@@ -1,4 +1,5 @@
 {
     "apiPort": 5000,
-    "apiHost": "127.0.0.1"
+    "apiHost": "127.0.0.1",
+    "dsn":"proasistenciag2"
 }
