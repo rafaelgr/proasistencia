@@ -239,7 +239,7 @@ function importar() {
 
 function salir() {
     var mf = function() {
-        var url = "EmpresaGeneral.html";
+        var url = "EmpresasGeneral.html";
         window.open(url, '_self');
     }
     return mf;
