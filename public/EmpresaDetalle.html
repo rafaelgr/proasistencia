@@ -167,8 +167,8 @@
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
-                        </li>                        
-                     </ul>   
+                        </li>
+                    </ul>
                 </li>
                 <li id="gestion">
                     <a href="#">
@@ -192,8 +192,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Usuarios</li>
-                <li>Detalle usuario</li>
+                <li>Empresas propias</li>
+                <li>Detalle empresa</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -217,8 +217,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-mortar-board"></i>
-                            Detalle usuario <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-building-o"></i>
+                            Detalle empresa propia<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -271,7 +271,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento usuarios </h2>
+                                <h2>Mantenimiento empresas propias </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -284,50 +284,141 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmUsuario" class="smart-form">
+                                    <form id="frmEmpresa" class="smart-form">
                                         <header>
-                                            Datos del usuario.
+                                            Datos de la empresa propia.
                                         </header>
                                         <fieldset>
                                             <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">ID</label>
+                                                    <label class="input">
+                                                        <input id="txtEmpresaId" name="txtEmpresaId" type="text" data-bind="value: empresaId" disabled/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Cod. anterior:</label>
+                                                    <label class="input">
+                                                        <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
+                                                    </label>
+                                                </section>
                                                 <section class="col col-md-6">
+                                                    <div class="pull-right">
+                                                        <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-refresh"></i>
+                                                        </button>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">NIF</label>
+                                                    <label class="input">
+                                                        <input id="txtNif" name="txtNif" data-bind="value: nif" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-9">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" type="text" data-bind="value: nombre" />
+                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Login</label>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Direccion</label>
                                                     <label class="input">
-                                                        <input id="txtLogin" name="txtLogin" type="text" data-bind="value: login" />
+                                                        <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
                                                     </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Contraseña</label>
+                                                    <label class="label">Poblacion</label>
                                                     <label class="input">
-                                                        <input id="txtPassword1" name="txtPassword1" type="password" />
+                                                        <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Repita contraseña</label>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Cod.Postal</label>
                                                     <label class="input">
-                                                        <input id="txtPassword2" name="txtPassword2" type="password" />
+                                                        <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-4">
+                                                    <label class="label">Provincia</label>
+                                                    <label class="input">
+                                                        <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Fecha alta</label>
+                                                    <label class="input">
+                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Fecha baja</label>
+                                                    <label class="input">
+                                                        <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="checkbox">
+                                                        <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                        <i></i>La empresa está activa
                                                     </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
+                                                    <label class="label">Persona de contacto (1)</label>
+                                                    <label class="input">
+                                                        <input id="txtContacto1" name="txtContacto1" data-bind="value: contacto1" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Persona de contacto (2)</label>
+                                                    <label class="input">
+                                                        <input id="txtContacto2" name="txtContacto2" data-bind="value: contacto2" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Teléfono (1)</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Teléfono (2)</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Fax</label>
+                                                    <label class="input">
+                                                        <input id="txtFax" name="txtFax" data-bind="value: fax" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
                                                     <label class="label">Correo electrónico</label>
                                                     <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" type="email" data-bind="value: email" />
+                                                        <input id="txtEmail" name="txtEmail" data-bind="value: email" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Nivel de usuario</label>
-                                                    <label class="select">
-                                                        <select id="cmbNivel" name="cmbNivel" data-bind="options: posiblesNiveles, optionsText: 'nombre', value: nivel, valueAllowUnset: true"></select><i></i>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Observaciones</label>
+                                                    <label class="textarea textarea-resizable">
+                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
                                                     </label>
                                                 </section>
                                             </div>
@@ -395,6 +486,8 @@
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- MOMENT -->
+    <script src="js/moment.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
@@ -435,8 +528,8 @@
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/usuarioDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/empresaDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
