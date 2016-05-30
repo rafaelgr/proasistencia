@@ -1,0 +1,27 @@
+USE `proasistencia`;
+
+/*Table structure for table `clientes` */
+
+DROP TABLE IF EXISTS `clientes`;
+
+CREATE TABLE `clientes` (
+  `clienteId` INT(11) NOT NULL AUTO_INCREMENT,
+  `proId` VARCHAR(255) DEFAULT NULL,
+  `nombre` VARCHAR(255) DEFAULT NULL,
+  `nif` VARCHAR(255) DEFAULT NULL,
+  `fechaAlta` DATETIME DEFAULT NULL,
+  `fechaBaja` DATETIME DEFAULT NULL,
+  `activa` TINYINT(1) DEFAULT NULL,
+  `contacto1` VARCHAR(255) DEFAULT NULL,
+  `contacto2` VARCHAR(255) DEFAULT NULL,
+  `direccion` VARCHAR(255) DEFAULT NULL,
+  `codPostal` VARCHAR(255) DEFAULT NULL,
+  `poblacion` VARCHAR(255) DEFAULT NULL,
+  `provincia` VARCHAR(255) DEFAULT NULL,
+  `telefono1` VARCHAR(255) DEFAULT NULL,
+  `telefono2` VARCHAR(255) DEFAULT NULL,
+  `fax` VARCHAR(255) DEFAULT NULL,
+  `email` VARCHAR(255) DEFAULT NULL,
+  `observaciones` TEXT,
+  PRIMARY KEY (`clienteId`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

@@ -17,6 +17,7 @@ var serveIndex = require('serve-index');
 var usuarios_router = require('./lib/usuarios/usuarios_controller');
 var version_router = require('./lib/version/version_controller');
 var empresas_router = require('./lib/empresas/empresas_controller');
+var clientes_router = require('./lib/clientes/clientes_controller');
 var sqlany_router = require('./lib/sqlany/sqlany_controller');
 
 // read app parameters (host and port for the API)
@@ -61,6 +62,7 @@ app.use('/api', router);
 app.use('/api/usuarios', usuarios_router);
 app.use('/api/version', version_router);
 app.use('/api/empresas', empresas_router);
+app.use('/api/clientes', clientes_router);
 app.use('/api/sqlany', sqlany_router);
 
 // -- start server
