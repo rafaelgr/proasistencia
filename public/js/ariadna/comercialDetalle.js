@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-empresaDetalle.js
-Funciones js par la página EmpresaDetalle.html
+comercialDetalle.js
+Funciones js par la página ComercialDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -18,19 +18,19 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
-    $("#frmEmpresa").submit(function() {
+    $("#frmComercial").submit(function() {
         return false;
     });
 
-    empId = gup('EmpresaId');
+    empId = gup('ComercialId');
     if (empId != 0) {
         var data = {
-                empresaId: empId
+                comercialId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/empresas/" + empId,
+            url: myconfig.apiUrl + "/api/comerciales/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -42,13 +42,13 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.empresaId(0);
+        vm.comercialId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.empresaId = ko.observable();
+    self.comercialId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -69,7 +69,7 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.empresaId(data.empresaId);
+    vm.comercialId(data.comercialId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -90,7 +90,7 @@ function loadData(data) {
 }
 
 function datosOK() {
-    $('#frmEmpresa').validate({
+    $('#frmComercial').validate({
         rules: {
             txtNif: {
                 required: true
@@ -119,12 +119,12 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmEmpresa").validate().settings;
-    return $('#frmEmpresa').valid();
+    var opciones = $("#frmComercial").validate().settings;
+    return $('#frmComercial').valid();
 }
 
 function datosImportOK() {
-    $('#frmEmpresa').validate({
+    $('#frmComercial').validate({
         rules: {
             txtProId: {
                 required: true
@@ -141,8 +141,8 @@ function datosImportOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmEmpresa").validate().settings;
-    return $('#frmEmpresa').valid();
+    var opciones = $("#frmComercial").validate().settings;
+    return $('#frmComercial').valid();
 }
 
 function aceptar() {
@@ -150,8 +150,8 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            empresa: {
-                "empresaId": vm.empresaId(),
+            comercial: {
+                "comercialId": vm.comercialId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -174,7 +174,7 @@ function aceptar() {
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/empresas",
+                url: myconfig.apiUrl + "/api/comerciales",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -182,7 +182,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
+                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -190,7 +190,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/empresas/" + empId,
+                url: myconfig.apiUrl + "/api/comerciales/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -198,7 +198,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
+                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -215,7 +215,7 @@ function importar() {
         $('#btnImportar').addClass('fa-spin');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/empresas/" + vm.proId(),
+            url: myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
@@ -227,7 +227,7 @@ function importar() {
                     // mensaje de que no se ha encontrado
                 }
                 data = rData[0];
-                data.empresaId = vm.empresaId(); // Por si es un update
+                data.comercialId = vm.comercialId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -239,7 +239,7 @@ function importar() {
 
 function salir() {
     var mf = function() {
-        var url = "EmpresasGeneral.html";
+        var url = "ComercialesGeneral.html";
         window.open(url, '_self');
     }
     return mf;

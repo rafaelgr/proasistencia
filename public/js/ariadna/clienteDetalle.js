@@ -162,7 +162,7 @@ function aceptar() {
                 "contacto2": vm.contacto2(),
                 "direccion": vm.direccion(),
                 "poblacion": vm.poblacion(),
-                "provincia": vm.direccion(),
+                "provincia": vm.provincia(),
                 "codPostal": vm.codPostal(),
                 "telefono1": vm.telefono1(),
                 "telefono2": vm.telefono2(),
