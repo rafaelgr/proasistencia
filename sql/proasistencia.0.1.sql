@@ -49,3 +49,29 @@ CREATE TABLE `comerciales` (
   `observaciones` TEXT,
   PRIMARY KEY (`comercialId`)
 ) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `mantenedores` */
+
+DROP TABLE IF EXISTS `mantenedores`;
+
+CREATE TABLE `mantenedores` (
+  `mantenedorId` INT(11) NOT NULL AUTO_INCREMENT,
+  `proId` VARCHAR(255) DEFAULT NULL,
+  `nombre` VARCHAR(255) DEFAULT NULL,
+  `nif` VARCHAR(255) DEFAULT NULL,
+  `fechaAlta` DATETIME DEFAULT NULL,
+  `fechaBaja` DATETIME DEFAULT NULL,
+  `activa` TINYINT(1) DEFAULT NULL,
+  `contacto1` VARCHAR(255) DEFAULT NULL,
+  `contacto2` VARCHAR(255) DEFAULT NULL,
+  `direccion` VARCHAR(255) DEFAULT NULL,
+  `codPostal` VARCHAR(255) DEFAULT NULL,
+  `poblacion` VARCHAR(255) DEFAULT NULL,
+  `provincia` VARCHAR(255) DEFAULT NULL,
+  `telefono1` VARCHAR(255) DEFAULT NULL,
+  `telefono2` VARCHAR(255) DEFAULT NULL,
+  `fax` VARCHAR(255) DEFAULT NULL,
+  `email` VARCHAR(255) DEFAULT NULL,
+  `observaciones` TEXT,
+  PRIMARY KEY (`mantenedorId`)
+) ENGINE=INNODB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8;

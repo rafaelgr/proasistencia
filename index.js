@@ -12,6 +12,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var serveIndex = require('serve-index');
+var moment = require('moment');
 
 // api support
 var usuarios_router = require('./lib/usuarios/usuarios_controller');
@@ -19,8 +20,12 @@ var version_router = require('./lib/version/version_controller');
 var empresas_router = require('./lib/empresas/empresas_controller');
 var clientes_router = require('./lib/clientes/clientes_controller');
 var comerciales_router = require('./lib/comerciales/comerciales_controller');
+var mantenedores_router = require('./lib/mantenedores/mantenedores_controller');
 var sqlany_router = require('./lib/sqlany/sqlany_controller');
+var tipos_comerciales_router = require('./lib/tipos_comerciales/tipos_comerciales_controller');
 
+
+var pack = require('./package.json');
 // read app parameters (host and port for the API)
 var config = require('./config.json');
 
@@ -65,10 +70,19 @@ app.use('/api/version', version_router);
 app.use('/api/empresas', empresas_router);
 app.use('/api/clientes', clientes_router);
 app.use('/api/comerciales', comerciales_router);
+app.use('/api/mantenedores', mantenedores_router);
 app.use('/api/sqlany', sqlany_router);
+app.use('/api/tipos_comerciales', tipos_comerciales_router);
 
 // -- start server
 app.listen(config.apiPort);
 
+
+
 // -- console message
-console.log('PROASISTENCIA API / SERVER on port: ' + config.apiPort);
+console.log ("-------------------------------------------");
+console.log (" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
+console.log ("-------------------------------------------");
+console.log(' VERSION: ' + pack.version);
+console.log(' PORT: ' + config.apiPort);
+console.log ("-------------------------------------------");

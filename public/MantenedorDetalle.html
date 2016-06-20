@@ -207,8 +207,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Empresas propias</li>
-                <li>Detalle empresa</li>
+                <li>Mantenedores</li>
+                <li>Detalle mantenedor</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -232,8 +232,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-building-o"></i>
-                            Detalle empresa propia<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-crosshairs"></i>
+                            Detalle mantenedor <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -286,7 +286,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento empresas propias </h2>
+                                <h2>Mantenimiento mantenedores</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -299,16 +299,16 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmEmpresa" class="smart-form">
+                                    <form id="frmMantenedor" class="smart-form">
                                         <header>
-                                            Datos de la empresa propia.
+                                            Datos de la mantenedor .
                                         </header>
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-3">
                                                     <label class="label">ID</label>
                                                     <label class="input">
-                                                        <input id="txtEmpresaId" name="txtEmpresaId" type="text" data-bind="value: empresaId" disabled/>
+                                                        <input id="txtMantenedorId" name="txtMantenedorId" type="text" data-bind="value: mantenedorId" disabled/>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
@@ -317,7 +317,8 @@
                                                         <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
+                                                <!-- El botón de importación no se muestra porque aquí no tiene funcionalidad -->
+                                                <section class="col col-md-6" style="display: none;">
                                                     <div class="pull-right">
                                                         <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
                                                             <i class="fa fa-lg fa-refresh"></i>
@@ -385,7 +386,7 @@
                                                 <section class="col col-md-3">
                                                     <label class="checkbox">
                                                         <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                        <i></i>La empresa está activa
+                                                        <i></i>El mantenedor está activo
                                                     </label>
                                                 </section>
                                             </div>
@@ -544,7 +545,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/empresaDetalle.js"></script>
+    <script src="js/ariadna/mantenedorDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

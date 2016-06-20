@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-comercialDetalle.js
-Funciones js par la página ComercialDetalle.html
+mantenedorDetalle.js
+Funciones js par la página MantenedorDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -18,54 +18,19 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
-    $("#frmComercial").submit(function() {
+    $("#frmMantenedor").submit(function() {
         return false;
     });
 
-    // select2 things
-    $("#cmbTiposComerciales").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
-
-    loadTiposComerciales();
-
-    empId = gup('ComercialId');
+    empId = gup('MantenedorId');
     if (empId != 0) {
         var data = {
-                comercialId: empId
+                mantenedorId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/comerciales/" + empId,
+            url: myconfig.apiUrl + "/api/mantenedores/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -77,13 +42,13 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.comercialId(0);
+        vm.mantenedorId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.comercialId = ko.observable();
+    self.mantenedorId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -101,17 +66,10 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
-    //
-    self.tipoComercialId = ko.observable();
-    self.stipoComercialId = ko.observable();
-    //
-    self.posiblesTiposComerciales = ko.observableArray([]);
-    self.elegidosTiposComerciales = ko.observableArray([]);
-
 }
 
 function loadData(data) {
-    vm.comercialId(data.comercialId);
+    vm.mantenedorId(data.mantenedorId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -129,11 +87,10 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
-    loadTiposComerciales(data.tipoComercialId);
 }
 
 function datosOK() {
-    $('#frmComercial').validate({
+    $('#frmMantenedor').validate({
         rules: {
             txtNif: {
                 required: true
@@ -162,12 +119,12 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmComercial").validate().settings;
-    return $('#frmComercial').valid();
+    var opciones = $("#frmMantenedor").validate().settings;
+    return $('#frmMantenedor').valid();
 }
 
 function datosImportOK() {
-    $('#frmComercial').validate({
+    $('#frmMantenedor').validate({
         rules: {
             txtProId: {
                 required: true
@@ -184,8 +141,8 @@ function datosImportOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmComercial").validate().settings;
-    return $('#frmComercial').valid();
+    var opciones = $("#frmMantenedor").validate().settings;
+    return $('#frmMantenedor').valid();
 }
 
 function aceptar() {
@@ -193,8 +150,8 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            comercial: {
-                "comercialId": vm.comercialId(),
+            mantenedor: {
+                "mantenedorId": vm.mantenedorId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -211,14 +168,13 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
-                "observaciones": vm.observaciones(),
-                "tipoComercialId": vm.stipoComercialId()
+                "observaciones": vm.observaciones()
             }
         };
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/comerciales",
+                url: myconfig.apiUrl + "/api/mantenedores",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -226,7 +182,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
+                    var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -234,7 +190,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/comerciales/" + empId,
+                url: myconfig.apiUrl + "/api/mantenedores/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -242,7 +198,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
+                    var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -254,12 +210,14 @@ function aceptar() {
 
 function importar() {
     var mf = function() {
+        // en este caso no tenemos importación (mostramos el mensaje adecuado)
+        // mejor lo quitamos de pantalla y evitamos confusiones
         if (!datosImportOK())
             return;
         $('#btnImportar').addClass('fa-spin');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId(),
+            url: myconfig.apiUrl + "/api/sqlany/mantenedores/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
@@ -271,7 +229,7 @@ function importar() {
                     // mensaje de que no se ha encontrado
                 }
                 data = rData[0];
-                data.comercialId = vm.comercialId(); // Por si es un update
+                data.mantenedorId = vm.mantenedorId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -283,24 +241,8 @@ function importar() {
 
 function salir() {
     var mf = function() {
-        var url = "ComercialesGeneral.html";
+        var url = "MantenedoresGeneral.html";
         window.open(url, '_self');
     }
     return mf;
-}
-
-
-function loadTiposComerciales(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_comerciales",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data, status) {
-            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposComerciales(tiposComerciales);
-            $("#cmbTrabajadores").val([id]);
-        },
-        error: errorAjax
-    });
 }
