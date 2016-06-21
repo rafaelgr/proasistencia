@@ -143,6 +143,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: true
+            },
+            cmbTiposComerciales: {
+                required:true
             }
         },
         // Messages for form validation
@@ -155,6 +158,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: 'Debe usar un correo válido'
+            },
+            cmbTiposComerciales: {
+                required: "Debe elegir un tipo comercial"
             }
         },
         // Do not change code below
@@ -299,7 +305,10 @@ function loadTiposComerciales(id) {
         success: function(data, status) {
             var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposComerciales(tiposComerciales);
-            $("#cmbTrabajadores").val([id]);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbTiposComerciales").val([id]).trigger('change');
         },
         error: errorAjax
     });
