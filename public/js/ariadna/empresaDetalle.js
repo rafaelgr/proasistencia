@@ -66,6 +66,8 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+    self.dniFirmante = ko.observable();
+    self.firmante = ko.observable();
 }
 
 function loadData(data) {
@@ -87,6 +89,8 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
+    vm.dniFirmante(data.dniFirmante);
+    vm.firmante(data.firmante);
 }
 
 function datosOK() {
@@ -168,7 +172,9 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante()
             }
         };
         if (empId == 0) {
