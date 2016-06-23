@@ -24,6 +24,7 @@ function initForm() {
     getVersionFooter();
     //
     $('#btnAlta').click(crearContratoComercial());
+    $('#btnRefrescar').click(refrescar());
     $('#frmCrear').submit(function() {
         return false
     });
@@ -159,7 +160,7 @@ function loadTablaContratosComerciales(data) {
         dt.fnDraw();
         $("#tbContratoComercial").show();
     }
-    
+
 }
 
 
@@ -167,6 +168,23 @@ function crearContratoComercial() {
     var mf = function() {
         var url = "ContratoComercialDetalle.html?ContratoComercialId=0";
         window.open(url, '_self');
+    };
+    return mf;
+}
+
+function refrescar() {
+    var mf = function() {
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/contratos_comerciales/",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaContratosComerciales(data);
+            },
+            error: errorAjax
+        });
     };
     return mf;
 }
@@ -210,7 +228,7 @@ function editContratoComercial(id) {
 }
 
 function buscarContratosComerciales() {
-    var mf = function () {
+    var mf = function() {
         if (!datosOK()) {
             return;
         }
@@ -220,7 +238,7 @@ function buscarContratosComerciales() {
             url: myconfig.apiUrl + "/api/contratos_comerciales",
             dataType: "json",
             contentType: "application/json",
-            success: function (data, status) {
+            success: function(data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosComerciales(data);
             },
