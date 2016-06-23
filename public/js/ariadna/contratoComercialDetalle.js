@@ -2,7 +2,7 @@
 comercialDetalle.js
 Funciones js par la página ComercialDetalle.html
 ---------------------------------------------------------------------------*/
-var empId = 0;
+var contratoComercialId = 0;
 
 datePickerSpanish(); // see comun.js
 
@@ -17,13 +17,12 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#btnImportar").click(importar());
-    $("#frmComercial").submit(function() {
+    $("#frmContratoComercial").submit(function() {
         return false;
     });
 
     // select2 things
-    $("#cmbTiposComerciales").select2({
+    $("#cmbEmpresas").select2({
         allowClear: true,
         language: {
             errorLoading: function() {
@@ -54,18 +53,85 @@ function initForm() {
             }
         }
     });
+    loadEmpresas();
 
-    loadTiposComerciales();
+    $("#cmbComerciales").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+    loadComerciales();
 
-    empId = gup('ComercialId');
-    if (empId != 0) {
+    $("#cmbTiposPagos").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+    loadTiposPagos();
+
+
+
+    contratoComercialId = gup('ContratoComercialId');
+    if (contratoComercialId != 0) {
         var data = {
-                comercialId: empId
+                contratoComercialId: contratoComercialId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/comerciales/" + empId,
+            url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -77,90 +143,77 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.comercialId(0);
+        vm.contratoComercialId(0);
     }
 }
 
 function admData() {
     var self = this;
+    self.contratoComercialId = ko.observable();
+    self.empresaId = ko.observable();
     self.comercialId = ko.observable();
-    self.proId = ko.observable();
-    self.nombre = ko.observable();
-    self.nif = ko.observable();
-    self.fechaAlta = ko.observable();
-    self.fechaBaja = ko.observable();
-    self.activa = ko.observable();
-    self.contacto1 = ko.observable();
-    self.contacto2 = ko.observable();
-    self.direccion = ko.observable();
-    self.codPostal = ko.observable();
-    self.poblacion = ko.observable();
-    self.provincia = ko.observable();
-    self.telefono1 = ko.observable();
-    self.telefono2 = ko.observable();
-    self.fax = ko.observable();
-    self.email = ko.observable();
+    self.fechaInicio = ko.observable();
+    self.fechaFin = ko.observable();
+    self.numMeses = ko.observable();
+    self.tipoPago = ko.observable();
+    self.minimoMensual = ko.observable();
+    self.manImporteOperacion = ko.observable();
+    self.manPorVentas = ko.observable();
     self.observaciones = ko.observable();
     //
-    self.tipoComercialId = ko.observable();
-    self.stipoComercialId = ko.observable();
+    self.sempresaId = ko.observable();
     //
-    self.posiblesTiposComerciales = ko.observableArray([]);
-    self.elegidosTiposComerciales = ko.observableArray([]);
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.scomercialId = ko.observable();
+    //
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+    //
+    self.stipoPagoId = ko.observable();
+    //
+    self.posiblesTiposPagos = ko.observableArray([]);
+    self.elegidosTiposPagos = ko.observableArray([]);
+
 
 }
 
 function loadData(data) {
+    vm.contratoComercialId(data.contratoComercialId);
+    vm.empresaId(data.empresaId);
     vm.comercialId(data.comercialId);
-    vm.proId(data.proId);
-    vm.nombre(data.nombre);
-    vm.nif(data.nif);
-    vm.fechaAlta(spanishDate(data.fechaAlta));
-    vm.fechaBaja(spanishDate(data.fechaBaja));
-    vm.activa(data.activa);
-    vm.contacto1(data.contacto1);
-    vm.contacto2(data.contacto2);
-    vm.direccion(data.direccion);
-    vm.codPostal(data.codPostal);
-    vm.provincia(data.provincia);
-    vm.telefono1(data.telefono1);
-    vm.telefono2(data.telefono2);
-    vm.fax(data.fax);
-    vm.email(data.email);
+    vm.fechaInicio(spanishDate(data.fechaInicio));
+    vm.fechaFin(spanishDate(data.fechaFin));
+    vm.numMeses(data.numMeses);
+    vm.tipoPago(data.tipoPago);
+    vm.minimoMensual(data.minimoMensual);
+    vm.manImporteOperacion(data.manImporteOperacion);
+    vm.manPorVentas(data.manPorVentas);
     vm.observaciones(data.observaciones);
-    vm.poblacion(data.poblacion);
-    loadTiposComerciales(data.tipoComercialId);
+    //
+    loadEmpresas(data.empresaId);
+    loadComerciales(data.comercialId);
+    loadTiposPagos(data.tipoPago);
 }
 
 function datosOK() {
-    $('#frmComercial').validate({
+    $('#frmContratoComercial').validate({
         rules: {
-            txtNif: {
+            cmbEmpresas: {
                 required: true
             },
-            txtNombre: {
+            cmbComerciales: {
                 required: true
-            },
-            txtEmail: {
-                email: true
-            },
-            cmbTiposComerciales: {
-                required:true
             }
         },
         // Messages for form validation
         messages: {
-            txtNif: {
-                required: "Introduzca un NIF"
+            cmbEmpresas: {
+                required: "Debe elegir una empresa"
             },
-            txtNombre: {
-                required: 'Introduzca el nombre'
-            },
-            txtEmail: {
-                email: 'Debe usar un correo válido'
-            },
-            cmbTiposComerciales: {
-                required: "Debe elegir un tipo comercial"
+            cmbComerciales: {
+                required: "Debe elegir un comercial"
             }
         },
         // Do not change code below
@@ -168,63 +221,45 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmComercial").validate().settings;
-    return $('#frmComercial').valid();
-}
-
-function datosImportOK() {
-    $('#frmComercial').validate({
-        rules: {
-            txtProId: {
-                required: true
-            }
-        },
-        // Messages for form validation
-        messages: {
-            txtProId: {
-                required: "Introduzca un código"
-            }
-        },
-        // Do not change code below
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    var opciones = $("#frmComercial").validate().settings;
-    return $('#frmComercial').valid();
+    var opciones = $("#frmContratoComercial").validate().settings;
+    return $('#frmContratoComercial').valid();
 }
 
 function aceptar() {
     var mf = function() {
         if (!datosOK())
             return;
+        // control de fechas 
+        // var fecha1, fecha2;
+        // if (moment(vm.fechaInicio(), "DD/MM/YYYY").isValid()) {
+        //     fecha1 = moment(vm.fechaInicio(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        // } else {
+        //     fecha1 = null;
+        // }
+        // if (moment(vm.fechaFin(), "DD/MM/YYYY").isValid()) {
+        //     fecha2 = moment(vm.fechaFin(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        // } else {
+        //     fecha2 = null;
+        // }
         var data = {
-            comercial: {
-                "comercialId": vm.comercialId(),
-                "proId": vm.proId(),
-                "nombre": vm.nombre(),
-                "nif": vm.nif(),
-                "fechaAlta": spanishDbDate(vm.fechaAlta()),
-                "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                "activa": vm.activa(),
-                "contacto1": vm.contacto1(),
-                "contacto2": vm.contacto2(),
-                "direccion": vm.direccion(),
-                "poblacion": vm.poblacion(),
-                "provincia": vm.provincia(),
-                "codPostal": vm.codPostal(),
-                "telefono1": vm.telefono1(),
-                "telefono2": vm.telefono2(),
-                "fax": vm.fax(),
-                "email": vm.email(),
-                "observaciones": vm.observaciones(),
-                "tipoComercialId": vm.stipoComercialId()
+            contratoComercial: {
+                "contratoComercialId": vm.contratoComercialId(),
+                "empresaId": vm.sempresaId(),
+                "comercialId": vm.scomercialId(),
+                "fechaInicio": spanishDbDate(vm.fechaInicio()),
+                "fechaFin": spanishDbDate(vm.fechaFin()),
+                "numMeses": vm.numMeses(),
+                "tipoPago": vm.stipoPagoId(),
+                "minimoMensual": vm.minimoMensual(),
+                "manImporteOperacion": vm.manImporteOperacion(),
+                "manPorVentas": vm.manPorVentas(),
+                "observaciones": vm.observaciones()
             }
         };
-        if (empId == 0) {
+        if (contratoComercialId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/comerciales",
+                url: myconfig.apiUrl + "/api/contratos_comerciales",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -232,7 +267,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
+                    var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -240,7 +275,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/comerciales/" + empId,
+                url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -248,7 +283,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
+                    var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -258,58 +293,51 @@ function aceptar() {
     return mf;
 }
 
-function importar() {
-    var mf = function() {
-        if (!datosImportOK())
-            return;
-        $('#btnImportar').addClass('fa-spin');
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function(data, status) {
-                $('#btnImportar').removeClass('fa-spin');
-                // la cadena será devuelta como JSON
-                var rData = JSON.parse(data);
-                // comprobamos que no está vacía
-                if (rData.length == 0) {
-                    // mensaje de que no se ha encontrado
-                }
-                data = rData[0];
-                data.comercialId = vm.comercialId(); // Por si es un update
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-            },
-            error: errorAjax
-        });
-    };
-    return mf;
-}
-
 function salir() {
     var mf = function() {
-        var url = "ComercialesGeneral.html";
+        var url = "ContratoComercialGeneral.html";
         window.open(url, '_self');
     }
     return mf;
 }
 
 
-function loadTiposComerciales(id) {
+function loadEmpresas(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_comerciales",
+        url: "/api/empresas",
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposComerciales(tiposComerciales);
-            //if (id){
-            //    vm.stipoComercialId(id);
-            //}
-            $("#cmbTiposComerciales").val([id]).trigger('change');
+            var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+            vm.posiblesEmpresas(empresas);
+            $("#cmbEmpresas").val([id]).trigger('change');
         },
         error: errorAjax
     });
+}
+
+function loadComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(comerciales);
+            $("#cmbComerciales").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadTiposPagos(id) {
+    var tiposPagos = [
+        { tipoPagoId: 0, nombre: "" },
+        { tipoPagoId: 1, nombre: "Pago único" },
+        { tipoPagoId: 2, nombre: "Pago mensual" }
+    ];
+    vm.posiblesTiposPagos(tiposPagos);
+    $("#cmbTiposPagos").val([id]).trigger('change');
 }

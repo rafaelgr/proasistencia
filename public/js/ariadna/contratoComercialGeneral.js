@@ -128,8 +128,8 @@ function initTablaContratosComerciales() {
         }, {
             data: "contratoComercialId",
             render: function(data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComercial(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteContratoComercial(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editContratoComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -159,6 +159,7 @@ function loadTablaContratosComerciales(data) {
         dt.fnDraw();
         $("#tbContratoComercial").show();
     }
+    
 }
 
 
@@ -189,7 +190,7 @@ function deleteContratoComercial(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function(data, status) {
-                    var fn = buscarComerciales();
+                    var fn = buscarContratosComerciales();
                     fn();
                 },
                 error: errorAjax
@@ -206,4 +207,25 @@ function editContratoComercial(id) {
     // pasando en la url ese ID
     var url = "ContratoComercialDetalle.html?ContratoComercialId=" + id;
     window.open(url, '_self');
+}
+
+function buscarContratosComerciales() {
+    var mf = function () {
+        if (!datosOK()) {
+            return;
+        }
+        // enviar la consulta por la red (AJAX)
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/contratos_comerciales",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaContratosComerciales(data);
+            },
+            error: errorAjax
+        });
+    };
+    return mf;
 }

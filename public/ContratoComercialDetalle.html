@@ -228,8 +228,9 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Comerciales </li>
-                <li>Detalle comercial / comisionista</li>
+                <li>Gestión</li>
+                <li>Contrato terceros</li>
+                <li>Detalle contrato comercial</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -253,8 +254,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-building"></i>
-                            Detalle comercial / comisionista<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-file-o"></i>
+                            Detalle contrato comercial<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -307,7 +308,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento comerciales / comisionistas</h2>
+                                <h2>Mantenimiento contratos comerciales</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -320,154 +321,100 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmComercial" class="smart-form">
+                                    <form id="frmContratoComercial" class="smart-form">
                                         <header>
-                                            Datos del comercial / comisionista
+                                            Datos del contrato
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">ID</label>
-                                                    <label class="input">
-                                                        <input id="txtComercialId" name="txtComercialId" type="text" data-bind="value: comercialId" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Cod. anterior:</label>
-                                                    <label class="input">
-                                                        <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
-                                                    </label>
-                                                </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">TipoComercial</label>
+                                                    <label class="label">Empresa propia</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">NIF</label>
-                                                    <label class="input">
-                                                        <input id="txtNif" name="txtNif" data-bind="value: nif" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-9">
-                                                    <label class="label">Nombre</label>
-                                                    <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Direccion</label>
-                                                    <label class="input">
-                                                        <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Poblacion</label>
-                                                    <label class="input">
-                                                        <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Cod.Postal</label>
-                                                    <label class="input">
-                                                        <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Provincia</label>
-                                                    <label class="input">
-                                                        <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha alta</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha baja</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="checkbox">
-                                                        <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                        <i></i>La comercial está activa
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (1)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto1" name="txtContacto1" data-bind="value: contacto1" />
+                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (2)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto2" name="txtContacto2" data-bind="value: contacto2" />
+                                                    <label class="label">Comercial / comisionista</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-3">
-                                                    <label class="label">Teléfono (1)</label>
+                                                    <label class="label">Fecha Inicio</label>
                                                     <label class="input">
-                                                        <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
+                                                        <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Teléfono (2)</label>
+                                                    <div class="form-group">
+                                                        <label class="label">Fecha final</label>
+                                                        <label class="input">
+                                                            <input id="txtFechaFin" type="text" name="txtFechaFin" data-bind="value: fechaFin" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                                        </label>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Meses</label>
                                                     <label class="input">
-                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
+                                                        <input id="txtNumMeses" name="txtNumMeses" data-bind="value: numMeses" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Fax</label>
-                                                    <label class="input">
-                                                        <input id="txtFax" name="txtFax" data-bind="value: fax" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Correo electrónico</label>
-                                                    <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" data-bind="value: email" />
+                                                    <label class="label">Tipo pago</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbTiposPagos" name="cmbTiposPagos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: stipoPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                             </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Observaciones</label>
-                                                    <label class="textarea textarea-resizable">
-                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
-                                                </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-md-3">
+                                                        <header>
+                                                            Condiciones generales mantenimiento
+                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="label">Por operacion</label>
+                                                                <label class="input">
+                                                                    <input id="txtManImporteOperacion" name="txtManImporteOperacion" data-bind="value: manImporteOperacion" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="label">% Sobre ventas</label>
+                                                                <label class="input">
+                                                                    <input id="txtManPorVentas" name="txtManPorVentas" data-bind="value: manPorVentas" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-md-9">
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-md-12">
+                                                        <label class="label">Observaciones</label>
+                                                        <label class="textarea textarea-resizable">
+                                                            <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="pull-right">
+                                                    <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-sign-out"></i>
+                                                    </button>
+                                                    <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-check"></i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
                                     </form>
                                 </div>
                                 <!-- end widget content -->
@@ -564,7 +511,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/comercialDetalle.js"></script>
+    <script src="js/ariadna/contratoComercialDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
