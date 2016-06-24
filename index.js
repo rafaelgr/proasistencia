@@ -24,6 +24,7 @@ var mantenedores_router = require('./lib/mantenedores/mantenedores_controller');
 var sqlany_router = require('./lib/sqlany/sqlany_controller');
 var tipos_comerciales_router = require('./lib/tipos_comerciales/tipos_comerciales_controller');
 var contratos_comerciales_router = require('./lib/contratos-comerciales/contratos_comerciales_controller');
+var contratos_mantenedores_router = require('./lib/contratos-mantenedores/contratos_mantenedores_controller');
 
 
 var pack = require('./package.json');
@@ -75,6 +76,7 @@ app.use('/api/mantenedores', mantenedores_router);
 app.use('/api/sqlany', sqlany_router);
 app.use('/api/tipos_comerciales', tipos_comerciales_router);
 app.use('/api/contratos_comerciales', contratos_comerciales_router);
+app.use('/api/contratos_mantenedores', contratos_mantenedores_router);
 
 // -- start server
 app.listen(config.apiPort);
