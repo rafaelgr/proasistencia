@@ -160,6 +160,7 @@ function admData() {
     self.manImporteOperacion = ko.observable();
     self.manPorVentas = ko.observable();
     self.observaciones = ko.observable();
+    self.importe = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -187,6 +188,7 @@ function loadData(data) {
     vm.fechaFin(spanishDate(data.fechaFin));
     vm.numMeses(data.numMeses);
     vm.tipoPago(data.tipoPago);
+    vm.importe(data.importe);
     vm.minimoMensual(data.minimoMensual);
     vm.manImporteOperacion(data.manImporteOperacion);
     vm.manPorVentas(data.manPorVentas);
@@ -250,6 +252,7 @@ function aceptar() {
                 "fechaFin": spanishDbDate(vm.fechaFin()),
                 "numMeses": vm.numMeses(),
                 "tipoPago": vm.stipoPagoId(),
+                "importe": vm.importe(),
                 "minimoMensual": vm.minimoMensual(),
                 "manImporteOperacion": vm.manImporteOperacion(),
                 "manPorVentas": vm.manPorVentas(),

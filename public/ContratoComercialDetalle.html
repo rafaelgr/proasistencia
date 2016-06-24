@@ -362,6 +362,24 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Importe</label>
+                                                    <label class="input">
+                                                        <input id="txtImporte" name="txtImporte" data-bind="value: importe" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Mínimo mensual</label>
+                                                    <label class="input">
+                                                        <input id="txtMinimoMensual" name="txtMinimoMensual" data-bind="value: minimoMensual" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
                                                     <label class="label">Tipo pago</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbTiposPagos" name="cmbTiposPagos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: stipoPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
@@ -370,7 +388,7 @@
                                             </div>
                                             <fieldset>
                                                 <div class="row">
-                                                    <section class="col col-md-3">
+                                                    <section class="col col-md-4">
                                                         <header>
                                                             Condiciones generales mantenimiento
                                                         </header>
@@ -391,7 +409,15 @@
                                                             </section>
                                                         </div>
                                                     </section>
-                                                    <section class="col col-md-9">
+                                                    <section class="col col-md-4">
+                                                        <header>
+                                                            Condiciones generales servicios
+                                                        </header>
+                                                    </section>
+                                                    <section class="col col-md-4">
+                                                        <header>
+                                                            Condiciones generales obras
+                                                        </header>
                                                     </section>
                                                 </div>
                                             </fieldset>
