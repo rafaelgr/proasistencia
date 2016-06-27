@@ -163,6 +163,11 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="formaspago">
+                            <a href="FormaPagoGeneral.html">
+                                <i class="fa fa-money"></i> Formas de pago
+                            </a>
+                        </li> 
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
@@ -230,7 +235,7 @@
                 <li>Administracion</li>
                 <li>Gestión</li>
                 <li>Contrato terceros</li>
-                <li>Detalle contrato comercial</li>
+                <li>Detalle contrato mantenedor</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -255,7 +260,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-file-o"></i>
-                            Detalle contrato comercial<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Detalle contrato mantenedor<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -308,7 +313,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento contratos comerciales</h2>
+                                <h2>Mantenimiento contratos mantenedor</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -321,7 +326,7 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmContratoComercial" class="smart-form">
+                                    <form id="frmContratoMantenedor" class="smart-form">
                                         <header>
                                             Datos del contrato
                                         </header>
@@ -334,9 +339,9 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Comercial / comisionista</label>
+                                                    <label class="label">Mantenedor</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'mantenedorId', value: smantenedorId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                             </div>
@@ -356,27 +361,9 @@
                                                     </div>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Meses</label>
+                                                    <label class="label">Porcentaje comercial</label>
                                                     <label class="input">
-                                                        <input id="txtNumMeses" name="txtNumMeses" data-bind="value: numMeses" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Importe</label>
-                                                    <label class="input">
-                                                        <input id="txtImporte" name="txtImporte" data-bind="value: importe" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Mínimo mensual</label>
-                                                    <label class="input">
-                                                        <input id="txtMinimoMensual" name="txtMinimoMensual" data-bind="value: minimoMensual" />
+                                                        <input id="txtManPorComer" name="txtManPorComer" data-bind="value: manPorComer" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
@@ -388,36 +375,43 @@
                                             </div>
                                             <fieldset>
                                                 <div class="row">
-                                                    <section class="col col-md-4">
+                                                    <section class="col col-md-6">
                                                         <header>
-                                                            Condiciones generales mantenimiento
+                                                            Firmante empresa propia
                                                         </header>
                                                         <div class="row">
-                                                            <section class="col col-md-12">
-                                                                <label class="label">Por operacion</label>
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
                                                                 <label class="input">
-                                                                    <input id="txtManImporteOperacion" name="txtManImporteOperacion" data-bind="value: manImporteOperacion" />
+                                                                    <input id="txtDniFirmanteEmpresa" name="txtDniFirmanteEmpresa" data-bind="value: dniFirmanteEmpresa" />
                                                                 </label>
                                                             </section>
-                                                        </div>
-                                                        <div class="row">
-                                                            <section class="col col-md-12">
-                                                                <label class="label">% Sobre ventas</label>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
                                                                 <label class="input">
-                                                                    <input id="txtManPorVentas" name="txtManPorVentas" data-bind="value: manPorVentas" />
+                                                                    <input id="txtFirmanteEmpresa" name="txtFirmanteEmpresa" data-bind="value: firmanteEmpresa" />
                                                                 </label>
                                                             </section>
                                                         </div>
                                                     </section>
-                                                    <section class="col col-md-4">
+                                                    <section class="col col-md-6">
                                                         <header>
-                                                            Condiciones generales servicios
+                                                            Firmante mantenedor
                                                         </header>
-                                                    </section>
-                                                    <section class="col col-md-4">
-                                                        <header>
-                                                            Condiciones generales obras
-                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
+                                                                <label class="input">
+                                                                    <input id="txtDniFirmanteMantenedor" name="txtDniFirmanteMantenedor" data-bind="value: dniFirmanteMantenedor" />
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
+                                                                <label class="input">
+                                                                    <input id="txtFirmanteMantenedor" name="txtFirmanteMantenedor" data-bind="value: firmanteMantenedor" />
+                                                                </label>
+                                                            </section>
+                                                        </div>                                                        
                                                     </section>
                                                 </div>
                                             </fieldset>
@@ -537,7 +531,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/contratoComercialDetalle.js"></script>
+    <script src="js/ariadna/contratoMantenedorDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

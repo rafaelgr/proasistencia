@@ -1,8 +1,8 @@
 ﻿/*-------------------------------------------------------------------------- 
 comercialDetalle.js
-Funciones js par la página ComercialDetalle.html
+Funciones js par la página MantenedorDetalle.html
 ---------------------------------------------------------------------------*/
-var contratoComercialId = 0;
+var contratoMantenedorId = 0;
 
 datePickerSpanish(); // see comun.js
 
@@ -17,7 +17,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmContratoComercial").submit(function() {
+    $("#frmContratoMantenedor").submit(function() {
         return false;
     });
 
@@ -55,7 +55,7 @@ function initForm() {
     });
     loadEmpresas();
 
-    $("#cmbComerciales").select2({
+    $("#cmbMantenedores").select2({
         allowClear: true,
         language: {
             errorLoading: function() {
@@ -86,7 +86,7 @@ function initForm() {
             }
         }
     });
-    loadComerciales();
+    loadMantenedores();
 
     $("#cmbTiposPagos").select2({
         allowClear: true,
@@ -123,15 +123,15 @@ function initForm() {
 
 
 
-    contratoComercialId = gup('ContratoComercialId');
-    if (contratoComercialId != 0) {
+    contratoMantenedorId = gup('ContratoMantenedorId');
+    if (contratoMantenedorId != 0) {
         var data = {
-                contratoComercialId: contratoComercialId
+                contratoMantenedorId: contratoMantenedorId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
+            url: myconfig.apiUrl + "/api/contratos_mantenedores/" + contratoMantenedorId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -143,34 +143,34 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.contratoComercialId(0);
+        vm.contratoMantenedorId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.contratoComercialId = ko.observable();
+    self.contratoMantenedorId = ko.observable();
     self.empresaId = ko.observable();
-    self.comercialId = ko.observable();
+    self.mantenedorId = ko.observable();
     self.fechaInicio = ko.observable();
     self.fechaFin = ko.observable();
-    self.numMeses = ko.observable();
     self.tipoPago = ko.observable();
-    self.minimoMensual = ko.observable();
-    self.manImporteOperacion = ko.observable();
-    self.manPorVentas = ko.observable();
+    self.manPorComer = ko.observable();
+    self.dniFirmanteEmpresa = ko.observable();
+    self.firmanteEmpresa = ko.observable();
+    self.dniFirmanteMantenedor = ko.observable();
+    self.firmanteMantenedor = ko.observable();
     self.observaciones = ko.observable();
-    self.importe = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
-    self.scomercialId = ko.observable();
+    self.smantenedorId = ko.observable();
     //
-    self.posiblesComerciales = ko.observableArray([]);
-    self.elegidosComerciales = ko.observableArray([]);
+    self.posiblesMantenedores = ko.observableArray([]);
+    self.elegidosMantenedores = ko.observableArray([]);
     //
     self.stipoPagoId = ko.observable();
     //
@@ -181,31 +181,31 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.contratoComercialId(data.contratoComercialId);
+    vm.contratoMantenedorId(data.contratoMantenedorId);
     vm.empresaId(data.empresaId);
-    vm.comercialId(data.comercialId);
+    vm.mantenedorId(data.mantenedorId);
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFin(spanishDate(data.fechaFin));
-    vm.numMeses(data.numMeses);
     vm.tipoPago(data.tipoPago);
-    vm.importe(data.importe);
-    vm.minimoMensual(data.minimoMensual);
-    vm.manImporteOperacion(data.manImporteOperacion);
-    vm.manPorVentas(data.manPorVentas);
+    vm.manPorComer(data.manPorComer);
+    vm.dniFirmanteEmpresa(data.dniFirmanteEmpresa);
+    vm.firmanteEmpresa(data.firmanteEmpresa);
+    vm.dniFirmanteMantenedor(data.dniFirmanteMantenedor);
+    vm.firmanteMantenedor(data.firmanteMantenedor);
     vm.observaciones(data.observaciones);
     //
     loadEmpresas(data.empresaId);
-    loadComerciales(data.comercialId);
+    loadMantenedores(data.mantenedorId);
     loadTiposPagos(data.tipoPago);
 }
 
 function datosOK() {
-    $('#frmContratoComercial').validate({
+    $('#frmContratoMantenedor').validate({
         rules: {
             cmbEmpresas: {
                 required: true
             },
-            cmbComerciales: {
+            cmbMantenedores: {
                 required: true
             }
         },
@@ -214,7 +214,7 @@ function datosOK() {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
             },
-            cmbComerciales: {
+            cmbMantenedores: {
                 required: "Debe elegir un comercial"
             }
         },
@@ -223,8 +223,8 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmContratoComercial").validate().settings;
-    return $('#frmContratoComercial').valid();
+    var opciones = $("#frmContratoMantenedor").validate().settings;
+    return $('#frmContratoMantenedor').valid();
 }
 
 function aceptar() {
@@ -244,25 +244,25 @@ function aceptar() {
         //     fecha2 = null;
         // }
         var data = {
-            contratoComercial: {
-                "contratoComercialId": vm.contratoComercialId(),
+            contratoMantenedor: {
+                "contratoMantenedorId": vm.contratoMantenedorId(),
                 "empresaId": vm.sempresaId(),
-                "comercialId": vm.scomercialId(),
+                "mantenedorId": vm.smantenedorId(),
                 "fechaInicio": spanishDbDate(vm.fechaInicio()),
                 "fechaFin": spanishDbDate(vm.fechaFin()),
-                "numMeses": vm.numMeses(),
+                "manPorComer": vm.manPorComer(),
                 "tipoPago": vm.stipoPagoId(),
-                "importe": vm.importe(),
-                "minimoMensual": vm.minimoMensual(),
-                "manImporteOperacion": vm.manImporteOperacion(),
-                "manPorVentas": vm.manPorVentas(),
+                "dniFirmanteEmpresa": vm.dniFirmanteEmpresa(),
+                "firmanteEmpresa": vm.firmanteEmpresa(),
+                "dniFirmanteMantenedor": vm.dniFirmanteMantenedor(),
+                "firmanteMantenedor": vm.firmanteMantenedor(),
                 "observaciones": vm.observaciones()
             }
         };
-        if (contratoComercialId == 0) {
+        if (contratoMantenedorId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/contratos_comerciales",
+                url: myconfig.apiUrl + "/api/contratos_mantenedores",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -270,7 +270,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
+                    var url = "ContratoMantenedorGeneral.html?ContratoMantenedorId=" + vm.contratoMantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -278,7 +278,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
+                url: myconfig.apiUrl + "/api/contratos_mantenedores/" + contratoMantenedorId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -286,7 +286,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
+                    var url = "ContratoMantenedorGeneral.html?ContratoMantenedorId=" + vm.contratoMantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -298,7 +298,7 @@ function aceptar() {
 
 function salir() {
     var mf = function() {
-        var url = "ContratoComercialGeneral.html";
+        var url = "ContratoMantenedorGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -320,16 +320,16 @@ function loadEmpresas(id) {
     });
 }
 
-function loadComerciales(id) {
+function loadMantenedores(id) {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales",
+        url: "/api/mantenedores",
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesComerciales(comerciales);
-            $("#cmbComerciales").val([id]).trigger('change');
+            var mantenedores = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesMantenedores(mantenedores);
+            $("#cmbMantenedores").val([id]).trigger('change');
         },
         error: errorAjax
     });
@@ -338,8 +338,10 @@ function loadComerciales(id) {
 function loadTiposPagos(id) {
     var tiposPagos = [
         { tipoPagoId: 0, nombre: "" },
-        { tipoPagoId: 1, nombre: "Pago único" },
-        { tipoPagoId: 2, nombre: "Pago mensual" }
+        { tipoPagoId: 1, nombre: "Anual" },
+        { tipoPagoId: 2, nombre: "Semestral" },
+        { tipoPagoId: 2, nombre: "Trimestral" },
+        { tipoPagoId: 2, nombre: "Mensual" }
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
