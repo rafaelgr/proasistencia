@@ -8989,10 +8989,13 @@ CREATE TABLE `contrato_mantenedor` (
   `dniFirmanteMantenedor` varchar(255) DEFAULT NULL,
   `firmanteMantenedor` varchar(255) DEFAULT NULL,
   `observaciones` text,
+  `tipoPago` int(11) DEFAULT NULL COMMENT '0= Anual, 1=Semestral, 2=Trimestral, 3=Mensual',
   PRIMARY KEY (`contratoMantenedorId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_mantenedor` */
+
+insert  into `contrato_mantenedor`(`contratoMantenedorId`,`empresaId`,`mantenedorId`,`fechaInicio`,`fechaFin`,`manPorComer`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteMantenedor`,`firmanteMantenedor`,`observaciones`,`tipoPago`) values (1,178,179,'2016-01-01',NULL,'25.00','4556','Juan','4558','maria','Observacion',2);
 
 /*Table structure for table `empresas` */
 
@@ -9031,6 +9034,27 @@ insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaj
 insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`) values (176,'5','GRUPO INMOBILIARIO METROPOLITANO S.A.','A79088159','0001-01-01 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`) values (177,'6','REABITA OBRAS DE REHABILITACION S.L.','B85983054','0001-01-01 00:00:00',NULL,1,NULL,NULL,'REAL, 1 - Nº8 1ºD','28460','LOS MOLINOS','MADRID',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`) values (178,'7','SIERRA DE GUADARRAMA, C.B.','E82315227','0001-01-01 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+/*Table structure for table `formas_pago` */
+
+DROP TABLE IF EXISTS `formas_pago`;
+
+CREATE TABLE `formas_pago` (
+  `formaPagoId` int(11) NOT NULL AUTO_INCREMENT,
+  `tipoFormaPagoId` int(11) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `numeroVencimientos` int(11) DEFAULT NULL,
+  `primerVencimiento` int(11) DEFAULT NULL,
+  `restoVencimiento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`formaPagoId`),
+  KEY `fkey_tipo_forma_pago` (`tipoFormaPagoId`),
+  CONSTRAINT `fkey_tipo_forma_pago` FOREIGN KEY (`tipoFormaPagoId`) REFERENCES `tipos_forma_pago` (`tipoFormaPagoId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `formas_pago` */
+
+insert  into `formas_pago`(`formaPagoId`,`tipoFormaPagoId`,`nombre`,`numeroVencimientos`,`primerVencimiento`,`restoVencimiento`) values (1,0,'Efectivo',1,0,0);
+insert  into `formas_pago`(`formaPagoId`,`tipoFormaPagoId`,`nombre`,`numeroVencimientos`,`primerVencimiento`,`restoVencimiento`) values (2,4,'RECIBO 30,60,90',3,30,30);
 
 /*Table structure for table `mantenedores` */
 
@@ -9081,6 +9105,26 @@ insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (4,'MANTENIM
 insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (5,'JEFE OBRAS');
 insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (6,'OFICINA TÉCNICA');
 insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (7,'ASESOR TÉCNICO');
+
+/*Table structure for table `tipos_forma_pago` */
+
+DROP TABLE IF EXISTS `tipos_forma_pago`;
+
+CREATE TABLE `tipos_forma_pago` (
+  `tipoFormaPagoId` int(11) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`tipoFormaPagoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tipos_forma_pago` */
+
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (0,'EFECTIVO');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (1,'TRANSFERENCIA');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (2,'TALON');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (3,'PAGARE');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (4,'RECIBO BANCARIO');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (5,'CONFIRMING');
+insert  into `tipos_forma_pago`(`tipoFormaPagoId`,`nombre`) values (6,'TARJETA CREDITO');
 
 /*Table structure for table `usuarios` */
 
