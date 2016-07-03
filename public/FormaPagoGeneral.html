@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,7 +145,6 @@
             </a>
             </span>
         </div>
-        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -232,9 +231,8 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administracion</li>
-                <li>Usuarios</li>
-                <li>Detalle usuario</li>
+                <li>Administración</li>
+                <li>Formas de pago</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -258,8 +256,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-mortar-board"></i>
-                            Detalle usuario <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-money"></i>
+                            Formas de pago <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -312,7 +310,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento usuarios </h2>
+                                <h2>Mantenimiento formas de pago </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -325,65 +323,47 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmUsuario" class="smart-form">
+                                    <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Datos del usuario.
+                                            Buscar formas de pago por nombre.
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Nombre</label>
+                                                <section class="col col-md-12">
+                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
                                                     <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" type="text" data-bind="value: nombre" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Login</label>
-                                                    <label class="input">
-                                                        <input id="txtLogin" name="txtLogin" type="text" data-bind="value: login" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Contraseña</label>
-                                                    <label class="input">
-                                                        <input id="txtPassword1" name="txtPassword1" type="password" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Repita contraseña</label>
-                                                    <label class="input">
-                                                        <input id="txtPassword2" name="txtPassword2" type="password" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Correo electrónico</label>
-                                                    <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" type="email" data-bind="value: email" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Nivel de usuario</label>
-                                                    <label class="select">
-                                                        <select id="cmbNivel" name="cmbNivel" data-bind="options: posiblesNiveles, optionsText: 'nombre', value: nivel, valueAllowUnset: true"></select><i></i>
+                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
                                                     </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
+                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
                                                 </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
+                                                <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-plus"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
                                     </form>
+                                    <div id="tbFormaPago" style="display:none;">
+                                        <table id="dt_formaPago" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-class="expand">
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Tipo
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -404,7 +384,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -471,13 +451,11 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
-    <!--- KNOCKOUT JS -->
-    <script src="js/knockout-3.1.0.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="myconfig.js"></script>
-    <script src="js/ariadna/usuarioDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="myconfig.js"></script>
+    <script src="js/ariadna/formaPagoGeneral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

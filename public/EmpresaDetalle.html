@@ -163,11 +163,21 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="formaspago">
+                            <a href="FormaPagoGeneral.html">
+                                <i class="fa fa-money"></i> Formas de pago
+                            </a>
+                        </li> 
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
+                        <li id="mantenedores">
+                            <a href="MantenedoresGeneral.html">
+                                <i class="fa fa-crosshairs"></i> Mantenedores
+                            </a>
+                        </li> 
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -175,7 +185,7 @@
                         </li>
                         <li id="comerciales">
                             <a href="ComercialesGeneral.html">
-                                <i class="fa fa-user"></i> Comerciales
+                                <i class="fa fa-user"></i> Comercial / Comis.
                             </a>
                         </li>
                     </ul>
@@ -184,6 +194,27 @@
                     <a href="#">
                         <i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">GESTION</span>
                     </a>
+                    <ul>
+                        <li id="contratos">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
+                            <ul>
+                                <li>
+                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato comercial</a>
+                                </li>
+                                <li>
+                                    <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="contratos">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
+                            <ul>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
                 <li id="informes">
                     <a href="#">
@@ -432,6 +463,25 @@
                                                     </label>
                                                 </section>
                                             </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <header>
+                                                Datos de firmante habitual
+                                            </header>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">DNI</label>
+                                                    <label class="input">
+                                                        <input id="txtDniFirmante" name="txtDniFirmante" data-bind="value: dniFirmante" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-9">
+                                                    <label class="label">Firmante</label>
+                                                    <label class="input">
+                                                        <input id="txtFirmante" name="txtFirmante" data-bind="value: firmante" />
+                                                    </label>
+                                                </section>
+                                            </div>                                            
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">

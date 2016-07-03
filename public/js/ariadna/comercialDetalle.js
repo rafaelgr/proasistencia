@@ -22,6 +22,41 @@ function initForm() {
         return false;
     });
 
+    // select2 things
+    $("#cmbTiposComerciales").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+
+    loadTiposComerciales();
+
     empId = gup('ComercialId');
     if (empId != 0) {
         var data = {
@@ -66,6 +101,13 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+    //
+    self.tipoComercialId = ko.observable();
+    self.stipoComercialId = ko.observable();
+    //
+    self.posiblesTiposComerciales = ko.observableArray([]);
+    self.elegidosTiposComerciales = ko.observableArray([]);
+
 }
 
 function loadData(data) {
@@ -87,6 +129,7 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
+    loadTiposComerciales(data.tipoComercialId);
 }
 
 function datosOK() {
@@ -100,6 +143,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: true
+            },
+            cmbTiposComerciales: {
+                required:true
             }
         },
         // Messages for form validation
@@ -112,6 +158,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: 'Debe usar un correo válido'
+            },
+            cmbTiposComerciales: {
+                required: "Debe elegir un tipo comercial"
             }
         },
         // Do not change code below
@@ -168,7 +217,8 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "tipoComercialId": vm.stipoComercialId()
             }
         };
         if (empId == 0) {
@@ -243,4 +293,23 @@ function salir() {
         window.open(url, '_self');
     }
     return mf;
+}
+
+
+function loadTiposComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposComerciales(tiposComerciales);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbTiposComerciales").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
 }

@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-empresaDetalle.js
-Funciones js par la página EmpresaDetalle.html
+mantenedorDetalle.js
+Funciones js par la página MantenedorDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -18,19 +18,19 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
-    $("#frmEmpresa").submit(function() {
+    $("#frmMantenedor").submit(function() {
         return false;
     });
 
-    empId = gup('EmpresaId');
+    empId = gup('MantenedorId');
     if (empId != 0) {
         var data = {
-                empresaId: empId
+                mantenedorId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/empresas/" + empId,
+            url: myconfig.apiUrl + "/api/mantenedores/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -42,13 +42,13 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.empresaId(0);
+        vm.mantenedorId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.empresaId = ko.observable();
+    self.mantenedorId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -66,12 +66,10 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
-    self.dniFirmante = ko.observable();
-    self.firmante = ko.observable();
 }
 
 function loadData(data) {
-    vm.empresaId(data.empresaId);
+    vm.mantenedorId(data.mantenedorId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -89,12 +87,10 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
-    vm.dniFirmante(data.dniFirmante);
-    vm.firmante(data.firmante);
 }
 
 function datosOK() {
-    $('#frmEmpresa').validate({
+    $('#frmMantenedor').validate({
         rules: {
             txtNif: {
                 required: true
@@ -123,12 +119,12 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmEmpresa").validate().settings;
-    return $('#frmEmpresa').valid();
+    var opciones = $("#frmMantenedor").validate().settings;
+    return $('#frmMantenedor').valid();
 }
 
 function datosImportOK() {
-    $('#frmEmpresa').validate({
+    $('#frmMantenedor').validate({
         rules: {
             txtProId: {
                 required: true
@@ -145,8 +141,8 @@ function datosImportOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmEmpresa").validate().settings;
-    return $('#frmEmpresa').valid();
+    var opciones = $("#frmMantenedor").validate().settings;
+    return $('#frmMantenedor').valid();
 }
 
 function aceptar() {
@@ -154,8 +150,8 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            empresa: {
-                "empresaId": vm.empresaId(),
+            mantenedor: {
+                "mantenedorId": vm.mantenedorId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -172,15 +168,13 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
-                "observaciones": vm.observaciones(),
-                "dniFirmante": vm.dniFirmante(),
-                "firmante": vm.firmante()
+                "observaciones": vm.observaciones()
             }
         };
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/empresas",
+                url: myconfig.apiUrl + "/api/mantenedores",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -188,7 +182,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
+                    var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -196,7 +190,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/empresas/" + empId,
+                url: myconfig.apiUrl + "/api/mantenedores/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -204,7 +198,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
+                    var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -216,12 +210,14 @@ function aceptar() {
 
 function importar() {
     var mf = function() {
+        // en este caso no tenemos importación (mostramos el mensaje adecuado)
+        // mejor lo quitamos de pantalla y evitamos confusiones
         if (!datosImportOK())
             return;
         $('#btnImportar').addClass('fa-spin');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/empresas/" + vm.proId(),
+            url: myconfig.apiUrl + "/api/sqlany/mantenedores/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
@@ -233,7 +229,7 @@ function importar() {
                     // mensaje de que no se ha encontrado
                 }
                 data = rData[0];
-                data.empresaId = vm.empresaId(); // Por si es un update
+                data.mantenedorId = vm.mantenedorId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -245,7 +241,7 @@ function importar() {
 
 function salir() {
     var mf = function() {
-        var url = "EmpresasGeneral.html";
+        var url = "MantenedoresGeneral.html";
         window.open(url, '_self');
     }
     return mf;
