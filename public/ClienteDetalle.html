@@ -409,7 +409,11 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                </section>
+                                                    <label class="label">Forma de pago</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section> 
                                                 <section class="col col-md-3">
                                                     <label class="checkbox">
                                                         <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">

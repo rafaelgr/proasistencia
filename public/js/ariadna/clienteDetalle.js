@@ -54,8 +54,43 @@ function initForm() {
             }
         }
     });
-
     loadTiposClientes();
+
+    // select2 things
+    $("#cmbFormasPago").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+    loadFormasPago();
+
+
     empId = gup('ClienteId');
     if (empId != 0) {
         var data = {
@@ -100,7 +135,13 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
-        //
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
+    //
     self.tipoClienteId = ko.observable();
     self.stipoClienteId = ko.observable();
     //
@@ -128,6 +169,7 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
     loadTiposClientes(data.tipoClienteId);
+    loadFormasPago(data.formaPagoId);
 }
 
 function datosOK() {
@@ -143,7 +185,10 @@ function datosOK() {
                 email: true
             },
             cmbTiposClientes: {
-                required:true
+                required: true
+            },
+            cmbFormasPago: {
+                required: true
             }
         },
         // Messages for form validation
@@ -159,6 +204,9 @@ function datosOK() {
             },
             cmbTiposClientes: {
                 required: "Debe elegir un tipo cliente"
+            },
+            cmbFormasPago: {
+                required: "Debe elegir una forma de pago"
             }
         },
         // Do not change code below
@@ -216,7 +264,8 @@ function aceptar() {
                 "fax": vm.fax(),
                 "email": vm.email(),
                 "observaciones": vm.observaciones(),
-                "tipoClienteId": vm.stipoClienteId()
+                "tipoClienteId": vm.stipoClienteId(),
+                "formaPagoId": vm.sformaPagoId()
             }
         };
         if (empId == 0) {
@@ -310,3 +359,19 @@ function loadTiposClientes(id) {
         error: errorAjax
     });
 }
+
+function loadFormasPago(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/formas_pago",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+            vm.posiblesFormasPago(formasPago);
+            $("#cmbFormasPago").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
