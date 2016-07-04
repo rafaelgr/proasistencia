@@ -28,6 +28,7 @@ var contratos_mantenedores_router = require('./lib/contratos-mantenedores/contra
 var tipos_forma_pago_router = require('./lib/tipos_forma_pago/tipos_forma_pago_controller');
 var formas_pago_router = require('./lib/formas_pago/formas_pago_controller');
 var tipos_iva_router = require('./lib/tipos_iva/tipos_iva_controller');
+var articulos_router = require('./lib/articulos/articulos_controller');
 
 
 var pack = require('./package.json');
@@ -83,6 +84,7 @@ app.use('/api/contratos_mantenedores', contratos_mantenedores_router);
 app.use('/api/tipos_forma_pago', tipos_forma_pago_router);
 app.use('/api/formas_pago', formas_pago_router);
 app.use('/api/tipos_iva', tipos_iva_router);
+app.use('/api/articulos', articulos_router);
 
 // -- start server
 app.listen(config.apiPort);
