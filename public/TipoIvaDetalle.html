@@ -234,8 +234,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Formas de pago </li>
-                <li>Detalle formas de pago</li>
+                <li>Tipos de IVA </li>
+                <li>Detalle tipo de IVA</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -260,7 +260,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-money"></i>
-                            Detalle forma de pago<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Detalle tipo IVA<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -313,7 +313,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento formas de pago</h2>
+                                <h2>Mantenimiento tipos de IVA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -326,42 +326,28 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmFormaPago" class="smart-form">
+                                    <form id="frmTipoIva" class="smart-form">
                                         <header>
-                                            Datos de la forma de pago.
+                                            Datos del tipo de IVA
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
+                                                <section class="col col-md-6">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Tipo</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Porcentaje</label>
+                                                    <label class="input">
+                                                        <input id="txtPorcentaje" name="txtPorcentaje" data-bind="value: porcentaje" />
                                                     </label>
                                                 </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-4">
-                                                    <label class="label">Número vencimientos</label>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Código contable</label>
                                                     <label class="input">
-                                                        <input id="txtNumeroVencimientos" name="txtNumeroVencimientos" data-bind="value: numeroVencimientos" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Primer vencimiento (dias)</label>
-                                                    <label class="input">
-                                                        <input id="txtPrimerVencimiento" name="txtPrimerVencimiento" data-bind="value: primerVencimiento" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Resto vencimientos (dias)</label>
-                                                    <label class="input">
-                                                        <input id="txtRestoVencimientos" name="txtRestoVencimientos" data-bind="value: restoVencimiento" />
+                                                        <input id="txtCodigoContable" name="txtCodigoContable" data-bind="value: codigoContable" />
                                                     </label>
                                                 </section>
                                             </div>
@@ -472,7 +458,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/formaPagoDetalle.js"></script>
+    <script src="js/ariadna/tipoIvaDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

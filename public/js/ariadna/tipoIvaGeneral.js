@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-foamPagoGeneral.js
-Funciones js par la página FormaPagoGeneral.html
+tipoIvaGeneral.js
+Funciones js par la página TipoIvaGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,8 +8,8 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFormasPago;
-var formaPagoId;
+var dataTiposIva;
+var tipoIvaId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -23,47 +23,47 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    $('#btnBuscar').click(buscarFormasPago());
-    $('#btnAlta').click(crearFormaPago());
+    $('#btnBuscar').click(buscarTiposIva());
+    $('#btnAlta').click(crearTipoIva());
     $('#frmBuscar').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
-    //        buscarFormasPago();
+    //        buscarTiposIva();
     //});
     //
-    initTablaFormasPago();
+    initTablaTiposIva();
     // comprobamos parámetros
-    formaPagoId = gup('FormaPagoId');
-    if (formaPagoId !== '') {
+    tipoIvaId = gup('TipoIvaId');
+    if (tipoIvaId !== '') {
         // cargar la tabla con un único valor que es el que corresponde.
         var data = {
-            id: formaPagoId
+            id: tipoIvaId
         }
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/formas_pago/" + formaPagoId,
+            url: myconfig.apiUrl + "/api/tipos_iva/" + tipoIvaId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaFormasPago(data);
+                loadTablaTiposIva(data);
             },
             error: errorAjax
         });
     }
 }
 
-function initTablaFormasPago() {
-    tablaCarro = $('#dt_formaPago').dataTable({
+function initTablaTiposIva() {
+    tablaCarro = $('#dt_tipoIva').dataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_formaPago'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_tipoIva'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -92,16 +92,16 @@ function initTablaFormasPago() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFormasPago,
+        data: dataTiposIva,
         columns: [{
             data: "nombre"
         }, {
-            data: "tipoFormaPago"
+            data: "porcentaje"
         }, {
-            data: "formaPagoId",
+            data: "tipoIvaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFormaPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFormaPago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoIva(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editTipoIva(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -129,20 +129,20 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaFormasPago(data) {
-    var dt = $('#dt_formaPago').dataTable();
+function loadTablaTiposIva(data) {
+    var dt = $('#dt_tipoIva').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbFormaPago").hide();
+        $("#tbTipoIva").hide();
     } else {
         dt.fnClearTable();
         dt.fnAddData(data);
         dt.fnDraw();
-        $("#tbFormaPago").show();
+        $("#tbTipoIva").show();
     }
 }
 
-function buscarFormasPago() {
+function buscarTiposIva() {
     var mf = function () {
         if (!datosOK()) {
             return;
@@ -152,12 +152,12 @@ function buscarFormasPago() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/formas_pago/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/tipos_iva/?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaFormasPago(data);
+                loadTablaTiposIva(data);
             },
             error: errorAjax
         });
@@ -165,15 +165,15 @@ function buscarFormasPago() {
     return mf;
 }
 
-function crearFormaPago() {
+function crearTipoIva() {
     var mf = function () {
-        var url = "FormaPagoDetalle.html?FormaPagoId=0";
+        var url = "TipoIvaDetalle.html?TipoIvaId=0";
         window.open(url, '_self');
     };
     return mf;
 }
 
-function deleteFormaPago(id) {
+function deleteTipoIva(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -183,16 +183,17 @@ function deleteFormaPago(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                formaPagoId: id
+                tipoIvaId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/formas_pago/" + id,
+                url: myconfig.apiUrl + "/api/tipos_iva/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFormasPago();
+                    $('#txtBuscar').val('*');
+                    var fn = buscarTiposIva();
                     fn();
                 },
                 error: errorAjax
@@ -204,10 +205,10 @@ function deleteFormaPago(id) {
     });
 }
 
-function editFormaPago(id) {
-    // hay que abrir la página de detalle de formaPago
+function editTipoIva(id) {
+    // hay que abrir la página de detalle de tipoIva
     // pasando en la url ese ID
-    var url = "FormaPagoDetalle.html?FormaPagoId=" + id;
+    var url = "TipoIvaDetalle.html?TipoIvaId=" + id;
     window.open(url, '_self');
 }
 
