@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-formaPagoDetalle.js
-Funciones js par la página FormaPagoDetalle.html
+articuloDetalle.js
+Funciones js par la página ArticuloDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -17,11 +17,11 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmFormaPago").submit(function() {
+    $("#frmArticulo").submit(function() {
         return false;
     });
 
-    $("#cmbTiposFormaPago").select2({
+    $("#cmbTiposIva").select2({
         allowClear: true,
         language: {
             errorLoading: function() {
@@ -52,17 +52,17 @@ function initForm() {
             }
         }
     });
-    loadTiposFormaPago();
+    loadTiposIva();
 
-    empId = gup('FormaPagoId');
+    empId = gup('ArticuloId');
     if (empId != 0) {
         var data = {
-                formaPagoId: empId
+                articuloId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/formas_pago/" + empId,
+            url: myconfig.apiUrl + "/api/articulos/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -74,70 +74,54 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.formaPagoId(0);
+        vm.articuloId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.formaPagoId = ko.observable();
-    self.tipoFormaPagoId = ko.observable();
+    self.articuloId = ko.observable();
     self.nombre = ko.observable();
-    self.numeroVencimientos = ko.observable();
-    self.primerVencimiento = ko.observable();
-    self.restoVencimiento = ko.observable();
+    self.precioUnitario = ko.observable();
+    self.codigoBarras = ko.observable();
     //
-    self.stipoFormaPagoId = ko.observable();
+    self.stipoIvaId = ko.observable();
     //
-    self.posiblesTiposFormaPago = ko.observableArray([]);
-    self.elegidosTiposFormaPago = ko.observableArray([]);   
+    self.posiblesTiposIva = ko.observableArray([]);
+    self.elegidosTiposIva = ko.observableArray([]);   
 }
 
 function loadData(data) {
-    vm.formaPagoId(data.formaPagoId);
-    vm.tipoFormaPagoId(data.tipoFormaPagoId);
+    vm.articuloId(data.articuloId);
     vm.nombre(data.nombre);
-    vm.numeroVencimientos(data.numeroVencimientos);
-    vm.primerVencimiento(data.primerVencimiento);
-    vm.restoVencimiento(data.restoVencimiento);
-    loadTiposFormaPago(data.tipoFormaPagoId);
+    vm.precioUnitario(data.precioUnitario);
+    vm.codigoBarras(data.codigoBarras);
+    loadTiposIva(data.tipoIvaId);
 }
 
 function datosOK() {
-    $('#frmFormaPago').validate({
+    $('#frmArticulo').validate({
         rules: {
-            cmbTiposFormasPago: {
+            cmbTiposIva: {
                 required: true
             },
             txtNombre: {
                 required: true
             },
-            txtNumeroVencimientos: {
-                required: true
-            },
-            txtPrimerVencimiento: {
-                required: true
-            },
-            txtRestoVencimineto: {
+            txtPrecioUnitario: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            cmbTiposFormasPago: {
-                required: "Debe elegit un tipo"
+            cmbTiposIva: {
+                required: "Debe elegir un tipo de IVA"
             },
             txtNombre: {
                 required: "Debe dar un nombre"
             },
-            txtNumeroVencimientos: {
-                required: "Introduzca el númnero de vencimientos"
-            },
-            txtPrimerVencimiento: {
-                required: "Dias hasta el primer vencimiento"
-            },
-            txtRestoVencimineto: {
-                required: "Dias en resto de vencimientos"
+            txtPrecioUnitario: {
+                required: "Introduzca un precio"
             }
         },
         // Do not change code below
@@ -145,8 +129,8 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmFormaPago").validate().settings;
-    return $('#frmFormaPago').valid();
+    var opciones = $("#frmArticulo").validate().settings;
+    return $('#frmArticulo').valid();
 }
 
 
@@ -155,19 +139,18 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            formaPago: {
-                "formaPagoId": vm.formaPagoId(),
-                "tipoFormaPagoId": vm.stipoFormaPagoId(),
+            articulo: {
+                "articuloId": vm.articuloId(),
+                "tipoIvaId": vm.stipoIvaId(),
                 "nombre": vm.nombre(),
-                "numeroVencimientos": vm.numeroVencimientos(),
-                "primerVencimiento": vm.primerVencimiento(),
-                "restoVencimiento": vm.restoVencimiento()
+                "precioUnitario": vm.precioUnitario(),
+                "codigoBarras": vm.codigoBarras()
             }
         };
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/formas_pago",
+                url: myconfig.apiUrl + "/api/articulos",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -175,7 +158,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "FormaPagoGeneral.html?FormaPagoId=" + vm.formaPagoId();
+                    var url = "ArticuloGeneral.html?ArticuloId=" + vm.articuloId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -183,7 +166,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/formas_pago/" + empId,
+                url: myconfig.apiUrl + "/api/articulos/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -191,7 +174,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "FormaPagoGeneral.html?FormaPagoId=" + vm.formaPagoId();
+                    var url = "ArticuloGeneral.html?ArticuloId=" + vm.articuloId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -204,23 +187,23 @@ function aceptar() {
 
 function salir() {
     var mf = function() {
-        var url = "FormaPagoGeneral.html";
+        var url = "ArticuloGeneral.html";
         window.open(url, '_self');
     }
     return mf;
 }
 
 
-function loadTiposFormaPago(id) {
+function loadTiposIva(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_forma_pago",
+        url: "/api/tipos_iva",
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var tiposFormaPago = [{ tipoFormaPagoId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposFormaPago(tiposFormaPago);
-            $("#cmbTiposFormaPago").val([id]).trigger('change');
+            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposIva(tiposIva);
+            $("#cmbTiposIva").val([id]).trigger('change');
         },
         error: errorAjax
     });

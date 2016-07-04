@@ -167,18 +167,17 @@
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
                             </a>
-                        </li> 
+                        </li>
                         <li id="tiposiva">
                             <a href="TipoIvaGeneral.html">
                                 <i class="fa fa-money"></i> Tipos de IVA
                             </a>
-                        </li>  
+                        </li>
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -193,7 +192,7 @@
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Articulos
                             </a>
-                        </li>  
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -239,8 +238,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Formas de pago </li>
-                <li>Detalle formas de pago</li>
+                <li>Articulos </li>
+                <li>Detalle articulo</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -264,8 +263,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-money"></i>
-                            Detalle forma de pago<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-square-o"></i>
+                            Detalle articulo<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -318,7 +317,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento formas de pago</h2>
+                                <h2>Mantenimiento articulos</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -331,9 +330,9 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmFormaPago" class="smart-form">
+                                    <form id="frmArticulo" class="smart-form">
                                         <header>
-                                            Datos de la forma de pago.
+                                            Datos del articulo.
                                         </header>
                                         <fieldset>
                                             <div class="row">
@@ -344,29 +343,25 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-4">
-                                                    <label class="label">Tipo</label>
+                                                    <label class="label">Tipo IVA</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-4">
-                                                    <label class="label">Número vencimientos</label>
+                                                </section>
+                                                <section class="col col-md-4">
+                                                    <label class="label">Código Barras</label>
                                                     <label class="input">
-                                                        <input id="txtNumeroVencimientos" name="txtNumeroVencimientos" data-bind="value: numeroVencimientos" />
+                                                        <input id="txtCodigoBarras" name="txtCodigoBarras" data-bind="value: codigoBarras" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-4">
-                                                    <label class="label">Primer vencimiento (dias)</label>
+                                                    <label class="label">Precio unitario</label>
                                                     <label class="input">
-                                                        <input id="txtPrimerVencimiento" name="txtPrimerVencimiento" data-bind="value: primerVencimiento" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Resto vencimientos (dias)</label>
-                                                    <label class="input">
-                                                        <input id="txtRestoVencimientos" name="txtRestoVencimientos" data-bind="value: restoVencimiento" />
+                                                        <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />
                                                     </label>
                                                 </section>
                                             </div>
@@ -477,7 +472,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/formaPagoDetalle.js"></script>
+    <script src="js/ariadna/articuloDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
