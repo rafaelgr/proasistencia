@@ -22,6 +22,40 @@ function initForm() {
         return false;
     });
 
+    // select2 things
+    $("#cmbTiposClientes").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+
+    loadTiposClientes();
     empId = gup('ClienteId');
     if (empId != 0) {
         var data = {
@@ -66,6 +100,12 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+        //
+    self.tipoClienteId = ko.observable();
+    self.stipoClienteId = ko.observable();
+    //
+    self.posiblesTiposClientes = ko.observableArray([]);
+    self.elegidosTiposClientes = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -87,6 +127,7 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
+    loadTiposClientes(data.tipoClienteId);
 }
 
 function datosOK() {
@@ -100,6 +141,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: true
+            },
+            cmbTiposClientes: {
+                required:true
             }
         },
         // Messages for form validation
@@ -112,6 +156,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: 'Debe usar un correo válido'
+            },
+            cmbTiposClientes: {
+                required: "Debe elegir un tipo cliente"
             }
         },
         // Do not change code below
@@ -168,7 +215,8 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "tipoClienteId": vm.stipoClienteId()
             }
         };
         if (empId == 0) {
@@ -243,4 +291,22 @@ function salir() {
         window.open(url, '_self');
     }
     return mf;
+}
+
+function loadTiposClientes(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_clientes",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var tiposClientes = [{ tipoClienteId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposClientes(tiposClientes);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbTiposClientes").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
 }

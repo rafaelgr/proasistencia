@@ -151,7 +151,7 @@ function admData() {
     var self = this;
     self.contratoMantenedorId = ko.observable();
     self.empresaId = ko.observable();
-    self.mantenedorId = ko.observable();
+    self.clienteId = ko.observable();
     self.fechaInicio = ko.observable();
     self.fechaFin = ko.observable();
     self.tipoPago = ko.observable();
@@ -167,7 +167,7 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
-    self.smantenedorId = ko.observable();
+    self.sclienteId = ko.observable();
     //
     self.posiblesMantenedores = ko.observableArray([]);
     self.elegidosMantenedores = ko.observableArray([]);
@@ -183,7 +183,7 @@ function admData() {
 function loadData(data) {
     vm.contratoMantenedorId(data.contratoMantenedorId);
     vm.empresaId(data.empresaId);
-    vm.mantenedorId(data.mantenedorId);
+    vm.clienteId(data.clienteId);
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFin(spanishDate(data.fechaFin));
     vm.tipoPago(data.tipoPago);
@@ -195,7 +195,7 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     //
     loadEmpresas(data.empresaId);
-    loadMantenedores(data.mantenedorId);
+    loadMantenedores(data.clienteId);
     loadTiposPagos(data.tipoPago);
 }
 
@@ -247,7 +247,7 @@ function aceptar() {
             contratoMantenedor: {
                 "contratoMantenedorId": vm.contratoMantenedorId(),
                 "empresaId": vm.sempresaId(),
-                "mantenedorId": vm.smantenedorId(),
+                "clienteId": vm.sclienteId(),
                 "fechaInicio": spanishDbDate(vm.fechaInicio()),
                 "fechaFin": spanishDbDate(vm.fechaFin()),
                 "manPorComer": vm.manPorComer(),
@@ -323,7 +323,7 @@ function loadEmpresas(id) {
 function loadMantenedores(id) {
     $.ajax({
         type: "GET",
-        url: "/api/mantenedores",
+        url: "/api/clientes/mantenedores",
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
@@ -340,8 +340,8 @@ function loadTiposPagos(id) {
         { tipoPagoId: 0, nombre: "" },
         { tipoPagoId: 1, nombre: "Anual" },
         { tipoPagoId: 2, nombre: "Semestral" },
-        { tipoPagoId: 2, nombre: "Trimestral" },
-        { tipoPagoId: 2, nombre: "Mensual" }
+        { tipoPagoId: 3, nombre: "Trimestral" },
+        { tipoPagoId: 4, nombre: "Mensual" }
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
