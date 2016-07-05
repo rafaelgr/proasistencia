@@ -139,7 +139,7 @@ function initTablaContratosComerciales() {
 }
 
 function datosOK() {
-    //TODO: Incluir en la validación si el certificado figura en el almacén de certificados.
+    
     $('#frmCrear').validate({
         // Do not change code below
         errorPlacement: function(error, element) {

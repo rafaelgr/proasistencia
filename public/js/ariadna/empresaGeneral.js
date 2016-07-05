@@ -111,7 +111,7 @@ function initTablaEmpresas() {
 }
 
 function datosOK() {
-    //TODO: Incluir en la validación si el certificado figura en el almacén de certificados.
+    
     $('#frmBuscar').validate({
         rules: {
             txtBuscar: { required: true },
