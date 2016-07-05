@@ -162,7 +162,7 @@
                             <a href="ParametroDetalle.html">
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
-                        </li>                    
+                        </li>
                         <li id="usuarios">
                             <a href="UsuariosGeneral.html">
                                 <i class="fa fa-mortar-board"></i> Usuarios
@@ -172,18 +172,17 @@
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
                             </a>
-                        </li> 
+                        </li>
                         <li id="tiposiva">
                             <a href="TipoIvaGeneral.html">
                                 <i class="fa fa-money"></i> Tipos de IVA
                             </a>
-                        </li>  
+                        </li>
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -198,7 +197,7 @@
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Articulos
                             </a>
-                        </li>  
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -235,7 +234,7 @@
                                     <a href="#"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -254,9 +253,9 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administracion</li>
-                <li>Clientes </li>
-                <li>Detalle cliente</li>
+                <li>Gestion</li>
+                <li>Facturación </li>
+                <li>Prefacturas</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -280,8 +279,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-building"></i>
-                            Detalle cliente<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-th"></i>
+                            Detalle prefactura<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -347,145 +346,86 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmCliente" class="smart-form">
+                                    <form id="frmPrefactura" class="smart-form">
                                         <header>
-                                            Datos de la cliente.
+                                            Datos de la prefactura.
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">ID</label>
+                                                <section class="col col-md-2">
+                                                    <label class="label">SERIE</label>
                                                     <label class="input">
-                                                        <input id="txtClienteId" name="txtClienteId" type="text" data-bind="value: clienteId" disabled/>
+                                                        <input id="txtSerie" name="txtSerie" type="text" data-bind="value: serie" disabled/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">AÑO</label>
+                                                    <label class="input">
+                                                        <input id="txtAno" name="txtAno" type="text" data-bind="value: ano" disabled/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">NUMERO</label>
+                                                    <label class="input">
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" disabled/>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Cod. anterior:</label>
+                                                    <label class="label">Fecha </label>
                                                     <label class="input">
-                                                        <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
+                                                        <input id="txtFecha" name="txtFecha" data-bind="value: fecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Tipo cliente</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposClientes" name="cmbTiposClientes" data-bind="options: posiblesTiposClientes, optionsText: 'nombre', optionsValue: 'tipoClienteId', value: stipoClienteId, valueAllowUnset: true, selectedOptions: elegidosTiposClientes, selected2:{}"></select><i></i>
+                                                    <label class="label">Total</label>
+                                                    <label class="input">
+                                                        <input id="txtTotal" name="txtTotal" type="text" data-bind="value: total" disabled/>
                                                     </label>
-                                                </section>                                                
-                                                <section class="col col-md-3">
-                                                    <div class="pull-right">
-                                                        <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
-                                                            <i class="fa fa-lg fa-refresh"></i>
-                                                        </button>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <div class="row">
+                                                        <header>
+                                                            EMISOR
+                                                        </header>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-md-12">
+                                                            <label class="label">Empresa</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <div class="row">
+                                                        <header>
+                                                            RECEPTOR
+                                                        </header>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-md-12">
+                                                            <label class="label">Cliente</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosClientes, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-3">
-                                                    <label class="label">NIF</label>
-                                                    <label class="input">
-                                                        <input id="txtNif" name="txtNif" data-bind="value: nif" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-9">
-                                                    <label class="label">Nombre</label>
-                                                    <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Direccion</label>
-                                                    <label class="input">
-                                                        <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Poblacion</label>
-                                                    <label class="input">
-                                                        <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Cod.Postal</label>
-                                                    <label class="input">
-                                                        <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Provincia</label>
-                                                    <label class="input">
-                                                        <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha alta</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha baja</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
                                                     <label class="label">Forma de pago</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                     </label>
-                                                </section> 
-                                                <section class="col col-md-3">
-                                                    <label class="checkbox">
-                                                        <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                        <i></i>La cliente está activa
-                                                    </label>
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (1)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto1" name="txtContacto1" data-bind="value: contacto1" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (2)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto2" name="txtContacto2" data-bind="value: contacto2" />
-                                                    </label>
-                                                </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Teléfono (1)</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Teléfono (2)</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fax</label>
-                                                    <label class="input">
-                                                        <input id="txtFax" name="txtFax" data-bind="value: fax" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Correo electrónico</label>
-                                                    <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" data-bind="value: email" />
-                                                    </label>
-                                                </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-12">
@@ -602,7 +542,7 @@
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/clienteDetalle.js"></script>
+    <script src="js/ariadna/prefacturaDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-clienteDetalle.js
-Funciones js par la página ClienteDetalle.html
+prefacturaDetalle.js
+Funciones js par la página PrefacturaDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -17,13 +17,12 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#btnImportar").click(importar());
-    $("#frmCliente").submit(function() {
+    $("#frmPrefactura").submit(function() {
         return false;
     });
 
     // select2 things
-    $("#cmbTiposClientes").select2({
+    $("#cmbEmpresas").select2({
         allowClear: true,
         language: {
             errorLoading: function() {
@@ -54,7 +53,43 @@ function initForm() {
             }
         }
     });
-    loadTiposClientes();
+    loadEmpresas();
+
+    // select2 things
+    $("#cmbClientes").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+
+    $("#cmbClientes").change(cambioCliente());
+    //loadClientes();
 
     // select2 things
     $("#cmbFormasPago").select2({
@@ -91,15 +126,15 @@ function initForm() {
     loadFormasPago();
 
 
-    empId = gup('ClienteId');
+    empId = gup('PrefacturaId');
     if (empId != 0) {
         var data = {
-                clienteId: empId
+                prefacturaId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/clientes/" + empId,
+            url: myconfig.apiUrl + "/api/prefacturas/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -111,30 +146,49 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.clienteId(0);
+        vm.prefacturaId(0);
     }
 }
 
 function admData() {
     var self = this;
+    self.prefacturaId = ko.observable();
+    self.ano = ko.observable();
+    self.numero = ko.observable();
+    self.serie = ko.observable();
+    self.fecha = ko.observable();
+    self.empresaId = ko.observable();
     self.clienteId = ko.observable();
-    self.proId = ko.observable();
-    self.nombre = ko.observable();
-    self.nif = ko.observable();
-    self.fechaAlta = ko.observable();
-    self.fechaBaja = ko.observable();
-    self.activa = ko.observable();
-    self.contacto1 = ko.observable();
-    self.contacto2 = ko.observable();
-    self.direccion = ko.observable();
-    self.codPostal = ko.observable();
-    self.poblacion = ko.observable();
-    self.provincia = ko.observable();
-    self.telefono1 = ko.observable();
-    self.telefono2 = ko.observable();
-    self.fax = ko.observable();
-    self.email = ko.observable();
-    self.observaciones = ko.observable();
+    self.contratoMantenimientoId = ko.observable();
+    //
+    self.emisorNif = ko.observable();
+    self.emisorNombre = ko.observable();
+    self.emisorDireccion = ko.observable();
+    self.emisorCodPostal = ko.observable();
+    self.emisorPoblacion = ko.observable();
+    self.emisorProvincia = ko.observable();
+    //
+    self.receptorNif = ko.observable();
+    self.receptorNombre = ko.observable();
+    self.receptorDireccion = ko.observable();
+    self.receptorCodPostal = ko.observable();
+    self.receptorPoblacion = ko.observable();
+    self.receptorProvincia = ko.observable();
+    //
+    self.total = ko.observable();
+    self.totalConIva = ko.observable();
+    //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.clienteId = ko.observable();
+    self.sclienteId = ko.observable();
+    //
+    self.posiblesClientes = ko.observableArray([]);
+    self.elegidosClientes = ko.observableArray([]);
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -142,38 +196,42 @@ function admData() {
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
     //
-    self.tipoClienteId = ko.observable();
-    self.stipoClienteId = ko.observable();
-    //
-    self.posiblesTiposClientes = ko.observableArray([]);
-    self.elegidosTiposClientes = ko.observableArray([]);
+    self.observaciones = ko.observable();
+
 }
 
 function loadData(data) {
+    vm.prefacturaId(data.prefacturaId);
+    vm.ano(data.ano);
+    vm.numero(data.numero);
+    vm.serie(data.serie);
+    vm.fecha(spanishDate(data.fecha));
+    vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
-    vm.proId(data.proId);
-    vm.nombre(data.nombre);
-    vm.nif(data.nif);
-    vm.fechaAlta(spanishDate(data.fechaAlta));
-    vm.fechaBaja(spanishDate(data.fechaBaja));
-    vm.activa(data.activa);
-    vm.contacto1(data.contacto1);
-    vm.contacto2(data.contacto2);
-    vm.direccion(data.direccion);
-    vm.codPostal(data.codPostal);
-    vm.provincia(data.provincia);
-    vm.telefono1(data.telefono1);
-    vm.telefono2(data.telefono2);
-    vm.fax(data.fax);
-    vm.email(data.email);
-    vm.observaciones(data.observaciones);
-    vm.poblacion(data.poblacion);
-    loadTiposClientes(data.tipoClienteId);
+    vm.contratoMantenimientoId(data.contratoMantenimientoId);
+    //
+    vm.emisorNif(data.emisorNif);
+    vm.emisorNombre(data.emisorNombre);
+    vm.emisorCodPostal(data.emisorCodPostal);
+    vm.emisorPoblacion(data.emisorPoblacion);
+    vm.emisorProvincia(data.emisorProvincia);
+    vm.emisorDireccion(data.emisorDireccion);
+    //
+    vm.receptorNif(data.receptorNif);
+    vm.receptorNombre(data.receptorNombre);
+    vm.receptorCodPostal(data.receptorCodPostal);
+    vm.receptorPoblacion(data.receptorPoblacion);
+    vm.receptorProvincia(data.receptorProvincia);
+    vm.receptorDireccion(data.receptorDireccion);
+
+    //
+    loadEmpresas(data.empresaId);
+    loadClientes(data.clienteId);
     loadFormasPago(data.formaPagoId);
 }
 
 function datosOK() {
-    $('#frmCliente').validate({
+    $('#frmPrefactura').validate({
         rules: {
             txtNif: {
                 required: true
@@ -184,7 +242,7 @@ function datosOK() {
             txtEmail: {
                 email: true
             },
-            cmbTiposClientes: {
+            cmbTiposPrefacturas: {
                 required: true
             },
             cmbFormasPago: {
@@ -202,8 +260,8 @@ function datosOK() {
             txtEmail: {
                 email: 'Debe usar un correo válido'
             },
-            cmbTiposClientes: {
-                required: "Debe elegir un tipo cliente"
+            cmbTiposPrefacturas: {
+                required: "Debe elegir un tipo prefactura"
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
@@ -214,12 +272,12 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmCliente").validate().settings;
-    return $('#frmCliente').valid();
+    var opciones = $("#frmPrefactura").validate().settings;
+    return $('#frmPrefactura').valid();
 }
 
 function datosImportOK() {
-    $('#frmCliente').validate({
+    $('#frmPrefactura').validate({
         rules: {
             txtProId: {
                 required: true
@@ -236,8 +294,8 @@ function datosImportOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmCliente").validate().settings;
-    return $('#frmCliente').valid();
+    var opciones = $("#frmPrefactura").validate().settings;
+    return $('#frmPrefactura').valid();
 }
 
 function aceptar() {
@@ -245,8 +303,8 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            cliente: {
-                "clienteId": vm.clienteId(),
+            prefactura: {
+                "prefacturaId": vm.prefacturaId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -264,14 +322,14 @@ function aceptar() {
                 "fax": vm.fax(),
                 "email": vm.email(),
                 "observaciones": vm.observaciones(),
-                "tipoClienteId": vm.stipoClienteId(),
+                "tipoPrefacturaId": vm.stipoPrefacturaId(),
                 "formaPagoId": vm.sformaPagoId()
             }
         };
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/clientes",
+                url: myconfig.apiUrl + "/api/prefacturas",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -279,7 +337,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
+                    var url = "PrefacturasGeneral.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -287,7 +345,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/clientes/" + empId,
+                url: myconfig.apiUrl + "/api/prefacturas/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -295,7 +353,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
+                    var url = "PrefacturasGeneral.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -312,7 +370,7 @@ function importar() {
         $('#btnImportar').addClass('fa-spin');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/clientes/" + vm.proId(),
+            url: myconfig.apiUrl + "/api/sqlany/prefacturas/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
@@ -324,7 +382,7 @@ function importar() {
                     // mensaje de que no se ha encontrado
                 }
                 data = rData[0];
-                data.clienteId = vm.clienteId(); // Por si es un update
+                data.prefacturaId = vm.prefacturaId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -336,25 +394,37 @@ function importar() {
 
 function salir() {
     var mf = function() {
-        var url = "ClientesGeneral.html";
+        var url = "PrefacturasGeneral.html";
         window.open(url, '_self');
     }
     return mf;
 }
 
-function loadTiposClientes(id) {
+function loadEmpresas(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_clientes",
+        url: "/api/empresas",
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var tiposClientes = [{ tipoClienteId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposClientes(tiposClientes);
-            //if (id){
-            //    vm.stipoComercialId(id);
-            //}
-            $("#cmbTiposClientes").val([id]).trigger('change');
+            var empresas = [{empresaId: 0, nombre: "" }].concat(data);
+            vm.posiblesEmpresas(empresas);
+            $("#cmbEmpresas").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadClientes(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/activos",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var clientes = [{clienteId: 0, nombre: "" }].concat(data);
+            vm.posiblesClientes(clientes);
+            $("#cmbClientes").val([id]).trigger('change');
         },
         error: errorAjax
     });
@@ -375,3 +445,9 @@ function loadFormasPago(id) {
     });
 }
 
+function cambioCliente(){
+    var mf = function(){
+        alert('Cambia cliente');
+    };
+    return mf();
+}
