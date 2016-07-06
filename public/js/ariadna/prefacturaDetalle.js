@@ -54,6 +54,9 @@ function initForm() {
         }
     });
     loadEmpresas();
+    $("#cmbEmpresas").select2().on('change', function(e){
+        alert(JSON.stringify(e.added));
+    });
 
     // select2 things
     $("#cmbClientes").select2({
@@ -88,8 +91,7 @@ function initForm() {
         }
     });
 
-    $("#cmbClientes").change(cambioCliente());
-    //loadClientes();
+    loadClientes();
 
     // select2 things
     $("#cmbFormasPago").select2({
