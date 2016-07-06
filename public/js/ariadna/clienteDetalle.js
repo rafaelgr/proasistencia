@@ -135,6 +135,8 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+    self.cuentaContable = ko.observable();
+    self.iban = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -168,6 +170,8 @@ function loadData(data) {
     vm.email(data.email);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
+    vm.cuentaContable(data.cuentaContable);
+    vm.iban(data.iban);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
 }
@@ -179,6 +183,12 @@ function datosOK() {
                 required: true
             },
             txtNombre: {
+                required: true
+            },
+            txtCuentaContable: {
+                required: true
+            },
+            txtIban: {
                 required: true
             },
             txtEmail: {
@@ -198,6 +208,12 @@ function datosOK() {
             },
             txtNombre: {
                 required: 'Introduzca el nombre'
+            },
+            txtCuentaContable: {
+                required: 'Introduzca una cuenta'
+            },
+            txtIban: {
+                required: 'Introduzca un iban'
             },
             txtEmail: {
                 email: 'Debe usar un correo válido'
@@ -265,7 +281,9 @@ function aceptar() {
                 "email": vm.email(),
                 "observaciones": vm.observaciones(),
                 "tipoClienteId": vm.stipoClienteId(),
-                "formaPagoId": vm.sformaPagoId()
+                "formaPagoId": vm.sformaPagoId(),
+                "cuentaContable": vm.cuentaContable(),
+                "iban": vm.iban()
             }
         };
         if (empId == 0) {

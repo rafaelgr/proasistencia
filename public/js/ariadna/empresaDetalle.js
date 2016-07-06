@@ -68,6 +68,7 @@ function admData() {
     self.observaciones = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
+    self.contabilidad = ko.observable();
 }
 
 function loadData(data) {
@@ -91,6 +92,7 @@ function loadData(data) {
     vm.poblacion(data.poblacion);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
+    vm.contabilidad(data.contabilidad);
 }
 
 function datosOK() {
@@ -104,6 +106,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: true
+            },
+            txtContabilidad: {
+                required: true
             }
         },
         // Messages for form validation
@@ -116,6 +121,9 @@ function datosOK() {
             },
             txtEmail: {
                 email: 'Debe usar un correo válido'
+            },
+            txtContabilidad: {
+                required: 'Indique la contabilidad'
             }
         },
         // Do not change code below
@@ -174,7 +182,8 @@ function aceptar() {
                 "email": vm.email(),
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
-                "firmante": vm.firmante()
+                "firmante": vm.firmante(),
+                "contabilidad": vm.contabilidad()
             }
         };
         if (empId == 0) {
