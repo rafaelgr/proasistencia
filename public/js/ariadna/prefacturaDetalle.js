@@ -54,8 +54,9 @@ function initForm() {
         }
     });
     loadEmpresas();
-    $("#cmbEmpresas").select2().on('change', function(e){
-        alert(JSON.stringify(e.added));
+    $("#cmbEmpresas").select2().on('change', function(e) {
+        //alert(JSON.stringify(e.added));
+        cambioEmpresa(e.added);
     });
 
     // select2 things
@@ -92,6 +93,11 @@ function initForm() {
     });
 
     loadClientes();
+    $("#cmbClientes").select2().on('change', function(e) {
+        //alert(JSON.stringify(e.added));
+        cambioCliente(e.added);
+    });
+
 
     // select2 things
     $("#cmbFormasPago").select2({
@@ -235,16 +241,13 @@ function loadData(data) {
 function datosOK() {
     $('#frmPrefactura').validate({
         rules: {
-            txtNif: {
+            cmbEmpresas: {
                 required: true
             },
-            txtNombre: {
+            cmbClientes: {
                 required: true
             },
-            txtEmail: {
-                email: true
-            },
-            cmbTiposPrefacturas: {
+            txtFecha: {
                 required: true
             },
             cmbFormasPago: {
@@ -253,17 +256,14 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
-            txtNif: {
-                required: "Introduzca un NIF"
+            cmbEmpresas: {
+                required: "Debe elegir un emisor"
             },
-            txtNombre: {
-                required: 'Introduzca el nombre'
+            cmbClientes: {
+                required: 'Debe elegir un receptor'
             },
-            txtEmail: {
-                email: 'Debe usar un correo válido'
-            },
-            cmbTiposPrefacturas: {
-                required: "Debe elegir un tipo prefactura"
+            txtFecha: {
+                required: 'Debe elegir una fecha'
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
@@ -307,25 +307,29 @@ function aceptar() {
         var data = {
             prefactura: {
                 "prefacturaId": vm.prefacturaId(),
-                "proId": vm.proId(),
-                "nombre": vm.nombre(),
-                "nif": vm.nif(),
-                "fechaAlta": spanishDbDate(vm.fechaAlta()),
-                "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                "activa": vm.activa(),
-                "contacto1": vm.contacto1(),
-                "contacto2": vm.contacto2(),
-                "direccion": vm.direccion(),
-                "poblacion": vm.poblacion(),
-                "provincia": vm.provincia(),
-                "codPostal": vm.codPostal(),
-                "telefono1": vm.telefono1(),
-                "telefono2": vm.telefono2(),
-                "fax": vm.fax(),
-                "email": vm.email(),
-                "observaciones": vm.observaciones(),
-                "tipoPrefacturaId": vm.stipoPrefacturaId(),
-                "formaPagoId": vm.sformaPagoId()
+                "ano": vm.ano(),
+                "numero": vm.numero(),
+                "serie": vm.serie(),
+                "fecha": spanishDbDate(vm.fecha()),
+                "empresaId": vm.sempresaId(),
+                "clienteId": vm.sclienteId(),
+                "contratoMantenimientoId": vm.contratoMantenimientoId(),
+                "emisorNif": vm.emisorNif(),
+                "emisorNombre": vm.emisorNombre(),
+                "emisorDireccion": vm.emisorDireccion(),
+                "emisorCodPostal": vm.emisorCodPostal(),
+                "emisorPoblacion": vm.emisorPoblacion(),
+                "emisorProvincia": vm.emisorProvincia(),
+                "receptorNif": vm.receptorNif(),
+                "receptorNombre": vm.receptorNombre(),
+                "receptorDireccion": vm.receptorDireccion(),
+                "receptorCodPostal": vm.receptorCodPostal(),
+                "receptorPoblacion": vm.receptorPoblacion(),
+                "receptorProvincia": vm.receptorProvincia(),
+                "total": vm.total(),
+                "totalConIva": vm.totalConIva(),
+                "formaPagoId": vm.sformaPagoId(),
+                "observaciones": vm.observaciones()
             }
         };
         if (empId == 0) {
@@ -339,7 +343,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "PrefacturasGeneral.html?PrefacturaId=" + vm.prefacturaId();
+                    var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -355,7 +359,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "PrefacturasGeneral.html?PrefacturaId=" + vm.prefacturaId();
+                    var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -409,7 +413,7 @@ function loadEmpresas(id) {
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var empresas = [{empresaId: 0, nombre: "" }].concat(data);
+            var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
         },
@@ -424,7 +428,7 @@ function loadClientes(id) {
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var clientes = [{clienteId: 0, nombre: "" }].concat(data);
+            var clientes = [{ clienteId: 0, nombre: "" }].concat(data);
             vm.posiblesClientes(clientes);
             $("#cmbClientes").val([id]).trigger('change');
         },
@@ -447,9 +451,54 @@ function loadFormasPago(id) {
     });
 }
 
-function cambioCliente(){
-    var mf = function(){
-        alert('Cambia cliente');
-    };
-    return mf();
+function cambioCliente(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var clienteId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/" + clienteId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            // cargamos los campos por defecto de receptor
+            vm.receptorNif(data.nif);
+            vm.receptorNombre(data.nombre);
+            vm.receptorDireccion(data.direccion);
+            vm.receptorCodPostal(data.codPostal);
+            vm.receptorPoblacion(data.poblacion);
+            vm.receptorProvincia(data.provincia);
+            $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
+            //vm.sformaPagoId(data.formaPagoId);
+        },
+        error: errorAjax
+    });
+
+}
+
+function cambioEmpresa(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var empresaId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/" + empresaId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            // cargamos los campos por defecto de receptor
+            vm.emisorNif(data.nif);
+            vm.emisorNombre(data.nombre);
+            vm.emisorDireccion(data.direccion);
+            vm.emisorCodPostal(data.codPostal);
+            vm.emisorPoblacion(data.poblacion);
+            vm.emisorProvincia(data.provincia);
+        },
+        error: errorAjax
+    });
+
 }
