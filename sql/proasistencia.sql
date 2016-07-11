@@ -25,11 +25,12 @@ CREATE TABLE `articulos` (
   `precioUnitario` decimal(10,2) DEFAULT NULL,
   `tipoIvaId` int(11) DEFAULT NULL,
   PRIMARY KEY (`articuloId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `articulos` */
 
 insert  into `articulos`(`articuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`) values (2,NULL,'Mantenimiento general','0.00',5);
+insert  into `articulos`(`articuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`) values (3,NULL,'Articulo para pruebas','120.33',5);
 
 /*Table structure for table `clientes` */
 
@@ -324,9 +325,11 @@ CREATE TABLE `prefacturas` (
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_clientes` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas` */
+
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID',NULL,NULL,1,'Una lista de observaciones');
 
 /*Table structure for table `prefacturas_bases` */
 

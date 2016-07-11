@@ -12,12 +12,18 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
+
     vm = new admData();
     ko.applyBindings(vm);
+
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#frmPrefactura").submit(function() {
+        return false;
+    });
+
+    $("#frmLinea").submit(function() {
         return false;
     });
 
@@ -133,6 +139,85 @@ function initForm() {
     });
     loadFormasPago();
 
+    // select2 things
+    $("#cmbArticulos").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+    loadArticulos();
+    $("#cmbArticulos").select2().on('change', function(e) {
+        //alert(JSON.stringify(e.added));
+        cambioArticulo(e.added);
+    });
+
+    // select2 things
+    $("#cmbTiposIva").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function() {
+                return "La carga falló";
+            },
+            inputTooLong: function(e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function(e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function() {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function(e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function() {
+                return "No se encontraron resultados";
+            },
+            searching: function() {
+                return "Buscando…";
+            }
+        }
+    });
+    loadTiposIva();
+    $("#cmbTiposIva").select2().on('change', function(e) {
+        //alert(JSON.stringify(e.added));
+        cambioTiposIva(e.added);
+    });
+
+
+    $("#txtCantidad").blur(cambioPrecioCantidad());
+    $("#txtPrecio").blur(cambioPrecioCantidad());
 
     empId = gup('PrefacturaId');
     if (empId != 0) {
@@ -206,6 +291,28 @@ function admData() {
     //
     self.observaciones = ko.observable();
 
+    // -- Valores para las líneas
+    self.prefacturaLineaId = ko.observable();
+    self.linea = ko.observable();
+    self.articuloId = ko.observable();
+    self.tipoIvaId = ko.observable();
+    self.porcentaje = ko.observable();
+    self.descripcion = ko.observable();
+    self.cantidad = ko.observable();
+    self.importe = ko.observable();
+    self.totalLinea = ko.observable();
+    //
+    self.sarticuloId = ko.observable();
+    //
+    self.posiblesArticulos = ko.observableArray([]);
+    self.elegidosArticulos = ko.observableArray([]);
+    //
+    self.stipoIvaId = ko.observable();
+    //
+    self.posiblesTiposIva = ko.observableArray([]);
+    self.elegidosTiposIva = ko.observableArray([]);
+    //
+
 }
 
 function loadData(data) {
@@ -236,6 +343,61 @@ function loadData(data) {
     loadEmpresas(data.empresaId);
     loadClientes(data.clienteId);
     loadFormasPago(data.formaPagoId);
+    vm.observaciones(data.observaciones);
+}
+
+function loadDataLinea(data) {
+    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.linea(data.linea);
+    vm.articuloId(data.articuloId);
+    vm.tipoIvaId(data.tipoIvaId);
+    vm.porcentaje(data.porcentaje);
+    vm.descripcion(data.descripcion);
+    vm.cantidad(data.cantidad);
+    vm.importe(data.importe);
+    //
+    loadArticulos(data.articuloId);
+    loadTiposIva(data.tipoIvaId);
+}
+
+function datosOK() {
+    $('#frmPrefactura').validate({
+        rules: {
+            cmbEmpresas: {
+                required: true
+            },
+            cmbClientes: {
+                required: true
+            },
+            txtFecha: {
+                required: true
+            },
+            cmbFormasPago: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbEmpresas: {
+                required: "Debe elegir un emisor"
+            },
+            cmbClientes: {
+                required: 'Debe elegir un receptor'
+            },
+            txtFecha: {
+                required: 'Debe elegir una fecha'
+            },
+            cmbFormasPago: {
+                required: "Debe elegir una forma de pago"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmPrefactura").validate().settings;
+    return $('#frmPrefactura').valid();
 }
 
 function datosOK() {
@@ -406,6 +568,38 @@ function salir() {
     return mf;
 }
 
+function nuevaLinea() {
+    // TODO: Implementar la funcionalidad de nueva línea
+    vm.prefacturaLineaId(0); // es un alta
+    $.ajax({
+        type: "GET",
+        url: "/api/prefacturas/nextline/" + vm.prefacturaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            vm.linea(data);
+        },
+        error: errorAjax
+    });
+}
+
+function aceptarLinea() {
+    // TODO: Implementar funcionalidad de aceptar.
+    var data = {
+        prefacturaLineaId: vm.prefacturaLineaId(),
+        prefacturaId: vm.prefacturaId(),
+        articuloId: vm.sarticuloId(),
+        tipoIva: vm.tipoIvaId(),
+        porcentaje: vm.porcentaje(),
+        descripcion: vm.descripcion(),
+        cantidad: vm.cantidad(),
+        importe: vm.importe(),
+        totalLinea: vm.totalLinea()
+    }
+    alert(JSON.stringify(data));
+}
+
+
 function loadEmpresas(id) {
     $.ajax({
         type: "GET",
@@ -450,6 +644,37 @@ function loadFormasPago(id) {
         error: errorAjax
     });
 }
+
+function loadArticulos(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesArticulos(articulos);
+            $("#cmbArticulos").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadTiposIva(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_iva",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposIva(tiposIva);
+            $("#cmbTiposIva").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
 
 function cambioCliente(data) {
     //
@@ -501,4 +726,64 @@ function cambioEmpresa(data) {
         error: errorAjax
     });
 
+}
+
+function cambioArticulo(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var articuloId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos/" + articuloId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            // cargamos los campos por defecto de receptor
+            vm.descripcion(data.nombre);
+            vm.cantidad(1);
+            vm.importe(data.precioUnitario);
+            vm.totalLinea(vm.cantidad() * vm.importe());
+
+            //valores para IVA por defecto a partir del  
+            // articulo seleccionado.
+            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+            var data2 = {
+                id: data.tipoIvaId
+            };
+            cambioTiposIva(data2);
+        },
+        error: errorAjax
+    });
+
+}
+
+function cambioTiposIva(data) {
+    if (!data) {
+        return;
+    }
+    var tipoIvaId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_iva/" + tipoIvaId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            // cargamos los campos por defecto de receptor
+            vm.tipoIvaId(data.tipoIvaId);
+            vm.porcentaje(data.porcentaje);
+            // TODO: hay que verificar la carga de las tablas
+            // de bases y cuotas asociadas.
+        },
+        error: errorAjax
+    });
+
+}
+
+function cambioPrecioCantidad() {
+    var mf = function() {
+        vm.totalLinea(vm.cantidad() * vm.importe());
+    }
+    return mf;
 }

@@ -92,9 +92,12 @@ function initTablaPrefacturas() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha"
+            data: "fecha",
+            render: function(data, type, row){
+                return moment(data).format('DD/MM/YYYY');
+            }
         }, {
-            data: "importe"
+            data: "total"
         }, {
             data: "observaciones"
         }, {
