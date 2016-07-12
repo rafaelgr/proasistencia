@@ -373,9 +373,12 @@ CREATE TABLE `prefacturas_lineas` (
   CONSTRAINT `prefl_articulos` FOREIGN KEY (`articuloId`) REFERENCES `articulos` (`articuloId`),
   CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
   CONSTRAINT `prefl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_lineas` */
+
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (2,2,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (4,3,2,2,5,'21.00','Mantenimiento general','1.00','120.00','120.00');
 
 /*Table structure for table `tipos_clientes` */
 

@@ -2,7 +2,20 @@
 prefacturaDetalle.js
 Funciones js par la página PrefacturaDetalle.html
 ---------------------------------------------------------------------------*/
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
 var empId = 0;
+var lineaEnEdicion = false;
+
+var dataPrefacturasLineas;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
 
 datePickerSpanish(); // see comun.js
 
@@ -27,38 +40,12 @@ function initForm() {
         return false;
     });
 
-    // select2 things
-    $("#cmbEmpresas").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
+    $("#linea-form").submit(function() {
+        return false;
     });
+
+    // select2 things
+    $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function(e) {
         //alert(JSON.stringify(e.added));
@@ -66,37 +53,7 @@ function initForm() {
     });
 
     // select2 things
-    $("#cmbClientes").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbClientes").select2(select2Spanish());
 
     loadClientes();
     $("#cmbClientes").select2().on('change', function(e) {
@@ -106,71 +63,11 @@ function initForm() {
 
 
     // select2 things
-    $("#cmbFormasPago").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
 
     // select2 things
-    $("#cmbArticulos").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbArticulos").select2(select2Spanish());
     loadArticulos();
     $("#cmbArticulos").select2().on('change', function(e) {
         //alert(JSON.stringify(e.added));
@@ -178,37 +75,7 @@ function initForm() {
     });
 
     // select2 things
-    $("#cmbTiposIva").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
     $("#cmbTiposIva").select2().on('change', function(e) {
         //alert(JSON.stringify(e.added));
@@ -218,6 +85,8 @@ function initForm() {
 
     $("#txtCantidad").blur(cambioPrecioCantidad());
     $("#txtPrecio").blur(cambioPrecioCantidad());
+
+    initTablaPrefacturasLineas();
 
     empId = gup('PrefacturaId');
     if (empId != 0) {
@@ -234,6 +103,7 @@ function initForm() {
             success: function(data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                loadLineasPrefactura(data.prefacturaId);
             },
             error: errorAjax
         });
@@ -346,19 +216,6 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
 }
 
-function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
-    vm.linea(data.linea);
-    vm.articuloId(data.articuloId);
-    vm.tipoIvaId(data.tipoIvaId);
-    vm.porcentaje(data.porcentaje);
-    vm.descripcion(data.descripcion);
-    vm.cantidad(data.cantidad);
-    vm.importe(data.importe);
-    //
-    loadArticulos(data.articuloId);
-    loadTiposIva(data.tipoIvaId);
-}
 
 function datosOK() {
     $('#frmPrefactura').validate({
@@ -400,45 +257,6 @@ function datosOK() {
     return $('#frmPrefactura').valid();
 }
 
-function datosOK() {
-    $('#frmPrefactura').validate({
-        rules: {
-            cmbEmpresas: {
-                required: true
-            },
-            cmbClientes: {
-                required: true
-            },
-            txtFecha: {
-                required: true
-            },
-            cmbFormasPago: {
-                required: true
-            }
-        },
-        // Messages for form validation
-        messages: {
-            cmbEmpresas: {
-                required: "Debe elegir un emisor"
-            },
-            cmbClientes: {
-                required: 'Debe elegir un receptor'
-            },
-            txtFecha: {
-                required: 'Debe elegir una fecha'
-            },
-            cmbFormasPago: {
-                required: "Debe elegir una forma de pago"
-            }
-        },
-        // Do not change code below
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    var opciones = $("#frmPrefactura").validate().settings;
-    return $('#frmPrefactura').valid();
-}
 
 function datosImportOK() {
     $('#frmPrefactura').validate({
@@ -568,37 +386,6 @@ function salir() {
     return mf;
 }
 
-function nuevaLinea() {
-    // TODO: Implementar la funcionalidad de nueva línea
-    vm.prefacturaLineaId(0); // es un alta
-    $.ajax({
-        type: "GET",
-        url: "/api/prefacturas/nextline/" + vm.prefacturaId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data, status) {
-            vm.linea(data);
-        },
-        error: errorAjax
-    });
-}
-
-function aceptarLinea() {
-    // TODO: Implementar funcionalidad de aceptar.
-    var data = {
-        prefacturaLineaId: vm.prefacturaLineaId(),
-        prefacturaId: vm.prefacturaId(),
-        articuloId: vm.sarticuloId(),
-        tipoIva: vm.tipoIvaId(),
-        porcentaje: vm.porcentaje(),
-        descripcion: vm.descripcion(),
-        cantidad: vm.cantidad(),
-        importe: vm.importe(),
-        totalLinea: vm.totalLinea()
-    }
-    alert(JSON.stringify(data));
-}
-
 
 function loadEmpresas(id) {
     $.ajax({
@@ -644,37 +431,6 @@ function loadFormasPago(id) {
         error: errorAjax
     });
 }
-
-function loadArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-            $("#cmbArticulos").val([id]).trigger('change');
-        },
-        error: errorAjax
-    });
-}
-
-function loadTiposIva(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_iva",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data, status) {
-            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposIva(tiposIva);
-            $("#cmbTiposIva").val([id]).trigger('change');
-        },
-        error: errorAjax
-    });
-}
-
 
 function cambioCliente(data) {
     //
@@ -726,6 +482,258 @@ function cambioEmpresa(data) {
         error: errorAjax
     });
 
+}
+
+
+
+/*------------------------------------------------------------------
+    Funciones relacionadas con las líneas de facturas
+--------------------------------------------------------------------*/
+
+function nuevaLinea() {
+    // TODO: Implementar la funcionalidad de nueva línea
+    vm.prefacturaLineaId(0); // es un alta
+    lineaEnEdicion = false;
+    $.ajax({
+        type: "GET",
+        url: "/api/prefacturas/nextlinea/" + vm.prefacturaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            vm.linea(data);
+        },
+        error: errorAjax
+    });
+}
+
+function aceptarLinea() {
+    // TODO: Implementar funcionalidad de aceptar.
+    if (!datosOKLineas()) {
+        return;
+    }
+    var data = {
+        prefacturaLinea: {
+            prefacturaLineaId: vm.prefacturaLineaId(),
+            linea: vm.linea(),
+            prefacturaId: vm.prefacturaId(),
+            articuloId: vm.sarticuloId(),
+            tipoIvaId: vm.tipoIvaId(),
+            porcentaje: vm.porcentaje(),
+            descripcion: vm.descripcion(),
+            cantidad: vm.cantidad(),
+            importe: vm.importe(),
+            totalLinea: vm.totalLinea()
+        }
+    }
+    if (!lineaEnEdicion) {
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function(data, status) {
+                $('#modalLinea').modal('hide');
+                loadLineasPrefactura(vm.prefacturaId());
+            },
+            error: errorAjax
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function(data, status) {
+                $('#modalLinea').modal('hide');
+                loadLineasPrefactura(vm.prefacturaId());
+            },
+            error: errorAjax
+        });
+    }
+}
+
+function datosOKLineas() {
+    $('#linea-form').validate({
+        rules: {
+            txtLinea: {
+                required: true
+            },
+            cmbArticulos: {
+                required: true
+            },
+            cmbTiposIva: {
+                required: true
+            },
+            txtDescripcion: {
+                required: true
+            },
+            txtPrecio: {
+                required: true
+            },
+            txtCantidad: {
+                required: true
+            },
+            txtTotalLinea: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbArticulos: {
+                required: "Debe elegir un articulo"
+            },
+            cmbTiposIva: {
+                required: 'Debe elegir un tipo de IVA'
+            },
+            txtLinea: {
+                required: 'Necesita un número de linea'
+            },
+            txtDescripcion: {
+                required: 'Necesita una descripcion'
+            },
+            txtCantidad: {
+                required: 'Necesita una cantidad'
+            },
+            txtPrecio: {
+                required: 'Necesita un precio'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#linea-form").validate().settings;
+    return $('#linea-form').valid();
+}
+
+function initTablaPrefacturasLineas() {
+    tablaCarro = $('#dt_lineas').dataTable({
+        autoWidth: true,
+        preDrawCallback: function() {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function(nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function(oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataPrefacturasLineas,
+        columns: [{
+            data: "linea"
+        }, {
+            data: "descripcion"
+        }, {
+            data: "importe"
+        }, {
+            data: "cantidad"
+        }, {
+            data: "totalLinea"
+        }, {
+            data: "prefacturaLineaId",
+            render: function(data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function loadDataLinea(data) {
+    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.linea(data.linea);
+    vm.articuloId(data.articuloId);
+    vm.tipoIvaId(data.tipoIvaId);
+    vm.porcentaje(data.porcentaje);
+    vm.descripcion(data.descripcion);
+    vm.cantidad(data.cantidad);
+    vm.importe(data.importe);
+    vm.totalLinea(data.totalLinea);
+    //
+    loadArticulos(data.articuloId);
+    loadTiposIva(data.tipoIvaId);
+}
+
+function loadTablaPrefacturaLineas(data) {
+    var dt = $('#dt_lineas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function loadLineasPrefactura(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/prefacturas/lineas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            loadTablaPrefacturaLineas(data);
+        },
+        error: errorAjax
+    });
+}
+
+function loadArticulos(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesArticulos(articulos);
+            $("#cmbArticulos").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadTiposIva(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_iva",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposIva(tiposIva);
+            $("#cmbTiposIva").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
 }
 
 function cambioArticulo(data) {
@@ -786,4 +794,50 @@ function cambioPrecioCantidad() {
         vm.totalLinea(vm.cantidad() * vm.importe());
     }
     return mf;
+}
+
+function editPrefacturaLinea(id) {
+    lineaEnEdicion = true;
+    $.ajax({
+        type: "GET",
+        url: "/api/prefacturas/linea/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            if (data.length > 0) {
+                loadDataLinea(data[0]);
+            }
+        },
+        error: errorAjax
+    });
+}
+
+function deletePrefacturaLinea(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function(ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                prefacturaId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/prefacturas/lineas/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    loadLineasPrefactura(vm.prefacturaId());
+                },
+                error: errorAjax
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }
