@@ -541,7 +541,7 @@ function aceptarLinea() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            url: myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
