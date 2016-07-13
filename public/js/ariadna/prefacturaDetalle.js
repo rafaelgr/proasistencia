@@ -286,8 +286,8 @@ function aceptar() {
                 "receptorCodPostal": vm.receptorCodPostal(),
                 "receptorPoblacion": vm.receptorPoblacion(),
                 "receptorProvincia": vm.receptorProvincia(),
-                "total": vm.total(),
-                "totalConIva": vm.totalConIva(),
+                "total": numeroDbf(vm.total()),
+                "totalConIva": numeroDbf(vm.totalConIva()),
                 "formaPagoId": vm.sformaPagoId(),
                 "observaciones": vm.observaciones()
             }
