@@ -33,22 +33,22 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmPrefactura").submit(function() {
+    $("#frmPrefactura").submit(function () {
         return false;
     });
 
-    $("#frmLinea").submit(function() {
+    $("#frmLinea").submit(function () {
         return false;
     });
 
-    $("#linea-form").submit(function() {
+    $("#linea-form").submit(function () {
         return false;
     });
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
-    $("#cmbEmpresas").select2().on('change', function(e) {
+    $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
     });
@@ -57,7 +57,7 @@ function initForm() {
     $("#cmbClientes").select2(select2Spanish());
 
     loadClientes();
-    $("#cmbClientes").select2().on('change', function(e) {
+    $("#cmbClientes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioCliente(e.added);
     });
@@ -70,7 +70,7 @@ function initForm() {
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     loadArticulos();
-    $("#cmbArticulos").select2().on('change', function(e) {
+    $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioArticulo(e.added);
     });
@@ -78,7 +78,7 @@ function initForm() {
     // select2 things
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
-    $("#cmbTiposIva").select2().on('change', function(e) {
+    $("#cmbTiposIva").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioTiposIva(e.added);
     });
@@ -93,16 +93,16 @@ function initForm() {
     empId = gup('PrefacturaId');
     if (empId != 0) {
         var data = {
-                prefacturaId: empId
-            }
-            // hay que buscar ese elemento en concreto
+            prefacturaId: empId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/prefacturas/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 loadLineasPrefactura(data.prefacturaId);
@@ -252,7 +252,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -261,7 +261,7 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
@@ -299,7 +299,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -315,7 +315,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -330,7 +330,7 @@ function aceptar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "PrefacturasGeneral.html";
         window.open(url, '_self');
     }
@@ -344,7 +344,7 @@ function loadEmpresas(id) {
         url: "/api/empresas",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
@@ -359,7 +359,7 @@ function loadClientes(id) {
         url: "/api/clientes/activos",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var clientes = [{ clienteId: 0, nombre: "" }].concat(data);
             vm.posiblesClientes(clientes);
             $("#cmbClientes").val([id]).trigger('change');
@@ -374,7 +374,7 @@ function loadFormasPago(id) {
         url: "/api/formas_pago",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
@@ -394,7 +394,7 @@ function cambioCliente(data) {
         url: "/api/clientes/" + clienteId,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // cargamos los campos por defecto de receptor
             vm.receptorNif(data.nif);
             vm.receptorNombre(data.nombre);
@@ -421,7 +421,7 @@ function cambioEmpresa(data) {
         url: "/api/empresas/" + empresaId,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // cargamos los campos por defecto de receptor
             vm.emisorNif(data.nif);
             vm.emisorNombre(data.nombre);
@@ -450,7 +450,7 @@ function nuevaLinea() {
         url: "/api/prefacturas/nextlinea/" + vm.prefacturaId(),
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             vm.linea(data);
         },
         error: errorAjax
@@ -483,7 +483,7 @@ function aceptarLinea() {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 $('#modalLinea').modal('hide');
                 loadLineasPrefactura(vm.prefacturaId());
                 loadBasesPrefactura(vm.prefacturaId());
@@ -497,7 +497,7 @@ function aceptarLinea() {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 $('#modalLinea').modal('hide');
                 loadLineasPrefactura(vm.prefacturaId());
                 loadBasesPrefactura(vm.prefacturaId());
@@ -554,7 +554,7 @@ function datosOKLineas() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -565,16 +565,16 @@ function datosOKLineas() {
 function initTablaPrefacturasLineas() {
     tablaCarro = $('#dt_lineas').dataTable({
         autoWidth: true,
-        preDrawCallback: function() {
+        preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
                 responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
             }
         },
-        rowCallback: function(nRow) {
+        rowCallback: function (nRow) {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
         },
-        drawCallback: function(oSettings) {
+        drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
         language: {
@@ -601,34 +601,34 @@ function initTablaPrefacturasLineas() {
         columns: [{
             data: "linea"
         }, {
-            data: "descripcion"
-        }, {
-            data: "importe",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "cantidad",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "totalLinea",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "prefacturaLineaId",
-            render: function(data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                return html;
-            }
-        }]
+                data: "descripcion"
+            }, {
+                data: "importe",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "cantidad",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "totalLinea",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "prefacturaLineaId",
+                render: function (data, type, row) {
+                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                    return html;
+                }
+            }]
     });
 }
 
@@ -664,7 +664,7 @@ function loadLineasPrefactura(id) {
         url: "/api/prefacturas/lineas/" + id,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             loadTablaPrefacturaLineas(data);
         },
         error: errorAjax
@@ -677,7 +677,7 @@ function loadArticulos(id) {
         url: "/api/articulos",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
             vm.posiblesArticulos(articulos);
             $("#cmbArticulos").val([id]).trigger('change');
@@ -692,7 +692,7 @@ function loadTiposIva(id) {
         url: "/api/tipos_iva",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposIva(tiposIva);
             $("#cmbTiposIva").val([id]).trigger('change');
@@ -712,7 +712,7 @@ function cambioArticulo(data) {
         url: "/api/articulos/" + articuloId,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // cargamos los campos por defecto de receptor
             vm.descripcion(data.nombre);
             vm.cantidad(1);
@@ -742,7 +742,7 @@ function cambioTiposIva(data) {
         url: "/api/tipos_iva/" + tipoIvaId,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // cargamos los campos por defecto de receptor
             vm.tipoIvaId(data.tipoIvaId);
             vm.porcentaje(data.porcentaje);
@@ -755,7 +755,7 @@ function cambioTiposIva(data) {
 }
 
 function cambioPrecioCantidad() {
-    var mf = function() {
+    var mf = function () {
         vm.totalLinea(vm.cantidad() * vm.importe());
     }
     return mf;
@@ -768,7 +768,7 @@ function editPrefacturaLinea(id) {
         url: "/api/prefacturas/linea/" + id,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             if (data.length > 0) {
                 loadDataLinea(data[0]);
             }
@@ -784,10 +784,12 @@ function deletePrefacturaLinea(id) {
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
-    }, function(ButtonPressed) {
+    }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                prefacturaId: id
+                prefacturaLinea: {
+                    prefacturaId: vm.prefacturaId()
+                }
             };
             $.ajax({
                 type: "DELETE",
@@ -795,7 +797,7 @@ function deletePrefacturaLinea(id) {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     loadLineasPrefactura(vm.prefacturaId());
                     loadBasesPrefactura(vm.prefacturaId());
                 },
@@ -816,16 +818,16 @@ function deletePrefacturaLinea(id) {
 function initTablaBases() {
     tablaCarro = $('#dt_bases').dataTable({
         autoWidth: true,
-        preDrawCallback: function() {
+        preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
                 responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
             }
         },
-        rowCallback: function(nRow) {
+        rowCallback: function (nRow) {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
         },
-        drawCallback: function(oSettings) {
+        drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
         language: {
@@ -852,24 +854,24 @@ function initTablaBases() {
         columns: [{
             data: "tipo"
         }, {
-            data: "porcentaje",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "base",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "cuota",
-            className: "text-right",
-            render: function(data, type, row){
-                return numeral(data).format('0,0.00');
-            }
-        }]
+                data: "porcentaje",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "base",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "cuota",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }]
     });
 }
 
@@ -891,11 +893,11 @@ function loadBasesPrefactura(id) {
         url: "/api/prefacturas/bases/" + id,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // actualizamos los totales
             var t1 = 0; // total sin iva
             var t2 = 0; // total con iva
-            for (var i=0; i< data.length; i++){
+            for (var i = 0; i < data.length; i++) {
                 t1 += data[i].base;
                 t2 += data[i].base + data[i].cuota;
             }

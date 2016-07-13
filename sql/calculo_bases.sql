@@ -14,3 +14,6 @@ AND tipoIvaId NOT IN
 (SELECT DISTINCT tipoIvaId 
 FROM prefacturas_lineas
 WHERE prefacturaId = 2);
+
+DELETE FROM prefacturas_bases 
+WHERE prefacturaId = '15' AND tipoIvaId NOT IN (SELECT DISTINCT tipoIvaId FROM prefacturas_lineas WHERE prefacturaId = '15')
