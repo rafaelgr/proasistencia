@@ -11,6 +11,7 @@ var empId = 0;
 var lineaEnEdicion = false;
 
 var dataPrefacturasLineas;
+var dataBases;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -87,6 +88,7 @@ function initForm() {
     $("#txtPrecio").blur(cambioPrecioCantidad());
 
     initTablaPrefacturasLineas();
+    initTablaBases();
 
     empId = gup('PrefacturaId');
     if (empId != 0) {
@@ -104,6 +106,7 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 loadLineasPrefactura(data.prefacturaId);
+                loadBasesPrefactura(data.prefacturaId);
             },
             error: errorAjax
         });
@@ -257,29 +260,6 @@ function datosOK() {
     return $('#frmPrefactura').valid();
 }
 
-
-function datosImportOK() {
-    $('#frmPrefactura').validate({
-        rules: {
-            txtProId: {
-                required: true
-            }
-        },
-        // Messages for form validation
-        messages: {
-            txtProId: {
-                required: "Introduzca un código"
-            }
-        },
-        // Do not change code below
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    var opciones = $("#frmPrefactura").validate().settings;
-    return $('#frmPrefactura').valid();
-}
-
 function aceptar() {
     var mf = function() {
         if (!datosOK())
@@ -345,35 +325,6 @@ function aceptar() {
                 error: errorAjax
             });
         }
-    };
-    return mf;
-}
-
-function importar() {
-    var mf = function() {
-        if (!datosImportOK())
-            return;
-        $('#btnImportar').addClass('fa-spin');
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/prefacturas/" + vm.proId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function(data, status) {
-                $('#btnImportar').removeClass('fa-spin');
-                // la cadena será devuelta como JSON
-                var rData = JSON.parse(data);
-                // comprobamos que no está vacía
-                if (rData.length == 0) {
-                    // mensaje de que no se ha encontrado
-                }
-                data = rData[0];
-                data.prefacturaId = vm.prefacturaId(); // Por si es un update
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-            },
-            error: errorAjax
-        });
     };
     return mf;
 }
@@ -535,6 +486,7 @@ function aceptarLinea() {
             success: function(data, status) {
                 $('#modalLinea').modal('hide');
                 loadLineasPrefactura(vm.prefacturaId());
+                loadBasesPrefactura(vm.prefacturaId());
             },
             error: errorAjax
         });
@@ -548,6 +500,7 @@ function aceptarLinea() {
             success: function(data, status) {
                 $('#modalLinea').modal('hide');
                 loadLineasPrefactura(vm.prefacturaId());
+                loadBasesPrefactura(vm.prefacturaId());
             },
             error: errorAjax
         });
@@ -844,6 +797,7 @@ function deletePrefacturaLinea(id) {
                 data: JSON.stringify(data),
                 success: function(data, status) {
                     loadLineasPrefactura(vm.prefacturaId());
+                    loadBasesPrefactura(vm.prefacturaId());
                 },
                 error: errorAjax
             });
@@ -851,5 +805,104 @@ function deletePrefacturaLinea(id) {
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
         }
+    });
+}
+
+/*
+    Funciones relacionadas con la gestión de bases
+    y cuotas
+*/
+
+function initTablaBases() {
+    tablaCarro = $('#dt_bases').dataTable({
+        autoWidth: true,
+        preDrawCallback: function() {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
+            }
+        },
+        rowCallback: function(nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function(oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataBases,
+        columns: [{
+            data: "tipo"
+        }, {
+            data: "porcentaje",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "base",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "cuota",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
+        }]
+    });
+}
+
+
+function loadTablaBases(data) {
+    var dt = $('#dt_bases').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function loadBasesPrefactura(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/prefacturas/bases/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            // actualizamos los totales
+            var t1 = 0; // total sin iva
+            var t2 = 0; // total con iva
+            for (var i=0; i< data.length; i++){
+                t1 += data[i].base;
+                t2 += data[i].base + data[i].cuota;
+            }
+            vm.total(numeral(t1).format('0,0.00'));
+            vm.totalConIva(numeral(t2).format('0,0.00'));
+            loadTablaBases(data);
+        },
+        error: errorAjax
     });
 }
