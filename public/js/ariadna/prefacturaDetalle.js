@@ -443,7 +443,7 @@ function cambioEmpresa(data) {
 
 function nuevaLinea() {
     // TODO: Implementar la funcionalidad de nueva línea
-    vm.prefacturaLineaId(0); // es un alta
+    limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
     $.ajax({
         type: "GET",
@@ -647,6 +647,21 @@ function loadDataLinea(data) {
     loadTiposIva(data.tipoIvaId);
 }
 
+function limpiaDataLinea(data) {
+    vm.prefacturaLineaId(0);
+    vm.linea(null);
+    vm.articuloId(null);
+    vm.tipoIvaId(null);
+    vm.porcentaje(null);
+    vm.descripcion(null);
+    vm.cantidad(null);
+    vm.importe(null);
+    vm.totalLinea(null);
+    //
+    loadArticulos();
+    loadTiposIva();
+}
+
 function loadTablaPrefacturaLineas(data) {
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
@@ -680,7 +695,11 @@ function loadArticulos(id) {
         success: function (data, status) {
             var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
             vm.posiblesArticulos(articulos);
-            $("#cmbArticulos").val([id]).trigger('change');
+            if (id) {
+                $("#cmbArticulos").val([id]).trigger('change');
+            }else{
+                $("#cmbArticulos").val([0]).trigger('change');
+            }
         },
         error: errorAjax
     });
@@ -695,7 +714,11 @@ function loadTiposIva(id) {
         success: function (data, status) {
             var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposIva(tiposIva);
-            $("#cmbTiposIva").val([id]).trigger('change');
+            if (id) {
+                $("#cmbTiposIva").val([id]).trigger('change');
+            }else{
+                $("#cmbTiposIva").val([0]).trigger('change');
+            }
         },
         error: errorAjax
     });
