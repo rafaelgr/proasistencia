@@ -650,11 +650,23 @@ function initTablaPrefacturasLineas() {
         }, {
             data: "descripcion"
         }, {
-            data: "importe"
+            data: "importe",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
         }, {
-            data: "cantidad"
+            data: "cantidad",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
         }, {
-            data: "totalLinea"
+            data: "totalLinea",
+            className: "text-right",
+            render: function(data, type, row){
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "prefacturaLineaId",
             render: function(data, type, row) {
