@@ -32,6 +32,8 @@ var articulos_router = require('./lib/articulos/articulos_controller');
 var parametros_router = require('./lib/parametros/parametros_controller');
 var prefacturas_router = require('./lib/prefacturas/prefacturas_controller');
 
+var informes_router = require('./lib/informes/informes_controller');
+
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
@@ -73,6 +75,7 @@ router.get('/', function(req, res) {
 
 // -- registering routes
 app.use('/api', router);
+app.use('/api/informes', informes_router);
 app.use('/api/usuarios', usuarios_router);
 app.use('/api/version', version_router);
 app.use('/api/empresas', empresas_router);
