@@ -322,14 +322,14 @@ CREATE TABLE `prefacturas` (
   KEY `pref_empresas` (`empresaId`),
   KEY `pref_clientes` (`clienteId`),
   KEY `pref_formas_pago` (`formaPagoId`),
-  CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_clientes` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
+  CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas` */
 
-insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID',NULL,NULL,1,'Una lista de observaciones');
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID','2165.94','2620.79',1,'Una lista de observaciones');
 
 /*Table structure for table `prefacturas_bases` */
 
@@ -343,13 +343,15 @@ CREATE TABLE `prefacturas_bases` (
   `base` decimal(12,2) DEFAULT NULL,
   `cuota` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`prefacturaBaseId`),
-  KEY `prefb_prefacturas` (`prefacturaId`),
+  UNIQUE KEY `prefb_prefac_iva` (`prefacturaId`,`tipoIvaId`),
   KEY `prefb_tipos_iva` (`tipoIvaId`),
   CONSTRAINT `prefb_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
   CONSTRAINT `prefb_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_bases` */
+
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (50,2,5,'21.00','2165.94','454.85');
 
 /*Table structure for table `prefacturas_lineas` */
 
@@ -373,12 +375,13 @@ CREATE TABLE `prefacturas_lineas` (
   CONSTRAINT `prefl_articulos` FOREIGN KEY (`articuloId`) REFERENCES `articulos` (`articuloId`),
   CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
   CONSTRAINT `prefl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_lineas` */
 
-insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (2,2,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
-insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (4,3,2,2,5,'21.00','Mantenimiento general','1.00','120.00','120.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (28,1,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (30,2,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (31,3,2,3,5,'21.00','Cambiamos la descripción','16.00','120.33','1925.28');
 
 /*Table structure for table `tipos_clientes` */
 
