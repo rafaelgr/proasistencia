@@ -143,17 +143,21 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   `fechaFin` date DEFAULT NULL,
   `importe` decimal(10,2) DEFAULT NULL,
   `tipoPago` int(11) DEFAULT NULL,
+  `manPorComer` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje que se llevaría el mantenedor',
   `observaciones` text,
   PRIMARY KEY (`contratoClienteMantenimientoId`),
   KEY `ref_ccm_empresa` (`empresaId`),
   KEY `ref_ccm_mantenedor` (`mantenedorId`),
   KEY `ref_ccm_cliente` (`clienteId`),
+  CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
-  CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`),
-  CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
+
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (1,172,25019,25020,'2016-07-01',NULL,'1200.00',3,NULL,'Creado a mano para ver que funciona correctamente');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (4,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático');
 
 /*Table structure for table `contrato_comercial` */
 
