@@ -13,6 +13,7 @@ var breakpointDefinition = {
 };
 
 var empId = 0;
+var lineaEnEdicion = false;
 
 datePickerSpanish(); // see comun.js
 
@@ -122,6 +123,7 @@ function admData() {
     self.elegidosComerciales = ko.observableArray([]);
     //
     self.clienteComisionistaId = ko.observable();
+    self.clienteId = ko.observable();
     self.comercialId = ko.observable();
     self.porComer = ko.observable();
 }
@@ -375,7 +377,7 @@ function loadFormasPago(id) {
 --------------------------------------------------------------------*/
 function nuevoComisionista() {
     // TODO: Implementar la funcionalidad de nueva línea
-    limpiaDataLinea(); // es un alta
+    limpiaComisionista(); // es un alta
     lineaEnEdicion = false;
 }
 
@@ -389,7 +391,7 @@ function aceptarComisionista() {
         clienteComisionista: {
             clienteComisionistaId: vm.clienteComisionistaId(),
             clienteId: vm.clienteId(),
-            comercialId: vm.comercialId(),
+            comercialId: vm.scomercialId(),
             porComer: vm.porComer()
         }
     }
@@ -401,8 +403,8 @@ function aceptarComisionista() {
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
-                $('#modalComisionistas').modal('hide');
-                loadComisionistas(vm.prefacturaId());
+                $('#modalComisionista').modal('hide');
+                loadComisionistas(vm.clienteId());
             },
             error: errorAjax
         });
@@ -414,8 +416,8 @@ function aceptarComisionista() {
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
-                $('#modalLinea').modal('hide');
-                loadComisionistas(vm.clienteComisionistaId());
+                $('#modalComisionista').modal('hide');
+                loadComisionistas(vm.clienteId());
             },
             error: errorAjax
         });
@@ -451,12 +453,12 @@ function datosOKComisionistas() {
 }
 
 function initTablaComisionistas() {
-    tablaCarro = $('#dt_comisionistas').dataTable({
+    tablaCarro = $('#dt_comisiones').dataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisionistas'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisiones'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -498,7 +500,7 @@ function initTablaComisionistas() {
                 data: "clienteComisionistaId",
                 render: function (data, type, row) {
                     var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionistas' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                     return html;
                 }
@@ -517,15 +519,12 @@ function loadComisionista(data) {
 
 function limpiaComisionista(data) {
     vm.clienteComisionistaId(0);
-    vm.clienteId(null);
     vm.comercialId(null);
     vm.porComer(null);
-    //
-    loadComerciales(data.comercialId);
 }
 
 function loadTablaComisionistas(data) {
-    var dt = $('#dt_comisionistas').dataTable();
+    var dt = $('#dt_comisiones').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -537,7 +536,7 @@ function loadTablaComisionistas(data) {
 function loadComisionistas(id) {
     $.ajax({
         type: "GET",
-        url: "/api/clientes/comisionistas/" + id,
+        url: "/api/clientes/comisionistas/" + vm.clienteId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -574,8 +573,8 @@ function editComisionista(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            if (data.length > 0) {
-                loadComisionista(data[0]);
+            if (data) {
+                loadComisionista(data);
             }
         },
         error: errorAjax
@@ -593,7 +592,7 @@ function deleteComisionista(id) {
         if (ButtonPressed === "Aceptar") {
             var data = {
                 clienteComisionista: {
-                    clienteComisionistaId: vm.clienteComisionistaId()
+                    clienteComisionistaId: id
                 }
             };
             $.ajax({
@@ -603,7 +602,7 @@ function deleteComisionista(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadComisionistas(vm.clienteComisionistaId());
+                    loadComisionistas(vm.clienteId());
                 },
                 error: errorAjax
             });
