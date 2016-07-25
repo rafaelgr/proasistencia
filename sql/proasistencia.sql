@@ -130,6 +130,31 @@ insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fec
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (28,'40','Clientes pasados a Patricia',NULL,'2015-02-18 12:25:40',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (29,'41','Sonia',NULL,'2015-04-13 11:27:17',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 
+/*Table structure for table `contrato_cliente_mantenimiento` */
+
+DROP TABLE IF EXISTS `contrato_cliente_mantenimiento`;
+
+CREATE TABLE `contrato_cliente_mantenimiento` (
+  `contratoClienteMantenimientoId` int(11) NOT NULL AUTO_INCREMENT,
+  `empresaId` int(11) DEFAULT NULL,
+  `mantenedorId` int(11) DEFAULT NULL,
+  `clienteId` int(11) DEFAULT NULL,
+  `fechaInicio` date DEFAULT NULL,
+  `fechaFin` date DEFAULT NULL,
+  `importe` decimal(10,2) DEFAULT NULL,
+  `tipoPago` int(11) DEFAULT NULL,
+  `observaciones` text,
+  PRIMARY KEY (`contratoClienteMantenimientoId`),
+  KEY `ref_ccm_empresa` (`empresaId`),
+  KEY `ref_ccm_mantenedor` (`mantenedorId`),
+  KEY `ref_ccm_cliente` (`clienteId`),
+  CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`),
+  CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `contrato_cliente_mantenimiento` */
+
 /*Table structure for table `contrato_comercial` */
 
 DROP TABLE IF EXISTS `contrato_comercial`;
