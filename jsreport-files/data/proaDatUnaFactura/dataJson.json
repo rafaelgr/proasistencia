@@ -1,0 +1,72 @@
+{
+    "cabecera":{
+        "prefacturaId": "45788",
+        "ano": "2016",
+        "numero": "45578",
+        "serie": "F",
+        "fecha": "01/06/2016",
+        "empresaId": "77",
+        "clienteId": "4578",
+        "contratoMantenimientoId": "",
+        "emisorNif": "A78999",
+        "emisorNombre": "La Generala S.A.",
+        "emisorDirección": "Calle del Pato N.29",
+        "emisorCodPostal": "28080",
+        "emisorPoblacion": "Madrid",
+        "emisorProvincia": "Madrid",
+        "receptorNif": "B66666",
+        "receptorNombre": "El Cliente S.L.",
+        "receptorDirección": "Calle del Cliente N.30",
+        "receptorCodPostal": "46000",
+        "receptorPoblacion": "Alzira",
+        "receptorProvincia": "Valencia",
+        "total": "1.250,33",
+        "totalConIva": "1.589,40",
+        "formaPago": "EFECTIVO",
+        "observaciones": "EL PAGO SE DESCONTARÁ DEL PENDIENTE"
+    },
+    "lineas": [
+        {
+            "prefacturaLineaId": "1",
+            "linea": "1",
+            "prefacturaId": "45788",
+            "articuloId": "00012",
+            "tipoIva": "21%",
+            "porcentaje": "21",
+            "descripcion":"Mantenimiento soportado en globo",
+            "cantidad":"1",
+            "importe": "24,60",
+            "totalLinea": "24,60"
+        },
+        {
+            "prefacturaLineaId": "2",
+            "linea": "2",
+            "prefacturaId": "45788",
+            "articuloId": "00011",
+            "tipoIva": "EXENTO",
+            "porcentaje": "0",
+            "descripcion":"Varios exentos",
+            "cantidad":"2",
+            "importe": "30,20",
+            "totalLinea": "60,40"
+        }
+    ],
+    "bases": [
+        {
+            "prefacturaBaseId":"1",
+            "prefacturaId":"45788",
+            "tipoIva": "21%",
+            "porcentaje": "21",
+            "base": "24,60",
+            "cuota": "10,30"
+        },
+        {
+            "prefacturaBaseId":"2",
+            "prefacturaId":"45788",
+            "tipoIva": "EXENTO",
+            "porcentaje": "0",
+            "base": "60,40",
+            "cuota": "0"
+        }
+    ]
+}

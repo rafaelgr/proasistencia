@@ -1,0 +1,23 @@
+{
+    "shortid": "HyJXrkrv",
+    "recipe": "phantom-pdf",
+    "engine": "handlebars",
+    "modificationDate": {
+        "$$date": 1468571952317
+    },
+    "_id": "WPHzyTHs8tD9tPeQ",
+    "data": {
+        "shortid": "H108U1HP"
+    },
+    "phantom": {
+        "headerHeight": "2cm"
+    },
+    "resources": {
+        "items": [
+            {
+                "shortid": "H108U1HP",
+                "entitySet": "data"
+            }
+        ]
+    }
+}

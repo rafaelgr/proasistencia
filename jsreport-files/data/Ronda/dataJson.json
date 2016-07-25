@@ -1,0 +1,25 @@
+{
+    "ninforme":"Plantilla de Ronda",
+    "ronda": "Ronda de ejemplo",
+    "puntos":[
+            {
+                "orden": "1",
+                "grupo": "G1",
+                "edificio": "Edificio 1",
+                "cota": "Esta es mi cota",
+                "cubiculo":"Mi cubo",
+                "punto": "Mira que texto más grande",
+                "zonaFuego": "Fuego 1"
+            },
+            {
+                "orden": "2",
+                "grupo": "G1",
+                "edificio": "Edificio 1",
+                "cota": "Esta es mi cota",
+                "cubiculo":"Mi cubo",
+                "punto": "Mira que texto más grande",
+                "zonaFuego": "Fuego 2"
+            }
+
+        ]
+}

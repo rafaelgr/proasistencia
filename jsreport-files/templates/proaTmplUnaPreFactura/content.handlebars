@@ -1,0 +1,130 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image proaIcon}' style="display:none;"/>
+<style>
+    .cuadro {
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 1px solid #000000;
+        padding: 10px;
+    }
+</style>
+<div>
+    <table class="table">
+        <tr>
+            <td>
+                <h2>ID: <span>{{cabecera.prefacturaId}}</span></h2>
+                <h2>Fecha: <span>{{cabecera.fecha}}</span></h2>
+            </td>
+            <td style="text-align:right;">
+                <div style="text-align:right;">
+                    <h1>PREFACTURA</h1>
+                </div>
+            </td>
+        </tr>
+        <tr >
+            <td>
+                <div class="cuadro">
+                    <h3>EMISOR</h3>
+                    <div>
+                        <strong>NIF: </strong>{{cabecera.emisorNif}}
+                    </div>
+                    <div>{{cabecera.emisorNombre}}</div>
+                    <div>{{cabecera.emisorDireccion}}</div>
+                    <div>{{cabecera.emisorCodPostal}} {{cabecera.emisorPoblacion}}</div>
+                    <div>{{cabecera.emisorProvincia}}</div>
+                </div>
+            </td>
+            <td>
+                <div class="cuadro">
+                    <h3>RECEPTOR</h3>
+                    <div>
+                        <strong>NIF: </strong>{{cabecera.receptorNif}}
+                    </div>
+                    <div>{{cabecera.receptorNombre}}</div>
+                    <div>{{cabecera.receptorDireccion}}</div>
+                    <div>{{cabecera.receptorCodPostal}} {{cabecera.receptorPoblacion}}</div>
+                    <div>{{cabecera.receptorProvincia}}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-stripped table-forum">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Linea</th>
+                <th>Descripcion</th>
+                <th>Tipo IVA</th>
+                <th style="text-align:right;">Precio</th>
+                <th style="text-align:right;">Cantidad</th>
+                <th style="text-align:right;">Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each lineas}}
+            <tr>
+                <td>{{linea}}</td>
+                <td>{{descripcion}}</td>
+                <td>{{tipoIva}}</td>
+                <td style="text-align:right;">{{importe}}</td>
+                <td style="text-align:right;">{{cantidad}}</td>
+                <td style="text-align:right;">{{totalLinea}}</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align:right;">TOTAL :</td>
+                <td style="text-align:right;">{{cabecera.total}}</td>
+            </tr>
+        </tbody>
+    </table> 
+    <table class="table table-stripped table-forum">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Tipo IVA</th>
+                <th style="text-align:right;">Porcentaje</th>
+                <th style="text-align:right;">Base</th>
+                <th style="text-align:right;">Cuota</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each bases}}
+            <tr>
+                <td>{{tipoIva}}</td>
+                <td style="text-align:right;">{{porcentaje}}</td>
+                <td style="text-align:right;">{{base}}</td>
+                <td style="text-align:right;">{{cuota}}</td>
+                <td></td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align:right;">TOTAL (CON IVA) :</td>
+                <td style="text-align:right;">{{cabecera.totalConIva}}</td>
+            </tr>
+        </tbody>
+    </table>   
+   <table class="table">
+        <tr>
+            <td>
+                <strong>Observaciones:</strong>
+                <p>{{cabecera.observaciones}}</p>
+            </td>
+            <td>
+                <strong>Forma de pago:</strong>
+                <p>{{cabecera.formaPago}}</p>
+            </td>
+        </tr>
+   </table>             
+</div>

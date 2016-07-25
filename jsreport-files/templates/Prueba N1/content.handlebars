@@ -1,0 +1,39 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image FalckLogo}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{ninforme}}</h1>
+        <h3>{{ronda}}</h3>
+    </div>
+    <table class="table table-stripped table-forum">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Orden</th>
+                <th>Punto</th>
+                <th>Cubiculo</th>
+                <th>Zona fuego</th>
+                <th>Grupo</th>
+                <th>Edificio</th>
+                <th>Cota</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each puntos}}
+            <tr>
+                <td>{{orden}}</td>
+                <td>{{punto}}</td>
+                <td>{{cubiculo}}</td>
+                <td>{{zonaFuego}}</td>
+                <td>{{grupo}}</td>
+                <td>{{edificio}}</td>
+                <td>{{cota}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>            
+</div>
