@@ -264,6 +264,13 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
+        // Antes de dar de alta hay que inicializar valores
+        // si es modifcación los valores cambiarán solos
+        // ojo!! numeroDbf(n) espera un string.
+        if (!vm.total()) {
+            vm.total('0');
+            vm.totalConIva('0');
+        }
         var data = {
             prefactura: {
                 "prefacturaId": vm.prefacturaId(),
@@ -293,6 +300,8 @@ function aceptar() {
             }
         };
         if (empId == 0) {
+
+
             $.ajax({
                 type: "POST",
                 url: myconfig.apiUrl + "/api/prefacturas",
@@ -302,8 +311,8 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
-                    // Nos volvemos al general
-                    var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
+                    // De momento no volvemos al mismo (es alta y hay que introducir líneas)
+                    var url = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -452,6 +461,8 @@ function nuevaLinea() {
         contentType: "application/json",
         success: function (data, status) {
             vm.linea(data);
+            vm.total(0);
+            vm.totalConIva(0);
         },
         error: errorAjax
     });
@@ -697,7 +708,7 @@ function loadArticulos(id) {
             vm.posiblesArticulos(articulos);
             if (id) {
                 $("#cmbArticulos").val([id]).trigger('change');
-            }else{
+            } else {
                 $("#cmbArticulos").val([0]).trigger('change');
             }
         },
@@ -716,7 +727,7 @@ function loadTiposIva(id) {
             vm.posiblesTiposIva(tiposIva);
             if (id) {
                 $("#cmbTiposIva").val([id]).trigger('change');
-            }else{
+            } else {
                 $("#cmbTiposIva").val([0]).trigger('change');
             }
         },

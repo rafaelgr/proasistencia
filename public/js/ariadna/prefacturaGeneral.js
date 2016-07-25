@@ -144,8 +144,7 @@ function loadTablaPrefacturas(data) {
 
 function buscarPrefacturas() {
     var mf = function () {
-        // TODO:
-        // Ahora han cambiado los criterios de filtrado
+        cargarPrefacturas()();
     };
     return mf;
 }
