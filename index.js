@@ -32,6 +32,7 @@ var articulos_router = require('./lib/articulos/articulos_controller');
 var parametros_router = require('./lib/parametros/parametros_controller');
 var prefacturas_router = require('./lib/prefacturas/prefacturas_controller');
 var contratos_cliente_mantenimiento_router = require('./lib/contratos-cliente-mantenimiento/contratos_clientes_mantenimiento_controller');
+var clientes_comisionistas_router = require('./lib/clientes-comisionistas/clientes_comisionistas_controller');
 
 var informes_router = require('./lib/informes/informes_controller');
 
@@ -94,6 +95,7 @@ app.use('/api/articulos', articulos_router);
 app.use('/api/parametros', parametros_router);
 app.use('/api/prefacturas', prefacturas_router);
 app.use('/api/contratos_cliente_mantenimiento', contratos_cliente_mantenimiento_router);
+app.use('/api/clientes_comisionistas', clientes_comisionistas_router);
 
 // -- start server
 app.listen(config.apiPort);

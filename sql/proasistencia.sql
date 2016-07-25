@@ -152,12 +152,28 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
 
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (1,172,25019,25020,'2016-07-01',NULL,'1200.00',3,NULL,'Creado a mano para ver que funciona correctamente');
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (4,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (5,176,25019,25020,'2016-01-01',NULL,'2500.00',4,'12.45','A ver si graba bien de entrada');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values (6,178,NULL,25020,'2016-01-01',NULL,'1500.00',4,'10.30','OKKK');
+
+/*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
+
+DROP TABLE IF EXISTS `contrato_cliente_mantenimiento_comisionistas`;
+
+CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
+  `contratoClienteMantenimientoComisionistaId` int(11) NOT NULL AUTO_INCREMENT,
+  `contratoClienteMantenimientoId` int(11) DEFAULT NULL,
+  `comercialId` int(11) DEFAULT NULL,
+  `porComer` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`contratoClienteMantenimientoComisionistaId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
 
 /*Table structure for table `contrato_comercial` */
 
@@ -330,7 +346,7 @@ CREATE TABLE `prefacturas` (
   `fecha` date DEFAULT NULL,
   `empresaId` int(11) DEFAULT NULL,
   `clienteId` int(11) DEFAULT NULL,
-  `contratoMantenimientoId` int(11) DEFAULT NULL,
+  `contratoClienteMantenimientoId` int(11) DEFAULT NULL,
   `emisorNif` varchar(255) DEFAULT NULL,
   `emisorNombre` varchar(255) DEFAULT NULL,
   `emisorDireccion` varchar(255) DEFAULT NULL,
@@ -351,6 +367,8 @@ CREATE TABLE `prefacturas` (
   KEY `pref_empresas` (`empresaId`),
   KEY `pref_clientes` (`clienteId`),
   KEY `pref_formas_pago` (`formaPagoId`),
+  KEY `pref_contratos` (`contratoClienteMantenimientoId`),
+  CONSTRAINT `pref_contratos` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `pref_clientes` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
@@ -358,7 +376,7 @@ CREATE TABLE `prefacturas` (
 
 /*Data for the table `prefacturas` */
 
-insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID','2165.94','2620.79',1,'Una lista de observaciones');
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID','2165.94','2620.79',1,'Una lista de observaciones');
 
 /*Table structure for table `prefacturas_bases` */
 
