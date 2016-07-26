@@ -54,6 +54,10 @@ function initForm() {
     // select2 things
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
+    $("#cmbComerciales").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioComercial(e.added);
+    });
 
     initTablaComisionistas();
 
@@ -126,6 +130,8 @@ function admData() {
     self.clienteId = ko.observable();
     self.comercialId = ko.observable();
     self.porComer = ko.observable();
+    //
+    self.empresaId = ko.observable(null);
 }
 
 function loadData(data) {
@@ -611,4 +617,29 @@ function deleteComisionista(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+/*
+* cambioComercial
+* Al cambiar un comercial debemos ofertar
+* el porcentaje que tiene por defecto para esa empresa
+*/
+function cambioComercial(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.empresaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.porComer(data.manPorVentas);
+        },
+        error: errorAjax
+    });
+
 }
