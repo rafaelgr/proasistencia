@@ -423,6 +423,9 @@
                                             </fieldset>
                                             <fieldset>
                                                 <div class="pull-right">
+                                                    <button id="btnGenerar" title="Generar prefacturas" data-toggle="modal" data-target="#modalGenerar" onclick="generar()" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-stack-exchange"></i>
+                                                </button>
                                                     <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                         <i class="fa fa-lg fa-sign-out"></i>
                                                     </button>
@@ -554,6 +557,51 @@
                         </fieldset>
                         <footer>
                             <button id="btnAceptarComisionista" class="btn btn-primary" onclick="aceptarComisionista()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalGenerar" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> GENERAR PREFACTURAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generar-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Inicial</label>
+                                        <label class="input">
+                                            <input id="txtFInicial" name="txtFInicial" data-bind="value: fInicial" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Final</label>
+                                        <label class="input">
+                                            <input id="txtFFinal" name="txtFFinal" data-bind="value: fFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarGenerar" class="btn btn-primary" onclick="aceptarGenerar()">
                                 Aceptar
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">

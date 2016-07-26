@@ -39,6 +39,10 @@ function initForm() {
     $("#comisionista-form").submit(function () {
         return false;
     });
+
+    $("#generar-form").submit(function () {
+        return false;
+    });
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -129,6 +133,10 @@ function admData() {
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     self.porComer = ko.observable();
+
+    // --------- generacion
+    self.fInicial = ko.observable();
+    self.fFinal = ko.observable();
 
 
 }
@@ -339,7 +347,7 @@ function aceptarComisionista() {
     if (!datosOKComisionistas()) {
         return;
     }
-    if (!vm.contratoClienteMantenimientoComisionistaId()){
+    if (!vm.contratoClienteMantenimientoComisionistaId()) {
         // es alta
         vm.contratoClienteMantenimientoComisionistaId(0);
     }
@@ -594,4 +602,18 @@ function cambioComercial(data) {
         error: errorAjax
     });
 
+}
+
+/* ----------------------------------------------------------
+    Funciones relacionadas con la generación de prefacturas
+-------------------------------------------------------------*/
+
+function generar() {
+    // Cargamos por defecto los valores actuales
+    vm.fInicial(vm.fechaInicio());
+    vm.fFinal(vm.fechaFin());
+}
+
+function aceptarGenerar() {
+    $('#modalGenerar').modal('hide');
 }
