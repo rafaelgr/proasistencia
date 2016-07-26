@@ -89,13 +89,12 @@ CREATE TABLE `clientes_comisionistas` (
   KEY `ref_cc_comercial` (`comercialId`),
   CONSTRAINT `ref_cc_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_cc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes_comisionistas` */
 
 insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`porComer`) values 
-(2,25020,8,'33.00'),
-(4,25020,8,'33.00');
+(16,25020,6,'11.10');
 
 /*Table structure for table `comerciales` */
 
@@ -184,11 +183,7 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
 /*Data for the table `contrato_cliente_mantenimiento` */
 
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`) values 
-(1,172,25019,25020,'2016-07-01',NULL,'1200.00',3,NULL,'Creado a mano para ver que funciona correctamente'),
-(4,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático'),
-(5,176,25019,25020,'2016-01-01',NULL,'2500.00',4,'12.45','A ver si graba bien de entrada'),
-(6,178,NULL,25020,'2016-01-01',NULL,'1500.00',4,'10.30','OKKK'),
-(7,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático');
+(6,178,NULL,25020,'2016-01-01',NULL,'1500.00',4,'10.30','OKKK');
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -204,13 +199,13 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
 
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values 
 (1,6,21,'10.20'),
-(3,6,8,'22.00');
+(5,6,6,'15.00');
 
 /*Table structure for table `contrato_comercial` */
 
