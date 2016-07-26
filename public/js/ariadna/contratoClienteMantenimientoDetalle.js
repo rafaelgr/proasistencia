@@ -2,6 +2,18 @@
 contratoClienteMantenimientoDetalle.js
 Funciones js par la página ContratoClienteMantenimientoDetalle.html
 ---------------------------------------------------------------------------*/
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
+var dataComisionistas;
+
 var contratoClienteMantenimientoId = 0;
 
 datePickerSpanish(); // see comun.js
@@ -20,7 +32,13 @@ function initForm() {
     $("#frmContratoClienteMantenimiento").submit(function () {
         return false;
     });
+    $("#frmComisionista").submit(function () {
+        return false;
+    });
 
+    $("#comisionista-form").submit(function () {
+        return false;
+    });
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -34,6 +52,15 @@ function initForm() {
 
     $("#cmbTiposPagos").select2(select2Spanish());
     loadTiposPagos();
+
+    $("#cmbComerciales").select2(select2Spanish());
+    loadComerciales();
+    $("#cmbComerciales").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioComercial(e.added);
+    });
+
+    initTablaComisionistas();
 
     contratoClienteMantenimientoId = gup('ContratoClienteMantenimientoId');
     if (contratoClienteMantenimientoId != 0) {
@@ -92,6 +119,16 @@ function admData() {
     //
     self.posiblesTiposPagos = ko.observableArray([]);
     self.elegidosTiposPagos = ko.observableArray([]);
+    //
+    self.contratoClienteMantenimientoComisionistaId = ko.observable();
+    self.comercialId = ko.observable();
+    //
+
+    self.scomercialId = ko.observable();
+    //
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+    self.porComer = ko.observable();
 
 
 }
@@ -112,6 +149,8 @@ function loadData(data) {
     loadMantenedores(data.clienteId);
     loadClientes(data.clienteId);
     loadTiposPagos(data.tipoPago);
+    //
+    loadComisionistas(data.contratoClienteMantenimientoId);
 }
 
 function datosOK() {
@@ -283,4 +322,276 @@ function loadTiposPagos(id) {
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
+}
+
+
+/*------------------------------------------------------------------
+    Funciones relacionadas con las líneas de comisionistas
+--------------------------------------------------------------------*/
+function nuevoComisionista() {
+    // TODO: Implementar la funcionalidad de nueva línea
+    limpiaComisionista(); // es un alta
+    lineaEnEdicion = false;
+}
+
+function aceptarComisionista() {
+    // TODO: Implementar funcionalidad de aceptar.
+    if (!datosOKComisionistas()) {
+        return;
+    }
+    if (!vm.contratoClienteMantenimientoComisionistaId()){
+        // es alta
+        vm.contratoClienteMantenimientoComisionistaId(0);
+    }
+    var data = {
+        contratoMantenimientoComisionista: {
+            contratoClienteMantenimientoComisionistaId: vm.contratoClienteMantenimientoComisionistaId(),
+            contratoClienteMantenimientoId: vm.contratoClienteMantenimientoId(),
+            comercialId: vm.scomercialId(),
+            porComer: vm.porComer()
+        }
+    }
+    if (!lineaEnEdicion) {
+        data.contratoMantenimientoComisionista.contratoClienteMantenimientoComisionistaId = 0;
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/contrato_mantenimiento_comisionistas",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                $('#modalComisionista').modal('hide');
+                loadComisionistas(vm.clienteId());
+            },
+            error: errorAjax
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/contrato_mantenimiento_comisionistas/" + vm.contratoClienteMantenimientoComisionistaId(),
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                $('#modalComisionista').modal('hide');
+                loadComisionistas(vm.clienteId());
+            },
+            error: errorAjax
+        });
+    }
+}
+
+function datosOKComisionistas() {
+    $('#comisionista-form').validate({
+        rules: {
+            cmbComerciales: {
+                required: true
+            },
+            txtPorComer: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbComerciales: {
+                required: "Debe elegir un comercial"
+            },
+            txtPorComer: {
+                required: 'Necesita un porcentaje'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#comisionista-form").validate().settings;
+    return $('#comisionista-form').valid();
+}
+
+function initTablaComisionistas() {
+    tablaCarro = $('#dt_comisiones').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisiones'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataComisionistas,
+        columns: [{
+            data: "comercial"
+        }, {
+                data: "porComer",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "contratoClienteMantenimientoComisionistaId",
+                render: function (data, type, row) {
+                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                    return html;
+                }
+            }]
+    });
+}
+
+function loadComisionista(data) {
+    vm.contratoClienteMantenimientoComisionistaId(data.contratoClienteMantenimientoComisionistaId);
+    vm.contratoClienteMantenimientoId(data.contratoClienteMantenimientoId);
+    vm.comercialId(data.comercialId);
+    vm.porComer(data.porComer);
+    //
+    loadComerciales(data.comercialId);
+}
+
+function limpiaComisionista(data) {
+    vm.contratoClienteMantenimientoComisionistaId(0);
+    vm.comercialId(null);
+    vm.porComer(null);
+    loadComerciales();
+}
+
+function loadTablaComisionistas(data) {
+    var dt = $('#dt_comisiones').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadComisionistas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/contrato_mantenimiento_comisionistas/mantenimiento/" + vm.contratoClienteMantenimientoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaComisionistas(data);
+        },
+        error: errorAjax
+    });
+}
+
+function loadComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(comerciales);
+            if (id) {
+                $("#cmbComerciales").val([id]).trigger('change');
+            } else {
+                $("#cmbComerciales").val([0]).trigger('change');
+            }
+        },
+        error: errorAjax
+    });
+}
+
+function editComisionista(id) {
+    lineaEnEdicion = true;
+    $.ajax({
+        type: "GET",
+        url: "/api/contrato_mantenimiento_comisionistas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadComisionista(data);
+            }
+        },
+        error: errorAjax
+    });
+}
+
+function deleteComisionista(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                clienteComisionista: {
+                    clienteComisionistaId: id
+                }
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/contrato_mantenimiento_comisionistas/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadComisionistas(vm.clienteId());
+                },
+                error: errorAjax
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+/*
+* cambioComercial
+* Al cambiar un comercial debemos ofertar
+* el porcentaje que tiene por defecto para esa empresa
+*/
+function cambioComercial(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.empresaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.porComer(data.manPorVentas);
+        },
+        error: errorAjax
+    });
+
 }
