@@ -566,6 +566,11 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmLinea">
                                         <fieldset>
+                                            <div class="pull-left">
+                                                <strong>Total: </strong><span data-bind="text: total"></span>
+                                                 <br/> 
+                                                <strong> Total (+IVA): </strong><span data-bind="text: totalConIva"></span>
+                                            </div>
                                             <div class="pull-right">
                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
