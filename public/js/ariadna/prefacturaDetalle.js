@@ -53,59 +53,10 @@ function initForm() {
         cambioEmpresa(e.added);
     });
 
-    options = select2Spanish();
-    options.ajax = {
-        url: "http://localhost:5000/api/clientes",
-        dataType: 'json',
-        delay: 250,
-        data: function (params) {
-            return {
-                nombre: params.term
-            };
-        },
-        processResults: function (data, params) {
-            resultados = [];
-            for (var i = 0; i < data.length; i++) {
-                var d = {
-                    id: data[0].clienteId,
-                    text: data[0].nombre
-                }
-                resultados.push(d);
-            }
-            return { results: resultados };
-        },
-        cache: true
-    };
-
     // select2 things
-    $("#cmbClientes").select2({
-        ajax: {
-            url: "http://localhost:5000/api/clientes",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    nombre: params.term
-                };
-            },
-            processResults: function (data, params) {
-                resultados = [];
-                for (var i = 0; i < data.length; i++) {
-                    var d = {
-                        id: data[0].clienteId,
-                        text: data[0].nombre
-                    }
-                    resultados.push(d);
-                }
-                return { results: resultados };
-            },
-            cache: true
-        },
-        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-        minimumInputLength: 1
-    });
+    $("#cmbClientes").select2(select2Spanish());
 
-    // loadClientes();
+    loadClientes();
     $("#cmbClientes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioCliente(e.added);
