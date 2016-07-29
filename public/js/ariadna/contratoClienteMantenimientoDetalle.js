@@ -52,6 +52,13 @@ function initForm() {
 
     $("#cmbClientes").select2(select2Spanish());
     loadClientes();
+    $("#cmbClientes").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioCliente(e.added);
+    });
+
+    $("#cmbAgentes").select2(select2Spanish());
+    loadAgentes();
 
 
     $("#cmbTiposPagos").select2(select2Spanish());
@@ -118,7 +125,11 @@ function admData() {
     self.posiblesClientes = ko.observableArray([]);
     self.elegidosClientes = ko.observableArray([]);
     //
-
+    self.sagenteId = ko.observable();
+    //
+    self.posiblesAgentes = ko.observableArray([]);
+    self.elegidosAgentes = ko.observableArray([]);
+    //
     self.stipoPagoId = ko.observable();
     //
     self.posiblesTiposPagos = ko.observableArray([]);
@@ -152,10 +163,12 @@ function loadData(data) {
     vm.tipoPago(data.tipoPago);
     vm.manPorComer(data.manPorComer);
     vm.observaciones(data.observaciones);
+    vm.comercialId(data.comercialId);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.clienteId);
     loadClientes(data.clienteId);
+    loadAgentes(data.comercialId);
     loadTiposPagos(data.tipoPago);
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
@@ -226,6 +239,7 @@ function aceptar() {
                 "importe": vm.importe(),
                 "manPorComer": vm.manPorComer(),
                 "tipoPago": vm.stipoPagoId(),
+                "comercialId": vm.sagenteId(),
                 "observaciones": vm.observaciones()
             }
         };
@@ -319,6 +333,22 @@ function loadClientes(id) {
         error: errorAjax
     });
 }
+
+function loadAgentes(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/agentes",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var agentes = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesAgentes(agentes);
+            $("#cmbAgentes").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
 
 function loadTiposPagos(id) {
     var tiposPagos = [
@@ -598,6 +628,33 @@ function cambioComercial(data) {
         success: function (data, status) {
             // asignamos el porComer al vm
             vm.porComer(data.manPorVentas);
+        },
+        error: errorAjax
+    });
+
+}
+
+/*
+* cambioCliente
+* Al cambiar un cliente debemos hacer varias cosas
+*/
+function cambioCliente(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var clienteId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/" + clienteId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el agente que corresponda
+            if (data.comercialId){
+                loadAgentes(data.comercialId);
+            }
+            
         },
         error: errorAjax
     });
