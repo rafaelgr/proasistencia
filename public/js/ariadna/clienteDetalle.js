@@ -52,6 +52,10 @@ function initForm() {
     loadFormasPago();
 
     // select2 things
+    $("#cmbAgentes").select2(select2Spanish());
+    loadAgentes();
+
+    // select2 things
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
     $("#cmbComerciales").select2().on('change', function (e) {
@@ -119,6 +123,12 @@ function admData() {
     //
     self.posiblesTiposClientes = ko.observableArray([]);
     self.elegidosTiposClientes = ko.observableArray([]);
+    //
+    self.agenteId = ko.observable();
+    self.sagenteId = ko.observable();
+    //
+    self.posiblesAgentes = ko.observableArray([]);
+    self.elegidosAgentes = ko.observableArray([]);
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -157,6 +167,7 @@ function loadData(data) {
     vm.iban(data.iban);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
+    loadAgentes(data.comercialId);
     //
     loadComisionistas(data.clienteId);
 }
@@ -268,7 +279,8 @@ function aceptar() {
                 "tipoClienteId": vm.stipoClienteId(),
                 "formaPagoId": vm.sformaPagoId(),
                 "cuentaContable": vm.cuentaContable(),
-                "iban": vm.iban()
+                "iban": vm.iban(),
+                "comercialId": vm.sagenteId()
             }
         };
         if (empId == 0) {
@@ -377,6 +389,22 @@ function loadFormasPago(id) {
         error: errorAjax
     });
 }
+
+function loadAgentes(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/agentes",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var agentes = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesAgentes(agentes);
+            $("#cmbAgentes").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
@@ -563,7 +591,7 @@ function loadComerciales(id) {
             vm.posiblesComerciales(comerciales);
             if (id) {
                 $("#cmbComerciales").val([id]).trigger('change');
-            }else{
+            } else {
                 $("#cmbComerciales").val([0]).trigger('change');
             }
         },
