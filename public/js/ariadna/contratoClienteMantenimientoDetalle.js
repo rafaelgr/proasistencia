@@ -253,9 +253,24 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
-                    // Nos volvemos al general
-                    var url = "ContratoClienteMantenimientoGeneral.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
-                    window.open(url, '_self');
+                    var contratoClienteMantenimiento = {
+                        "contratoClienteMantenimientoId": vm.contratoClienteMantenimientoId(),
+                        "clienteId": vm.sclienteId()
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: myconfig.apiUrl + "/api/contrato_mantenimiento_comisionistas/cargarcomisiones",
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify(contratoClienteMantenimiento),
+                        success: function (data, status) {
+                            // Nos quedamos
+                            var url = "ContratoClienteMantenimientoDetalle.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
+                            window.open(url, '_self');
+                        },
+                        error: errorAjax
+                    });
+
                 },
                 error: errorAjax
             });
@@ -651,10 +666,10 @@ function cambioCliente(data) {
         contentType: "application/json",
         success: function (data, status) {
             // asignamos el agente que corresponda
-            if (data.comercialId){
+            if (data.comercialId) {
                 loadAgentes(data.comercialId);
             }
-            
+
         },
         error: errorAjax
     });
