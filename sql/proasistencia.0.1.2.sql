@@ -11,3 +11,6 @@ ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`
   ADD COLUMN `beneficio` DECIMAL(10,2) NULL AFTER `margen`,
   ADD COLUMN `importeInicial` DECIMAL(10,2) NULL AFTER `beneficio`,
   ADD COLUMN `manAgente` DECIMAL(5,2) NULL AFTER `importeInicial`;
+# Nuevo parámetro de margen comercial en mantenimientos
+ALTER TABLE `proasistencia`.`parametros`   
+  ADD COLUMN `margenMantenimiento` DECIMAL(5,2) NULL AFTER `articuloMantenimiento`;

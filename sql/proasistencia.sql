@@ -407,12 +407,13 @@ DROP TABLE IF EXISTS `parametros`;
 CREATE TABLE `parametros` (
   `parametroId` int(11) NOT NULL,
   `articuloMantenimiento` int(11) DEFAULT NULL,
+  `margenMantenimiento` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`parametroId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `parametros` */
 
-insert  into `parametros`(`parametroId`,`articuloMantenimiento`) values (0,2);
+insert  into `parametros`(`parametroId`,`articuloMantenimiento`,`margenMantenimiento`) values (0,2,'10.50');
 
 /*Table structure for table `prefacturas` */
 

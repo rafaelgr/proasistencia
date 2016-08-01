@@ -70,6 +70,7 @@ function admData() {
     var self = this;
     self.parametroId = ko.observable();
     self.articuloMantenimiento = ko.observable();
+    self.margenMantenimiento = ko.observable();
     //
     self.sartManId = ko.observable();
     //
@@ -80,6 +81,7 @@ function admData() {
 function loadData(data) {
     vm.parametroId(data.parametroId);
     vm.articuloMantenimiento(data.articuloMantenimiento);
+    vm.margenMantenimiento(data.margenMantenimiento);
     loadArtMan(data.articuloMantenimiento);
 }
 
@@ -113,7 +115,8 @@ function aceptar() {
         var data = {
             parametro: {
                 "parametroId": 0,
-                "articuloMantenimiento": vm.sartManId()
+                "articuloMantenimiento": vm.sartManId(),
+                "margenMantenimiento": vm.margenMantenimiento()
             }
         };
 
