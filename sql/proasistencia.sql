@@ -65,12 +65,13 @@ CREATE TABLE `clientes` (
   KEY `fkey_tipo_cliente` (`tipoClienteId`),
   CONSTRAINT `fkey_forma_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `fkey_tipo_cliente` FOREIGN KEY (`tipoClienteId`) REFERENCES `tipos_clientes` (`tipoClienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=33870 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33871 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes` */
 
 insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`) values (25019,NULL,'MANTENIMIENTOS BUENOS S.A.','ASSS','2016-07-01 00:00:00',NULL,1,'Juan Martel',NULL,'Calle del Progreso','28080','Madrid','MADRID','916686888',NULL,NULL,'jm@gmail.com',1,'Es un mantenedor de prueba para ver como funciona',1,'7888888','ES6501822339600011500305',NULL);
-insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`) values (25020,'0','Casas del Mayorazgo','455578B','2016-01-01 00:00:00',NULL,1,NULL,NULL,'Calle del Mayorazgo N.27','46000','Valencia','VALENCIA',NULL,NULL,NULL,NULL,1,NULL,0,'4455555','ES6501822339600011500305',NULL);
+insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`) values (25020,'0','Casas del Mayorazgo','455578B','2016-01-01 00:00:00',NULL,1,NULL,NULL,'Calle del Mayorazgo N.27','46000','Valencia','VALENCIA',NULL,NULL,NULL,NULL,1,NULL,0,'4455555','ES6501822339600011500305',8);
+insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`) values (33870,NULL,'Nombre del clientre','A4555',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0,'11222122','51215555',6);
 
 /*Table structure for table `clientes_comisionistas` */
 
@@ -220,6 +221,11 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   `manPorComer` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje que se llevaría el mantenedor',
   `observaciones` text,
   `comercialId` int(11) DEFAULT NULL COMMENT 'Es el agente asociado',
+  `coste` decimal(10,2) DEFAULT NULL,
+  `margen` decimal(5,2) DEFAULT NULL,
+  `beneficio` decimal(10,2) DEFAULT NULL,
+  `importeInicial` decimal(10,2) DEFAULT NULL,
+  `manAgente` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`contratoClienteMantenimientoId`),
   KEY `ref_ccm_empresa` (`empresaId`),
   KEY `ref_ccm_mantenedor` (`mantenedorId`),
@@ -227,15 +233,9 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
-
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`) values (1,172,25019,25020,'2016-07-01',NULL,'1200.00',3,NULL,'Creado a mano para ver que funciona correctamente',NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`) values (4,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático',NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`) values (5,176,25019,25020,'2016-01-01',NULL,'2500.00',4,'12.45','A ver si graba bien de entrada',NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`) values (6,178,NULL,25020,'2016-01-01',NULL,'1500.00',4,'10.30','OKKK',NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`) values (7,172,25019,25020,'2016-01-01',NULL,'1450.23',3,NULL,'Creada con POST automático',NULL);
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -251,12 +251,9 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
-
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (1,6,21,'10.20');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (3,6,8,'22.00');
 
 /*Table structure for table `contrato_comercial` */
 

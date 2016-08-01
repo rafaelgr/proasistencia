@@ -4,3 +4,10 @@ ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`
 # El cliente tiene un agente asociado por defecto
 ALTER TABLE `proasistencia`.`clientes`   
   ADD COLUMN `comercialId` INT(11) NULL  COMMENT 'Es el agente por defecto' AFTER `iban`;
+# Nuevos campos para calculos de importe en contrato de mantenimiento
+ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`   
+  ADD COLUMN `coste` DECIMAL(10,2) NULL AFTER `comercialId`,
+  ADD COLUMN `margen` DECIMAL(5,2) NULL AFTER `coste`,
+  ADD COLUMN `beneficio` DECIMAL(10,2) NULL AFTER `margen`,
+  ADD COLUMN `importeInicial` DECIMAL(10,2) NULL AFTER `beneficio`,
+  ADD COLUMN `manAgente` DECIMAL(5,2) NULL AFTER `importeInicial`;
