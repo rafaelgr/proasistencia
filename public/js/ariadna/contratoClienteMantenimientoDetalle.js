@@ -26,6 +26,16 @@ function initForm() {
     getVersionFooter();
     vm = new admData();
     ko.applyBindings(vm);
+
+    // Calculadora de cliente
+    $('#txtCoste').on('blur', cambioCoste());
+    $('#txtMargen').on('blur', cambioCoste());
+    $('#txtManAgente').on('blur', cambioCoste());
+    $('#txtImporte2').on('blur', cambioImporte2());
+
+    // calculadora de mantenedor
+    $('#txtImporte3').on('blur', cambioImporte3());
+
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
@@ -49,6 +59,10 @@ function initForm() {
 
     $("#cmbMantenedores").select2(select2Spanish());
     loadMantenedores();
+    $("#cmbMantenedores").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioMantenedor(e.added);
+    });
 
     $("#cmbClientes").select2(select2Spanish());
     loadClientes();
@@ -59,6 +73,10 @@ function initForm() {
 
     $("#cmbAgentes").select2(select2Spanish());
     loadAgentes();
+    $("#cmbAgentes").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioAgente(e.added);
+    });
 
 
     $("#cmbTiposPagos").select2(select2Spanish());
@@ -72,6 +90,8 @@ function initForm() {
     });
 
     initTablaComisionistas();
+
+    loadParametros(); // es por tener el margen comercial por defecto
 
     contratoClienteMantenimientoId = gup('ContratoClienteMantenimientoId');
     if (contratoClienteMantenimientoId != 0) {
@@ -109,6 +129,13 @@ function admData() {
     self.tipoPago = ko.observable();
     self.manPorComer = ko.observable();
     self.observaciones = ko.observable();
+    //
+    self.coste = ko.observable();
+    self.margen = ko.observable();
+    self.beneficio = ko.observable();
+    self.importeInicial = ko.observable();
+    self.manAgente = ko.observable();
+    self.beneficioPrevio = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -164,6 +191,12 @@ function loadData(data) {
     vm.manPorComer(data.manPorComer);
     vm.observaciones(data.observaciones);
     vm.comercialId(data.comercialId);
+
+    vm.coste(data.coste);
+    vm.margen(data.margen);
+    vm.beneficio(data.beneficio);
+    vm.importeInicial(data.importeInicial);
+    vm.manAgente(data.manAgente);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.clienteId);
@@ -240,7 +273,12 @@ function aceptar() {
                 "manPorComer": vm.manPorComer(),
                 "tipoPago": vm.stipoPagoId(),
                 "comercialId": vm.sagenteId(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "coste": vm.coste(),
+                "margen": vm.margen(),
+                "beneficio": vm.beneficio(),
+                "importeInicial": vm.importeInicial(),
+                "manAgente": vm.manAgente()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -377,6 +415,41 @@ function loadTiposPagos(id) {
     $("#cmbTiposPagos").val([id]).trigger('change');
 }
 
+function loadParametros() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/parametros/0",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // hay que mostrarlo en la zona de datos
+            vm.margen(data.margenMantenimiento);
+        },
+        error: errorAjax
+    });
+}
+
+function cambioCoste() {
+    var mf = function () {
+        if (vm.coste()) {
+            var b = roundToTwo((vm.coste() * vm.margen() / 100.0));
+            vm.beneficio(b);
+            vm.importeInicial(parseFloat(vm.coste()) + vm.beneficio());
+            if (vm.manAgente()) {
+                var m = roundToTwo((vm.importeInicial() * vm.manAgente() / 100.0));
+                vm.importe(roundToTwo(m + vm.importeInicial()));
+            }
+        }
+    };
+    return mf;
+}
+
+function cambioImporte() {
+    var mf = function () {
+        alert("Cambia importe");
+    };
+    return mf;
+}
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
@@ -649,6 +722,44 @@ function cambioComercial(data) {
 
 }
 
+function cambioAgente(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.sempresaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.manAgente(data.manPorVentas);
+        },
+        error: errorAjax
+    });;
+}
+
+function cambioMantenedor(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.sempresaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.manAgente(data.manPorVentas);
+        },
+        error: errorAjax
+    });;
+}
+
 /*
 * cambioCliente
 * Al cambiar un cliente debemos hacer varias cosas
@@ -668,6 +779,8 @@ function cambioCliente(data) {
             // asignamos el agente que corresponda
             if (data.comercialId) {
                 loadAgentes(data.comercialId);
+                data.id = data.comercialId;
+                cambioAgente(data);
             }
 
         },
