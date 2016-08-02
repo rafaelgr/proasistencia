@@ -226,16 +226,23 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   `beneficio` decimal(10,2) DEFAULT NULL,
   `importeInicial` decimal(10,2) DEFAULT NULL,
   `manAgente` decimal(5,2) DEFAULT NULL,
+  `articuloId` int(11) DEFAULT NULL COMMENT 'Articulo relacionado que tipifica el contrato',
   PRIMARY KEY (`contratoClienteMantenimientoId`),
   KEY `ref_ccm_empresa` (`empresaId`),
   KEY `ref_ccm_mantenedor` (`mantenedorId`),
   KEY `ref_ccm_cliente` (`clienteId`),
+  KEY `ref_ccm_articulo` (`articuloId`),
+  CONSTRAINT `ref_ccm_articulo` FOREIGN KEY (`articuloId`) REFERENCES `articulos` (`articuloId`),
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
+
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (26,172,NULL,25020,NULL,NULL,'1092.88',3,NULL,NULL,6,'824.00','20.30','167.27','991.27','10.25',NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (27,172,25019,33870,'2016-08-01',NULL,'100.00',4,'20.00',NULL,6,NULL,'20.30','18.00','20.00','10.00',NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (28,172,NULL,25020,'2016-08-02',NULL,'633.97',4,NULL,NULL,6,'478.00','20.30','97.03','575.03','10.25',NULL);
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -251,9 +258,14 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
+
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (13,26,8,'10.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (14,26,8,'9.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (15,28,8,'9.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (16,28,8,'10.00');
 
 /*Table structure for table `contrato_comercial` */
 
@@ -278,7 +290,7 @@ CREATE TABLE `contrato_comercial` (
 /*Data for the table `contrato_comercial` */
 
 insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manImporteOperacion`,`manPorVentas`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'0.00','11.10',NULL);
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manImporteOperacion`,`manPorVentas`,`observaciones`) values (4,176,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'0.00','10.25',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manImporteOperacion`,`manPorVentas`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'0.00','10.25',NULL);
 
 /*Table structure for table `contrato_mantenedor` */
 
@@ -304,7 +316,7 @@ CREATE TABLE `contrato_mantenedor` (
 
 /*Data for the table `contrato_mantenedor` */
 
-insert  into `contrato_mantenedor`(`contratoMantenedorId`,`empresaId`,`clienteId`,`fechaInicio`,`fechaFin`,`manPorComer`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteMantenedor`,`firmanteMantenedor`,`observaciones`,`tipoPago`) values (2,175,25019,'2016-07-01',NULL,'10.00','45555','JUUUJ','4555','HJJJJ',NULL,4);
+insert  into `contrato_mantenedor`(`contratoMantenedorId`,`empresaId`,`clienteId`,`fechaInicio`,`fechaFin`,`manPorComer`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteMantenedor`,`firmanteMantenedor`,`observaciones`,`tipoPago`) values (2,172,25019,'2016-07-01',NULL,'10.10','45555','JUUUJ','4555','HJJJJ',NULL,4);
 
 /*Table structure for table `empresas` */
 
@@ -413,7 +425,7 @@ CREATE TABLE `parametros` (
 
 /*Data for the table `parametros` */
 
-insert  into `parametros`(`parametroId`,`articuloMantenimiento`,`margenMantenimiento`) values (0,2,'10.50');
+insert  into `parametros`(`parametroId`,`articuloMantenimiento`,`margenMantenimiento`) values (0,2,'20.30');
 
 /*Table structure for table `prefacturas` */
 

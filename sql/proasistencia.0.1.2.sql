@@ -14,3 +14,7 @@ ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`
 # Nuevo parámetro de margen comercial en mantenimientos
 ALTER TABLE `proasistencia`.`parametros`   
   ADD COLUMN `margenMantenimiento` DECIMAL(5,2) NULL AFTER `articuloMantenimiento`;
+# Realación de artículo - contrato de mantenimiento para tipicar el contrato
+ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`   
+  ADD COLUMN `articuloId` INT(11) NULL  COMMENT 'Articulo relacionado que tipifica el contrato' AFTER `manAgente`,
+  ADD CONSTRAINT `ref_ccm_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`);
