@@ -2,6 +2,19 @@
 comercialDetalle.js
 Funciones js par la página ComercialDetalle.html
 ---------------------------------------------------------------------------*/
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
+var dataContratosComerciales;
+var contratoComercialId;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
 var empId = 0;
 
 datePickerSpanish(); // see comun.js
@@ -18,38 +31,40 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
-    $("#frmComercial").submit(function() {
+    $("#frmComercial").submit(function () {
         return false;
     });
+
+    initTablaContratosComerciales();
 
     // select2 things
     $("#cmbTiposComerciales").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -60,18 +75,31 @@ function initForm() {
     empId = gup('ComercialId');
     if (empId != 0) {
         var data = {
-                comercialId: empId
-            }
-            // hay que buscar ese elemento en concreto
+            comercialId: empId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/comerciales/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                // cargamos los contratos relacionados
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/contratos_comerciales/comercial/" + vm.comercialId(),
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        loadTablaContratosComerciales(data);
+                    },
+                    error: errorAjax
+                });
             },
             error: errorAjax
         });
@@ -145,7 +173,7 @@ function datosOK() {
                 email: true
             },
             cmbTiposComerciales: {
-                required:true
+                required: true
             }
         },
         // Messages for form validation
@@ -164,7 +192,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -186,7 +214,7 @@ function datosImportOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -195,7 +223,7 @@ function datosImportOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
@@ -228,7 +256,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -244,7 +272,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -259,7 +287,7 @@ function aceptar() {
 }
 
 function importar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosImportOK())
             return;
         $('#btnImportar').addClass('fa-spin');
@@ -268,7 +296,7 @@ function importar() {
             url: myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
-            success: function(data, status) {
+            success: function (data, status) {
                 $('#btnImportar').removeClass('fa-spin');
                 // la cadena será devuelta como JSON
                 var rData = JSON.parse(data);
@@ -288,7 +316,7 @@ function importar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "ComercialesGeneral.html";
         window.open(url, '_self');
     }
@@ -302,7 +330,7 @@ function loadTiposComerciales(id) {
         url: "/api/tipos_comerciales",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposComerciales(tiposComerciales);
             //if (id){
@@ -312,4 +340,91 @@ function loadTiposComerciales(id) {
         },
         error: errorAjax
     });
+}
+
+// TAB CONTRATOS
+function initTablaContratosComerciales() {
+    tablaCarro = $('#dt_contratoComercial').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contratoComercial'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataContratosComerciales,
+        columns: [{
+            data: "empresa"
+        }, {
+                data: "fechaInicio",
+                render: function (data, type, row) {
+                    if (!data) {
+                        return "";
+                    }
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            }, {
+                data: "fechaFin",
+                render: function (data, type, row) {
+                    if (!data) {
+                        return "";
+                    }
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            }, {
+                data: "contratoComercialId",
+                render: function (data, type, row) {
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editContratoComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt2 + "</div>";
+                    return html;
+                }
+            }]
+    });
+}
+
+function loadTablaContratosComerciales(data) {
+    var dt = $('#dt_contratoComercial').dataTable();
+    if (data !== null && data.length === 0) {
+        mostrarMensajeSmart('No se han encontrado registros');
+        $("#tbContratoComercial").hide();
+    } else {
+        dt.fnClearTable();
+        dt.fnAddData(data);
+        dt.fnDraw();
+        $("#tbContratoComercial").show();
+    }
+
+}
+
+function editContratoComercial(id) {
+    // hay que abrir la página de detalle de comercial
+    // pasando en la url ese ID
+    var url = "ContratoComercialDetalle.html?ContratoComercialId=" + id;
+    window.open(url, '_self');
 }
