@@ -399,10 +399,12 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-3">
-                                                </section>
-                                                <section class="col col-md-3">
-                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Artículo relacionado</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>                                                
                                                 <section class="col col-md-3">
                                                     <label class="label">Fecha Inicio</label>
                                                     <label class="input">

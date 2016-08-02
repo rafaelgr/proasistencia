@@ -81,6 +81,8 @@ function initForm() {
         cambioAgente(e.added);
     });
 
+    $("#cmbArticulos").select2(select2Spanish());
+    loadArticulos();
 
     $("#cmbTiposPagos").select2(select2Spanish());
     loadTiposPagos();
@@ -137,6 +139,7 @@ function admData() {
     self.tipoPago = ko.observable();
     self.manPorComer = ko.observable();
     self.observaciones = ko.observable();
+    self.articuloId = ko.observable();
     //
     self.coste = ko.observable();
     self.margen = ko.observable();
@@ -154,6 +157,11 @@ function admData() {
     //
     self.posiblesMantenedores = ko.observableArray([]);
     self.elegidosMantenedores = ko.observableArray([]);
+    //
+    self.sarticuloId = ko.observable();
+    //
+    self.posiblesArticulos = ko.observableArray([]);
+    self.elegidosArticulos = ko.observableArray([]);    
     //
     self.sclienteId = ko.observable();
     //
@@ -199,6 +207,7 @@ function loadData(data) {
     vm.manPorComer(data.manPorComer);
     vm.observaciones(data.observaciones);
     vm.comercialId(data.comercialId);
+    vm.articuloId(data.articuloId);
 
     vm.coste(data.coste);
     vm.margen(data.margen);
@@ -211,6 +220,7 @@ function loadData(data) {
     loadClientes(data.clienteId);
     loadAgentes(data.comercialId);
     loadTiposPagos(data.tipoPago);
+    loadArticulos(data.articuloId);
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
 }
@@ -286,7 +296,8 @@ function aceptar() {
                 "margen": vm.margen(),
                 "beneficio": vm.beneficio(),
                 "importeInicial": vm.importeInicial(),
-                "manAgente": vm.manAgente()
+                "manAgente": vm.manAgente(),
+                "articuloId": vm.sarticuloId()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -394,6 +405,22 @@ function loadClientes(id) {
         error: errorAjax
     });
 }
+
+function loadArticulos(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesArticulos(articulos);
+            $("#cmbArticulos").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
 
 function loadAgentes(id) {
     $.ajax({
