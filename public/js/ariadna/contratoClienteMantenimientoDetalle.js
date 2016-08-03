@@ -32,12 +32,7 @@ function initForm() {
     $('#txtMargen').on('blur', cambioCoste());
     $('#txtManAgente').on('blur', cambioCoste());
 
-    $('#txtImporte2').on('blur', cambioImporte2());
 
-    // calculadora de mantenedor
-    $('#txtImporte3').on('blur', cambioImporte3());
-    $('#txtManPorComer').on('blur', cambioImporte3());
-    $('#txtManAgente2').on('blur', cambioImporte3());
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
@@ -64,7 +59,6 @@ function initForm() {
     loadMantenedores();
     $("#cmbMantenedores").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioMantenedor(e.added);
     });
 
     $("#cmbClientes").select2(select2Spanish());
@@ -99,7 +93,6 @@ function initForm() {
     loadParametros(); // es por tener el margen comercial por defecto
 
     contratoClienteMantenimientoId = gup('ContratoClienteMantenimientoId');
-    ocultarCalMantenedor(); // por defecto ocultamos la calculadora de mantenedor
     if (contratoClienteMantenimientoId != 0) {
         var data = {
             contratoClienteMantenimientoId: contratoClienteMantenimientoId
@@ -113,9 +106,6 @@ function initForm() {
             data: JSON.stringify(data),
             success: function (data, status) {
                 // Mirar si es de mantenedor para mostrar su calculadora
-                if (data.mantenedorId) {
-                    mostrarCalMantenedor();
-                }
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -486,30 +476,6 @@ function cambioImporte() {
     return mf;
 }
 
-function cambioImporte2() {
-    var mf = function () {
-    };
-    return mf;
-}
-
-function cambioImporte3() {
-    var mf = function () {
-        // hay que calcular desde el importe de cliente hacia atrás
-        if (vm.importe()) {
-            // (1) Calculamos el porcentaje que fcaturaremos y eso
-            // será nuestro beneficio inicial (previo)
-            var bp = (vm.importe() * vm.manPorComer() / 100);
-            vm.importeInicial(roundToTwo(bp));
-            // (2) Y ahora le restamos la comisión del agente
-            if (vm.manAgente()) {
-                bp = bp - (bp * vm.manAgente() / 100);
-            }
-            vm.beneficio(roundToTwo(bp));
-        }
-    };
-    return mf;
-}
-
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
 --------------------------------------------------------------------*/
@@ -800,25 +766,7 @@ function cambioAgente(data) {
     });;
 }
 
-function cambioMantenedor(data) {
-    //
-    if (!data) {
-        return;
-    }
-    mostrarCalMantenedor();
-    var comercialId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/contratos_mantenedores/mantenedor_empresa/" + comercialId + "/" + vm.sempresaId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // asignamos el porComer al vm
-            vm.manPorComer(data.manPorComer);
-        },
-        error: errorAjax
-    });;
-}
+
 
 /*
 * cambioCliente
@@ -849,15 +797,6 @@ function cambioCliente(data) {
 
 }
 
-function ocultarCalMantenedor() {
-    $("#calMantenedor").hide();
-    $("#calCliente").show();
-}
-
-function mostrarCalMantenedor() {
-    $("#calCliente").hide();
-    $("#calMantenedor").show();
-}
 
 /* ----------------------------------------------------------
     Funciones relacionadas con la generación de prefacturas
