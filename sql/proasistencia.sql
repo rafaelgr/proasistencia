@@ -29,7 +29,7 @@ CREATE TABLE `articulos` (
   PRIMARY KEY (`articuloId`),
   KEY `ref_art_grupo` (`grupoArticuloId`),
   CONSTRAINT `ref_art_grupo` FOREIGN KEY (`grupoArticuloId`) REFERENCES `grupo_articulo` (`grupoArticuloId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `articulos` */
 
@@ -37,6 +37,7 @@ insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,
 insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (3,NULL,NULL,'Articulo para pruebas','120.33',5,NULL);
 insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (4,NULL,NULL,'Tipo de mantenimiento 1','0.00',5,NULL);
 insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (5,NULL,NULL,'Tipo mantenimiento 2','0.00',4,NULL);
+insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (6,4,NULL,'Mantenimiento de ascensores','12.63',5,'Esta es la descripción larga en la \nque se\ncuenta\ntodo\n');
 
 /*Table structure for table `clientes` */
 
@@ -392,9 +393,12 @@ CREATE TABLE `grupo_articulo` (
   `grupoArticuloId` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`grupoArticuloId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `grupo_articulo` */
+
+insert  into `grupo_articulo`(`grupoArticuloId`,`nombre`) values (3,'Capitulo de obras');
+insert  into `grupo_articulo`(`grupoArticuloId`,`nombre`) values (4,'Capitulo Mantenimiento');
 
 /*Table structure for table `mantenedores` */
 
@@ -569,12 +573,7 @@ CREATE TABLE `tipos_comerciales` (
 /*Data for the table `tipos_comerciales` */
 
 insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (1,'AGENTE');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (2,'COMERCIAL');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (3,'DIRECTOR COMERCIAL');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (4,'MANTENIMIENTO');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (5,'JEFE OBRAS');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (6,'OFICINA TÉCNICA');
-insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (7,'ASESOR TÉCNICO');
+insert  into `tipos_comerciales`(`tipoComercialId`,`nombre`) values (2,'COLABORADOR');
 
 /*Table structure for table `tipos_forma_pago` */
 
