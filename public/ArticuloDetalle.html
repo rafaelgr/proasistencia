@@ -162,7 +162,7 @@
                             <a href="ParametroDetalle.html">
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
-                        </li>                    
+                        </li>
                         <li id="usuarios">
                             <a href="UsuariosGeneral.html">
                                 <i class="fa fa-mortar-board"></i> Usuarios
@@ -191,6 +191,11 @@
                         <li id="comerciales">
                             <a href="ComercialesGeneral.html">
                                 <i class="fa fa-user"></i> Comercial / Comis.
+                            </a>
+                        </li>
+                        <li id="grupoArticulos">
+                            <a href="GrupoArticuloGeneral.html">
+                                <i class="fa fa-square"></i> Capitulos
                             </a>
                         </li>
                         <li id="articulos">
@@ -237,7 +242,7 @@
                                     <a href="#"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -281,10 +286,9 @@
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                     <h1 class="page-title txt-color-blueDark">
 
-                            <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-square-o"></i>
-                            Detalle unidad<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
-                        </h1>
+                        <!-- PAGE HEADER -->
+                        <i class="fa-fw fa fa-square-o"></i> Detalle unidad<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                    </h1>
                 </div>
                 <!-- end col -->
                 <!-- right side of the page with the sparkline graphs -->
@@ -370,6 +374,10 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-4">
+                                                    <label class="label">Capitulo</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbGruposArticulo" name="cmbGruposArticulo" data-bind="options: posiblesGruposArticulo, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGruposArticulo, selected2:{}"></select><i></i>
+                                                    </label>
                                                 </section>
                                                 <section class="col col-md-4">
                                                     <label class="label">Código Barras</label>
@@ -381,6 +389,14 @@
                                                     <label class="label">Precio unitario</label>
                                                     <label class="input">
                                                         <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Descripcion</label>
+                                                    <label class="textarea textarea-resizable">
+                                                        <textarea id="txtDescripcion" rows="3" class="custom-scroll" data-bind="value:descripcion"></textarea>
                                                     </label>
                                                 </section>
                                             </div>
@@ -416,11 +432,12 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
-                    <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong> <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
+                    <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                 </div>
             </div>
         </div>
@@ -450,6 +467,8 @@
     <script src="js/bootstrap/bootstrap.min.js"></script>
     <!-- MOMENT -->
     <script src="js/moment.js"></script>
+    <!-- NUMERAL -->
+    <script src="js/numeral.min.js"></script>    
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
