@@ -20,17 +20,23 @@ DROP TABLE IF EXISTS `articulos`;
 
 CREATE TABLE `articulos` (
   `articuloId` int(11) NOT NULL AUTO_INCREMENT,
+  `grupoArticuloId` int(11) DEFAULT NULL,
   `codigoBarras` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `precioUnitario` decimal(10,2) DEFAULT NULL,
   `tipoIvaId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`articuloId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `descripcion` text,
+  PRIMARY KEY (`articuloId`),
+  KEY `ref_art_grupo` (`grupoArticuloId`),
+  CONSTRAINT `ref_art_grupo` FOREIGN KEY (`grupoArticuloId`) REFERENCES `grupo_articulo` (`grupoArticuloId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `articulos` */
 
-insert  into `articulos`(`articuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`) values (2,NULL,'Mantenimiento general','0.00',5);
-insert  into `articulos`(`articuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`) values (3,NULL,'Articulo para pruebas','120.33',5);
+insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (2,NULL,NULL,'Mantenimiento general','0.00',5,NULL);
+insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (3,NULL,NULL,'Articulo para pruebas','120.33',5,NULL);
+insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (4,NULL,NULL,'Tipo de mantenimiento 1','0.00',5,NULL);
+insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`) values (5,NULL,NULL,'Tipo mantenimiento 2','0.00',4,NULL);
 
 /*Table structure for table `clientes` */
 
@@ -87,7 +93,7 @@ CREATE TABLE `clientes_comisionistas` (
   KEY `ref_cc_comercial` (`comercialId`),
   CONSTRAINT `ref_cc_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_cc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes_comisionistas` */
 
@@ -240,7 +246,7 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
 
 /*Data for the table `contrato_cliente_mantenimiento` */
 
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (26,172,NULL,25020,NULL,NULL,'1092.88',3,NULL,NULL,6,'824.00','20.30','167.27','991.27','10.25',NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (26,172,NULL,25020,'2016-08-01',NULL,'1092.88',3,NULL,NULL,6,'824.00','20.30','167.27','991.27','10.25',5);
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (27,172,25019,33870,'2016-08-01',NULL,'100.00',4,'20.00',NULL,6,NULL,'20.30','18.00','20.00','10.00',NULL);
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (28,172,NULL,25020,'2016-08-02',NULL,'633.97',4,NULL,NULL,6,'478.00','20.30','97.03','575.03','10.25',NULL);
 
@@ -378,6 +384,18 @@ CREATE TABLE `formas_pago` (
 insert  into `formas_pago`(`formaPagoId`,`tipoFormaPagoId`,`nombre`,`numeroVencimientos`,`primerVencimiento`,`restoVencimiento`) values (1,0,'Efectivo',1,0,0);
 insert  into `formas_pago`(`formaPagoId`,`tipoFormaPagoId`,`nombre`,`numeroVencimientos`,`primerVencimiento`,`restoVencimiento`) values (2,4,'RECIBO 30,60,90',3,30,30);
 
+/*Table structure for table `grupo_articulo` */
+
+DROP TABLE IF EXISTS `grupo_articulo`;
+
+CREATE TABLE `grupo_articulo` (
+  `grupoArticuloId` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`grupoArticuloId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `grupo_articulo` */
+
 /*Table structure for table `mantenedores` */
 
 DROP TABLE IF EXISTS `mantenedores`;
@@ -461,8 +479,8 @@ CREATE TABLE `prefacturas` (
   KEY `pref_clientes` (`clienteId`),
   KEY `pref_formas_pago` (`formaPagoId`),
   KEY `pref_contratos` (`contratoClienteMantenimientoId`),
-  CONSTRAINT `pref_contratos` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `pref_clientes` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
+  CONSTRAINT `pref_contratos` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
