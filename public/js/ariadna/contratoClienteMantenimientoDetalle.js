@@ -164,7 +164,8 @@ function admData() {
     //
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
-    self.porComer = ko.observable();
+    self.porVentaNeta = ko.observable();
+    self.porBeneficio = ko.observable();
 
     // --------- generacion
     self.fInicial = ko.observable();
@@ -470,12 +471,6 @@ function cambioImporteAlCliente() {
     return mf;
 }
 
-function cambioImporte() {
-    var mf = function () {
-        alert("Cambia importe");
-    };
-    return mf;
-}
 
 function cargarDatosDeContrato(contratoClienteMantenimientoId) {
     var data = {
@@ -519,7 +514,8 @@ function aceptarComisionista() {
             contratoClienteMantenimientoComisionistaId: vm.contratoClienteMantenimientoComisionistaId(),
             contratoClienteMantenimientoId: vm.contratoClienteMantenimientoId(),
             comercialId: vm.scomercialId(),
-            porComer: vm.porComer()
+            porVentaNeta: vm.porVentaNeta(),
+            porBeneficio: vm.porBeneficio()
         }
     }
     if (!lineaEnEdicion) {
@@ -557,18 +553,12 @@ function datosOKComisionistas() {
         rules: {
             cmbComerciales: {
                 required: true
-            },
-            txtPorComer: {
-                required: true
             }
         },
         // Messages for form validation
         messages: {
             cmbComerciales: {
-                required: "Debe elegir un comercial"
-            },
-            txtPorComer: {
-                required: 'Necesita un porcentaje'
+                required: "Debe elegir un colaborador"
             }
         },
         // Do not change code below
@@ -619,12 +609,18 @@ function initTablaComisionistas() {
         columns: [{
             data: "comercial"
         }, {
-                data: "porComer",
+                data: "porVentaNeta",
                 className: "text-right",
                 render: function (data, type, row) {
                     return numeral(data).format('0,0.00');
                 }
             }, {
+                data: "porBeneficio",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            },{
                 data: "contratoClienteMantenimientoComisionistaId",
                 render: function (data, type, row) {
                     var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -640,7 +636,8 @@ function loadComisionista(data) {
     vm.contratoClienteMantenimientoComisionistaId(data.contratoClienteMantenimientoComisionistaId);
     vm.contratoClienteMantenimientoId(data.contratoClienteMantenimientoId);
     vm.comercialId(data.comercialId);
-    vm.porComer(data.porComer);
+    vm.porVentaNeta(data.porVentaNeta);
+    vm.porBeneficio(data.porBeneficio);
     //
     loadComerciales(data.comercialId);
 }
@@ -648,7 +645,8 @@ function loadComisionista(data) {
 function limpiaComisionista(data) {
     vm.contratoClienteMantenimientoComisionistaId(0);
     vm.comercialId(null);
-    vm.porComer(null);
+    vm.porVentaNeta(null);
+    vm.porBeneficio(null);
     loadComerciales();
 }
 
@@ -760,7 +758,8 @@ function cambioComercial(data) {
         contentType: "application/json",
         success: function (data, status) {
             // asignamos el porComer al vm
-            vm.porComer(data.manPorVentas);
+            vm.porVentaNeta(data.manPorVentaNeta);
+            vm.porBeneficio(data.manPorBeneficio);
         },
         error: errorAjax
     });
@@ -780,10 +779,10 @@ function cambioAgente(data) {
         contentType: "application/json",
         success: function (data, status) {
             // asignamos el porComer al vm
-            vm.manAgente(data.manPorVentas);
+            vm.manAgente(data.manPorVentaNeta);
         },
         error: errorAjax
-    });;
+    });
 }
 
 
@@ -800,7 +799,7 @@ function cambioMantenedor(data) {
         contentType: "application/json",
         success: function (data, status) {
             // asignamos el porComer al vm
-            vm.manPorComer(data.manPorComer);
+            vm.manPorComer(data.manPorVentaNeta);
         },
         error: errorAjax
     });;

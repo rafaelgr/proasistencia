@@ -139,7 +139,8 @@ function admData() {
     self.clienteComisionistaId = ko.observable();
     self.clienteId = ko.observable();
     self.comercialId = ko.observable();
-    self.porComer = ko.observable();
+    self.manPorVentaNeta = ko.observable();
+    self.manPorBeneficio = ko.observable();
     //
     self.empresaId = ko.observable(null);
 }
@@ -426,7 +427,8 @@ function aceptarComisionista() {
             clienteComisionistaId: vm.clienteComisionistaId(),
             clienteId: vm.clienteId(),
             comercialId: vm.scomercialId(),
-            porComer: vm.porComer()
+            manPorVentaNeta: vm.manPorVentaNeta(),
+            manPorBeneficio: vm.manPorBeneficio()
         }
     }
     if (!lineaEnEdicion) {
@@ -463,18 +465,12 @@ function datosOKComisionistas() {
         rules: {
             cmbComerciales: {
                 required: true
-            },
-            txtPorComer: {
-                required: true
             }
         },
         // Messages for form validation
         messages: {
             cmbComerciales: {
                 required: "Debe elegir un comercial"
-            },
-            txtPorComer: {
-                required: 'Necesita un porcentaje'
             }
         },
         // Do not change code below
@@ -525,7 +521,13 @@ function initTablaComisionistas() {
         columns: [{
             data: "comercial"
         }, {
-                data: "porComer",
+                data: "manPorVentaNeta",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "manPorBeneficio",
                 className: "text-right",
                 render: function (data, type, row) {
                     return numeral(data).format('0,0.00');
@@ -546,7 +548,8 @@ function loadComisionista(data) {
     vm.clienteComisionistaId(data.clienteComisionistaId);
     vm.clienteId(data.clienteId);
     vm.comercialId(data.comercialId);
-    vm.porComer(data.porComer);
+    vm.manPorVentaNeta(data.manPorVentaNeta);
+    vm.manPorBeneficio(data.manPorBeneficio);
     //
     loadComerciales(data.comercialId);
 }
@@ -554,7 +557,8 @@ function loadComisionista(data) {
 function limpiaComisionista(data) {
     vm.clienteComisionistaId(0);
     vm.comercialId(null);
-    vm.porComer(null);
+    vm.manPorVentaNeta(null);
+    vm.manPorBeneficio(null)
 }
 
 function loadTablaComisionistas(data) {
@@ -664,8 +668,9 @@ function cambioComercial(data) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // asignamos el porComer al vm
-            vm.porComer(data.manPorVentas);
+            // asignamos el manPorVentaNeta al vm
+            vm.manPorVentaNeta(data.manPorVentaNeta);
+            vm.manPorBeneficio(data.manPorBeneficio);
         },
         error: errorAjax
     });

@@ -88,7 +88,8 @@ CREATE TABLE `clientes_comisionistas` (
   `clienteComisionistaId` int(11) NOT NULL AUTO_INCREMENT,
   `clienteId` int(11) DEFAULT NULL,
   `comercialId` int(11) DEFAULT NULL,
-  `porComer` decimal(5,2) DEFAULT NULL,
+  `manPorVentaNeta` decimal(5,2) DEFAULT NULL,
+  `manPorBeneficio` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`clienteComisionistaId`),
   KEY `ref_cc_cliente` (`clienteId`),
   KEY `ref_cc_comercial` (`comercialId`),
@@ -98,8 +99,8 @@ CREATE TABLE `clientes_comisionistas` (
 
 /*Data for the table `clientes_comisionistas` */
 
-insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`porComer`) values (1,25020,8,'10.00');
-insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`porComer`) values (2,25020,8,'9.00');
+insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`) values (1,25020,8,'10.00',NULL);
+insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`) values (2,25020,8,'9.00',NULL);
 
 /*Table structure for table `comerciales` */
 
@@ -264,22 +265,24 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   `contratoClienteMantenimientoComisionistaId` int(11) NOT NULL AUTO_INCREMENT,
   `contratoClienteMantenimientoId` int(11) DEFAULT NULL,
   `comercialId` int(11) DEFAULT NULL,
-  `porComer` decimal(5,2) DEFAULT NULL,
+  `porVentaNeta` decimal(5,2) DEFAULT NULL,
+  `porBeneficio` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`contratoClienteMantenimientoComisionistaId`),
   KEY `ref_ccmc_ccm` (`contratoClienteMantenimientoId`),
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
 
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (13,26,8,'10.00');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (14,26,8,'9.00');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (15,28,8,'9.00');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (16,28,8,'10.00');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (17,29,8,'10.00');
-insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (18,29,8,'9.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (13,26,8,'10.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (14,26,8,'9.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (15,28,8,'9.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (16,28,8,'10.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (17,29,8,'10.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (18,29,8,'9.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (21,35,6,'15.00','10.00');
 
 /*Table structure for table `contrato_comercial` */
 
@@ -303,8 +306,8 @@ CREATE TABLE `contrato_comercial` (
 
 /*Data for the table `contrato_comercial` */
 
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'0.00','11.10',NULL);
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'0.00','10.25',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'10.00','0.00',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'15.00','10.00',NULL);
 
 /*Table structure for table `contrato_mantenedor` */
 

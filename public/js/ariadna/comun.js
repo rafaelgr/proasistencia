@@ -46,7 +46,7 @@ function mostrarMensajeSmart(mens) {
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar]'
-    }, function(ButtonPressed) {
+    }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             // no hacemos nada solo queríamos mostrar em mensaje
         }
@@ -58,7 +58,7 @@ function mostrarMensajeSmartSiNo(mens) {
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
-    }, function(ButtonPressed) {
+    }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             return 'S';
         }
@@ -68,13 +68,13 @@ function mostrarMensajeSmartSiNo(mens) {
     });
 }
 
-var errorAjax = function(xhr, textStatus, errorThrwon) {
+var errorAjax = function (xhr, textStatus, errorThrwon) {
     var m = xhr.responseText;
     if (!m) m = "Error general posiblemente falla la conexión";
     mostrarMensajeSmart(m);
 }
 
-var errorAjaxSerial = function(xhr) {
+var errorAjaxSerial = function (xhr) {
     var m = xhr.responseText;
     if (!m) m = "Error general posiblemente falla la conexión";
     mostrarMensajeSmart(m);
@@ -143,7 +143,7 @@ function getVersionFooter() {
         url: myconfig.apiUrl + "/api/version",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // Regresa el mensaje
             if (!data.version) {
                 mostrarMensaje('No se pudo obtener la versión ');
@@ -152,7 +152,7 @@ function getVersionFooter() {
             $("#versionFooter").text(a);
 
         },
-        error: function(xhr, textStatus, errorThrwon) {
+        error: function (xhr, textStatus, errorThrwon) {
             var m = xhr.responseText;
             if (!m) m = "Error general posiblemente falla la conexión";
             mostrarMensaje(m);
@@ -216,30 +216,30 @@ function select2Spanish() {
     return {
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -249,8 +249,8 @@ function select2Spanish() {
 //---- numreoDbf
 // Toma un número en formato imprimible español y lo pasa
 // a formato guardable en base de datos.
-function numeroDbf(n){
-    return n.replace('.','').replace(',','.');
+function numeroDbf(n) {
+    return n.replace('.', '').replace(',', '.');
 }
 
 // Initialize utilities
@@ -258,6 +258,20 @@ numeral.language('es', {
     delimiters: {
         thousands: '.',
         decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'mm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal: function (number) {
+        var b = number % 10;
+        return (b === 1 || b === 3) ? 'er' :
+            (b === 2) ? 'do' :
+                (b === 7 || b === 0) ? 'mo' :
+                    (b === 8) ? 'vo' :
+                        (b === 9) ? 'no' : 'to';
     },
     currency: {
         symbol: '€'
@@ -268,6 +282,6 @@ numeral.language('es', {
 numeral.language('es');
 
 // Own utilities
-var roundToTwo = function (num) {    
-    return +(Math.round(num + "e+2")  + "e-2");
+var roundToTwo = function (num) {
+    return +(Math.round(num + "e+2") + "e-2");
 };

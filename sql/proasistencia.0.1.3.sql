@@ -18,3 +18,10 @@ ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`
 ALTER TABLE `proasistencia`.`contrato_comercial`   
   CHANGE `manImporteOperacion` `manPorVentaNeta` DECIMAL(5,2) NULL  COMMENT 'Porcentaje sobre venta neta',
   CHANGE `manPorVentas` `manPorBeneficio` DECIMAL(5,2) NULL  COMMENT 'Porcentaje sobre beneficio';
+# el cambio anterior pero en la relación de coplaboradores en un contrato de mantenimento
+ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento_comisionistas`   
+  CHANGE `porComer` `porVentaNeta` DECIMAL(5,2) NULL,
+  ADD COLUMN `porBeneficio` DECIMAL(5,2) NULL AFTER `porVentaNeta`;
+ALTER TABLE `proasistencia`.`clientes_comisionistas`   
+  CHANGE `porComer` `manPorVentaNeta` DECIMAL(5,2) NULL,
+  ADD COLUMN `manPorBeneficio` DECIMAL(5,2) NULL AFTER `manPorVentaNeta`;
