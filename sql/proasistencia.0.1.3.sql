@@ -14,3 +14,7 @@ ALTER TABLE `proasistencia`.`contrato_cliente_mantenimiento`
   CHANGE `importe` `venta` DECIMAL(10,2) NULL,
   CHANGE `importeInicial` `ventaNeta` DECIMAL(10,2) NULL,
   ADD COLUMN `importeAlCliente` DECIMAL(10,2) NULL AFTER `articuloId`;
+# cambio en los contratos comerciales para tener las comisiones correctas
+ALTER TABLE `proasistencia`.`contrato_comercial`   
+  CHANGE `manImporteOperacion` `manPorVentaNeta` DECIMAL(5,2) NULL  COMMENT 'Porcentaje sobre venta neta',
+  CHANGE `manPorVentas` `manPorBeneficio` DECIMAL(5,2) NULL  COMMENT 'Porcentaje sobre beneficio';

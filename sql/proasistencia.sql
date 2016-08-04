@@ -295,16 +295,16 @@ CREATE TABLE `contrato_comercial` (
   `tipoPago` int(11) DEFAULT NULL COMMENT 'Tipo de pago (1: Único / 2: Mensual',
   `importe` decimal(12,2) DEFAULT NULL,
   `minimoMensual` decimal(12,2) DEFAULT NULL,
-  `manImporteOperacion` decimal(12,2) DEFAULT NULL COMMENT 'Importe por operación de mantenimiento',
-  `manPorVentas` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje sobre las ventas de mantenimiento',
+  `manPorVentaNeta` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje sobre venta neta',
+  `manPorBeneficio` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje sobre beneficio',
   `observaciones` text,
   PRIMARY KEY (`contratoComercialId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_comercial` */
 
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manImporteOperacion`,`manPorVentas`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'0.00','11.10',NULL);
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manImporteOperacion`,`manPorVentas`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'0.00','10.25',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'0.00','11.10',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'0.00','10.25',NULL);
 
 /*Table structure for table `contrato_mantenedor` */
 

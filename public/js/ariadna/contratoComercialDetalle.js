@@ -157,8 +157,8 @@ function admData() {
     self.numMeses = ko.observable();
     self.tipoPago = ko.observable();
     self.minimoMensual = ko.observable();
-    self.manImporteOperacion = ko.observable();
-    self.manPorVentas = ko.observable();
+    self.manPorVentaNeta = ko.observable();
+    self.manPorBeneficio = ko.observable();
     self.observaciones = ko.observable();
     self.importe = ko.observable();
     //
@@ -190,8 +190,8 @@ function loadData(data) {
     vm.tipoPago(data.tipoPago);
     vm.importe(data.importe);
     vm.minimoMensual(data.minimoMensual);
-    vm.manImporteOperacion(data.manImporteOperacion);
-    vm.manPorVentas(data.manPorVentas);
+    vm.manPorVentaNeta(data.manPorVentaNeta);
+    vm.manPorBeneficio(data.manPorBeneficio);
     vm.observaciones(data.observaciones);
     //
     loadEmpresas(data.empresaId);
@@ -254,8 +254,8 @@ function aceptar() {
                 "tipoPago": vm.stipoPagoId(),
                 "importe": vm.importe(),
                 "minimoMensual": vm.minimoMensual(),
-                "manImporteOperacion": vm.manImporteOperacion(),
-                "manPorVentas": vm.manPorVentas(),
+                "manPorVentaNeta": vm.manPorVentaNeta(),
+                "manPorBeneficio": vm.manPorBeneficio(),
                 "observaciones": vm.observaciones()
             }
         };
