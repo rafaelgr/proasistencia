@@ -220,9 +220,6 @@ function datosOK() {
             },
             txtManPorComer: {
                 number: true
-            },
-            cmbTiposPagos: {
-                required: true
             }
         },
         // Messages for form validation
@@ -239,9 +236,6 @@ function datosOK() {
             },
             txtManPorComer: {
                 number: "Debe ser un número valido"
-            },
-            cmbTiposPagos: {
-                required: "Debe elegir un tipo de pago"
             }
         },
         // Do not change code below
