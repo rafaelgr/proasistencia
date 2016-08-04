@@ -8,6 +8,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataContratosComerciales;
+var dataClientes;
 var contratoComercialId;
 
 var breakpointDefinition = {
@@ -36,6 +37,7 @@ function initForm() {
     });
 
     initTablaContratosComerciales();
+    initTablaClientes();
 
     // select2 things
     $("#cmbTiposComerciales").select2({
@@ -90,13 +92,25 @@ function initForm() {
                 // cargamos los contratos relacionados
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/contratos_comerciales/comercial/" + vm.comercialId(),
+                    url: myconfig.apiUrl + "/api/contratos_comerciales/comercial/" + empId,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (data, status) {
                         // hay que mostrarlo en la zona de datos
                         loadTablaContratosComerciales(data);
+                    },
+                    error: errorAjax
+                });
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/clientes/agente/" + empId,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        loadTablaClientes(data);
                     },
                     error: errorAjax
                 });
@@ -411,20 +425,84 @@ function initTablaContratosComerciales() {
 function loadTablaContratosComerciales(data) {
     var dt = $('#dt_contratoComercial').dataTable();
     if (data !== null && data.length === 0) {
-        mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbContratoComercial").hide();
-    } else {
-        dt.fnClearTable();
-        dt.fnAddData(data);
-        dt.fnDraw();
-        $("#tbContratoComercial").show();
+        data = null;
     }
-
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
 }
 
 function editContratoComercial(id) {
     // hay que abrir la página de detalle de comercial
     // pasando en la url ese ID
     var url = "ContratoComercialDetalle.html?ContratoComercialId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_blank');
+}
+
+// TAB CLIENTES
+function initTablaClientes() {
+    tablaCarro = $('#dt_clientes').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_clientes'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataClientes,
+        columns: [{
+            data: "nombre"
+        },
+            {
+                data: "clienteId",
+                render: function (data, type, row) {
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editCliente(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt2 + "</div>";
+                    return html;
+                }
+            }]
+    });
+}
+
+function loadTablaClientes(data) {
+    var dt = $('#dt_clientes').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editCliente(id) {
+    // hay que abrir la página de detalle de comercial
+    // pasando en la url ese ID
+    var url = "ClienteDetalle.html?ClienteId=" + id;
+    window.open(url, '_blank');
 }
