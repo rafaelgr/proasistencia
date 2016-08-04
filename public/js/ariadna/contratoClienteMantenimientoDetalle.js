@@ -28,9 +28,10 @@ function initForm() {
     ko.applyBindings(vm);
 
     // Calculadora de cliente
-    $('#txtCoste').on('blur', cambioCoste());
-    $('#txtMargen').on('blur', cambioCoste());
-    $('#txtManAgente').on('blur', cambioCoste());
+    $('#txtImporteAlCliente').on('blur', cambioImporteAlCliente());
+    $('#txtManPorComer').on('blur', cambioImporteAlCliente());
+    $('#txtManAgente').on('blur', cambioImporteAlCliente());
+    $('#txtCoste').on('blur', cambioImporteAlCliente());
 
 
 
@@ -59,6 +60,7 @@ function initForm() {
     loadMantenedores();
     $("#cmbMantenedores").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
+        cambioMantenedor(e.added);
     });
 
     $("#cmbClientes").select2(select2Spanish());
@@ -94,23 +96,7 @@ function initForm() {
 
     contratoClienteMantenimientoId = gup('ContratoClienteMantenimientoId');
     if (contratoClienteMantenimientoId != 0) {
-        var data = {
-            contratoClienteMantenimientoId: contratoClienteMantenimientoId
-        }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // Mirar si es de mantenedor para mostrar su calculadora
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-            },
-            error: errorAjax
-        });
+        cargarDatosDeContrato(contratoClienteMantenimientoId);
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.contratoClienteMantenimientoId(0);
@@ -125,7 +111,7 @@ function admData() {
     self.clienteId = ko.observable();
     self.fechaInicio = ko.observable();
     self.fechaFin = ko.observable();
-    self.importe = ko.observable();
+    self.venta = ko.observable();
     self.tipoPago = ko.observable();
     self.manPorComer = ko.observable();
     self.observaciones = ko.observable();
@@ -134,9 +120,11 @@ function admData() {
     self.coste = ko.observable();
     self.margen = ko.observable();
     self.beneficio = ko.observable();
-    self.importeInicial = ko.observable();
+    self.ventaNeta = ko.observable();
     self.manAgente = ko.observable();
     self.beneficioPrevio = ko.observable();
+    self.importeAlMantenedor = ko.observable();
+    self.importeAlCliente = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -151,7 +139,7 @@ function admData() {
     self.sarticuloId = ko.observable();
     //
     self.posiblesArticulos = ko.observableArray([]);
-    self.elegidosArticulos = ko.observableArray([]);    
+    self.elegidosArticulos = ko.observableArray([]);
     //
     self.sclienteId = ko.observable();
     //
@@ -192,17 +180,18 @@ function loadData(data) {
     vm.clienteId(data.clienteId);
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFin(spanishDate(data.fechaFin));
-    vm.importe(data.importe);
+    vm.venta(data.venta);
     vm.tipoPago(data.tipoPago);
     vm.manPorComer(data.manPorComer);
     vm.observaciones(data.observaciones);
     vm.comercialId(data.comercialId);
     vm.articuloId(data.articuloId);
+    vm.importeAlCliente(data.importeAlCliente);
 
     vm.coste(data.coste);
     vm.margen(data.margen);
     vm.beneficio(data.beneficio);
-    vm.importeInicial(data.importeInicial);
+    vm.ventaNeta(data.ventaNeta);
     vm.manAgente(data.manAgente);
     //
     loadEmpresas(data.empresaId);
@@ -277,7 +266,7 @@ function aceptar() {
                 "clienteId": vm.sclienteId(),
                 "fechaInicio": spanishDbDate(vm.fechaInicio()),
                 "fechaFin": spanishDbDate(vm.fechaFin()),
-                "importe": vm.importe(),
+                "venta": vm.venta(),
                 "manPorComer": vm.manPorComer(),
                 "tipoPago": vm.stipoPagoId(),
                 "comercialId": vm.sagenteId(),
@@ -285,9 +274,10 @@ function aceptar() {
                 "coste": vm.coste(),
                 "margen": vm.margen(),
                 "beneficio": vm.beneficio(),
-                "importeInicial": vm.importeInicial(),
+                "ventaNeta": vm.ventaNeta(),
                 "manAgente": vm.manAgente(),
-                "articuloId": vm.sarticuloId()
+                "articuloId": vm.sarticuloId(),
+                "importeAlCliente": vm.importeAlCliente()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -311,9 +301,10 @@ function aceptar() {
                         contentType: "application/json",
                         data: JSON.stringify(contratoClienteMantenimiento),
                         success: function (data, status) {
-                            // Nos quedamos
-                            var url = "ContratoClienteMantenimientoDetalle.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
-                            window.open(url, '_self');
+                            contratoClienteMantenimientoId = vm.contratoClienteMantenimientoId();
+                            var mens = "Revise las asociaciones con colaboradores creadas automáticamente, más abajo en esta página";
+                            mostrarMensajeSmart(mens);
+                            cargarDatosDeContrato(vm.contratoClienteMantenimientoId());
                         },
                         error: errorAjax
                     });
@@ -454,15 +445,25 @@ function loadParametros() {
     });
 }
 
-function cambioCoste() {
+function cambioImporteAlCliente() {
     var mf = function () {
-        if (vm.coste()) {
-            var b = roundToTwo((vm.coste() * vm.margen() / 100.0));
-            vm.beneficio(b);
-            vm.importeInicial(parseFloat(vm.coste()) + vm.beneficio());
+        if (vm.importeAlCliente()) {
+            var importe = vm.importeAlCliente();
+            var venta = importe;
+            // Si hay mantenedor calculamos venta
+            if (vm.manPorComer()) {
+                venta = importe - (importe * vm.manPorComer() / 100.0);
+            }
+            vm.venta(roundToTwo(venta));
+            // Descontamos comisión del agente para llegar a venta neta
+            var ventaNeta = venta;
             if (vm.manAgente()) {
-                var m = roundToTwo((vm.importeInicial() * vm.manAgente() / 100.0));
-                vm.importe(roundToTwo(m + vm.importeInicial()));
+                ventaNeta = venta - (venta * vm.manAgente() / 100.0);
+            }
+            vm.ventaNeta(roundToTwo(ventaNeta));
+            // Solo queda restar el coste para obtener el beneficio
+            if (vm.coste()) {
+                vm.beneficio(roundToTwo(vm.ventaNeta() - vm.coste()));
             }
         }
     };
@@ -475,6 +476,25 @@ function cambioImporte() {
     };
     return mf;
 }
+
+function cargarDatosDeContrato(contratoClienteMantenimientoId) {
+    var data = {
+        contratoClienteMantenimientoId: contratoClienteMantenimientoId
+    }
+    // hay que buscar ese elemento en concreto
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            loadData(data);
+        },
+        error: errorAjax
+    });
+}
+
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
@@ -766,6 +786,25 @@ function cambioAgente(data) {
     });;
 }
 
+
+function cambioMantenedor(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_mantenedores/mantenedor_empresa/" + comercialId + "/" + vm.sempresaId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.manPorComer(data.manPorComer);
+        },
+        error: errorAjax
+    });;
+}
 
 
 /*

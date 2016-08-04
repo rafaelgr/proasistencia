@@ -183,7 +183,6 @@
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -198,7 +197,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -371,7 +370,7 @@
                                                 <section class="col col-md-3">
                                                     <label class="label">Importe al cliente</label>
                                                     <label class="input">
-                                                        <input id="txtImporte" name="txtImporte" data-bind="value:importe" disabled />
+                                                        <input id="txtImporteAlCliente2" name="txtImporteAlCliente2" data-bind="value:importeAlCliente" disabled />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
@@ -409,7 +408,7 @@
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
                                                     </label>
-                                                </section>                                                
+                                                </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Fecha Inicio</label>
                                                     <label class="input">
@@ -426,54 +425,44 @@
                                                 </section>
                                             </div>
                                             <!-- Calculadoras de importes -->
-                                            <fieldset>
+                                                <header>(Calculadora importes)</header>
+                                                <div class="row" >
+                                                    <div class="col col-md-4">
+                                                        <label class="label">Importe al cliente</label>
+                                                        <label class="input">
+                                                            <input id="txtImporteAlCliente" name="txtImporteAlCliente" data-bind="value:importeAlCliente" />
+                                                    </div>
+                                                    <div class="col col-md-2">
+                                                        <label class="label">% Mantenedor</label>
+                                                        <label class="input">
+                                                            <input id="txtManPorComer" name="txtManPorComer" data-bind="value:manPorComer" />
+                                                    </div>
+                                                    <div class="col col-md-4">
+                                                        <label class="label">Venta</label>
+                                                        <label class="input">
+                                                            <input id="txtVenta" name="txtVenta" data-bind="value:venta" disabled/>
+                                                    </div>
+                                                    <div class="col col-md-2">
+                                                        <label class="label">% Agente</label>
+                                                        <label class="input">
+                                                            <input id="txtManAgente" name="txtManAgente" data-bind="value:manAgente" />
+                                                    </div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col col-md-4">
+                                                        <label class="label">Venta neta</label>
+                                                        <label class="input">
+                                                            <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
                                                     </div>
-                                                    <div class="col col-md-8">
-                                                        <div id="calCliente">
-                                                            <header>CALCULADORA (CLIENTE)</header>
-                                                            <div class="row">
-                                                                <section class="col col-md-5">
-                                                                    <label class="label">Coste</label>
-                                                                    <label class="input">
-                                                                    <input id="txtCoste" name="txtCoste" data-bind="value:coste"  />
-                                                                </label>
-                                                                </section>
-                                                                <section class="col col-md-2">
-                                                                    <label class="label">M. Comercial</label>
-                                                                    <label class="input">
-                                                                    <input id="txtMargen" name="txtMargen" data-bind="value:margen"/>
-                                                                </label>
-                                                                </section>
-                                                                <section class="col col-md-5">
-                                                                    <label class="label">Beneficio</label>
-                                                                    <label class="input">
-                                                                    <input id="txtBeneficio" name="txtBeneficio" data-bind="value:beneficio" disabled />
-                                                                </label>
-                                                                </section>
-                                                            </div>
-                                                            <div class="row">
-                                                                <section class="col col-md-5">
-                                                                    <label class="label">Importe inicial</label>
-                                                                    <label class="input">
-                                                                    <input id="txtImporteInicial" name="txtImporteInicial" data-bind="value:importeInicial" disabled />
-                                                                </label>
-                                                                </section>
-                                                                <section class="col col-md-2">
-                                                                    <label class="label">C. Agente</label>
-                                                                    <label class="input">
-                                                                    <input id="txtManAgente" name="txtManAgente" data-bind="value:manAgente" />
-                                                                </label>
-                                                                </section>
-                                                                <section class="col col-md-5">
-                                                                    <label class="label">Importe al cliente</label>
-                                                                    <label class="input">
-                                                                    <input id="txtImporte2" name="txtImporte2" data-bind="value:importe" disabled />
-                                                                </label>
-                                                                </section>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col col-md-4">
+                                                        <label class="label">Coste</label>
+                                                        <label class="input">
+                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" />
+                                                    </div>
+                                                    <div class="col col-md-4">
+                                                        <label class="label">Beneficio</label>
+                                                        <label class="input">
+                                                            <input id="txtBeneficio" name="txtBeneficio" data-bind="value:beneficio" disabled/>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -490,8 +479,8 @@
                                             <fieldset>
                                                 <div class="pull-right">
                                                     <button id="btnGenerar" title="Generar prefacturas" data-toggle="modal" data-target="#modalGenerar" onclick="generar()" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-stack-exchange"></i>
-                                                </button>
+                                                        <i class="fa fa-lg fa-stack-exchange"></i>
+                                                    </button>
                                                     <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                         <i class="fa fa-lg fa-sign-out"></i>
                                                     </button>
@@ -551,8 +540,7 @@
                                     <form id="frmComisionista">
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnNuevoComisionista" title="Nuevo comisionista" data-toggle="modal" data-target="#modalComisionista" onclick="nuevoComisionista()"
-                                                    class="btn btn-success btn-circle btn-lg">
+                                                <button id="btnNuevoComisionista" title="Nuevo comisionista" data-toggle="modal" data-target="#modalComisionista" onclick="nuevoComisionista()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
                                             </div>
@@ -662,7 +650,6 @@
                                             <input id="txtFFinal" name="txtFFinal" data-bind="value: fFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                         </label>
                                     </section>
-
                                 </div>
                             </section>
                         </fieldset>
@@ -685,7 +672,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">

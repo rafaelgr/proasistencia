@@ -223,7 +223,7 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   `clienteId` int(11) DEFAULT NULL,
   `fechaInicio` date DEFAULT NULL,
   `fechaFin` date DEFAULT NULL,
-  `importe` decimal(10,2) DEFAULT NULL,
+  `venta` decimal(10,2) DEFAULT NULL,
   `tipoPago` int(11) DEFAULT NULL,
   `manPorComer` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje que se llevaría el mantenedor',
   `observaciones` text,
@@ -231,9 +231,10 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   `coste` decimal(10,2) DEFAULT NULL,
   `margen` decimal(5,2) DEFAULT NULL,
   `beneficio` decimal(10,2) DEFAULT NULL,
-  `importeInicial` decimal(10,2) DEFAULT NULL,
+  `ventaNeta` decimal(10,2) DEFAULT NULL,
   `manAgente` decimal(5,2) DEFAULT NULL,
   `articuloId` int(11) DEFAULT NULL COMMENT 'Articulo relacionado que tipifica el contrato',
+  `importeAlCliente` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`contratoClienteMantenimientoId`),
   KEY `ref_ccm_empresa` (`empresaId`),
   KEY `ref_ccm_mantenedor` (`mantenedorId`),
@@ -243,13 +244,17 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
 
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (26,172,NULL,25020,'2016-08-01',NULL,'1092.88',3,NULL,NULL,6,'824.00','20.30','167.27','991.27','10.25',5);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (27,172,25019,33870,'2016-08-01',NULL,'100.00',4,'20.00',NULL,6,NULL,'20.30','18.00','20.00','10.00',NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`importe`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`importeInicial`,`manAgente`,`articuloId`) values (28,172,NULL,25020,'2016-08-02',NULL,'633.97',4,NULL,NULL,6,'478.00','20.30','97.03','575.03','10.25',NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (26,172,NULL,25020,'2016-08-01',NULL,'1000.00',3,NULL,NULL,6,'124.00','20.30','773.50','897.50','10.25',5,'1000.00');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (27,172,25019,33870,'2016-08-01',NULL,'1080.00',4,'10.00',NULL,6,'30.00','20.30','996.00','1026.00','5.00',NULL,'1200.00');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (28,172,NULL,25020,'2016-08-02',NULL,'633.97',4,NULL,NULL,6,'478.00','20.30','97.03','575.03','10.25',NULL,NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (29,172,NULL,25020,'2016-08-01',NULL,'654.97',1,NULL,NULL,6,'490.00','20.30','99.47','589.47','10.00',4,NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (32,172,NULL,33870,NULL,NULL,'643.39',2,NULL,NULL,6,'480.00','20.30','97.44','577.44','10.25',NULL,NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (33,172,NULL,25020,NULL,NULL,'670.19',1,NULL,NULL,6,'500.00','20.30','101.50','601.50','10.25',NULL,NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (35,172,25019,33870,NULL,NULL,'2412.00',2,'10.00','Este con todos sus campos montados',6,'145.00','20.30','2019.77','2164.77','10.25',NULL,'2680.00');
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -265,7 +270,7 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -273,6 +278,8 @@ insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMant
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (14,26,8,'9.00');
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (15,28,8,'9.00');
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (16,28,8,'10.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (17,29,8,'10.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porComer`) values (18,29,8,'9.00');
 
 /*Table structure for table `contrato_comercial` */
 
