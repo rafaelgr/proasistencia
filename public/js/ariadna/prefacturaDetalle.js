@@ -451,7 +451,6 @@ function cambioEmpresa(data) {
 --------------------------------------------------------------------*/
 
 function nuevaLinea() {
-    // TODO: Implementar la funcionalidad de nueva línea
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
     $.ajax({
@@ -469,7 +468,6 @@ function nuevaLinea() {
 }
 
 function aceptarLinea() {
-    // TODO: Implementar funcionalidad de aceptar.
     if (!datosOKLineas()) {
         return;
     }
@@ -780,8 +778,6 @@ function cambioTiposIva(data) {
             // cargamos los campos por defecto de receptor
             vm.tipoIvaId(data.tipoIvaId);
             vm.porcentaje(data.porcentaje);
-            // TODO: hay que verificar la carga de las tablas
-            // de bases y cuotas asociadas.
         },
         error: errorAjax
     });

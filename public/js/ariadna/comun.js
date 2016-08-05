@@ -285,3 +285,13 @@ numeral.language('es');
 var roundToTwo = function (num) {
     return +(Math.round(num + "e+2") + "e-2");
 };
+
+
+// Returns number of months between two dates
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
