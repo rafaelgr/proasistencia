@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/rafaelgr/proasistencia#readme",
   "dependencies": {
-    "async": "^1.4.2",
+    "async": "^2.0.0",
     "body-parser": "^1.14.0",
     "connect": "^3.4.0",
     "cors": "^2.7.1",
