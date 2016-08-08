@@ -609,6 +609,9 @@ function initTablaComisionistas() {
             }
         },
         data: dataComisionistas,
+        columnDefs: [
+            { "width": "20%", "targets": 3 }
+        ],
         columns: [{
             data: "comercial"
         }, {
@@ -853,7 +856,7 @@ function generar() {
     var importe = vm.importeAlCliente();
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     var numpagos = calNumPagos();
-    var pagos = crearPagos(importe, fInicial, numpagos);
+    var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId());
     vm.numpagos(numpagos);
     loadTablaGenerador(pagos);
 }
@@ -951,7 +954,7 @@ function cambioGenerador() {
         var importe = vm.importeAlCliente();
         var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
         var numpagos = calNumPagos();
-        var pagos = crearPagos(importe, fInicial, numpagos);
+        var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId());
         vm.numpagos(numpagos);
         loadTablaGenerador(pagos);
     };
@@ -961,7 +964,7 @@ function cambioGenerador() {
 // crearPagos()
 // crea un vector provisional con la fecha e importe de cada
 // uno de los pagos
-function crearPagos(importe, fechaInicial, numPagos) {
+function crearPagos(importe, fechaInicial, numPagos, empresaId, clienteId) {
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
@@ -985,7 +988,9 @@ function crearPagos(importe, fechaInicial, numPagos) {
         var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         var p = {
             fecha: f,
-            importe: importePago
+            importe: importePago,
+            empresaId: empresaId,
+            clienteId: clienteId
         };
         pagos.push(p);
     }
@@ -1030,6 +1035,9 @@ function initTablaGenerador() {
             }
         },
         data: dataGenerador,
+        columnDefs: [
+            { "width": "20%", "targets": [2, 3] }
+        ],
         columns: [{
             data: "fecha"
         }, {
@@ -1038,6 +1046,12 @@ function initTablaGenerador() {
                 render: function (data, type, row) {
                     return numeral(data).format('0,0.00');
                 }
+            }, {
+                data: "empresaId",
+                className: "text-center"
+            }, {
+                data: "clienteId",
+                className: "text-center"
             }]
     });
 }
