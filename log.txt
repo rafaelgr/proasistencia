@@ -1,0 +1,432 @@
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+PROASISTENCIA API / SERVER on port: 8080
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'numeral'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:6:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/07/02016 09:10:10
+-------------------------------------------
+ VERSION: 0.0.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/07/02016 18:40:48
+-------------------------------------------
+ VERSION: 0.0.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02016 16:06:42
+-------------------------------------------
+ VERSION: 0.0.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/07/02016 08:16:14
+-------------------------------------------
+ VERSION: 0.1.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/07/02016 09:04:32
+-------------------------------------------
+ VERSION: 0.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/07/02016 17:04:52
+-------------------------------------------
+ VERSION: 0.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/07/02016 05:26:47
+-------------------------------------------
+ VERSION: 0.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/07/02016 17:08:12
+-------------------------------------------
+ VERSION: 0.1.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/07/02016 08:24:44
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/07/02016 17:53:50
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/07/02016 17:54:53
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/07/02016 12:20:38
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/08/02016 17:22:02
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02016 02:20:17
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02016 12:33:36
+-------------------------------------------
+ VERSION: 0.1.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02016 12:37:39
+-------------------------------------------
+ VERSION: 0.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02016 21:05:08
+-------------------------------------------
+ VERSION: 0.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/08/02016 17:46:54
+-------------------------------------------
+ VERSION: 0.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/08/02016 01:51:55
+-------------------------------------------
+ VERSION: 0.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/08/02016 18:05:17
+-------------------------------------------
+ VERSION: 0.1.2
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/08/02016 07:57:33
+-------------------------------------------
+ VERSION: 0.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/08/02016 15:58:07
+-------------------------------------------
+ VERSION: 0.1.3
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/08/02016 22:59:37
+-------------------------------------------
+ VERSION: 0.1.3
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/08/02016 07:54:48
+-------------------------------------------
+ VERSION: 0.1.3
+ PORT: 8080
+-------------------------------------------
