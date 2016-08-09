@@ -14,6 +14,7 @@ var breakpointDefinition = {
 
 var dataComisionistas;
 var dataGenerador;
+var dataPrefacturas;
 
 var contratoClienteMantenimientoId = 0;
 
@@ -101,6 +102,7 @@ function initForm() {
 
     initTablaComisionistas();
     initTablaGenerador();
+    initTablaPrefacturas();
 
     loadParametros(); // es por tener el margen comercial por defecto
 
@@ -214,6 +216,7 @@ function loadData(data) {
     loadArticulos(data.articuloId);
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
+    loadPrefacturas(data.contratoClienteMantenimientoId);
 }
 
 function datosOK() {
@@ -680,6 +683,20 @@ function loadComisionistas(id) {
     });
 }
 
+function loadPrefacturas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: errorAjax
+    });
+}
+
+
 function loadComerciales(id) {
     $.ajax({
         type: "GET",
@@ -1136,4 +1153,82 @@ function deletePrevias() {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+
+function loadTablaPrefacturas(data) {
+    var dt = $('#dt_prefactura').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function initTablaPrefacturas() {
+    tablaCarro = $('#dt_prefactura').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataPrefacturas,
+        columns: [{
+            data: "emisorNombre"
+        }, {
+                data: "receptorNombre"
+            }, {
+                data: "fecha",
+                render: function (data, type, row) {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            }, {
+                data: "total"
+            }, {
+                data: "observaciones"
+            }, {
+                data: "prefacturaId",
+                render: function (data, type, row) {
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt2 +  "</div>";
+                    return html;
+                }
+            }]
+    });
+}
+
+function editPrefactura(id) {
+    // hay que abrir la página de detalle de prefactura
+    // pasando en la url ese ID
+    var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    window.open(url, '_blank');
 }
