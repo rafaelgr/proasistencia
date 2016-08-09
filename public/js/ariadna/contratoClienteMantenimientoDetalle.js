@@ -182,6 +182,7 @@ function admData() {
     self.fFinal = ko.observable();
     self.speriodoId = ko.observable();
     self.numpagos = ko.observable();
+    self.listaPagos = ko.observable();
 }
 
 function loadData(data) {
@@ -856,8 +857,9 @@ function generar() {
     var importe = vm.importeAlCliente();
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     var numpagos = calNumPagos();
-    var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId());
+    var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
     vm.numpagos(numpagos);
+    vm.listaPagos(pagos);
     loadTablaGenerador(pagos);
 }
 
@@ -867,7 +869,44 @@ function aceptarGenerar() {
     if (!datosOKGenerar()) {
         return;
     }
+    // comprobamos si ya hubiera facturas para este contrato.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data.length > 0) {
+                deletePrevias();
+            } else {
+                // no hay directamente creamos
+                crearPrefacturas();
+            }
+        },
+        error: errorAjax
+    });
     $('#modalGenerar').modal('hide');
+}
+
+function crearPrefacturas() {
+    // llamar a la api
+    var data = {
+        lista: vm.listaPagos(),
+        articuloId: vm.sarticuloId(),
+        contratoClienteMantenimientoId: vm.contratoClienteMantenimientoId()
+    }
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            // mostramos un mensaje
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+        },
+        error: errorAjax
+    });
 }
 
 // datosOKGenerar()
@@ -954,8 +993,9 @@ function cambioGenerador() {
         var importe = vm.importeAlCliente();
         var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
         var numpagos = calNumPagos();
-        var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId());
+        var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
         vm.numpagos(numpagos);
+        vm.listaPagos(pagos);
         loadTablaGenerador(pagos);
     };
     return mf;
@@ -964,7 +1004,7 @@ function cambioGenerador() {
 // crearPagos()
 // crea un vector provisional con la fecha e importe de cada
 // uno de los pagos
-function crearPagos(importe, fechaInicial, numPagos, empresaId, clienteId) {
+function crearPagos(importe, fechaInicial, numPagos, empresaId, clienteId, articuloId) {
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
@@ -1067,4 +1107,33 @@ function loadTablaGenerador(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+}
+
+// deletePrevias
+// Borra si "Aceptar" las facturas previas
+// y crea las nuevas
+function deletePrevias() {
+    // mensaje de confirmación
+    var mens = "Hay prefacturas ya creadas para este contrato. ¿Quiere eliminarlas y crearlas de nuevo?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    crearPrefacturas();
+                },
+                error: errorAjax
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }

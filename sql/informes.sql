@@ -1,7 +1,7 @@
 # cabeceras
 SELECT 
 pf.prefacturaId, pf.ano, pf.numero, pf.serie, pf.fecha,
-pf.empresaId, pf.clienteId, pf.contratoMantenimientoId,
+pf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,
 pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,
 pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,
 pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones
