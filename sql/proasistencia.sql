@@ -95,12 +95,12 @@ CREATE TABLE `clientes_comisionistas` (
   KEY `ref_cc_comercial` (`comercialId`),
   CONSTRAINT `ref_cc_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_cc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes_comisionistas` */
 
-insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`) values (1,25020,8,'10.00',NULL);
 insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`) values (2,25020,8,'9.00',NULL);
+insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`) values (3,25020,6,'10.00','12.00');
 
 /*Table structure for table `comerciales` */
 
@@ -164,7 +164,6 @@ insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fec
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (31,'2','Tortajada Fenollera, Juan',NULL,'2000-11-08 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jtortajada@proasistencia.es','',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (32,'3','Anabel',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (33,'4','Trejo, Isabel',NULL,'2001-02-22 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
-insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (34,'5','Alvarez Linera, Jorge',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (35,'6','Coma, Liliana',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (36,'7','Ortega Viota',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (37,'8','Cocero, Sara',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
@@ -190,7 +189,6 @@ insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fec
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (57,'2','Tortajada Fenollera, Juan',NULL,'2000-11-08 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jtortajada@proasistencia.es','',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (58,'3','Anabel',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (59,'4','Trejo, Isabel',NULL,'2001-02-22 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
-insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (60,'5','Alvarez Linera, Jorge',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (61,'6','Coma, Liliana',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (62,'7','Ortega Viota',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`tipoComercialId`,`formaPagoId`) values (63,'8','Cocero, Sara',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL);
@@ -245,17 +243,20 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
 
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (26,172,NULL,25020,'2016-08-01',NULL,'1000.00',3,NULL,NULL,6,'124.00','20.30','773.50','897.50','10.25',5,'1000.00');
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (27,172,25019,33870,'2016-08-01',NULL,'1080.00',4,'10.00',NULL,6,'30.00','20.30','996.00','1026.00','5.00',NULL,'1200.00');
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (28,172,NULL,25020,'2016-08-02',NULL,'633.97',4,NULL,NULL,6,'478.00','20.30','97.03','575.03','10.25',NULL,NULL);
-insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (29,172,NULL,25020,'2016-08-01',NULL,'654.97',1,NULL,NULL,6,'490.00','20.30','99.47','589.47','10.00',4,NULL);
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (29,172,NULL,25020,'2016-01-01','2017-01-01','1500.00',4,'0.00','Este es el que va a servir de pruebas para periodificaciones',6,'490.00','20.30','860.00','1350.00','10.00',4,'1500.00');
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (32,172,NULL,33870,NULL,NULL,'643.39',2,NULL,NULL,6,'480.00','20.30','97.44','577.44','10.25',NULL,NULL);
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (33,172,NULL,25020,NULL,NULL,'670.19',1,NULL,NULL,6,'500.00','20.30','101.50','601.50','10.25',NULL,NULL);
 insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (35,172,25019,33870,NULL,NULL,'2412.00',2,'10.00','Este con todos sus campos montados',6,'145.00','20.30','2019.77','2164.77','10.25',NULL,'2680.00');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (36,172,NULL,25020,'2016-08-01',NULL,'1200.00',2,'0.00',NULL,8,'0.00','20.30','1080.00','1080.00','10.00',5,'1200.00');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (37,172,NULL,25020,NULL,NULL,'1500.00',1,'0.00',NULL,6,'125.00','20.30','1150.00','1275.00','15.00',NULL,'1500.00');
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`) values (38,175,NULL,25020,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,'20.30',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -272,7 +273,7 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -283,6 +284,13 @@ insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMant
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (17,29,8,'10.00',NULL);
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (18,29,8,'9.00',NULL);
 insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (21,35,6,'15.00','10.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (22,26,6,'15.00','10.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (23,36,8,'10.00','13.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (24,36,6,NULL,NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (25,37,8,'9.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (26,37,6,'10.00','12.00');
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (27,38,8,'9.00',NULL);
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`) values (28,38,6,'10.00','12.00');
 
 /*Table structure for table `contrato_comercial` */
 
@@ -497,11 +505,22 @@ CREATE TABLE `prefacturas` (
   CONSTRAINT `pref_contratos` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas` */
 
-insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (2,NULL,NULL,NULL,'2016-01-01',172,25019,NULL,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','ASSS','MANTENIMIENTOS BUENOS S.A.','Calle del Progreso','28080','Madrid','MADRID','2165.94','2620.79',1,'Una lista de observaciones');
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (26,2016,NULL,NULL,'2016-03-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (27,2016,NULL,NULL,'2016-02-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (28,2016,NULL,NULL,'2016-01-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (29,2016,NULL,NULL,'2016-04-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (30,2016,NULL,NULL,'2016-05-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (31,2016,NULL,NULL,'2016-06-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (32,2016,NULL,NULL,'2016-07-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (33,2016,NULL,NULL,'2016-08-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (34,2016,NULL,NULL,'2016-09-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (35,2016,NULL,NULL,'2016-10-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (36,2016,NULL,NULL,'2016-11-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values (37,2016,NULL,NULL,'2016-12-01',172,25020,29,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','455578B','Casas del Mayorazgo','Calle del Mayorazgo N.27','46000','Valencia','VALENCIA','125.00','151.25',1,NULL);
 
 /*Table structure for table `prefacturas_bases` */
 
@@ -517,13 +536,24 @@ CREATE TABLE `prefacturas_bases` (
   PRIMARY KEY (`prefacturaBaseId`),
   UNIQUE KEY `prefb_prefac_iva` (`prefacturaId`,`tipoIvaId`),
   KEY `prefb_tipos_iva` (`tipoIvaId`),
-  CONSTRAINT `prefb_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
+  CONSTRAINT `prefb_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefb_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_bases` */
 
-insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (50,2,5,'21.00','2165.94','454.85');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (75,31,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (76,26,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (77,32,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (78,27,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (79,28,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (80,30,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (81,33,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (82,34,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (83,35,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (84,37,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (85,36,5,'21.00','125.00','26.25');
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values (86,29,5,'21.00','125.00','26.25');
 
 /*Table structure for table `prefacturas_lineas` */
 
@@ -541,19 +571,28 @@ CREATE TABLE `prefacturas_lineas` (
   `importe` decimal(10,2) DEFAULT NULL,
   `totalLinea` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`prefacturaLineaId`),
-  KEY `prefl_prefacturas` (`prefacturaId`),
   KEY `prefl_articulos` (`articuloId`),
   KEY `prefl_tipos_iva` (`tipoIvaId`),
+  KEY `prefl_prefacturas` (`prefacturaId`),
+  CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefl_articulos` FOREIGN KEY (`articuloId`) REFERENCES `articulos` (`articuloId`),
-  CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
   CONSTRAINT `prefl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_lineas` */
 
-insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (28,1,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
-insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (30,2,2,3,5,'21.00','Articulo para pruebas','1.00','120.33','120.33');
-insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (31,3,2,3,5,'21.00','Cambiamos la descripción','16.00','120.33','1925.28');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (56,1,26,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (57,1,31,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (58,1,32,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (59,1,28,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (60,1,27,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (61,1,36,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (62,1,35,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (63,1,30,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (64,1,37,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (65,1,34,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (66,1,33,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values (67,1,29,4,5,'21.00','Tipo de mantenimiento 1','1.00','125.00','125.00');
 
 /*Table structure for table `tipos_clientes` */
 

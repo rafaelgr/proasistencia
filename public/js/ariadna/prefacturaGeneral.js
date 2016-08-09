@@ -44,7 +44,7 @@ function initForm() {
 
     } else {
 
-        // TODO: Por defecto ahora a la entrada se van a cargar todas 
+        // Por defecto ahora a la entrada se van a cargar todas 
         // las facturas que tengamos en el sistema. En un futuro este
         // criterio puede cambiar y habrá que adaptarlo.
         cargarPrefacturas()();
@@ -114,7 +114,7 @@ function initTablaPrefacturas() {
 }
 
 function datosOK() {
-    //TODO: Segun se incorporen criterios de filtrado
+    // Segun se incorporen criterios de filtrado
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {

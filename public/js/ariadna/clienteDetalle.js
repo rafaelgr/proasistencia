@@ -411,13 +411,12 @@ function loadAgentes(id) {
     Funciones relacionadas con las líneas de comisionistas
 --------------------------------------------------------------------*/
 function nuevoComisionista() {
-    // TODO: Implementar la funcionalidad de nueva línea
     limpiaComisionista(); // es un alta
     lineaEnEdicion = false;
 }
 
 function aceptarComisionista() {
-    // TODO: Implementar funcionalidad de aceptar.
+
     if (!datosOKComisionistas()) {
         return;
     }

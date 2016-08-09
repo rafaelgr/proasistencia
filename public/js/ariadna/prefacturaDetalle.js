@@ -125,7 +125,7 @@ function admData() {
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
-    self.contratoMantenimientoId = ko.observable();
+    self.contratoClienteMantenimientoId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -196,7 +196,7 @@ function loadData(data) {
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
-    vm.contratoMantenimientoId(data.contratoMantenimientoId);
+    vm.contratoClienteMantenimientoId(data.contratoClienteMantenimientoId);
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -280,7 +280,7 @@ function aceptar() {
                 "fecha": spanishDbDate(vm.fecha()),
                 "empresaId": vm.sempresaId(),
                 "clienteId": vm.sclienteId(),
-                "contratoMantenimientoId": vm.contratoMantenimientoId(),
+                "contratoClienteMantenimientoId": vm.contratoClienteMantenimientoId(),
                 "emisorNif": vm.emisorNif(),
                 "emisorNombre": vm.emisorNombre(),
                 "emisorDireccion": vm.emisorDireccion(),
@@ -451,7 +451,6 @@ function cambioEmpresa(data) {
 --------------------------------------------------------------------*/
 
 function nuevaLinea() {
-    // TODO: Implementar la funcionalidad de nueva línea
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
     $.ajax({
@@ -469,7 +468,6 @@ function nuevaLinea() {
 }
 
 function aceptarLinea() {
-    // TODO: Implementar funcionalidad de aceptar.
     if (!datosOKLineas()) {
         return;
     }
@@ -780,8 +778,6 @@ function cambioTiposIva(data) {
             // cargamos los campos por defecto de receptor
             vm.tipoIvaId(data.tipoIvaId);
             vm.porcentaje(data.porcentaje);
-            // TODO: hay que verificar la carga de las tablas
-            // de bases y cuotas asociadas.
         },
         error: errorAjax
     });

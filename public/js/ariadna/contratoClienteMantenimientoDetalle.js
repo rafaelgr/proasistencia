@@ -13,6 +13,8 @@ var breakpointDefinition = {
 };
 
 var dataComisionistas;
+var dataGenerador;
+var dataPrefacturas;
 
 var contratoClienteMantenimientoId = 0;
 
@@ -33,6 +35,9 @@ function initForm() {
     $('#txtManAgente').on('blur', cambioImporteAlCliente());
     $('#txtCoste').on('blur', cambioImporteAlCliente());
 
+    // calculadora del generador
+    $('#txtFInicial').on('blur', cambioGenerador());
+    $('#txtFFinal').on('blur', cambioGenerador());
 
 
     // asignación de eventos al clic
@@ -44,11 +49,9 @@ function initForm() {
     $("#frmComisionista").submit(function () {
         return false;
     });
-
     $("#comisionista-form").submit(function () {
         return false;
     });
-
     $("#generar-form").submit(function () {
         return false;
     });
@@ -81,6 +84,13 @@ function initForm() {
     loadArticulos();
 
     $("#cmbTiposPagos").select2(select2Spanish());
+    $("#cmbPeriodos").select2(select2Spanish());
+    $("#cmbPeriodos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) {
+            cambioGenerador()();
+        }
+    });
     loadTiposPagos();
 
     $("#cmbComerciales").select2(select2Spanish());
@@ -91,6 +101,8 @@ function initForm() {
     });
 
     initTablaComisionistas();
+    initTablaGenerador();
+    initTablaPrefacturas();
 
     loadParametros(); // es por tener el margen comercial por defecto
 
@@ -170,8 +182,9 @@ function admData() {
     // --------- generacion
     self.fInicial = ko.observable();
     self.fFinal = ko.observable();
-
-
+    self.speriodoId = ko.observable();
+    self.numpagos = ko.observable();
+    self.listaPagos = ko.observable();
 }
 
 function loadData(data) {
@@ -203,6 +216,7 @@ function loadData(data) {
     loadArticulos(data.articuloId);
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
+    loadPrefacturas(data.contratoClienteMantenimientoId);
 }
 
 function datosOK() {
@@ -424,6 +438,7 @@ function loadTiposPagos(id) {
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
+    $("#cmbPeriodos").val([id]).trigger('change');
 }
 
 function loadParametros() {
@@ -489,13 +504,11 @@ function cargarDatosDeContrato(contratoClienteMantenimientoId) {
     Funciones relacionadas con las líneas de comisionistas
 --------------------------------------------------------------------*/
 function nuevoComisionista() {
-    // TODO: Implementar la funcionalidad de nueva línea
     limpiaComisionista(); // es un alta
     lineaEnEdicion = false;
 }
 
 function aceptarComisionista() {
-    // TODO: Implementar funcionalidad de aceptar.
     if (!datosOKComisionistas()) {
         return;
     }
@@ -600,6 +613,9 @@ function initTablaComisionistas() {
             }
         },
         data: dataComisionistas,
+        columnDefs: [
+            { "width": "20%", "targets": 3 }
+        ],
         columns: [{
             data: "comercial"
         }, {
@@ -614,7 +630,7 @@ function initTablaComisionistas() {
                 render: function (data, type, row) {
                     return numeral(data).format('0,0.00');
                 }
-            },{
+            }, {
                 data: "contratoClienteMantenimientoComisionistaId",
                 render: function (data, type, row) {
                     var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -666,6 +682,20 @@ function loadComisionistas(id) {
         error: errorAjax
     });
 }
+
+function loadPrefacturas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: errorAjax
+    });
+}
+
 
 function loadComerciales(id) {
     $.ajax({
@@ -833,13 +863,372 @@ function cambioCliente(data) {
 /* ----------------------------------------------------------
     Funciones relacionadas con la generación de prefacturas
 -------------------------------------------------------------*/
-
+// generar()
+// se llama a esta función cuando se pulsa la botón "generar"
+// prepara los valores para el formulario modal y lo muestra
 function generar() {
     // Cargamos por defecto los valores actuales
     vm.fInicial(vm.fechaInicio());
     vm.fFinal(vm.fechaFin());
+    vm.speriodoId(vm.stipoPagoId());
+    var importe = vm.importeAlCliente();
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    var numpagos = calNumPagos();
+    var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
+    vm.numpagos(numpagos);
+    vm.listaPagos(pagos);
+    loadTablaGenerador(pagos);
 }
 
+// aceptarGenerar()
+// cuando se hace clic en el botón "GENERAR" del formulario modal
 function aceptarGenerar() {
+    if (!datosOKGenerar()) {
+        return;
+    }
+    // comprobamos si ya hubiera facturas para este contrato.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data.length > 0) {
+                deletePrevias();
+            } else {
+                // no hay directamente creamos
+                crearPrefacturas();
+            }
+        },
+        error: errorAjax
+    });
     $('#modalGenerar').modal('hide');
+}
+
+function crearPrefacturas() {
+    // llamar a la api
+    var data = {
+        lista: vm.listaPagos(),
+        articuloId: vm.sarticuloId(),
+        contratoClienteMantenimientoId: vm.contratoClienteMantenimientoId()
+    }
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            // mostramos un mensaje
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+        },
+        error: errorAjax
+    });
+}
+
+// datosOKGenerar()
+// comprueba que los datos del formulario modal son correctos
+function datosOKGenerar() {
+    $('#generar-form').validate({
+        rules: {
+            txtFInicial: {
+                required: true
+            },
+            txtFFinal: {
+                required: true
+            },
+            cmPeriodos: {
+                required: true,
+                number: true
+            },
+            txtNumPagos: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtFInicial: {
+                required: "Debe elegir una fecha inicial"
+            },
+            txtFFinal: {
+                required: "Debe elegir una fecha final"
+            },
+            txtNumPagos: {
+                required: "Debe tener un número de pagos",
+                number: "Debe ser un número valido"
+            },
+            cmbPeriodos: {
+                required: "Elija una periodificación"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#generar-form").validate().settings;
+    // TODO: hay que controlar que el número de pagos no sea cero
+    return $('#generar-form').valid();
+}
+
+// calNumPagos()
+// calcula el número de pagos que se producen entre las fechas
+// según la periodicidad de pago escogida
+function calNumPagos() {
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    var fFinal = new Date(spanishDbDate(vm.fechaFin()));
+    var numMeses = parseInt(moment(fFinal).diff(fInicial, 'months', true));
+    // calculamos según la periodicidad
+    var divisor = 1;
+    switch (vm.stipoPagoId()) {
+        case 1:
+            divisor = 12;
+            break;
+        case 2:
+            divisor = 6;
+            break;
+        case 3:
+            divisor = 3;
+            break;
+        case 4:
+            divisor = 1;
+            break;
+    }
+    return parseInt(numMeses / divisor);
+}
+
+// cambioGenerador()
+// cuando se abandona el foco de los campos en el formulario modal
+// se llama a esta función para que recalcule el número de pagos
+// en función de los nuevos valores.
+function cambioGenerador() {
+    var mf = function () {
+        vm.fechaInicio(vm.fInicial());
+        vm.fechaFin(vm.fFinal());
+        vm.stipoPagoId(vm.speriodoId());
+        loadTiposPagos(vm.stipoPagoId());
+        var importe = vm.importeAlCliente();
+        var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+        var numpagos = calNumPagos();
+        var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
+        vm.numpagos(numpagos);
+        vm.listaPagos(pagos);
+        loadTablaGenerador(pagos);
+    };
+    return mf;
+}
+
+// crearPagos()
+// crea un vector provisional con la fecha e importe de cada
+// uno de los pagos
+function crearPagos(importe, fechaInicial, numPagos, empresaId, clienteId, articuloId) {
+    // calculamos según la periodicidad
+    var divisor = 1;
+    switch (vm.stipoPagoId()) {
+        case 1:
+            divisor = 12;
+            break;
+        case 2:
+            divisor = 6;
+            break;
+        case 3:
+            divisor = 3;
+            break;
+        case 4:
+            divisor = 1;
+            break;
+    }
+    // se supone que la fecha ya está en formato js.
+    var importePago = importe / numPagos;
+    var pagos = [];
+    for (var i = 0; i < numPagos; i++) {
+        var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
+        var p = {
+            fecha: f,
+            importe: importePago,
+            empresaId: empresaId,
+            clienteId: clienteId
+        };
+        pagos.push(p);
+    }
+    return pagos;
+}
+
+// initTablaGenerador()
+// inicializa la tabla que muestra el detalle cada pago a generar
+function initTablaGenerador() {
+    tablaCarro = $('#dt_generar').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerador,
+        columnDefs: [
+            { "width": "20%", "targets": [2, 3] }
+        ],
+        columns: [{
+            data: "fecha"
+        }, {
+                data: "importe",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "empresaId",
+                className: "text-center"
+            }, {
+                data: "clienteId",
+                className: "text-center"
+            }]
+    });
+}
+
+// loadTablaGenerador()
+// carga en la tabla de pagos a generar los valores del vector
+// que se le pasa.
+function loadTablaGenerador(data) {
+    var dt = $('#dt_generar').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+// deletePrevias
+// Borra si "Aceptar" las facturas previas
+// y crea las nuevas
+function deletePrevias() {
+    // mensaje de confirmación
+    var mens = "Hay prefacturas ya creadas para este contrato. ¿Quiere eliminarlas y crearlas de nuevo?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    crearPrefacturas();
+                },
+                error: errorAjax
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+
+function loadTablaPrefacturas(data) {
+    var dt = $('#dt_prefactura').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function initTablaPrefacturas() {
+    tablaCarro = $('#dt_prefactura').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataPrefacturas,
+        columns: [{
+            data: "emisorNombre"
+        }, {
+                data: "receptorNombre"
+            }, {
+                data: "fecha",
+                render: function (data, type, row) {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            }, {
+                data: "total"
+            }, {
+                data: "observaciones"
+            }, {
+                data: "prefacturaId",
+                render: function (data, type, row) {
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt2 +  "</div>";
+                    return html;
+                }
+            }]
+    });
+}
+
+function editPrefactura(id) {
+    // hay que abrir la página de detalle de prefactura
+    // pasando en la url ese ID
+    var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    window.open(url, '_blank');
 }
