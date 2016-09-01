@@ -35,6 +35,7 @@ var contratos_cliente_mantenimiento_router = require('./lib/contratos-cliente-ma
 var clientes_comisionistas_router = require('./lib/clientes-comisionistas/clientes_comisionistas_controller');
 var contrato_mantenimiento_comisionistas_router = require('./lib/contrato-mantenimiento-comisionistas/contrato_mantenimiento_comisionistas_controller');
 var grupo_articulos_router = require('./lib/grupos-articulos/grupo_articulo_controller');
+var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 
 var informes_router = require('./lib/informes/informes_controller');
 
@@ -100,6 +101,7 @@ app.use('/api/contratos_cliente_mantenimiento', contratos_cliente_mantenimiento_
 app.use('/api/clientes_comisionistas', clientes_comisionistas_router);
 app.use('/api/contrato_mantenimiento_comisionistas', contrato_mantenimiento_comisionistas_router);
 app.use('/api/grupo_articulo', grupo_articulos_router);
+app.use('/api/contabilidad', contabilidad_router);
 
 // -- start server
 app.listen(config.apiPort);

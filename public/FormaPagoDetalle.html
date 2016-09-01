@@ -361,7 +361,7 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
+                                                <section class="col col-md-6">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
@@ -373,6 +373,13 @@
                                                         <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Codigo Contable</label>
+                                                    <label class="input">
+                                                        <input id="txtCodigoContable" name="txtCodigoContable" data-bind="value: codigoContable" />
+                                                    </label>
+                                                </section>
+
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-4">
