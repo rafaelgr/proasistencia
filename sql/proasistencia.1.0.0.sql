@@ -1,2 +1,33 @@
 ALTER TABLE `formas_pago`   
   ADD COLUMN `codigoContable` INT(11) NULL AFTER `restoVencimiento`;
+
+# trasladar las formas de pago de conta a gestión
+INSERT INTO tipos_iva
+SELECT 
+0 AS tipoIvaId,
+nombriva AS nombre,
+porceiva AS porcentaje,
+codigiva AS codigoContable
+FROM ariconta1.tiposiva;
+# -- usando estos sql como plantilla hay que actualizar los valores de otras tablas
+/*
+update articulos set tipoIvaId = * WHERE tipoIvaId = *
+update prefacturas_bases set tipoIvaId = * WHERE tipoIvaId = *
+update prefacturas_lineas set tipoIvaId = * WHERE tipoIvaId = *
+*/
+
+INSERT INTO formas_pago
+SELECT 
+0 AS formaPagoId,
+tipforpa AS tipoFormaPagoId,
+nomforpa AS nombre,
+numerove AS numeroVencimientos,
+primerve AS primerVencimiento,
+restoven AS restoVencimiento,
+codforpa AS codigoContable
+FROM ariconta1.formapago;
+# -- usando estos sql hay que cambiar los valores de las formas de pago
+/*
+update clientes set formaPagoId = * where formaPagoId = *;
+update prefacturas set formaPagoId = * where formaPagoId = *;
+*/

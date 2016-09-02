@@ -49,6 +49,7 @@ function mostrarMensajeSmart(mens) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             // no hacemos nada solo queríamos mostrar em mensaje
+            return;
         }
     });
 }
