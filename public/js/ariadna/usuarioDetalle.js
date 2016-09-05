@@ -164,7 +164,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "UsuarioGeneral.html?UsuarioId=" + vm.usuarioId();
+                    var url = "UsuariosGeneral.html?UsuarioId=" + vm.usuarioId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -180,7 +180,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "UsuarioGeneral.html?UsuarioId=" + vm.usuarioId();
+                    var url = "UsuariosGeneral.html?UsuarioId=" + vm.usuarioId();
                     window.open(url, '_self');
                 },
                 error: errorAjax
@@ -192,7 +192,7 @@ function aceptar() {
 
 function salir() {
     var mf = function() {
-        var url = "UsuarioGeneral.html";
+        var url = "UsuariosGeneral.html";
         window.open(url, '_self');
     }
     return mf;

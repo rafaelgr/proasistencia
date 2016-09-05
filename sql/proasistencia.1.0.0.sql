@@ -31,3 +31,10 @@ FROM ariconta1.formapago;
 update clientes set formaPagoId = * where formaPagoId = *;
 update prefacturas set formaPagoId = * where formaPagoId = *;
 */
+
+ALTER TABLE `clientes`   
+  ADD COLUMN `email2` VARCHAR(255) NULL AFTER `email`;
+
+ALTER TABLE `comerciales`   
+  ADD COLUMN `email2` VARCHAR(255) NULL AFTER `email`;
+  
