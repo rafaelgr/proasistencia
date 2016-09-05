@@ -55,3 +55,8 @@ ALTER TABLE `comerciales`
   ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `formaPagoId`,
   ADD COLUMN `firmante` VARCHAR(255) NULL AFTER `dniFirmante`;
   
+ALTER TABLE `contrato_comercial`   
+  ADD COLUMN `dniFirmanteEmpresa` VARCHAR(255) NULL AFTER `observaciones`,
+  ADD COLUMN `firmanteEmpresa` VARCHAR(255) NULL AFTER `dniFirmanteEmpresa`,
+  ADD COLUMN `dniFirmanteColaborador` VARCHAR(255) NULL AFTER `firmanteEmpresa`,
+  ADD COLUMN `firmanteColaborador` VARCHAR(255) NULL AFTER `dniFirmanteColaborador`;

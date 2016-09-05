@@ -143,7 +143,7 @@ CREATE TABLE `comerciales` (
 
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (4,'1','Proasistencia',NULL,'2001-02-22 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (5,'2','Tortajada Fenollera, Juan',NULL,'2000-11-08 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jtortajada@proasistencia.es',NULL,'',NULL,NULL,NULL,NULL);
-insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (6,'3','Anabel','456666','2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,NULL,NULL,NULL);
+insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (6,'3','Anabel','456666','2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,NULL,'5555','Spiderman');
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (7,'4','Trejo, Isabel',NULL,'2001-02-22 00:00:00',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (8,'5','Alvarez Linera, Jorge','A45555','2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'e1@gmail.com','e2@gmail.com','',1,2,NULL,NULL);
 insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`) values (9,'6','Coma, Liliana',NULL,'2001-02-22 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL);
@@ -316,13 +316,17 @@ CREATE TABLE `contrato_comercial` (
   `manPorVentaNeta` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje sobre venta neta',
   `manPorBeneficio` decimal(5,2) DEFAULT NULL COMMENT 'Porcentaje sobre beneficio',
   `observaciones` text,
+  `dniFirmanteEmpresa` varchar(255) DEFAULT NULL,
+  `firmanteEmpresa` varchar(255) DEFAULT NULL,
+  `dniFirmanteColaborador` varchar(255) DEFAULT NULL,
+  `firmanteColaborador` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`contratoComercialId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_comercial` */
 
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (3,175,6,'2016-06-18','2016-06-12',10,1,NULL,NULL,'10.00','0.00',NULL);
-insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'15.00','10.00',NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteColaborador`,`firmanteColaborador`) values (3,175,6,'2016-06-18','2016-06-12',10,3,NULL,NULL,'10.00','0.00',NULL,NULL,NULL,NULL,NULL);
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`manPorVentaNeta`,`manPorBeneficio`,`observaciones`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteColaborador`,`firmanteColaborador`) values (4,172,6,'2016-06-17','2016-06-25',10,1,NULL,NULL,'15.00','10.00',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `contrato_mantenedor` */
 

@@ -172,7 +172,7 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -203,7 +203,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -294,7 +294,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-file-o"></i> Detalle contrato agente / colaborador<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-file-o"></i> Detalle contrato agente / colaborador
+                        <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -461,6 +462,51 @@
                                                 </div>
                                             </fieldset>
                                             <fieldset>
+                                                <header>
+                                                    FIRMANTES
+                                                </header>
+                                                <div class="row">
+                                                    <section class="col col-md-6">
+                                                        <header>
+                                                            Empresa
+                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
+                                                                <label class="input">
+                                                        <input id="txtDniFirmanteEmpresa" name="txtDniFirmanteEmpresa" data-bind="value: dniFirmanteEmpresa" />
+                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
+                                                                <label class="input">
+                                                        <input id="txtFirmanteEmpresa" name="txtFirmanteEmpresa" data-bind="value: firmanteEmpresa" />
+                                                    </label>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-md-6">
+                                                        <header>
+                                                            Agente / Colaborador
+                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
+                                                                <label class="input">
+                                                        <input id="txtDniFirmanteColaborador" name="txtDniFirmanteColaborador" data-bind="value: dniFirmanteColaborador" />
+                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
+                                                                <label class="input">
+                                                        <input id="txtFirmanteColaborador" name="txtFirmanteColaborador" data-bind="value: firmanteColaborador" />
+                                                    </label>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
                                                 <div class="row">
                                                     <section class="col col-md-12">
                                                         <label class="label">Observaciones</label>
@@ -506,8 +552,7 @@
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
                     <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
-                    <i
-                        class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                 </div>
             </div>
         </div>
