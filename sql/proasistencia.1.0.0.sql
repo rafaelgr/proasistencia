@@ -39,9 +39,14 @@ ALTER TABLE `comerciales`
   ADD COLUMN `email2` VARCHAR(255) NULL AFTER `email`;
   
 
-CREATE TABLE `proasistencia`.`unidades`(  
+CREATE TABLE `unidades`(  
   `unidadId` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255),
   `abrev` VARCHAR(255),
   PRIMARY KEY (`unidadId`)
 );
+
+
+ALTER TABLE `articulos`   
+  ADD COLUMN `unidadId` INT(11) NULL AFTER `descripcion`,
+  ADD CONSTRAINT `ref_art_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades`(`unidadId`);

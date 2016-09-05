@@ -385,12 +385,19 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-4">
+                                                    <label class="label">Unidades</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'nombre', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                
+                                                <section class="col col-md-2">
                                                     <label class="label">Código Barras</label>
                                                     <label class="input">
                                                         <input id="txtCodigoBarras" name="txtCodigoBarras" data-bind="value: codigoBarras" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-4">
+                                                <section class="col col-md-2">
                                                     <label class="label">Precio unitario</label>
                                                     <label class="input">
                                                         <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />

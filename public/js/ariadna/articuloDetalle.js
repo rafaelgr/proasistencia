@@ -27,6 +27,9 @@ function initForm() {
     $("#cmbGruposArticulo").select2(select2Spanish());
     loadGruposArticulo();
 
+    $("#cmbUnidades").select2(select2Spanish());
+    loadUnidades();
+    
     empId = gup('ArticuloId');
     if (empId != 0) {
         var data = {
@@ -68,6 +71,12 @@ function admData() {
     //
     self.posiblesGruposArticulo = ko.observableArray([]);
     self.elegidosGruposArticulo = ko.observableArray([]);
+    //
+    self.sunidadId = ko.observable();
+    //
+    self.posiblesUnidades = ko.observableArray([]);
+    self.elegidosUnidades = ko.observableArray([]);
+
 
 }
 
@@ -79,6 +88,7 @@ function loadData(data) {
     vm.descripcion(data.descripcion);
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
+    loadUnidades(data.unidadId);
 }
 
 function datosOK() {
@@ -88,6 +98,9 @@ function datosOK() {
                 required: true
             },
             cmbGruposArticulo: {
+                required: true
+            },
+            cmbUnidades: {
                 required: true
             },
             txtNombre: {
@@ -104,6 +117,9 @@ function datosOK() {
             },
             cmbGruposArticulo: {
                 required: "Debe elegir un capítulo"
+            },
+            cmbUnidades: {
+                required: "Debe elegir una unidad"
             },
             txtNombre: {
                 required: "Debe dar un nombre"
@@ -134,7 +150,8 @@ function aceptar() {
                 "precioUnitario": vm.precioUnitario(),
                 "codigoBarras": vm.codigoBarras(),
                 "descripcion": vm.descripcion(),
-                "grupoArticuloId": vm.sgrupoArticuloId()
+                "grupoArticuloId": vm.sgrupoArticuloId(),
+                "unidadId": vm.sunidadId()
             }
         };
         if (empId == 0) {
@@ -210,6 +227,22 @@ function loadGruposArticulo(id) {
             var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
             vm.posiblesGruposArticulo(grupos);
             $("#cmbGruposArticulo").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+
+function loadUnidades(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/unidades",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var unidades = [{ unidadId: 0, nombre: "" }].concat(data);
+            vm.posiblesUnidades(unidades);
+            $("#cmbUnidades").val([id]).trigger('change');
         },
         error: errorAjax
     });
