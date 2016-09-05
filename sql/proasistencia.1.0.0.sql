@@ -50,3 +50,8 @@ CREATE TABLE `unidades`(
 ALTER TABLE `articulos`   
   ADD COLUMN `unidadId` INT(11) NULL AFTER `descripcion`,
   ADD CONSTRAINT `ref_art_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades`(`unidadId`);
+
+ALTER TABLE `comerciales`   
+  ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `formaPagoId`,
+  ADD COLUMN `firmante` VARCHAR(255) NULL AFTER `dniFirmante`;
+  

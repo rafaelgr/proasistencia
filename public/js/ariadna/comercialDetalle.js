@@ -144,6 +144,8 @@ function admData() {
     self.email = ko.observable();
     self.email2 = ko.observable();
     self.observaciones = ko.observable();
+    self.dniFirmante = ko.observable();
+    self.firmante = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -172,6 +174,8 @@ function loadData(data) {
     vm.email(data.email);
     vm.email2(data.email2);
     vm.observaciones(data.observaciones);
+    vm.dniFirmante(data.dniFirmante);
+    vm.firmante(data.firmante);
     vm.poblacion(data.poblacion);
     loadTiposComerciales(data.tipoComercialId);
 }
@@ -269,6 +273,8 @@ function aceptar() {
                 "email": vm.email(),
                 "email2": vm.email2(),
                 "observaciones": vm.observaciones(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante(),
                 "tipoComercialId": vm.stipoComercialId()
             }
         };
