@@ -15,6 +15,8 @@ var breakpointDefinition = {
 var empId = 0;
 var lineaEnEdicion = false;
 
+var numDigitos = 0; // número de digitos de cuenta contable
+
 datePickerSpanish(); // see comun.js
 
 var dataComisionistas;
@@ -33,6 +35,10 @@ function initForm() {
     $("#btnImportar").click(importar());
     $("#frmCliente").submit(function () {
         return false;
+    });
+
+    $("#txtProId").blur(function(){
+        cambioCodigo();
     });
 
     $("#frmComisionista").submit(function () {
@@ -64,6 +70,19 @@ function initForm() {
     });
 
     initTablaComisionistas();
+
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status){
+            numDigitos = data.numDigitos
+        },
+        error: errorAjax
+    });
 
     empId = gup('ClienteId');
     if (empId != 0) {
@@ -174,6 +193,7 @@ function loadData(data) {
 }
 
 function datosOK() {
+    // comprobaciones previas
     $('#frmCliente').validate({
         rules: {
             txtNif: {
@@ -181,6 +201,10 @@ function datosOK() {
             },
             txtNombre: {
                 required: true
+            },
+            txtProId:{
+                required: true,
+                number: true
             },
             txtCuentaContable: {
                 required: true
@@ -206,8 +230,12 @@ function datosOK() {
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
+            txtProId:{
+                required: "Necesitamos un código (contabilidad)",
+                number: "El código debe ser un número"
+            },
             txtCuentaContable: {
-                required: 'Introduzca una cuenta'
+                required: 'Se necesita una cuenta una cuenta'
             },
             txtIban: {
                 required: 'Introduzca un iban'
@@ -674,4 +702,10 @@ function cambioComercial(data) {
         error: errorAjax
     });
 
+}
+
+function cambioCodigo(data){
+    // cuando cambia el código cambiamos la cuenta contable
+    var codmacta = montarCuentaContable('43', vm.proId(), numDigitos); // (comun.js)
+    vm.cuentaContable(codmacta);
 }

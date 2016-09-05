@@ -296,3 +296,13 @@ function monthDiff(d1, d2) {
     months += d2.getMonth();
     return months <= 0 ? 0 : months;
 }
+
+// Montar una cuenta contable
+var montarCuentaContable = function (inicio, final, numdigitos) {
+    var s1 = '' + inicio + final;
+    var n1 = s1.length;
+    var n2 = numdigitos - n1 + 1;
+    var s2 = Array(n2).join('0');
+    var codmacta = '' + inicio + s2 + final;
+    return codmacta;
+}
