@@ -38,3 +38,10 @@ ALTER TABLE `clientes`
 ALTER TABLE `comerciales`   
   ADD COLUMN `email2` VARCHAR(255) NULL AFTER `email`;
   
+
+CREATE TABLE `proasistencia`.`unidades`(  
+  `unidadId` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255),
+  `abrev` VARCHAR(255),
+  PRIMARY KEY (`unidadId`)
+);
