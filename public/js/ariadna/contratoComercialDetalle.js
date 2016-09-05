@@ -339,6 +339,7 @@ function loadTiposPagos(id) {
     var tiposPagos = [
         { tipoPagoId: 0, nombre: "" },
         { tipoPagoId: 1, nombre: "Pago único" },
+        { tipoPagoId: 3, nombre: "Pago trimestral" },
         { tipoPagoId: 2, nombre: "Pago mensual" }
     ];
     vm.posiblesTiposPagos(tiposPagos);
