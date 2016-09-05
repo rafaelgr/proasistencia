@@ -142,6 +142,7 @@ function admData() {
     self.telefono2 = ko.observable();
     self.fax = ko.observable();
     self.email = ko.observable();
+    self.email2 = ko.observable();
     self.observaciones = ko.observable();
     //
     self.tipoComercialId = ko.observable();
@@ -169,6 +170,7 @@ function loadData(data) {
     vm.telefono2(data.telefono2);
     vm.fax(data.fax);
     vm.email(data.email);
+    vm.email2(data.email2);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
     loadTiposComerciales(data.tipoComercialId);
@@ -186,6 +188,9 @@ function datosOK() {
             txtEmail: {
                 email: true
             },
+            txtEmail2: {
+                email: true
+            },
             cmbTiposComerciales: {
                 required: true
             }
@@ -199,6 +204,9 @@ function datosOK() {
                 required: 'Introduzca el nombre'
             },
             txtEmail: {
+                email: 'Debe usar un correo válido'
+            },
+            txtEmail2: {
                 email: 'Debe usar un correo válido'
             },
             cmbTiposComerciales: {
@@ -259,6 +267,7 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
+                "email2": vm.email2(),
                 "observaciones": vm.observaciones(),
                 "tipoComercialId": vm.stipoComercialId()
             }
