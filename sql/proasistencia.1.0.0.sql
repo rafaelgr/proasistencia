@@ -60,3 +60,6 @@ ALTER TABLE `contrato_comercial`
   ADD COLUMN `firmanteEmpresa` VARCHAR(255) NULL AFTER `dniFirmanteEmpresa`,
   ADD COLUMN `dniFirmanteColaborador` VARCHAR(255) NULL AFTER `firmanteEmpresa`,
   ADD COLUMN `firmanteColaborador` VARCHAR(255) NULL AFTER `dniFirmanteColaborador`;
+
+ALTER TABLE `contrato_cliente_mantenimiento`   
+  ADD COLUMN `referencia` VARCHAR(255) NULL AFTER `importeAlCliente`;
