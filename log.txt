@@ -430,3 +430,325 @@ Error: Connection lost: The server closed the connection.
  VERSION: 0.1.3
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/08/02016 13:38:09
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02016 09:21:30
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02016 09:21:33
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02016 09:21:36
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02016 16:14:21
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02016 16:14:23
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/08/02016 01:51:22
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/08/02016 19:11:21
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02016 12:58:13
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02016 12:58:16
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02016 12:58:22
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02016 12:58:26
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/08/02016 04:40:27
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  17/08/02016 05:59:09
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  19/08/02016 01:50:59
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/08/02016 03:30:25
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  31/08/02016 05:09:03
+-------------------------------------------
+ VERSION: 0.1.4
+ PORT: 8080
+-------------------------------------------
