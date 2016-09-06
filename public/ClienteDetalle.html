@@ -168,6 +168,11 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>   
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -215,7 +220,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato comercial</a>
+                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
                                 </li>
                                 <li>
                                     <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
@@ -367,7 +372,7 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Cod. anterior:</label>
+                                                    <label class="label">Codigo:</label>
                                                     <label class="input">
                                                         <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
                                                     </label>
@@ -390,7 +395,7 @@
                                                 <section class="col col-md-3">
                                                     <label class="label">Cuenta Contable</label>
                                                     <label class="input">
-                                                        <input id="txtCuentaContable" name="txtCuentaContable" type="text" data-bind="value: cuentaContable"/>
+                                                        <input id="txtCuentaContable" name="txtCuentaContable" type="text" data-bind="value: cuentaContable" disabled/>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
@@ -406,7 +411,6 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-
                                                 </section>
                                             </div>
                                             <div class="row">
@@ -492,30 +496,37 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Teléfono (1)</label>
                                                     <label class="input">
                                                         <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Teléfono (2)</label>
                                                     <label class="input">
                                                         <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Fax</label>
                                                     <label class="input">
                                                         <input id="txtFax" name="txtFax" data-bind="value: fax" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Correo electrónico</label>
+                                                    <label class="label">Correo electrónico (1)</label>
                                                     <label class="input">
                                                         <input id="txtEmail" name="txtEmail" data-bind="value: email" />
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Correo electrónico (2)</label>
+                                                    <label class="input">
+                                                        <input id="txtEmail2" name="txtEmail2" data-bind="value: email2" />
+                                                    </label>
+                                                </section>
+                                                
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-12">

@@ -86,6 +86,7 @@ function admData() {
     self.numeroVencimientos = ko.observable();
     self.primerVencimiento = ko.observable();
     self.restoVencimiento = ko.observable();
+    self.codigoContable = ko.observable();
     //
     self.stipoFormaPagoId = ko.observable();
     //
@@ -100,6 +101,7 @@ function loadData(data) {
     vm.numeroVencimientos(data.numeroVencimientos);
     vm.primerVencimiento(data.primerVencimiento);
     vm.restoVencimiento(data.restoVencimiento);
+    vm.codigoContable(data.codigoContable);
     loadTiposFormaPago(data.tipoFormaPagoId);
 }
 
@@ -118,7 +120,10 @@ function datosOK() {
             txtPrimerVencimiento: {
                 required: true
             },
-            txtRestoVencimineto: {
+            txtRestoVencimientos: {
+                required: true
+            },
+            txtCodigoContable: {
                 required: true
             }
         },
@@ -136,8 +141,11 @@ function datosOK() {
             txtPrimerVencimiento: {
                 required: "Dias hasta el primer vencimiento"
             },
-            txtRestoVencimineto: {
+            txtRestoVencimientos: {
                 required: "Dias en resto de vencimientos"
+            },
+            txtCodigoContable: {
+                required: "Debe proporcionar un código contable"
             }
         },
         // Do not change code below
@@ -161,7 +169,8 @@ function aceptar() {
                 "nombre": vm.nombre(),
                 "numeroVencimientos": vm.numeroVencimientos(),
                 "primerVencimiento": vm.primerVencimiento(),
-                "restoVencimiento": vm.restoVencimiento()
+                "restoVencimiento": vm.restoVencimiento(),
+                "codigoContable": vm.codigoContable()
             }
         };
         if (empId == 0) {

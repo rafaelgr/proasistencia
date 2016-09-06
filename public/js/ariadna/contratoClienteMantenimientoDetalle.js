@@ -137,6 +137,7 @@ function admData() {
     self.beneficioPrevio = ko.observable();
     self.importeAlMantenedor = ko.observable();
     self.importeAlCliente = ko.observable();
+    self.referencia = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -201,7 +202,7 @@ function loadData(data) {
     vm.comercialId(data.comercialId);
     vm.articuloId(data.articuloId);
     vm.importeAlCliente(data.importeAlCliente);
-
+    vm.referencia(data.referencia);
     vm.coste(data.coste);
     vm.margen(data.margen);
     vm.beneficio(data.beneficio);
@@ -228,6 +229,9 @@ function datosOK() {
             cmbClientes: {
                 required: true
             },
+            cmbArticulos: {
+                required: true
+            },
             txtImporte: {
                 required: true,
                 number: true
@@ -243,6 +247,9 @@ function datosOK() {
             },
             cmbClientes: {
                 required: "Debe elegir un cliente"
+            },
+            cmbArticulos: {
+                required: "Debe elegir una unidad de obra"
             },
             txtImporte: {
                 required: "Debe introducir un importe",
@@ -286,7 +293,8 @@ function aceptar() {
                 "ventaNeta": vm.ventaNeta(),
                 "manAgente": vm.manAgente(),
                 "articuloId": vm.sarticuloId(),
-                "importeAlCliente": vm.importeAlCliente()
+                "importeAlCliente": vm.importeAlCliente(),
+                "referencia": vm.referencia()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -921,6 +929,7 @@ function crearPrefacturas() {
         success: function (data, status) {
             // mostramos un mensaje
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            loadPrefacturas(vm.contratoClienteMantenimientoId());
         },
         error: errorAjax
     });

@@ -17,7 +17,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmContratoComercial").submit(function() {
+    $("#frmContratoComercial").submit(function () {
         return false;
     });
 
@@ -25,30 +25,30 @@ function initForm() {
     $("#cmbEmpresas").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -58,30 +58,30 @@ function initForm() {
     $("#cmbComerciales").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -91,30 +91,30 @@ function initForm() {
     $("#cmbTiposPagos").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -126,16 +126,16 @@ function initForm() {
     contratoComercialId = gup('ContratoComercialId');
     if (contratoComercialId != 0) {
         var data = {
-                contratoComercialId: contratoComercialId
-            }
-            // hay que buscar ese elemento en concreto
+            contratoComercialId: contratoComercialId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -161,6 +161,10 @@ function admData() {
     self.manPorBeneficio = ko.observable();
     self.observaciones = ko.observable();
     self.importe = ko.observable();
+    self.dniFirmanteEmpresa = ko.observable();
+    self.firmanteEmpresa = ko.observable();
+    self.dniFirmanteColaborador = ko.observable();
+    self.firmanteColaborador = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -193,6 +197,10 @@ function loadData(data) {
     vm.manPorVentaNeta(data.manPorVentaNeta);
     vm.manPorBeneficio(data.manPorBeneficio);
     vm.observaciones(data.observaciones);
+    vm.dniFirmanteEmpresa(data.dniFirmanteEmpresa);
+    vm.firmanteEmpresa(data.firmanteEmpresa);
+    vm.dniFirmanteColaborador(data.dniFirmanteColaborador);
+    vm.firmanteColaborador(data.firmanteColaborador);
     //
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
@@ -219,7 +227,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -228,7 +236,7 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         // control de fechas 
@@ -256,7 +264,11 @@ function aceptar() {
                 "minimoMensual": vm.minimoMensual(),
                 "manPorVentaNeta": vm.manPorVentaNeta(),
                 "manPorBeneficio": vm.manPorBeneficio(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "dniFirmanteEmpresa": vm.dniFirmanteEmpresa(),
+                "firmanteEmpresa": vm.firmanteEmpresa(),
+                "dniFirmanteColaborador": vm.dniFirmanteColaborador(),
+                "firmanteColaborador": vm.firmanteColaborador(),
             }
         };
         if (contratoComercialId == 0) {
@@ -266,7 +278,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -282,7 +294,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -297,7 +309,7 @@ function aceptar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "ContratoComercialGeneral.html";
         window.open(url, '_self');
     }
@@ -311,7 +323,7 @@ function loadEmpresas(id) {
         url: "/api/empresas",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
@@ -326,7 +338,7 @@ function loadComerciales(id) {
         url: "/api/comerciales",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
             vm.posiblesComerciales(comerciales);
             $("#cmbComerciales").val([id]).trigger('change');
@@ -339,6 +351,7 @@ function loadTiposPagos(id) {
     var tiposPagos = [
         { tipoPagoId: 0, nombre: "" },
         { tipoPagoId: 1, nombre: "Pago único" },
+        { tipoPagoId: 3, nombre: "Pago trimestral" },
         { tipoPagoId: 2, nombre: "Pago mensual" }
     ];
     vm.posiblesTiposPagos(tiposPagos);

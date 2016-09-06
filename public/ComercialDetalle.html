@@ -168,6 +168,11 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -198,7 +203,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -215,7 +220,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato comercial</a>
+                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
                                 </li>
                                 <li>
                                     <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
@@ -352,7 +357,7 @@
                                     </li>
                                     <li>
                                         <a data-toggle="tab" href="#s3"><i class="fa fa-file-o"></i> <span class="hidden-mobile hidden-tablet">Clientes</span></a>
-                                    </li>                                    
+                                    </li>
                                 </ul>
                             </header>
                             <!-- widget div-->
@@ -479,36 +484,62 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-3">
+                                                        <section class="col col-md-2">
                                                             <label class="label">Teléfono (1)</label>
                                                             <label class="input">
                                                         <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
                                                     </label>
                                                         </section>
-                                                        <section class="col col-md-3">
+                                                        <section class="col col-md-2">
                                                             <label class="label">Teléfono (2)</label>
                                                             <label class="input">
                                                         <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
                                                     </label>
                                                         </section>
-                                                        <section class="col col-md-3">
+                                                        <section class="col col-md-2">
                                                             <label class="label">Fax</label>
                                                             <label class="input">
                                                         <input id="txtFax" name="txtFax" data-bind="value: fax" />
                                                     </label>
                                                         </section>
                                                         <section class="col col-md-3">
-                                                            <label class="label">Correo electrónico</label>
+                                                            <label class="label">Correo electrónico (1)</label>
                                                             <label class="input">
                                                         <input id="txtEmail" name="txtEmail" data-bind="value: email" />
                                                     </label>
                                                         </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Correo electrónico (2)</label>
+                                                            <label class="input">
+                                                        <input id="txtEmail2" name="txtEmail2" data-bind="value: email2" />
+                                                    </label>
+                                                        </section>
+
                                                     </div>
                                                     <div class="row">
                                                         <section class="col col-md-12">
                                                             <label class="label">Observaciones</label>
                                                             <label class="textarea textarea-resizable">
                                                         <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                    </label>
+                                                        </section>
+                                                    </div>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <header>
+                                                        Datos de firmante habitual
+                                                    </header>
+                                                    <div class="row">
+                                                        <section class="col col-md-3">
+                                                            <label class="label">DNI</label>
+                                                            <label class="input">
+                                                        <input id="txtDniFirmante" name="txtDniFirmante" data-bind="value: dniFirmante" />
+                                                    </label>
+                                                        </section>
+                                                        <section class="col col-md-9">
+                                                            <label class="label">Firmante</label>
+                                                            <label class="input">
+                                                        <input id="txtFirmante" name="txtFirmante" data-bind="value: firmante" />
                                                     </label>
                                                         </section>
                                                     </div>
@@ -560,7 +591,7 @@
                                                     </thead>
                                                 </table>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- end widget content -->

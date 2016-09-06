@@ -168,6 +168,11 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>   
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -215,7 +220,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato comercial</a>
+                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
                                 </li>
                                 <li>
                                     <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
@@ -361,7 +366,7 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
+                                                <section class="col col-md-6">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
@@ -373,6 +378,13 @@
                                                         <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Codigo Contable</label>
+                                                    <label class="input">
+                                                        <input id="txtCodigoContable" name="txtCodigoContable" data-bind="value: codigoContable" />
+                                                    </label>
+                                                </section>
+
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-4">

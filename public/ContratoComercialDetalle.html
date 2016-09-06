@@ -168,6 +168,11 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
                         </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -198,7 +203,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -215,7 +220,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato comercial</a>
+                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
                                 </li>
                                 <li>
                                     <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
@@ -265,7 +270,7 @@
                 <li>Administracion</li>
                 <li>Gestión</li>
                 <li>Contrato terceros</li>
-                <li>Detalle contrato comercial</li>
+                <li>Detalle contrato agente / colaborador</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -289,7 +294,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-file-o"></i> Detalle contrato comercial<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-file-o"></i> Detalle contrato agente / colaborador
+                        <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -342,7 +348,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento contratos comerciales</h2>
+                                <h2>Mantenimiento contratos agente / colaborador</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -456,6 +462,51 @@
                                                 </div>
                                             </fieldset>
                                             <fieldset>
+                                                <header>
+                                                    FIRMANTES
+                                                </header>
+                                                <div class="row">
+                                                    <section class="col col-md-6">
+                                                        <header>
+                                                            Empresa
+                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
+                                                                <label class="input">
+                                                        <input id="txtDniFirmanteEmpresa" name="txtDniFirmanteEmpresa" data-bind="value: dniFirmanteEmpresa" />
+                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
+                                                                <label class="input">
+                                                        <input id="txtFirmanteEmpresa" name="txtFirmanteEmpresa" data-bind="value: firmanteEmpresa" />
+                                                    </label>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-md-6">
+                                                        <header>
+                                                            Agente / Colaborador
+                                                        </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-3">
+                                                                <label class="label">DNI</label>
+                                                                <label class="input">
+                                                        <input id="txtDniFirmanteColaborador" name="txtDniFirmanteColaborador" data-bind="value: dniFirmanteColaborador" />
+                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-9">
+                                                                <label class="label">Firmante</label>
+                                                                <label class="input">
+                                                        <input id="txtFirmanteColaborador" name="txtFirmanteColaborador" data-bind="value: firmanteColaborador" />
+                                                    </label>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
                                                 <div class="row">
                                                     <section class="col col-md-12">
                                                         <label class="label">Observaciones</label>
@@ -501,8 +552,7 @@
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
                     <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
-                    <i
-                        class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                 </div>
             </div>
         </div>

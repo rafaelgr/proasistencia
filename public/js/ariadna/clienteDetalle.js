@@ -15,6 +15,8 @@ var breakpointDefinition = {
 var empId = 0;
 var lineaEnEdicion = false;
 
+var numDigitos = 0; // número de digitos de cuenta contable
+
 datePickerSpanish(); // see comun.js
 
 var dataComisionistas;
@@ -33,6 +35,10 @@ function initForm() {
     $("#btnImportar").click(importar());
     $("#frmCliente").submit(function () {
         return false;
+    });
+
+    $("#txtProId").blur(function () {
+        cambioCodigo();
     });
 
     $("#frmComisionista").submit(function () {
@@ -64,6 +70,19 @@ function initForm() {
     });
 
     initTablaComisionistas();
+
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            numDigitos = data.numDigitos
+        },
+        error: errorAjax
+    });
 
     empId = gup('ClienteId');
     if (empId != 0) {
@@ -108,6 +127,7 @@ function admData() {
     self.telefono2 = ko.observable();
     self.fax = ko.observable();
     self.email = ko.observable();
+    self.email2 = ko.observable();
     self.observaciones = ko.observable();
     self.cuentaContable = ko.observable();
     self.iban = ko.observable();
@@ -162,6 +182,7 @@ function loadData(data) {
     vm.telefono2(data.telefono2);
     vm.fax(data.fax);
     vm.email(data.email);
+    vm.email2(data.email2);
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
     vm.cuentaContable(data.cuentaContable);
@@ -174,6 +195,7 @@ function loadData(data) {
 }
 
 function datosOK() {
+    // comprobaciones previas
     $('#frmCliente').validate({
         rules: {
             txtNif: {
@@ -182,6 +204,10 @@ function datosOK() {
             txtNombre: {
                 required: true
             },
+            txtProId: {
+                required: true,
+                number: true
+            },
             txtCuentaContable: {
                 required: true
             },
@@ -189,6 +215,9 @@ function datosOK() {
                 required: true
             },
             txtEmail: {
+                email: true
+            },
+            txtEmail2: {
                 email: true
             },
             cmbTiposClientes: {
@@ -206,13 +235,20 @@ function datosOK() {
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
+            txtProId: {
+                required: "Necesitamos un código (contabilidad)",
+                number: "El código debe ser un número"
+            },
             txtCuentaContable: {
-                required: 'Introduzca una cuenta'
+                required: 'Se necesita una cuenta una cuenta'
             },
             txtIban: {
                 required: 'Introduzca un iban'
             },
             txtEmail: {
+                email: 'Debe usar un correo válido'
+            },
+            txtEmail2: {
                 email: 'Debe usar un correo válido'
             },
             cmbTiposClientes: {
@@ -276,6 +312,7 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
+                "email2": vm.email2(),
                 "observaciones": vm.observaciones(),
                 "tipoClienteId": vm.stipoClienteId(),
                 "formaPagoId": vm.sformaPagoId(),
@@ -413,6 +450,12 @@ function loadAgentes(id) {
 function nuevoComisionista() {
     limpiaComisionista(); // es un alta
     lineaEnEdicion = false;
+    // no se pueden dar comisionistas si no se ha dado de alta al cliente.
+    if (empId == 0) {
+        $('#modalComisionista').modal('hide');
+        mostrarMensajeSmart("Debe crear primero al cliente antes de asignarle colaboradores");
+        return;
+    }
 }
 
 function aceptarComisionista() {
@@ -674,4 +717,10 @@ function cambioComercial(data) {
         error: errorAjax
     });
 
+}
+
+function cambioCodigo(data) {
+    // cuando cambia el código cambiamos la cuenta contable
+    var codmacta = montarCuentaContable('43', vm.proId(), numDigitos); // (comun.js)
+    vm.cuentaContable(codmacta);
 }
