@@ -231,12 +231,18 @@ function datosImportOK() {
         rules: {
             txtProId: {
                 required: true
+            },
+            cmbTiposComerciales:{
+                required: true
             }
         },
         // Messages for form validation
         messages: {
             txtProId: {
                 required: "Introduzca un código"
+            },
+            cmbTiposComerciales: {
+                required: "Debe escoger un tipo comercial antes de importar"
             }
         },
         // Do not change code below
@@ -320,9 +326,14 @@ function importar() {
         if (!datosImportOK())
             return;
         $('#btnImportar').addClass('fa-spin');
+        var url = myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId();
+        if (vm.stipoComercialId() == 1){
+            // los agentes se buscan en otro sitio
+            url = myconfig.apiUrl + "/api/sqlany/agentes/" + vm.proId();
+        }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId(),
+            url: url,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
