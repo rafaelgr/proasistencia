@@ -752,3 +752,1709 @@ Error: Connection lost: The server closed the connection.
  VERSION: 0.1.4
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/09/02016 10:52:34
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/09/02016 12:28:31
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    at TCP.onread (net.js:531:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/09/02016 13:57:14
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/09/02016 13:57:17
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:47:49
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:47:52
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:11
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:14
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:26
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:30
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:33
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:35
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:54:52
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 15:55:01
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:11:33
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:11:36
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:22:27
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:22:30
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:24:32
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:34:12
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:34:16
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:34:34
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:34:37
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:40:03
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:40:06
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:44:22
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:44:25
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:45:28
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:45:31
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:26
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:28
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:31
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:35
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:38
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:41
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:46
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:55
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:46:57
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:47:01
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:47:06
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:47:27
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:47:30
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    at TCP.onread (net.js:531:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:48:59
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 16:49:02
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/09/02016 21:46:12
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/09/02016 15:01:12
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/09/02016 15:01:15
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/09/02016 01:25:33
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/09/02016 08:47:42
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/09/02016 13:05:53
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/09/02016 13:05:56
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/09/02016 20:56:47
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/09/02016 16:58:02
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/09/02016 08:52:07
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 08:46:02
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 08:46:24
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 08:46:28
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 08:49:35
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:101:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:123:18)
+    at Object.module.exports.getConnectionDb (C:\Ariadna\proasistencia\lib\comun\comun.js:39:16)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:40:40
+    at fn (C:\Ariadna\proasistencia\node_modules\async\lib\async.js:746:34)
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:1213:16
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:166:37
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:706:43
+    at C:\Ariadna\proasistencia\node_modules\async\lib\async.js:167:37
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 08:49:38
+-------------------------------------------
+ VERSION: 1.0.0
+ PORT: 8080
+-------------------------------------------
