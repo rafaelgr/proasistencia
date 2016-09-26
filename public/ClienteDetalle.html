@@ -172,7 +172,7 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -398,19 +398,51 @@
                                                         <input id="txtCuentaContable" name="txtCuentaContable" type="text" data-bind="value: cuentaContable" disabled/>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">IBAN:</label>
-                                                    <label class="input">
-                                                        <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
-                                                    </label>
+                                                <section class="col col-md-6">
+                                                    <div class="row">
+                                                        <section class="col col-md-2">
+                                                            <label class="label">IBAN:</label>
+                                                            <label class="input">
+                                                                <input id="txtIban1" name="txtIban1" type="text" data-bind="value: iban1" />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">-</label>
+                                                            <label class="input">
+                                                            <input id="txtIban2" name="txtIban2" type="text" data-bind="value: iban2" />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">-</label>
+                                                            <label class="input">
+                                                            <input id="txtIban3" name="txtIban3" type="text" data-bind="value: iban3" />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">-</label>
+                                                            <label class="input">
+                                                            <input id="txtIban4" name="txtIban4" type="text" data-bind="value: iban4" />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">-</label>
+                                                            <label class="input">
+                                                            <input id="txtIban5" name="txtIban5" type="text" data-bind="value: iban5" />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">-</label>
+                                                            <label class="input">
+                                                            <input id="txtIban6" name="txtIban6" type="text" data-bind="value: iban6" />
+                                                            </label>
+                                                        </section>
+                                                    </div>
                                                 </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Agente</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesAgentes, optionsText: 'nombre', optionsValue: 'comercialId', value: sagenteId, valueAllowUnset: true, selectedOptions: elegidosAgentes, selected2:{}"></select><i></i>
                                                     </label>
-                                                </section>
-                                                <section class="col col-md-3">
                                                 </section>
                                             </div>
                                             <div class="row">
@@ -526,7 +558,7 @@
                                                         <input id="txtEmail2" name="txtEmail2" data-bind="value: email2" />
                                                     </label>
                                                 </section>
-                                                
+
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-12">
@@ -774,6 +806,8 @@
     <script src="js/knockout-3.1.0.js"></script>
     <!-- NUMERAL -->
     <script src="js/numeral.js"></script>
+    <script src="js/iban.js"></script>
+    <script src="js/sprintf/sprintf.min.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>

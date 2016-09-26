@@ -198,7 +198,10 @@ function deleteCliente(id) {
                     var fn = buscarClientes();
                     fn();
                 },
-                error: errorAjax
+                error: function(err){
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
