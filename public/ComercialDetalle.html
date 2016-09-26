@@ -392,10 +392,7 @@
                                                     </label>
                                                         </section>
                                                         <section class="col col-md-3">
-                                                            <label class="label">TipoComercial</label>
-                                                            <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
-                                                    </label>
+
                                                         </section>
                                                         <section class="col col-md-3">
                                                             <div class="pull-right">
@@ -403,6 +400,24 @@
                                                             <i class="fa fa-lg fa-refresh"></i>
                                                         </button>
                                                             </div>
+                                                        </section>
+                                                    </div>
+                                                    <div class="row">
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Tipo comercial</label>
+                                                            <label style="width:100%;">
+                                                                    <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
+                                                             </label>
+                                                        </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Colaborador relacionado [AGENTES]</label>
+                                                            <label style="width:100%;">
+                                                                    <select style="width:100%" id="cmbAscComerciales" name="cmbAscComerciales" 
+                                                                    data-bind="options: posiblesAscComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: sascComercialId, valueAllowUnset: true, selectedOptions: elegidosAscComerciales, selected2:{}"></select><i></i>
+                                                             </label>
+                                                        </section>
+                                                        <section class="col col-md-6">
+
                                                         </section>
                                                     </div>
                                                     <div class="row">

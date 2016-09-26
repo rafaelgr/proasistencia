@@ -40,39 +40,10 @@ function initForm() {
     initTablaClientes();
 
     // select2 things
-    $("#cmbTiposComerciales").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function () {
-                return "La carga falló";
-            },
-            inputTooLong: function (e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function (e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function () {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function (e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function () {
-                return "No se encontraron resultados";
-            },
-            searching: function () {
-                return "Buscando…";
-            }
-        }
-    });
-
+    $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
+    $("#cmbAscComerciales").select2(select2Spanish());
+    loadAscComerciales();
 
     empId = gup('ComercialId');
     if (empId != 0) {
@@ -152,6 +123,13 @@ function admData() {
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
+    //
+    self.ascComercialId = ko.observable();
+    self.sascComercialId = ko.observable();
+    //
+    self.posiblesAscComerciales = ko.observableArray([]);
+    self.elegidosAscComerciales = ko.observableArray([]);
+
 
 }
 
@@ -178,10 +156,11 @@ function loadData(data) {
     vm.firmante(data.firmante);
     vm.poblacion(data.poblacion);
     loadTiposComerciales(data.tipoComercialId);
+    loadAscComerciales(data.ascComercialId);
 }
 
 function datosOK() {
-    $('#frmComercial').validate({
+    var options = {
         rules: {
             txtNif: {
                 required: true
@@ -221,7 +200,14 @@ function datosOK() {
         errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
-    });
+    };
+    if (vm.stipoComercialId() == 1) {
+        // es un agente y necesita un colaborador asociado
+        options.rules.cmbAscComerciales = { required: true };
+        options.messages.cmbAscComerciales = { required: "Los agentes están asociados a un colaborador" };
+    }
+
+    $('#frmComercial').validate(options);
     var opciones = $("#frmComercial").validate().settings;
     return $('#frmComercial').valid();
 }
@@ -232,7 +218,7 @@ function datosImportOK() {
             txtProId: {
                 required: true
             },
-            cmbTiposComerciales:{
+            cmbTiposComerciales: {
                 required: true
             }
         },
@@ -281,7 +267,8 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
-                "tipoComercialId": vm.stipoComercialId()
+                "tipoComercialId": vm.stipoComercialId(),
+                "ascComercialId": vm.sascComercialId()
             }
         };
         if (empId == 0) {
@@ -327,7 +314,7 @@ function importar() {
             return;
         $('#btnImportar').addClass('fa-spin');
         var url = myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId();
-        if (vm.stipoComercialId() == 1){
+        if (vm.stipoComercialId() == 1) {
             // los agentes se buscan en otro sitio
             url = myconfig.apiUrl + "/api/sqlany/agentes/" + vm.proId();
         }
@@ -377,6 +364,24 @@ function loadTiposComerciales(id) {
             //    vm.stipoComercialId(id);
             //}
             $("#cmbTiposComerciales").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadAscComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ascComerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesAscComerciales(ascComerciales);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbAscComerciales").val([id]).trigger('change');
         },
         error: errorAjax
     });
