@@ -157,14 +157,21 @@ function admData() {
     self.numMeses = ko.observable();
     self.tipoPago = ko.observable();
     self.minimoMensual = ko.observable();
-    self.manPorVentaNeta = ko.observable();
-    self.manPorBeneficio = ko.observable();
     self.observaciones = ko.observable();
     self.importe = ko.observable();
     self.dniFirmanteEmpresa = ko.observable();
     self.firmanteEmpresa = ko.observable();
     self.dniFirmanteColaborador = ko.observable();
     self.firmanteColaborador = ko.observable();
+    self.manComisAgente = ko.observable();
+    self.manPorImpCliente = ko.observable();
+    self.manPorImpClienteAgente = ko.observable();
+    self.manPorCostes = ko.observable();
+    self.manCostes = ko.observable();
+    self.manJefeObra = ko.observable();
+    self.manOficinaTecnica = ko.observable();
+    self.manAsesorTecnico = ko.observable();
+    self.manComercial = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -194,13 +201,23 @@ function loadData(data) {
     vm.tipoPago(data.tipoPago);
     vm.importe(data.importe);
     vm.minimoMensual(data.minimoMensual);
-    vm.manPorVentaNeta(data.manPorVentaNeta);
-    vm.manPorBeneficio(data.manPorBeneficio);
     vm.observaciones(data.observaciones);
     vm.dniFirmanteEmpresa(data.dniFirmanteEmpresa);
     vm.firmanteEmpresa(data.firmanteEmpresa);
     vm.dniFirmanteColaborador(data.dniFirmanteColaborador);
     vm.firmanteColaborador(data.firmanteColaborador);
+    vm.manComisAgente(data.manComisAgente);
+    vm.manPorImpCliente(data.manPorImpCliente);
+    vm.manPorImpClienteAgente(data.manPorImpClienteAgente);
+    vm.manPorCostes(data.manPorCostes);
+    vm.manCostes(data.manCostes);
+    vm.manJefeObra(data.manJefeObra);
+    vm.manOficinaTecnica(data.manOficinaTecnica);
+    vm.manAsesorTecnico(data.manAsesorTecnico);
+    vm.manComercial(data.manComercial);
+    if (data.manPorImpCliente > 0) $('#chkManPorImpCliente').attr('checked', 'true');
+    if (data.manPorImpClienteAgente > 0) $('#chkManPorImpClienteAgente').attr('checked', 'true');
+    if (data.manPorCostes > 0) $('#chkManPorCostes').attr('checked', 'true');
     //
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
@@ -208,14 +225,17 @@ function loadData(data) {
 }
 
 function datosOK() {
-    $('#frmContratoComercial').validate({
+    var options = {
         rules: {
             cmbEmpresas: {
                 required: true
             },
             cmbComerciales: {
                 required: true
-            }
+            },
+            txtManPorImpCliente: { number: true },
+            txtManPorImpClienteAgfente: { number: true },
+            txtManPorCostes: { number: true }
         },
         // Messages for form validation
         messages: {
@@ -230,8 +250,21 @@ function datosOK() {
         errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
-    });
+    };
+    $('#frmContratoComercial').validate(options);
     var opciones = $("#frmContratoComercial").validate().settings;
+    if ($('#chkManPorCostes').is(':checked')) {
+        opciones.rules.txtManPorCostes = { required: true, number: true };
+        opciones.messages.txtManPorCostes = { required: "Se necesita un valor", number: "Debe ser un número válido" }
+    }
+    if ($('#chkManPorImpCliente').is(':checked')) {
+        opciones.rules.txtManPorImpCliente = { required: true, number: true };
+        opciones.messages.txtManPorImpCliente = { required: "Se necesita un valor", number: "Debe ser un número válido" }
+    }
+    if ($('#chkManPorImpClienteAgente').is(':checked')) {
+        opciones.rules.txtManPorImpClienteAgente = { required: true, number: true };
+        opciones.messages.txtManPorImpClienteAgente = { required: "Se necesita un valor", number: "Debe ser un número válido" }
+    }
     return $('#frmContratoComercial').valid();
 }
 
@@ -262,13 +295,20 @@ function aceptar() {
                 "tipoPago": vm.stipoPagoId(),
                 "importe": vm.importe(),
                 "minimoMensual": vm.minimoMensual(),
-                "manPorVentaNeta": vm.manPorVentaNeta(),
-                "manPorBeneficio": vm.manPorBeneficio(),
                 "observaciones": vm.observaciones(),
                 "dniFirmanteEmpresa": vm.dniFirmanteEmpresa(),
                 "firmanteEmpresa": vm.firmanteEmpresa(),
                 "dniFirmanteColaborador": vm.dniFirmanteColaborador(),
                 "firmanteColaborador": vm.firmanteColaborador(),
+                "manComisAgente": vm.manComisAgente(),
+                "manPorImpCliente": vm.manPorImpCliente(),
+                "manPorImpClienteAgente": vm.manPorImpClienteAgente(),
+                "manPorCostes": vm.manPorCostes(),
+                "manCostes": vm.manCostes(),
+                "manJefeObra": vm.manJefeObra(),
+                "manOficinaTecnica": vm.manOficinaTecnica(),
+                "manAsesorTecnico": vm.manAsesorTecnico(),
+                "manComercial": vm.manComercial()
             }
         };
         if (contratoComercialId == 0) {
