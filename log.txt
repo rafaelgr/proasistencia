@@ -2458,3 +2458,39 @@ Error: ER_BAD_DB_ERROR: Unknown database 'conta11'
  VERSION: 1.0.0
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 10:24:52
+-------------------------------------------
+ VERSION: 1.0.1
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/09/02016 18:25:15
+-------------------------------------------
+ VERSION: 1.0.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  23/09/02016 10:21:14
+-------------------------------------------
+ VERSION: 1.0.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/09/02016 10:45:53
+-------------------------------------------
+ VERSION: 1.0.1
+ PORT: 8080
+-------------------------------------------
