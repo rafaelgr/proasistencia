@@ -30,10 +30,10 @@ function initForm() {
     ko.applyBindings(vm);
 
     // Calculadora de cliente
-    $('#txtImporteAlCliente').on('blur', cambioImporteAlCliente());
-    $('#txtManPorComer').on('blur', cambioImporteAlCliente());
-    $('#txtManAgente').on('blur', cambioImporteAlCliente());
     $('#txtCoste').on('blur', cambioImporteAlCliente());
+    $('#txtMargen').on('blur', cambioImporteAlCliente());
+    $('#txtBeneficio').on('blur', cambioBeneficio());
+    $('#txtManPorComer').on('blur', cambioImporteAlCliente());
 
     // calculadora del generador
     $('#txtFInicial').on('blur', cambioGenerador());
@@ -126,6 +126,7 @@ function admData() {
     self.venta = ko.observable();
     self.tipoPago = ko.observable();
     self.manPorComer = ko.observable();
+    self.impComer = ko.observable();
     self.observaciones = ko.observable();
     self.articuloId = ko.observable();
     //
@@ -208,6 +209,7 @@ function loadData(data) {
     vm.beneficio(data.beneficio);
     vm.ventaNeta(data.ventaNeta);
     vm.manAgente(data.manAgente);
+    vm.impComer(data.impComer);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -294,7 +296,8 @@ function aceptar() {
                 "manAgente": vm.manAgente(),
                 "articuloId": vm.sarticuloId(),
                 "importeAlCliente": vm.importeAlCliente(),
-                "referencia": vm.referencia()
+                "referencia": vm.referencia(),
+                "impComer": vm.impComer()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -465,26 +468,28 @@ function loadParametros() {
 
 function cambioImporteAlCliente() {
     var mf = function () {
-        if (vm.importeAlCliente()) {
-            var importe = vm.importeAlCliente();
-            var venta = importe;
-            // Si hay mantenedor calculamos venta
-            if (vm.manPorComer()) {
-                venta = importe - (importe * vm.manPorComer() / 100.0);
+        if (vm.coste()) {
+            if (vm.margen()) {
+                vm.beneficio(vm.margen() * vm.coste() / 100);
             }
-            vm.venta(roundToTwo(venta));
-            // Descontamos comisión del agente para llegar a venta neta
-            var ventaNeta = venta;
-            if (vm.manAgente()) {
-                ventaNeta = venta - (venta * vm.manAgente() / 100.0);
-            }
-            vm.ventaNeta(roundToTwo(ventaNeta));
-            // Solo queda restar el coste para obtener el beneficio
-            if (vm.coste()) {
-                vm.beneficio(roundToTwo(vm.ventaNeta() - vm.coste()));
+            vm.ventaNeta(vm.coste() * 1 + vm.beneficio() * 1);
+        }
+        if (vm.manPorComer()) {
+            vm.impComer(vm.ventaNeta() * vm.manPorComer() / 100);
+        }
+        vm.importeAlCliente(vm.ventaNeta() * 1 + vm.impComer() * 1);
+    };
+    return mf;
+}
+function cambioBeneficio() {
+    var mf = function () {
+        if (!vm.margen() && vm.coste()) {
+            if (vm.beneficio()) {
+                vm.margen(((100 * vm.beneficio()) / vm.coste()));
             }
         }
-    };
+        cambioImporteAlCliente();
+    }
     return mf;
 }
 
@@ -1228,7 +1233,7 @@ function initTablaPrefacturas() {
                 data: "prefacturaId",
                 render: function (data, type, row) {
                     var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt2 +  "</div>";
+                    var html = "<div class='pull-right'>" + bt2 + "</div>";
                     return html;
                 }
             }]

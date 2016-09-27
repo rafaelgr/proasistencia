@@ -17,9 +17,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
     <!-- SmartAdmin RTL Support -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">
-    <!-- We recommend you use "your_style.css" to override SmartAdmin
-        specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-        <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/ariadna-style.css">
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">-->
     <!-- #FAVICONS -->
@@ -446,49 +445,68 @@
                                                     <!-- Calculadoras de importes -->
                                                     <header>(Calculadora importes)</header>
                                                     <div class="row">
-                                                        <section class="col col-md-4">
-                                                            <label class="label">Importe al cliente</label>
-                                                            <label class="input">
-                                                            <input id="txtImporteAlCliente" name="txtImporteAlCliente" data-bind="value:importeAlCliente" />
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-2">
-                                                            <label class="label">% Mantenedor</label>
-                                                            <label class="input">
-                                                            <input id="txtManPorComer" name="txtManPorComer" data-bind="value:manPorComer" />
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-4">
-                                                            <label class="label">Venta</label>
-                                                            <label class="input">
-                                                            <input id="txtVenta" name="txtVenta" data-bind="value:venta" disabled/>
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-2">
-                                                            <label class="label">% Agente</label>
-                                                            <label class="input">
-                                                            <input id="txtManAgente" name="txtManAgente" data-bind="value:manAgente" />
-                                                    </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-4">
-                                                            <label class="label">Venta neta</label>
-                                                            <label class="input">
-                                                            <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-4">
-                                                            <label class="label">Coste</label>
-                                                            <label class="input">
-                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" />
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-4">
-                                                            <label class="label">Beneficio</label>
-                                                            <label class="input">
-                                                            <input id="txtBeneficio" name="txtBeneficio" data-bind="value:beneficio" disabled/>
-                                                    </label>
+                                                        <section class="col col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="text-align:center;">COSTE</th>
+                                                                            <th colspan="2" style="text-align:center;">BENEFICIO</th>
+                                                                            <th style="text-align:center;">VENTA NETA</th>
+                                                                            <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                                            <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td style="text-align:center;">%</td>
+                                                                            <td style="text-align:center;">IMPORTE</td>
+                                                                            <td></td>
+                                                                            <td style="text-align:center;">%</td>
+                                                                            <td style="text-align:center;">IMPORTE</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtCoste" name="txtCoste" data-bind="value:coste" />
+                                                                                </label>
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtMargen" name="txtMargen" data-bind="value:margen" />
+                                                                                </label>                                                                                
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtBeneficio" name="txtBeneficio" data-bind="value:beneficio"/>
+                                                                                </label                                                                                
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
+                                                                                </label>
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtManPorComer" name="txtManPorComer" data-bind="value:manPorComer" />
+                                                                                </label>                                                                                
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtImpComer" name="txtImpComer" data-bind="value:impComer" disabled />
+                                                                                </label>                                                                                
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <label class="input">
+                                                                                        <input id="txtImporteAlCliente" name="txtImporteAlCliente" data-bind="value:importeAlCliente" disabled/>
+                                                                                </label>                                                                                
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </section>
                                                     </div>
                                                 </fieldset>

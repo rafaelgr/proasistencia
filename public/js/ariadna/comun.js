@@ -306,3 +306,50 @@ var montarCuentaContable = function (inicio, final, numdigitos) {
     var codmacta = '' + inicio + s2 + final;
     return codmacta;
 }
+
+var mensError = function (mens) {
+    // Building html response
+    var html = mens
+    html += sprintf("<div><small>%s</small></div>", "Haga clic en el mensaje para cerrarlo");
+    $.smallBox({
+        title: "ERROR",
+        content: html,
+        color: "#C46A69",
+        iconSmall: "fa fa-warning shake animated",
+    });
+}
+
+var mensErrorAjax = function (err) {
+    var ms = "ERROR";
+    if (err.readyState == 0) {
+        ms = "Error general. Posiblemente falle la conexión.";
+    }
+    if (err.status == 401) {
+        ms ="ERROR de autorización";
+    }
+    // comprobar para mensajes de borrado
+    if (err.responseText){
+        // buscar texto
+        if (/key constraint fails (.*), CONSTRAINT/.test(err.responseText)){
+            var a =  err.responseText.match("key constraint fails\(.*), CONSTRAINT");
+            var a2 = a[1].substring(2);
+            ms = "No se puede eliminar, hay registros que dependen de este en la tabla: " + a2;
+        }
+    }
+    // Building html response
+    var html = ms + "<hr/>"
+    html += sprintf("<div><strong>readyState: </strong>%s</div>", err.readyState);
+    if (err.responseText) {
+        html += sprintf("<div><strong>responseText: </strong>%s</div>", err.responseText);
+    }
+    html += sprintf("<div><strong>status: </strong>%s</div>", err.status);
+    html += sprintf("<div><strong>statusText: </strong>%s</div>", err.statusText);
+    html += "<hr/>";
+    html += sprintf("<div><small>%s</small></div>", "Haga clic en el mensaje para cerrarlo");
+    $.smallBox({
+        title: "ERROR",
+        content: html,
+        color: "#C46A69",
+        iconSmall: "fa fa-warning shake animated",
+    });
+}

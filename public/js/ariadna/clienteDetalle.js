@@ -131,6 +131,12 @@ function admData() {
     self.observaciones = ko.observable();
     self.cuentaContable = ko.observable();
     self.iban = ko.observable();
+    self.iban1 = ko.observable();
+    self.iban2 = ko.observable();
+    self.iban3 = ko.observable();
+    self.iban4 = ko.observable();
+    self.iban5 = ko.observable();
+    self.iban6 = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -192,6 +198,13 @@ function loadData(data) {
     loadAgentes(data.comercialId);
     //
     loadComisionistas(data.clienteId);
+    // split iban
+    var ibanl = vm.iban().match(/.{1,4}/g);
+    var i = 0;
+    ibanl.forEach(function(ibn){
+        i++;
+        vm['iban' + i](ibn);
+    });
 }
 
 function datosOK() {
@@ -264,7 +277,16 @@ function datosOK() {
         }
     });
     var opciones = $("#frmCliente").validate().settings;
-    return $('#frmCliente').valid();
+    if (!$('#frmCliente').valid()) return false;
+    // mas controles
+    // iban
+    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    if (!IBAN.isValid(vm.iban())){
+        mensError("IBAN incorrecto");
+        return false;
+    }
+    // 
+    return true;
 }
 
 function datosImportOK() {
