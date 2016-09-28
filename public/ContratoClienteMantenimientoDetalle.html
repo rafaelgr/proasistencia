@@ -378,67 +378,82 @@
                                                         <section class="col col-md-6">
                                                             <label class="label">Empresa propia</label>
                                                             <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Importe al cliente</label>
-                                                            <label class="input">
-                                                        <input id="txtImporteAlCliente2" name="txtImporteAlCliente2" data-bind="value:importeAlCliente" disabled />
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Tipo pago (cliente)</label>
-                                                            <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposPagos" name="cmbTiposPagos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: stipoPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Mantenedor</label>
-                                                            <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: smantenedorId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Cliente</label>
-                                                            <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
-                                                    </label>
-                                                        </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Agente</label>
-                                                            <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesAgentes, optionsText: 'nombre', optionsValue: 'comercialId', value: sagenteId, valueAllowUnset: true, selectedOptions: elegidosAgentes, selected2:{}"></select><i></i>
-                                                    </label>
+                                                                <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                            </label>
                                                         </section>
                                                         <section class="col col-md-3">
                                                             <label class="label">Referencia</label>
                                                             <label class="input">
-                                                            <input id="txtReferencia" name="txtReferencia" data-bind="value:referencia" />
-                                                    </label>
+                                                                    <input id="txtReferencia" name="txtReferencia" data-bind="value:referencia" />
+                                                            </label>
+                                                        </section>                                                        
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Tipo pago (cliente)</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbTiposPagos" name="cmbTiposPagos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: stipoPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
+                                                            </label>
                                                         </section>
+                                                    </div>
+                                                    <div class="row">
+                                                        <section class="col col-md-6">
+                                                            <label class="label">Cliente</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Importe al cliente</label>
+                                                            <label class="input">
+                                                                <input id="txtImporteAlCliente2" name="txtImporteAlCliente2" data-bind="value:importeAlCliente" disabled />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Agente</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesAgentes, optionsText: 'nombre', optionsValue: 'comercialId', value: sagenteId, valueAllowUnset: true, selectedOptions: elegidosAgentes, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                    </div>
+                                                    <div class="row">
+                                                        <section class="col col-md-6">
+                                                            <label class="label">Mantenedor</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: smantenedorId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Importe al mantenedor</label>
+                                                            <label class="input">
+                                                                <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value:importeMantenedor" disabled />
+                                                            </label>
+                                                        </section>                                                         
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Fecha Original</label>
+                                                            <label class="input">
+                                                                <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                            </label>
+                                                        </section>
+
                                                     </div>
                                                     <div class="row">
                                                         <section class="col col-md-6">
                                                             <label class="label">Unidad obra</label>
                                                             <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
-                                                    </label>
+                                                                <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
+                                                            </label>
                                                         </section>
                                                         <section class="col col-md-3">
                                                             <label class="label">Fecha Inicio</label>
                                                             <label class="input">
-                                                        <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
+                                                                <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                            </label>
                                                         </section>
                                                         <section class="col col-md-3">
                                                             <div class="form-group">
                                                                 <label class="label">Fecha final</label>
                                                                 <label class="input">
-                                                            <input id="txtFechaFin" type="text" name="txtFechaFin" data-bind="value: fechaFin" class="form-control datepicker" data-dateformat="dd/mm/yy" />
-                                                        </label>
+                                                                    <input id="txtFechaFin" type="text" name="txtFechaFin" data-bind="value: fechaFin" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                                                </label>
                                                             </div>
                                                         </section>
                                                     </div>
