@@ -172,6 +172,7 @@ function admData() {
     self.manOficinaTecnica = ko.observable();
     self.manAsesorTecnico = ko.observable();
     self.manComercial = ko.observable();
+    self.comision = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -215,6 +216,7 @@ function loadData(data) {
     vm.manOficinaTecnica(data.manOficinaTecnica);
     vm.manAsesorTecnico(data.manAsesorTecnico);
     vm.manComercial(data.manComercial);
+    vm.comision(data.comision);
     if (data.manPorImpCliente > 0) $('#chkManPorImpCliente').attr('checked', 'true');
     if (data.manPorImpClienteAgente > 0) $('#chkManPorImpClienteAgente').attr('checked', 'true');
     if (data.manPorCostes > 0) $('#chkManPorCostes').attr('checked', 'true');
@@ -235,7 +237,11 @@ function datosOK() {
             },
             txtManPorImpCliente: { number: true },
             txtManPorImpClienteAgfente: { number: true },
-            txtManPorCostes: { number: true }
+            txtManPorCostes: { number: true },
+            txtComision: {
+                required: true,
+                number: true
+            }
         },
         // Messages for form validation
         messages: {
@@ -244,6 +250,10 @@ function datosOK() {
             },
             cmbComerciales: {
                 required: "Debe elegir un comercial"
+            },
+            txtComision: {
+                required: "Debe indicar un porcentaje de comision",
+                number: "Indique un número válido"
             }
         },
         // Do not change code below
@@ -272,18 +282,6 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
-        // control de fechas 
-        // var fecha1, fecha2;
-        // if (moment(vm.fechaInicio(), "DD/MM/YYYY").isValid()) {
-        //     fecha1 = moment(vm.fechaInicio(), "DD/MM/YYYY").format("YYYY-MM-DD");
-        // } else {
-        //     fecha1 = null;
-        // }
-        // if (moment(vm.fechaFin(), "DD/MM/YYYY").isValid()) {
-        //     fecha2 = moment(vm.fechaFin(), "DD/MM/YYYY").format("YYYY-MM-DD");
-        // } else {
-        //     fecha2 = null;
-        // }
         var data = {
             contratoComercial: {
                 "contratoComercialId": vm.contratoComercialId(),
@@ -308,13 +306,19 @@ function aceptar() {
                 "manJefeObra": vm.manJefeObra(),
                 "manOficinaTecnica": vm.manOficinaTecnica(),
                 "manAsesorTecnico": vm.manAsesorTecnico(),
-                "manComercial": vm.manComercial()
+                "manComercial": vm.manComercial(),
+                "comision": vm.comision()
             }
         };
+        var url = "";
         if (contratoComercialId == 0) {
+            url = myconfig.apiUrl + "/api/contratos_comerciales";
+            if ($('#chkCopiarContrato').is(':checked')) {
+                url = myconfig.apiUrl + "/api/contratos_comerciales/upc/";
+            }
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/contratos_comerciales",
+                url: url,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -328,9 +332,13 @@ function aceptar() {
                 error: errorAjax
             });
         } else {
+            url = myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId;
+            if ($('#chkCopiarContrato').is(':checked')) {
+                url = myconfig.apiUrl + "/api/contratos_comerciales/upc/" + contratoComercialId;
+            }
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId,
+                url: url,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
