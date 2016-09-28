@@ -123,6 +123,7 @@ function admData() {
     self.clienteId = ko.observable();
     self.fechaInicio = ko.observable();
     self.fechaFin = ko.observable();
+    self.fechaOriginal = ko.observable();
     self.venta = ko.observable();
     self.tipoPago = ko.observable();
     self.manPorComer = ko.observable();
@@ -139,6 +140,7 @@ function admData() {
     self.importeAlMantenedor = ko.observable();
     self.importeAlCliente = ko.observable();
     self.referencia = ko.observable();
+    self.importeMantenedor = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -196,6 +198,7 @@ function loadData(data) {
     vm.clienteId(data.clienteId);
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFin(spanishDate(data.fechaFin));
+    vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.venta(data.venta);
     vm.tipoPago(data.tipoPago);
     vm.manPorComer(data.manPorComer);
@@ -210,6 +213,7 @@ function loadData(data) {
     vm.ventaNeta(data.ventaNeta);
     vm.manAgente(data.manAgente);
     vm.impComer(data.impComer);
+    vm.importeMantenedor(data.importeMantenedor);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -284,6 +288,7 @@ function aceptar() {
                 "clienteId": vm.sclienteId(),
                 "fechaInicio": spanishDbDate(vm.fechaInicio()),
                 "fechaFin": spanishDbDate(vm.fechaFin()),
+                "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
                 "venta": vm.venta(),
                 "manPorComer": vm.manPorComer(),
                 "tipoPago": vm.stipoPagoId(),
@@ -297,7 +302,8 @@ function aceptar() {
                 "articuloId": vm.sarticuloId(),
                 "importeAlCliente": vm.importeAlCliente(),
                 "referencia": vm.referencia(),
-                "impComer": vm.impComer()
+                "impComer": vm.impComer(),
+                "importeMantenedor": vm.importeMantenedor()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -478,6 +484,10 @@ function cambioImporteAlCliente() {
             vm.impComer(vm.ventaNeta() * vm.manPorComer() / 100);
         }
         vm.importeAlCliente(vm.ventaNeta() * 1 + vm.impComer() * 1);
+        // si hay un mantenedor calculamos el importe debido a él
+        if (vm.smantenedorId()){
+            vm.importeMantenedor(vm.beneficio() * 1 + vm.impComer() * 1);
+        }
     };
     return mf;
 }

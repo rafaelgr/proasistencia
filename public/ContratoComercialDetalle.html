@@ -402,10 +402,18 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
+                                                    <label class="checkbox">
+                                                        <input id="chkCopiarContrato" type="checkbox" name="chkCopiarContrato">
+                                                        <i></i>Copiar las condiciones de este contrato para todas las empresas
+                                                    </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-3">
+                                                    <label class="label">Comisión</label>
+                                                    <label class="input">
+                                                        <input id="txtComision" name="txtComision" data-bind="value: comision" />
+                                                    </label>
                                                 </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Importe</label>
@@ -448,7 +456,7 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManComisAgente" type="checkbox" name="chkManComisAgente" data-bind="checked: manComisAgente">
                                                                     <i></i> Importe comisión del agente
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>
@@ -459,12 +467,12 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManPorImpCliente" type="checkbox" name="chkManPorImpCliente">
                                                                     <i></i>% Sobre importe al cliente
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                                 <label class="input">
                                                                     <input id="txtManPorImpCliente" name="txtManPorImpCliente" data-bind="value: manPorImpCliente" />
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                         </div>
                                                         <div class="row">
@@ -473,12 +481,12 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManPorImpClienteAgente" type="checkbox" name="chkManPorImpClienteAgente">
                                                                     <i></i>% Sobre importe al cliente menos comisión agente
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                                 <label class="input">
                                                                     <input id="txtManPorImpClienteAgente" name="txtManPorImpClienteAgente" data-bind="value: manPorImpClienteAgente" />
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                         </div>
                                                         <div class="row">
@@ -487,12 +495,12 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManPorCostes" type="checkbox" name="chkManPorCostes">
                                                                     <i></i>% Sobre los costes
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                                 <label class="input">
                                                                     <input id="txtManPorCostes" name="txtManPorCostes" data-bind="value: manPorCostes" />
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                         </div>
                                                         <div class="row">
@@ -501,18 +509,18 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManCostes" type="checkbox" name="chkManCostes" data-bind="checked: manCostes">
                                                                     <i></i> Importe costes
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>
-                                                        </div>                                                        
+                                                        </div>
                                                         <div class="row">
                                                             <!-- jefe de obra -->
                                                             <section class="col col-md-8">
                                                                 <label class="checkbox">
                                                                     <input id="chkManJefeObra" type="checkbox" name="chkManJefeObra" data-bind="checked: manJefeObra">
                                                                     <i></i> Importe Jefe Obra
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>
@@ -523,7 +531,7 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManOficinaTecnica" type="checkbox" name="chkManOficinaTecnica" data-bind="checked: manOficinaTecnica">
                                                                     <i></i> Importe Oficina Técnica
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>
@@ -534,7 +542,7 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManAsesorTecnico" type="checkbox" name="chkManAsesorTecnico" data-bind="checked: manAsesorTecnico">
                                                                     <i></i> Importe Asesor Técnico
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>
@@ -545,7 +553,7 @@
                                                                 <label class="checkbox">
                                                                     <input id="chkManComercial" type="checkbox" name="chkManComercial" data-bind="checked: manComercial">
                                                                     <i></i> Importe Comercial
-                                                                </label>                                                                
+                                                                </label>
                                                             </section>
                                                             <section class="col col-md-4">
                                                             </section>

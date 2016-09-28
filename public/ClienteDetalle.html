@@ -371,19 +371,25 @@
                                                         <input id="txtClienteId" name="txtClienteId" type="text" data-bind="value: clienteId" disabled/>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Codigo:</label>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Codigo (Importar):</label>
                                                     <label class="input">
                                                         <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Codigo (Contabilidad):</label>
+                                                    <label class="input">
+                                                        <input id="txtCodigo" name="txtCodigo" type="text" data-bind="value: codigo" />
+                                                    </label>
+                                                </section>                                                
                                                 <section class="col col-md-3">
                                                     <label class="label">Tipo cliente</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbTiposClientes" name="cmbTiposClientes" data-bind="options: posiblesTiposClientes, optionsText: 'nombre', optionsValue: 'tipoClienteId', value: stipoClienteId, valueAllowUnset: true, selectedOptions: elegidosTiposClientes, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <div class="pull-right">
                                                         <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
                                                             <i class="fa fa-lg fa-refresh"></i>
