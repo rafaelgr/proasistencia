@@ -37,7 +37,7 @@ function initForm() {
         return false;
     });
 
-    $("#txtProId").blur(function () {
+    $("#txtCodigo").blur(function () {
         cambioCodigo();
     });
 
@@ -105,6 +105,19 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.clienteId(0);
+        // contador de código
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/clientes/nuevocodigo/",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                vm.codigo(data.codigo);
+            },
+            error: errorAjax
+        });
     }
 }
 
@@ -137,6 +150,7 @@ function admData() {
     self.iban4 = ko.observable();
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
+    self.codigo = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -193,6 +207,7 @@ function loadData(data) {
     vm.poblacion(data.poblacion);
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.iban);
+    vm.codigo(data.codigo);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
     loadAgentes(data.comercialId);
@@ -238,6 +253,10 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: true
+            },
+            txtCodigo: {
+                required: true,
+                number: true
             }
         },
         // Messages for form validation
@@ -269,6 +288,10 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
+            },
+            txtCodigo:{
+                required: "Debe introducir un código para contabilidad",
+                number: "El códig debe ser numérico"
             }
         },
         // Do not change code below
@@ -340,7 +363,8 @@ function aceptar() {
                 "formaPagoId": vm.sformaPagoId(),
                 "cuentaContable": vm.cuentaContable(),
                 "iban": vm.iban(),
-                "comercialId": vm.sagenteId()
+                "comercialId": vm.sagenteId(),
+                "codigo": vm.codigo()
             }
         };
         if (empId == 0) {
@@ -743,6 +767,6 @@ function cambioComercial(data) {
 
 function cambioCodigo(data) {
     // cuando cambia el código cambiamos la cuenta contable
-    var codmacta = montarCuentaContable('43', vm.proId(), numDigitos); // (comun.js)
+    var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
     vm.cuentaContable(codmacta);
 }
