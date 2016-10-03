@@ -141,6 +141,7 @@ function admData() {
     self.importeAlCliente = ko.observable();
     self.referencia = ko.observable();
     self.importeMantenedor = ko.observable();
+    self.diaPago = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -214,6 +215,7 @@ function loadData(data) {
     vm.manAgente(data.manAgente);
     vm.impComer(data.impComer);
     vm.importeMantenedor(data.importeMantenedor);
+    vm.diaPago(data.diaPago);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -279,7 +281,6 @@ function aceptar() {
         if (!datosOK()) {
             return;
         }
-
         var data = {
             contratoClienteMantenimiento: {
                 "contratoClienteMantenimientoId": vm.contratoClienteMantenimientoId(),
@@ -303,7 +304,8 @@ function aceptar() {
                 "importeAlCliente": vm.importeAlCliente(),
                 "referencia": vm.referencia(),
                 "impComer": vm.impComer(),
-                "importeMantenedor": vm.importeMantenedor()
+                "importeMantenedor": vm.importeMantenedor(),
+                "diaPago": vm.diaPago()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -1034,7 +1036,7 @@ function cambioGenerador() {
         var importe = vm.importeAlCliente();
         var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
         var numpagos = calNumPagos();
-        var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
+        var pagos = crearPagos(importe, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
         vm.numpagos(numpagos);
         vm.listaPagos(pagos);
         loadTablaGenerador(pagos);
@@ -1045,7 +1047,7 @@ function cambioGenerador() {
 // crearPagos()
 // crea un vector provisional con la fecha e importe de cada
 // uno de los pagos
-function crearPagos(importe, fechaInicial, numPagos, empresaId, clienteId, articuloId) {
+function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, clienteId, articuloId) {
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
