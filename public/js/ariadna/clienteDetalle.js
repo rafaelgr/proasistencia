@@ -59,7 +59,12 @@ function initForm() {
 
     // select2 things
     $("#cmbAgentes").select2(select2Spanish());
+    $("#cmbAgentes").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioAgente(e.added);
+    });
     loadAgentes();
+
 
     // select2 things
     $("#cmbComerciales").select2(select2Spanish());
@@ -151,6 +156,7 @@ function admData() {
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
+    self.colaborador = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -211,12 +217,14 @@ function loadData(data) {
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
     loadAgentes(data.comercialId);
+    var data = {id: data.comercialId};
+    cambioAgente(data);
     //
     loadComisionistas(data.clienteId);
     // split iban
     var ibanl = vm.iban().match(/.{1,4}/g);
     var i = 0;
-    ibanl.forEach(function(ibn){
+    ibanl.forEach(function (ibn) {
         i++;
         vm['iban' + i](ibn);
     });
@@ -230,16 +238,6 @@ function datosOK() {
                 required: true
             },
             txtNombre: {
-                required: true
-            },
-            txtProId: {
-                required: true,
-                number: true
-            },
-            txtCuentaContable: {
-                required: true
-            },
-            txtIban: {
                 required: true
             },
             txtEmail: {
@@ -267,16 +265,6 @@ function datosOK() {
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
-            txtProId: {
-                required: "Necesitamos un código (contabilidad)",
-                number: "El código debe ser un número"
-            },
-            txtCuentaContable: {
-                required: 'Se necesita una cuenta una cuenta'
-            },
-            txtIban: {
-                required: 'Introduzca un iban'
-            },
             txtEmail: {
                 email: 'Debe usar un correo válido'
             },
@@ -289,7 +277,7 @@ function datosOK() {
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
             },
-            txtCodigo:{
+            txtCodigo: {
                 required: "Debe introducir un código para contabilidad",
                 number: "El códig debe ser numérico"
             }
@@ -304,7 +292,7 @@ function datosOK() {
     // mas controles
     // iban
     vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
-    if (!IBAN.isValid(vm.iban())){
+    if (!IBAN.isValid(vm.iban())) {
         mensError("IBAN incorrecto");
         return false;
     }
@@ -759,6 +747,41 @@ function cambioComercial(data) {
             // asignamos el manPorVentaNeta al vm
             vm.manPorVentaNeta(data.manPorVentaNeta);
             vm.manPorBeneficio(data.manPorBeneficio);
+        },
+        error: errorAjax
+    });
+
+}
+
+
+/*
+* cambioAgente
+* Al cambiar un agente hay que traer el colaborador asociado
+*/
+function cambioAgente(data) {
+    //
+    if (!data) {
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/" + data.id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/comerciales/" + data.ascComercialId,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data, status) {
+                        if (data) {
+                            vm.colaborador(data.nombre);
+                        }
+                    }
+                });
+            }
         },
         error: errorAjax
     });
