@@ -104,12 +104,15 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                $("#wid-id-2").show();
             },
             error: errorAjax
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.clienteId(0);
+        // escondemos el grid de colaboradores asociados
+        $("#wid-id-2").hide();
         // contador de código
         $.ajax({
             type: "GET",
@@ -217,17 +220,19 @@ function loadData(data) {
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
     loadAgentes(data.comercialId);
-    var data = {id: data.comercialId};
+    var data = { id: data.comercialId };
     cambioAgente(data);
     //
     loadComisionistas(data.clienteId);
     // split iban
-    var ibanl = vm.iban().match(/.{1,4}/g);
-    var i = 0;
-    ibanl.forEach(function (ibn) {
-        i++;
-        vm['iban' + i](ibn);
-    });
+    if (vm.iban()) {
+        var ibanl = vm.iban().match(/.{1,4}/g);
+        var i = 0;
+        ibanl.forEach(function (ibn) {
+            i++;
+            vm['iban' + i](ibn);
+        });
+    }
 }
 
 function datosOK() {
@@ -292,9 +297,11 @@ function datosOK() {
     // mas controles
     // iban
     vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
-    if (!IBAN.isValid(vm.iban())) {
-        mensError("IBAN incorrecto");
-        return false;
+    if (vm.iban() && vm.iban() != "") {
+        if (!IBAN.isValid(vm.iban())) {
+            mensError("IBAN incorrecto");
+            return false;
+        }
     }
     // 
     return true;
@@ -597,26 +604,26 @@ function initTablaComisionistas() {
         columns: [{
             data: "comercial"
         }, {
-                data: "manPorVentaNeta",
-                className: "text-right",
-                render: function (data, type, row) {
-                    return numeral(data).format('0,0.00');
-                }
-            }, {
-                data: "manPorBeneficio",
-                className: "text-right",
-                render: function (data, type, row) {
-                    return numeral(data).format('0,0.00');
-                }
-            }, {
-                data: "clienteComisionistaId",
-                render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                    return html;
-                }
-            }]
+            data: "manPorVentaNeta",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "manPorBeneficio",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "clienteComisionistaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
