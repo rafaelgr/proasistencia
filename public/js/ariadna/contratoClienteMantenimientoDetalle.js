@@ -109,9 +109,12 @@ function initForm() {
     contratoClienteMantenimientoId = gup('ContratoClienteMantenimientoId');
     if (contratoClienteMantenimientoId != 0) {
         cargarDatosDeContrato(contratoClienteMantenimientoId);
+        $("#colaboradores").show();
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.contratoClienteMantenimientoId(0);
+        // ocultamoes el widget de colaboradores
+        $("#colaboradores").hide();
     }
 }
 
@@ -183,7 +186,7 @@ function admData() {
     self.elegidosComerciales = ko.observableArray([]);
     self.porVentaNeta = ko.observable();
     self.porBeneficio = ko.observable();
-
+    self.porComer = ko.observable();
     // --------- generacion
     self.fInicial = ko.observable();
     self.fFinal = ko.observable();
@@ -333,6 +336,7 @@ function aceptar() {
                             var mens = "Revise las asociaciones con colaboradores creadas automáticamente, más abajo en esta página";
                             mostrarMensajeSmart(mens);
                             cargarDatosDeContrato(vm.contratoClienteMantenimientoId());
+                            $("#colaboradores").show();
                         },
                         error: errorAjax
                     });
@@ -585,12 +589,18 @@ function datosOKComisionistas() {
         rules: {
             cmbComerciales: {
                 required: true
+            },
+            txtPorComer:{
+                number: true
             }
         },
         // Messages for form validation
         messages: {
             cmbComerciales: {
                 required: "Debe elegir un colaborador"
+            },
+            txtPorComer:{
+                number: "Debe ser un número válido"
             }
         },
         // Do not change code below
@@ -639,18 +649,12 @@ function initTablaComisionistas() {
         },
         data: dataComisionistas,
         columnDefs: [
-            { "width": "20%", "targets": 3 }
+            { "width": "20%", "targets": 2 }
         ],
         columns: [{
             data: "comercial"
         }, {
-                data: "porVentaNeta",
-                className: "text-right",
-                render: function (data, type, row) {
-                    return numeral(data).format('0,0.00');
-                }
-            }, {
-                data: "porBeneficio",
+                data: "porComer",
                 className: "text-right",
                 render: function (data, type, row) {
                     return numeral(data).format('0,0.00');
@@ -673,6 +677,7 @@ function loadComisionista(data) {
     vm.comercialId(data.comercialId);
     vm.porVentaNeta(data.porVentaNeta);
     vm.porBeneficio(data.porBeneficio);
+    vm.porComer(data.porComer);
     //
     loadComerciales(data.comercialId);
 }
@@ -682,6 +687,7 @@ function limpiaComisionista(data) {
     vm.comercialId(null);
     vm.porVentaNeta(null);
     vm.porBeneficio(null);
+    vm.porComer(null);
     loadComerciales();
 }
 
@@ -810,7 +816,9 @@ function cambioComercial(data) {
             vm.porVentaNeta(data.manPorVentaNeta);
             vm.porBeneficio(data.manPorBeneficio);
         },
-        error: errorAjax
+        error: function(err){
+
+        }
     });
 
 }

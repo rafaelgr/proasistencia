@@ -190,6 +190,7 @@ function admData() {
     self.comercialId = ko.observable();
     self.manPorVentaNeta = ko.observable();
     self.manPorBeneficio = ko.observable();
+    self.porComer = ko.observable();
     //
     self.empresaId = ko.observable(null);
 }
@@ -511,7 +512,8 @@ function aceptarComisionista() {
             clienteId: vm.clienteId(),
             comercialId: vm.scomercialId(),
             manPorVentaNeta: vm.manPorVentaNeta(),
-            manPorBeneficio: vm.manPorBeneficio()
+            manPorBeneficio: vm.manPorBeneficio(),
+            porComer: vm.porComer()
         }
     }
     if (!lineaEnEdicion) {
@@ -604,13 +606,7 @@ function initTablaComisionistas() {
         columns: [{
             data: "comercial"
         }, {
-            data: "manPorVentaNeta",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "manPorBeneficio",
+            data: "porComer",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -633,6 +629,7 @@ function loadComisionista(data) {
     vm.comercialId(data.comercialId);
     vm.manPorVentaNeta(data.manPorVentaNeta);
     vm.manPorBeneficio(data.manPorBeneficio);
+    vm.porComer(data.porComer);
     //
     loadComerciales(data.comercialId);
 }
@@ -754,8 +751,23 @@ function cambioComercial(data) {
             // asignamos el manPorVentaNeta al vm
             vm.manPorVentaNeta(data.manPorVentaNeta);
             vm.manPorBeneficio(data.manPorBeneficio);
+            vm.porComer(data.comision);
         },
-        error: errorAjax
+        error: function (err) {
+            // buscamos el comercial para sacar sus datos por defecto
+            $.ajax({
+                type: "GET",
+                url: "/api/comerciales/" + comercialId,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    vm.porComer(data.porComer);
+                },
+                error: function (err) {
+                    
+                }
+            });
+        }
     });
 
 }
