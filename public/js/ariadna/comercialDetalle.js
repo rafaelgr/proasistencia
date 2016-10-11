@@ -44,6 +44,9 @@ function initForm() {
     loadTiposComerciales();
     $("#cmbAscComerciales").select2(select2Spanish());
     loadAscComerciales();
+    // select2 things
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
 
     empId = gup('ComercialId');
     if (empId != 0) {
@@ -117,6 +120,15 @@ function admData() {
     self.observaciones = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
+    self.iban = ko.observable();
+    self.iban1 = ko.observable();
+    self.iban2 = ko.observable();
+    self.iban3 = ko.observable();
+    self.iban4 = ko.observable();
+    self.iban5 = ko.observable();
+    self.iban6 = ko.observable();
+    self.codigo = ko.observable();
+    self.porComer = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -129,6 +141,12 @@ function admData() {
     //
     self.posiblesAscComerciales = ko.observableArray([]);
     self.elegidosAscComerciales = ko.observableArray([]);
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
 
 
 }
@@ -157,6 +175,18 @@ function loadData(data) {
     vm.poblacion(data.poblacion);
     loadTiposComerciales(data.tipoComercialId);
     loadAscComerciales(data.ascComercialId);
+    vm.iban(data.iban);
+    vm.porComer(data.porComer);
+    // split iban
+    if (vm.iban()) {
+        var ibanl = vm.iban().match(/.{1,4}/g);
+        var i = 0;
+        ibanl.forEach(function (ibn) {
+            i++;
+            vm['iban' + i](ibn);
+        });
+    }
+    loadFormasPago(data.formaPagoId);
 }
 
 function datosOK() {
@@ -176,6 +206,9 @@ function datosOK() {
             },
             cmbTiposComerciales: {
                 required: true
+            },
+            txtPorComer:{
+                number: true
             }
         },
         // Messages for form validation
@@ -194,6 +227,9 @@ function datosOK() {
             },
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
+            },
+            txtPorComer:{
+                number: "Debe ser un número valido"
             }
         },
         // Do not change code below
@@ -209,6 +245,15 @@ function datosOK() {
 
     $('#frmComercial').validate(options);
     var opciones = $("#frmComercial").validate().settings;
+    // iban
+    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    var opciones = $("#frmComercial").validate().settings;
+    if (vm.iban() && vm.iban() != "") {
+        if (!IBAN.isValid(vm.iban())) {
+            mensError("IBAN incorrecto");
+            return false;
+        }
+    }
     return $('#frmComercial').valid();
 }
 
@@ -236,7 +281,6 @@ function datosImportOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmComercial").validate().settings;
     return $('#frmComercial').valid();
 }
 
@@ -268,7 +312,10 @@ function aceptar() {
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
                 "tipoComercialId": vm.stipoComercialId(),
-                "ascComercialId": vm.sascComercialId()
+                "ascComercialId": vm.sascComercialId(),
+                "formaPagoId": vm.sformaPagoId(),
+                "iban": vm.iban(),
+                "porComer":vm.porComer()
             }
         };
         if (empId == 0) {
@@ -335,6 +382,8 @@ function importar() {
                 data.comercialId = vm.comercialId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                // volver a cargar  el tipoComercial
+                loadTiposComerciales(vm.stipoComercialId());
             },
             error: errorAjax
         });
@@ -387,6 +436,21 @@ function loadAscComerciales(id) {
     });
 }
 
+function loadFormasPago(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/formas_pago",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+            vm.posiblesFormasPago(formasPago);
+            $("#cmbFormasPago").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
 // TAB CONTRATOS
 function initTablaContratosComerciales() {
     tablaCarro = $('#dt_contratoComercial').dataTable({
@@ -427,29 +491,29 @@ function initTablaContratosComerciales() {
         columns: [{
             data: "empresa"
         }, {
-                data: "fechaInicio",
-                render: function (data, type, row) {
-                    if (!data) {
-                        return "";
-                    }
-                    return moment(data).format('DD/MM/YYYY');
+            data: "fechaInicio",
+            render: function (data, type, row) {
+                if (!data) {
+                    return "";
                 }
-            }, {
-                data: "fechaFin",
-                render: function (data, type, row) {
-                    if (!data) {
-                        return "";
-                    }
-                    return moment(data).format('DD/MM/YYYY');
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "fechaFin",
+            render: function (data, type, row) {
+                if (!data) {
+                    return "";
                 }
-            }, {
-                data: "contratoComercialId",
-                render: function (data, type, row) {
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editContratoComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt2 + "</div>";
-                    return html;
-                }
-            }]
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "contratoComercialId",
+            render: function (data, type, row) {
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editContratoComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
@@ -510,14 +574,14 @@ function initTablaClientes() {
         columns: [{
             data: "nombre"
         },
-            {
-                data: "clienteId",
-                render: function (data, type, row) {
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editCliente(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt2 + "</div>";
-                    return html;
-                }
-            }]
+        {
+            data: "clienteId",
+            render: function (data, type, row) {
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editCliente(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
