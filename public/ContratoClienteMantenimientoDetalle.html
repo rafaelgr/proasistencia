@@ -401,10 +401,16 @@
                                                                 <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
                                                             </label>
                                                         </section>
-                                                        <section class="col col-md-3">
+                                                        <section class="col col-md-1">
                                                             <label class="label">Importe al cliente</label>
                                                             <label class="input">
                                                                 <input id="txtImporteAlCliente2" name="txtImporteAlCliente2" data-bind="value:importeAlCliente" disabled />
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-1">
+                                                            <label class="label">Dia de pgo</label>
+                                                            <label class="input">
+                                                                <input id="txtDiaPago" name="txtDiaPago" data-bind="value:diaPago" disabled />
                                                             </label>
                                                         </section>
                                                         <section class="col col-md-3">
@@ -456,6 +462,9 @@
                                                                 </label>
                                                             </div>
                                                         </section>
+                                                    </div>
+                                                    <div class="row">
+
                                                     </div>
                                                     <!-- Calculadoras de importes -->
                                                     <header>(Calculadora importes)</header>
