@@ -401,14 +401,14 @@
                                                                 <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
                                                             </label>
                                                         </section>
-                                                        <section class="col col-md-1">
+                                                        <section class="col col-md-2">
                                                             <label class="label">Importe al cliente</label>
                                                             <label class="input">
                                                                 <input id="txtImporteAlCliente2" name="txtImporteAlCliente2" data-bind="value:importeAlCliente" disabled />
                                                             </label>
                                                         </section>
                                                         <section class="col col-md-1">
-                                                            <label class="label">Dia de pgo</label>
+                                                            <label class="label">Dia de pago</label>
                                                             <label class="input">
                                                                 <input id="txtDiaPago" name="txtDiaPago" data-bind="value:diaPago" disabled />
                                                             </label>
@@ -559,24 +559,11 @@
                                                 </fieldset>
                                             </form>
                                             <!-- row  ELLE-->
-                                            <div class="row">
+                                            <div class="row" id="colaboradores">
                                                 <!-- NEW WIDGET START -->
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
                                                     <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                                                        <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-                                    
-                                data-widget-colorbutton="false" 
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true" 
-                                data-widget-sortable="false"
-                                    
-                                -->
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>COLABORADORES</h2>
@@ -600,8 +587,8 @@
                                                                         <div class="pull-right">
                                                                             <button id="btnNuevoComisionista" title="Nuevo comisionista" data-toggle="modal" data-target="#modalComisionista" onclick="nuevoComisionista()"
                                                                                 class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
+                                                                                <i class="fa fa-lg fa-plus"></i>
+                                                                            </button>
                                                                         </div>
                                                                     </fieldset>
                                                                 </form>
@@ -614,10 +601,7 @@
                                                                                     <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Colaborador
                                                                                 </th>
                                                                                 <th data-hide="phone">
-                                                                                    % Venta Neta
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    % Beneficio
+                                                                                    % Comision
                                                                                 </th>
                                                                                 <th>
                                                                                 </th>
@@ -696,22 +680,16 @@
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <div class="col col-md-8">
+                                    <div class="col col-md-10">
                                         <label class="label">Colaborador</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
                                     <section class="col col-md-2">
-                                        <label class="label">% Venta Neta</label>
+                                        <label class="label">% Comision</label>
                                         <label class="input">
-                                            <input id="txtPorVentaNeta" name="txtPorVentaNeta" type="text" data-bind="value: porVentaNeta" />
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">% Beneficio</label>
-                                        <label class="input">
-                                            <input id="txtPorBeneficio" name="txtPorBeneficio" type="text" data-bind="value: porBeneficio" />
+                                            <input id="txtPorComer" name="txtPorComer" type="text" data-bind="value: porComer" />
                                         </label>
                                     </section>
                                 </div>
