@@ -18,23 +18,26 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
-    $("#frmEmpresa").submit(function() {
+    $("#frmEmpresa").submit(function () {
         return false;
     });
+    // select2 things
+    $("#cmbTiposVia").select2(select2Spanish());
+    loadTiposVia();
 
     empId = gup('EmpresaId');
     if (empId != 0) {
         var data = {
-                empresaId: empId
-            }
-            // hay que buscar ese elemento en concreto
+            empresaId: empId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/empresas/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
@@ -69,6 +72,13 @@ function admData() {
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
     self.contabilidad = ko.observable();
+    //
+    self.tipoViaId = ko.observable();
+    self.stipoViaId = ko.observable();
+    //
+    self.posiblesTiposVia = ko.observableArray([]);
+    self.elegidosTiposVia = ko.observableArray([]);
+    //
 }
 
 function loadData(data) {
@@ -93,6 +103,7 @@ function loadData(data) {
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.contabilidad(data.contabilidad);
+    loadTiposVia(data.tipoViaId);
 }
 
 function datosOK() {
@@ -127,7 +138,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -149,7 +160,7 @@ function datosImportOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -158,7 +169,7 @@ function datosImportOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
@@ -183,7 +194,8 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
-                "contabilidad": vm.contabilidad()
+                "contabilidad": vm.contabilidad(),
+                "tipoViaId": vm.stipoViaId()
             }
         };
         if (empId == 0) {
@@ -193,7 +205,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -209,7 +221,7 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
@@ -224,7 +236,7 @@ function aceptar() {
 }
 
 function importar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosImportOK())
             return;
         $('#btnImportar').addClass('fa-spin');
@@ -233,7 +245,7 @@ function importar() {
             url: myconfig.apiUrl + "/api/sqlany/empresas/" + vm.proId(),
             dataType: "json",
             contentType: "application/json",
-            success: function(data, status) {
+            success: function (data, status) {
                 $('#btnImportar').removeClass('fa-spin');
                 // la cadena será devuelta como JSON
                 var rData = JSON.parse(data);
@@ -253,9 +265,24 @@ function importar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "EmpresasGeneral.html";
         window.open(url, '_self');
     }
     return mf;
+}
+
+function loadTiposVia(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia(tiposVia);
+            $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
 }
