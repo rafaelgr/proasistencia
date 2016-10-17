@@ -487,11 +487,13 @@ function cambioImporteAlCliente() {
             vm.ventaNeta(vm.coste() * 1 + vm.beneficio() * 1);
         }
         if (vm.manPorComer()) {
-            vm.impComer(vm.ventaNeta() * vm.manPorComer() / 100);
+            //vm.impComer(vm.ventaNeta() * vm.manPorComer() / 100);
+            vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.manPorComer()) / 100)));
+            vm.impComer(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
         }
         vm.importeAlCliente(vm.ventaNeta() * 1 + vm.impComer() * 1);
         // si hay un mantenedor calculamos el importe debido a él
-        if (vm.smantenedorId()){
+        if (vm.smantenedorId()) {
             vm.importeMantenedor(vm.beneficio() * 1 + vm.impComer() * 1);
         }
     };
@@ -590,7 +592,7 @@ function datosOKComisionistas() {
             cmbComerciales: {
                 required: true
             },
-            txtPorComer:{
+            txtPorComer: {
                 number: true
             }
         },
@@ -599,7 +601,7 @@ function datosOKComisionistas() {
             cmbComerciales: {
                 required: "Debe elegir un colaborador"
             },
-            txtPorComer:{
+            txtPorComer: {
                 number: "Debe ser un número válido"
             }
         },
@@ -654,20 +656,20 @@ function initTablaComisionistas() {
         columns: [{
             data: "comercial"
         }, {
-                data: "porComer",
-                className: "text-right",
-                render: function (data, type, row) {
-                    return numeral(data).format('0,0.00');
-                }
-            }, {
-                data: "contratoClienteMantenimientoComisionistaId",
-                render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                    return html;
-                }
-            }]
+            data: "porComer",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "contratoClienteMantenimientoComisionistaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
@@ -816,7 +818,7 @@ function cambioComercial(data) {
             vm.porVentaNeta(data.manPorVentaNeta);
             vm.porBeneficio(data.manPorBeneficio);
         },
-        error: function(err){
+        error: function (err) {
 
         }
     });
@@ -1132,18 +1134,18 @@ function initTablaGenerador() {
         columns: [{
             data: "fecha"
         }, {
-                data: "importe",
-                className: "text-right",
-                render: function (data, type, row) {
-                    return numeral(data).format('0,0.00');
-                }
-            }, {
-                data: "empresaId",
-                className: "text-center"
-            }, {
-                data: "clienteId",
-                className: "text-center"
-            }]
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresaId",
+            className: "text-center"
+        }, {
+            data: "clienteId",
+            className: "text-center"
+        }]
     });
 }
 
@@ -1239,24 +1241,24 @@ function initTablaPrefacturas() {
         columns: [{
             data: "emisorNombre"
         }, {
-                data: "receptorNombre"
-            }, {
-                data: "fecha",
-                render: function (data, type, row) {
-                    return moment(data).format('DD/MM/YYYY');
-                }
-            }, {
-                data: "total"
-            }, {
-                data: "observaciones"
-            }, {
-                data: "prefacturaId",
-                render: function (data, type, row) {
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt2 + "</div>";
-                    return html;
-                }
-            }]
+            data: "receptorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "prefacturaId",
+            render: function (data, type, row) {
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
