@@ -58,6 +58,10 @@ function initForm() {
     loadFormasPago();
 
     // select2 things
+    $("#cmbTiposVia").select2(select2Spanish());
+    loadTiposVia();
+
+    // select2 things
     $("#cmbAgentes").select2(select2Spanish());
     $("#cmbAgentes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -178,6 +182,13 @@ function admData() {
     //
     self.posiblesAgentes = ko.observableArray([]);
     self.elegidosAgentes = ko.observableArray([]);
+    //
+    self.tipoViaId = ko.observable();
+    self.stipoViaId = ko.observable();
+    //
+    self.posiblesTiposVia = ko.observableArray([]);
+    self.elegidosTiposVia = ko.observableArray([]);
+    //
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -220,6 +231,7 @@ function loadData(data) {
     vm.codigo(data.codigo);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
+    loadTiposVia(data.tipoViaId);
     loadAgentes(data.comercialId);
     var data = { id: data.comercialId };
     cambioAgente(data);
@@ -360,7 +372,8 @@ function aceptar() {
                 "cuentaContable": vm.cuentaContable(),
                 "iban": vm.iban(),
                 "comercialId": vm.sagenteId(),
-                "codigo": vm.codigo()
+                "codigo": vm.codigo(),
+                "tipoViaId": vm.stipoViaId()
             }
         };
         if (empId == 0) {
@@ -480,6 +493,21 @@ function loadAgentes(id) {
             var agentes = [{ comercialId: 0, nombre: "" }].concat(data);
             vm.posiblesAgentes(agentes);
             $("#cmbAgentes").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadTiposVia(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia(tiposVia);
+            $("#cmbTiposVia").val([id]).trigger('change');
         },
         error: errorAjax
     });
@@ -764,7 +792,7 @@ function cambioComercial(data) {
                     vm.porComer(data.porComer);
                 },
                 error: function (err) {
-                    
+
                 }
             });
         }

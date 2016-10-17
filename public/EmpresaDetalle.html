@@ -173,6 +173,11 @@
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
                         </li>   
+                        <li id="tiposvia">
+                            <a href="TipoViaGeneral.html">
+                                <i class="fa fa-map-marker"></i> Tipos de via
+                            </a>
+                        </li>  
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -407,7 +412,13 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-12">
+												<section class="col col-md-3">
+													<label class="label">Tipo via</label>
+													<label style="width:100%;">
+                                                        <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select><i></i>
+                                                    </label>
+												</section>                                                
+                                                <section class="col col-md-9">
                                                     <label class="label">Direccion</label>
                                                     <label class="input">
                                                         <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />

@@ -48,6 +48,10 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
 
+    // select2 things
+    $("#cmbTiposVia").select2(select2Spanish());
+    loadTiposVia();
+
     empId = gup('ComercialId');
     if (empId != 0) {
         var data = {
@@ -147,8 +151,13 @@ function admData() {
     //
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
-
-
+    //
+    self.tipoViaId = ko.observable();
+    self.stipoViaId = ko.observable();
+    //
+    self.posiblesTiposVia = ko.observableArray([]);
+    self.elegidosTiposVia = ko.observableArray([]);
+    //
 }
 
 function loadData(data) {
@@ -187,6 +196,7 @@ function loadData(data) {
         });
     }
     loadFormasPago(data.formaPagoId);
+    loadTiposVia(data.tipoViaId);
 }
 
 function datosOK() {
@@ -207,7 +217,7 @@ function datosOK() {
             cmbTiposComerciales: {
                 required: true
             },
-            txtPorComer:{
+            txtPorComer: {
                 number: true
             }
         },
@@ -228,7 +238,7 @@ function datosOK() {
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
             },
-            txtPorComer:{
+            txtPorComer: {
                 number: "Debe ser un número valido"
             }
         },
@@ -315,7 +325,8 @@ function aceptar() {
                 "ascComercialId": vm.sascComercialId(),
                 "formaPagoId": vm.sformaPagoId(),
                 "iban": vm.iban(),
-                "porComer":vm.porComer()
+                "porComer": vm.porComer(),
+                "tipoViaId": vm.stipoViaId()
             }
         };
         if (empId == 0) {
@@ -600,4 +611,19 @@ function editCliente(id) {
     // pasando en la url ese ID
     var url = "ClienteDetalle.html?ClienteId=" + id;
     window.open(url, '_blank');
+}
+
+function loadTiposVia(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia(tiposVia);
+            $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
 }
