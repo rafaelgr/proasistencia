@@ -482,7 +482,7 @@ function cambioImporteAlCliente() {
     var mf = function () {
         if (vm.coste()) {
             if (vm.margen()) {
-                vm.beneficio(vm.margen() * vm.coste() / 100);
+                vm.beneficio(roundToTwo(vm.margen() * vm.coste() / 100));
             }
             vm.ventaNeta(vm.coste() * 1 + vm.beneficio() * 1);
         }
@@ -491,19 +491,19 @@ function cambioImporteAlCliente() {
             vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.manPorComer()) / 100)));
             vm.impComer(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
         }
-        vm.importeAlCliente(vm.ventaNeta() * 1 + vm.impComer() * 1);
+        vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.impComer() * 1));
         // si hay un mantenedor calculamos el importe debido a él
         if (vm.smantenedorId()) {
-            vm.importeMantenedor(vm.beneficio() * 1 + vm.impComer() * 1);
+            vm.importeMantenedor(roundToTwo(vm.beneficio() * 1 + vm.impComer() * 1));
         }
     };
     return mf;
 }
 function cambioBeneficio() {
     var mf = function () {
-        if (!vm.margen() && vm.coste()) {
+        if (vm.margen() && vm.coste()) {
             if (vm.beneficio()) {
-                vm.margen(((100 * vm.beneficio()) / vm.coste()));
+                vm.margen(roundToTwo(((100 * vm.beneficio()) / vm.coste())));
             }
         }
         cambioImporteAlCliente();
@@ -810,13 +810,12 @@ function cambioComercial(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.empresaId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.clienteId() + "/" + vm.empresaId(),
         dataType: "json",
         contentType: "application/json",
-        success: function (data, status) {
+        success: function (comision, status) {
             // asignamos el porComer al vm
-            vm.porVentaNeta(data.manPorVentaNeta);
-            vm.porBeneficio(data.manPorBeneficio);
+            vm.porComer(comision);
         },
         error: function (err) {
 
