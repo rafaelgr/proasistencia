@@ -553,7 +553,8 @@ function aceptarComisionista() {
             contratoClienteMantenimientoId: vm.contratoClienteMantenimientoId(),
             comercialId: vm.scomercialId(),
             porVentaNeta: vm.porVentaNeta(),
-            porBeneficio: vm.porBeneficio()
+            porBeneficio: vm.porBeneficio(),
+            porComer: vm.porComer()
         }
     }
     if (!lineaEnEdicion) {
@@ -803,7 +804,7 @@ function deleteComisionista(id) {
 * el porcentaje que tiene por defecto para esa empresa
 */
 function cambioComercial(data) {
-    //
+    //  
     if (!data) {
         return;
     }
@@ -832,14 +833,16 @@ function cambioAgente(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.sempresaId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.clienteId() + "/" + vm.empresaId(),
         dataType: "json",
         contentType: "application/json",
-        success: function (data, status) {
+        success: function (comision, status) {
             // asignamos el porComer al vm
-            vm.manAgente(data.manPorVentaNeta);
+            vm.manPorComer(comision);
         },
-        error: errorAjax
+        error: function (err) {
+
+        }
     });
 }
 
