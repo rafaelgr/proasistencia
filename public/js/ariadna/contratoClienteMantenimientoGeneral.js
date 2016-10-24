@@ -113,7 +113,7 @@ function initTablaContratosClienteMantenimiento() {
         }, {
             data: "cliente"
         }, {
-            data: "articulo"
+            data: "referencia"
         }, {
             data: "fechaInicio",
             render: function(data, type, row) {

@@ -188,6 +188,8 @@ function admData() {
     self.porBeneficio = ko.observable();
     self.porComer = ko.observable();
     // --------- generacion
+    self.fImporte = ko.observable();
+    self.cliente = ko.observable();
     self.fInicial = ko.observable();
     self.fFinal = ko.observable();
     self.speriodoId = ko.observable();
@@ -456,8 +458,10 @@ function loadTiposPagos(id) {
         { tipoPagoId: 0, nombre: "" },
         { tipoPagoId: 1, nombre: "Anual" },
         { tipoPagoId: 2, nombre: "Semestral" },
+        { tipoPagoId: 5, nombre: "Quatrimestral" },
         { tipoPagoId: 3, nombre: "Trimestral" },
-        { tipoPagoId: 4, nombre: "Mensual" }
+        { tipoPagoId: 4, nombre: "Mensual" },
+        { tipoPagoId: 6, nombre: "Puntual" }
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
@@ -510,8 +514,6 @@ function cambioBeneficio() {
     }
     return mf;
 }
-
-
 function cargarDatosDeContrato(contratoClienteMantenimientoId) {
     var data = {
         contratoClienteMantenimientoId: contratoClienteMantenimientoId
@@ -897,6 +899,7 @@ function cambioCliente(data) {
 }
 
 
+
 /* ----------------------------------------------------------
     Funciones relacionadas con la generación de prefacturas
 -------------------------------------------------------------*/
@@ -904,14 +907,22 @@ function cambioCliente(data) {
 // se llama a esta función cuando se pulsa la botón "generar"
 // prepara los valores para el formulario modal y lo muestra
 function generar() {
+    // recalculamos los importes
+    cambioBeneficio()();
     // Cargamos por defecto los valores actuales
     vm.fInicial(vm.fechaInicio());
     vm.fFinal(vm.fechaFin());
     vm.speriodoId(vm.stipoPagoId());
     var importe = vm.importeAlCliente();
+    var cliente = vm.sclienteId();
+    if (vm.smantenedorId()) {
+        importe = vm.importeMantenedor();
+        cliente = vm.smantenedorId();
+    }
+    vm.fImporte(importe);
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     var numpagos = calNumPagos();
-    var pagos = crearPagos(importe, fInicial, numpagos, vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
+    var pagos = crearPagos(importe, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
     vm.numpagos(numpagos);
     vm.listaPagos(pagos);
     loadTablaGenerador(pagos);
@@ -1031,8 +1042,16 @@ function calNumPagos() {
         case 4:
             divisor = 1;
             break;
+        case 5:
+            divisor = 4;
+            break;
+        case 6:
+            divisor = numMeses;
+            break;
     }
-    return parseInt(numMeses / divisor);
+    var numpagos = parseInt(numMeses / divisor);
+    if (numpagos == 0) numpagos = 1;
+    return numpagos;
 }
 
 // cambioGenerador()
@@ -1046,9 +1065,14 @@ function cambioGenerador() {
         vm.stipoPagoId(vm.speriodoId());
         loadTiposPagos(vm.stipoPagoId());
         var importe = vm.importeAlCliente();
-        var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+        var cliente = vm.sclienteId();
+        if (vm.smantenedorId()) {
+            importe = vm.importeMantenedor();
+            cliente = vm.smantenedorId();
+        }
+        vm.fImporte(importe);
         var numpagos = calNumPagos();
-        var pagos = crearPagos(importe, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), vm.sclienteId(), vm.sarticuloId());
+        var pagos = crearPagos(importe, vm.fInicial(), numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
         vm.numpagos(numpagos);
         vm.listaPagos(pagos);
         loadTablaGenerador(pagos);
