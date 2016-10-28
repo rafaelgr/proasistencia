@@ -37,7 +37,7 @@ CREATE TABLE `articulos` (
 /*Data for the table `articulos` */
 
 insert  into `articulos`(`articuloId`,`grupoArticuloId`,`codigoBarras`,`nombre`,`precioUnitario`,`tipoIvaId`,`descripcion`,`unidadId`) values 
-(1,6,NULL,'seguro comunidad',0.00,1,NULL,3);
+(1,6,NULL,'seguro comunidad',0.00,3,NULL,3);
 
 /*Table structure for table `clientes` */
 
@@ -70,19 +70,22 @@ CREATE TABLE `clientes` (
   `comercialId` int(11) DEFAULT NULL COMMENT 'Es el agente por defecto',
   `cuentaCorriente` varchar(255) DEFAULT NULL,
   `codigo` int(11) DEFAULT NULL,
+  `tipoViaId` int(11) DEFAULT NULL,
   PRIMARY KEY (`clienteId`),
   KEY `fkey_forma_pago` (`formaPagoId`),
   KEY `fkey_tipo_cliente` (`tipoClienteId`),
+  KEY `ref_cliente_via` (`tipoViaId`),
+  CONSTRAINT `ref_cliente_via` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via` (`tipoViaId`),
   CONSTRAINT `fkey_forma_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `fkey_tipo_cliente` FOREIGN KEY (`tipoClienteId`) REFERENCES `tipos_clientes` (`tipoClienteId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes` */
 
-insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`,`cuentaCorriente`,`codigo`) values 
-(6,'','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','E78216900','2015-08-31 00:00:00',NULL,1,NULL,NULL,'LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,0,'430000001','ES8400492666761910643890',NULL,NULL,1),
-(7,'B0118/004','MAN. ALONSO ZAMORA VICENTE, 1','H85070449','2014-04-02 00:00:00',NULL,1,NULL,NULL,'ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,0,'430000002','ES9520858223150330089707',33,NULL,2),
-(9,'S0319/015','C.P. NARVÁEZ, 21','H-79230322','2013-10-14 00:00:00',NULL,1,NULL,NULL,'NARVÁEZ, 21','28009','MADRID','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,0,'430000003','ES4100190324834010015262',NULL,NULL,3);
+insert  into `clientes`(`clienteId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`formaPagoId`,`observaciones`,`tipoClienteId`,`cuentaContable`,`iban`,`comercialId`,`cuentaCorriente`,`codigo`,`tipoViaId`) values 
+(6,'','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','E78216900','2015-08-31 00:00:00',NULL,1,NULL,NULL,'LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,0,'430000001','ES8400492666761910643890',33,NULL,1,NULL),
+(7,'B0118/004','MAN. ALONSO ZAMORA VICENTE, 1','H85070449','2014-04-02 00:00:00',NULL,1,NULL,NULL,'ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,1,'430000002','ES9520858223150330089707',33,NULL,2,NULL),
+(9,'S0319/015','C.P. NARVÁEZ, 21','H-79230322','2013-10-14 00:00:00',NULL,1,NULL,NULL,'NARVÁEZ, 21','28009','MADRID','MADRID',NULL,NULL,NULL,NULL,NULL,7,NULL,0,'430000003','ES4100190324834010015262',33,NULL,3,1);
 
 /*Table structure for table `clientes_comisionistas` */
 
@@ -94,14 +97,21 @@ CREATE TABLE `clientes_comisionistas` (
   `comercialId` int(11) DEFAULT NULL,
   `manPorVentaNeta` decimal(5,2) DEFAULT NULL,
   `manPorBeneficio` decimal(5,2) DEFAULT NULL,
+  `porComer` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`clienteComisionistaId`),
   KEY `ref_cc_cliente` (`clienteId`),
   KEY `ref_cc_comercial` (`comercialId`),
   CONSTRAINT `ref_cc_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_cc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clientes_comisionistas` */
+
+insert  into `clientes_comisionistas`(`clienteComisionistaId`,`clienteId`,`comercialId`,`manPorVentaNeta`,`manPorBeneficio`,`porComer`) values 
+(1,7,33,NULL,NULL,3.00),
+(2,7,35,NULL,NULL,10.20),
+(3,9,35,NULL,NULL,10.00),
+(4,9,34,NULL,NULL,11.00);
 
 /*Table structure for table `comerciales` */
 
@@ -132,18 +142,24 @@ CREATE TABLE `comerciales` (
   `dniFirmante` varchar(255) DEFAULT NULL,
   `firmante` varchar(255) DEFAULT NULL,
   `ascComercialId` int(11) DEFAULT NULL COMMENT 'Comercial asociado, en el caso de los agentes el comercial del que dependen.',
+  `iban` varchar(255) DEFAULT NULL,
+  `porComer` decimal(5,2) DEFAULT NULL,
+  `tipoViaId` int(11) DEFAULT NULL,
   PRIMARY KEY (`comercialId`),
   KEY `fkey_comercial_forma_pago` (`formaPagoId`),
   KEY `fkey_comercial_comercial` (`ascComercialId`),
+  KEY `ref_comercial_via` (`tipoViaId`),
+  CONSTRAINT `ref_comercial_via` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via` (`tipoViaId`),
   CONSTRAINT `fkey_comercial_comercial` FOREIGN KEY (`ascComercialId`) REFERENCES `comerciales` (`comercialId`),
   CONSTRAINT `fkey_comercial_forma_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 /*Data for the table `comerciales` */
 
-insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`,`ascComercialId`) values 
-(33,NULL,'MARISA RAMIRO IGLESIAS','51891134y','2016-09-29 00:00:00',NULL,NULL,NULL,NULL,'INMACULADA CONCEPCIÓN 39','28019','madrid ','madrid ','695941897',NULL,NULL,'almaley.gestion@hotmail.com',NULL,NULL,1,NULL,NULL,NULL,34),
-(34,'4','Trejo, Isabel','51871549v ','2001-02-22 00:00:00',NULL,1,NULL,NULL,'calle','28009','tres cantos','madrid','696914587',NULL,NULL,'itrejo@proasistencia.es',NULL,'',2,NULL,NULL,NULL,NULL);
+insert  into `comerciales`(`comercialId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`email2`,`observaciones`,`tipoComercialId`,`formaPagoId`,`dniFirmante`,`firmante`,`ascComercialId`,`iban`,`porComer`,`tipoViaId`) values 
+(33,NULL,'MARISA RAMIRO IGLESIAS','51891134y','2016-09-29 00:00:00',NULL,NULL,NULL,NULL,'INMACULADA CONCEPCIÓN 39','28019','madrid ','madrid ','695941897',NULL,NULL,'almaley.gestion@hotmail.com',NULL,NULL,1,NULL,NULL,NULL,34,NULL,10.00,NULL),
+(34,'4','Trejo, Isabel','51871549v ','2001-02-22 00:00:00',NULL,1,NULL,NULL,'calle','28009','tres cantos','madrid','696914587',NULL,NULL,'itrejo@proasistencia.es',NULL,'',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(35,'11','Eduardo Chinarro','AFFF','2008-10-07 00:00:00',NULL,0,NULL,NULL,'La más bonira',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',2,6,'222222','Firmante del comercial',34,NULL,10.20,1);
 
 /*Table structure for table `contrato_cliente_mantenimiento` */
 
@@ -181,9 +197,13 @@ CREATE TABLE `contrato_cliente_mantenimiento` (
   CONSTRAINT `ref_ccm_cliente` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `ref_ccm_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `ref_ccm_mantenedor` FOREIGN KEY (`mantenedorId`) REFERENCES `clientes` (`clienteId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento` */
+
+insert  into `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`,`empresaId`,`mantenedorId`,`clienteId`,`fechaInicio`,`fechaFin`,`venta`,`tipoPago`,`manPorComer`,`observaciones`,`comercialId`,`coste`,`margen`,`beneficio`,`ventaNeta`,`manAgente`,`articuloId`,`importeAlCliente`,`referencia`,`impComer`,`importeMantenedor`,`fechaOriginal`) values 
+(3,2,7,9,'2016-01-01','2017-01-01',NULL,4,12.00,NULL,33,1400.00,15.00,210.00,1610.00,NULL,1,1829.55,'RFRREE',219.55,429.55,NULL),
+(4,2,NULL,6,'2016-01-01','2017-01-01',NULL,4,10.00,NULL,33,300.00,15.00,45.00,345.00,NULL,1,383.33,'RF45536663',38.33,NULL,NULL);
 
 /*Table structure for table `contrato_cliente_mantenimiento_comisionistas` */
 
@@ -195,14 +215,19 @@ CREATE TABLE `contrato_cliente_mantenimiento_comisionistas` (
   `comercialId` int(11) DEFAULT NULL,
   `porVentaNeta` decimal(5,2) DEFAULT NULL,
   `porBeneficio` decimal(5,2) DEFAULT NULL,
+  `porComer` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`contratoClienteMantenimientoComisionistaId`),
   KEY `ref_ccmc_ccm` (`contratoClienteMantenimientoId`),
   KEY `ref_ccmc_comercial` (`comercialId`),
   CONSTRAINT `ref_ccmc_ccm` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `ref_ccmc_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_cliente_mantenimiento_comisionistas` */
+
+insert  into `contrato_cliente_mantenimiento_comisionistas`(`contratoClienteMantenimientoComisionistaId`,`contratoClienteMantenimientoId`,`comercialId`,`porVentaNeta`,`porBeneficio`,`porComer`) values 
+(6,3,35,NULL,NULL,10.00),
+(7,4,35,NULL,NULL,10.00);
 
 /*Table structure for table `contrato_comercial` */
 
@@ -235,9 +260,12 @@ CREATE TABLE `contrato_comercial` (
   `comision` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`contratoComercialId`),
   UNIQUE KEY `idx_empresa_comercial` (`empresaId`,`comercialId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contrato_comercial` */
+
+insert  into `contrato_comercial`(`contratoComercialId`,`empresaId`,`comercialId`,`fechaInicio`,`fechaFin`,`numMeses`,`tipoPago`,`importe`,`minimoMensual`,`observaciones`,`dniFirmanteEmpresa`,`firmanteEmpresa`,`dniFirmanteColaborador`,`firmanteColaborador`,`manComisAgente`,`manPorImpCliente`,`manPorImpClienteAgente`,`manPorCostes`,`manCostes`,`manJefeObra`,`manOficinaTecnica`,`manAsesorTecnico`,`manComercial`,`comision`) values 
+(1,2,35,NULL,NULL,NULL,1,1200.00,100.00,NULL,'1111111','Firmante de la empresa','222222','Firmante del comercial',NULL,0.00,0.00,0.00,NULL,NULL,NULL,NULL,NULL,10.00);
 
 /*Table structure for table `contrato_mantenedor` */
 
@@ -289,13 +317,16 @@ CREATE TABLE `empresas` (
   `dniFirmante` varchar(255) DEFAULT NULL,
   `firmante` varchar(255) DEFAULT NULL,
   `contabilidad` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`empresaId`)
+  `tipoViaId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`empresaId`),
+  KEY `ref_empresa_via` (`tipoViaId`),
+  CONSTRAINT `ref_empresa_via` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via` (`tipoViaId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `empresas` */
 
-insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`,`contabilidad`) values 
-(2,'1','PROASISTENCIA, S.L.','B81323180','2001-03-30 00:00:00',NULL,1,NULL,NULL,'CAMINO DE REJAS, 1','28820','COSLADA','MADRID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'ariconta11');
+insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`,`contabilidad`,`tipoViaId`) values 
+(2,'1','PROASISTENCIA, S.L.','B81323180','2001-03-30 00:00:00',NULL,1,NULL,NULL,'CAMINO DE REJAS, 1','28820','COSLADA','MADRID',NULL,NULL,NULL,NULL,NULL,'1111111','Firmante de la empresa','ariconta11',2);
 
 /*Table structure for table `formas_pago` */
 
@@ -420,9 +451,35 @@ CREATE TABLE `prefacturas` (
   CONSTRAINT `pref_contratos` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas` */
+
+insert  into `prefacturas`(`prefacturaId`,`ano`,`numero`,`serie`,`fecha`,`empresaId`,`clienteId`,`contratoClienteMantenimientoId`,`emisorNif`,`emisorNombre`,`emisorDireccion`,`emisorCodPostal`,`emisorPoblacion`,`emisorProvincia`,`receptorNif`,`receptorNombre`,`receptorDireccion`,`receptorCodPostal`,`receptorPoblacion`,`receptorProvincia`,`total`,`totalConIva`,`formaPagoId`,`observaciones`) values 
+(65,2016,NULL,NULL,'2016-05-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(66,2016,NULL,NULL,'2016-11-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(67,2016,NULL,NULL,'2016-06-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(68,2016,NULL,NULL,'2016-03-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(69,2016,NULL,NULL,'2016-02-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(70,2016,NULL,NULL,'2016-01-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(71,2016,NULL,NULL,'2016-10-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(72,2016,NULL,NULL,'2016-12-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(73,2016,NULL,NULL,'2016-09-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(74,2016,NULL,NULL,'2016-07-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(75,2016,NULL,NULL,'2016-04-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(76,2016,NULL,NULL,'2016-08-01',2,7,3,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','H85070449','MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID',35.80,43.32,7,NULL),
+(77,2016,NULL,NULL,'2016-01-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(78,2016,NULL,NULL,'2016-02-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(79,2016,NULL,NULL,'2016-11-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(80,2016,NULL,NULL,'2016-07-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(81,2016,NULL,NULL,'2016-08-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(82,2016,NULL,NULL,'2016-03-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(83,2016,NULL,NULL,'2016-04-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(84,2016,NULL,NULL,'2016-05-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(85,2016,NULL,NULL,'2016-06-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(86,2016,NULL,NULL,'2016-09-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(87,2016,NULL,NULL,'2016-10-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL),
+(88,2016,NULL,NULL,'2016-12-01',2,6,4,'B81323180','PROASISTENCIA, S.L.','CAMINO DE REJAS, 1','28820','COSLADA','MADRID','E78216900','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID',31.94,38.65,7,NULL);
 
 /*Table structure for table `prefacturas_bases` */
 
@@ -440,9 +497,35 @@ CREATE TABLE `prefacturas_bases` (
   KEY `prefb_tipos_iva` (`tipoIvaId`),
   CONSTRAINT `prefb_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefb_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_bases` */
+
+insert  into `prefacturas_bases`(`prefacturaBaseId`,`prefacturaId`,`tipoIvaId`,`porcentaje`,`base`,`cuota`) values 
+(42,68,3,21.00,35.80,7.52),
+(43,67,3,21.00,35.80,7.52),
+(44,71,3,21.00,35.80,7.52),
+(45,72,3,21.00,35.80,7.52),
+(46,70,3,21.00,35.80,7.52),
+(47,65,3,21.00,35.80,7.52),
+(48,66,3,21.00,35.80,7.52),
+(49,74,3,21.00,35.80,7.52),
+(50,69,3,21.00,35.80,7.52),
+(51,76,3,21.00,35.80,7.52),
+(52,75,3,21.00,35.80,7.52),
+(53,73,3,21.00,35.80,7.52),
+(54,77,3,21.00,31.94,6.71),
+(55,78,3,21.00,31.94,6.71),
+(56,82,3,21.00,31.94,6.71),
+(57,81,3,21.00,31.94,6.71),
+(58,79,3,21.00,31.94,6.71),
+(59,87,3,21.00,31.94,6.71),
+(60,84,3,21.00,31.94,6.71),
+(61,85,3,21.00,31.94,6.71),
+(62,80,3,21.00,31.94,6.71),
+(63,83,3,21.00,31.94,6.71),
+(64,88,3,21.00,31.94,6.71),
+(65,86,3,21.00,31.94,6.71);
 
 /*Table structure for table `prefacturas_lineas` */
 
@@ -466,9 +549,35 @@ CREATE TABLE `prefacturas_lineas` (
   CONSTRAINT `prefl_articulos` FOREIGN KEY (`articuloId`) REFERENCES `articulos` (`articuloId`),
   CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
 /*Data for the table `prefacturas_lineas` */
+
+insert  into `prefacturas_lineas`(`prefacturaLineaId`,`linea`,`prefacturaId`,`articuloId`,`tipoIvaId`,`porcentaje`,`descripcion`,`cantidad`,`importe`,`totalLinea`) values 
+(65,1,71,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(66,1,68,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(67,1,67,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(68,1,65,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(69,1,72,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(70,1,70,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(71,1,66,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(72,1,69,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(73,1,74,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(74,1,76,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(75,1,75,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(76,1,73,1,3,21.00,'seguro comunidad',1.00,35.80,35.80),
+(77,1,77,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(78,1,78,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(79,1,82,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(80,1,81,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(81,1,79,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(82,1,85,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(83,1,84,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(84,1,80,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(85,1,83,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(86,1,87,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(87,1,88,1,3,21.00,'seguro comunidad',1.00,31.94,31.94),
+(88,1,86,1,3,21.00,'seguro comunidad',1.00,31.94,31.94);
 
 /*Table structure for table `tipos_clientes` */
 
@@ -544,6 +653,22 @@ CREATE TABLE `tipos_iva` (
 
 insert  into `tipos_iva`(`tipoIvaId`,`nombre`,`porcentaje`,`codigoContable`) values 
 (3,'21%',21.00,1);
+
+/*Table structure for table `tipos_via` */
+
+DROP TABLE IF EXISTS `tipos_via`;
+
+CREATE TABLE `tipos_via` (
+  `tipoViaId` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`tipoViaId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tipos_via` */
+
+insert  into `tipos_via`(`tipoViaId`,`nombre`) values 
+(1,'Calle'),
+(2,'Avenida');
 
 /*Table structure for table `unidades` */
 
