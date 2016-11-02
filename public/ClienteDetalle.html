@@ -472,12 +472,20 @@
 												</section>
 											</div>
 											<div class="row">
+												<section class="col col-md-12">
+													<label class="label">Nombre Comercial (FACTURACION)</label>
+													<label class="input">
+                                                        <input id="txtNombreComercial" name="txtNombre" data-bind="value: nombreComercial" />
+                                                    </label>
+												</section>
+											</div>
+											<div class="row">
 												<section class="col col-md-3">
 													<label class="label">Tipo via</label>
 													<label style="width:100%;">
                                                         <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select><i></i>
                                                     </label>
-												</section> 												
+												</section>
 												<section class="col col-md-9">
 													<label class="label">Direccion</label>
 													<label class="input">

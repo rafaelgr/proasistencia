@@ -138,6 +138,7 @@ function admData() {
     self.clienteId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
+    self.nombreComercial = ko.observable();
     self.nif = ko.observable();
     self.fechaAlta = ko.observable();
     self.fechaBaja = ko.observable();
@@ -210,6 +211,7 @@ function loadData(data) {
     vm.clienteId(data.clienteId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
+    vm.nombreComercial(data.nombreComercial);
     vm.nif(data.nif);
     vm.fechaAlta(spanishDate(data.fechaAlta));
     vm.fechaBaja(spanishDate(data.fechaBaja));
@@ -351,6 +353,7 @@ function aceptar() {
                 "clienteId": vm.clienteId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
+                "nombreComercial": vm.nombreComercial(),
                 "nif": vm.nif(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
