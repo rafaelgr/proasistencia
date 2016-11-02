@@ -97,6 +97,8 @@ function initTablaClientes() {
         columns: [{
             data: "nombre"
         }, {
+            data: "nombreComercial"
+        },{
             data: "nif"
         }, {
             data: "tipo"
