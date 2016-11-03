@@ -1358,6 +1358,8 @@ var initAutoCliente = function () {
     });
     // regla de validación para el control inicializado
     jQuery.validator.addMethod("clienteNecesario", function (value, element) {
-        return this.optional(element) || vm.sclienteId();
+        var r =  false;
+        if (vm.sclienteId()) r = true;
+        return r;
     }, "Debe seleccionar un cliente válido");
 };
