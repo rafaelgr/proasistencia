@@ -66,15 +66,12 @@ function initForm() {
         cambioMantenedor(e.added);
     });
 
-    /*
     $("#cmbClientes").select2(select2Spanish());
     loadClientes();
     $("#cmbClientes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioCliente(e.added);
     });
-    */
-    initAutoCliente();
 
     $("#cmbAgentes").select2(select2Spanish());
     loadAgentes();
@@ -234,14 +231,15 @@ function loadData(data) {
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
     loadPrefacturas(data.contratoClienteMantenimientoId);
-    //
-    cargaCliente(vm.clienteId());
 }
 
 function datosOK() {
     $('#frmContratoClienteMantenimiento').validate({
         rules: {
             cmbEmpresas: {
+                required: true
+            },
+            cmbClientes: {
                 required: true
             },
             cmbArticulos: {
@@ -253,15 +251,15 @@ function datosOK() {
             },
             txtManPorComer: {
                 number: true
-            },
-            txtCliente:{
-                clienteNecesario: true
             }
         },
         // Messages for form validation
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
+            },
+            cmbClientes: {
+                required: "Debe elegir un cliente"
             },
             cmbArticulos: {
                 required: "Debe elegir una unidad de obra"
@@ -1296,68 +1294,3 @@ function editPrefactura(id) {
     var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
     window.open(url, '_blank');
 }
-
-// ----------- Funciones relacionadas con el manejo de autocomplete
-
-// cargaCliente
-// carga en el campo txtCliente el valor seleccionado
-var cargaCliente = function (id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // poner el nombre en el campo de texto
-            $('#txtCliente').val(data.nombre);
-            vm.sclienteId(data.clienteId);
-            // asignamos el agente que corresponda
-            if (data.comercialId) {
-                loadAgentes(data.comercialId);
-                data.id = data.comercialId;
-                cambioAgente(data);
-            }
-        },
-        error: errorAjax
-    });
-};
-
-// initAutoCliente
-// inicializa el control del cliente como un autocomplete
-var initAutoCliente = function () {
-    // incialización propiamente dicha
-    $("#txtCliente").autocomplete({
-        source: function (request, response) {
-            // call ajax
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: errorAjax
-            });
-
-        },
-        minLength: 2,
-        select: function (event, ui) {
-            vm.sclienteId(ui.item.id);
-            // el cambio de cliente puede implicar cambio de agente
-            cambioCliente(ui.item);
-        }
-    });
-    // regla de validación para el control inicializado
-    jQuery.validator.addMethod("clienteNecesario", function (value, element) {
-        return this.optional(element) || vm.sclienteId();
-    }, "Debe seleccionar un cliente válido");
-};
