@@ -61,6 +61,11 @@ function initForm() {
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
 
+
+    // select2 things
+    $("#cmbTiposVia2").select2(select2Spanish());
+    loadTiposVia2();
+
     // select2 things
     $("#cmbAgentes").select2(select2Spanish());
     $("#cmbAgentes").select2().on('change', function (e) {
@@ -165,6 +170,10 @@ function admData() {
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
     self.colaborador = ko.observable();
+    self.direccion2 = ko.observable();
+    self.codPostal2 = ko.observable();
+    self.poblacion2 = ko.observable();
+    self.provincia2 = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -190,6 +199,12 @@ function admData() {
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
     //
+    //
+    self.tipoViaId2 = ko.observable();
+    self.stipoViaId2 = ko.observable();
+    //
+    self.posiblesTiposVia2 = ko.observableArray([]);
+    self.elegidosTiposVia2 = ko.observableArray([]);
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -231,6 +246,12 @@ function loadData(data) {
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.iban);
     vm.codigo(data.codigo);
+    // direccion 2
+    vm.direccion2(data.direccion2);
+    vm.codPostal2(data.codPostal2);
+    vm.provincia2(data.provincia2);
+    vm.poblacion2(data.poblacion2);
+    loadTiposVia2(data.tipoViaId2);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
     loadTiposVia(data.tipoViaId);
@@ -376,7 +397,12 @@ function aceptar() {
                 "iban": vm.iban(),
                 "comercialId": vm.sagenteId(),
                 "codigo": vm.codigo(),
-                "tipoViaId": vm.stipoViaId()
+                "tipoViaId": vm.stipoViaId(),
+                "direccion2": vm.direccion2(),
+                "poblacion2": vm.poblacion2(),
+                "provincia2": vm.provincia2(),
+                "codPostal2": vm.codPostal2(),
+                "tipoViaId2": vm.stipoViaId2()
             }
         };
         if (empId == 0) {
@@ -511,6 +537,21 @@ function loadTiposVia(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadTiposVia2(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia2 = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia2(tiposVia2);
+            $("#cmbTiposVia2").val([id]).trigger('change');
         },
         error: errorAjax
     });
