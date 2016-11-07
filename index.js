@@ -40,6 +40,7 @@ var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
 
 var informes_router = require('./lib/informes/informes_controller');
+var cuentas_router = require('./lib/cuentas/cuentas_controller');
 
 
 var pack = require('./package.json');
@@ -106,6 +107,7 @@ app.use('/api/grupo_articulo', grupo_articulos_router);
 app.use('/api/contabilidad', contabilidad_router);
 app.use('/api/unidades', unidades_router);
 app.use('/api/tipos_via', tipos_via_router);
+app.use('/api/cuentas', cuentas_router);
 
 // -- start server
 app.listen(config.apiPort);

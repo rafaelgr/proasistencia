@@ -100,6 +100,10 @@ function initTablaClientes() {
             data: "nombreComercial"
         },{
             data: "nif"
+        },{
+            data: "proId"
+        },{
+            data: "direccion2"
         }, {
             data: "tipo"
         }, {

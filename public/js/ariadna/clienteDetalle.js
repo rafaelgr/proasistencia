@@ -880,7 +880,21 @@ function cambioAgente(data) {
 }
 
 function cambioCodigo(data) {
-    // cuando cambia el código cambiamos la cuenta contable
-    var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
-    vm.cuentaContable(codmacta);
+    $.ajax({
+        type: "GET",
+        url: "/api/cuentas/" + vm.codigo(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // cuando cambia el código cambiamos la cuenta contable
+            if (data){
+                vm.nombreComercial(data.nombre);
+            }
+            var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
+            vm.cuentaContable(codmacta);
+        },
+        error: function (err) {
+
+        }
+    });
 }
