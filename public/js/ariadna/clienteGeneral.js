@@ -102,6 +102,15 @@ function initTablaClientes() {
         },
         data: dataClientes,
         columns: [{
+            data: "activa",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-check'></i>";
+                if (data == 0){
+                    html = "<i class='fa fa-ban'></i>";
+                }
+                return html;
+            }
+        },{
             data: "nombre"
         }, {
             data: "proId"
@@ -167,6 +176,7 @@ function buscarClientes() {
         if (aBuscar == "") {
             // eliminar la cookie;
             deleteCookie("buscador_clientes");
+            loadTablaClientes(null);
         } else {
             // enviar la consulta por la red (AJAX)
             $.ajax({
