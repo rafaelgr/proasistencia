@@ -36,26 +36,33 @@ function initForm() {
     initTablaClientes();
     // comprobamos parámetros
     clienteId = gup('ClienteId');
-    if (clienteId !== '') {
-        // cargar la tabla con un único valor que es el que corresponde.
-        var data = {
-            id: clienteId
+    var bus = getCookie("buscador_clientes");
+    if (bus) {
+        $('#txtBuscar').val(bus);
+        buscarClientes()();
+    } else {
+        if (clienteId !== '') {
+            // cargar la tabla con un único valor que es el que corresponde.
+            var data = {
+                id: clienteId
+            }
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/" + clienteId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    var data2 = [data];
+                    loadTablaClientes(data2);
+                },
+                error: errorAjax
+            });
         }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/clientes/" + clienteId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                var data2 = [data];
-                loadTablaClientes(data2);
-            },
-            error: errorAjax
-        });
     }
+
 }
 
 function initTablaClientes() {
@@ -95,15 +102,26 @@ function initTablaClientes() {
         },
         data: dataClientes,
         columns: [{
+            data: "activa",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-check'></i>";
+                if (data == 0){
+                    html = "<i class='fa fa-ban'></i>";
+                }
+                return html;
+            }
+        },{
             data: "nombre"
         }, {
-            data: "nombreComercial"
-        },{
-            data: "nif"
-        },{
             data: "proId"
-        },{
+        }, {
+            data: "nombreComercial"
+        }, {
             data: "direccion2"
+        }, {
+            data: "telefono1"
+        }, {
+            data: "nif"
         }, {
             data: "tipo"
         }, {
@@ -119,16 +137,13 @@ function initTablaClientes() {
 }
 
 function datosOK() {
-    
+
     $('#frmBuscar').validate({
         rules: {
-            txtBuscar: { required: true },
+
         },
         // Messages for form validation
         messages: {
-            txtBuscar: {
-                required: 'Introduzca el texto a buscar'
-            }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -158,18 +173,26 @@ function buscarClientes() {
         }
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
-        // enviar la consulta por la red (AJAX)
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/clientes/?nombre=" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaClientes(data);
-            },
-            error: errorAjax
-        });
+        if (aBuscar == "") {
+            // eliminar la cookie;
+            deleteCookie("buscador_clientes");
+            loadTablaClientes(null);
+        } else {
+            // enviar la consulta por la red (AJAX)
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/?nombre=" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // guardamos una coookie con los datos.
+                    setCookie("buscador_clientes", aBuscar, 1);
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaClientes(data);
+                },
+                error: errorAjax
+            });
+        }
     };
     return mf;
 }
@@ -204,7 +227,7 @@ function deleteCliente(id) {
                     var fn = buscarClientes();
                     fn();
                 },
-                error: function(err){
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }

@@ -56,6 +56,10 @@ function initForm() {
     // select2 things
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
+    
+    // select2 things
+    $("#cmbMotivosBaja").select2(select2Spanish());
+    loadMotivosBaja();    
 
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
@@ -212,6 +216,12 @@ function admData() {
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     //
+    self.motivoBajaId = ko.observable();
+    self.smotivoBajaId = ko.observable();
+    //
+    self.posiblesMotivosBaja = ko.observableArray([]);
+    self.elegidosMotivosBaja = ko.observableArray([]);
+    //    
     self.clienteComisionistaId = ko.observable();
     self.clienteId = ko.observable();
     self.comercialId = ko.observable();
@@ -254,6 +264,7 @@ function loadData(data) {
     loadTiposVia2(data.tipoViaId2);
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
+    loadMotivosBaja(data.motivoBajaId);
     loadTiposVia(data.tipoViaId);
     loadAgentes(data.comercialId);
     var data = { id: data.comercialId };
@@ -393,6 +404,7 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "tipoClienteId": vm.stipoClienteId(),
                 "formaPagoId": vm.sformaPagoId(),
+                "motivoBajaId": vm.smotivoBajaId(),
                 "cuentaContable": vm.cuentaContable(),
                 "iban": vm.iban(),
                 "comercialId": vm.sagenteId(),
@@ -507,6 +519,21 @@ function loadFormasPago(id) {
             var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadMotivosBaja(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/motivos_baja",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var motivosBaja = [{ motivoBajaId: 0, nombre: "" }].concat(data);
+            vm.posiblesMotivosBaja(motivosBaja);
+            $("#cmbMotivosBaja").val([id]).trigger('change');
         },
         error: errorAjax
     });
