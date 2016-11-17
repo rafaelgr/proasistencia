@@ -364,20 +364,54 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Buscar clientes por nombre.
+                                            Buscar clientes.
                                         </header>
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-12">
-                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
+
+                                                </section>
+                                            </div>
+                                            <div class="row">   
+                                                <section class="col col-md-3">
+                                                    <label class="label">Codigo</label>
                                                     <label class="input">
-                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
+                                                        <input id="txtCodigo" name="txtCodigo" type="text" data-bind="value: bCodigo" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-9">
+                                                    <label class="label">Nombre</label>
+                                                    <label class="input">
+                                                        <input id="txtNombre" name="txtNombre" type="text" data-bind="value: bNombre" />
                                                     </label>
                                                 </section>
                                             </div>
+                                            <div class="row">   
+                                                <section class="col col-md-3">
+                                                    <label class="label">Nif</label>
+                                                    <label class="input">
+                                                        <input id="txtNif" name="txtNif" type="text" data-bind="value: bNif" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Telefono</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono" name="txtTelefono" type="text" data-bind="value: bTelefono" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-7">
+                                                    <label class="label">Direccion</label>
+                                                    <label class="input">
+                                                        <input id="txtDireccion" name="txtDireccion" type="text" data-bind="value: bDireccion" />
+                                                    </label>
+                                                </section>
+                                            </div>                                            
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnBorrar" title="Borrar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-eraser"></i>
+                                                </button>                                                
                                                 <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
                                                 </button>
@@ -495,6 +529,8 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
+	<!--- KNOCKOUT JS -->
+	<script src="js/knockout-3.1.0.js"></script>    
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
