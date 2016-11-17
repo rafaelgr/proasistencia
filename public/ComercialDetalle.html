@@ -534,14 +534,19 @@
                                                         <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
 														</section>
-														<section class="col col-md-3">
-														</section>
-														<section class="col col-md-3">
+
+														<section class="col col-md-2">
 															<label class="checkbox">
                                                         <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
                                                         <i></i>La comercial está activa
                                                     </label>
 														</section>
+														<section class="col col-md-4">
+															<label class="label">Motivo de baja</label>
+															<label style="width:100%;">
+																<select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
+															</label>															
+														</section>														
 													</div>
 													<div class="row">
 														<section class="col col-md-6">

@@ -47,7 +47,9 @@ function initForm() {
     // select2 things
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
-
+    // select2 things
+    $("#cmbMotivosBaja").select2(select2Spanish());
+    loadMotivosBaja(); 
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
@@ -158,6 +160,11 @@ function admData() {
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
     //
+    self.motivoBajaId = ko.observable();
+    self.smotivoBajaId = ko.observable();
+    //
+    self.posiblesMotivosBaja = ko.observableArray([]);
+    self.elegidosMotivosBaja = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -186,6 +193,7 @@ function loadData(data) {
     loadAscComerciales(data.ascComercialId);
     vm.iban(data.iban);
     vm.porComer(data.porComer);
+    loadMotivosBaja(data.motivoBajaId);    
     // split iban
     if (vm.iban()) {
         var ibanl = vm.iban().match(/.{1,4}/g);
@@ -326,7 +334,8 @@ function aceptar() {
                 "formaPagoId": vm.sformaPagoId(),
                 "iban": vm.iban(),
                 "porComer": vm.porComer(),
-                "tipoViaId": vm.stipoViaId()
+                "tipoViaId": vm.stipoViaId(),
+                "motivoBajaId": vm.smotivoBajaId()
             }
         };
         if (empId == 0) {
@@ -592,7 +601,7 @@ function initTablaClientes() {
             data: "nif"
         }, {
             data: "telefono1"
-        }, 
+        },
         {
             data: "clienteId",
             render: function (data, type, row) {
@@ -631,6 +640,21 @@ function loadTiposVia(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: errorAjax
+    });
+}
+
+function loadMotivosBaja(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/motivos_baja",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var motivosBaja = [{ motivoBajaId: 0, nombre: "" }].concat(data);
+            vm.posiblesMotivosBaja(motivosBaja);
+            $("#cmbMotivosBaja").val([id]).trigger('change');
         },
         error: errorAjax
     });
