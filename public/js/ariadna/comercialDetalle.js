@@ -583,17 +583,15 @@ function initTablaClientes() {
         },
         data: dataClientes,
         columns: [{
-            data: "nombre"
-        }, {
             data: "proId"
         }, {
-            data: "nombreComercial"
+            data: "nombre"
         }, {
             data: "direccion2"
         }, {
-            data: "telefono1"
-        }, {
             data: "nif"
+        }, {
+            data: "telefono1"
         }, 
         {
             data: "clienteId",

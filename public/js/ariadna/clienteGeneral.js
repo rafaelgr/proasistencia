@@ -111,17 +111,15 @@ function initTablaClientes() {
                 return html;
             }
         },{
-            data: "nombre"
-        }, {
             data: "proId"
         }, {
-            data: "nombreComercial"
+            data: "nombre"
         }, {
             data: "direccion2"
         }, {
-            data: "telefono1"
-        }, {
             data: "nif"
+        }, {
+            data: "telefono1"
         }, {
             data: "tipo"
         }, {
