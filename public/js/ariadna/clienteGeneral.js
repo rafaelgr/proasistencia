@@ -22,12 +22,15 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    vm = new admData();
+    ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarClientes());
     $('#btnAlta').click(crearCliente());
     $('#frmBuscar').submit(function () {
         return false
     });
+    $('#btnBorrar').click(borrar());
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarClientes();
@@ -38,7 +41,12 @@ function initForm() {
     clienteId = gup('ClienteId');
     var bus = getCookie("buscador_clientes");
     if (bus) {
-        $('#txtBuscar').val(bus);
+        var b = JSON.parse(bus);
+        vm.bCodigo(b.Codigo);
+        vm.bNif(b.Nif);
+        vm.bNombre(b.Nombre);
+        vm.bTelefono(b.Telefono);
+        vm.bDireccion(b.Direccion);
         buscarClientes()();
     } else {
         if (clienteId !== '') {
@@ -62,7 +70,15 @@ function initForm() {
             });
         }
     }
+}
 
+function admData() {
+    var self = this;
+    self.bNombre = ko.observable();
+    self.bCodigo = ko.observable();
+    self.bNif = ko.observable();
+    self.bDireccion = ko.observable();
+    self.bTelefono = ko.observable();
 }
 
 function initTablaClientes() {
@@ -105,23 +121,21 @@ function initTablaClientes() {
             data: "activa",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-check'></i>";
-                if (data == 0){
+                if (data == 0) {
                     html = "<i class='fa fa-ban'></i>";
                 }
                 return html;
             }
-        },{
-            data: "nombre"
         }, {
             data: "proId"
         }, {
-            data: "nombreComercial"
+            data: "nombre"
         }, {
             data: "direccion2"
         }, {
-            data: "telefono1"
-        }, {
             data: "nif"
+        }, {
+            data: "telefono1"
         }, {
             data: "tipo"
         }, {
@@ -171,28 +185,32 @@ function buscarClientes() {
         if (!datosOK()) {
             return;
         }
-        // obtener el n.serie del certificado para la firma.
-        var aBuscar = $('#txtBuscar').val();
-        if (aBuscar == "") {
-            // eliminar la cookie;
-            deleteCookie("buscador_clientes");
-            loadTablaClientes(null);
-        } else {
-            // enviar la consulta por la red (AJAX)
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/clientes/?nombre=" + aBuscar,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    // guardamos una coookie con los datos.
-                    setCookie("buscador_clientes", aBuscar, 1);
-                    // hay que mostrarlo en la zona de datos
-                    loadTablaClientes(data);
-                },
-                error: errorAjax
-            });
-        }
+        // enviar la consulta por la red (AJAX)
+        var aBuscar = "?i=6"
+        if (vm.bNombre()) aBuscar += "&Nombre=" + vm.bNombre();
+        if (vm.bNif()) aBuscar += "&Nif=" + vm.bNif();
+        if (vm.bDireccion()) aBuscar += "&Direccion=" + vm.bDireccion();
+        if (vm.bTelefono()) aBuscar += "&Telefono=" + vm.bTelefono();
+        if (vm.bCodigo()) aBuscar += "&Codigo=" + vm.bCodigo();
+        b = {
+            Codigo: vm.bCodigo(),
+            Nombre: vm.bNombre(),
+            Nif: vm.bNif(),
+            Direccion: vm.bDireccion(),
+            Telefono: vm.bTelefono()
+        };
+        setCookie("buscador_clientes", JSON.stringify(b), 1);
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/clientes/buscar/" + aBuscar,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaClientes(data);
+            },
+            error: errorAjax
+        });
     };
     return mf;
 }
@@ -201,6 +219,19 @@ function crearCliente() {
     var mf = function () {
         var url = "ClienteDetalle.html?ClienteId=0";
         window.open(url, '_self');
+    };
+    return mf;
+}
+
+function borrar() {
+    var mf = function () {
+        vm.bCodigo(null);
+        vm.bNif(null);
+        vm.bNombre(null);
+        vm.bTelefono(null);
+        vm.bDireccion(null);
+        deleteCookie("buscador_clientes");
+        loadTablaClientes(null);
     };
     return mf;
 }
