@@ -444,7 +444,13 @@
 														</section>
 													</div>
 												</section>
-												<section class="col col-md-3">
+												<section class="col col-md-1">
+													<label class="label">C.AGEN.</label>
+													<label class="input">
+															<input id="txtCodComercial" name="txtCodComercial" type="text" data-bind="value: codComercial" />
+													</label>
+												</section>
+												<section class="col col-md-2">
 													<label class="label">Agente</label>
 													<label style="width:100%;">
                                                         <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesAgentes, optionsText: 'nombre', optionsValue: 'comercialId', value: sagenteId, valueAllowUnset: true, selectedOptions: elegidosAgentes, selected2:{}"></select><i></i>
@@ -589,7 +595,7 @@
 													<label style="width:100%;">
                                                         <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
                                                     </label>
-												</section>												
+												</section>
 											</div>
 											<div class="row">
 												<section class="col col-md-6">

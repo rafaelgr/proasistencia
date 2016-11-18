@@ -95,6 +95,15 @@ function initTablaComerciales() {
         },
         data: dataComerciales,
         columns: [{
+            data: "activa",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-check'></i>";
+                if (data == 0) {
+                    html = "<i class='fa fa-ban'></i>";
+                }
+                return html;
+            }
+        },{
             data: "nombre"
         }, {
             data: "nif"
