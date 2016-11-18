@@ -41,6 +41,10 @@ function initForm() {
         cambioCodigo();
     });
 
+    $("#txtCodComercial").blur(function () {
+        cambioCodComercial();
+    });
+    
     $("#frmComisionista").submit(function () {
         return false;
     });
@@ -178,6 +182,7 @@ function admData() {
     self.codPostal2 = ko.observable();
     self.poblacion2 = ko.observable();
     self.provincia2 = ko.observable();
+    self.codComercial = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -256,6 +261,7 @@ function loadData(data) {
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.iban);
     vm.codigo(data.codigo);
+    vm.codComercial(data.codComercial);
     // direccion 2
     vm.direccion2(data.direccion2);
     vm.codPostal2(data.codPostal2);
@@ -546,7 +552,7 @@ function loadAgentes(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var agentes = [{ comercialId: 0, nombre: "" }].concat(data);
+            var agentes = [{ comercialId: 0, nombre: "", proId: "" }].concat(data);
             vm.posiblesAgentes(agentes);
             $("#cmbAgentes").val([id]).trigger('change');
         },
@@ -887,6 +893,8 @@ function cambioAgente(data) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
+            // le damos valor al código
+            vm.codComercial(data.proId);
             if (data) {
                 $.ajax({
                     type: "GET",
@@ -924,4 +932,23 @@ function cambioCodigo(data) {
 
         }
     });
+}
+
+function cambioCodComercial(data){
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/codigo/" + vm.codComercial(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // cuando cambia el código cambiamos el agente
+            if (data){
+                $("#cmbAgentes").val([data.comercialId]).trigger('change');
+                var d = {};
+                d.id = data.comercialId;
+                cambioAgente(d);
+            }
+        },
+        error: errorAjax
+    });    
 }
