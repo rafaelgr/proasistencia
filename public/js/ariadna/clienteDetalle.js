@@ -140,6 +140,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
+                cambioCodigo();
             },
             error: errorAjax
         });
