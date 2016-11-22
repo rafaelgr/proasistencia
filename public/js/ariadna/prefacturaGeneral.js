@@ -91,6 +91,8 @@ function initTablaPrefacturas() {
             data: "emisorNombre"
         }, {
                 data: "receptorNombre"
+            },{
+                data: "vNum"
             }, {
                 data: "fecha",
                 render: function (data, type, row) {
@@ -98,6 +100,8 @@ function initTablaPrefacturas() {
                 }
             }, {
                 data: "total"
+            }, {
+                data: "totalConIva"
             }, {
                 data: "observaciones"
             }, {

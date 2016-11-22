@@ -211,7 +211,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -391,7 +391,7 @@
                                                             <label class="input">
                                                                     <input id="txtReferencia" name="txtReferencia" data-bind="value:referencia" />
                                                             </label>
-                                                        </section>                                                        
+                                                        </section>
                                                         <section class="col col-md-3">
                                                             <label class="label">Tipo pago (cliente)</label>
                                                             <label style="width:100%;">
@@ -410,10 +410,10 @@
                                                         -->
                                                         <section class="col col-md-6">
                                                             <label class="label">Cliente</label>
-                                                              <label class="input">
+                                                            <label class="input">
                                                                     <input id="txtCliente" name="txtCliente"/>
                                                             </label>
-                                                        </section>                                                        
+                                                        </section>
                                                         <section class="col col-md-2">
                                                             <label class="label">Importe al cliente</label>
                                                             <label class="input">
@@ -445,7 +445,7 @@
                                                             <label class="input">
                                                                 <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value:importeMantenedor" disabled />
                                                             </label>
-                                                        </section>                                                         
+                                                        </section>
                                                         <section class="col col-md-3">
                                                             <label class="label">Fecha Original</label>
                                                             <label class="input">
@@ -461,19 +461,25 @@
                                                                 <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
                                                             </label>
                                                         </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">Fecha Inicio</label>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">Fecha Inicio (Contrato)</label>
                                                             <label class="input">
                                                                 <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
                                                             </label>
                                                         </section>
-                                                        <section class="col col-md-3">
+                                                        <section class="col col-md-2">
                                                             <div class="form-group">
-                                                                <label class="label">Fecha final</label>
+                                                                <label class="label">Fecha Final (Contrato)</label>
                                                                 <label class="input">
                                                                     <input id="txtFechaFin" type="text" name="txtFechaFin" data-bind="value: fechaFin" class="form-control datepicker" data-dateformat="dd/mm/yy" />
                                                                 </label>
                                                             </div>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">Preaviso (meses)</label>
+                                                            <label class="input">
+                                                                <input id="txtPreaviso" name="txtPreaviso" data-bind="value:preaviso" />
+                                                            </label>
                                                         </section>
                                                     </div>
                                                     <div class="row">
@@ -513,7 +519,7 @@
                                                                             <td style="text-align:center;">
                                                                                 <label class="input">
                                                                                         <input id="txtMargen" name="txtMargen" data-bind="value:margen" />
-                                                                                </label>                                                                                
+                                                                                </label>
                                                                             </td>
                                                                             <td style="text-align:center;">
                                                                                 <label class="input">
@@ -528,17 +534,17 @@
                                                                             <td style="text-align:center;">
                                                                                 <label class="input">
                                                                                         <input id="txtManPorComer" name="txtManPorComer" data-bind="value:manPorComer" />
-                                                                                </label>                                                                                
+                                                                                </label>
                                                                             </td>
                                                                             <td style="text-align:center;">
                                                                                 <label class="input">
                                                                                         <input id="txtImpComer" name="txtImpComer" data-bind="value:impComer" disabled />
-                                                                                </label>                                                                                
+                                                                                </label>
                                                                             </td>
                                                                             <td style="text-align:center;">
                                                                                 <label class="input">
                                                                                         <input id="txtImporteAlCliente" name="txtImporteAlCliente" data-bind="value:importeAlCliente" disabled/>
-                                                                                </label>                                                                                
+                                                                                </label>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -645,7 +651,13 @@
                                                                 Receptor
                                                             </th>
                                                             <th data-hide="phone">
+                                                                Numero
+                                                            </th>
+                                                            <th data-hide="phone">
                                                                 Fecha
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                Base
                                                             </th>
                                                             <th data-hide="phone">
                                                                 Total
@@ -768,7 +780,7 @@
                                         <label class="input">
                                                 <input id="txtDiaPago2" name="txtDiaPago2" data-bind="value:diaPago" disabled/>
                                         </label>
-                                    </section>                                    
+                                    </section>
                                     <section class="col col-md-2">
                                         <label class="label">Num.Pagos</label>
                                         <label class="input">
@@ -898,7 +910,7 @@
     <script src="js/knockout-3.1.0.js"></script>
     <!--- AUTOCOM JS -->
     <script src="js/jquery.auto-complete.js"></script>
-    
+
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>

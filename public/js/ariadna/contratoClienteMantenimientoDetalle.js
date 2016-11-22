@@ -148,6 +148,7 @@ function admData() {
     self.referencia = ko.observable();
     self.importeMantenedor = ko.observable();
     self.diaPago = ko.observable();
+    self.preaviso = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -224,6 +225,7 @@ function loadData(data) {
     vm.impComer(data.impComer);
     vm.importeMantenedor(data.importeMantenedor);
     vm.diaPago(data.diaPago);
+    vm.preaviso(data.preaviso);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -311,7 +313,8 @@ function aceptar() {
                 "referencia": vm.referencia(),
                 "impComer": vm.impComer(),
                 "importeMantenedor": vm.importeMantenedor(),
-                "diaPago": vm.diaPago()
+                "diaPago": vm.diaPago(),
+                "preaviso": vm.preaviso()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -966,7 +969,8 @@ function aceptarGenerar() {
             "referencia": vm.referencia(),
             "impComer": vm.impComer(),
             "importeMantenedor": vm.importeMantenedor(),
-            "diaPago": vm.diaPago()
+            "diaPago": vm.diaPago(),
+            "preaviso": vm.preaviso()
         }
     };
     if (contratoClienteMantenimientoId == 0) {
@@ -1361,17 +1365,21 @@ function initTablaPrefacturas() {
         columns: [{
             data: "emisorNombre"
         }, {
-            data: "receptorNombre"
-        }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "total"
-        }, {
-            data: "observaciones"
-        }, {
+                data: "receptorNombre"
+            },{
+                data: "vNum"
+            }, {
+                data: "fecha",
+                render: function (data, type, row) {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            }, {
+                data: "total"
+            }, {
+                data: "totalConIva"
+            }, {
+                data: "observaciones"
+            }, {
             data: "prefacturaId",
             render: function (data, type, row) {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
