@@ -423,7 +423,7 @@
                                                         <section class="col col-md-1">
                                                             <label class="label">Dia pago</label>
                                                             <label class="input">
-                                                                <input id="txtDiaPago" name="txtDiaPago" data-bind="value:diaPago" disabled />
+                                                                <input id="txtDiaPago" name="txtDiaPago" data-bind="value:diaPago"  />
                                                             </label>
                                                         </section>
                                                         <section class="col col-md-3">
@@ -757,13 +757,19 @@
                                                 <select style="width:100%" id="cmbPeriodos" name="cmbPeriodos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: speriodoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
                                             </label>
                                     </section>
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
                                         <label class="label">Importe</label>
                                         <label class="input">
                                                 <input id="txtImporteG" name="txtImporteG" data-bind="value:fImporte" disabled/>
                                         </label>
                                     </section>
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
+                                        <label class="label">Dia Pago</label>
+                                        <label class="input">
+                                                <input id="txtDiaPago2" name="txtDiaPago2" data-bind="value:diaPago" disabled/>
+                                        </label>
+                                    </section>                                    
+                                    <section class="col col-md-2">
                                         <label class="label">Num.Pagos</label>
                                         <label class="input">
                                                 <input id="txtNumPagos" name="txtNumPagos" data-bind="value:numpagos" disabled/>
