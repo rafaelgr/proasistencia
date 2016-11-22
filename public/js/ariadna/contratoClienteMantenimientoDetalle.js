@@ -227,7 +227,6 @@ function loadData(data) {
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
-    loadClientes(data.clienteId);
     loadAgentes(data.comercialId);
     loadTiposPagos(data.tipoPago);
     loadArticulos(data.articuloId);
@@ -254,7 +253,7 @@ function datosOK() {
             txtManPorComer: {
                 number: true
             },
-            txtCliente:{
+            txtCliente: {
                 clienteNecesario: true
             }
         },
@@ -505,6 +504,7 @@ function cambioImporteAlCliente() {
     };
     return mf;
 }
+
 function cambioBeneficio() {
     var mf = function () {
         if (vm.margen() && vm.coste()) {
@@ -516,6 +516,7 @@ function cambioBeneficio() {
     }
     return mf;
 }
+
 function cargarDatosDeContrato(contratoClienteMantenimientoId) {
     var data = {
         contratoClienteMantenimientoId: contratoClienteMantenimientoId
@@ -908,6 +909,7 @@ function cambioCliente(data) {
 // generar()
 // se llama a esta función cuando se pulsa la botón "generar"
 // prepara los valores para el formulario modal y lo muestra
+
 function generar() {
     // recalculamos los importes
     cambioBeneficio()();
@@ -936,22 +938,111 @@ function aceptarGenerar() {
     if (!datosOKGenerar()) {
         return;
     }
-    // comprobamos si ya hubiera facturas para este contrato.
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            if (data.length > 0) {
-                deletePrevias();
-            } else {
-                // no hay directamente creamos
-                crearPrefacturas();
-            }
-        },
-        error: errorAjax
-    });
+    // -- Guardar el contrato por si ha habido modificaciones
+    if (!datosOK()) {
+        return;
+    }
+    var data = {
+        contratoClienteMantenimiento: {
+            "contratoClienteMantenimientoId": vm.contratoClienteMantenimientoId(),
+            "empresaId": vm.sempresaId(),
+            "mantenedorId": vm.smantenedorId(),
+            "clienteId": vm.sclienteId(),
+            "fechaInicio": spanishDbDate(vm.fechaInicio()),
+            "fechaFin": spanishDbDate(vm.fechaFin()),
+            "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
+            "venta": vm.venta(),
+            "manPorComer": vm.manPorComer(),
+            "tipoPago": vm.stipoPagoId(),
+            "comercialId": vm.sagenteId(),
+            "observaciones": vm.observaciones(),
+            "coste": vm.coste(),
+            "margen": vm.margen(),
+            "beneficio": vm.beneficio(),
+            "ventaNeta": vm.ventaNeta(),
+            "manAgente": vm.manAgente(),
+            "articuloId": vm.sarticuloId(),
+            "importeAlCliente": vm.importeAlCliente(),
+            "referencia": vm.referencia(),
+            "impComer": vm.impComer(),
+            "importeMantenedor": vm.importeMantenedor(),
+            "diaPago": vm.diaPago()
+        }
+    };
+    if (contratoClienteMantenimientoId == 0) {
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadData(data);
+                var contratoClienteMantenimiento = {
+                    "contratoClienteMantenimientoId": vm.contratoClienteMantenimientoId(),
+                    "clienteId": vm.sclienteId()
+                }
+                $.ajax({
+                    type: "POST",
+                    url: myconfig.apiUrl + "/api/contrato_mantenimiento_comisionistas/cargarcomisiones",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(contratoClienteMantenimiento),
+                    success: function (data, status) {
+                        // comprobamos si ya hubiera facturas para este contrato.
+                        $.ajax({
+                            type: "GET",
+                            url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function (data, status) {
+                                if (data.length > 0) {
+                                    deletePrevias();
+                                } else {
+                                    // no hay directamente creamos
+                                    crearPrefacturas();
+                                }
+                            },
+                            error: errorAjax
+                        });
+                    },
+                    error: errorAjax
+                });
+
+            },
+            error: errorAjax
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadData(data);
+                // comprobamos si ya hubiera facturas para este contrato.
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/prefacturas/" + vm.contratoClienteMantenimientoId(),
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data, status) {
+                        if (data.length > 0) {
+                            deletePrevias();
+                        } else {
+                            // no hay directamente creamos
+                            crearPrefacturas();
+                        }
+                    },
+                    error: errorAjax
+                });
+            },
+            error: errorAjax
+        });
+    }
     $('#modalGenerar').modal('hide');
 }
 
@@ -1073,8 +1164,9 @@ function cambioGenerador() {
             cliente = vm.smantenedorId();
         }
         vm.fImporte(importe);
+        var fIni = moment(vm.fInicial(), 'DD/MM/YYYY')._d;
         var numpagos = calNumPagos();
-        var pagos = crearPagos(importe, vm.fInicial(), numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
+        var pagos = crearPagos(importe, fIni, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
         vm.numpagos(numpagos);
         vm.listaPagos(pagos);
         loadTablaGenerador(pagos);
@@ -1358,7 +1450,7 @@ var initAutoCliente = function () {
     });
     // regla de validación para el control inicializado
     jQuery.validator.addMethod("clienteNecesario", function (value, element) {
-        var r =  false;
+        var r = false;
         if (vm.sclienteId()) r = true;
         return r;
     }, "Debe seleccionar un cliente válido");
