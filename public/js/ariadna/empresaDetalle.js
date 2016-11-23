@@ -72,6 +72,8 @@ function admData() {
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
     self.contabilidad = ko.observable();
+    self.seriePre = ko.observable();
+    self.serieFac = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -103,6 +105,8 @@ function loadData(data) {
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.contabilidad(data.contabilidad);
+    vm.seriePre(data.seriePre);
+    vm.serieFac(data.serieFac);
     loadTiposVia(data.tipoViaId);
 }
 
@@ -120,6 +124,12 @@ function datosOK() {
             },
             txtContabilidad: {
                 required: true
+            },
+            txtSeriePre: {
+                required: true
+            },
+            txtSerieFac: {
+                required: true
             }
         },
         // Messages for form validation
@@ -135,6 +145,12 @@ function datosOK() {
             },
             txtContabilidad: {
                 required: 'Indique la contabilidad'
+            },
+            txtSeriePre: {
+                required: 'Indique la serie'
+            },
+            txtSerieFac: {
+                required: 'Indique la serie'
             }
         },
         // Do not change code below
@@ -195,7 +211,9 @@ function aceptar() {
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
                 "contabilidad": vm.contabilidad(),
-                "tipoViaId": vm.stipoViaId()
+                "tipoViaId": vm.stipoViaId(),
+                "seriePre": vm.seriePre(),
+                "serieFac": vm.serieFac()
             }
         };
         if (empId == 0) {
