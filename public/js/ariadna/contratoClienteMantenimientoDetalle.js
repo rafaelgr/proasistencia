@@ -38,7 +38,8 @@ function initForm() {
     // calculadora del generador
     $('#txtFInicial').on('blur', cambioGenerador());
     $('#txtFFinal').on('blur', cambioGenerador());
-
+    $('#txtFechaFactura2').on('blur', cambioGenerador());
+    $('#chkFacturaParcial2').on('blur', cambioGenerador());
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
@@ -933,7 +934,7 @@ function generar() {
         cliente = vm.smantenedorId();
     }
     vm.fImporte(importe);
-    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    var fInicial = new Date(spanishDbDate(vm.fechaFactura()));
     var numpagos = calNumPagos();
     var pagos = crearPagos(importe, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
     vm.numpagos(numpagos);
@@ -1176,7 +1177,8 @@ function cambioGenerador() {
             cliente = vm.smantenedorId();
         }
         vm.fImporte(importe);
-        var fIni = moment(vm.fInicial(), 'DD/MM/YYYY')._d;
+        //var fIni = moment(vm.fInicial(), 'DD/MM/YYYY')._d;
+        var fIni = new Date(spanishDbDate(vm.fechaFactura()));
         var numpagos = calNumPagos();
         var pagos = crearPagos(importe, fIni, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
         vm.numpagos(numpagos);
@@ -1206,14 +1208,34 @@ function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, cliente
             divisor = 1;
             break;
     }
+    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
+    // de mes 
+    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
+    var finMesInicioContrato = moment(inicioContrato).endOf('month');
+    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
     // se supone que la fecha ya está en formato js.
     var importePago = importe / numPagos;
+    var import1 = (importePago / 30) * diffDias;
+    var import2 = importePago - import1;
     var pagos = [];
     for (var i = 0; i < numPagos; i++) {
         var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         var p = {
             fecha: f,
             importe: importePago,
+            empresaId: empresaId,
+            clienteId: clienteId
+        };
+        if (vm.facturaParcial() && i == 0) {
+            p.importe = import1;
+        }
+        pagos.push(p);
+    }
+    if (vm.facturaParcial()) {
+        var f = moment(fechaInicial).add(numPagos * divisor, 'month').format('DD/MM/YYYY');
+        var p = {
+            fecha: f,
+            importe: import2,
             empresaId: empresaId,
             clienteId: clienteId
         };
@@ -1226,6 +1248,7 @@ function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, cliente
 // inicializa la tabla que muestra el detalle cada pago a generar
 function initTablaGenerador() {
     tablaCarro = $('#dt_generar').dataTable({
+        bSort: false,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1279,6 +1302,14 @@ function initTablaGenerador() {
             className: "text-center"
         }]
     });
+}
+
+function checkFacParcial(checkbox)
+{
+    if (checkbox.checked)
+    {
+        cambioGenerador();
+    }
 }
 
 // loadTablaGenerador()
