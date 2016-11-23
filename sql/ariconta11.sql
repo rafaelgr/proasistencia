@@ -1,6 +1,6 @@
 /*
-SQLyog Community v12.2.6 (64 bit)
-MySQL - 5.6.16 : Database - ariconta11
+SQLyog Community v12.2.1 (64 bit)
+MySQL - 5.0.27-community-nt : Database - ariconta11
 *********************************************************************
 */
 
@@ -12,6 +12,8 @@ MySQL - 5.6.16 : Database - ariconta11
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`ariconta11` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
 USE `ariconta11`;
 
 /*Table structure for table `agentes` */
@@ -19,37 +21,37 @@ USE `ariconta11`;
 DROP TABLE IF EXISTS `agentes`;
 
 CREATE TABLE `agentes` (
-  `Codigo` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `Nombre` varchar(30) NOT NULL DEFAULT '',
-  `domagent` varchar(30) DEFAULT NULL,
-  `codpobla` varchar(5) NOT NULL DEFAULT '',
-  `pobagent` varchar(30) NOT NULL DEFAULT '',
-  `proagent` varchar(30) NOT NULL DEFAULT '',
-  `nifagent` varchar(15) DEFAULT NULL,
-  `telagent` varchar(15) DEFAULT NULL,
-  `comision` decimal(4,2) DEFAULT NULL,
-  `comisioc` decimal(4,2) DEFAULT NULL COMMENT 'Comision si descto.',
-  `comisios` decimal(4,2) DEFAULT NULL COMMENT 'Comision si no descto.',
-  `coddelega` tinyint(4) DEFAULT NULL COMMENT 'Por si va a delegaciones',
-  `comsio1n` decimal(4,2) DEFAULT NULL COMMENT 'Comison 1 sin dto esp (Fontenas)',
-  `comisio1s` decimal(4,2) DEFAULT NULL COMMENT 'Comison 1 con dto esp (Fontenas)',
-  `comsiopvpmin` decimal(4,2) DEFAULT NULL COMMENT 'Comision herbelca pvpminimo',
-  PRIMARY KEY (`Codigo`)
+  `Codigo` smallint(5) unsigned NOT NULL default '0',
+  `Nombre` varchar(30) NOT NULL default '',
+  `domagent` varchar(30) default NULL,
+  `codpobla` varchar(5) NOT NULL default '',
+  `pobagent` varchar(30) NOT NULL default '',
+  `proagent` varchar(30) NOT NULL default '',
+  `nifagent` varchar(15) default NULL,
+  `telagent` varchar(15) default NULL,
+  `comision` decimal(4,2) default NULL,
+  `comisioc` decimal(4,2) default NULL COMMENT 'Comision si descto.',
+  `comisios` decimal(4,2) default NULL COMMENT 'Comision si no descto.',
+  `coddelega` tinyint(4) default NULL COMMENT 'Por si va a delegaciones',
+  `comsio1n` decimal(4,2) default NULL COMMENT 'Comison 1 sin dto esp (Fontenas)',
+  `comisio1s` decimal(4,2) default NULL COMMENT 'Comison 1 con dto esp (Fontenas)',
+  `comsiopvpmin` decimal(4,2) default NULL COMMENT 'Comision herbelca pvpminimo',
+  PRIMARY KEY  (`Codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `agentes` */
 
 insert  into `agentes`(`Codigo`,`Nombre`,`domagent`,`codpobla`,`pobagent`,`proagent`,`nifagent`,`telagent`,`comision`,`comisioc`,`comisios`,`coddelega`,`comsio1n`,`comisio1s`,`comsiopvpmin`) values 
-(0,'NOmbre','Uruguay, 11 - Despacho 101','46007','VALENCIA','VALENCIA','1',NULL,0.00,NULL,NULL,NULL,NULL,NULL,NULL);
+(0,'NOmbre','Uruguay, 11 - Despacho 101','46007','VALENCIA','VALENCIA','1',NULL,'0.00',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `asipre` */
 
 DROP TABLE IF EXISTS `asipre`;
 
 CREATE TABLE `asipre` (
-  `numaspre` smallint(1) NOT NULL DEFAULT '0',
-  `nomaspre` char(40) NOT NULL DEFAULT '',
-  PRIMARY KEY (`numaspre`)
+  `numaspre` smallint(1) NOT NULL default '0',
+  `nomaspre` char(40) NOT NULL default '',
+  PRIMARY KEY  (`numaspre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `asipre` */
@@ -59,18 +61,18 @@ CREATE TABLE `asipre` (
 DROP TABLE IF EXISTS `asipre_lineas`;
 
 CREATE TABLE `asipre_lineas` (
-  `numaspre` smallint(1) NOT NULL DEFAULT '0',
-  `linlapre` smallint(1) NOT NULL DEFAULT '0',
-  `codmacta` varchar(10) NOT NULL DEFAULT '0',
-  `numdocum` varchar(10) DEFAULT NULL,
-  `codconce` smallint(1) NOT NULL DEFAULT '0',
-  `ampconce` varchar(30) DEFAULT NULL,
-  `timporteD` decimal(12,2) DEFAULT NULL,
-  `timporteH` decimal(12,2) DEFAULT NULL,
-  `codccost` varchar(4) DEFAULT NULL,
-  `ctacontr` varchar(10) DEFAULT NULL,
-  `idcontab` varchar(6) DEFAULT NULL,
-  PRIMARY KEY (`numaspre`,`linlapre`),
+  `numaspre` smallint(1) NOT NULL default '0',
+  `linlapre` smallint(1) NOT NULL default '0',
+  `codmacta` varchar(10) NOT NULL default '0',
+  `numdocum` varchar(10) default NULL,
+  `codconce` smallint(1) NOT NULL default '0',
+  `ampconce` varchar(30) default NULL,
+  `timporteD` decimal(12,2) default NULL,
+  `timporteH` decimal(12,2) default NULL,
+  `codccost` varchar(4) default NULL,
+  `ctacontr` varchar(10) default NULL,
+  `idcontab` varchar(6) default NULL,
+  PRIMARY KEY  (`numaspre`,`linlapre`),
   KEY `cl_cuentas` (`codmacta`),
   KEY `cl_contrapartida` (`ctacontr`),
   KEY `cl_centrocoste` (`codccost`),
@@ -88,13 +90,13 @@ CREATE TABLE `asipre_lineas` (
 DROP TABLE IF EXISTS `balances`;
 
 CREATE TABLE `balances` (
-  `numbalan` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `nombalan` varchar(100) NOT NULL DEFAULT '0',
+  `numbalan` smallint(3) unsigned NOT NULL default '0',
+  `nombalan` varchar(100) NOT NULL default '0',
   `Descripcion` text,
-  `Aparece` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `perdidas` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Predeterminado` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`numbalan`)
+  `Aparece` tinyint(3) unsigned NOT NULL default '0',
+  `perdidas` tinyint(3) unsigned NOT NULL default '0',
+  `Predeterminado` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`numbalan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `balances` */
@@ -119,13 +121,13 @@ insert  into `balances`(`numbalan`,`nombalan`,`Descripcion`,`Aparece`,`perdidas`
 DROP TABLE IF EXISTS `balances_ctas`;
 
 CREATE TABLE `balances_ctas` (
-  `NumBalan` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Pasivo` char(1) NOT NULL DEFAULT '0',
-  `codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `tipsaldo` char(1) NOT NULL DEFAULT '',
-  `Resta` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codigo`,`codmacta`,`Pasivo`,`NumBalan`,`Resta`)
+  `NumBalan` tinyint(3) unsigned NOT NULL default '0',
+  `Pasivo` char(1) NOT NULL default '0',
+  `codigo` tinyint(4) NOT NULL default '0',
+  `codmacta` varchar(10) NOT NULL default '',
+  `tipsaldo` char(1) NOT NULL default '',
+  `Resta` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`codigo`,`codmacta`,`Pasivo`,`NumBalan`,`Resta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `balances_ctas` */
@@ -2536,21 +2538,21 @@ insert  into `balances_ctas`(`NumBalan`,`Pasivo`,`codigo`,`codmacta`,`tipsaldo`,
 DROP TABLE IF EXISTS `balances_texto`;
 
 CREATE TABLE `balances_texto` (
-  `NumBalan` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Pasivo` char(1) NOT NULL DEFAULT '0',
-  `codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `padre` tinyint(4) DEFAULT NULL,
-  `Orden` tinyint(3) unsigned DEFAULT NULL,
-  `tipo` tinyint(4) NOT NULL DEFAULT '0',
-  `deslinea` varchar(100) DEFAULT NULL,
-  `texlinea` varchar(100) DEFAULT NULL,
-  `formula` varchar(250) DEFAULT NULL,
-  `TienenCtas` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Negrita` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `A_Cero` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Pintar` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `LibroCD` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`codigo`,`Pasivo`,`NumBalan`)
+  `NumBalan` tinyint(3) unsigned NOT NULL default '0',
+  `Pasivo` char(1) NOT NULL default '0',
+  `codigo` tinyint(4) NOT NULL default '0',
+  `padre` tinyint(4) default NULL,
+  `Orden` tinyint(3) unsigned default NULL,
+  `tipo` tinyint(4) NOT NULL default '0',
+  `deslinea` varchar(100) default NULL,
+  `texlinea` varchar(100) default NULL,
+  `formula` varchar(250) default NULL,
+  `TienenCtas` tinyint(3) unsigned NOT NULL default '0',
+  `Negrita` tinyint(3) unsigned NOT NULL default '0',
+  `A_Cero` tinyint(3) unsigned NOT NULL default '0',
+  `Pintar` tinyint(3) unsigned NOT NULL default '0',
+  `LibroCD` varchar(10) default NULL,
+  PRIMARY KEY  (`codigo`,`Pasivo`,`NumBalan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `balances_texto` */
@@ -3179,39 +3181,39 @@ insert  into `balances_texto`(`NumBalan`,`Pasivo`,`codigo`,`padre`,`Orden`,`tipo
 DROP TABLE IF EXISTS `bancos`;
 
 CREATE TABLE `bancos` (
-  `codmacta` varchar(10) NOT NULL DEFAULT '0',
-  `descripcion` varchar(40) DEFAULT NULL,
-  `sufijoem` char(3) DEFAULT NULL,
-  `idcedente` varchar(15) DEFAULT NULL,
-  `ctagastos` varchar(10) DEFAULT NULL,
-  `codccost` varchar(4) DEFAULT NULL,
-  `ctaingreso` varchar(10) DEFAULT NULL,
-  `idnorma34` varchar(10) DEFAULT NULL,
-  `ctaefectosdesc` varchar(10) DEFAULT NULL,
-  `ctagastostarj` varchar(10) DEFAULT NULL,
-  `talonriesgo` decimal(8,2) DEFAULT NULL,
-  `talondias` smallint(6) DEFAULT NULL,
-  `pagareriesgo` decimal(8,2) DEFAULT NULL,
-  `pagaredias` smallint(6) DEFAULT NULL,
-  `remesamaximo` decimal(8,2) DEFAULT NULL,
-  `remesariesgo` decimal(8,2) DEFAULT NULL,
-  `remesadiasmenor` smallint(6) DEFAULT NULL,
-  `remesadiasmayor` smallint(6) DEFAULT NULL,
-  `GastRemDescontad` tinyint(4) DEFAULT '0' COMMENT 'Gastos remesas descontados del importe',
-  `GastTransDescontad` tinyint(4) DEFAULT '0' COMMENT 'Gastos transferencias descontados del importe',
+  `codmacta` varchar(10) NOT NULL default '0',
+  `descripcion` varchar(40) default NULL,
+  `sufijoem` char(3) default NULL,
+  `idcedente` varchar(15) default NULL,
+  `ctagastos` varchar(10) default NULL,
+  `codccost` varchar(4) default NULL,
+  `ctaingreso` varchar(10) default NULL,
+  `idnorma34` varchar(10) default NULL,
+  `ctaefectosdesc` varchar(10) default NULL,
+  `ctagastostarj` varchar(10) default NULL,
+  `talonriesgo` decimal(8,2) default NULL,
+  `talondias` smallint(6) default NULL,
+  `pagareriesgo` decimal(8,2) default NULL,
+  `pagaredias` smallint(6) default NULL,
+  `remesamaximo` decimal(8,2) default NULL,
+  `remesariesgo` decimal(8,2) default NULL,
+  `remesadiasmenor` smallint(6) default NULL,
+  `remesadiasmayor` smallint(6) default NULL,
+  `GastRemDescontad` tinyint(4) default '0' COMMENT 'Gastos remesas descontados del importe',
+  `GastTransDescontad` tinyint(4) default '0' COMMENT 'Gastos transferencias descontados del importe',
   `iban` varchar(40) NOT NULL COMMENT '4Digitos del iban ES00',
-  `Sufijo3414` varchar(3) DEFAULT NULL,
-  `N1914GrabaNifDeudor` tinyint(4) DEFAULT '0',
-  `CaixaConfirming` varchar(20) DEFAULT NULL COMMENT 'NºContrato caixa confirming. Solo para los caixaconfirming',
-  `ctatransfercli` tinyint(1) DEFAULT '0' COMMENT 'Cta Transferencia Clientes',
-  PRIMARY KEY (`codmacta`)
+  `Sufijo3414` varchar(3) default NULL,
+  `N1914GrabaNifDeudor` tinyint(4) default '0',
+  `CaixaConfirming` varchar(20) default NULL COMMENT 'NºContrato caixa confirming. Solo para los caixaconfirming',
+  `ctatransfercli` tinyint(1) default '0' COMMENT 'Cta Transferencia Clientes',
+  PRIMARY KEY  (`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `bancos` */
 
 insert  into `bancos`(`codmacta`,`descripcion`,`sufijoem`,`idcedente`,`ctagastos`,`codccost`,`ctaingreso`,`idnorma34`,`ctaefectosdesc`,`ctagastostarj`,`talonriesgo`,`talondias`,`pagareriesgo`,`pagaredias`,`remesamaximo`,`remesariesgo`,`remesadiasmenor`,`remesadiasmayor`,`GastRemDescontad`,`GastTransDescontad`,`iban`,`Sufijo3414`,`N1914GrabaNifDeudor`,`CaixaConfirming`,`ctatransfercli`) values 
 ('570000001','CAJA',NULL,NULL,'626000001',NULL,'769000001',NULL,'520800001','626000001',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,'',NULL,0,NULL,0),
-('572000001','Nombre banco','000',NULL,'626000001',NULL,'769000001',NULL,'520800001',NULL,NULL,5,NULL,5,NULL,25000.00,14,14,0,0,'ES6400000000000000000000',NULL,1,NULL,0);
+('572000001','Nombre banco','000',NULL,'626000001',NULL,'769000001',NULL,'520800001',NULL,NULL,5,NULL,5,NULL,'25000.00',14,14,0,0,'ES6400000000000000000000',NULL,1,NULL,0);
 
 /*Table structure for table `bics` */
 
@@ -3221,7 +3223,7 @@ CREATE TABLE `bics` (
   `entidad` int(11) NOT NULL,
   `Nombre` varchar(150) NOT NULL,
   `bic` varchar(11) NOT NULL,
-  PRIMARY KEY (`entidad`)
+  PRIMARY KEY  (`entidad`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
 
 /*Data for the table `bics` */
@@ -3331,14 +3333,14 @@ insert  into `bics`(`entidad`,`Nombre`,`bic`) values
 DROP TABLE IF EXISTS `cartas`;
 
 CREATE TABLE `cartas` (
-  `codCarta` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `descarta` varchar(50) DEFAULT NULL,
-  `saludos` varchar(80) DEFAULT NULL,
+  `codCarta` smallint(3) unsigned NOT NULL default '0',
+  `descarta` varchar(50) default NULL,
+  `saludos` varchar(80) default NULL,
   `parrafo1` text,
-  `parrafo2` varchar(255) DEFAULT NULL,
-  `parrafo3` varchar(255) DEFAULT NULL,
-  `desped` varchar(110) DEFAULT NULL,
-  PRIMARY KEY (`codCarta`)
+  `parrafo2` varchar(255) default NULL,
+  `parrafo3` varchar(255) default NULL,
+  `desped` varchar(110) default NULL,
+  PRIMARY KEY  (`codCarta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `cartas` */
@@ -3351,9 +3353,9 @@ insert  into `cartas`(`codCarta`,`descarta`,`saludos`,`parrafo1`,`parrafo2`,`par
 DROP TABLE IF EXISTS `ccoste`;
 
 CREATE TABLE `ccoste` (
-  `codccost` char(4) NOT NULL DEFAULT '0',
-  `nomccost` char(30) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codccost`)
+  `codccost` char(4) NOT NULL default '0',
+  `nomccost` char(30) NOT NULL default '0',
+  PRIMARY KEY  (`codccost`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `ccoste` */
@@ -3363,11 +3365,11 @@ CREATE TABLE `ccoste` (
 DROP TABLE IF EXISTS `ccoste_lineas`;
 
 CREATE TABLE `ccoste_lineas` (
-  `codccost` char(4) NOT NULL DEFAULT '0',
-  `linscost` smallint(1) NOT NULL DEFAULT '0',
-  `subccost` char(4) DEFAULT NULL,
-  `porccost` decimal(5,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codccost`,`linscost`),
+  `codccost` char(4) NOT NULL default '0',
+  `linscost` smallint(1) NOT NULL default '0',
+  `subccost` char(4) default NULL,
+  `porccost` decimal(5,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codccost`,`linscost`),
   KEY `cl_subcentro` (`subccost`),
   CONSTRAINT `ccoste_lineas_ibfk_1` FOREIGN KEY (`codccost`) REFERENCES `ccoste` (`codccost`) ON DELETE CASCADE,
   CONSTRAINT `ccoste_lineas_ibfk_2` FOREIGN KEY (`subccost`) REFERENCES `ccoste` (`codccost`) ON DELETE SET NULL
@@ -3381,52 +3383,52 @@ DROP TABLE IF EXISTS `cobros`;
 
 CREATE TABLE `cobros` (
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `fecvenci` date NOT NULL DEFAULT '0000-00-00',
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `ctabanc1` varchar(10) NOT NULL DEFAULT '',
-  `iban` varchar(40) DEFAULT NULL,
-  `fecultco` date DEFAULT NULL,
-  `impcobro` decimal(12,2) DEFAULT NULL,
-  `emitdocum` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `recedocu` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `contdocu` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `text33csb` varchar(80) DEFAULT NULL,
-  `text41csb` varchar(60) DEFAULT NULL,
-  `ultimareclamacion` date DEFAULT NULL,
-  `agente` smallint(5) unsigned DEFAULT NULL,
-  `departamento` smallint(3) unsigned DEFAULT NULL,
-  `tiporem` tinyint(4) DEFAULT NULL,
-  `codrem` smallint(3) unsigned DEFAULT NULL,
-  `anyorem` smallint(4) DEFAULT NULL,
-  `siturem` char(1) DEFAULT NULL,
-  `gastos` decimal(10,2) unsigned zerofill DEFAULT NULL,
-  `Devuelto` tinyint(4) DEFAULT '0',
-  `situacionjuri` tinyint(3) unsigned DEFAULT '0',
-  `noremesar` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `codmacta` varchar(10) NOT NULL default '',
+  `codforpa` smallint(6) NOT NULL default '0',
+  `fecvenci` date NOT NULL default '0000-00-00',
+  `impvenci` decimal(12,2) NOT NULL default '0.00',
+  `ctabanc1` varchar(10) NOT NULL default '',
+  `iban` varchar(40) default NULL,
+  `fecultco` date default NULL,
+  `impcobro` decimal(12,2) default NULL,
+  `emitdocum` tinyint(3) unsigned NOT NULL default '0',
+  `recedocu` tinyint(3) unsigned NOT NULL default '0',
+  `contdocu` tinyint(3) unsigned NOT NULL default '0',
+  `text33csb` varchar(80) default NULL,
+  `text41csb` varchar(60) default NULL,
+  `ultimareclamacion` date default NULL,
+  `agente` smallint(5) unsigned default NULL,
+  `departamento` smallint(3) unsigned default NULL,
+  `tiporem` tinyint(4) default NULL,
+  `codrem` smallint(3) unsigned default NULL,
+  `anyorem` smallint(4) default NULL,
+  `siturem` char(1) default NULL,
+  `gastos` decimal(10,2) unsigned zerofill default NULL,
+  `Devuelto` tinyint(4) default '0',
+  `situacionjuri` tinyint(3) unsigned default '0',
+  `noremesar` tinyint(3) unsigned NOT NULL default '0',
   `observa` text,
-  `Transfer` int(11) DEFAULT '0',
-  `referencia` varchar(15) DEFAULT NULL,
-  `referencia1` varchar(15) DEFAULT NULL,
-  `referencia2` varchar(15) DEFAULT NULL,
-  `nomclien` varchar(60) DEFAULT NULL COMMENT 'Nombre cliente',
-  `domclien` varchar(60) DEFAULT NULL COMMENT 'domicilio',
-  `pobclien` varchar(60) DEFAULT NULL COMMENT 'poblacion',
-  `cpclien` varchar(6) DEFAULT NULL COMMENT 'codigo postal',
-  `proclien` varchar(60) DEFAULT NULL COMMENT 'provincia',
-  `feccomunica` date DEFAULT NULL COMMENT 'Fecha comunicacion',
-  `fecprorroga` date DEFAULT NULL COMMENT 'Fecha prorroga',
-  `fecsiniestro` date DEFAULT NULL COMMENT 'Fecha aviso siniestro',
-  `fecejecutiva` date DEFAULT NULL COMMENT 'Recaudacion ejecutiva',
-  `nifclien` varchar(15) DEFAULT NULL,
-  `codpais` char(2) DEFAULT NULL,
-  `situacion` tinyint(1) DEFAULT '0' COMMENT '0=pendiente cobro 1=cobrado',
-  `codusu` int(7) DEFAULT NULL,
-  PRIMARY KEY (`numserie`,`numfactu`,`fecfactu`,`numorden`),
+  `Transfer` int(11) default '0',
+  `referencia` varchar(15) default NULL,
+  `referencia1` varchar(15) default NULL,
+  `referencia2` varchar(15) default NULL,
+  `nomclien` varchar(60) default NULL COMMENT 'Nombre cliente',
+  `domclien` varchar(60) default NULL COMMENT 'domicilio',
+  `pobclien` varchar(60) default NULL COMMENT 'poblacion',
+  `cpclien` varchar(6) default NULL COMMENT 'codigo postal',
+  `proclien` varchar(60) default NULL COMMENT 'provincia',
+  `feccomunica` date default NULL COMMENT 'Fecha comunicacion',
+  `fecprorroga` date default NULL COMMENT 'Fecha prorroga',
+  `fecsiniestro` date default NULL COMMENT 'Fecha aviso siniestro',
+  `fecejecutiva` date default NULL COMMENT 'Recaudacion ejecutiva',
+  `nifclien` varchar(15) default NULL,
+  `codpais` char(2) default NULL,
+  `situacion` tinyint(1) default '0' COMMENT '0=pendiente cobro 1=cobrado',
+  `codusu` int(7) default NULL,
+  PRIMARY KEY  (`numserie`,`numfactu`,`fecfactu`,`numorden`),
   KEY `fp_scobro` (`codforpa`),
   CONSTRAINT `cobros_ibfk_1` FOREIGN KEY (`codforpa`) REFERENCES `formapago` (`codforpa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3438,13 +3440,13 @@ CREATE TABLE `cobros` (
 DROP TABLE IF EXISTS `compensa`;
 
 CREATE TABLE `compensa` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
+  `codigo` int(11) NOT NULL default '0',
   `fecha` datetime NOT NULL,
   `login` varchar(15) NOT NULL,
   `PC` varchar(15) NOT NULL,
   `codmacta` varchar(10) NOT NULL,
   `nommacta` varchar(40) NOT NULL,
-  PRIMARY KEY (`codigo`)
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Compensacion clientes. Cabecera';
 
 /*Data for the table `compensa` */
@@ -3454,18 +3456,18 @@ CREATE TABLE `compensa` (
 DROP TABLE IF EXISTS `compensa_facturas`;
 
 CREATE TABLE `compensa_facturas` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `linea` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `destino` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `codigo` int(11) NOT NULL default '0',
+  `linea` smallint(1) unsigned NOT NULL default '0',
+  `destino` tinyint(3) unsigned NOT NULL default '0',
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `gastos` decimal(10,2) unsigned zerofill DEFAULT NULL,
-  `impcobro` decimal(12,2) DEFAULT NULL,
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `impvenci` decimal(12,2) NOT NULL default '0.00',
+  `gastos` decimal(10,2) unsigned zerofill default NULL,
+  `impcobro` decimal(12,2) default NULL,
   `fecvenci` date NOT NULL,
-  PRIMARY KEY (`codigo`,`linea`)
+  PRIMARY KEY  (`codigo`,`linea`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Lineas de las compensaciones de clientes';
 
 /*Data for the table `compensa_facturas` */
@@ -3475,13 +3477,13 @@ CREATE TABLE `compensa_facturas` (
 DROP TABLE IF EXISTS `compensapro`;
 
 CREATE TABLE `compensapro` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
+  `codigo` int(11) NOT NULL default '0',
   `fecha` datetime NOT NULL,
   `login` varchar(15) NOT NULL,
   `PC` varchar(15) NOT NULL,
   `codmacta` varchar(10) NOT NULL,
   `nommacta` varchar(40) NOT NULL,
-  PRIMARY KEY (`codigo`)
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Compensacion proveedores. Cabecera';
 
 /*Data for the table `compensapro` */
@@ -3491,17 +3493,17 @@ CREATE TABLE `compensapro` (
 DROP TABLE IF EXISTS `compensapro_facturas`;
 
 CREATE TABLE `compensapro_facturas` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `linea` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `destino` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `codigo` int(11) NOT NULL default '0',
+  `linea` smallint(1) unsigned NOT NULL default '0',
+  `destino` tinyint(3) unsigned NOT NULL default '0',
   `numserie` char(3) NOT NULL,
-  `numfactu` varchar(10) NOT NULL DEFAULT '',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `impefect` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `imppagad` decimal(12,2) DEFAULT NULL,
+  `numfactu` varchar(10) NOT NULL default '',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `impefect` decimal(12,2) NOT NULL default '0.00',
+  `imppagad` decimal(12,2) default NULL,
   `fecefect` date NOT NULL,
-  PRIMARY KEY (`codigo`,`linea`)
+  PRIMARY KEY  (`codigo`,`linea`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Lineas de las compensaciones de proveedores';
 
 /*Data for the table `compensapro_facturas` */
@@ -3511,11 +3513,11 @@ CREATE TABLE `compensapro_facturas` (
 DROP TABLE IF EXISTS `conceptos`;
 
 CREATE TABLE `conceptos` (
-  `codconce` smallint(1) NOT NULL DEFAULT '0',
-  `nomconce` char(30) NOT NULL DEFAULT '0',
-  `tipoconce` tinyint(1) NOT NULL DEFAULT '0',
-  `EsEfectivo340` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'En 340 y 347 indicaran el efectivo',
-  PRIMARY KEY (`codconce`)
+  `codconce` smallint(1) NOT NULL default '0',
+  `nomconce` char(30) NOT NULL default '0',
+  `tipoconce` tinyint(1) NOT NULL default '0',
+  `EsEfectivo340` tinyint(4) NOT NULL default '0' COMMENT 'En 340 y 347 indicaran el efectivo',
+  PRIMARY KEY  (`codconce`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `conceptos` */
@@ -3565,12 +3567,12 @@ DROP TABLE IF EXISTS `contadores`;
 
 CREATE TABLE `contadores` (
   `tiporegi` char(3) NOT NULL,
-  `nomregis` char(30) NOT NULL DEFAULT '',
-  `contado1` mediumint(9) unsigned DEFAULT NULL,
-  `contado2` mediumint(9) unsigned DEFAULT NULL,
-  `FacliAjena` tinyint(4) NOT NULL DEFAULT '0',
-  `codconce340` varchar(3) DEFAULT NULL,
-  PRIMARY KEY (`tiporegi`)
+  `nomregis` char(30) NOT NULL default '',
+  `contado1` mediumint(9) unsigned default NULL,
+  `contado2` mediumint(9) unsigned default NULL,
+  `FacliAjena` tinyint(4) NOT NULL default '0',
+  `codconce340` varchar(3) default NULL,
+  PRIMARY KEY  (`tiporegi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `contadores` */
@@ -3592,8 +3594,8 @@ insert  into `contadores`(`tiporegi`,`nomregis`,`contado1`,`contado2`,`FacliAjen
 DROP TABLE IF EXISTS `ctaagrupadas`;
 
 CREATE TABLE `ctaagrupadas` (
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codmacta`),
+  `codmacta` char(10) NOT NULL default '',
+  PRIMARY KEY  (`codmacta`),
   CONSTRAINT `ctaagrupadas_ibfk_1` FOREIGN KEY (`codmacta`) REFERENCES `cuentas` (`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -3604,8 +3606,8 @@ CREATE TABLE `ctaagrupadas` (
 DROP TABLE IF EXISTS `ctaexclusion`;
 
 CREATE TABLE `ctaexclusion` (
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codmacta`),
+  `codmacta` char(10) NOT NULL default '',
+  PRIMARY KEY  (`codmacta`),
   CONSTRAINT `ctaexclusion_ibfk_1` FOREIGN KEY (`codmacta`) REFERENCES `cuentas` (`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -3616,38 +3618,38 @@ CREATE TABLE `ctaexclusion` (
 DROP TABLE IF EXISTS `cuentas`;
 
 CREATE TABLE `cuentas` (
-  `codmacta` varchar(10) NOT NULL DEFAULT '0',
-  `nommacta` varchar(60) NOT NULL DEFAULT '0',
-  `apudirec` char(1) NOT NULL DEFAULT '0',
-  `model347` tinyint(1) NOT NULL DEFAULT '0',
-  `razosoci` varchar(60) DEFAULT NULL,
-  `dirdatos` varchar(50) DEFAULT NULL,
-  `codposta` varchar(6) DEFAULT '',
-  `despobla` varchar(50) DEFAULT NULL,
-  `desprovi` varchar(30) DEFAULT NULL,
-  `nifdatos` varchar(15) DEFAULT '',
-  `maidatos` varchar(50) DEFAULT '',
-  `webdatos` varchar(50) DEFAULT '',
+  `codmacta` varchar(10) NOT NULL default '0',
+  `nommacta` varchar(60) NOT NULL default '0',
+  `apudirec` char(1) NOT NULL default '0',
+  `model347` tinyint(1) NOT NULL default '0',
+  `razosoci` varchar(60) default NULL,
+  `dirdatos` varchar(50) default NULL,
+  `codposta` varchar(6) default '',
+  `despobla` varchar(50) default NULL,
+  `desprovi` varchar(30) default NULL,
+  `nifdatos` varchar(15) default '',
+  `maidatos` varchar(50) default '',
+  `webdatos` varchar(50) default '',
   `obsdatos` text,
-  `numpoliz` varchar(10) DEFAULT NULL,
-  `fecsolic` date DEFAULT NULL,
-  `credisol` decimal(14,2) DEFAULT NULL,
-  `fecconce` date DEFAULT NULL,
-  `credicon` decimal(14,2) DEFAULT NULL,
+  `numpoliz` varchar(10) default NULL,
+  `fecsolic` date default NULL,
+  `credisol` decimal(14,2) default NULL,
+  `fecconce` date default NULL,
+  `credicon` decimal(14,2) default NULL,
   `observa` text,
-  `fecbloq` date DEFAULT NULL,
-  `forpa` smallint(6) DEFAULT NULL,
-  `ctabanco` varchar(10) DEFAULT NULL,
-  `grupotesoreria` varchar(20) DEFAULT NULL,
-  `fecbajcre` date DEFAULT NULL COMMENT 'Fecha de baja en asegurados',
-  `iban` varchar(40) DEFAULT NULL,
-  `SEPA_Refere` varchar(35) DEFAULT NULL COMMENT 'Referencia de mandato',
-  `SEPA_FecFirma` date DEFAULT NULL COMMENT 'Firma orden mandato',
-  `codpais` char(2) DEFAULT NULL,
-  `codigiva` tinyint(1) unsigned DEFAULT NULL,
-  `codcontrhab` varchar(10) DEFAULT NULL COMMENT 'Cta Contrapartida habitual',
-  `esctamultiple` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`codmacta`)
+  `fecbloq` date default NULL,
+  `forpa` smallint(6) default NULL,
+  `ctabanco` varchar(10) default NULL,
+  `grupotesoreria` varchar(20) default NULL,
+  `fecbajcre` date default NULL COMMENT 'Fecha de baja en asegurados',
+  `iban` varchar(40) default NULL,
+  `SEPA_Refere` varchar(35) default NULL COMMENT 'Referencia de mandato',
+  `SEPA_FecFirma` date default NULL COMMENT 'Firma orden mandato',
+  `codpais` char(2) default NULL,
+  `codigiva` tinyint(1) unsigned default NULL,
+  `codcontrhab` varchar(10) default NULL COMMENT 'Cta Contrapartida habitual',
+  `esctamultiple` tinyint(1) default '0',
+  PRIMARY KEY  (`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `cuentas` */
@@ -3990,6 +3992,11 @@ insert  into `cuentas`(`codmacta`,`nommacta`,`apudirec`,`model347`,`razosoci`,`d
 ('430000001','C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','S',1,'C.P. PLAZA DE LEGAZPI 1  Y  BOLIVAR, 1','LEGAZPI, 1  Y  BOLIVAR, 1','28045','MADRID','MADRID','E78216900',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES8400492666761910643890',NULL,NULL,NULL,NULL,NULL,0),
 ('430000002','MAN. ALONSO ZAMORA VICENTE, 1','S',1,'MAN. ALONSO ZAMORA VICENTE, 1','ALONSO ZAMORA VICENTE, 1, PORTAL 1 AL 7','28702','SAN SEBASTIÁN DE LOS REYES','MADRID','H85070449',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES9520858223150330089707',NULL,NULL,NULL,NULL,NULL,0),
 ('430000003','C.P. NARVÁEZ, 21','S',1,'C.P. NARVÁEZ, 21','NARVÁEZ, 21','28009','MADRID','MADRID','H-79230322',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES4100190324834010015262',NULL,NULL,NULL,NULL,NULL,0),
+('430000425','C.P. POVEDILLA, 10','S',1,'C.P. POVEDILLA, 10','POVEDILLA, 10','28009','MADRID','MADRID','E78259827',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES1600190324874010001936',NULL,NULL,NULL,NULL,NULL,0),
+('430003728','A.P. NIZA, 39-41-43','S',1,'A.P. NIZA, 39-41-43','AVDA. DE NIZA, 39','28022','MADRID','MADRID','H79583712',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES8820381773926800017952',NULL,NULL,NULL,NULL,NULL,0),
+('430006790','C.P. ENRIQUE MOYANO, 7','S',1,'C.P. ENRIQUE MOYANO, 7',NULL,NULL,NULL,NULL,'H81170128',NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES8420381123086000722454',NULL,NULL,NULL,NULL,NULL,0),
+('430006958','MUTUA PROPIETARIOS','S',1,'MUTUA PROPIETARIOS','SSSSSSSS','280000','BARCELONA','BARCELONA','000000000X','INFO@INFO.ES','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
+('430006959','DESAM','S',1,'DESAM','LAGUNA DALGA, 10B - NAVE 9','28021','MADRID','MADRID','B83156778','gestion@desam.es','','TRATAMIENTO DE PLAGAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,'ES2721005881780200002175',NULL,NULL,NULL,NULL,NULL,0),
 ('4304','CLIENTES (MONEDA EXTRANJERA)','N',0,'CLIENTES (MONEDA EXTRANJERA)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'ES',NULL,NULL,0),
 ('4309','CLIENTES, FACTURAS PENDIENTES DE FORMALIZAR','N',0,'CLIENTES, FACTURAS PENDIENTES DE FORMALIZAR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'ES',NULL,NULL,0),
 ('431','CLIENTES, EFECTOS COMERCIALES A COBRAR','N',0,'CLIENTES, EFECTOS COMERCIALES A COBRAR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Créditos con clientes, formalizados en efectos de giro aceptados. \r\n\r\nSe incluirán en esta cuenta los efectos en cartera, los descontados, los entregados en gestión de cobro y los impagados; en este Ãºltimo caso sólo cuando no deban reflejarse en la cuenta 436. \r\n\r\nFigurará en el activo corriente del balance. \r\n\r\nSu movimiento es el siguiente: \r\n\r\na) Se cargará:\r\n   a1) Por las ventas o prestación de servicios derivados de la actividad principal aceptando los clientes los          efectos de giro, con abono a cuentas del subgrupo 70.\r\n   a2) Por la formalización del derecho de cobro en efectos de giro aceptados por el cliente, con abono,          generalmente, a la cuenta 430. \r\n\r\nb) Se abonará: \r\n    b1) Por el cobro de los efectos al vencimiento, con cargo a cuentas del subgrupo 57. \r\n    b2) Por su clasificación como de dudoso cobro, con cargo a la cuenta 436. \r\n    b3) Por la parte que resultara definitivamente incobrable, con cargo a la cuenta 650. \r\n\r\nLa financiación obtenida por el descuento de efectos, constituye una deuda que deberá recogerse, generalmente, en las cuentas correspondientes del subgrupo 52. En consecuencia, al vencimiento de los efectos atendidos, se abonará la cuenta 4311, con cargo a la cuenta 5208. \r\n',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),
@@ -4642,10 +4649,10 @@ insert  into `cuentas`(`codmacta`,`nommacta`,`apudirec`,`model347`,`razosoci`,`d
 DROP TABLE IF EXISTS `departamentos`;
 
 CREATE TABLE `departamentos` (
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `Dpto` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `Descripcion` varchar(30) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codmacta`,`Dpto`)
+  `codmacta` varchar(10) NOT NULL default '',
+  `Dpto` smallint(3) unsigned NOT NULL default '0',
+  `Descripcion` varchar(30) NOT NULL default '0',
+  PRIMARY KEY  (`codmacta`,`Dpto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `departamentos` */
@@ -4667,21 +4674,21 @@ insert  into `departamentos`(`codmacta`,`Dpto`,`Descripcion`) values
 DROP TABLE IF EXISTS `empresa`;
 
 CREATE TABLE `empresa` (
-  `codempre` char(8) NOT NULL DEFAULT '0',
-  `nomempre` char(40) NOT NULL DEFAULT '',
-  `nomresum` char(15) DEFAULT NULL,
-  `numnivel` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `numdigi1` tinyint(1) unsigned DEFAULT '0',
-  `numdigi2` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `numdigi3` tinyint(1) unsigned DEFAULT '0',
-  `numdigi4` tinyint(1) unsigned DEFAULT '0',
-  `numdigi5` tinyint(1) unsigned DEFAULT '0',
-  `numdigi6` tinyint(1) unsigned DEFAULT '0',
-  `numdigi7` tinyint(1) unsigned DEFAULT '0',
-  `numdigi8` tinyint(1) unsigned DEFAULT '0',
-  `numdigi9` tinyint(1) unsigned DEFAULT '0',
-  `numdigi10` tinyint(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`codempre`)
+  `codempre` char(8) NOT NULL default '0',
+  `nomempre` char(40) NOT NULL default '',
+  `nomresum` char(15) default NULL,
+  `numnivel` tinyint(1) unsigned NOT NULL default '0',
+  `numdigi1` tinyint(1) unsigned default '0',
+  `numdigi2` tinyint(1) unsigned NOT NULL default '0',
+  `numdigi3` tinyint(1) unsigned default '0',
+  `numdigi4` tinyint(1) unsigned default '0',
+  `numdigi5` tinyint(1) unsigned default '0',
+  `numdigi6` tinyint(1) unsigned default '0',
+  `numdigi7` tinyint(1) unsigned default '0',
+  `numdigi8` tinyint(1) unsigned default '0',
+  `numdigi9` tinyint(1) unsigned default '0',
+  `numdigi10` tinyint(1) unsigned default '0',
+  PRIMARY KEY  (`codempre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `empresa` */
@@ -4694,38 +4701,38 @@ insert  into `empresa`(`codempre`,`nomempre`,`nomresum`,`numnivel`,`numdigi1`,`n
 DROP TABLE IF EXISTS `empresa2`;
 
 CREATE TABLE `empresa2` (
-  `codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `apoderado` char(100) DEFAULT NULL,
-  `codpobla` char(6) DEFAULT NULL,
-  `pobempre` char(30) DEFAULT NULL,
-  `provempre` char(30) DEFAULT NULL,
-  `nifempre` char(9) DEFAULT NULL,
-  `letraseti` char(4) DEFAULT NULL,
-  `siglasvia` char(2) DEFAULT NULL,
-  `siglaempre` char(2) DEFAULT NULL,
-  `direccion` char(30) DEFAULT NULL,
-  `numero` char(4) DEFAULT NULL,
-  `escalera` char(2) DEFAULT NULL,
-  `piso` char(2) DEFAULT NULL,
-  `puerta` char(2) DEFAULT NULL,
-  `codpos` char(5) DEFAULT NULL,
-  `poblacion` char(20) DEFAULT NULL,
-  `provincia` char(15) DEFAULT NULL,
-  `telefono` char(9) DEFAULT NULL,
-  `contacto` char(100) DEFAULT NULL,
-  `tfnocontacto` char(9) DEFAULT NULL,
-  `administracion` char(5) DEFAULT NULL,
-  `banco1` char(4) DEFAULT NULL,
-  `oficina1` char(4) DEFAULT NULL,
-  `dc1` char(2) DEFAULT NULL,
-  `cuenta1` char(10) DEFAULT NULL,
-  `banco2` char(4) DEFAULT NULL,
-  `oficina2` char(4) DEFAULT NULL,
-  `dc2` char(2) DEFAULT NULL,
-  `cuenta2` char(10) DEFAULT NULL,
-  `iban1` varchar(40) DEFAULT NULL,
-  `iban2` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
+  `codigo` tinyint(4) NOT NULL default '0',
+  `apoderado` char(100) default NULL,
+  `codpobla` char(6) default NULL,
+  `pobempre` char(30) default NULL,
+  `provempre` char(30) default NULL,
+  `nifempre` char(9) default NULL,
+  `letraseti` char(4) default NULL,
+  `siglasvia` char(2) default NULL,
+  `siglaempre` char(2) default NULL,
+  `direccion` char(30) default NULL,
+  `numero` char(4) default NULL,
+  `escalera` char(2) default NULL,
+  `piso` char(2) default NULL,
+  `puerta` char(2) default NULL,
+  `codpos` char(5) default NULL,
+  `poblacion` char(20) default NULL,
+  `provincia` char(15) default NULL,
+  `telefono` char(9) default NULL,
+  `contacto` char(100) default NULL,
+  `tfnocontacto` char(9) default NULL,
+  `administracion` char(5) default NULL,
+  `banco1` char(4) default NULL,
+  `oficina1` char(4) default NULL,
+  `dc1` char(2) default NULL,
+  `cuenta1` char(10) default NULL,
+  `banco2` char(4) default NULL,
+  `oficina2` char(4) default NULL,
+  `dc2` char(2) default NULL,
+  `cuenta2` char(10) default NULL,
+  `iban1` varchar(40) default NULL,
+  `iban2` varchar(40) default NULL,
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `empresa2` */
@@ -4739,39 +4746,39 @@ DROP TABLE IF EXISTS `factcli`;
 
 CREATE TABLE `factcli` (
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `codconce340` varchar(3) NOT NULL DEFAULT '0',
-  `codopera` smallint(2) NOT NULL DEFAULT '0',
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `codconce340` varchar(3) NOT NULL default '0',
+  `codopera` smallint(2) NOT NULL default '0',
+  `codmacta` char(10) NOT NULL default '',
+  `anofactu` smallint(6) NOT NULL default '0',
   `codforpa` smallint(6) NOT NULL,
   `observa` text,
-  `totbases` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `totbasesret` decimal(12,2) DEFAULT NULL,
-  `totivas` decimal(12,2) DEFAULT NULL,
-  `totrecargo` decimal(12,2) DEFAULT NULL,
-  `totfaccl` decimal(14,2) DEFAULT NULL,
-  `retfaccl` decimal(6,2) DEFAULT NULL,
-  `trefaccl` decimal(12,2) DEFAULT NULL,
-  `cuereten` char(10) DEFAULT NULL,
+  `totbases` decimal(12,2) NOT NULL default '0.00',
+  `totbasesret` decimal(12,2) default NULL,
+  `totivas` decimal(12,2) default NULL,
+  `totrecargo` decimal(12,2) default NULL,
+  `totfaccl` decimal(14,2) default NULL,
+  `retfaccl` decimal(6,2) default NULL,
+  `trefaccl` decimal(12,2) default NULL,
+  `cuereten` char(10) default NULL,
   `tiporeten` smallint(11) unsigned NOT NULL,
-  `numdiari` smallint(1) unsigned DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
-  `numasien` mediumint(1) unsigned DEFAULT NULL,
-  `fecliqcl` date NOT NULL DEFAULT '0000-00-00',
+  `numdiari` smallint(1) unsigned default NULL,
+  `fechaent` date default NULL,
+  `numasien` mediumint(1) unsigned default NULL,
+  `fecliqcl` date NOT NULL default '0000-00-00',
   `nommacta` varchar(60) NOT NULL,
-  `dirdatos` varchar(50) DEFAULT NULL,
-  `codpobla` varchar(6) DEFAULT NULL,
-  `despobla` varchar(50) DEFAULT NULL,
-  `desprovi` varchar(50) DEFAULT NULL,
-  `nifdatos` varchar(15) DEFAULT NULL,
-  `codpais` char(2) DEFAULT NULL,
-  `dpto` smallint(3) unsigned DEFAULT NULL,
-  `codagente` smallint(5) unsigned DEFAULT NULL,
-  `codintra` varchar(1) DEFAULT NULL,
-  `escorrecta` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`numserie`,`numfactu`,`anofactu`),
+  `dirdatos` varchar(50) default NULL,
+  `codpobla` varchar(6) default NULL,
+  `despobla` varchar(50) default NULL,
+  `desprovi` varchar(50) default NULL,
+  `nifdatos` varchar(15) default NULL,
+  `codpais` char(2) default NULL,
+  `dpto` smallint(3) unsigned default NULL,
+  `codagente` smallint(5) unsigned default NULL,
+  `codintra` varchar(1) default NULL,
+  `escorrecta` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`numserie`,`numfactu`,`anofactu`),
   KEY `cl_facCodmacta` (`codmacta`),
   KEY `cl_faccuereten` (`cuereten`),
   KEY `cl_Contadores` (`numserie`),
@@ -4791,20 +4798,20 @@ DROP TABLE IF EXISTS `factcli_lineas`;
 
 CREATE TABLE `factcli_lineas` (
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
-  `numlinea` smallint(6) NOT NULL DEFAULT '0',
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `anofactu` smallint(6) NOT NULL default '0',
+  `numlinea` smallint(6) NOT NULL default '0',
   `codmacta` char(10) NOT NULL,
-  `baseimpo` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `baseimpo` decimal(12,2) NOT NULL default '0.00',
   `codigiva` tinyint(1) unsigned NOT NULL,
-  `porciva` decimal(6,2) DEFAULT NULL,
-  `porcrec` decimal(6,2) DEFAULT NULL,
-  `impoiva` decimal(12,2) DEFAULT NULL,
-  `imporec` decimal(12,2) DEFAULT NULL,
-  `aplicret` tinyint(1) NOT NULL DEFAULT '1',
-  `codccost` char(4) DEFAULT NULL,
-  PRIMARY KEY (`numserie`,`numfactu`,`anofactu`,`numlinea`),
+  `porciva` decimal(6,2) default NULL,
+  `porcrec` decimal(6,2) default NULL,
+  `impoiva` decimal(12,2) default NULL,
+  `imporec` decimal(12,2) default NULL,
+  `aplicret` tinyint(1) NOT NULL default '1',
+  `codccost` char(4) default NULL,
+  PRIMARY KEY  (`numserie`,`numfactu`,`anofactu`,`numlinea`),
   KEY `cl_Contadores` (`numserie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -4816,17 +4823,17 @@ DROP TABLE IF EXISTS `factcli_totales`;
 
 CREATE TABLE `factcli_totales` (
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
-  `numlinea` smallint(6) NOT NULL DEFAULT '0',
-  `baseimpo` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `anofactu` smallint(6) NOT NULL default '0',
+  `numlinea` smallint(6) NOT NULL default '0',
+  `baseimpo` decimal(12,2) NOT NULL default '0.00',
   `codigiva` tinyint(1) unsigned NOT NULL,
-  `porciva` decimal(6,2) DEFAULT NULL,
-  `porcrec` decimal(6,2) DEFAULT NULL,
-  `impoiva` decimal(12,2) DEFAULT NULL,
-  `imporec` decimal(12,2) DEFAULT NULL,
-  PRIMARY KEY (`numserie`,`numfactu`,`anofactu`,`numlinea`),
+  `porciva` decimal(6,2) default NULL,
+  `porcrec` decimal(6,2) default NULL,
+  `impoiva` decimal(12,2) default NULL,
+  `imporec` decimal(12,2) default NULL,
+  PRIMARY KEY  (`numserie`,`numfactu`,`anofactu`,`numlinea`),
   KEY `cl_Contadores` (`numserie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -4840,37 +4847,37 @@ CREATE TABLE `factpro` (
   `numserie` char(3) NOT NULL,
   `numregis` int(11) NOT NULL,
   `fecharec` date NOT NULL,
-  `numfactu` varchar(10) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
+  `numfactu` varchar(10) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
   `codconce340` varchar(3) NOT NULL,
   `codopera` tinyint(3) NOT NULL,
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
+  `codmacta` char(10) NOT NULL default '',
+  `anofactu` smallint(6) NOT NULL default '0',
   `codforpa` smallint(6) NOT NULL,
   `observa` text,
-  `totbases` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `totbasesret` decimal(12,2) DEFAULT NULL,
-  `totivas` decimal(12,2) DEFAULT NULL,
-  `totrecargo` decimal(12,2) DEFAULT NULL,
-  `totfacpr` decimal(14,2) DEFAULT NULL,
-  `retfacpr` decimal(6,2) DEFAULT NULL,
-  `trefacpr` decimal(12,2) DEFAULT NULL,
-  `cuereten` char(10) DEFAULT NULL,
+  `totbases` decimal(12,2) NOT NULL default '0.00',
+  `totbasesret` decimal(12,2) default NULL,
+  `totivas` decimal(12,2) default NULL,
+  `totrecargo` decimal(12,2) default NULL,
+  `totfacpr` decimal(14,2) default NULL,
+  `retfacpr` decimal(6,2) default NULL,
+  `trefacpr` decimal(12,2) default NULL,
+  `cuereten` char(10) default NULL,
   `tiporeten` smallint(11) unsigned NOT NULL,
-  `numdiari` smallint(1) unsigned DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
-  `numasien` mediumint(1) unsigned DEFAULT NULL,
-  `fecliqpr` date NOT NULL DEFAULT '0000-00-00',
+  `numdiari` smallint(1) unsigned default NULL,
+  `fechaent` date default NULL,
+  `numasien` mediumint(1) unsigned default NULL,
+  `fecliqpr` date NOT NULL default '0000-00-00',
   `nommacta` varchar(60) NOT NULL,
-  `dirdatos` varchar(50) DEFAULT NULL,
-  `codpobla` varchar(6) DEFAULT NULL,
-  `despobla` varchar(50) DEFAULT NULL,
-  `desprovi` varchar(50) DEFAULT NULL,
-  `nifdatos` varchar(15) DEFAULT NULL,
-  `codpais` char(2) DEFAULT NULL,
-  `codintra` varchar(1) DEFAULT NULL,
-  `escorrecta` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`numserie`,`numregis`,`anofactu`),
+  `dirdatos` varchar(50) default NULL,
+  `codpobla` varchar(6) default NULL,
+  `despobla` varchar(50) default NULL,
+  `desprovi` varchar(50) default NULL,
+  `nifdatos` varchar(15) default NULL,
+  `codpais` char(2) default NULL,
+  `codintra` varchar(1) default NULL,
+  `escorrecta` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`numserie`,`numregis`,`anofactu`),
   KEY `cl_facCodmacta` (`codmacta`),
   KEY `cl_faccuereten` (`cuereten`),
   KEY `cl_Contadores` (`numserie`),
@@ -4885,20 +4892,20 @@ DROP TABLE IF EXISTS `factpro_lineas`;
 
 CREATE TABLE `factpro_lineas` (
   `numserie` char(3) NOT NULL,
-  `numregis` int(11) NOT NULL DEFAULT '0',
+  `numregis` int(11) NOT NULL default '0',
   `fecharec` date NOT NULL,
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
-  `numlinea` smallint(6) NOT NULL DEFAULT '0',
+  `anofactu` smallint(6) NOT NULL default '0',
+  `numlinea` smallint(6) NOT NULL default '0',
   `codmacta` char(10) NOT NULL,
-  `baseimpo` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `baseimpo` decimal(12,2) NOT NULL default '0.00',
   `codigiva` tinyint(1) unsigned NOT NULL,
-  `porciva` decimal(6,2) DEFAULT NULL,
-  `porcrec` decimal(6,2) DEFAULT NULL,
-  `impoiva` decimal(12,2) DEFAULT NULL,
-  `imporec` decimal(12,2) DEFAULT NULL,
-  `aplicret` tinyint(1) NOT NULL DEFAULT '1',
-  `codccost` char(4) DEFAULT NULL,
-  PRIMARY KEY (`numserie`,`numregis`,`anofactu`,`numlinea`),
+  `porciva` decimal(6,2) default NULL,
+  `porcrec` decimal(6,2) default NULL,
+  `impoiva` decimal(12,2) default NULL,
+  `imporec` decimal(12,2) default NULL,
+  `aplicret` tinyint(1) NOT NULL default '1',
+  `codccost` char(4) default NULL,
+  PRIMARY KEY  (`numserie`,`numregis`,`anofactu`,`numlinea`),
   KEY `cl_Contadores` (`numserie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -4910,17 +4917,17 @@ DROP TABLE IF EXISTS `factpro_totales`;
 
 CREATE TABLE `factpro_totales` (
   `numserie` char(3) NOT NULL,
-  `numregis` int(11) NOT NULL DEFAULT '0',
+  `numregis` int(11) NOT NULL default '0',
   `fecharec` date NOT NULL,
-  `anofactu` smallint(6) NOT NULL DEFAULT '0',
-  `numlinea` smallint(6) NOT NULL DEFAULT '0',
-  `baseimpo` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `anofactu` smallint(6) NOT NULL default '0',
+  `numlinea` smallint(6) NOT NULL default '0',
+  `baseimpo` decimal(12,2) NOT NULL default '0.00',
   `codigiva` tinyint(1) unsigned NOT NULL,
-  `porciva` decimal(6,2) DEFAULT NULL,
-  `porcrec` decimal(6,2) DEFAULT NULL,
-  `impoiva` decimal(12,2) DEFAULT NULL,
-  `imporec` decimal(12,2) DEFAULT NULL,
-  PRIMARY KEY (`numserie`,`numregis`,`anofactu`,`numlinea`),
+  `porciva` decimal(6,2) default NULL,
+  `porcrec` decimal(6,2) default NULL,
+  `impoiva` decimal(12,2) default NULL,
+  `imporec` decimal(12,2) default NULL,
+  PRIMARY KEY  (`numserie`,`numregis`,`anofactu`,`numlinea`),
   KEY `cl_Contadores` (`numserie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -4931,14 +4938,14 @@ CREATE TABLE `factpro_totales` (
 DROP TABLE IF EXISTS `formapago`;
 
 CREATE TABLE `formapago` (
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `nomforpa` varchar(25) NOT NULL DEFAULT '',
-  `tipforpa` tinyint(1) NOT NULL DEFAULT '0',
-  `numerove` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `primerve` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `restoven` smallint(5) unsigned DEFAULT '0',
-  `iban` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`codforpa`)
+  `codforpa` smallint(6) NOT NULL default '0',
+  `nomforpa` varchar(25) NOT NULL default '',
+  `tipforpa` tinyint(1) NOT NULL default '0',
+  `numerove` smallint(5) unsigned NOT NULL default '0',
+  `primerve` smallint(5) unsigned NOT NULL default '0',
+  `restoven` smallint(5) unsigned default '0',
+  `iban` varchar(40) default NULL,
+  PRIMARY KEY  (`codforpa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `formapago` */
@@ -4952,11 +4959,11 @@ insert  into `formapago`(`codforpa`,`nomforpa`,`tipforpa`,`numerove`,`primerve`,
 DROP TABLE IF EXISTS `gastosfijos`;
 
 CREATE TABLE `gastosfijos` (
-  `codigo` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `Descripcion` varchar(30) NOT NULL DEFAULT '0',
-  `ctaprevista` varchar(10) NOT NULL DEFAULT '',
-  `contrapar` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
+  `codigo` smallint(3) unsigned NOT NULL default '0',
+  `Descripcion` varchar(30) NOT NULL default '0',
+  `ctaprevista` varchar(10) NOT NULL default '',
+  `contrapar` varchar(10) default NULL,
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `gastosfijos` */
@@ -4966,11 +4973,11 @@ CREATE TABLE `gastosfijos` (
 DROP TABLE IF EXISTS `gastosfijos_recibos`;
 
 CREATE TABLE `gastosfijos_recibos` (
-  `codigo` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `fecha` date NOT NULL DEFAULT '0000-00-00',
-  `importe` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `contabilizado` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codigo`,`fecha`)
+  `codigo` smallint(3) unsigned NOT NULL default '0',
+  `fecha` date NOT NULL default '0000-00-00',
+  `importe` decimal(14,2) NOT NULL default '0.00',
+  `contabilizado` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`codigo`,`fecha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `gastosfijos_recibos` */
@@ -4980,14 +4987,14 @@ CREATE TABLE `gastosfijos_recibos` (
 DROP TABLE IF EXISTS `hcabapu`;
 
 CREATE TABLE `hcabapu` (
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `numasien` int(10) unsigned NOT NULL DEFAULT '0',
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `numasien` int(10) unsigned NOT NULL default '0',
   `obsdiari` text,
-  `feccreacion` datetime DEFAULT NULL,
-  `usucreacion` varchar(20) DEFAULT NULL,
-  `desdeaplicacion` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`numdiari`,`fechaent`,`numasien`),
+  `feccreacion` datetime default NULL,
+  `usucreacion` varchar(20) default NULL,
+  `desdeaplicacion` varchar(50) default NULL,
+  PRIMARY KEY  (`numdiari`,`fechaent`,`numasien`),
   KEY `cl_numdiari` (`numdiari`),
   CONSTRAINT `hcabapu_ibfk_1` FOREIGN KEY (`numdiari`) REFERENCES `tiposdiario` (`numdiari`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -5001,12 +5008,12 @@ DROP TABLE IF EXISTS `hcabapu_fichdocs`;
 CREATE TABLE `hcabapu_fichdocs` (
   `codigo` int(11) NOT NULL,
   `campo` longblob NOT NULL,
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `numasien` int(10) unsigned NOT NULL DEFAULT '0',
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `numasien` int(10) unsigned NOT NULL default '0',
   `orden` smallint(6) NOT NULL,
-  `docum` varchar(250) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codigo`),
+  `docum` varchar(250) NOT NULL default '0',
+  PRIMARY KEY  (`codigo`),
   KEY `numdiari` (`numdiari`,`fechaent`,`numasien`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -5017,39 +5024,39 @@ CREATE TABLE `hcabapu_fichdocs` (
 DROP TABLE IF EXISTS `hlinapu`;
 
 CREATE TABLE `hlinapu` (
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `numasien` int(10) unsigned NOT NULL DEFAULT '0',
-  `linliapu` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `numdocum` char(15) DEFAULT NULL,
-  `codconce` smallint(1) DEFAULT NULL,
-  `ampconce` char(50) DEFAULT NULL,
-  `timporteD` decimal(12,2) DEFAULT NULL,
-  `codccost` char(4) DEFAULT NULL,
-  `timporteH` decimal(12,2) DEFAULT NULL,
-  `ctacontr` char(10) DEFAULT NULL,
-  `idcontab` char(6) DEFAULT NULL,
-  `punteada` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `traspasado` tinyint(4) DEFAULT '0',
-  `numserie` char(3) DEFAULT NULL,
-  `numfaccl` int(11) unsigned DEFAULT NULL,
-  `numfacpr` varchar(10) DEFAULT NULL,
-  `fecfactu` date DEFAULT NULL,
-  `numorden` smallint(1) unsigned DEFAULT NULL,
-  `tipforpa` tinyint(1) DEFAULT NULL,
-  `impreso` tinyint(1) DEFAULT NULL,
-  `nrorecibo` int(11) DEFAULT NULL,
-  `reftalonpag` varchar(30) DEFAULT NULL,
-  `bancotalonpag` varchar(30) DEFAULT NULL,
-  `fecdevol` date DEFAULT NULL,
-  `coddevol` varchar(10) DEFAULT NULL,
-  `gastodev` decimal(12,2) DEFAULT NULL,
-  `tiporem` tinyint(4) DEFAULT NULL,
-  `codrem` smallint(3) unsigned DEFAULT NULL,
-  `anyorem` smallint(4) DEFAULT NULL,
-  `esdevolucion` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`numdiari`,`fechaent`,`numasien`,`linliapu`),
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `numasien` int(10) unsigned NOT NULL default '0',
+  `linliapu` smallint(1) unsigned NOT NULL default '0',
+  `codmacta` char(10) NOT NULL default '',
+  `numdocum` char(15) default NULL,
+  `codconce` smallint(1) default NULL,
+  `ampconce` char(50) default NULL,
+  `timporteD` decimal(12,2) default NULL,
+  `codccost` char(4) default NULL,
+  `timporteH` decimal(12,2) default NULL,
+  `ctacontr` char(10) default NULL,
+  `idcontab` char(6) default NULL,
+  `punteada` tinyint(1) unsigned NOT NULL default '0',
+  `traspasado` tinyint(4) default '0',
+  `numserie` char(3) default NULL,
+  `numfaccl` int(11) unsigned default NULL,
+  `numfacpr` varchar(10) default NULL,
+  `fecfactu` date default NULL,
+  `numorden` smallint(1) unsigned default NULL,
+  `tipforpa` tinyint(1) default NULL,
+  `impreso` tinyint(1) default NULL,
+  `nrorecibo` int(11) default NULL,
+  `reftalonpag` varchar(30) default NULL,
+  `bancotalonpag` varchar(30) default NULL,
+  `fecdevol` date default NULL,
+  `coddevol` varchar(10) default NULL,
+  `gastodev` decimal(12,2) default NULL,
+  `tiporem` tinyint(4) default NULL,
+  `codrem` smallint(3) unsigned default NULL,
+  `anyorem` smallint(4) default NULL,
+  `esdevolucion` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`numdiari`,`fechaent`,`numasien`,`linliapu`),
   KEY `cl_numdiari` (`numdiari`),
   KEY `cl_fent` (`fechaent`),
   KEY `cl_numa` (`numasien`),
@@ -5071,55 +5078,55 @@ CREATE TABLE `hlinapu` (
 DROP TABLE IF EXISTS `inmovcon`;
 
 CREATE TABLE `inmovcon` (
-  `codconam` smallint(6) NOT NULL DEFAULT '0',
-  `nomconam` char(30) NOT NULL DEFAULT '',
-  `coefimaxi` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `perimaxi` smallint(6) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codconam`)
+  `codconam` smallint(6) NOT NULL default '0',
+  `nomconam` char(30) NOT NULL default '',
+  `coefimaxi` decimal(5,2) NOT NULL default '0.00',
+  `perimaxi` smallint(6) NOT NULL default '0',
+  PRIMARY KEY  (`codconam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `inmovcon` */
 
 insert  into `inmovcon`(`codconam`,`nomconam`,`coefimaxi`,`perimaxi`) values 
-(1,'GASTOS DE CONSTITUCION',20.00,5),
-(2,'TRATAMIENTO DE FLUIDOS',12.00,18),
-(3,'MOBILIARIO, ENSERES Y DEMAS EQ',10.00,20),
-(4,'MAQUINAS COPIADORAS Y REPRODUC',15.00,14),
-(5,'TELECOMUNICACIONES',12.00,18),
-(6,'EQUIPOS TRATAM. DE INFORMACION',25.00,8),
-(7,'EDIFICIOS ADMIN., COMERCIALES.',2.00,100),
-(8,'SEGURIDAD, EXTINCION INCENDIOS',12.00,18),
-(9,'APLICACIONES INFORMATICAS',33.00,4);
+(1,'GASTOS DE CONSTITUCION','20.00',5),
+(2,'TRATAMIENTO DE FLUIDOS','12.00',18),
+(3,'MOBILIARIO, ENSERES Y DEMAS EQ','10.00',20),
+(4,'MAQUINAS COPIADORAS Y REPRODUC','15.00',14),
+(5,'TELECOMUNICACIONES','12.00',18),
+(6,'EQUIPOS TRATAM. DE INFORMACION','25.00',8),
+(7,'EDIFICIOS ADMIN., COMERCIALES.','2.00',100),
+(8,'SEGURIDAD, EXTINCION INCENDIOS','12.00',18),
+(9,'APLICACIONES INFORMATICAS','33.00',4);
 
 /*Table structure for table `inmovele` */
 
 DROP TABLE IF EXISTS `inmovele`;
 
 CREATE TABLE `inmovele` (
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `codmact1` char(10) NOT NULL DEFAULT '',
-  `nominmov` char(30) NOT NULL DEFAULT '',
-  `codprove` char(10) DEFAULT NULL,
-  `factupro` char(10) DEFAULT NULL,
-  `fechaadq` date DEFAULT NULL,
-  `codccost` char(4) DEFAULT NULL,
-  `valoradq` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `codmact2` char(10) NOT NULL DEFAULT '',
-  `codmact3` char(10) NOT NULL DEFAULT '',
-  `conconam` smallint(6) NOT NULL DEFAULT '0',
-  `anominim` smallint(6) NOT NULL DEFAULT '0',
-  `anomaxim` smallint(6) NOT NULL DEFAULT '0',
-  `anovidas` smallint(6) NOT NULL DEFAULT '0',
-  `amortacu` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `valorres` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `tipoamor` tinyint(4) NOT NULL DEFAULT '0',
-  `numserie` char(20) DEFAULT NULL,
-  `fecventa` date DEFAULT NULL,
-  `impventa` decimal(14,2) DEFAULT NULL,
-  `coeficie` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `situacio` tinyint(4) NOT NULL DEFAULT '0',
-  `Repartos` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codinmov`),
+  `codinmov` smallint(6) NOT NULL default '0',
+  `codmact1` char(10) NOT NULL default '',
+  `nominmov` char(30) NOT NULL default '',
+  `codprove` char(10) default NULL,
+  `factupro` char(10) default NULL,
+  `fechaadq` date default NULL,
+  `codccost` char(4) default NULL,
+  `valoradq` decimal(14,2) NOT NULL default '0.00',
+  `codmact2` char(10) NOT NULL default '',
+  `codmact3` char(10) NOT NULL default '',
+  `conconam` smallint(6) NOT NULL default '0',
+  `anominim` smallint(6) NOT NULL default '0',
+  `anomaxim` smallint(6) NOT NULL default '0',
+  `anovidas` smallint(6) NOT NULL default '0',
+  `amortacu` decimal(14,2) NOT NULL default '0.00',
+  `valorres` decimal(14,2) NOT NULL default '0.00',
+  `tipoamor` tinyint(4) NOT NULL default '0',
+  `numserie` char(20) default NULL,
+  `fecventa` date default NULL,
+  `impventa` decimal(14,2) default NULL,
+  `coeficie` decimal(5,2) NOT NULL default '0.00',
+  `situacio` tinyint(4) NOT NULL default '0',
+  `Repartos` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`codinmov`),
   KEY `sinmov_Cta1` (`codmact1`),
   KEY `sinmov_Cta2` (`codmact2`),
   KEY `sinmov_Cta3` (`codmact3`),
@@ -5137,11 +5144,11 @@ CREATE TABLE `inmovele` (
 DROP TABLE IF EXISTS `inmovele_his`;
 
 CREATE TABLE `inmovele_his` (
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `fechainm` date NOT NULL DEFAULT '0000-00-00',
-  `imporinm` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `porcinm` decimal(5,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codinmov`,`fechainm`),
+  `codinmov` smallint(6) NOT NULL default '0',
+  `fechainm` date NOT NULL default '0000-00-00',
+  `imporinm` decimal(12,2) NOT NULL default '0.00',
+  `porcinm` decimal(5,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codinmov`,`fechainm`),
   KEY `cl_inmov` (`codinmov`),
   CONSTRAINT `inmovele_his_ibfk_1` FOREIGN KEY (`codinmov`) REFERENCES `inmovele` (`codinmov`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -5153,12 +5160,12 @@ CREATE TABLE `inmovele_his` (
 DROP TABLE IF EXISTS `inmovele_rep`;
 
 CREATE TABLE `inmovele_rep` (
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `numlinea` tinyint(4) NOT NULL DEFAULT '0',
-  `codmacta2` char(10) NOT NULL DEFAULT '',
-  `codccost` char(4) DEFAULT NULL,
-  `porcenta` decimal(5,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codinmov`,`numlinea`)
+  `codinmov` smallint(6) NOT NULL default '0',
+  `numlinea` tinyint(4) NOT NULL default '0',
+  `codmacta2` char(10) NOT NULL default '',
+  `codccost` char(4) default NULL,
+  `porcenta` decimal(5,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codinmov`,`numlinea`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `inmovele_rep` */
@@ -5170,12 +5177,12 @@ DROP TABLE IF EXISTS `liqiva`;
 CREATE TABLE `liqiva` (
   `anoliqui` int(7) NOT NULL,
   `periodo` smallint(6) NOT NULL,
-  `escomplem` tinyint(1) NOT NULL DEFAULT '0',
-  `importe` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `numdiari` smallint(1) unsigned DEFAULT NULL,
-  `numasien` mediumint(1) unsigned DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
-  PRIMARY KEY (`anoliqui`,`periodo`,`escomplem`)
+  `escomplem` tinyint(1) NOT NULL default '0',
+  `importe` decimal(12,2) NOT NULL default '0.00',
+  `numdiari` smallint(1) unsigned default NULL,
+  `numasien` mediumint(1) unsigned default NULL,
+  `fechaent` date default NULL,
+  PRIMARY KEY  (`anoliqui`,`periodo`,`escomplem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `liqiva` */
@@ -5185,12 +5192,12 @@ CREATE TABLE `liqiva` (
 DROP TABLE IF EXISTS `memoria`;
 
 CREATE TABLE `memoria` (
-  `codigo` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `parametros` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `valor` char(50) NOT NULL DEFAULT '',
-  `descripcion` char(50) DEFAULT NULL,
-  `tipo` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`codigo`,`parametros`)
+  `codigo` smallint(1) unsigned NOT NULL default '0',
+  `parametros` tinyint(1) unsigned NOT NULL default '1',
+  `valor` char(50) NOT NULL default '',
+  `descripcion` char(50) default NULL,
+  `tipo` tinyint(1) unsigned NOT NULL default '1',
+  PRIMARY KEY  (`codigo`,`parametros`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `memoria` */
@@ -5205,9 +5212,9 @@ CREATE TABLE `menus` (
   `padre` int(11) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
   `orden` int(11) NOT NULL,
-  `tipo` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=contabilidad 1=tesoreria',
-  `imagen` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Si hay asociado Imagelist, cargara una imagen',
-  PRIMARY KEY (`codigo`,`aplicacion`)
+  `tipo` tinyint(1) NOT NULL default '0' COMMENT '0=contabilidad 1=tesoreria',
+  `imagen` smallint(6) NOT NULL default '0' COMMENT 'Si hay asociado Imagelist, cargara una imagen',
+  PRIMARY KEY  (`codigo`,`aplicacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `menus` */
@@ -5244,16 +5251,16 @@ insert  into `menus`(`codigo`,`aplicacion`,`padre`,`descripcion`,`orden`,`tipo`,
 (107,'ariconta',1,'Nueva empresa',7,0,0),
 (108,'ariconta',1,'Configurar Balances',8,0,0),
 (201,'ariconta',2,'Plan Contable',1,0,21),
-(202,'ariconta',2,'Tipos de Diario',2,0,0),
+(202,'ariconta',2,'Tipos de Diario',11,0,0),
 (203,'ariconta',2,'Conceptos',3,0,0),
 (204,'ariconta',2,'Tipos de I.V.A.',4,0,0),
-(205,'ariconta',2,'Tipos de Pago',5,1,0),
+(205,'ariconta',2,'Tipos de Pago',7,1,0),
 (206,'ariconta',2,'Formas de Pago',6,1,0),
-(207,'ariconta',2,'Bancos',7,0,0),
-(208,'ariconta',2,'Bic - Swift',8,1,0),
-(209,'ariconta',2,'Agentes',9,1,0),
-(211,'ariconta',2,'Asientos Predefinidos',11,0,0),
-(212,'ariconta',2,'Modelos de Cartas',12,1,0),
+(207,'ariconta',2,'Bancos',8,0,0),
+(208,'ariconta',2,'Bic - Swift',9,1,0),
+(209,'ariconta',2,'Agentes',10,1,0),
+(211,'ariconta',2,'Asientos Predefinidos',12,0,0),
+(212,'ariconta',2,'Modelos de Cartas',13,1,0),
 (301,'ariconta',3,'Asientos',1,0,1),
 (303,'ariconta',3,'Extractos',3,0,13),
 (304,'ariconta',3,'Punteo',4,0,22),
@@ -5297,8 +5304,8 @@ insert  into `menus`(`codigo`,`aplicacion`,`padre`,`descripcion`,`orden`,`tipo`,
 (614,'ariconta',6,'Transferencias Abonos',14,1,0),
 (801,'ariconta',8,'Cartera de Pagos',1,1,5),
 (802,'ariconta',8,'Informe Pagos pendientes',2,1,19),
-(803,'ariconta',8,'Informe Pagos bancos',3,1,0),
-(804,'ariconta',8,'Realizar Pago',4,1,24),
+(803,'ariconta',8,'Informe Pagos bancos',4,1,0),
+(804,'ariconta',8,'Realizar Pago',3,1,24),
 (805,'ariconta',8,'Transferencias *',5,1,0),
 (806,'ariconta',8,'Pagos domiciliados *',6,1,0),
 (807,'ariconta',8,'Gastos Fijos *',7,1,0),
@@ -5323,7 +5330,8 @@ insert  into `menus`(`codigo`,`aplicacion`,`padre`,`descripcion`,`orden`,`tipo`,
 (1409,'ariconta',14,'Renumerar registros proveedor',9,0,0),
 (1410,'ariconta',14,'Aumentar dígitos contables',10,0,0),
 (1411,'ariconta',14,'Traspaso códigos de I.V.A.',11,0,0),
-(1412,'ariconta',14,'Acciones realizadas',12,0,0);
+(1412,'ariconta',14,'Acciones realizadas',12,0,0),
+(1413,'ariconta',14,'Importaciones externas',13,0,0);
 
 /*Table structure for table `menus_usuarios` */
 
@@ -5333,18 +5341,18 @@ CREATE TABLE `menus_usuarios` (
   `codusu` int(7) NOT NULL,
   `codigo` int(11) NOT NULL,
   `aplicacion` varchar(30) NOT NULL,
-  `ver` tinyint(1) NOT NULL DEFAULT '1',
-  `creareliminar` tinyint(1) NOT NULL DEFAULT '1',
-  `modificar` tinyint(1) NOT NULL DEFAULT '1',
-  `imprimir` tinyint(1) NOT NULL DEFAULT '1',
-  `especial` tinyint(1) NOT NULL DEFAULT '1',
-  `expandido` tinyint(1) NOT NULL DEFAULT '1',
-  `textovisible` varchar(100) DEFAULT NULL,
-  `vericono` tinyint(1) NOT NULL DEFAULT '0',
-  `posX` decimal(10,4) DEFAULT NULL,
-  `posY` decimal(10,4) DEFAULT NULL,
-  `filtro` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`,`aplicacion`),
+  `ver` tinyint(1) NOT NULL default '1',
+  `creareliminar` tinyint(1) NOT NULL default '1',
+  `modificar` tinyint(1) NOT NULL default '1',
+  `imprimir` tinyint(1) NOT NULL default '1',
+  `especial` tinyint(1) NOT NULL default '1',
+  `expandido` tinyint(1) NOT NULL default '1',
+  `textovisible` varchar(100) default NULL,
+  `vericono` tinyint(1) NOT NULL default '0',
+  `posX` decimal(10,4) default NULL,
+  `posY` decimal(10,4) default NULL,
+  `filtro` varchar(100) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`,`aplicacion`),
   KEY `FK_menus_usuarios` (`codigo`,`aplicacion`),
   CONSTRAINT `menus_usuarios_ibfk_1` FOREIGN KEY (`codigo`, `aplicacion`) REFERENCES `menus` (`codigo`, `aplicacion`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -5352,553 +5360,559 @@ CREATE TABLE `menus_usuarios` (
 /*Data for the table `menus_usuarios` */
 
 insert  into `menus_usuarios`(`codusu`,`codigo`,`aplicacion`,`ver`,`creareliminar`,`modificar`,`imprimir`,`especial`,`expandido`,`textovisible`,`vericono`,`posX`,`posY`,`filtro`) values 
-(0,1,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,2,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(0,1,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,2,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (0,2,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(0,3,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(0,3,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (0,3,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(0,4,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(0,4,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (0,4,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(0,5,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,6,'ariconta',1,1,1,1,1,1,NULL,0,450.1418,1665.0710,NULL),
+(0,5,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,6,'ariconta',1,1,1,1,1,1,NULL,0,'450.1418','1665.0710',NULL),
 (0,6,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(0,8,'ariconta',1,1,1,1,1,1,NULL,0,3720.1890,1665.0710,NULL),
+(0,8,'ariconta',1,1,1,1,1,1,NULL,0,'3720.1890','1665.0710',NULL),
 (0,8,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(0,9,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(0,9,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (0,9,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(0,10,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,11,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,13,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,14,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,101,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,102,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,104,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,105,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,106,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,107,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,108,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,201,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,30.0472,NULL),
-(0,202,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,203,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,204,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,205,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,206,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,207,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,208,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,209,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,211,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,212,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,301,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,30.0472,'0'),
-(0,303,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,30.0472,NULL),
-(0,304,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,30.0472,NULL),
-(0,306,'ariconta',1,1,1,1,1,0,NULL,1,6990.2360,30.0472,NULL),
-(0,307,'ariconta',1,1,1,1,1,0,NULL,1,8625.2610,30.0472,NULL),
-(0,308,'ariconta',1,1,1,1,1,0,NULL,1,10260.2800,30.0472,NULL),
-(0,309,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,310,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,311,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,312,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,314,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,6570.1420,NULL),
-(0,401,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,4935.1180,'2'),
-(0,402,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,4935.1180,NULL),
-(0,403,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,404,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,4935.1180,'2'),
-(0,405,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,4935.1180,NULL),
-(0,406,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,408,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,412,'ariconta',1,1,1,1,1,0,NULL,1,6990.2360,3300.0950,NULL),
-(0,502,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,503,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,505,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,508,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,509,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,510,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,511,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,601,'ariconta',1,1,1,1,1,1,NULL,1,450.1418,1665.0710,'0'),
-(0,602,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,1665.0710,NULL),
-(0,604,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,3300.0950,NULL),
-(0,606,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,607,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,608,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,609,'ariconta',1,1,1,1,1,1,NULL,1,450.1418,6570.1420,NULL),
-(0,610,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,611,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,612,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,613,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,614,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,801,'ariconta',1,1,1,1,1,1,NULL,1,3720.1890,1665.0710,'0'),
-(0,802,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,1665.0710,NULL),
-(0,803,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,804,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,3300.0950,NULL),
-(0,805,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,806,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,807,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,808,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,809,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,810,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(0,901,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,902,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,903,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1001,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1002,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1003,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1005,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1101,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'0'),
-(0,1103,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1301,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1303,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1304,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1306,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1308,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1408,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(0,1412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,2,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(0,10,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,11,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,13,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,14,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,101,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,102,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,104,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,105,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,106,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,107,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,108,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,201,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','30.0472',NULL),
+(0,202,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,203,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,204,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,205,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,206,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,207,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,208,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,209,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,211,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,212,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,301,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','30.0472','0'),
+(0,303,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','30.0472',NULL),
+(0,304,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','30.0472',NULL),
+(0,306,'ariconta',1,1,1,1,1,0,NULL,1,'6990.2360','30.0472',NULL),
+(0,307,'ariconta',1,1,1,1,1,0,NULL,1,'8625.2610','30.0472',NULL),
+(0,308,'ariconta',1,1,1,1,1,0,NULL,1,'10260.2800','30.0472',NULL),
+(0,309,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,310,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,311,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,312,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,314,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','6570.1420',NULL),
+(0,401,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','4935.1180','2'),
+(0,402,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','4935.1180',NULL),
+(0,403,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,404,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','4935.1180','2'),
+(0,405,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','4935.1180',NULL),
+(0,406,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,408,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,412,'ariconta',1,1,1,1,1,0,NULL,1,'6990.2360','3300.0950',NULL),
+(0,502,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,503,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,505,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,508,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,509,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,510,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,511,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,601,'ariconta',1,1,1,1,1,1,NULL,1,'450.1418','1665.0710','0'),
+(0,602,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','1665.0710',NULL),
+(0,604,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','3300.0950',NULL),
+(0,606,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,607,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,608,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,609,'ariconta',1,1,1,1,1,1,NULL,1,'450.1418','6570.1420',NULL),
+(0,610,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,611,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,612,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,613,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,614,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,801,'ariconta',1,1,1,1,1,1,NULL,1,'3720.1890','1665.0710','0'),
+(0,802,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','1665.0710',NULL),
+(0,803,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,804,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','3300.0950',NULL),
+(0,805,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,806,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,807,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,808,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,809,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,810,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(0,901,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,902,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,903,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1001,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1002,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1003,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1005,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1101,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','0'),
+(0,1103,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1301,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1303,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1304,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1306,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1308,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1408,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(0,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
+(1,1,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,2,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (1,2,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(1,3,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(1,3,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (1,3,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(1,4,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(1,4,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (1,4,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(1,5,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,6,'ariconta',1,1,1,1,1,1,NULL,0,8625.2610,1665.0710,NULL),
+(1,5,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,6,'ariconta',1,1,1,1,1,1,NULL,0,'8625.2610','1665.0710',NULL),
 (1,6,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(1,8,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(1,8,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (1,8,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(1,9,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(1,9,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (1,9,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(1,10,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,11,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,13,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,14,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,101,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,102,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,104,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,105,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,106,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,107,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,108,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(1,201,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,30.0472,NULL),
-(1,202,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,203,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,204,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,205,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,206,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,207,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,208,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,209,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,211,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,212,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,301,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,1665.0710,'1'),
-(1,303,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,3300.0950,NULL),
-(1,304,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,30.0472,NULL),
-(1,306,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,30.0472,NULL),
-(1,307,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,1665.0710,NULL),
-(1,308,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,3300.0950,NULL),
-(1,309,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,310,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,311,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,312,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,314,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,401,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'2'),
-(1,402,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,1665.0710,NULL),
-(1,403,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,404,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,3300.0950,'0'),
-(1,405,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,3300.0950,NULL),
-(1,406,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,408,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,502,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,503,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,505,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,508,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,509,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,510,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,511,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,601,'ariconta',1,1,1,1,1,1,NULL,1,8625.2610,1665.0710,NULL),
-(1,602,'ariconta',1,1,1,1,1,0,NULL,1,11894.7400,1665.0710,NULL),
-(1,604,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,606,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,607,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,608,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,609,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,610,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,611,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,612,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,613,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,614,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,801,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,802,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,803,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,804,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,805,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,806,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,807,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,808,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,809,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,810,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(1,901,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,902,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,903,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1001,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1002,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1003,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1005,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1101,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'0'),
-(1,1103,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1301,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1303,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1304,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1306,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1308,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1408,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(1,1412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,2,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(1,10,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,11,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,13,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,14,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,101,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,102,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,104,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,105,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,106,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,107,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,108,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(1,201,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','30.0472',NULL),
+(1,202,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,203,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,204,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,205,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,206,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,207,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,208,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,209,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,211,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,212,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,301,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','1665.0710','1'),
+(1,303,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','3300.0950',NULL),
+(1,304,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','30.0472',NULL),
+(1,306,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','30.0472',NULL),
+(1,307,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','1665.0710',NULL),
+(1,308,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','3300.0950',NULL),
+(1,309,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,310,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,311,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,312,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,314,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,401,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','2'),
+(1,402,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','1665.0710',NULL),
+(1,403,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,404,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','3300.0950','0'),
+(1,405,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','3300.0950',NULL),
+(1,406,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,408,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,502,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,503,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,505,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,508,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,509,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,510,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,511,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,601,'ariconta',1,1,1,1,1,1,NULL,1,'8625.2610','1665.0710',NULL),
+(1,602,'ariconta',1,1,1,1,1,0,NULL,1,'11894.7400','1665.0710',NULL),
+(1,604,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,606,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,607,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,608,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,609,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,610,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,611,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,612,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,613,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,614,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,801,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,802,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,803,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,804,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,805,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,806,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,807,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,808,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,809,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,810,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(1,901,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,902,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,903,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1001,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1002,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1003,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1005,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1101,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','0'),
+(1,1103,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1301,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1303,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1304,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1306,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1308,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1408,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(1,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
+(4,1,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,2,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (4,2,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(4,3,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(4,3,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (4,3,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(4,4,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(4,4,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (4,4,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(4,5,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,6,'ariconta',1,1,1,1,1,1,NULL,0,8625.2610,1665.0710,NULL),
+(4,5,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,6,'ariconta',1,1,1,1,1,1,NULL,0,'8625.2610','1665.0710',NULL),
 (4,6,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(4,8,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(4,8,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (4,8,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(4,9,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(4,9,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (4,9,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(4,10,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,11,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,13,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,14,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,101,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,102,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,104,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,105,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,106,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,107,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,108,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,201,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,30.0472,NULL),
-(4,202,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,203,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,204,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,205,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,206,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,207,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,208,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,209,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,211,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,212,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,301,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,1665.0710,'1'),
-(4,303,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,3300.0950,NULL),
-(4,304,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,30.0472,NULL),
-(4,306,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,30.0472,NULL),
-(4,307,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,1665.0710,NULL),
-(4,308,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,3300.0950,NULL),
-(4,309,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,310,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,311,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,312,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,314,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,401,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'2'),
-(4,402,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,1665.0710,NULL),
-(4,403,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,404,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,3300.0950,'0'),
-(4,405,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,3300.0950,NULL),
-(4,406,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,408,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,502,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,503,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,505,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,508,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,509,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,510,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,511,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,601,'ariconta',1,1,1,1,1,1,NULL,1,8625.2610,1665.0710,NULL),
-(4,602,'ariconta',1,1,1,1,1,0,NULL,1,11894.7400,1665.0710,NULL),
-(4,604,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,606,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,607,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,608,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,609,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,610,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,611,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,612,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,613,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,614,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,801,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,802,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,803,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,804,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,805,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,806,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,807,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,808,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,809,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,810,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(4,901,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,902,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,903,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1001,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1002,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1003,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1005,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1101,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'0'),
-(4,1103,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1301,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1303,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1304,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1306,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1308,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1408,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(4,1412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,2,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(4,10,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,11,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,13,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,14,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,101,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,102,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,104,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,105,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,106,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,107,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,108,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,201,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','30.0472',NULL),
+(4,202,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,203,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,204,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,205,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,206,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,207,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,208,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,209,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,211,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,212,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,301,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','1665.0710','1'),
+(4,303,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','3300.0950',NULL),
+(4,304,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','30.0472',NULL),
+(4,306,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','30.0472',NULL),
+(4,307,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','1665.0710',NULL),
+(4,308,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','3300.0950',NULL),
+(4,309,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,310,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,311,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,312,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,314,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,401,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','2'),
+(4,402,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','1665.0710',NULL),
+(4,403,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,404,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','3300.0950','0'),
+(4,405,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','3300.0950',NULL),
+(4,406,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,408,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,502,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,503,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,505,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,508,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,509,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,510,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,511,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,601,'ariconta',1,1,1,1,1,1,NULL,1,'8625.2610','1665.0710',NULL),
+(4,602,'ariconta',1,1,1,1,1,0,NULL,1,'11894.7400','1665.0710',NULL),
+(4,604,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,606,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,607,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,608,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,609,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,610,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,611,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,612,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,613,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,614,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,801,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,802,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,803,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,804,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,805,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,806,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,807,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,808,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,809,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,810,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(4,901,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,902,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,903,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1001,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1002,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1003,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1005,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1101,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','0'),
+(4,1103,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1301,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1303,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1304,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1306,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1308,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1408,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(4,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
+(5,1,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,2,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (5,2,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(5,3,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(5,3,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (5,3,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(5,4,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(5,4,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (5,4,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(5,5,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,6,'ariconta',1,1,1,1,1,1,NULL,0,450.1418,3300.0950,NULL),
+(5,5,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,6,'ariconta',1,1,1,1,1,1,NULL,0,'450.1418','3300.0950',NULL),
 (5,6,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(5,8,'ariconta',1,1,1,1,1,1,NULL,0,450.1418,4935.1180,NULL),
+(5,8,'ariconta',1,1,1,1,1,1,NULL,0,'450.1418','4935.1180',NULL),
 (5,8,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(5,9,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(5,9,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (5,9,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(5,10,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,11,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,13,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,14,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,101,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,102,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,104,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,105,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,106,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,107,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,108,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,201,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,30.0472,NULL),
-(5,202,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,203,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,204,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,205,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,206,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,207,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,208,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,209,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,211,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,212,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,301,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,1665.0710,'0'),
-(5,303,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,1665.0710,NULL),
-(5,304,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,30.0472,NULL),
-(5,306,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,30.0472,NULL),
-(5,307,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,1665.0710,NULL),
-(5,308,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,30.0472,NULL),
-(5,309,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,1665.0710,NULL),
-(5,310,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,311,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,312,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,314,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,401,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,3300.0950,'2'),
-(5,402,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,3300.0950,NULL),
-(5,403,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,404,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,4935.1180,'2'),
-(5,405,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,4935.1180,NULL),
-(5,406,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,408,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,502,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,503,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,505,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,508,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,509,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,510,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,511,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,601,'ariconta',1,1,1,1,1,1,NULL,1,450.1418,3300.0950,'0'),
-(5,602,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,3300.0950,NULL),
-(5,604,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,606,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,607,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,608,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,609,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,610,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,611,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,612,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,613,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,614,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,801,'ariconta',1,1,1,1,1,1,NULL,1,450.1418,4935.1180,'0'),
-(5,802,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,4935.1180,NULL),
-(5,803,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,804,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,805,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,806,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,807,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,808,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,809,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,810,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(5,901,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,902,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,903,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1001,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1002,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1003,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1005,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1101,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'0'),
-(5,1103,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1301,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1303,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1304,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1306,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1308,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1408,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(5,1412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1,'ariconta',0,0,0,0,0,1,NULL,0,0.0000,0.0000,NULL),
-(9,2,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(5,10,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,11,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,13,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,14,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,101,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,102,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,104,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,105,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,106,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,107,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,108,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,201,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','30.0472',NULL),
+(5,202,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,203,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,204,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,205,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,206,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,207,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,208,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,209,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,211,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,212,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,301,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','1665.0710','0'),
+(5,303,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','1665.0710',NULL),
+(5,304,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','30.0472',NULL),
+(5,306,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','30.0472',NULL),
+(5,307,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','1665.0710',NULL),
+(5,308,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','30.0472',NULL),
+(5,309,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','1665.0710',NULL),
+(5,310,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,311,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,312,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,314,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,401,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','3300.0950','2'),
+(5,402,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','3300.0950',NULL),
+(5,403,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,404,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','4935.1180','2'),
+(5,405,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','4935.1180',NULL),
+(5,406,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,408,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,502,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,503,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,505,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,508,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,509,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,510,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,511,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,601,'ariconta',1,1,1,1,1,1,NULL,1,'450.1418','3300.0950','0'),
+(5,602,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','3300.0950',NULL),
+(5,604,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,606,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,607,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,608,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,609,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,610,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,611,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,612,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,613,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,614,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,801,'ariconta',1,1,1,1,1,1,NULL,1,'450.1418','4935.1180','0'),
+(5,802,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','4935.1180',NULL),
+(5,803,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,804,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,805,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,806,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,807,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,808,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,809,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,810,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(5,901,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,902,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,903,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1001,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1002,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1003,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1005,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1101,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','0'),
+(5,1103,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1301,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1303,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1304,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1306,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1308,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1408,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(5,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
+(7,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
+(9,1,'ariconta',0,0,0,0,0,1,NULL,0,'0.0000','0.0000',NULL),
+(9,2,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (9,2,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(9,3,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(9,3,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (9,3,'introcon',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL),
-(9,4,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
+(9,4,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
 (9,4,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(9,5,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,6,'ariconta',1,1,1,1,1,1,NULL,0,450.1418,3300.0950,NULL),
+(9,5,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,6,'ariconta',1,1,1,1,1,1,NULL,0,'450.1418','3300.0950',NULL),
 (9,6,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(9,8,'ariconta',1,1,1,1,1,1,NULL,0,3720.1890,3300.0950,NULL),
+(9,8,'ariconta',1,1,1,1,1,1,NULL,0,'3720.1890','3300.0950',NULL),
 (9,8,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(9,9,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
+(9,9,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
 (9,9,'introcon',1,1,1,1,1,0,NULL,0,NULL,NULL,NULL),
-(9,10,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,11,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,13,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,14,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,101,'ariconta',0,0,0,0,0,1,NULL,0,0.0000,0.0000,NULL),
-(9,102,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,104,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,105,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,106,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,107,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,108,'ariconta',0,0,0,0,0,0,NULL,0,0.0000,0.0000,NULL),
-(9,201,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,4935.1180,NULL),
-(9,202,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,203,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,204,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,205,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,206,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,207,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,208,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,209,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,211,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,212,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,301,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,30.0472,'1'),
-(9,303,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,30.0472,NULL),
-(9,304,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,30.0472,NULL),
-(9,306,'ariconta',1,1,1,1,1,0,NULL,1,6990.2360,30.0472,NULL),
-(9,307,'ariconta',1,1,1,1,1,0,NULL,1,10260.2800,30.0472,NULL),
-(9,308,'ariconta',1,1,1,1,1,0,NULL,1,8625.2610,30.0472,NULL),
-(9,309,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,310,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,311,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,312,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,314,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,401,'ariconta',1,1,1,1,1,0,NULL,1,450.1418,1665.0710,'2'),
-(9,402,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,1665.0710,NULL),
-(9,403,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,404,'ariconta',1,1,1,1,1,0,NULL,1,3720.1890,1665.0710,'0'),
-(9,405,'ariconta',1,1,1,1,1,0,NULL,1,5355.2130,1665.0710,NULL),
-(9,406,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,408,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,502,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,503,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,505,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,508,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,509,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,510,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,511,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,601,'ariconta',1,1,1,1,1,1,NULL,1,450.1418,3300.0950,'0'),
-(9,602,'ariconta',1,1,1,1,1,0,NULL,1,2085.1660,3300.0950,NULL),
-(9,604,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,606,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,607,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,608,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,609,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,610,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,611,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,612,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,613,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,614,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,801,'ariconta',1,1,1,1,1,1,NULL,1,3720.1890,3300.0950,'2'),
-(9,802,'ariconta',1,1,1,1,1,0,NULL,1,11894.7400,1665.0710,NULL),
-(9,803,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,804,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,805,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,806,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,807,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,808,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,809,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,810,'ariconta',1,1,1,1,1,1,NULL,0,0.0000,0.0000,NULL),
-(9,901,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,902,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,903,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1001,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1002,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1003,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1005,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1101,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,'0'),
-(9,1103,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1301,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1303,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1304,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1306,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1308,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1408,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1409,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1410,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1411,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL),
-(9,1412,'ariconta',1,1,1,1,1,0,NULL,0,0.0000,0.0000,NULL);
+(9,10,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,11,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,13,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,14,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,101,'ariconta',0,0,0,0,0,1,NULL,0,'0.0000','0.0000',NULL),
+(9,102,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,104,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,105,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,106,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,107,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,108,'ariconta',0,0,0,0,0,0,NULL,0,'0.0000','0.0000',NULL),
+(9,201,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','4935.1180',NULL),
+(9,202,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,203,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,204,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,205,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,206,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,207,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,208,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,209,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,211,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,212,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,301,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','30.0472','1'),
+(9,303,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','30.0472',NULL),
+(9,304,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','30.0472',NULL),
+(9,306,'ariconta',1,1,1,1,1,0,NULL,1,'6990.2360','30.0472',NULL),
+(9,307,'ariconta',1,1,1,1,1,0,NULL,1,'10260.2800','30.0472',NULL),
+(9,308,'ariconta',1,1,1,1,1,0,NULL,1,'8625.2610','30.0472',NULL),
+(9,309,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,310,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,311,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,312,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,314,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,401,'ariconta',1,1,1,1,1,0,NULL,1,'450.1418','1665.0710','2'),
+(9,402,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','1665.0710',NULL),
+(9,403,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,404,'ariconta',1,1,1,1,1,0,NULL,1,'3720.1890','1665.0710','0'),
+(9,405,'ariconta',1,1,1,1,1,0,NULL,1,'5355.2130','1665.0710',NULL),
+(9,406,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,408,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,502,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,503,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,505,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,508,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,509,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,510,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,511,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,601,'ariconta',1,1,1,1,1,1,NULL,1,'450.1418','3300.0950','0'),
+(9,602,'ariconta',1,1,1,1,1,0,NULL,1,'2085.1660','3300.0950',NULL),
+(9,604,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,606,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,607,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,608,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,609,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,610,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,611,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,612,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,613,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,614,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,801,'ariconta',1,1,1,1,1,1,NULL,1,'3720.1890','3300.0950','2'),
+(9,802,'ariconta',1,1,1,1,1,0,NULL,1,'11894.7400','1665.0710',NULL),
+(9,803,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,804,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,805,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,806,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,807,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,808,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,809,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,810,'ariconta',1,1,1,1,1,1,NULL,0,'0.0000','0.0000',NULL),
+(9,901,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,902,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,903,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1001,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1002,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1003,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1005,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1101,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000','0'),
+(9,1103,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1301,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1303,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1304,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1306,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1308,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1408,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1409,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1410,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1411,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1412,'ariconta',1,1,1,1,1,0,NULL,0,'0.0000','0.0000',NULL),
+(9,1413,'ariconta',1,1,1,1,1,1,NULL,0,NULL,NULL,NULL);
 
 /*Table structure for table `norma43` */
 
 DROP TABLE IF EXISTS `norma43`;
 
 CREATE TABLE `norma43` (
-  `codigo` smallint(4) NOT NULL DEFAULT '0',
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `fecopera` date NOT NULL DEFAULT '0000-00-00',
-  `fecvalor` date NOT NULL DEFAULT '0000-00-00',
-  `importeD` decimal(12,2) DEFAULT NULL,
-  `importeH` decimal(14,2) DEFAULT NULL,
-  `concepto` char(30) DEFAULT NULL,
-  `numdocum` char(10) NOT NULL DEFAULT '',
-  `saldo` decimal(14,2) DEFAULT NULL,
-  `punteada` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`codigo`)
+  `codigo` smallint(4) NOT NULL default '0',
+  `codmacta` char(10) NOT NULL default '',
+  `fecopera` date NOT NULL default '0000-00-00',
+  `fecvalor` date NOT NULL default '0000-00-00',
+  `importeD` decimal(12,2) default NULL,
+  `importeH` decimal(14,2) default NULL,
+  `concepto` char(30) default NULL,
+  `numdocum` char(10) NOT NULL default '',
+  `saldo` decimal(14,2) default NULL,
+  `punteada` tinyint(4) default '0',
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `norma43` */
@@ -5908,34 +5922,34 @@ CREATE TABLE `norma43` (
 DROP TABLE IF EXISTS `npgc`;
 
 CREATE TABLE `npgc` (
-  `codmacta` varchar(10) NOT NULL DEFAULT '0',
-  `nommacta` varchar(60) NOT NULL DEFAULT '0',
-  `apudirec` char(1) NOT NULL DEFAULT '0',
-  `model347` tinyint(1) NOT NULL DEFAULT '0',
-  `razosoci` varchar(60) DEFAULT NULL,
-  `dirdatos` varchar(30) DEFAULT '',
-  `codposta` varchar(6) DEFAULT '',
-  `despobla` varchar(30) DEFAULT '',
-  `desprovi` varchar(30) DEFAULT NULL,
-  `nifdatos` varchar(15) DEFAULT '',
-  `maidatos` varchar(50) DEFAULT '',
-  `webdatos` varchar(50) DEFAULT '',
+  `codmacta` varchar(10) NOT NULL default '0',
+  `nommacta` varchar(60) NOT NULL default '0',
+  `apudirec` char(1) NOT NULL default '0',
+  `model347` tinyint(1) NOT NULL default '0',
+  `razosoci` varchar(60) default NULL,
+  `dirdatos` varchar(30) default '',
+  `codposta` varchar(6) default '',
+  `despobla` varchar(30) default '',
+  `desprovi` varchar(30) default NULL,
+  `nifdatos` varchar(15) default '',
+  `maidatos` varchar(50) default '',
+  `webdatos` varchar(50) default '',
   `obsdatos` text,
-  `pais` varchar(15) DEFAULT NULL,
-  `entidad` varchar(4) DEFAULT NULL,
-  `oficina` varchar(4) DEFAULT NULL,
-  `CC` varchar(4) DEFAULT NULL,
-  `cuentaba` varchar(10) DEFAULT NULL,
-  `numpoliz` varchar(10) DEFAULT NULL,
-  `fecsolic` date DEFAULT NULL,
-  `credisol` decimal(14,2) DEFAULT NULL,
-  `fecconce` date DEFAULT NULL,
-  `credicon` decimal(14,2) DEFAULT NULL,
+  `pais` varchar(15) default NULL,
+  `entidad` varchar(4) default NULL,
+  `oficina` varchar(4) default NULL,
+  `CC` varchar(4) default NULL,
+  `cuentaba` varchar(10) default NULL,
+  `numpoliz` varchar(10) default NULL,
+  `fecsolic` date default NULL,
+  `credisol` decimal(14,2) default NULL,
+  `fecconce` date default NULL,
+  `credicon` decimal(14,2) default NULL,
   `observa` text,
-  `fecbloq` date DEFAULT NULL,
-  `forpa` smallint(6) DEFAULT NULL,
-  `ctabanco` varchar(10) DEFAULT NULL,
-  `grupotesoreria` varchar(20) DEFAULT NULL
+  `fecbloq` date default NULL,
+  `forpa` smallint(6) default NULL,
+  `ctabanco` varchar(10) default NULL,
+  `grupotesoreria` varchar(20) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `npgc` */
@@ -5947,34 +5961,34 @@ DROP TABLE IF EXISTS `pagos`;
 CREATE TABLE `pagos` (
   `numserie` char(3) NOT NULL,
   `codmacta` varchar(10) NOT NULL,
-  `numfactu` varchar(10) NOT NULL DEFAULT '',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `fecefect` date NOT NULL DEFAULT '0000-00-00',
-  `impefect` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `fecultpa` date DEFAULT NULL,
-  `imppagad` decimal(12,2) DEFAULT NULL,
-  `ctabanc1` varchar(10) NOT NULL DEFAULT '',
-  `emitdocum` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `text1csb` varchar(80) DEFAULT NULL,
-  `text2csb` varchar(60) DEFAULT NULL,
-  `iban` varchar(40) DEFAULT NULL,
-  `nrodocum` int(10) unsigned DEFAULT NULL,
-  `referencia` varchar(15) DEFAULT NULL,
+  `numfactu` varchar(10) NOT NULL default '',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `codforpa` smallint(6) NOT NULL default '0',
+  `fecefect` date NOT NULL default '0000-00-00',
+  `impefect` decimal(12,2) NOT NULL default '0.00',
+  `fecultpa` date default NULL,
+  `imppagad` decimal(12,2) default NULL,
+  `ctabanc1` varchar(10) NOT NULL default '',
+  `emitdocum` tinyint(3) unsigned NOT NULL default '0',
+  `text1csb` varchar(80) default NULL,
+  `text2csb` varchar(60) default NULL,
+  `iban` varchar(40) default NULL,
+  `nrodocum` int(10) unsigned default NULL,
+  `referencia` varchar(15) default NULL,
   `observa` text,
-  `nomprove` varchar(60) DEFAULT NULL COMMENT 'Nombre Proveedor',
-  `domprove` varchar(60) DEFAULT NULL COMMENT 'domicilio',
-  `pobprove` varchar(60) DEFAULT NULL COMMENT 'poblacion',
-  `cpprove` varchar(6) DEFAULT NULL COMMENT 'codigo postal',
-  `proprove` varchar(60) DEFAULT NULL COMMENT 'provincia',
-  `nifprove` varchar(15) DEFAULT NULL,
-  `codpais` char(2) DEFAULT NULL,
-  `situacion` tinyint(1) DEFAULT '0' COMMENT '0=pendiente pago 1=pagado',
-  `codusu` int(7) DEFAULT NULL,
-  `situdocum` char(1) DEFAULT NULL COMMENT 'Situacion transferencia',
-  `anyodocum` smallint(4) DEFAULT NULL COMMENT 'Año Transferencia',
-  PRIMARY KEY (`numserie`,`codmacta`,`numfactu`,`fecfactu`,`numorden`),
+  `nomprove` varchar(60) default NULL COMMENT 'Nombre Proveedor',
+  `domprove` varchar(60) default NULL COMMENT 'domicilio',
+  `pobprove` varchar(60) default NULL COMMENT 'poblacion',
+  `cpprove` varchar(6) default NULL COMMENT 'codigo postal',
+  `proprove` varchar(60) default NULL COMMENT 'provincia',
+  `nifprove` varchar(15) default NULL,
+  `codpais` char(2) default NULL,
+  `situacion` tinyint(1) default '0' COMMENT '0=pendiente pago 1=pagado',
+  `codusu` int(7) default NULL,
+  `situdocum` char(1) default NULL COMMENT 'Situacion transferencia',
+  `anyodocum` smallint(4) default NULL COMMENT 'Año Transferencia',
+  PRIMARY KEY  (`numserie`,`codmacta`,`numfactu`,`fecfactu`,`numorden`),
   KEY `fp_spagop` (`codforpa`),
   CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`codforpa`) REFERENCES `formapago` (`codforpa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -5986,10 +6000,10 @@ CREATE TABLE `pagos` (
 DROP TABLE IF EXISTS `paises`;
 
 CREATE TABLE `paises` (
-  `codpais` char(2) NOT NULL DEFAULT 'ES',
-  `nompais` varchar(50) NOT NULL DEFAULT '',
-  `intracom` smallint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codpais`)
+  `codpais` char(2) NOT NULL default 'ES',
+  `nompais` varchar(50) NOT NULL default '',
+  `intracom` smallint(1) NOT NULL default '0',
+  PRIMARY KEY  (`codpais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `paises` */
@@ -6240,16 +6254,16 @@ insert  into `paises`(`codpais`,`nompais`,`intracom`) values
 DROP TABLE IF EXISTS `paramamort`;
 
 CREATE TABLE `paramamort` (
-  `codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `tipoamor` tinyint(4) NOT NULL DEFAULT '0',
-  `intcont` tinyint(4) NOT NULL DEFAULT '0',
-  `ultfecha` date NOT NULL DEFAULT '0000-00-00',
-  `condebes` smallint(6) DEFAULT '0',
-  `conhaber` smallint(6) DEFAULT '0',
-  `numdiari` smallint(6) DEFAULT '0',
-  `codiva` smallint(5) unsigned DEFAULT NULL,
-  `Preimpreso` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codigo`)
+  `codigo` tinyint(4) NOT NULL default '0',
+  `tipoamor` tinyint(4) NOT NULL default '0',
+  `intcont` tinyint(4) NOT NULL default '0',
+  `ultfecha` date NOT NULL default '0000-00-00',
+  `condebes` smallint(6) default '0',
+  `conhaber` smallint(6) default '0',
+  `numdiari` smallint(6) default '0',
+  `codiva` smallint(5) unsigned default NULL,
+  `Preimpreso` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `paramamort` */
@@ -6262,69 +6276,69 @@ insert  into `paramamort`(`codigo`,`tipoamor`,`intcont`,`ultfecha`,`condebes`,`c
 DROP TABLE IF EXISTS `parametros`;
 
 CREATE TABLE `parametros` (
-  `fechaini` date NOT NULL DEFAULT '0000-00-00',
-  `fechafin` date NOT NULL DEFAULT '0000-00-00',
-  `autocoste` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `emitedia` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `listahco` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `numdiapr` smallint(1) unsigned DEFAULT '0',
-  `concefpr` smallint(1) DEFAULT '0',
-  `conceapr` smallint(1) DEFAULT '0',
-  `numdiacl` smallint(1) unsigned DEFAULT '0',
-  `concefcl` smallint(1) DEFAULT '0',
-  `conceacl` smallint(1) DEFAULT '0',
-  `limimpcl` decimal(10,2) DEFAULT '0.00',
-  `conpresu` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `periodos` char(2) DEFAULT NULL,
-  `grupogto` char(1) DEFAULT NULL,
-  `grupovta` char(1) DEFAULT NULL,
-  `ctaperga` varchar(10) DEFAULT NULL,
-  `abononeg` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `grupoord` char(1) DEFAULT NULL,
-  `tinumfac` char(1) DEFAULT NULL,
-  `modhcofa` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `anofactu` smallint(1) DEFAULT NULL,
-  `perfactu` smallint(1) DEFAULT NULL,
-  `nctafact` char(1) DEFAULT NULL,
-  `AsienActAuto` tinyint(1) NOT NULL DEFAULT '0',
-  `codinume` char(1) DEFAULT NULL,
-  `diremail` varchar(50) DEFAULT NULL,
-  `SmtpHost` varchar(50) DEFAULT NULL,
-  `SmtpPass` varchar(50) DEFAULT NULL,
-  `SmtpUser` varchar(50) DEFAULT NULL,
-  `ContabilizaFact` tinyint(3) unsigned zerofill NOT NULL DEFAULT '000',
-  `conce43` smallint(1) DEFAULT NULL,
-  `diario43` smallint(1) DEFAULT NULL,
-  `constructoras` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `websoporte` varchar(100) DEFAULT NULL,
-  `mailsoporte` varchar(100) DEFAULT NULL,
-  `webversion` varchar(100) DEFAULT NULL,
-  `CCenFacturas` tinyint(3) unsigned DEFAULT NULL,
-  `Subgrupo1` varchar(10) DEFAULT NULL,
-  `Subgrupo2` varchar(10) DEFAULT NULL,
-  `enlaza_cta` varchar(25) DEFAULT NULL,
-  `agenciaviajes` tinyint(3) DEFAULT '0',
-  `NuevaPlan` tinyint(4) NOT NULL DEFAULT '0',
-  `FechaActiva` date DEFAULT NULL,
-  `Automocion` varchar(10) DEFAULT NULL,
-  `TicketsEn340LetraSerie` tinyint(4) DEFAULT NULL,
-  `Presentacion349Mensual` tinyint(4) DEFAULT NULL,
-  `EnvioDesdeOutlook` tinyint(4) DEFAULT '0' COMMENT 'Envio desde outlook',
-  `GranEmpresa` tinyint(4) DEFAULT '0' COMMENT 'Es gran empresa(8 y 9)',
-  `ImporteMaxEfec340` decimal(6,2) DEFAULT NULL COMMENT 'Importe por el cual empieza a declara el 347',
-  `TraspasCtasBanco` smallint(6) DEFAULT '0' COMMENT 'Alzira. Para unificar cta banco entre secciones',
-  `ImportacionFrasProveedor` tinyint(4) DEFAULT '0' COMMENT '1- Navarres',
-  `LetraSerieAutofactura` char(2) DEFAULT NULL COMMENT 'Letra serie de autofacturas',
-  `pathayuda` varchar(100) DEFAULT NULL,
-  `nroariges` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `fecejeract` tinyint(1) DEFAULT '0' COMMENT 'Fechas Ejercicio Actual',
-  `esmultiseccion` tinyint(1) DEFAULT '0',
-  `ctahpdeudor` varchar(10) DEFAULT NULL,
-  `ctahpacreedor` varchar(10) DEFAULT NULL,
-  `conce303` smallint(1) DEFAULT NULL,
-  `diario303` smallint(1) DEFAULT NULL,
-  `contabapteiva0` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fechaini`),
+  `fechaini` date NOT NULL default '0000-00-00',
+  `fechafin` date NOT NULL default '0000-00-00',
+  `autocoste` smallint(1) unsigned NOT NULL default '0',
+  `emitedia` smallint(1) unsigned NOT NULL default '0',
+  `listahco` smallint(1) unsigned NOT NULL default '0',
+  `numdiapr` smallint(1) unsigned default '0',
+  `concefpr` smallint(1) default '0',
+  `conceapr` smallint(1) default '0',
+  `numdiacl` smallint(1) unsigned default '0',
+  `concefcl` smallint(1) default '0',
+  `conceacl` smallint(1) default '0',
+  `limimpcl` decimal(10,2) default '0.00',
+  `conpresu` smallint(1) unsigned NOT NULL default '0',
+  `periodos` char(2) default NULL,
+  `grupogto` char(1) default NULL,
+  `grupovta` char(1) default NULL,
+  `ctaperga` varchar(10) default NULL,
+  `abononeg` smallint(1) unsigned NOT NULL default '0',
+  `grupoord` char(1) default NULL,
+  `tinumfac` char(1) default NULL,
+  `modhcofa` smallint(1) unsigned NOT NULL default '0',
+  `anofactu` smallint(1) default NULL,
+  `perfactu` smallint(1) default NULL,
+  `nctafact` char(1) default NULL,
+  `AsienActAuto` tinyint(1) NOT NULL default '0',
+  `codinume` char(1) default NULL,
+  `diremail` varchar(50) default NULL,
+  `SmtpHost` varchar(50) default NULL,
+  `SmtpPass` varchar(50) default NULL,
+  `SmtpUser` varchar(50) default NULL,
+  `ContabilizaFact` tinyint(3) unsigned zerofill NOT NULL default '000',
+  `conce43` smallint(1) default NULL,
+  `diario43` smallint(1) default NULL,
+  `constructoras` tinyint(3) unsigned NOT NULL default '0',
+  `websoporte` varchar(100) default NULL,
+  `mailsoporte` varchar(100) default NULL,
+  `webversion` varchar(100) default NULL,
+  `CCenFacturas` tinyint(3) unsigned default NULL,
+  `Subgrupo1` varchar(10) default NULL,
+  `Subgrupo2` varchar(10) default NULL,
+  `enlaza_cta` varchar(25) default NULL,
+  `agenciaviajes` tinyint(3) default '0',
+  `NuevaPlan` tinyint(4) NOT NULL default '0',
+  `FechaActiva` date default NULL,
+  `Automocion` varchar(10) default NULL,
+  `TicketsEn340LetraSerie` tinyint(4) default NULL,
+  `Presentacion349Mensual` tinyint(4) default NULL,
+  `EnvioDesdeOutlook` tinyint(4) default '0' COMMENT 'Envio desde outlook',
+  `GranEmpresa` tinyint(4) default '0' COMMENT 'Es gran empresa(8 y 9)',
+  `ImporteMaxEfec340` decimal(6,2) default NULL COMMENT 'Importe por el cual empieza a declara el 347',
+  `TraspasCtasBanco` smallint(6) default '0' COMMENT 'Alzira. Para unificar cta banco entre secciones',
+  `ImportacionFrasProveedor` tinyint(4) default '0' COMMENT '1- Navarres',
+  `LetraSerieAutofactura` char(2) default NULL COMMENT 'Letra serie de autofacturas',
+  `pathayuda` varchar(100) default NULL,
+  `nroariges` smallint(3) unsigned NOT NULL default '0',
+  `fecejeract` tinyint(1) default '0' COMMENT 'Fechas Ejercicio Actual',
+  `esmultiseccion` tinyint(1) default '0',
+  `ctahpdeudor` varchar(10) default NULL,
+  `ctahpacreedor` varchar(10) default NULL,
+  `conce303` smallint(1) default NULL,
+  `diario303` smallint(1) default NULL,
+  `contabapteiva0` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`fechaini`),
   KEY `cl_diarios1` (`numdiapr`),
   KEY `cl_conceptos1` (`concefpr`),
   KEY `cl_conceptos2` (`conceapr`),
@@ -6348,68 +6362,68 @@ CREATE TABLE `parametros` (
 /*Data for the table `parametros` */
 
 insert  into `parametros`(`fechaini`,`fechafin`,`autocoste`,`emitedia`,`listahco`,`numdiapr`,`concefpr`,`conceapr`,`numdiacl`,`concefcl`,`conceacl`,`limimpcl`,`conpresu`,`periodos`,`grupogto`,`grupovta`,`ctaperga`,`abononeg`,`grupoord`,`tinumfac`,`modhcofa`,`anofactu`,`perfactu`,`nctafact`,`AsienActAuto`,`codinume`,`diremail`,`SmtpHost`,`SmtpPass`,`SmtpUser`,`ContabilizaFact`,`conce43`,`diario43`,`constructoras`,`websoporte`,`mailsoporte`,`webversion`,`CCenFacturas`,`Subgrupo1`,`Subgrupo2`,`enlaza_cta`,`agenciaviajes`,`NuevaPlan`,`FechaActiva`,`Automocion`,`TicketsEn340LetraSerie`,`Presentacion349Mensual`,`EnvioDesdeOutlook`,`GranEmpresa`,`ImporteMaxEfec340`,`TraspasCtasBanco`,`ImportacionFrasProveedor`,`LetraSerieAutofactura`,`pathayuda`,`nroariges`,`fecejeract`,`esmultiseccion`,`ctahpdeudor`,`ctahpacreedor`,`conce303`,`diario303`,`contabapteiva0`) values 
-('2016-01-01','2016-12-31',0,0,0,1,2,16,1,1,13,3005.06,1,'0','6','7','129000001',0,NULL,'0',1,2016,2,'1',1,'2','administracion@ai','.9','mcarmen','mcarmen',001,1,1,0,'www.ariadnasoftware.com/ariconta.htm',NULL,'srvcentral.myariadna.com/comprueba',0,NULL,NULL,NULL,0,1,'2016-01-01',NULL,1,0,0,0,6000.00,0,0,'B',NULL,1,1,0,'475100001','475000001',10,1,1);
+('2016-01-01','2016-12-31',0,0,0,1,2,16,1,1,13,'3005.06',1,'0','6','7','129000001',0,NULL,'0',1,2016,2,'1',1,'2','administracion@ai','.9','mcarmen','mcarmen',001,1,1,0,'www.ariadnasoftware.com/ariconta.htm',NULL,'srvcentral.myariadna.com/comprueba',0,NULL,NULL,NULL,0,1,'2016-01-01',NULL,1,0,0,0,'6000.00',0,0,'B',NULL,1,1,0,'475100001','475000001',10,1,1);
 
 /*Table structure for table `paramtesor` */
 
 DROP TABLE IF EXISTS `paramtesor`;
 
 CREATE TABLE `paramtesor` (
-  `Codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `contapag` tinyint(4) NOT NULL DEFAULT '0',
-  `cajabanco` tinyint(4) DEFAULT NULL,
-  `ctabenbanc` varchar(10) DEFAULT NULL,
-  `par_pen_apli` varchar(10) DEFAULT NULL,
-  `generactrpar` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `abonocambiado` tinyint(3) unsigned DEFAULT '0',
-  `RemesaCancelacion` varchar(10) DEFAULT NULL,
-  `RemesaConfirmacion` varchar(10) DEFAULT NULL,
-  `contapagarepte` tinyint(4) DEFAULT '0' COMMENT 'contabiliza pag contra cuentas puente',
-  `contatalonpte` tinyint(4) DEFAULT '0' COMMENT 'contabiliza talo contra cta puente',
-  `pagarecta` varchar(10) DEFAULT NULL COMMENT 'cta puente pagare',
-  `taloncta` varchar(10) DEFAULT NULL COMMENT 'cta puente talon',
-  `contaefecpte` tinyint(4) DEFAULT NULL,
-  `contapagareptePRO` tinyint(4) DEFAULT '0' COMMENT 'conta. pagares provee cuentas puente',
-  `contatalonptePRO` tinyint(4) DEFAULT '0' COMMENT 'conta. talon prov. cta puente',
-  `pagarectaPRO` varchar(10) DEFAULT NULL COMMENT 'cta puente pagare prove',
-  `talonctaPRO` varchar(10) DEFAULT NULL COMMENT 'cta puente talon prov.',
-  `comprobarinicio` tinyint(4) DEFAULT '0' COMMENT 'comprobar al incio el riesgo',
-  `Responsable` varchar(40) DEFAULT NULL,
-  `ctaefectcomerciales` varchar(10) DEFAULT NULL COMMENT 'Cta efectos comerciales a cobrar',
-  `EliminaRecibidosRiesgo` tinyint(4) DEFAULT NULL COMMENT 'Elimina en tabla recepcion a eliminar riesgo',
-  `DiasMaxAvisoDesde` smallint(6) DEFAULT NULL COMMENT 'Dias maximo aviso falta pago DESDE',
-  `DiasMaxAvisoHasta` smallint(6) DEFAULT NULL COMMENT 'Dias maximo aviso falta pago HASTA',
-  `DiasMaxSiniestroDesde` smallint(6) DEFAULT NULL COMMENT 'Dias maximo aviso siniestro DESDE',
-  `DiasMaxSiniestrohasta` smallint(6) DEFAULT NULL COMMENT 'Dias maximo aviso siniestro HASTA',
-  `FechaIniSeg` date DEFAULT NULL COMMENT 'Dia que inicia operaciones aseguradas',
-  `DiasAvisoDesdeProrroga` smallint(6) DEFAULT NULL COMMENT 'Dias aviso desde prorroga',
-  `Nor19xVto` smallint(6) DEFAULT '0' COMMENT 'Contab. norma19 por fec vto',
-  `RecaudacionEjecutiva` smallint(6) DEFAULT '0' COMMENT 'Recaudacion ejecutiva',
-  `FechaAsegEsFra` tinyint(4) DEFAULT '0' COMMENT 'Para asegurados es la fecha venciemiento(ALZIRA)',
-  `Norma19_34Nueva` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Nuevas Normas SEPA',
-  `InteresesCobrosTarjeta` decimal(4,2) DEFAULT '0.00' COMMENT 'Navarres.Cobros tarjeta. Calcular intereses',
-  `Norma57` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Solo en BD. 0-NO  1-Si, ESCALONA ..',
-  `CaixaConfirming` tinyint(4) DEFAULT '0' COMMENT 'Picassent. Pagos por confirming',
-  `RemesasEntidad` tinyint(4) DEFAULT '0' COMMENT 'Escalona. Remesas por entidad bancaria',
-  `XML` tinyint(4) DEFAULT '0' COMMENT 'NormaSEPA en XML',
-  PRIMARY KEY (`Codigo`)
+  `Codigo` tinyint(4) NOT NULL default '0',
+  `contapag` tinyint(4) NOT NULL default '0',
+  `cajabanco` tinyint(4) default NULL,
+  `ctabenbanc` varchar(10) default NULL,
+  `par_pen_apli` varchar(10) default NULL,
+  `generactrpar` tinyint(3) unsigned NOT NULL default '0',
+  `abonocambiado` tinyint(3) unsigned default '0',
+  `RemesaCancelacion` varchar(10) default NULL,
+  `RemesaConfirmacion` varchar(10) default NULL,
+  `contapagarepte` tinyint(4) default '0' COMMENT 'contabiliza pag contra cuentas puente',
+  `contatalonpte` tinyint(4) default '0' COMMENT 'contabiliza talo contra cta puente',
+  `pagarecta` varchar(10) default NULL COMMENT 'cta puente pagare',
+  `taloncta` varchar(10) default NULL COMMENT 'cta puente talon',
+  `contaefecpte` tinyint(4) default NULL,
+  `contapagareptePRO` tinyint(4) default '0' COMMENT 'conta. pagares provee cuentas puente',
+  `contatalonptePRO` tinyint(4) default '0' COMMENT 'conta. talon prov. cta puente',
+  `pagarectaPRO` varchar(10) default NULL COMMENT 'cta puente pagare prove',
+  `talonctaPRO` varchar(10) default NULL COMMENT 'cta puente talon prov.',
+  `comprobarinicio` tinyint(4) default '0' COMMENT 'comprobar al incio el riesgo',
+  `Responsable` varchar(40) default NULL,
+  `ctaefectcomerciales` varchar(10) default NULL COMMENT 'Cta efectos comerciales a cobrar',
+  `EliminaRecibidosRiesgo` tinyint(4) default NULL COMMENT 'Elimina en tabla recepcion a eliminar riesgo',
+  `DiasMaxAvisoDesde` smallint(6) default NULL COMMENT 'Dias maximo aviso falta pago DESDE',
+  `DiasMaxAvisoHasta` smallint(6) default NULL COMMENT 'Dias maximo aviso falta pago HASTA',
+  `DiasMaxSiniestroDesde` smallint(6) default NULL COMMENT 'Dias maximo aviso siniestro DESDE',
+  `DiasMaxSiniestrohasta` smallint(6) default NULL COMMENT 'Dias maximo aviso siniestro HASTA',
+  `FechaIniSeg` date default NULL COMMENT 'Dia que inicia operaciones aseguradas',
+  `DiasAvisoDesdeProrroga` smallint(6) default NULL COMMENT 'Dias aviso desde prorroga',
+  `Nor19xVto` smallint(6) default '0' COMMENT 'Contab. norma19 por fec vto',
+  `RecaudacionEjecutiva` smallint(6) default '0' COMMENT 'Recaudacion ejecutiva',
+  `FechaAsegEsFra` tinyint(4) default '0' COMMENT 'Para asegurados es la fecha venciemiento(ALZIRA)',
+  `Norma19_34Nueva` tinyint(4) NOT NULL default '0' COMMENT 'Nuevas Normas SEPA',
+  `InteresesCobrosTarjeta` decimal(4,2) default '0.00' COMMENT 'Navarres.Cobros tarjeta. Calcular intereses',
+  `Norma57` tinyint(4) NOT NULL default '0' COMMENT 'Solo en BD. 0-NO  1-Si, ESCALONA ..',
+  `CaixaConfirming` tinyint(4) default '0' COMMENT 'Picassent. Pagos por confirming',
+  `RemesasEntidad` tinyint(4) default '0' COMMENT 'Escalona. Remesas por entidad bancaria',
+  `XML` tinyint(4) default '0' COMMENT 'NormaSEPA en XML',
+  PRIMARY KEY  (`Codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `paramtesor` */
 
 insert  into `paramtesor`(`Codigo`,`contapag`,`cajabanco`,`ctabenbanc`,`par_pen_apli`,`generactrpar`,`abonocambiado`,`RemesaCancelacion`,`RemesaConfirmacion`,`contapagarepte`,`contatalonpte`,`pagarecta`,`taloncta`,`contaefecpte`,`contapagareptePRO`,`contatalonptePRO`,`pagarectaPRO`,`talonctaPRO`,`comprobarinicio`,`Responsable`,`ctaefectcomerciales`,`EliminaRecibidosRiesgo`,`DiasMaxAvisoDesde`,`DiasMaxAvisoHasta`,`DiasMaxSiniestroDesde`,`DiasMaxSiniestrohasta`,`FechaIniSeg`,`DiasAvisoDesdeProrroga`,`Nor19xVto`,`RecaudacionEjecutiva`,`FechaAsegEsFra`,`Norma19_34Nueva`,`InteresesCobrosTarjeta`,`Norma57`,`CaixaConfirming`,`RemesasEntidad`,`XML`) values 
-(1,1,NULL,'769000001','555000001',0,0,NULL,NULL,0,0,NULL,NULL,0,0,0,NULL,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,1,0.00,0,0,0,1);
+(1,1,NULL,'769000001','555000001',0,0,NULL,NULL,0,0,NULL,NULL,0,0,0,NULL,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,1,'0.00',0,0,0,1);
 
 /*Table structure for table `presupuestos` */
 
 DROP TABLE IF EXISTS `presupuestos`;
 
 CREATE TABLE `presupuestos` (
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `anopresu` smallint(6) NOT NULL DEFAULT '0',
-  `mespresu` tinyint(4) NOT NULL DEFAULT '0',
-  `imppresu` decimal(14,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codmacta`,`anopresu`,`mespresu`)
+  `codmacta` char(10) NOT NULL default '',
+  `anopresu` smallint(6) NOT NULL default '0',
+  `mespresu` tinyint(4) NOT NULL default '0',
+  `imppresu` decimal(14,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codmacta`,`anopresu`,`mespresu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `presupuestos` */
@@ -6419,14 +6433,14 @@ CREATE TABLE `presupuestos` (
 DROP TABLE IF EXISTS `reclama`;
 
 CREATE TABLE `reclama` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `fecreclama` date NOT NULL DEFAULT '0000-00-00',
-  `codmacta` varchar(10) DEFAULT NULL,
-  `nommacta` varchar(35) DEFAULT NULL,
-  `carta` tinyint(4) NOT NULL DEFAULT '0',
-  `importes` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `codigo` int(11) NOT NULL default '0',
+  `fecreclama` date NOT NULL default '0000-00-00',
+  `codmacta` varchar(10) default NULL,
+  `nommacta` varchar(35) default NULL,
+  `carta` tinyint(4) NOT NULL default '0',
+  `importes` decimal(12,2) NOT NULL default '0.00',
   `observaciones` text,
-  PRIMARY KEY (`codigo`)
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `reclama` */
@@ -6436,14 +6450,14 @@ CREATE TABLE `reclama` (
 DROP TABLE IF EXISTS `reclama_facturas`;
 
 CREATE TABLE `reclama_facturas` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `numlinea` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `numserie` char(3) DEFAULT '0',
-  `numfactu` int(11) DEFAULT '0',
-  `fecfactu` date DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned DEFAULT '0',
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codigo`,`numlinea`),
+  `codigo` int(11) NOT NULL default '0',
+  `numlinea` smallint(1) unsigned NOT NULL default '0',
+  `numserie` char(3) default '0',
+  `numfactu` int(11) default '0',
+  `fecfactu` date default '0000-00-00',
+  `numorden` smallint(1) unsigned default '0',
+  `impvenci` decimal(12,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codigo`,`numlinea`),
   CONSTRAINT `reclama_facturas_ibfk_1` FOREIGN KEY (`codigo`) REFERENCES `reclama` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -6455,16 +6469,16 @@ DROP TABLE IF EXISTS `remesas`;
 
 CREATE TABLE `remesas` (
   `tiporem` tinyint(4) unsigned NOT NULL COMMENT 'wtiporemesa2',
-  `codigo` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `anyo` smallint(3) unsigned NOT NULL DEFAULT '0',
+  `codigo` smallint(3) unsigned NOT NULL default '0',
+  `anyo` smallint(3) unsigned NOT NULL default '0',
   `fecremesa` date NOT NULL,
   `situacion` char(1) NOT NULL,
   `codmacta` varchar(10) NOT NULL,
-  `tipo` tinyint(3) unsigned DEFAULT NULL,
-  `importe` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `descripcion` varchar(50) DEFAULT NULL,
+  `tipo` tinyint(3) unsigned default NULL,
+  `importe` decimal(14,2) NOT NULL default '0.00',
+  `descripcion` varchar(50) default NULL,
   `solocobro` tinyint(1) NOT NULL,
-  PRIMARY KEY (`tiporem`,`codigo`,`anyo`)
+  PRIMARY KEY  (`tiporem`,`codigo`,`anyo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `remesas` */
@@ -6474,10 +6488,10 @@ CREATE TABLE `remesas` (
 DROP TABLE IF EXISTS `scryst`;
 
 CREATE TABLE `scryst` (
-  `codigo` varchar(7) NOT NULL DEFAULT '0',
-  `descripcion` varchar(50) DEFAULT NULL,
-  `informe` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
+  `codigo` varchar(7) NOT NULL default '0',
+  `descripcion` varchar(50) default NULL,
+  `informe` varchar(30) default NULL,
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `scryst` */
@@ -6577,12 +6591,12 @@ insert  into `scryst`(`codigo`,`descripcion`,`informe`) values
 DROP TABLE IF EXISTS `slog`;
 
 CREATE TABLE `slog` (
-  `fecha` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `accion` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `usuario` varchar(30) DEFAULT NULL,
-  `pc` varchar(30) DEFAULT NULL,
+  `fecha` datetime NOT NULL default '0000-00-00 00:00:00',
+  `accion` tinyint(3) unsigned NOT NULL default '0',
+  `usuario` varchar(30) default NULL,
+  `pc` varchar(30) default NULL,
   `descripcion` text,
-  PRIMARY KEY (`accion`,`fecha`)
+  PRIMARY KEY  (`accion`,`fecha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `slog` */
@@ -6592,14 +6606,14 @@ CREATE TABLE `slog` (
 DROP TABLE IF EXISTS `slog340`;
 
 CREATE TABLE `slog340` (
-  `fecha` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fecha` datetime NOT NULL default '0000-00-00 00:00:00',
   `codusu` int(7) NOT NULL,
-  `periodo` varchar(10) NOT NULL DEFAULT '',
-  `nifdeclarado` varchar(9) DEFAULT NULL,
-  `razosoci` varchar(40) DEFAULT NULL,
-  `fechaexp` date NOT NULL DEFAULT '0000-00-00',
-  `impanterior` decimal(12,2) DEFAULT NULL,
-  `impperiodo` decimal(12,2) DEFAULT NULL
+  `periodo` varchar(10) NOT NULL default '',
+  `nifdeclarado` varchar(9) default NULL,
+  `razosoci` varchar(40) default NULL,
+  `fechaexp` date NOT NULL default '0000-00-00',
+  `impanterior` decimal(12,2) default NULL,
+  `impperiodo` decimal(12,2) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC COMMENT='Log declaraacion340-347 efectivo';
 
 /*Data for the table `slog340` */
@@ -6609,17 +6623,17 @@ CREATE TABLE `slog340` (
 DROP TABLE IF EXISTS `talones`;
 
 CREATE TABLE `talones` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `talon` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Es talon o pagare',
-  `fecharec` date NOT NULL DEFAULT '0000-00-00',
-  `numeroref` varchar(20) NOT NULL DEFAULT '' COMMENT 'numero del talon',
-  `banco` varchar(30) NOT NULL DEFAULT '' COMMENT 'string para el banco',
-  `importe` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `codmacta` varchar(10) NOT NULL DEFAULT '' COMMENT 'Cliente',
-  `fechavto` date NOT NULL DEFAULT '0000-00-00',
-  `Contabilizada` tinyint(4) NOT NULL DEFAULT '0',
-  `LlevadoBanco` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Si ha sido remesado ya',
-  PRIMARY KEY (`codigo`)
+  `codigo` int(11) NOT NULL default '0',
+  `talon` tinyint(4) NOT NULL default '0' COMMENT 'Es talon o pagare',
+  `fecharec` date NOT NULL default '0000-00-00',
+  `numeroref` varchar(20) NOT NULL default '' COMMENT 'numero del talon',
+  `banco` varchar(30) NOT NULL default '' COMMENT 'string para el banco',
+  `importe` decimal(10,2) NOT NULL default '0.00',
+  `codmacta` varchar(10) NOT NULL default '' COMMENT 'Cliente',
+  `fechavto` date NOT NULL default '0000-00-00',
+  `Contabilizada` tinyint(4) NOT NULL default '0',
+  `LlevadoBanco` tinyint(4) NOT NULL default '0' COMMENT 'Si ha sido remesado ya',
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `talones` */
@@ -6629,14 +6643,14 @@ CREATE TABLE `talones` (
 DROP TABLE IF EXISTS `talones_facturas`;
 
 CREATE TABLE `talones_facturas` (
-  `codigo` int(11) NOT NULL DEFAULT '0',
+  `codigo` int(11) NOT NULL default '0',
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(6) NOT NULL DEFAULT '0',
-  `importe` decimal(10,2) DEFAULT NULL,
-  `contabilizado` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`codigo`,`numserie`,`numfactu`,`fecfactu`,`numorden`),
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(6) NOT NULL default '0',
+  `importe` decimal(10,2) default NULL,
+  `contabilizado` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`codigo`,`numserie`,`numfactu`,`fecfactu`,`numorden`),
   CONSTRAINT `talones_facturas_ibfk_1` FOREIGN KEY (`codigo`) REFERENCES `talones` (`codigo`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -6647,26 +6661,26 @@ CREATE TABLE `talones_facturas` (
 DROP TABLE IF EXISTS `tipofpago`;
 
 CREATE TABLE `tipofpago` (
-  `tipoformapago` tinyint(4) NOT NULL DEFAULT '0',
-  `descformapago` varchar(25) DEFAULT NULL,
-  `siglas` varchar(5) DEFAULT NULL,
-  `modopago` smallint(5) unsigned DEFAULT '0',
-  `modocobro` smallint(5) unsigned DEFAULT NULL,
-  `diaricli` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `condecli` smallint(1) NOT NULL DEFAULT '0',
-  `conhacli` smallint(1) NOT NULL DEFAULT '0',
-  `ampdecli` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `amphacli` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `ctrdecli` tinyint(4) NOT NULL DEFAULT '0',
-  `ctrhacli` tinyint(4) NOT NULL DEFAULT '0',
-  `diaripro` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `condepro` smallint(1) NOT NULL DEFAULT '0',
-  `conhapro` smallint(1) NOT NULL DEFAULT '0',
-  `ampdepro` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `amphapro` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `ctrdepro` tinyint(4) NOT NULL DEFAULT '0',
-  `ctrhapro` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`tipoformapago`)
+  `tipoformapago` tinyint(4) NOT NULL default '0',
+  `descformapago` varchar(25) default NULL,
+  `siglas` varchar(5) default NULL,
+  `modopago` smallint(5) unsigned default '0',
+  `modocobro` smallint(5) unsigned default NULL,
+  `diaricli` smallint(1) unsigned NOT NULL default '0',
+  `condecli` smallint(1) NOT NULL default '0',
+  `conhacli` smallint(1) NOT NULL default '0',
+  `ampdecli` smallint(1) unsigned NOT NULL default '0',
+  `amphacli` smallint(1) unsigned NOT NULL default '0',
+  `ctrdecli` tinyint(4) NOT NULL default '0',
+  `ctrhacli` tinyint(4) NOT NULL default '0',
+  `diaripro` smallint(1) unsigned NOT NULL default '0',
+  `condepro` smallint(1) NOT NULL default '0',
+  `conhapro` smallint(1) NOT NULL default '0',
+  `ampdepro` smallint(1) unsigned NOT NULL default '0',
+  `amphapro` smallint(1) unsigned NOT NULL default '0',
+  `ctrdepro` tinyint(4) NOT NULL default '0',
+  `ctrhapro` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`tipoformapago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tipofpago` */
@@ -6685,9 +6699,9 @@ insert  into `tipofpago`(`tipoformapago`,`descformapago`,`siglas`,`modopago`,`mo
 DROP TABLE IF EXISTS `tipomemoria`;
 
 CREATE TABLE `tipomemoria` (
-  `codigo` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `descripcion` char(50) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
+  `codigo` tinyint(1) unsigned NOT NULL default '1',
+  `descripcion` char(50) default NULL,
+  PRIMARY KEY  (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tipomemoria` */
@@ -6697,9 +6711,9 @@ CREATE TABLE `tipomemoria` (
 DROP TABLE IF EXISTS `tiposdiario`;
 
 CREATE TABLE `tiposdiario` (
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `desdiari` char(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`numdiari`)
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `desdiari` char(30) NOT NULL default '',
+  PRIMARY KEY  (`numdiari`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tiposdiario` */
@@ -6712,17 +6726,17 @@ insert  into `tiposdiario`(`numdiari`,`desdiari`) values
 DROP TABLE IF EXISTS `tiposiva`;
 
 CREATE TABLE `tiposiva` (
-  `codigiva` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `nombriva` char(15) NOT NULL DEFAULT '',
-  `tipodiva` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `porceiva` decimal(4,2) NOT NULL DEFAULT '0.00',
-  `porcerec` decimal(4,2) DEFAULT NULL,
-  `cuentare` char(10) NOT NULL DEFAULT '',
-  `cuentarr` char(10) NOT NULL DEFAULT '',
-  `cuentaso` char(10) NOT NULL DEFAULT '',
-  `cuentasr` char(10) NOT NULL DEFAULT '',
-  `cuentasn` char(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codigiva`),
+  `codigiva` tinyint(1) unsigned NOT NULL default '0',
+  `nombriva` char(15) NOT NULL default '',
+  `tipodiva` tinyint(1) unsigned NOT NULL default '0',
+  `porceiva` decimal(4,2) NOT NULL default '0.00',
+  `porcerec` decimal(4,2) default NULL,
+  `cuentare` char(10) NOT NULL default '',
+  `cuentarr` char(10) NOT NULL default '',
+  `cuentaso` char(10) NOT NULL default '',
+  `cuentasr` char(10) NOT NULL default '',
+  `cuentasn` char(10) NOT NULL default '',
+  PRIMARY KEY  (`codigiva`),
   KEY `cl_repercutido` (`cuentare`),
   KEY `cl_repercutidorec` (`cuentarr`),
   KEY `cl_soportado` (`cuentaso`),
@@ -6738,7 +6752,7 @@ CREATE TABLE `tiposiva` (
 /*Data for the table `tiposiva` */
 
 insert  into `tiposiva`(`codigiva`,`nombriva`,`tipodiva`,`porceiva`,`porcerec`,`cuentare`,`cuentarr`,`cuentaso`,`cuentasr`,`cuentasn`) values 
-(1,'21%',0,21.00,0.00,'477000001','477000001','472000001','472000001','472000001');
+(1,'21%',0,'21.00','0.00','477000001','477000001','472000001','472000001','472000001');
 
 /*Table structure for table `tmp340` */
 
@@ -6746,31 +6760,31 @@ DROP TABLE IF EXISTS `tmp340`;
 
 CREATE TABLE `tmp340` (
   `codusu` int(7) NOT NULL,
-  `codigo` mediumint(9) NOT NULL DEFAULT '0',
-  `nifdeclarado` varchar(9) DEFAULT NULL,
-  `nifrepresante` varchar(9) DEFAULT NULL,
-  `razosoci` varchar(40) DEFAULT NULL,
-  `codpais` char(2) DEFAULT NULL,
-  `idenpais` char(1) DEFAULT NULL,
-  `nifresidencia` varchar(20) DEFAULT NULL,
-  `clavelibro` char(1) NOT NULL DEFAULT '',
-  `claveoperacion` char(1) DEFAULT NULL,
-  `fechaexp` date NOT NULL DEFAULT '0000-00-00',
-  `fechaop` date NOT NULL DEFAULT '0000-00-00',
-  `tipo` decimal(5,2) DEFAULT NULL,
-  `base` decimal(12,2) DEFAULT NULL,
-  `totiva` decimal(12,2) DEFAULT NULL,
-  `totalfac` decimal(14,2) DEFAULT NULL,
-  `idfactura` varchar(40) DEFAULT NULL,
-  `numreg` varchar(18) DEFAULT NULL,
-  `numiva` tinyint(4) DEFAULT NULL,
-  `ivare` decimal(5,2) DEFAULT NULL,
-  `cuotare` decimal(10,2) DEFAULT NULL,
-  `rectifica` varchar(15) DEFAULT NULL COMMENT 'para las rectificativas',
-  `dom_intracom` varchar(40) DEFAULT NULL COMMENT 'intracom',
-  `pob_intracom` varchar(22) DEFAULT NULL COMMENT 'intracom',
-  `cp_intracom` varchar(10) DEFAULT NULL COMMENT 'intracom',
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` mediumint(9) NOT NULL default '0',
+  `nifdeclarado` varchar(9) default NULL,
+  `nifrepresante` varchar(9) default NULL,
+  `razosoci` varchar(40) default NULL,
+  `codpais` char(2) default NULL,
+  `idenpais` char(1) default NULL,
+  `nifresidencia` varchar(20) default NULL,
+  `clavelibro` char(1) NOT NULL default '',
+  `claveoperacion` char(1) default NULL,
+  `fechaexp` date NOT NULL default '0000-00-00',
+  `fechaop` date NOT NULL default '0000-00-00',
+  `tipo` decimal(5,2) default NULL,
+  `base` decimal(12,2) default NULL,
+  `totiva` decimal(12,2) default NULL,
+  `totalfac` decimal(14,2) default NULL,
+  `idfactura` varchar(40) default NULL,
+  `numreg` varchar(18) default NULL,
+  `numiva` tinyint(4) default NULL,
+  `ivare` decimal(5,2) default NULL,
+  `cuotare` decimal(10,2) default NULL,
+  `rectifica` varchar(15) default NULL COMMENT 'para las rectificativas',
+  `dom_intracom` varchar(40) default NULL COMMENT 'intracom',
+  `pob_intracom` varchar(22) default NULL COMMENT 'intracom',
+  `cp_intracom` varchar(10) default NULL COMMENT 'intracom',
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmp340` */
@@ -6781,17 +6795,17 @@ DROP TABLE IF EXISTS `tmp347`;
 
 CREATE TABLE `tmp347` (
   `codusu` int(7) NOT NULL,
-  `cliprov` tinyint(4) NOT NULL DEFAULT '0',
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  `nif` varchar(15) NOT NULL DEFAULT '',
-  `importe` decimal(14,2) DEFAULT NULL,
-  `razosoci` varchar(30) DEFAULT NULL,
-  `dirdatos` varchar(30) DEFAULT '',
-  `codposta` varchar(6) NOT NULL DEFAULT '',
-  `despobla` varchar(30) DEFAULT '',
-  `Provincia` varchar(40) DEFAULT NULL,
-  `pais` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`cliprov`,`cta`,`nif`)
+  `cliprov` tinyint(4) NOT NULL default '0',
+  `cta` varchar(10) NOT NULL default '',
+  `nif` varchar(15) NOT NULL default '',
+  `importe` decimal(14,2) default NULL,
+  `razosoci` varchar(30) default NULL,
+  `dirdatos` varchar(30) default '',
+  `codposta` varchar(6) NOT NULL default '',
+  `despobla` varchar(30) default '',
+  `Provincia` varchar(40) default NULL,
+  `pais` varchar(2) default NULL,
+  PRIMARY KEY  (`codusu`,`cliprov`,`cta`,`nif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmp347` */
@@ -6802,16 +6816,16 @@ DROP TABLE IF EXISTS `tmp347tot`;
 
 CREATE TABLE `tmp347tot` (
   `codusu` int(7) NOT NULL,
-  `cliprov` tinyint(4) NOT NULL DEFAULT '0',
-  `nif` varchar(15) NOT NULL DEFAULT '',
-  `importe` decimal(14,2) DEFAULT NULL,
-  `razosoci` varchar(30) DEFAULT NULL,
-  `dirdatos` varchar(30) DEFAULT '',
-  `codposta` varchar(6) NOT NULL DEFAULT '',
-  `despobla` varchar(30) DEFAULT '',
-  `Provincia` varchar(40) DEFAULT NULL,
-  `pais` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`cliprov`,`nif`)
+  `cliprov` tinyint(4) NOT NULL default '0',
+  `nif` varchar(15) NOT NULL default '',
+  `importe` decimal(14,2) default NULL,
+  `razosoci` varchar(30) default NULL,
+  `dirdatos` varchar(30) default '',
+  `codposta` varchar(6) NOT NULL default '',
+  `despobla` varchar(30) default '',
+  `Provincia` varchar(40) default NULL,
+  `pais` varchar(40) default NULL,
+  PRIMARY KEY  (`codusu`,`cliprov`,`nif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmp347tot` */
@@ -6822,15 +6836,15 @@ DROP TABLE IF EXISTS `tmp347trimestral`;
 
 CREATE TABLE `tmp347trimestral` (
   `codusu` int(7) NOT NULL,
-  `cliprov` tinyint(4) NOT NULL DEFAULT '0',
-  `nif` varchar(15) NOT NULL DEFAULT '',
-  `trim1` decimal(14,2) DEFAULT '0.00',
-  `trim2` decimal(14,2) DEFAULT '0.00',
-  `trim3` decimal(14,2) DEFAULT '0.00',
-  `trim4` decimal(14,2) DEFAULT '0.00',
-  `metalico` decimal(14,2) DEFAULT '0.00',
-  `codposta` varchar(6) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codusu`,`cliprov`,`nif`)
+  `cliprov` tinyint(4) NOT NULL default '0',
+  `nif` varchar(15) NOT NULL default '',
+  `trim1` decimal(14,2) default '0.00',
+  `trim2` decimal(14,2) default '0.00',
+  `trim3` decimal(14,2) default '0.00',
+  `trim4` decimal(14,2) default '0.00',
+  `metalico` decimal(14,2) default '0.00',
+  `codposta` varchar(6) NOT NULL default '',
+  PRIMARY KEY  (`codusu`,`cliprov`,`nif`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmp347trimestral` */
@@ -6841,16 +6855,16 @@ DROP TABLE IF EXISTS `tmp347trimestre`;
 
 CREATE TABLE `tmp347trimestre` (
   `codusu` int(7) NOT NULL,
-  `cliprov` tinyint(4) NOT NULL DEFAULT '0',
-  `cta` varchar(10) NOT NULL DEFAULT '',
+  `cliprov` tinyint(4) NOT NULL default '0',
+  `cta` varchar(10) NOT NULL default '',
   `nif` varchar(15) NOT NULL,
-  `trim1` decimal(14,2) DEFAULT '0.00',
-  `trim2` decimal(14,2) DEFAULT '0.00',
-  `trim3` decimal(14,2) DEFAULT '0.00',
-  `trim4` decimal(14,2) DEFAULT '0.00',
-  `metalico` decimal(14,2) DEFAULT '0.00',
-  `codposta` varchar(6) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codusu`,`cliprov`,`cta`,`nif`)
+  `trim1` decimal(14,2) default '0.00',
+  `trim2` decimal(14,2) default '0.00',
+  `trim3` decimal(14,2) default '0.00',
+  `trim4` decimal(14,2) default '0.00',
+  `metalico` decimal(14,2) default '0.00',
+  `codposta` varchar(6) NOT NULL default '',
+  PRIMARY KEY  (`codusu`,`cliprov`,`cta`,`nif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmp347trimestre` */
@@ -6860,11 +6874,11 @@ CREATE TABLE `tmp347trimestre` (
 DROP TABLE IF EXISTS `tmpactualizar`;
 
 CREATE TABLE `tmpactualizar` (
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `numasien` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `numasien` smallint(1) unsigned NOT NULL default '0',
   `codusu` int(7) NOT NULL,
-  PRIMARY KEY (`numdiari`,`fechaent`,`numasien`,`codusu`)
+  PRIMARY KEY  (`numdiari`,`fechaent`,`numasien`,`codusu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpactualizar` */
@@ -6875,16 +6889,16 @@ DROP TABLE IF EXISTS `tmpbalancesumas`;
 
 CREATE TABLE `tmpbalancesumas` (
   `codusu` int(7) NOT NULL,
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  `nomcta` varchar(30) NOT NULL DEFAULT '0',
-  `aperturaD` decimal(14,2) DEFAULT NULL,
-  `aperturaH` decimal(14,2) DEFAULT NULL,
-  `acumAntD` decimal(14,2) DEFAULT NULL,
-  `acumAntH` decimal(14,2) DEFAULT NULL,
-  `acumPerD` decimal(14,2) DEFAULT NULL,
-  `acumPerH` decimal(14,2) DEFAULT NULL,
-  `TotalD` decimal(14,2) DEFAULT NULL,
-  `TotalH` decimal(14,2) DEFAULT NULL
+  `cta` varchar(10) NOT NULL default '',
+  `nomcta` varchar(30) NOT NULL default '0',
+  `aperturaD` decimal(14,2) default NULL,
+  `aperturaH` decimal(14,2) default NULL,
+  `acumAntD` decimal(14,2) default NULL,
+  `acumAntH` decimal(14,2) default NULL,
+  `acumPerD` decimal(14,2) default NULL,
+  `acumPerH` decimal(14,2) default NULL,
+  `TotalD` decimal(14,2) default NULL,
+  `TotalH` decimal(14,2) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpbalancesumas` */
@@ -6894,9 +6908,9 @@ CREATE TABLE `tmpbalancesumas` (
 DROP TABLE IF EXISTS `tmpbussinmov`;
 
 CREATE TABLE `tmpbussinmov` (
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `titulo` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`codmacta`)
+  `codmacta` varchar(10) NOT NULL default '',
+  `titulo` varchar(30) default NULL,
+  PRIMARY KEY  (`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpbussinmov` */
@@ -6906,9 +6920,9 @@ CREATE TABLE `tmpbussinmov` (
 DROP TABLE IF EXISTS `tmpcierre`;
 
 CREATE TABLE `tmpcierre` (
-  `Importe` decimal(12,2) DEFAULT NULL,
-  `cta` char(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`cta`)
+  `Importe` decimal(12,2) default NULL,
+  `cta` char(10) NOT NULL default '',
+  PRIMARY KEY  (`cta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpcierre` */
@@ -6919,10 +6933,10 @@ DROP TABLE IF EXISTS `tmpcierre1`;
 
 CREATE TABLE `tmpcierre1` (
   `codusu` int(7) NOT NULL,
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  `nomcta` varchar(30) NOT NULL DEFAULT '0',
-  `acumPerD` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`cta`)
+  `cta` varchar(10) NOT NULL default '',
+  `nomcta` varchar(30) NOT NULL default '0',
+  `acumPerD` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`cta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpcierre1` */
@@ -6935,7 +6949,7 @@ CREATE TABLE `tmpcobros` (
   `codusu` int(7) NOT NULL,
   `numorden` smallint(1) unsigned NOT NULL,
   `fecvenci` date NOT NULL,
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00'
+  `impvenci` decimal(12,2) NOT NULL default '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpcobros` */
@@ -6947,21 +6961,21 @@ DROP TABLE IF EXISTS `tmpcobros2`;
 CREATE TABLE `tmpcobros2` (
   `codusu` int(7) NOT NULL,
   `numserie` char(3) NOT NULL,
-  `numfactu` int(11) NOT NULL DEFAULT '0',
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `fecvenci` date NOT NULL DEFAULT '0000-00-00',
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `reftalonpag` varchar(30) DEFAULT NULL COMMENT 'Referencia talon pagare',
-  `bancotalonpag` varchar(30) DEFAULT NULL COMMENT 'Banco talon pagare',
-  `iban` varchar(40) DEFAULT NULL,
-  `gastos` decimal(12,2) DEFAULT NULL,
-  `esdevol` tinyint(1) DEFAULT NULL,
-  `codrem` smallint(3) DEFAULT NULL,
-  `anyorem` smallint(4) DEFAULT NULL,
-  `cliente` varchar(40) DEFAULT NULL
+  `numfactu` int(11) NOT NULL default '0',
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `codmacta` varchar(10) NOT NULL default '',
+  `codforpa` smallint(6) NOT NULL default '0',
+  `fecvenci` date NOT NULL default '0000-00-00',
+  `impvenci` decimal(12,2) NOT NULL default '0.00',
+  `reftalonpag` varchar(30) default NULL COMMENT 'Referencia talon pagare',
+  `bancotalonpag` varchar(30) default NULL COMMENT 'Banco talon pagare',
+  `iban` varchar(40) default NULL,
+  `gastos` decimal(12,2) default NULL,
+  `esdevol` tinyint(1) default NULL,
+  `codrem` smallint(3) default NULL,
+  `anyorem` smallint(4) default NULL,
+  `cliente` varchar(40) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpcobros2` */
@@ -6972,21 +6986,21 @@ DROP TABLE IF EXISTS `tmpconext`;
 
 CREATE TABLE `tmpconext` (
   `codusu` int(7) NOT NULL,
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `Pos` int(10) unsigned NOT NULL DEFAULT '0',
-  `fechaent` date NOT NULL DEFAULT '2001-01-20',
-  `numasien` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `linliapu` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `nomdocum` varchar(15) DEFAULT NULL,
-  `ampconce` varchar(50) DEFAULT NULL,
-  `timporteD` decimal(12,2) DEFAULT NULL,
-  `timporteH` decimal(12,2) DEFAULT NULL,
-  `saldo` decimal(12,2) DEFAULT NULL,
-  `Punteada` char(2) DEFAULT NULL,
-  `contra` varchar(10) DEFAULT NULL,
-  `ccost` varchar(4) DEFAULT NULL,
-  `desdoblado` tinyint(1) NOT NULL DEFAULT '0'
+  `cta` varchar(10) NOT NULL default '',
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `Pos` int(10) unsigned NOT NULL default '0',
+  `fechaent` date NOT NULL default '2001-01-20',
+  `numasien` smallint(1) unsigned NOT NULL default '0',
+  `linliapu` smallint(1) unsigned NOT NULL default '0',
+  `nomdocum` varchar(15) default NULL,
+  `ampconce` varchar(50) default NULL,
+  `timporteD` decimal(12,2) default NULL,
+  `timporteH` decimal(12,2) default NULL,
+  `saldo` decimal(12,2) default NULL,
+  `Punteada` char(2) default NULL,
+  `contra` varchar(10) default NULL,
+  `ccost` varchar(4) default NULL,
+  `desdoblado` tinyint(1) NOT NULL default '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpconext` */
@@ -6997,20 +7011,20 @@ DROP TABLE IF EXISTS `tmpconextcab`;
 
 CREATE TABLE `tmpconextcab` (
   `codusu` int(7) NOT NULL,
-  `cuenta` varchar(80) NOT NULL DEFAULT '',
-  `fechini` varchar(10) DEFAULT NULL,
-  `fechfin` varchar(10) DEFAULT NULL,
-  `acumantD` decimal(14,2) DEFAULT NULL,
-  `acumantH` decimal(14,2) DEFAULT NULL,
-  `acumantT` decimal(14,2) DEFAULT NULL,
-  `acumperD` decimal(14,2) DEFAULT NULL,
-  `acumperH` decimal(14,2) DEFAULT NULL,
-  `acumperT` decimal(14,2) DEFAULT NULL,
-  `acumtotD` decimal(14,2) DEFAULT NULL,
-  `acumtotH` decimal(14,2) DEFAULT NULL,
-  `acumtotT` decimal(14,2) DEFAULT NULL,
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codusu`,`cta`)
+  `cuenta` varchar(80) NOT NULL default '',
+  `fechini` varchar(10) default NULL,
+  `fechfin` varchar(10) default NULL,
+  `acumantD` decimal(14,2) default NULL,
+  `acumantH` decimal(14,2) default NULL,
+  `acumantT` decimal(14,2) default NULL,
+  `acumperD` decimal(14,2) default NULL,
+  `acumperH` decimal(14,2) default NULL,
+  `acumperT` decimal(14,2) default NULL,
+  `acumtotD` decimal(14,2) default NULL,
+  `acumtotH` decimal(14,2) default NULL,
+  `acumtotT` decimal(14,2) default NULL,
+  `cta` varchar(10) NOT NULL default '',
+  PRIMARY KEY  (`codusu`,`cta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpconextcab` */
@@ -7021,9 +7035,9 @@ DROP TABLE IF EXISTS `tmpctaexpcc`;
 
 CREATE TABLE `tmpctaexpcc` (
   `codusu` int(7) NOT NULL,
-  `cta` char(10) NOT NULL DEFAULT '',
-  `codccost` char(4) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codccost`,`codusu`,`cta`)
+  `cta` char(10) NOT NULL default '',
+  `codccost` char(4) NOT NULL default '',
+  PRIMARY KEY  (`codccost`,`codusu`,`cta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpctaexpcc` */
@@ -7034,10 +7048,10 @@ DROP TABLE IF EXISTS `tmpctaexplotacioncierre`;
 
 CREATE TABLE `tmpctaexplotacioncierre` (
   `codusu` int(7) NOT NULL,
-  `cta` varchar(10) NOT NULL DEFAULT '',
-  `acumPerD` decimal(14,2) DEFAULT NULL,
-  `acumPerH` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`cta`)
+  `cta` varchar(10) NOT NULL default '',
+  `acumPerD` decimal(14,2) default NULL,
+  `acumPerH` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`cta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpctaexplotacioncierre` */
@@ -7048,17 +7062,17 @@ DROP TABLE IF EXISTS `tmpcuentas`;
 
 CREATE TABLE `tmpcuentas` (
   `codusu` int(7) NOT NULL,
-  `codmacta` varchar(10) NOT NULL DEFAULT '0',
-  `nommacta` varchar(30) NOT NULL DEFAULT '0',
-  `razosoci` varchar(30) DEFAULT '',
-  `dirdatos` varchar(30) DEFAULT '',
-  `codposta` varchar(6) DEFAULT '',
-  `despobla` varchar(30) DEFAULT '',
-  `nifdatos` varchar(15) DEFAULT '',
-  `apudirec` char(1) DEFAULT NULL,
-  `model347` tinyint(3) unsigned zerofill DEFAULT NULL,
-  `dpto` int(4) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codmacta`)
+  `codmacta` varchar(10) NOT NULL default '0',
+  `nommacta` varchar(30) NOT NULL default '0',
+  `razosoci` varchar(30) default '',
+  `dirdatos` varchar(30) default '',
+  `codposta` varchar(6) default '',
+  `despobla` varchar(30) default '',
+  `nifdatos` varchar(15) default '',
+  `apudirec` char(1) default NULL,
+  `model347` tinyint(3) unsigned zerofill default NULL,
+  `dpto` int(4) default NULL,
+  PRIMARY KEY  (`codusu`,`codmacta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpcuentas` */
@@ -7069,10 +7083,10 @@ DROP TABLE IF EXISTS `tmpdiarresum`;
 
 CREATE TABLE `tmpdiarresum` (
   `codusu` int(7) NOT NULL,
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `Debe` decimal(14,2) DEFAULT NULL,
-  `Haber` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codmacta`)
+  `codmacta` char(10) NOT NULL default '',
+  `Debe` decimal(14,2) default NULL,
+  `Haber` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`codmacta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpdiarresum` */
@@ -7083,15 +7097,15 @@ DROP TABLE IF EXISTS `tmpdirioresum`;
 
 CREATE TABLE `tmpdirioresum` (
   `codusu` int(7) NOT NULL,
-  `clave` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `fecha` char(10) DEFAULT NULL,
-  `asiento` smallint(6) DEFAULT NULL,
-  `cuenta` char(30) DEFAULT NULL,
-  `titulo` char(30) DEFAULT NULL,
-  `concepto` char(30) DEFAULT NULL,
-  `debe` decimal(14,2) DEFAULT NULL,
-  `haber` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`clave`,`codusu`)
+  `clave` smallint(5) unsigned NOT NULL default '0',
+  `fecha` char(10) default NULL,
+  `asiento` smallint(6) default NULL,
+  `cuenta` char(30) default NULL,
+  `titulo` char(30) default NULL,
+  `concepto` char(30) default NULL,
+  `debe` decimal(14,2) default NULL,
+  `haber` decimal(14,2) default NULL,
+  PRIMARY KEY  (`clave`,`codusu`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpdirioresum` */
@@ -7102,20 +7116,20 @@ DROP TABLE IF EXISTS `tmpentrefechas`;
 
 CREATE TABLE `tmpentrefechas` (
   `codusu` int(7) NOT NULL,
-  `codigo` smallint(6) NOT NULL DEFAULT '0',
-  `codccost` char(4) DEFAULT NULL,
-  `nomccost` char(30) DEFAULT NULL,
-  `conconam` smallint(6) DEFAULT NULL,
-  `nomconam` char(30) DEFAULT NULL,
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `nominmov` char(30) NOT NULL DEFAULT '',
-  `fechaadq` char(10) DEFAULT NULL,
-  `valoradq` decimal(12,2) DEFAULT NULL,
-  `amortacu` decimal(14,2) DEFAULT NULL,
-  `fecventa` date DEFAULT NULL,
-  `impventa` decimal(14,2) DEFAULT NULL,
-  `impperiodo` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` smallint(6) NOT NULL default '0',
+  `codccost` char(4) default NULL,
+  `nomccost` char(30) default NULL,
+  `conconam` smallint(6) default NULL,
+  `nomconam` char(30) default NULL,
+  `codinmov` smallint(6) NOT NULL default '0',
+  `nominmov` char(30) NOT NULL default '',
+  `fechaadq` char(10) default NULL,
+  `valoradq` decimal(12,2) default NULL,
+  `amortacu` decimal(14,2) default NULL,
+  `fecventa` date default NULL,
+  `impventa` decimal(14,2) default NULL,
+  `impperiodo` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpentrefechas` */
@@ -7126,34 +7140,34 @@ DROP TABLE IF EXISTS `tmpevolsal`;
 
 CREATE TABLE `tmpevolsal` (
   `codusu` int(7) NOT NULL,
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `nommacta` varchar(60) DEFAULT NULL,
-  `apertura` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `mes1` int(7) DEFAULT NULL,
-  `mes2` int(7) DEFAULT NULL,
-  `mes3` int(7) DEFAULT NULL,
-  `mes4` int(7) DEFAULT NULL,
-  `mes5` int(7) DEFAULT NULL,
-  `mes6` int(7) DEFAULT NULL,
-  `mes7` int(7) DEFAULT NULL,
-  `mes8` int(7) DEFAULT NULL,
-  `mes9` int(7) DEFAULT NULL,
-  `mes10` int(7) DEFAULT NULL,
-  `mes11` int(7) DEFAULT NULL,
-  `mes12` int(7) DEFAULT NULL,
-  `importemes1` decimal(14,2) DEFAULT NULL,
-  `importemes2` decimal(14,2) DEFAULT NULL,
-  `importemes3` decimal(14,2) DEFAULT NULL,
-  `importemes4` decimal(14,2) DEFAULT NULL,
-  `importemes5` decimal(14,2) DEFAULT NULL,
-  `importemes6` decimal(14,2) DEFAULT NULL,
-  `importemes7` decimal(14,2) DEFAULT NULL,
-  `importemes8` decimal(14,2) DEFAULT NULL,
-  `importemes9` decimal(14,2) DEFAULT NULL,
-  `importemes10` decimal(14,2) DEFAULT NULL,
-  `importemes11` decimal(14,2) DEFAULT NULL,
-  `importemes12` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codmacta`,`apertura`)
+  `codmacta` varchar(10) NOT NULL default '',
+  `nommacta` varchar(60) default NULL,
+  `apertura` decimal(14,2) NOT NULL default '0.00',
+  `mes1` int(7) default NULL,
+  `mes2` int(7) default NULL,
+  `mes3` int(7) default NULL,
+  `mes4` int(7) default NULL,
+  `mes5` int(7) default NULL,
+  `mes6` int(7) default NULL,
+  `mes7` int(7) default NULL,
+  `mes8` int(7) default NULL,
+  `mes9` int(7) default NULL,
+  `mes10` int(7) default NULL,
+  `mes11` int(7) default NULL,
+  `mes12` int(7) default NULL,
+  `importemes1` decimal(14,2) default NULL,
+  `importemes2` decimal(14,2) default NULL,
+  `importemes3` decimal(14,2) default NULL,
+  `importemes4` decimal(14,2) default NULL,
+  `importemes5` decimal(14,2) default NULL,
+  `importemes6` decimal(14,2) default NULL,
+  `importemes7` decimal(14,2) default NULL,
+  `importemes8` decimal(14,2) default NULL,
+  `importemes9` decimal(14,2) default NULL,
+  `importemes10` decimal(14,2) default NULL,
+  `importemes11` decimal(14,2) default NULL,
+  `importemes12` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`codmacta`,`apertura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpevolsal` */
@@ -7164,27 +7178,27 @@ DROP TABLE IF EXISTS `tmpfaclin`;
 
 CREATE TABLE `tmpfaclin` (
   `codusu` int(7) NOT NULL,
-  `codigo` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `numserie` varchar(3) NOT NULL DEFAULT '',
-  `nomserie` varchar(100) DEFAULT NULL,
+  `codigo` smallint(1) unsigned NOT NULL default '0',
+  `numserie` varchar(3) NOT NULL default '',
+  `nomserie` varchar(100) default NULL,
   `Numfac` int(11) NOT NULL,
   `Fecha` date NOT NULL,
-  `cta` varchar(10) DEFAULT NULL,
-  `Cliente` varchar(50) DEFAULT NULL,
-  `NIF` varchar(12) DEFAULT NULL,
-  `Imponible` decimal(14,2) DEFAULT NULL,
-  `IVA` decimal(6,2) DEFAULT NULL,
-  `ImpIVA` decimal(14,2) DEFAULT NULL,
-  `Total` decimal(14,2) DEFAULT NULL,
-  `retencion` decimal(14,4) DEFAULT NULL,
-  `tipoiva` tinyint(4) DEFAULT NULL,
-  `porcrec` decimal(6,2) DEFAULT NULL,
-  `recargo` decimal(14,2) DEFAULT NULL,
-  `tipoopera` varchar(100) DEFAULT NULL,
-  `tipoformapago` varchar(100) DEFAULT NULL,
-  `ctabase` varchar(10) DEFAULT NULL,
-  `ImponibleAnt` decimal(14,2) DEFAULT NULL,
-  `numfactura` varchar(10) DEFAULT NULL,
+  `cta` varchar(10) default NULL,
+  `Cliente` varchar(50) default NULL,
+  `NIF` varchar(12) default NULL,
+  `Imponible` decimal(14,2) default NULL,
+  `IVA` decimal(6,2) default NULL,
+  `ImpIVA` decimal(14,2) default NULL,
+  `Total` decimal(14,2) default NULL,
+  `retencion` decimal(14,4) default NULL,
+  `tipoiva` tinyint(4) default NULL,
+  `porcrec` decimal(6,2) default NULL,
+  `recargo` decimal(14,2) default NULL,
+  `tipoopera` varchar(100) default NULL,
+  `tipoformapago` varchar(100) default NULL,
+  `ctabase` varchar(10) default NULL,
+  `ImponibleAnt` decimal(14,2) default NULL,
+  `numfactura` varchar(10) default NULL,
   KEY `cta` (`cta`),
   KEY `codusu` (`codusu`,`numserie`,`Numfac`,`Fecha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -7197,21 +7211,21 @@ DROP TABLE IF EXISTS `tmpfaclinprov`;
 
 CREATE TABLE `tmpfaclinprov` (
   `codusu` int(7) NOT NULL,
-  `codigo` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `Numfac` varchar(12) DEFAULT NULL,
-  `FechaFac` varchar(10) DEFAULT NULL,
-  `FechaCon` varchar(10) DEFAULT NULL,
-  `cta` varchar(10) DEFAULT NULL,
-  `Cliente` varchar(30) DEFAULT NULL,
-  `NIF` varchar(12) DEFAULT NULL,
-  `Imponible` decimal(14,2) DEFAULT NULL,
-  `IVA` varchar(5) DEFAULT NULL,
-  `ImpIVA` decimal(14,2) DEFAULT NULL,
-  `Total` decimal(14,2) DEFAULT NULL,
-  `retencion` decimal(14,2) DEFAULT NULL,
-  `tipoiva` tinyint(4) DEFAULT '0',
-  `NoDeducible` char(2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` smallint(1) unsigned NOT NULL default '0',
+  `Numfac` varchar(12) default NULL,
+  `FechaFac` varchar(10) default NULL,
+  `FechaCon` varchar(10) default NULL,
+  `cta` varchar(10) default NULL,
+  `Cliente` varchar(30) default NULL,
+  `NIF` varchar(12) default NULL,
+  `Imponible` decimal(14,2) default NULL,
+  `IVA` varchar(5) default NULL,
+  `ImpIVA` decimal(14,2) default NULL,
+  `Total` decimal(14,2) default NULL,
+  `retencion` decimal(14,2) default NULL,
+  `tipoiva` tinyint(4) default '0',
+  `NoDeducible` char(2) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpfaclinprov` */
@@ -7237,18 +7251,18 @@ DROP TABLE IF EXISTS `tmphistoapu`;
 
 CREATE TABLE `tmphistoapu` (
   `codusu` int(7) NOT NULL,
-  `numdiari` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `desdiari` char(30) NOT NULL DEFAULT '',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `numasien` mediumint(1) unsigned NOT NULL DEFAULT '0',
-  `linliapu` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `nommacta` char(30) DEFAULT NULL,
-  `numdocum` char(10) DEFAULT NULL,
-  `ampconce` char(30) DEFAULT NULL,
-  `timporteD` decimal(12,2) DEFAULT NULL,
-  `timporteH` decimal(12,2) DEFAULT NULL,
-  `codccost` char(4) DEFAULT NULL
+  `numdiari` smallint(1) unsigned NOT NULL default '0',
+  `desdiari` char(30) NOT NULL default '',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `numasien` mediumint(1) unsigned NOT NULL default '0',
+  `linliapu` smallint(1) unsigned NOT NULL default '0',
+  `codmacta` char(10) NOT NULL default '',
+  `nommacta` char(30) default NULL,
+  `numdocum` char(10) default NULL,
+  `ampconce` char(30) default NULL,
+  `timporteD` decimal(12,2) default NULL,
+  `timporteH` decimal(12,2) default NULL,
+  `codccost` char(4) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmphistoapu` */
@@ -7259,16 +7273,16 @@ DROP TABLE IF EXISTS `tmpimpbalan`;
 
 CREATE TABLE `tmpimpbalan` (
   `codusu` int(7) NOT NULL,
-  `Pasivo` char(1) NOT NULL DEFAULT '',
-  `codigo` smallint(6) NOT NULL DEFAULT '0',
-  `descripcion` varchar(60) DEFAULT NULL,
-  `linea` varchar(100) DEFAULT NULL,
-  `importe1` decimal(14,2) DEFAULT NULL,
-  `importe2` decimal(14,2) DEFAULT NULL,
-  `negrita` tinyint(4) DEFAULT NULL,
-  `LibroCD` varchar(6) DEFAULT NULL,
-  `QueCuentas` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`codigo`,`codusu`,`Pasivo`)
+  `Pasivo` char(1) NOT NULL default '',
+  `codigo` smallint(6) NOT NULL default '0',
+  `descripcion` varchar(60) default NULL,
+  `linea` varchar(100) default NULL,
+  `importe1` decimal(14,2) default NULL,
+  `importe2` decimal(14,2) default NULL,
+  `negrita` tinyint(4) default NULL,
+  `LibroCD` varchar(6) default NULL,
+  `QueCuentas` varchar(255) default NULL,
+  PRIMARY KEY  (`codigo`,`codusu`,`Pasivo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpimpbalan` */
@@ -7279,16 +7293,16 @@ DROP TABLE IF EXISTS `tmpimpbalance`;
 
 CREATE TABLE `tmpimpbalance` (
   `codusu` int(7) NOT NULL,
-  `Pasivo` char(1) NOT NULL DEFAULT '',
-  `codigo` smallint(6) NOT NULL DEFAULT '0',
-  `descripcion` varchar(100) DEFAULT NULL,
-  `linea` varchar(100) DEFAULT NULL,
-  `importe1` decimal(14,2) DEFAULT NULL,
-  `importe2` decimal(14,2) DEFAULT NULL,
-  `negrita` tinyint(4) DEFAULT NULL,
-  `orden` smallint(6) NOT NULL DEFAULT '0',
-  `QueCuentas` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`codigo`,`codusu`,`Pasivo`)
+  `Pasivo` char(1) NOT NULL default '',
+  `codigo` smallint(6) NOT NULL default '0',
+  `descripcion` varchar(100) default NULL,
+  `linea` varchar(100) default NULL,
+  `importe1` decimal(14,2) default NULL,
+  `importe2` decimal(14,2) default NULL,
+  `negrita` tinyint(4) default NULL,
+  `orden` smallint(6) NOT NULL default '0',
+  `QueCuentas` varchar(255) default NULL,
+  PRIMARY KEY  (`codigo`,`codusu`,`Pasivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpimpbalance` */
@@ -7300,11 +7314,11 @@ DROP TABLE IF EXISTS `tmpinfbbdd`;
 CREATE TABLE `tmpinfbbdd` (
   `codusu` int(7) NOT NULL,
   `posicion` int(7) NOT NULL,
-  `concepto` varchar(50) DEFAULT NULL,
-  `nactual` int(7) DEFAULT NULL,
-  `poractual` decimal(5,2) DEFAULT NULL,
-  `nsiguiente` int(7) DEFAULT NULL,
-  `porsiguiente` decimal(5,2) DEFAULT NULL
+  `concepto` varchar(50) default NULL,
+  `nactual` int(7) default NULL,
+  `poractual` decimal(5,2) default NULL,
+  `nsiguiente` int(7) default NULL,
+  `porsiguiente` decimal(5,2) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpinfbbdd` */
@@ -7315,25 +7329,25 @@ DROP TABLE IF EXISTS `tmplinccexplo`;
 
 CREATE TABLE `tmplinccexplo` (
   `codusu` int(7) NOT NULL,
-  `codccost` varchar(4) NOT NULL DEFAULT '',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `linapu` smallint(6) NOT NULL DEFAULT '0',
-  `docum` varchar(15) NOT NULL DEFAULT '',
-  `fechaent` date NOT NULL DEFAULT '0000-00-00',
-  `ampconce` varchar(50) DEFAULT NULL,
-  `perD` decimal(12,2) DEFAULT NULL,
-  `perH` decimal(12,2) DEFAULT NULL,
-  `saldo` decimal(12,2) DEFAULT NULL,
-  `ctactra` varchar(10) DEFAULT NULL,
-  `desctra` varchar(35) DEFAULT NULL,
-  `antD` decimal(12,2) DEFAULT NULL,
-  `antH` decimal(12,2) DEFAULT NULL,
-  `mes` smallint(6) DEFAULT NULL,
-  `anyo` smallint(6) DEFAULT NULL,
-  `desdoblado` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Desdoblado segun reparto de CC',
-  `numdiari` smallint(1) unsigned DEFAULT NULL,
-  `numasien` mediumint(1) unsigned NOT NULL DEFAULT '0',
-  `punteada` tinyint(1) unsigned NOT NULL DEFAULT '0'
+  `codccost` varchar(4) NOT NULL default '',
+  `codmacta` varchar(10) NOT NULL default '',
+  `linapu` smallint(6) NOT NULL default '0',
+  `docum` varchar(15) NOT NULL default '',
+  `fechaent` date NOT NULL default '0000-00-00',
+  `ampconce` varchar(50) default NULL,
+  `perD` decimal(12,2) default NULL,
+  `perH` decimal(12,2) default NULL,
+  `saldo` decimal(12,2) default NULL,
+  `ctactra` varchar(10) default NULL,
+  `desctra` varchar(35) default NULL,
+  `antD` decimal(12,2) default NULL,
+  `antH` decimal(12,2) default NULL,
+  `mes` smallint(6) default NULL,
+  `anyo` smallint(6) default NULL,
+  `desdoblado` tinyint(1) NOT NULL default '0' COMMENT 'Desdoblado segun reparto de CC',
+  `numdiari` smallint(1) unsigned default NULL,
+  `numasien` mediumint(1) unsigned NOT NULL default '0',
+  `punteada` tinyint(1) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmplinccexplo` */
@@ -7345,12 +7359,12 @@ DROP TABLE IF EXISTS `tmplinfactura`;
 CREATE TABLE `tmplinfactura` (
   `codusu` int(7) NOT NULL,
   `numserie` char(3) NOT NULL,
-  `codfaccl` int(11) NOT NULL DEFAULT '0',
-  `anofaccl` smallint(6) NOT NULL DEFAULT '0',
-  `texto1` varchar(30) DEFAULT NULL,
-  `texto2` varchar(30) DEFAULT NULL,
-  `texto3` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`numserie`,`codfaccl`,`anofaccl`)
+  `codfaccl` int(11) NOT NULL default '0',
+  `anofaccl` smallint(6) NOT NULL default '0',
+  `texto1` varchar(30) default NULL,
+  `texto2` varchar(30) default NULL,
+  `texto3` varchar(30) default NULL,
+  PRIMARY KEY  (`codusu`,`numserie`,`codfaccl`,`anofaccl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmplinfactura` */
@@ -7361,8 +7375,8 @@ DROP TABLE IF EXISTS `tmpliqiva`;
 
 CREATE TABLE `tmpliqiva` (
   `codusu` int(7) NOT NULL,
-  `iva` decimal(14,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codusu`,`iva`)
+  `iva` decimal(14,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codusu`,`iva`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpliqiva` */
@@ -7373,17 +7387,17 @@ DROP TABLE IF EXISTS `tmpliquidaiva`;
 
 CREATE TABLE `tmpliquidaiva` (
   `codusu` int(7) NOT NULL,
-  `iva` decimal(14,2) NOT NULL DEFAULT '0.00',
-  `bases` decimal(14,2) DEFAULT NULL,
-  `ivas` decimal(14,2) DEFAULT NULL,
-  `codempre` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `periodo` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ano` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `cliente` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `porcrec` decimal(14,2) DEFAULT NULL,
-  `imporec` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`iva`,`ano`,`codempre`,`periodo`,`cliente`,`codmacta`)
+  `iva` decimal(14,2) NOT NULL default '0.00',
+  `bases` decimal(14,2) default NULL,
+  `ivas` decimal(14,2) default NULL,
+  `codempre` tinyint(3) unsigned NOT NULL default '0',
+  `periodo` tinyint(3) unsigned NOT NULL default '0',
+  `ano` smallint(3) unsigned NOT NULL default '0',
+  `cliente` tinyint(3) unsigned NOT NULL default '1',
+  `codmacta` varchar(10) NOT NULL default '',
+  `porcrec` decimal(14,2) default NULL,
+  `imporec` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`iva`,`ano`,`codempre`,`periodo`,`cliente`,`codmacta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpliquidaiva` */
@@ -7394,16 +7408,16 @@ DROP TABLE IF EXISTS `tmpnorma43`;
 
 CREATE TABLE `tmpnorma43` (
   `codusu` int(7) NOT NULL,
-  `Orden` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `codmacta` char(10) NOT NULL DEFAULT '',
-  `fecopera` date NOT NULL DEFAULT '0000-00-00',
-  `fecvalor` date NOT NULL DEFAULT '0000-00-00',
-  `importeD` decimal(12,2) DEFAULT NULL,
-  `importeH` decimal(14,2) DEFAULT NULL,
-  `concepto` char(30) DEFAULT NULL,
-  `numdocum` char(10) NOT NULL DEFAULT '',
-  `saldo` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`Orden`,`codmacta`)
+  `Orden` smallint(5) unsigned NOT NULL default '0',
+  `codmacta` char(10) NOT NULL default '',
+  `fecopera` date NOT NULL default '0000-00-00',
+  `fecvalor` date NOT NULL default '0000-00-00',
+  `importeD` decimal(12,2) default NULL,
+  `importeH` decimal(14,2) default NULL,
+  `concepto` char(30) default NULL,
+  `numdocum` char(10) NOT NULL default '',
+  `saldo` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`Orden`,`codmacta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpnorma43` */
@@ -7416,7 +7430,7 @@ CREATE TABLE `tmppagos` (
   `codusu` int(7) NOT NULL,
   `numorden` smallint(1) unsigned NOT NULL,
   `fecvenci` date NOT NULL,
-  `impvenci` decimal(12,2) NOT NULL DEFAULT '0.00'
+  `impvenci` decimal(12,2) NOT NULL default '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmppagos` */
@@ -7429,18 +7443,18 @@ CREATE TABLE `tmppagos2` (
   `codusu` int(7) NOT NULL,
   `numserie` char(3) NOT NULL,
   `numfactu` varchar(10) NOT NULL,
-  `fecfactu` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `fecefect` date NOT NULL DEFAULT '0000-00-00',
-  `impefect` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `reftalonpag` varchar(30) DEFAULT NULL COMMENT 'Referencia talon pagare',
-  `bancotalonpag` varchar(30) DEFAULT NULL COMMENT 'Banco talon pagare',
-  `iban` varchar(40) DEFAULT NULL,
-  `proveedor` varchar(40) DEFAULT NULL,
-  `nrodocum` int(10) unsigned DEFAULT NULL,
-  `anyodocum` smallint(4) DEFAULT NULL
+  `fecfactu` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `codmacta` varchar(10) NOT NULL default '',
+  `codforpa` smallint(6) NOT NULL default '0',
+  `fecefect` date NOT NULL default '0000-00-00',
+  `impefect` decimal(12,2) NOT NULL default '0.00',
+  `reftalonpag` varchar(30) default NULL COMMENT 'Referencia talon pagare',
+  `bancotalonpag` varchar(30) default NULL COMMENT 'Banco talon pagare',
+  `iban` varchar(40) default NULL,
+  `proveedor` varchar(40) default NULL,
+  `nrodocum` int(10) unsigned default NULL,
+  `anyodocum` smallint(4) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmppagos2` */
@@ -7451,26 +7465,26 @@ DROP TABLE IF EXISTS `tmppendientes`;
 
 CREATE TABLE `tmppendientes` (
   `codusu` int(7) NOT NULL,
-  `serie_cta` varchar(10) NOT NULL DEFAULT '',
-  `factura` varchar(10) NOT NULL DEFAULT '',
-  `fecha` date NOT NULL DEFAULT '0000-00-00',
-  `numorden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `codforpa` smallint(6) NOT NULL DEFAULT '0',
-  `nomforpa` varchar(25) NOT NULL DEFAULT '',
-  `codmacta` varchar(10) DEFAULT NULL,
-  `nombre` varchar(30) NOT NULL DEFAULT '',
-  `fecVto` date NOT NULL DEFAULT '0000-00-00',
-  `importe` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `pag_cob` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `vencido` tinyint(4) NOT NULL DEFAULT '0',
-  `Situacion` varchar(100) NOT NULL DEFAULT '',
-  `gastos` decimal(12,2) DEFAULT '0.00',
-  `coddirec` varchar(4) DEFAULT NULL,
-  `nomdirec` varchar(30) DEFAULT NULL,
-  `devuelto` varchar(1) DEFAULT NULL,
-  `recibido` varchar(1) DEFAULT NULL,
-  `observa` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`serie_cta`,`factura`,`fecha`,`numorden`,`importe`)
+  `serie_cta` varchar(10) NOT NULL default '',
+  `factura` varchar(10) NOT NULL default '',
+  `fecha` date NOT NULL default '0000-00-00',
+  `numorden` smallint(1) unsigned NOT NULL default '0',
+  `codforpa` smallint(6) NOT NULL default '0',
+  `nomforpa` varchar(25) NOT NULL default '',
+  `codmacta` varchar(10) default NULL,
+  `nombre` varchar(30) NOT NULL default '',
+  `fecVto` date NOT NULL default '0000-00-00',
+  `importe` decimal(12,2) NOT NULL default '0.00',
+  `pag_cob` decimal(12,2) NOT NULL default '0.00',
+  `vencido` tinyint(4) NOT NULL default '0',
+  `Situacion` varchar(100) NOT NULL default '',
+  `gastos` decimal(12,2) default '0.00',
+  `coddirec` varchar(4) default NULL,
+  `nomdirec` varchar(30) default NULL,
+  `devuelto` varchar(1) default NULL,
+  `recibido` varchar(1) default NULL,
+  `observa` varchar(150) default NULL,
+  PRIMARY KEY  (`codusu`,`serie_cta`,`factura`,`fecha`,`numorden`,`importe`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmppendientes` */
@@ -7481,14 +7495,14 @@ DROP TABLE IF EXISTS `tmppresu1`;
 
 CREATE TABLE `tmppresu1` (
   `codusu` int(7) NOT NULL,
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `cta` varchar(10) DEFAULT NULL,
-  `titulo` varchar(30) DEFAULT NULL,
-  `ano` smallint(6) NOT NULL DEFAULT '0',
-  `mes` tinyint(4) NOT NULL DEFAULT '0',
-  `Importe` decimal(14,2) DEFAULT NULL,
-  `ejercicio` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` int(11) NOT NULL default '0',
+  `cta` varchar(10) default NULL,
+  `titulo` varchar(30) default NULL,
+  `ano` smallint(6) NOT NULL default '0',
+  `mes` tinyint(4) NOT NULL default '0',
+  `Importe` decimal(14,2) default NULL,
+  `ejercicio` varchar(10) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmppresu1` */
@@ -7499,14 +7513,14 @@ DROP TABLE IF EXISTS `tmppresu2`;
 
 CREATE TABLE `tmppresu2` (
   `codusu` int(7) NOT NULL,
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `cta` varchar(10) DEFAULT NULL,
-  `titulo` varchar(30) DEFAULT NULL,
-  `mes` tinyint(4) DEFAULT '0',
-  `Presupuesto` decimal(14,2) DEFAULT NULL,
-  `realizado` decimal(14,2) DEFAULT NULL,
-  `anyo` int(7) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` int(11) NOT NULL default '0',
+  `cta` varchar(10) default NULL,
+  `titulo` varchar(30) default NULL,
+  `mes` tinyint(4) default '0',
+  `Presupuesto` decimal(14,2) default NULL,
+  `realizado` decimal(14,2) default NULL,
+  `anyo` int(7) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmppresu2` */
@@ -7517,14 +7531,14 @@ DROP TABLE IF EXISTS `tmprenumfrapro`;
 
 CREATE TABLE `tmprenumfrapro` (
   `codusu` int(7) NOT NULL,
-  `anofacpr` smallint(6) NOT NULL DEFAULT '0',
-  `numregisold` int(10) NOT NULL DEFAULT '0',
-  `numregisnew` int(10) NOT NULL DEFAULT '0',
-  `fecrecpr` date NOT NULL DEFAULT '0000-00-00',
-  `numdiari` smallint(1) unsigned DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
-  `numasien` mediumint(1) unsigned DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`numregisold`)
+  `anofacpr` smallint(6) NOT NULL default '0',
+  `numregisold` int(10) NOT NULL default '0',
+  `numregisnew` int(10) NOT NULL default '0',
+  `fecrecpr` date NOT NULL default '0000-00-00',
+  `numdiari` smallint(1) unsigned default NULL,
+  `fechaent` date default NULL,
+  `numasien` mediumint(1) unsigned default NULL,
+  PRIMARY KEY  (`codusu`,`numregisold`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmprenumfrapro` */
@@ -7535,10 +7549,10 @@ DROP TABLE IF EXISTS `tmpresumenivafac`;
 
 CREATE TABLE `tmpresumenivafac` (
   `codusu` int(7) NOT NULL,
-  `orden` smallint(1) unsigned NOT NULL DEFAULT '0',
-  `IVA` varchar(10) DEFAULT NULL,
-  `TotalIVA` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`orden`)
+  `orden` smallint(1) unsigned NOT NULL default '0',
+  `IVA` varchar(10) default NULL,
+  `TotalIVA` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`orden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpresumenivafac` */
@@ -7549,13 +7563,13 @@ DROP TABLE IF EXISTS `tmpsaldoscc`;
 
 CREATE TABLE `tmpsaldoscc` (
   `codusu` int(7) NOT NULL,
-  `codccost` char(4) NOT NULL DEFAULT '0',
-  `nomccost` char(30) NOT NULL DEFAULT '0',
-  `ano` smallint(1) NOT NULL DEFAULT '0',
-  `mes` tinyint(1) NOT NULL DEFAULT '0',
-  `impmesde` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `impmesha` decimal(12,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`ano`,`codusu`,`codccost`,`mes`)
+  `codccost` char(4) NOT NULL default '0',
+  `nomccost` char(30) NOT NULL default '0',
+  `ano` smallint(1) NOT NULL default '0',
+  `mes` tinyint(1) NOT NULL default '0',
+  `impmesde` decimal(12,2) NOT NULL default '0.00',
+  `impmesha` decimal(12,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`ano`,`codusu`,`codccost`,`mes`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpsaldoscc` */
@@ -7566,10 +7580,10 @@ DROP TABLE IF EXISTS `tmpsimula`;
 
 CREATE TABLE `tmpsimula` (
   `codusu` int(7) NOT NULL,
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `codconam` smallint(6) NOT NULL DEFAULT '0',
-  `totalamor` decimal(12,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`codusu`,`codinmov`)
+  `codinmov` smallint(6) NOT NULL default '0',
+  `codconam` smallint(6) NOT NULL default '0',
+  `totalamor` decimal(12,2) NOT NULL default '0.00',
+  PRIMARY KEY  (`codusu`,`codinmov`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpsimula` */
@@ -7580,16 +7594,16 @@ DROP TABLE IF EXISTS `tmpsimulainmo`;
 
 CREATE TABLE `tmpsimulainmo` (
   `codusu` int(7) NOT NULL,
-  `codigo` smallint(6) NOT NULL DEFAULT '0',
-  `conconam` smallint(6) DEFAULT NULL,
-  `nomconam` char(30) DEFAULT NULL,
-  `codinmov` smallint(6) NOT NULL DEFAULT '0',
-  `nominmov` char(30) NOT NULL DEFAULT '',
-  `fechaadq` char(10) DEFAULT NULL,
-  `valoradq` decimal(14,2) DEFAULT NULL,
-  `amortacu` decimal(14,2) DEFAULT NULL,
-  `totalamor` decimal(14,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`codigo`)
+  `codigo` smallint(6) NOT NULL default '0',
+  `conconam` smallint(6) default NULL,
+  `nomconam` char(30) default NULL,
+  `codinmov` smallint(6) NOT NULL default '0',
+  `nominmov` char(30) NOT NULL default '',
+  `fechaadq` char(10) default NULL,
+  `valoradq` decimal(14,2) default NULL,
+  `amortacu` decimal(14,2) default NULL,
+  `totalamor` decimal(14,2) default NULL,
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpsimulainmo` */
@@ -7600,10 +7614,10 @@ DROP TABLE IF EXISTS `tmpsperdi`;
 
 CREATE TABLE `tmpsperdi` (
   `codusu` int(7) NOT NULL,
-  `pasivo` char(1) NOT NULL DEFAULT '0',
-  `codigo` tinyint(4) NOT NULL DEFAULT '0',
-  `importe` decimal(12,2) DEFAULT NULL,
-  PRIMARY KEY (`codusu`,`pasivo`,`codigo`)
+  `pasivo` char(1) NOT NULL default '0',
+  `codigo` tinyint(4) NOT NULL default '0',
+  `importe` decimal(12,2) default NULL,
+  PRIMARY KEY  (`codusu`,`pasivo`,`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmpsperdi` */
@@ -7614,23 +7628,23 @@ DROP TABLE IF EXISTS `tmptesoreriacomun`;
 
 CREATE TABLE `tmptesoreriacomun` (
   `codusu` int(7) NOT NULL,
-  `codigo` int(1) unsigned NOT NULL DEFAULT '0',
-  `texto1` varchar(35) DEFAULT NULL,
-  `texto2` varchar(35) DEFAULT NULL,
-  `texto3` varchar(35) DEFAULT NULL,
-  `texto4` varchar(35) DEFAULT NULL,
-  `texto5` varchar(35) DEFAULT NULL,
-  `texto6` varchar(35) DEFAULT NULL,
-  `importe1` decimal(14,2) DEFAULT NULL,
-  `importe2` decimal(14,2) DEFAULT NULL,
-  `fecha1` date DEFAULT NULL,
-  `fecha2` date DEFAULT NULL,
-  `fecha3` date DEFAULT NULL,
-  `observa1` varchar(255) DEFAULT NULL,
-  `observa2` varchar(255) DEFAULT NULL,
-  `opcion` tinyint(4) DEFAULT '0',
+  `codigo` int(1) unsigned NOT NULL default '0',
+  `texto1` varchar(35) default NULL,
+  `texto2` varchar(35) default NULL,
+  `texto3` varchar(35) default NULL,
+  `texto4` varchar(35) default NULL,
+  `texto5` varchar(35) default NULL,
+  `texto6` varchar(35) default NULL,
+  `importe1` decimal(14,2) default NULL,
+  `importe2` decimal(14,2) default NULL,
+  `fecha1` date default NULL,
+  `fecha2` date default NULL,
+  `fecha3` date default NULL,
+  `observa1` varchar(255) default NULL,
+  `observa2` varchar(255) default NULL,
+  `opcion` tinyint(4) default '0',
   `Texto` text,
-  PRIMARY KEY (`codusu`,`codigo`)
+  PRIMARY KEY  (`codusu`,`codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `tmptesoreriacomun` */
@@ -7641,11 +7655,11 @@ DROP TABLE IF EXISTS `tmpwbusca`;
 
 CREATE TABLE `tmpwbusca` (
   `codusu` int(7) NOT NULL,
-  `tabla` tinyint(4) DEFAULT '0',
-  `Long1` int(10) unsigned DEFAULT NULL,
-  `Long2` int(10) unsigned DEFAULT NULL,
-  `Numserie` char(1) DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
+  `tabla` tinyint(4) default '0',
+  `Long1` int(10) unsigned default NULL,
+  `Long2` int(10) unsigned default NULL,
+  `Numserie` char(1) default NULL,
+  `fechaent` date default NULL,
   KEY `Indice1` (`codusu`,`tabla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -7657,10 +7671,10 @@ DROP TABLE IF EXISTS `tmpwbusca0`;
 
 CREATE TABLE `tmpwbusca0` (
   `codusu` int(7) NOT NULL,
-  `tabla` tinyint(4) DEFAULT '0',
-  `Long1` int(10) unsigned DEFAULT NULL,
-  `Long2` int(10) unsigned DEFAULT NULL,
-  `fechaent` date DEFAULT NULL,
+  `tabla` tinyint(4) default '0',
+  `Long1` int(10) unsigned default NULL,
+  `Long2` int(10) unsigned default NULL,
+  `fechaent` date default NULL,
   KEY `Indice1` (`codusu`,`tabla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -7672,9 +7686,9 @@ DROP TABLE IF EXISTS `tmpwbusca1`;
 
 CREATE TABLE `tmpwbusca1` (
   `codusu` int(7) NOT NULL,
-  `codfaccl` int(10) unsigned DEFAULT NULL,
-  `anofaccl` int(10) unsigned DEFAULT NULL,
-  `numserie` char(1) DEFAULT NULL,
+  `codfaccl` int(10) unsigned default NULL,
+  `anofaccl` int(10) unsigned default NULL,
+  `numserie` char(1) default NULL,
   KEY `cod1` (`codusu`,`codfaccl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -7686,8 +7700,8 @@ DROP TABLE IF EXISTS `tmpwbusca2`;
 
 CREATE TABLE `tmpwbusca2` (
   `codusu` int(7) NOT NULL,
-  `NumRegis` int(10) unsigned DEFAULT NULL,
-  `anofacpr` int(10) unsigned DEFAULT NULL,
+  `NumRegis` int(10) unsigned default NULL,
+  `anofacpr` int(10) unsigned default NULL,
   KEY `cod2` (`codusu`,`NumRegis`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -7699,17 +7713,17 @@ DROP TABLE IF EXISTS `transferencias`;
 
 CREATE TABLE `transferencias` (
   `tipotrans` tinyint(4) unsigned NOT NULL COMMENT '0=PAGOS 1=ABONOS',
-  `codigo` int(3) unsigned NOT NULL DEFAULT '0',
+  `codigo` int(3) unsigned NOT NULL default '0',
   `anyo` int(7) NOT NULL,
-  `Descripcion` varchar(30) NOT NULL DEFAULT '',
+  `Descripcion` varchar(30) NOT NULL default '',
   `fecha` date NOT NULL,
-  `codmacta` varchar(10) NOT NULL DEFAULT '',
+  `codmacta` varchar(10) NOT NULL default '',
   `situacion` char(1) NOT NULL,
-  `importe` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `subtipo` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=TRANSF. 1=PAGO DOMICILIADO',
-  `concepto` tinyint(4) DEFAULT '0' COMMENT '0=PENSION 1=NOMINA 9=ORDINARIA',
-  `solopago` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`tipotrans`,`codigo`,`anyo`)
+  `importe` decimal(12,2) NOT NULL default '0.00',
+  `subtipo` tinyint(4) NOT NULL default '0' COMMENT '0=TRANSF. 1=PAGO DOMICILIADO',
+  `concepto` tinyint(4) default '0' COMMENT '0=PENSION 1=NOMINA 9=ORDINARIA',
+  `solopago` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`tipotrans`,`codigo`,`anyo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `transferencias` */
@@ -7720,9 +7734,9 @@ DROP TABLE IF EXISTS `zbloqueos`;
 
 CREATE TABLE `zbloqueos` (
   `codusu` int(7) NOT NULL,
-  `tabla` char(20) NOT NULL DEFAULT '',
+  `tabla` char(20) NOT NULL default '',
   `clave` char(70) NOT NULL,
-  PRIMARY KEY (`tabla`,`clave`)
+  PRIMARY KEY  (`tabla`,`clave`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `zbloqueos` */
