@@ -483,6 +483,23 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
+                                                        <section class="col col-md-6"></section>
+                                                        <section class="col col-md-2">
+                                                            <div class="form-group">
+                                                                <label class="label">Fecha primera factura</label>
+                                                                <label class="input">
+                                                                    <input id="txtFechaFactura" type="text" name="txtFechaFactura" data-bind="value: fechaFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-md-4">
+                                                            <label class="checkbox">
+                                                                <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
+                                                                <i></i>Facturación parcial
+                                                            </label>
+                                                        </section>
+                                                    </div>
+                                                    <div class="row">
 
                                                     </div>
                                                     <!-- Calculadoras de importes -->
@@ -759,6 +776,22 @@
                                         <label class="label">Fecha Final</label>
                                         <label class="input">
                                             <input id="txtFFinal" name="txtFFinal" data-bind="value: fFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <div class="form-group">
+                                            <label class="label">Fecha primera factura</label>
+                                            <label class="input">
+                                                <input id="txtFechaFactura2" type="text" name="txtFechaFactura2" data-bind="value: fechaFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="checkbox">
+                                            <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial">
+                                            <i></i>Facturación parcial
                                         </label>
                                     </section>
                                 </div>

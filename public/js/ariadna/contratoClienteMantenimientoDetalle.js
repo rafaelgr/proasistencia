@@ -149,6 +149,8 @@ function admData() {
     self.importeMantenedor = ko.observable();
     self.diaPago = ko.observable();
     self.preaviso = ko.observable();
+    self.fechaFactura = ko.observable();
+    self.facturaParcial = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -226,6 +228,8 @@ function loadData(data) {
     vm.importeMantenedor(data.importeMantenedor);
     vm.diaPago(data.diaPago);
     vm.preaviso(data.preaviso);
+    vm.fechaFactura(spanishDate(data.fechaFactura));
+    vm.facturaParcial(data.facturaParcial);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -314,7 +318,9 @@ function aceptar() {
                 "impComer": vm.impComer(),
                 "importeMantenedor": vm.importeMantenedor(),
                 "diaPago": vm.diaPago(),
-                "preaviso": vm.preaviso()
+                "preaviso": vm.preaviso(),
+                "fechaFactura": spanishDbDate(vm.fechaFactura()),
+                "facturaParcial": vm.facturaParcial()
             }
         };
         if (contratoClienteMantenimientoId == 0) {
@@ -970,7 +976,9 @@ function aceptarGenerar() {
             "impComer": vm.impComer(),
             "importeMantenedor": vm.importeMantenedor(),
             "diaPago": vm.diaPago(),
-            "preaviso": vm.preaviso()
+            "preaviso": vm.preaviso(),
+            "fechaFactura": spanishDbDate(vm.fechaFactura()),
+            "facturaParcial": vm.facturaParcial()
         }
     };
     if (contratoClienteMantenimientoId == 0) {
@@ -1365,21 +1373,21 @@ function initTablaPrefacturas() {
         columns: [{
             data: "emisorNombre"
         }, {
-                data: "receptorNombre"
-            },{
-                data: "vNum"
-            }, {
-                data: "fecha",
-                render: function (data, type, row) {
-                    return moment(data).format('DD/MM/YYYY');
-                }
-            }, {
-                data: "total"
-            }, {
-                data: "totalConIva"
-            }, {
-                data: "observaciones"
-            }, {
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "observaciones"
+        }, {
             data: "prefacturaId",
             render: function (data, type, row) {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
