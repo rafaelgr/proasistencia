@@ -22,70 +22,16 @@ function initForm() {
     });
 
     // select2 things
-    $("#cmbEmpresas").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbEmpresas").select2(select2Spanish());
+    $("#cmbEmpresas").select2().on('change', function (e) {
+        cambioEmpresa(e.added);
+    }); 
     loadEmpresas();
 
-    $("#cmbMantenedores").select2({
-        allowClear: true,
-        language: {
-            errorLoading: function() {
-                return "La carga falló";
-            },
-            inputTooLong: function(e) {
-                var t = e.input.length - e.maximum,
-                    n = "Por favor, elimine " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            inputTooShort: function(e) {
-                var t = e.minimum - e.input.length,
-                    n = "Por favor, introduzca " + t + " car";
-                return t == 1 ? n += "ácter" : n += "acteres", n;
-            },
-            loadingMore: function() {
-                return "Cargando más resultados…";
-            },
-            maximumSelected: function(e) {
-                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
-                return e.maximum != 1 && (t += "s"), t;
-            },
-            noResults: function() {
-                return "No se encontraron resultados";
-            },
-            searching: function() {
-                return "Buscando…";
-            }
-        }
-    });
+    $("#cmbMantenedores").select2(select2Spanish());
+    $("#cmbMantenedores").select2().on('change', function (e) {
+        cambioMantenedor(e.added);
+    }); 
     loadMantenedores();
 
     $("#cmbTiposPagos").select2({
@@ -345,4 +291,46 @@ function loadTiposPagos(id) {
     ];
     vm.posiblesTiposPagos(tiposPagos);
     $("#cmbTiposPagos").val([id]).trigger('change');
+}
+
+function cambioEmpresa(data) {
+    //
+    if (!data) {
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/" + data.id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                vm.dniFirmanteEmpresa(data.dniFirmante);
+                vm.firmanteEmpresa(data.firmante);
+            }
+        },
+        error: errorAjax
+    });
+
+}
+
+function cambioMantenedor(data) {
+    //
+    if (!data) {
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/" + data.id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                vm.dniFirmanteMantenedor(data.dniFirmante);
+                vm.firmanteMantenedor(data.firmante);
+            }
+        },
+        error: errorAjax
+    });
+
 }

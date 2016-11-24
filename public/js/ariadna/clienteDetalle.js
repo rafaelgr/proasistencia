@@ -44,7 +44,7 @@ function initForm() {
     $("#txtCodComercial").blur(function () {
         cambioCodComercial();
     });
-    
+
     $("#frmComisionista").submit(function () {
         return false;
     });
@@ -60,10 +60,10 @@ function initForm() {
     // select2 things
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
-    
+
     // select2 things
     $("#cmbMotivosBaja").select2(select2Spanish());
-    loadMotivosBaja();    
+    loadMotivosBaja();
 
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
@@ -184,6 +184,8 @@ function admData() {
     self.poblacion2 = ko.observable();
     self.provincia2 = ko.observable();
     self.codComercial = ko.observable();
+    self.dniFirmante = ko.observable();
+    self.firmante = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -263,6 +265,8 @@ function loadData(data) {
     vm.iban(data.iban);
     vm.codigo(data.codigo);
     vm.codComercial(data.codComercial);
+    vm.dniFirmante(data.dniFirmante);
+    vm.firmante(data.firmante);
     // direccion 2
     vm.direccion2(data.direccion2);
     vm.codPostal2(data.codPostal2);
@@ -314,6 +318,9 @@ function datosOK() {
             txtCodigo: {
                 required: true,
                 number: true
+            },
+            cmbAgentes: {
+                required: true
             }
         },
         // Messages for form validation
@@ -339,6 +346,9 @@ function datosOK() {
             txtCodigo: {
                 required: "Debe introducir un código para contabilidad",
                 number: "El códig debe ser numérico"
+            },
+            cmbAgentes:{
+                required: "Debe seleccionar un agente"
             }
         },
         // Do not change code below
@@ -421,7 +431,9 @@ function aceptar() {
                 "poblacion2": vm.poblacion2(),
                 "provincia2": vm.provincia2(),
                 "codPostal2": vm.codPostal2(),
-                "tipoViaId2": vm.stipoViaId2()
+                "tipoViaId2": vm.stipoViaId2(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante()
             }
         };
         if (empId == 0) {
@@ -905,6 +917,22 @@ function cambioAgente(data) {
                     success: function (data, status) {
                         if (data) {
                             vm.colaborador(data.nombre);
+                            // controlar si el colaborador ya figura como comisionista
+                            /*
+                            $.ajax({
+                                type: "GET",
+                                url: "/api/clientes_comisionistas/comercial/" + vm.clienteId() + "/" + data.id,
+                                dataType: "json",
+                                contentType: "application/json",
+                                success: function (data, status) {
+                                    if (!data){
+                                        alert("No está");
+                                    }else{
+                                        alert("Ya está");
+                                    }
+                                }
+                            });
+                            */
                         }
                     }
                 });
@@ -923,7 +951,7 @@ function cambioCodigo(data) {
         contentType: "application/json",
         success: function (data, status) {
             // cuando cambia el código cambiamos la cuenta contable
-            if (data){
+            if (data) {
                 vm.nombreComercial(data.nombre);
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
@@ -935,7 +963,7 @@ function cambioCodigo(data) {
     });
 }
 
-function cambioCodComercial(data){
+function cambioCodComercial(data) {
     $.ajax({
         type: "GET",
         url: "/api/comerciales/codigo/" + vm.codComercial(),
@@ -943,7 +971,7 @@ function cambioCodComercial(data){
         contentType: "application/json",
         success: function (data, status) {
             // cuando cambia el código cambiamos el agente
-            if (data){
+            if (data) {
                 $("#cmbAgentes").val([data.comercialId]).trigger('change');
                 var d = {};
                 d.id = data.comercialId;
@@ -951,5 +979,5 @@ function cambioCodComercial(data){
             }
         },
         error: errorAjax
-    });    
+    });
 }
