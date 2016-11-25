@@ -80,7 +80,10 @@ function initForm() {
                         // hay que mostrarlo en la zona de datos
                         loadTablaContratosComerciales(data);
                     },
-                    error: errorAjax
+                                    error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                 });
                 $.ajax({
                     type: "GET",
@@ -92,10 +95,16 @@ function initForm() {
                         // hay que mostrarlo en la zona de datos
                         loadTablaClientes(data);
                     },
-                    error: errorAjax
+                                    error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                 });
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -352,7 +361,10 @@ function aceptar() {
                     var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -368,7 +380,10 @@ function aceptar() {
                     var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -405,7 +420,10 @@ function importar() {
                 // volver a cargar  el tipoComercial
                 loadTiposComerciales(vm.stipoComercialId());
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -434,7 +452,10 @@ function loadTiposComerciales(id) {
             //}
             $("#cmbTiposComerciales").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -452,7 +473,10 @@ function loadAscComerciales(id) {
             //}
             $("#cmbAscComerciales").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -467,7 +491,10 @@ function loadFormasPago(id) {
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -641,7 +668,10 @@ function loadTiposVia(id) {
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -656,6 +686,9 @@ function loadMotivosBaja(id) {
             vm.posiblesMotivosBaja(motivosBaja);
             $("#cmbMotivosBaja").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }

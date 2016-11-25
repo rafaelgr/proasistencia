@@ -53,7 +53,10 @@ function initForm() {
                 var data2 = [data];
                 loadTablaComerciales(data2);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -171,7 +174,10 @@ function buscarComerciales() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaComerciales(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -207,7 +213,10 @@ function deleteComercial(id) {
                     var fn = buscarComerciales();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {

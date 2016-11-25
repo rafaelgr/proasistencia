@@ -103,7 +103,10 @@ function initForm() {
         success: function (data, status) {
             numDigitos = data.numDigitos
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 
     empId = gup('ClienteId');
@@ -123,7 +126,10 @@ function initForm() {
                 loadData(data);
                 $("#wid-id-2").show();
             },
-            error: errorAjax
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -142,7 +148,10 @@ function initForm() {
                 vm.codigo(data.codigo);
                 cambioCodigo();
             },
-            error: errorAjax
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     }
 }
@@ -347,7 +356,7 @@ function datosOK() {
                 required: "Debe introducir un código para contabilidad",
                 number: "El códig debe ser numérico"
             },
-            cmbAgentes:{
+            cmbAgentes: {
                 required: "Debe seleccionar un agente"
             }
         },
@@ -450,7 +459,10 @@ function aceptar() {
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -466,7 +478,10 @@ function aceptar() {
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -496,7 +511,10 @@ function importar() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-            error: errorAjax
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;
@@ -524,7 +542,10 @@ function loadTiposClientes(id) {
             //}
             $("#cmbTiposClientes").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -539,7 +560,10 @@ function loadFormasPago(id) {
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -554,7 +578,10 @@ function loadMotivosBaja(id) {
             vm.posiblesMotivosBaja(motivosBaja);
             $("#cmbMotivosBaja").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -569,7 +596,10 @@ function loadAgentes(id) {
             vm.posiblesAgentes(agentes);
             $("#cmbAgentes").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -584,7 +614,10 @@ function loadTiposVia(id) {
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -599,7 +632,10 @@ function loadTiposVia2(id) {
             vm.posiblesTiposVia2(tiposVia2);
             $("#cmbTiposVia2").val([id]).trigger('change');
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -645,7 +681,10 @@ function aceptarComisionista() {
                 $('#modalComisionista').modal('hide');
                 loadComisionistas(vm.clienteId());
             },
-            error: errorAjax
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         $.ajax({
@@ -658,7 +697,10 @@ function aceptarComisionista() {
                 $('#modalComisionista').modal('hide');
                 loadComisionistas(vm.clienteId());
             },
-            error: errorAjax
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     }
 }
@@ -778,7 +820,10 @@ function loadComisionistas(id) {
         success: function (data, status) {
             loadTablaComisionistas(data);
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -797,7 +842,10 @@ function loadComerciales(id) {
                 $("#cmbComerciales").val([0]).trigger('change');
             }
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -813,7 +861,10 @@ function editComisionista(id) {
                 loadComisionista(data);
             }
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -840,7 +891,10 @@ function deleteComisionista(id) {
                 success: function (data, status) {
                     loadComisionistas(vm.clienteId());
                 },
-                error: errorAjax
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -938,7 +992,10 @@ function cambioAgente(data) {
                 });
             }
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 
 }
@@ -978,6 +1035,9 @@ function cambioCodComercial(data) {
                 cambioAgente(d);
             }
         },
-        error: errorAjax
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }

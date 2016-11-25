@@ -38,7 +38,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -185,7 +188,10 @@ function aceptar() {
                     var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -201,7 +207,10 @@ function aceptar() {
                     var url = "MantenedoresGeneral.html?MantenedorId=" + vm.mantenedorId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -233,7 +242,10 @@ function importar() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;

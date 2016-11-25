@@ -61,7 +61,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -250,7 +253,10 @@ function aceptar() {
                 }
                 window.open(url, '_self');
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -288,7 +294,10 @@ function aceptarObservaciones() {
             success: function(data, status) {
                 loadTablaPuntos(dataPuntos);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
     return mf;

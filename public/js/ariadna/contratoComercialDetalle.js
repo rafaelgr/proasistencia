@@ -55,7 +55,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -245,7 +248,10 @@ function aceptar() {
                     var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             url = myconfig.apiUrl + "/api/contratos_comerciales/" + contratoComercialId;
@@ -265,7 +271,10 @@ function aceptar() {
                     var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -292,7 +301,10 @@ function loadEmpresas(id) {
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -307,7 +319,10 @@ function loadComerciales(id) {
             vm.posiblesComerciales(comerciales);
             $("#cmbComerciales").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -342,7 +357,10 @@ function cambioEmpresa(data) {
                 vm.firmanteEmpresa(data.firmante);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -367,7 +385,10 @@ function cambioComercial(data) {
                 vm.firmanteColaborador(data.firmante);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
