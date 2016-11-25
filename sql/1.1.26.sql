@@ -5,3 +5,5 @@ ALTER TABLE `empresas`
 ALTER TABLE `clientes`   
   ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `motivoBajaId`,
   ADD COLUMN `firmante` VARCHAR(255) NULL AFTER `dniFirmante`;
+
+  
