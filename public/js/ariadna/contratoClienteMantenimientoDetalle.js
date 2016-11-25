@@ -41,6 +41,13 @@ function initForm() {
     $('#txtFechaFactura2').on('blur', cambioGenerador());
     $('#chkFacturaParcial2').on('blur', cambioGenerador());
 
+    $("#txtCodCliente").blur(function () {
+        cambioCodCliente();
+    });
+    $("#txtCodMantenedor").blur(function () {
+        cambioCodMantenedor();
+    });    
+
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
@@ -194,6 +201,9 @@ function admData() {
     self.porVentaNeta = ko.observable();
     self.porBeneficio = ko.observable();
     self.porComer = ko.observable();
+    //
+    self.codCliente = ko.observable();
+    self.codMantenedor = ko.observable();
     // --------- generacion
     self.fImporte = ko.observable();
     self.cliente = ko.observable();
@@ -231,6 +241,8 @@ function loadData(data) {
     vm.preaviso(data.preaviso);
     vm.fechaFactura(spanishDate(data.fechaFactura));
     vm.facturaParcial(data.facturaParcial);
+    vm.codCliente(data.codCliente);
+    vm.codMantenedor(data.codMantenedor);
     //
     loadEmpresas(data.empresaId);
     loadMantenedores(data.mantenedorId);
@@ -878,7 +890,19 @@ function cambioMantenedor(data) {
             vm.manPorComer(data.manPorVentaNeta);
         },
         error: errorAjax
-    });;
+    });
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/" + comercialId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // asignamos el porComer al vm
+            vm.codMantenedor(data.proId);
+        },
+        error: errorAjax
+    });
+    
 }
 
 
@@ -898,6 +922,8 @@ function cambioCliente(data) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
+            // cargamos el código del cliente
+            vm.codCliente(data.proId);
             // asignamos el agente que corresponda
             if (data.comercialId) {
                 loadAgentes(data.comercialId);
@@ -1304,10 +1330,8 @@ function initTablaGenerador() {
     });
 }
 
-function checkFacParcial(checkbox)
-{
-    if (checkbox.checked)
-    {
+function checkFacParcial(checkbox) {
+    if (checkbox.checked) {
         cambioGenerador();
     }
 }
@@ -1502,3 +1526,37 @@ var initAutoCliente = function () {
         return r;
     }, "Debe seleccionar un cliente válido");
 };
+
+
+function cambioCodCliente(data){
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/codigo/" + vm.codCliente(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // cuando cambia el código cambiamos el agente
+            cargaCliente(data.clienteId);
+        },
+        error: errorAjax
+    });    
+}
+
+function cambioCodMantenedor(data){
+    $.ajax({
+        type: "GET",
+        url: "/api/clientes/mantenedorc/" + vm.codMantenedor(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // cuando cambia el código cambiamos el agente
+            if (data){
+                $("#cmbMantenedores").val([data.clienteId]).trigger('change');
+                var d = {};
+                d.id = data.clienteId;
+                cambioMantenedor(d);
+            }
+        },
+        error: errorAjax
+    });    
+}

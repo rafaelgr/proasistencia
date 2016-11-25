@@ -408,7 +408,13 @@
                                                             </label>
                                                         </section>
                                                         -->
-                                                        <section class="col col-md-6">
+                                                        <section class="col col-md-1">
+                                                            <label class="label">C.Cliente</label>
+                                                            <label class="input">
+                                                                    <input id="txtCodCliente" name="txtCodCliente" data-bind="value:codCliente"/>
+                                                            </label>
+                                                        </section>                                                        
+                                                        <section class="col col-md-5">
                                                             <label class="label">Cliente</label>
                                                             <label class="input">
                                                                     <input id="txtCliente" name="txtCliente"/>
@@ -434,7 +440,13 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-6">
+                                                        <section class="col col-md-1">
+                                                            <label class="label">C.Mantenedor</label>
+                                                            <label class="input">
+                                                                    <input id="txtCodMantenedor" name="txtCodMantenedor" data-bind="value:codMantenedor"/>
+                                                            </label>
+                                                        </section>                                                         
+                                                        <section class="col col-md-5">
                                                             <label class="label">Mantenedor</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: smantenedorId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
