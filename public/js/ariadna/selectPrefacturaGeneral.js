@@ -183,32 +183,35 @@ function loadTablaPrefacturas(data) {
     dt.fnDraw();
     data.forEach(function(v) {
         var field = "#chk" + v.prefacturaId;
-        $(field).blur(function() {
+        $(field).change(function() {
             var quantity = 0;
             var data = {
-                id: v.prefacturaId,
-                sel: 0
+                prefactura: {
+                    prefacturaId: v.prefacturaId,
+                    empresaId: v.empresaId,
+                    clienteId: v.clienteId,
+                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    sel: 0
+                }
             };
-            /*
+            if (this.checked) {
+                data.sel = 1;
+            }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('/apo/%s/?api_key=%s', myconfig.apiUrl, v.id, api_key);
+            var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
             $.ajax({
                 type: type,
                 url: url,
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function (data, status) {
+                success: function(data, status) {
                 },
-                error: function (err) {
-                    aswNotif.errAjax(err);
-                    if (err.status == 401) {
-                        window.open('index.html', '_self');
-                    }
+                error: function(err) {
+                    mensErrorAjax(err);
                 }
             });
-            */
         });
     });
 }
