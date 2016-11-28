@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,7 +145,6 @@
             </a>
             </span>
         </div>
-        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -162,7 +161,7 @@
                             <a href="ParametroDetalle.html">
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
-                        </li>                    
+                        </li>
                         <li id="usuarios">
                             <a href="UsuariosGeneral.html">
                                 <i class="fa fa-mortar-board"></i> Usuarios
@@ -182,18 +181,17 @@
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
                             </a>
-                        </li> 
+                        </li>
                         <li id="tiposiva">
                             <a href="TipoIvaGeneral.html">
                                 <i class="fa fa-money"></i> Tipos de IVA
                             </a>
-                        </li>  
+                        </li>
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -218,7 +216,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li>   
+                        </li> 
                     </ul>
                 </li>
                 <li id="gestion">
@@ -258,7 +256,7 @@
                                     <a href="#"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -277,10 +275,9 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administracion</li>
                 <li>Gestión</li>
-                <li>Contrato terceros</li>
-                <li>Detalle contrato mantenedor</li>
+                <li>Facturación</li>
+                <li>Emitir facturas</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -304,8 +301,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-file-o"></i>
-                            Detalle contrato mantenedor<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-th"></i>
+                            Emisión de facturas <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -321,7 +318,7 @@
                         </li>
                         <li class="sparks-info">
                         <h5>
-                        Comerciales <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
+                        Clientes <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
                         </h5>
                         </li>
                         </ul>-->
@@ -358,7 +355,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento contratos mantenedor</h2>
+                                <h2>Emisión de facturas </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -371,120 +368,73 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmContratoMantenedor" class="smart-form">
+                                    <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Datos del contrato
+                                            Seleccione las prefacturas que va a facturar
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Empresa propia</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+												<section class="col col-md-6">
+													<label class="label">Desde fecha</label>
+													<label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Mantenedor</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
+												</section>
+												<section class="col col-md-6">
+													<label class="label">Hasta fecha</label>
+													<label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
-                                                </section>
+												</section>                                                
+                                                                                                
                                             </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha Inicio</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <div class="form-group">
-                                                        <label class="label">Fecha final</label>
-                                                        <label class="input">
-                                                            <input id="txtFechaFin" type="text" name="txtFechaFin" data-bind="value: fechaFin" class="form-control datepicker" data-dateformat="dd/mm/yy" />
-                                                        </label>
-                                                    </div>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <!--
-                                                    <label class="label">Porcentaje comercial</label>
-                                                    <label class="input">
-                                                        <input id="txtManPorComer" name="txtManPorComer" data-bind="value: manPorComer" />
-                                                    </label>
-                                                    -->
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <!--
-                                                    <label class="label">Tipo pago</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposPagos" name="cmbTiposPagos" data-bind="options: posiblesTiposPagos, optionsText: 'nombre', optionsValue: 'tipoPagoId', value: stipoPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposPagos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                    -->
-                                                </section>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="pull-right">
+                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
+                                                </button>
+                                                <!-- Cambiaremos este botón a generación -->
+                                                <button id="btnAlta" title="Generar facturas" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-crosshairs"></i>
+                                                </button>
                                             </div>
-                                            <fieldset>
-                                                <div class="row">
-                                                    <section class="col col-md-6">
-                                                        <header>
-                                                            Firmante empresa propia
-                                                        </header>
-                                                        <div class="row">
-                                                            <section class="col col-md-3">
-                                                                <label class="label">DNI</label>
-                                                                <label class="input">
-                                                                    <input id="txtDniFirmanteEmpresa" name="txtDniFirmanteEmpresa" data-bind="value: dniFirmanteEmpresa" />
-                                                                </label>
-                                                            </section>
-                                                            <section class="col col-md-9">
-                                                                <label class="label">Firmante</label>
-                                                                <label class="input">
-                                                                    <input id="txtFirmanteEmpresa" name="txtFirmanteEmpresa" data-bind="value: firmanteEmpresa" />
-                                                                </label>
-                                                            </section>
-                                                        </div>
-                                                    </section>
-                                                    <section class="col col-md-6">
-                                                        <header>
-                                                            Firmante mantenedor
-                                                        </header>
-                                                        <div class="row">
-                                                            <section class="col col-md-3">
-                                                                <label class="label">DNI</label>
-                                                                <label class="input">
-                                                                    <input id="txtDniFirmanteMantenedor" name="txtDniFirmanteMantenedor" data-bind="value: dniFirmanteMantenedor" />
-                                                                </label>
-                                                            </section>
-                                                            <section class="col col-md-9">
-                                                                <label class="label">Firmante</label>
-                                                                <label class="input">
-                                                                    <input id="txtFirmanteMantenedor" name="txtFirmanteMantenedor" data-bind="value: firmanteMantenedor" />
-                                                                </label>
-                                                            </section>
-                                                        </div>                                                        
-                                                    </section>
-                                                </div>
-                                            </fieldset>
-                                            <fieldset>
-                                                <div class="row">
-                                                    <section class="col col-md-12">
-                                                        <label class="label">Observaciones</label>
-                                                        <label class="textarea textarea-resizable">
-                                                            <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
-                                                        </label>
-                                                    </section>
-                                                </div>
-                                            </fieldset>
-                                            <fieldset>
-                                                <div class="pull-right">
-                                                    <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                        <i class="fa fa-lg fa-sign-out"></i>
-                                                    </button>
-                                                    <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                        <i class="fa fa-lg fa-check"></i>
-                                                    </button>
-                                                </div>
-                                            </fieldset>
+                                        </fieldset>
                                     </form>
+                                    <div id="tbPrefactura">
+                                        <table id="dt_prefactura" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="phone">
+                                                        SEL
+                                                    </th>
+                                                    <th data-class="expand">
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Emisor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Receptor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Numero
+                                                    </th>                                                    
+                                                    <th data-hide="phone">
+                                                        Fecha
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Base
+                                                    </th>                                                    
+                                                    <th data-hide="phone">
+                                                        Total
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Observaciones
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -505,7 +455,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -539,8 +489,6 @@
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- MOMENT -->
-    <script src="js/moment.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
@@ -561,6 +509,8 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
+	<!--- KNOCKOUT JS -->
+	<script src="js/knockout-3.1.0.js"></script>    
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -576,13 +526,12 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
-    <!--- KNOCKOUT JS -->
-    <script src="js/knockout-3.1.0.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/contratoMantenedorDetalle.js"></script>
+    <script src="myconfig.js"></script>
+    <script src="js/ariadna/selectPrefacturaGeneral.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

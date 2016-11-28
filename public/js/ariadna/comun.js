@@ -182,10 +182,12 @@ function spanishDbDate(v) {
     if (!v) {
         return null;
     }
-    var rd = moment(v, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    if (rd == 'Invalid date') {
-        rd = null;
-    }
+    //var rd = moment(v, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    //if (rd == 'Invalid date') {
+    //   rd = null;
+    //}
+    var v2 = v.split('/');
+    rd = v2[2] + "-" + v2[1] + "-" + v2[0]; 
     return rd;
 }
 
