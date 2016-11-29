@@ -183,6 +183,9 @@ function loadTablaPrefacturas(data) {
     dt.fnDraw();
     data.forEach(function(v) {
         var field = "#chk" + v.prefacturaId;
+        if (v.sel == 1){
+            $(field).attr('checked', true);
+        }
         $(field).change(function() {
             var quantity = 0;
             var data = {
@@ -195,7 +198,7 @@ function loadTablaPrefacturas(data) {
                 }
             };
             if (this.checked) {
-                data.sel = 1;
+                data.prefactura.sel = 1;
             }
             var url = "", type = "";
             // updating record
