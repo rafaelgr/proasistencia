@@ -87,4 +87,4 @@ ALTER TABLE `proasistencia`.`facturas`
 
 #referencia de contabilización en factura
 ALTER TABLE `proasistencia`.`facturas`   
-  ADD COLUMN `contafich` VARCHAR(255) DEFAULT 'NULL'  NULL AFTER `prefacturaId`;
+  ADD COLUMN `contafich` VARCHAR(255)  NULL AFTER `prefacturaId`;
