@@ -84,3 +84,7 @@ ALTER TABLE `proasistencia`.`prefacturas`
 ALTER TABLE `proasistencia`.`facturas`   
   ADD COLUMN `prefacturaId` INT(11) NULL AFTER `sel`,
   ADD CONSTRAINT `fact_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `proasistencia`.`prefacturas`(`prefacturaId`);
+
+#referencia de contabilización en factura
+ALTER TABLE `proasistencia`.`facturas`   
+  ADD COLUMN `contafich` VARCHAR(255) DEFAULT 'NULL'  NULL AFTER `prefacturaId`;
