@@ -44,7 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(crearFactura());
+    $('#btnAlta').click(contabilizarFacturas());
     $('#frmBuscar').submit(function() {
         return false
     });
@@ -240,18 +240,18 @@ function buscarFacturas() {
     return mf;
 }
 
-function crearFactura() {
+function contabilizarFacturas() {
     var mf = function() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL",
+            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL",
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('Facturas dadas de alta correctamente');                 
+                mensNormal('El fichero para contabilización ya está preparado');                 
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
