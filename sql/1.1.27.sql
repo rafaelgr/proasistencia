@@ -79,3 +79,8 @@ CREATE TABLE `facturas_bases` (
 ALTER TABLE `proasistencia`.`prefacturas`   
   ADD COLUMN `facturaId` INT(11) NULL AFTER `sel`,
   ADD CONSTRAINT `pref_facturas` FOREIGN KEY (`facturaId`) REFERENCES `proasistencia`.`facturas`(`facturaId`);
+
+# referencia factura --> prefactura
+ALTER TABLE `proasistencia`.`facturas`   
+  ADD COLUMN `prefacturaId` INT(11) NULL AFTER `sel`,
+  ADD CONSTRAINT `fact_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `proasistencia`.`prefacturas`(`prefacturaId`);
