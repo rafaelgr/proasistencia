@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-prefacturaDetalle.js
-Funciones js par la página PrefacturaDetalle.html
+facturaDetalle.js
+Funciones js par la página FacturaDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var empId = 0;
 var lineaEnEdicion = false;
 
-var dataPrefacturasLineas;
+var dataFacturasLineas;
 var dataBases;
 
 var breakpointDefinition = {
@@ -33,7 +33,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmPrefactura").submit(function () {
+    $("#frmFactura").submit(function () {
         return false;
     });
 
@@ -80,26 +80,26 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad());
     $("#txtPrecio").blur(cambioPrecioCantidad());
 
-    initTablaPrefacturasLineas();
+    initTablaFacturasLineas();
     initTablaBases();
 
-    empId = gup('PrefacturaId');
+    empId = gup('FacturaId');
     if (empId != 0) {
         var data = {
-            prefacturaId: empId
+            facturaId: empId
         }
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/prefacturas/" + empId,
+            url: myconfig.apiUrl + "/api/facturas/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
-                loadLineasPrefactura(data.prefacturaId);
-                loadBasesPrefactura(data.prefacturaId);
+                loadLineasFactura(data.facturaId);
+                loadBasesFactura(data.facturaId);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -108,13 +108,13 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.prefacturaId(0);
+        vm.facturaId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.prefacturaId = ko.observable();
+    self.facturaId = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.serie = ko.observable();
@@ -161,7 +161,7 @@ function admData() {
     self.observaciones = ko.observable();
 
     // -- Valores para las líneas
-    self.prefacturaLineaId = ko.observable();
+    self.facturaLineaId = ko.observable();
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
@@ -185,7 +185,7 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.prefacturaId(data.prefacturaId);
+    vm.facturaId(data.facturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
     vm.serie(data.serie);
@@ -217,7 +217,7 @@ function loadData(data) {
 
 
 function datosOK() {
-    $('#frmPrefactura').validate({
+    $('#frmFactura').validate({
         rules: {
             cmbEmpresas: {
                 required: true
@@ -252,8 +252,8 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmPrefactura").validate().settings;
-    return $('#frmPrefactura').valid();
+    var opciones = $("#frmFactura").validate().settings;
+    return $('#frmFactura').valid();
 }
 
 function aceptar() {
@@ -268,8 +268,8 @@ function aceptar() {
             vm.totalConIva('0');
         }
         var data = {
-            prefactura: {
-                "prefacturaId": vm.prefacturaId(),
+            factura: {
+                "facturaId": vm.facturaId(),
                 "ano": vm.ano(),
                 "numero": vm.numero(),
                 "serie": vm.serie(),
@@ -300,7 +300,7 @@ function aceptar() {
 
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/prefacturas",
+                url: myconfig.apiUrl + "/api/facturas",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -308,7 +308,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // De momento no volvemos al mismo (es alta y hay que introducir líneas)
-                    var url = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
+                    var url = "FacturaDetalle.html?FacturaId=" + vm.facturaId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -319,7 +319,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/prefacturas/" + empId,
+                url: myconfig.apiUrl + "/api/facturas/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -327,7 +327,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
+                    var url = "FacturaGeneral.html?FacturaId=" + vm.facturaId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -342,7 +342,7 @@ function aceptar() {
 
 function salir() {
     var mf = function () {
-        var url = "PrefacturasGeneral.html";
+        var url = "FacturasGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -454,7 +454,7 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/nextlinea/" + vm.prefacturaId(),
+        url: "/api/facturas/nextlinea/" + vm.facturaId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -474,10 +474,10 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        prefacturaLinea: {
-            prefacturaLineaId: vm.prefacturaLineaId(),
+        facturaLinea: {
+            facturaLineaId: vm.facturaLineaId(),
             linea: vm.linea(),
-            prefacturaId: vm.prefacturaId(),
+            facturaId: vm.facturaId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
             porcentaje: vm.porcentaje(),
@@ -490,14 +490,14 @@ function aceptarLinea() {
     if (!lineaEnEdicion) {
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            url: myconfig.apiUrl + "/api/facturas/lineas",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 $('#modalLinea').modal('hide');
-                loadLineasPrefactura(vm.prefacturaId());
-                loadBasesPrefactura(vm.prefacturaId());
+                loadLineasFactura(vm.facturaId());
+                loadBasesFactura(vm.facturaId());
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -507,14 +507,14 @@ function aceptarLinea() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId(),
+            url: myconfig.apiUrl + "/api/facturas/lineas/" + vm.facturaLineaId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 $('#modalLinea').modal('hide');
-                loadLineasPrefactura(vm.prefacturaId());
-                loadBasesPrefactura(vm.prefacturaId());
+                loadLineasFactura(vm.facturaId());
+                loadBasesFactura(vm.facturaId());
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -579,7 +579,7 @@ function datosOKLineas() {
     return $('#linea-form').valid();
 }
 
-function initTablaPrefacturasLineas() {
+function initTablaFacturasLineas() {
     tablaCarro = $('#dt_lineas').dataTable({
         autoWidth: true,
         preDrawCallback: function () {
@@ -614,7 +614,7 @@ function initTablaPrefacturasLineas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataPrefacturasLineas,
+        data: dataFacturasLineas,
         columns: [{
             data: "linea"
         }, {
@@ -638,10 +638,10 @@ function initTablaPrefacturasLineas() {
                     return numeral(data).format('0,0.00');
                 }
             }, {
-                data: "prefacturaLineaId",
+                data: "facturaLineaId",
                 render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                     return html;
                 }
@@ -650,7 +650,7 @@ function initTablaPrefacturasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.facturaLineaId(data.facturaLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
     vm.tipoIvaId(data.tipoIvaId);
@@ -665,7 +665,7 @@ function loadDataLinea(data) {
 }
 
 function limpiaDataLinea(data) {
-    vm.prefacturaLineaId(0);
+    vm.facturaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
     vm.tipoIvaId(null);
@@ -679,7 +679,7 @@ function limpiaDataLinea(data) {
     loadTiposIva();
 }
 
-function loadTablaPrefacturaLineas(data) {
+function loadTablaFacturaLineas(data) {
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -690,14 +690,14 @@ function loadTablaPrefacturaLineas(data) {
 }
 
 
-function loadLineasPrefactura(id) {
+function loadLineasFactura(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/lineas/" + id,
+        url: "/api/facturas/lineas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaPrefacturaLineas(data);
+            loadTablaFacturaLineas(data);
         },
                         error: function (err) {
                     mensErrorAjax(err);
@@ -814,11 +814,11 @@ function cambioPrecioCantidad() {
     return mf;
 }
 
-function editPrefacturaLinea(id) {
+function editFacturaLinea(id) {
     lineaEnEdicion = true;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/linea/" + id,
+        url: "/api/facturas/linea/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -833,7 +833,7 @@ function editPrefacturaLinea(id) {
     });
 }
 
-function deletePrefacturaLinea(id) {
+function deleteFacturaLinea(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -843,19 +843,19 @@ function deletePrefacturaLinea(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                prefacturaLinea: {
-                    prefacturaId: vm.prefacturaId()
+                facturaLinea: {
+                    facturaId: vm.facturaId()
                 }
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/prefacturas/lineas/" + id,
+                url: myconfig.apiUrl + "/api/facturas/lineas/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadLineasPrefactura(vm.prefacturaId());
-                    loadBasesPrefactura(vm.prefacturaId());
+                    loadLineasFactura(vm.facturaId());
+                    loadBasesFactura(vm.facturaId());
                 },
                                 error: function (err) {
                     mensErrorAjax(err);
@@ -946,10 +946,10 @@ function loadTablaBases(data) {
 }
 
 
-function loadBasesPrefactura(id) {
+function loadBasesFactura(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/bases/" + id,
+        url: "/api/facturas/bases/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
