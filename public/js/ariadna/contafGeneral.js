@@ -242,6 +242,8 @@ function buscarFacturas() {
 
 function contabilizarFacturas() {
     var mf = function() {
+        // de momento nada
+        return;
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
