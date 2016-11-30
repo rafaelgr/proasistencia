@@ -252,7 +252,7 @@ function contabilizarFacturas() {
             success: function(data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('El fichero para contabilización ya está preparado');                 
+                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');                 
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
