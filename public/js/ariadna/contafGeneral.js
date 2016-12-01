@@ -29,7 +29,7 @@ function initForm() {
     getVersionFooter();
     //
     $.validator.addMethod("greaterThan",
-        function(value, element, params) {
+        function (value, element, params) {
             var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
             var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
             if (!/Invalid|NaN/.test(new Date(fv))) {
@@ -45,7 +45,8 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(contabilizarFacturas());
-    $('#frmBuscar').submit(function() {
+    $('#btnDownload').click(buscarFicheros());
+    $('#frmBuscar').submit(function () {
         return false
     });
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
@@ -67,16 +68,16 @@ function admData() {
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
-        preDrawCallback: function() {
+        preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
                 responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
             }
         },
-        rowCallback: function(nRow) {
+        rowCallback: function (nRow) {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
         },
-        drawCallback: function(oSettings) {
+        drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
         language: {
@@ -103,7 +104,7 @@ function initTablaFacturas() {
         columns: [{
             data: "facturaId",
             width: "10%",
-            render: function(data, type, row) {
+            render: function (data, type, row) {
                 var html = '<label class="input">';
                 html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
@@ -118,7 +119,7 @@ function initTablaFacturas() {
             data: "vNum"
         }, {
             data: "fecha",
-            render: function(data, type, row) {
+            render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
@@ -129,7 +130,7 @@ function initTablaFacturas() {
             data: "observaciones"
         }, {
             data: "facturaId",
-            render: function(data, type, row) {
+            render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
@@ -164,7 +165,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -179,12 +180,12 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
-    data.forEach(function(v) {
+    data.forEach(function (v) {
         var field = "#chk" + v.facturaId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
-        $(field).change(function() {
+        $(field).change(function () {
             var quantity = 0;
             var data = {
                 factura: {
@@ -207,10 +208,10 @@ function loadTablaFacturas(data) {
                 url: url,
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
 
                 },
-                error: function(err) {
+                error: function (err) {
                     mensErrorAjax(err);
                 }
             });
@@ -219,19 +220,19 @@ function loadTablaFacturas(data) {
 }
 
 function buscarFacturas() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
-            success: function(data, status) {
+            success: function (data, status) {
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
             },
-            error: function(err) {
+            error: function (err) {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
@@ -240,8 +241,16 @@ function buscarFacturas() {
     return mf;
 }
 
+function buscarFicheros() {
+    var mf = function () {
+        var url = "ficheros";
+        window.open(url, '_new');
+    };
+    return mf;
+}
+
 function contabilizarFacturas() {
-    var mf = function() {
+    var mf = function () {
         // de momento nada
         if (!datosOK()) return;
         $.ajax({
@@ -249,15 +258,15 @@ function contabilizarFacturas() {
             url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
-            success: function(data, status) {
+            success: function (data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');                 
+                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
             },
-            error: function(err) {
+            error: function (err) {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
@@ -273,7 +282,7 @@ function deleteFactura(id) {
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
-    }, function(ButtonPressed) {
+    }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
                 facturaId: id
@@ -284,11 +293,11 @@ function deleteFactura(id) {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     var fn = buscarFacturas();
                     fn();
                 },
-                error: function(err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -308,7 +317,7 @@ function editFactura(id) {
 }
 
 function cargarFacturas() {
-    var mf = function(id) {
+    var mf = function (id) {
         if (id) {
             var data = {
                 id: facturaId
@@ -320,10 +329,10 @@ function cargarFacturas() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     loadTablaFacturas(data);
                 },
-                error: function(err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -335,10 +344,10 @@ function cargarFacturas() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     loadTablaFacturas(data);
                 },
-                error: function(err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -354,10 +363,10 @@ function printFactura(id) {
         url: myconfig.apiUrl + "/api/informes/facturas/" + id,
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             informePDF(data);
         },
-        error: function(err) {
+        error: function (err) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
@@ -375,7 +384,7 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
-var f_open_post = function(verb, url, data, target) {
+var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
     form.method = verb;
