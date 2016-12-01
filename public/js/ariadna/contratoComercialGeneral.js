@@ -52,7 +52,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosComerciales(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         $.ajax({
@@ -65,7 +68,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosComerciales(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -183,7 +189,10 @@ function refrescar() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosComerciales(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -211,7 +220,10 @@ function deleteContratoComercial(id) {
                     var fn = buscarContratosComerciales();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -242,7 +254,10 @@ function buscarContratosComerciales() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosComerciales(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;

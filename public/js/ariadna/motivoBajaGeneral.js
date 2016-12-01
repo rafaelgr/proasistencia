@@ -52,7 +52,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaMotivosBaja(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -157,7 +160,10 @@ function buscarMotivosBaja() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaMotivosBaja(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -194,7 +200,10 @@ function deleteMotivoBaja(id) {
                     var fn = buscarMotivosBaja();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {

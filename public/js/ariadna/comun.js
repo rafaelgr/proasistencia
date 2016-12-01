@@ -182,10 +182,12 @@ function spanishDbDate(v) {
     if (!v) {
         return null;
     }
-    var rd = moment(v, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    if (rd == 'Invalid date') {
-        rd = null;
-    }
+    //var rd = moment(v, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    //if (rd == 'Invalid date') {
+    //   rd = null;
+    //}
+    var v2 = v.split('/');
+    rd = v2[2] + "-" + v2[1] + "-" + v2[0];
     return rd;
 }
 
@@ -319,19 +321,31 @@ var mensError = function (mens) {
     });
 }
 
+var mensNormal = function (mens) {
+    // Building html response
+    var html = mens
+    html += sprintf("<div><small>%s</small></div>", "Haga clic en el mensaje para cerrarlo");
+    $.smallBox({
+        title: "ERROR",
+        content: html,
+        color: "#4E8975",
+        iconSmall: "fa fa-warning shake animated"
+    });
+}
+
 var mensErrorAjax = function (err) {
     var ms = "ERROR";
     if (err.readyState == 0) {
         ms = "Error general. Posiblemente falle la conexión.";
     }
     if (err.status == 401) {
-        ms ="ERROR de autorización";
+        ms = "ERROR de autorización";
     }
     // comprobar para mensajes de borrado
-    if (err.responseText){
+    if (err.responseText) {
         // buscar texto
-        if (/key constraint fails (.*), CONSTRAINT/.test(err.responseText)){
-            var a =  err.responseText.match("key constraint fails\(.*), CONSTRAINT");
+        if (/key constraint fails (.*), CONSTRAINT/.test(err.responseText)) {
+            var a = err.responseText.match("key constraint fails\(.*), CONSTRAINT");
             var a2 = a[1].substring(2);
             ms = "No se puede eliminar, hay registros que dependen de este en la tabla: " + a2;
         }

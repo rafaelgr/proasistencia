@@ -183,7 +183,10 @@ function deletePrefactura(id) {
                     var fn = buscarPrefacturas();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -215,7 +218,10 @@ function cargarPrefacturas() {
                 success: function (data, status) {
                     loadTablaPrefacturas(data);
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -227,7 +233,10 @@ function cargarPrefacturas() {
                 success: function (data, status) {
                     loadTablaPrefacturas(data);
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -243,7 +252,10 @@ function printPrefactura(id) {
         success: function (data, status) {
             informePDF(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 

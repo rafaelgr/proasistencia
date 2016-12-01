@@ -53,7 +53,10 @@ function initForm() {
                 var data2 = [data];
                 loadTablaEmpresas(data2);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -160,7 +163,10 @@ function buscarEmpresas() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaEmpresas(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -196,7 +202,10 @@ function deleteEmpresa(id) {
                     var fn = buscarEmpresas();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {

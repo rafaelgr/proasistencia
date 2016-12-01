@@ -52,7 +52,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosClienteMantenimiento(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         $.ajax({
@@ -65,7 +68,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosClienteMantenimiento(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -187,7 +193,10 @@ function refrescar() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosClienteMantenimiento(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -215,7 +224,10 @@ function deleteContratoClienteMantenimiento(id) {
                     var fn = buscarContratosClienteMantenimiento();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -246,7 +258,10 @@ function buscarContratosClienteMantenimiento() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaContratosClienteMantenimiento(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;

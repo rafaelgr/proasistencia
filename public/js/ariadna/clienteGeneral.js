@@ -66,7 +66,10 @@ function initForm() {
                     var data2 = [data];
                     loadTablaClientes(data2);
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     }
@@ -209,7 +212,10 @@ function buscarClientes() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaClientes(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;

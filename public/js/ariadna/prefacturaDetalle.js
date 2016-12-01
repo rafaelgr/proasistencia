@@ -101,7 +101,10 @@ function initForm() {
                 loadLineasPrefactura(data.prefacturaId);
                 loadBasesPrefactura(data.prefacturaId);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -308,7 +311,10 @@ function aceptar() {
                     var url = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -324,7 +330,10 @@ function aceptar() {
                     var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -351,7 +360,10 @@ function loadEmpresas(id) {
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -366,7 +378,10 @@ function loadFormasPago(id) {
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -392,7 +407,10 @@ function cambioCliente(data) {
             $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
             //vm.sformaPagoId(data.formaPagoId);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -417,7 +435,10 @@ function cambioEmpresa(data) {
             vm.emisorPoblacion(data.poblacion);
             vm.emisorProvincia(data.provincia);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -441,7 +462,10 @@ function nuevaLinea() {
             vm.total(0);
             vm.totalConIva(0);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -475,7 +499,10 @@ function aceptarLinea() {
                 loadLineasPrefactura(vm.prefacturaId());
                 loadBasesPrefactura(vm.prefacturaId());
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         $.ajax({
@@ -489,7 +516,10 @@ function aceptarLinea() {
                 loadLineasPrefactura(vm.prefacturaId());
                 loadBasesPrefactura(vm.prefacturaId());
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -669,7 +699,10 @@ function loadLineasPrefactura(id) {
         success: function (data, status) {
             loadTablaPrefacturaLineas(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -688,7 +721,10 @@ function loadArticulos(id) {
                 $("#cmbArticulos").val([0]).trigger('change');
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -707,7 +743,10 @@ function loadTiposIva(id) {
                 $("#cmbTiposIva").val([0]).trigger('change');
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -737,7 +776,10 @@ function cambioArticulo(data) {
             };
             cambioTiposIva(data2);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -757,7 +799,10 @@ function cambioTiposIva(data) {
             vm.tipoIvaId(data.tipoIvaId);
             vm.porcentaje(data.porcentaje);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -781,7 +826,10 @@ function editPrefacturaLinea(id) {
                 loadDataLinea(data[0]);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -809,7 +857,10 @@ function deletePrefacturaLinea(id) {
                     loadLineasPrefactura(vm.prefacturaId());
                     loadBasesPrefactura(vm.prefacturaId());
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -913,7 +964,10 @@ function loadBasesPrefactura(id) {
             vm.totalConIva(numeral(t2).format('0,0.00'));
             loadTablaBases(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -938,7 +992,10 @@ var cargaCliente = function (id) {
                 cambioAgente(data);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 };
 
@@ -965,7 +1022,10 @@ var initAutoCliente = function () {
                     });
                     response(r);
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
 
         },

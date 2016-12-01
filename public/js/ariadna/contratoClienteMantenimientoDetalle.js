@@ -363,11 +363,17 @@ function aceptar() {
                             cargarDatosDeContrato(vm.contratoClienteMantenimientoId());
                             $("#colaboradores").show();
                         },
-                        error: errorAjax
+                                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                     });
 
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         } else {
             $.ajax({
@@ -383,7 +389,10 @@ function aceptar() {
                     var url = "ContratoClienteMantenimientoGeneral.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
                     window.open(url, '_self');
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
     };
@@ -410,7 +419,10 @@ function loadEmpresas(id) {
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -425,7 +437,10 @@ function loadMantenedores(id) {
             vm.posiblesMantenedores(mantenedores);
             $("#cmbMantenedores").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -440,7 +455,10 @@ function loadClientes(id) {
             vm.posiblesClientes(mantenedores);
             $("#cmbClientes").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -455,7 +473,10 @@ function loadArticulos(id) {
             vm.posiblesArticulos(articulos);
             $("#cmbArticulos").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -471,7 +492,10 @@ function loadAgentes(id) {
             vm.posiblesAgentes(agentes);
             $("#cmbAgentes").val([id]).trigger('change');
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -501,7 +525,10 @@ function loadParametros() {
             // hay que mostrarlo en la zona de datos
             vm.margen(data.margenMantenimiento);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -553,7 +580,10 @@ function cargarDatosDeContrato(contratoClienteMantenimientoId) {
         success: function (data, status) {
             loadData(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -596,7 +626,10 @@ function aceptarComisionista() {
                 $('#modalComisionista').modal('hide');
                 loadComisionistas(vm.clienteId());
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         $.ajax({
@@ -609,7 +642,10 @@ function aceptarComisionista() {
                 $('#modalComisionista').modal('hide');
                 loadComisionistas(vm.clienteId());
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -740,7 +776,10 @@ function loadComisionistas(id) {
         success: function (data, status) {
             loadTablaComisionistas(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -753,7 +792,10 @@ function loadPrefacturas(id) {
         success: function (data, status) {
             loadTablaPrefacturas(data);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -773,7 +815,10 @@ function loadComerciales(id) {
                 $("#cmbComerciales").val([0]).trigger('change');
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -789,7 +834,10 @@ function editComisionista(id) {
                 loadComisionista(data);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -816,7 +864,10 @@ function deleteComisionista(id) {
                 success: function (data, status) {
                     loadComisionistas(vm.clienteId());
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -889,7 +940,10 @@ function cambioMantenedor(data) {
             // asignamos el porComer al vm
             vm.manPorComer(data.manPorVentaNeta);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
     $.ajax({
         type: "GET",
@@ -900,7 +954,10 @@ function cambioMantenedor(data) {
             // asignamos el porComer al vm
             vm.codMantenedor(data.proId);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
     
 }
@@ -932,7 +989,10 @@ function cambioCliente(data) {
             }
 
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 
 }
@@ -1043,14 +1103,23 @@ function aceptarGenerar() {
                                     crearPrefacturas();
                                 }
                             },
-                            error: errorAjax
+                                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                         });
                     },
-                    error: errorAjax
+                                    error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                 });
 
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     } else {
         $.ajax({
@@ -1076,10 +1145,16 @@ function aceptarGenerar() {
                             crearPrefacturas();
                         }
                     },
-                    error: errorAjax
+                                    error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
                 });
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
     $('#modalGenerar').modal('hide');
@@ -1103,7 +1178,10 @@ function crearPrefacturas() {
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             loadPrefacturas(vm.contratoClienteMantenimientoId());
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 }
 
@@ -1369,7 +1447,10 @@ function deletePrevias() {
                 success: function (data, status) {
                     crearPrefacturas();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -1481,7 +1562,10 @@ var cargaCliente = function (id) {
                 cambioAgente(data);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });
 };
 
@@ -1508,7 +1592,10 @@ var initAutoCliente = function () {
                     });
                     response(r);
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
 
         },
@@ -1538,7 +1625,10 @@ function cambioCodCliente(data){
             // cuando cambia el código cambiamos el agente
             cargaCliente(data.clienteId);
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });    
 }
 
@@ -1557,6 +1647,9 @@ function cambioCodMantenedor(data){
                 cambioMantenedor(d);
             }
         },
-        error: errorAjax
+                        error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
     });    
 }

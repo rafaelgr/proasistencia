@@ -1,5 +1,6 @@
 {
     "apiPort": 8080,
     "apiHost": "127.0.0.1",
-    "dsn": "ProaGestion"
+    "dsn": "ProaGestion",
+    "conta_dir": ""
 }

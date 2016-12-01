@@ -52,7 +52,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaTiposVia(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -157,7 +160,10 @@ function buscarTiposVia() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaTiposVia(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -194,7 +200,10 @@ function deleteTipoVia(id) {
                     var fn = buscarTiposVia();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {

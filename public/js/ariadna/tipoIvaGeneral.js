@@ -52,7 +52,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaTiposIva(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     }
 }
@@ -159,7 +162,10 @@ function buscarTiposIva() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaTiposIva(data);
             },
-            error: errorAjax
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
         });
     };
     return mf;
@@ -196,7 +202,10 @@ function deleteTipoIva(id) {
                     var fn = buscarTiposIva();
                     fn();
                 },
-                error: errorAjax
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
             });
         }
         if (ButtonPressed === "Cancelar") {
