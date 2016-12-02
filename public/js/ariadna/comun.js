@@ -326,7 +326,7 @@ var mensNormal = function (mens) {
     var html = mens
     html += sprintf("<div><small>%s</small></div>", "Haga clic en el mensaje para cerrarlo");
     $.smallBox({
-        title: "ERROR",
+        title: "AVISO",
         content: html,
         color: "#4E8975",
         iconSmall: "fa fa-warning shake animated"

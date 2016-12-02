@@ -243,17 +243,16 @@ function buscarFacturas() {
 function contabilizarFacturas() {
     var mf = function() {
         // de momento nada
-        return;
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL",
+            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function(data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('El fichero para contabilización ya está preparado');                 
+                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');                 
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);

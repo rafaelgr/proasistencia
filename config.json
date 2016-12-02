@@ -2,5 +2,5 @@
     "apiPort": 8080,
     "apiHost": "127.0.0.1",
     "dsn": "ProaGestion",
-    "conta_dir": ""
+    "conta_dir": "C:\\Ariadna\\proasistencia\\public\\ficheros"
 }
