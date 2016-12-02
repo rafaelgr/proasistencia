@@ -95,7 +95,9 @@ function initForm() {
     loadArticulos();
 
     $("#cmbTiposPagos").select2(select2Spanish());
+    loadTiposPagos();
     $("#cmbTiposMantenimientos").select2(select2Spanish());
+    loadTiposMantenimientos();
     $("#cmbPeriodos").select2(select2Spanish());
     $("#cmbPeriodos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -103,7 +105,7 @@ function initForm() {
             cambioGenerador()();
         }
     });
-    loadTiposPagos();
+
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -273,6 +275,9 @@ function datosOK() {
             cmbArticulos: {
                 required: true
             },
+            cmbTiposMantenimientos: {
+                required: true
+            },
             txtImporte: {
                 required: true,
                 number: true
@@ -298,7 +303,10 @@ function datosOK() {
             },
             txtManPorComer: {
                 number: "Debe ser un número valido"
-            }
+            },
+            cmbTiposMantenimientos: {
+                required: "Debe elejir un tipo"
+            },
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -1223,7 +1231,7 @@ function datosOKGenerar() {
             txtFFinal: {
                 required: true
             },
-            cmPeriodos: {
+            cmbPeriodos: {
                 required: true,
                 number: true
             },
