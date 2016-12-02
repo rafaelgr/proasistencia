@@ -113,6 +113,8 @@ function initTablaContratosClienteMantenimiento() {
         },
         data: dataContratosClienteMantenimiento,
         columns: [{
+            data: "tipo"
+        },{
             data: "empresa"
         }, {
             data: "mantenedor"

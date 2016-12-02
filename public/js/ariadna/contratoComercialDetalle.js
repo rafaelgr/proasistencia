@@ -25,13 +25,13 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     $("#cmbEmpresas").select2().on('change', function (e) {
         cambioEmpresa(e.added);
-    });    
+    });
     loadEmpresas();
 
     $("#cmbComerciales").select2(select2Spanish());
     $("#cmbComerciales").select2().on('change', function (e) {
         cambioComercial(e.added);
-    });    
+    });
     loadComerciales();
 
     $("#cmbTiposPagos").select2(select2Spanish());
@@ -55,10 +55,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -91,7 +91,19 @@ function admData() {
     self.manOficinaTecnica = ko.observable();
     self.manAsesorTecnico = ko.observable();
     self.manComercial = ko.observable();
+    self.manComision = ko.observable();
     self.comision = ko.observable();
+    //
+    self.segComisAgente = ko.observable();
+    self.segPorImpCliente = ko.observable();
+    self.segPorImpClienteAgente = ko.observable();
+    self.segPorCostes = ko.observable();
+    self.segCostes = ko.observable();
+    self.segJefeObra = ko.observable();
+    self.segOficinaTecnica = ko.observable();
+    self.segAsesorTecnico = ko.observable();
+    self.segComercial = ko.observable();
+    self.segComision = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -135,10 +147,28 @@ function loadData(data) {
     vm.manOficinaTecnica(data.manOficinaTecnica);
     vm.manAsesorTecnico(data.manAsesorTecnico);
     vm.manComercial(data.manComercial);
+    vm.manComision(data.manComision);
+    //
+    vm.segComisAgente(data.segComisAgente);
+    vm.segPorImpCliente(data.segPorImpCliente);
+    vm.segPorImpClienteAgente(data.segPorImpClienteAgente);
+    vm.segPorCostes(data.segPorCostes);
+    vm.segCostes(data.segCostes);
+    vm.segJefeObra(data.segJefeObra);
+    vm.segOficinaTecnica(data.segOficinaTecnica);
+    vm.segAsesorTecnico(data.segAsesorTecnico);
+    vm.segComercial(data.segComercial);
+    vm.segComision(data.segComision);
+
     vm.comision(data.comision);
+
     if (data.manPorImpCliente > 0) $('#chkManPorImpCliente').attr('checked', 'true');
     if (data.manPorImpClienteAgente > 0) $('#chkManPorImpClienteAgente').attr('checked', 'true');
     if (data.manPorCostes > 0) $('#chkManPorCostes').attr('checked', 'true');
+    //
+    if (data.segPorImpCliente > 0) $('#chkSegPorImpCliente').attr('checked', 'true');
+    if (data.segPorImpClienteAgente > 0) $('#chkSegPorImpClienteAgente').attr('checked', 'true');
+    if (data.segPorCostes > 0) $('#chkSegPorCostes').attr('checked', 'true');    
     //
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
@@ -226,7 +256,18 @@ function aceptar() {
                 "manOficinaTecnica": vm.manOficinaTecnica(),
                 "manAsesorTecnico": vm.manAsesorTecnico(),
                 "manComercial": vm.manComercial(),
-                "comision": vm.comision()
+                "manComision": vm.manComision(),
+                "comision": vm.comision(),
+                "segComisAgente": vm.segComisAgente(),
+                "segPorImpCliente": vm.segPorImpCliente(),
+                "segPorImpClienteAgente": vm.segPorImpClienteAgente(),
+                "segPorCostes": vm.segPorCostes(),
+                "segCostes": vm.segCostes(),
+                "segJefeObra": vm.segJefeObra(),
+                "segOficinaTecnica": vm.segOficinaTecnica(),
+                "segAsesorTecnico": vm.segAsesorTecnico(),
+                "segComercial": vm.segComercial(),
+                "segComision": vm.segComision()
             }
         };
         var url = "";
@@ -248,7 +289,7 @@ function aceptar() {
                     var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -271,7 +312,7 @@ function aceptar() {
                     var url = "ContratoComercialGeneral.html?ContratoComercialId=" + vm.contratoComercialId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -301,10 +342,10 @@ function loadEmpresas(id) {
             vm.posiblesEmpresas(empresas);
             $("#cmbEmpresas").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -319,10 +360,10 @@ function loadComerciales(id) {
             vm.posiblesComerciales(comerciales);
             $("#cmbComerciales").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -357,10 +398,10 @@ function cambioEmpresa(data) {
                 vm.firmanteEmpresa(data.firmante);
             }
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 
 }
@@ -385,10 +426,10 @@ function cambioComercial(data) {
                 vm.firmanteColaborador(data.firmante);
             }
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 
 }

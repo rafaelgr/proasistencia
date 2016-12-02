@@ -213,7 +213,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -254,7 +254,7 @@
                                 </li>
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
-                                </li>  
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -449,6 +449,15 @@
                                                             Condiciones generales mantenimiento
                                                         </header>
                                                         <div class="row">
+                                                            <section class="col col-md-8"></section>
+                                                            <section class="col col-md-4">
+                                                                <label class="label">COMISION</label>
+                                                                <label class="input">
+                                                                    <input id="txtManComision" name="txtManComision" data-bind="value: manComision" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
                                                             <section class="col col-md-8">
                                                                 DEDUCCIONES IMPORTE AL CLIENTE
                                                                 <hr/>
@@ -570,12 +579,139 @@
 
                                                     <section class="col col-md-4">
                                                         <header>
-                                                            Condiciones generales servicios
+                                                            Condiciones generales seguros
                                                         </header>
+                                                        <div class="row">
+                                                            <section class="col col-md-8"></section>
+                                                            <section class="col col-md-4">
+                                                                <label class="label">COMISION</label>
+                                                                <label class="input">
+                                                                    <input id="txtSegComision" name="txtSegComision" data-bind="value: segComision" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-8">
+                                                                DEDUCCIONES IMPORTE AL CLIENTE
+                                                                <hr/>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                                PORCENTAJES
+                                                                <hr/>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- Comisión del agente -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegComisAgente" type="checkbox" name="chkSegComisAgente" data-bind="checked: segComisAgente">
+                                                                    <i></i> Importe comisión del agente
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- % Sobre importe al cliente -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegPorImpCliente" type="checkbox" name="chkSegPorImpCliente">
+                                                                    <i></i>% Sobre importe al cliente
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                                <label class="input">
+                                                                    <input id="txtSegPorImpCliente" name="txtSegPorImpCliente" data-bind="value: segPorImpCliente" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- % Sobre importe al cliente - comis agente -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegPorImpClienteAgente" type="checkbox" name="chkSegPorImpClienteAgente">
+                                                                    <i></i>% Sobre importe al cliente menos comisión agente
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                                <label class="input">
+                                                                    <input id="txtSegPorImpClienteAgente" name="txtSegPorImpClienteAgente" data-bind="value: segPorImpClienteAgente" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- Porcentaje sobre costes -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegPorCostes" type="checkbox" name="chkSegPorCostes">
+                                                                    <i></i>% Sobre los costes
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                                <label class="input">
+                                                                    <input id="txtSegPorCostes" name="txtSegPorCostes" data-bind="value: segPorCostes" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- costes -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegCostes" type="checkbox" name="chkSegCostes" data-bind="checked: segCostes">
+                                                                    <i></i> Importe costes
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- jefe de obra -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegJefeObra" type="checkbox" name="chkSegJefeObra" data-bind="checked: segJefeObra">
+                                                                    <i></i> Importe Jefe Obra
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- oficina técnica -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegOficinaTecnica" type="checkbox" name="chkSegOficinaTecnica" data-bind="checked: segOficinaTecnica">
+                                                                    <i></i> Importe Oficina Técnica
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- asesor técnico -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegAsesorTecnico" type="checkbox" name="chkSegAsesorTecnico" data-bind="checked: segAsesorTecnico">
+                                                                    <i></i> Importe Asesor Técnico
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- comercial -->
+                                                            <section class="col col-md-8">
+                                                                <label class="checkbox">
+                                                                    <input id="chkSegComercial" type="checkbox" name="chkSegComercial" data-bind="checked: segComercial">
+                                                                    <i></i> Importe Comercial
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-4">
+                                                            </section>
+                                                        </div>                                                        
                                                     </section>
                                                     <section class="col col-md-4">
                                                         <header>
-                                                            Condiciones generales obras
+                                                            -----------
                                                         </header>
                                                     </section>
                                                 </div>
@@ -695,7 +831,7 @@
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
-    <script src="js/sprintf/sprintf.min.js"></script>    
+    <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
