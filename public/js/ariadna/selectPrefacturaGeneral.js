@@ -280,7 +280,7 @@ function buscarPrefacturas() {
 function crearPrefactura() {
     var mf = function () {
         if (!datosOK()) return;
-        var url = myconfig.apiUrl + "/api/prefacturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL";
+        var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL";
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
         if (vm.sarticuloId()) url += "/" + vm.sarticuloId(); else url += "/0"
