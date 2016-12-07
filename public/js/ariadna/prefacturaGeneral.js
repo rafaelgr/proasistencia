@@ -25,7 +25,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarPrefacturas());
     $('#btnAlta').click(crearPrefactura());
-    $('#frmBuscar').submit(function () {
+    $('#frmBuscar').submit(function() {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
@@ -49,21 +49,30 @@ function initForm() {
         // criterio puede cambiar y habrá que adaptarlo.
         cargarPrefacturas()();
     }
+
+    $('#chkTodos').change(function(){
+        if (this.checked){
+            cargarPrefacturas2All();
+        }else{
+            cargarPrefacturas2();
+        }
+    })
 }
 
 function initTablaPrefacturas() {
     tablaCarro = $('#dt_prefactura').dataTable({
+        bSort: false,
         autoWidth: true,
-        preDrawCallback: function () {
+        preDrawCallback: function() {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
                 responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
             }
         },
-        rowCallback: function (nRow) {
+        rowCallback: function(nRow) {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
         },
-        drawCallback: function (oSettings) {
+        drawCallback: function(oSettings) {
             responsiveHelper_dt_basic.respond();
         },
         language: {
@@ -88,32 +97,45 @@ function initTablaPrefacturas() {
         },
         data: dataPrefacturas,
         columns: [{
+            data: "facturaId",
+            render: function(data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
             data: "emisorNombre"
         }, {
-                data: "receptorNombre"
-            },{
-                data: "vNum"
-            }, {
-                data: "fecha",
-                render: function (data, type, row) {
-                    return moment(data).format('DD/MM/YYYY');
-                }
-            }, {
-                data: "total"
-            }, {
-                data: "totalConIva"
-            }, {
-                data: "observaciones"
-            }, {
-                data: "prefacturaId",
-                render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
-                    return html;
-                }
-            }]
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function(data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "vFac"
+        }, {
+            data: "vFPago"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "prefacturaId",
+            render: function(data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
     });
 }
 
@@ -129,7 +151,7 @@ function datosOK() {
 
         },
         // Do not change code below
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -147,14 +169,14 @@ function loadTablaPrefacturas(data) {
 }
 
 function buscarPrefacturas() {
-    var mf = function () {
+    var mf = function() {
         cargarPrefacturas()();
     };
     return mf;
 }
 
 function crearPrefactura() {
-    var mf = function () {
+    var mf = function() {
         var url = "PrefacturaDetalle.html?PrefacturaId=0";
         window.open(url, '_self');
     };
@@ -168,7 +190,7 @@ function deletePrefactura(id) {
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
+    }, function(ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
                 prefacturaId: id
@@ -179,11 +201,11 @@ function deletePrefactura(id) {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function (data, status) {
+                success: function(data, status) {
                     var fn = buscarPrefacturas();
                     fn();
                 },
-                                error: function (err) {
+                error: function(err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -203,7 +225,7 @@ function editPrefactura(id) {
 }
 
 function cargarPrefacturas() {
-    var mf = function (id) {
+    var mf = function(id) {
         if (id) {
             var data = {
                 id: prefacturaId
@@ -215,10 +237,10 @@ function cargarPrefacturas() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function (data, status) {
+                success: function(data, status) {
                     loadTablaPrefacturas(data);
                 },
-                                error: function (err) {
+                error: function(err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -230,10 +252,10 @@ function cargarPrefacturas() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function (data, status) {
+                success: function(data, status) {
                     loadTablaPrefacturas(data);
                 },
-                                error: function (err) {
+                error: function(err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -249,13 +271,13 @@ function printPrefactura(id) {
         url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
         dataType: "json",
         contentType: "application/json",
-        success: function (data, status) {
+        success: function(data, status) {
             informePDF(data);
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function(err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -290,3 +312,35 @@ var f_open_post = function(verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function cargarPrefacturas2() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/prefacturas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: function(err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function cargarPrefacturas2All() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/prefacturas/all",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: function(err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
