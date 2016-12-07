@@ -924,7 +924,7 @@ function cambioComercial(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/comision/" + comercialId + "/" + vm.clienteId() + "/" + vm.empresaId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sclienteId() + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (comision, status) {
@@ -946,12 +946,16 @@ function cambioAgente(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/comision/" + comercialId + "/" + vm.clienteId() + "/" + vm.empresaId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sclienteId() + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (comision, status) {
             // asignamos el porComer al vm
             vm.manPorComer(comision);
+            // cambiamos los importes
+            if (vm.coste()){
+                cambioImporteAlCliente()();
+            }
         },
         error: function (err) {
 
@@ -1580,7 +1584,7 @@ function editPrefactura(id) {
 
 // cargaCliente
 // carga en el campo txtCliente el valor seleccionado
-var cargaCliente = function (id) {
+var cargaCliente = function (id, cambio) {
     $.ajax({
         type: "GET",
         url: "/api/clientes/" + id,
@@ -1591,7 +1595,7 @@ var cargaCliente = function (id) {
             $('#txtCliente').val(data.nombre);
             vm.sclienteId(data.clienteId);
             // asignamos el agente que corresponda
-            if (data.comercialId) {
+            if (data.comercialId && cambio) {
                 loadAgentes(data.comercialId);
                 data.id = data.comercialId;
                 cambioAgente(data);
@@ -1658,7 +1662,7 @@ function cambioCodCliente(data) {
         contentType: "application/json",
         success: function (data, status) {
             // cuando cambia el código cambiamos el agente
-            cargaCliente(data.clienteId);
+            cargaCliente(data.clienteId, true);
         },
         error: function (err) {
             mensErrorAjax(err);
