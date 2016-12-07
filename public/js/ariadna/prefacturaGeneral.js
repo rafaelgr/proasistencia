@@ -53,6 +53,7 @@ function initForm() {
 
 function initTablaPrefacturas() {
     tablaCarro = $('#dt_prefactura').dataTable({
+        bSort: false,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
