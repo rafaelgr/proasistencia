@@ -366,6 +366,12 @@ function datosOK() {
         }
     });
     var opciones = $("#frmCliente").validate().settings;
+    if (vm.stipoClienteId() == 1){
+        // Si es mantenedor no necesita agente
+        delete opciones.rules.cmbAgentes;
+        delete opciones.messages.cmbAgentes;
+    }
+    
     if (!$('#frmCliente').valid()) return false;
     // mas controles
     // iban
@@ -971,29 +977,15 @@ function cambioAgente(data) {
                     success: function (data, status) {
                         if (data) {
                             vm.colaborador(data.nombre);
-                            // controlar si el colaborador ya figura como comisionista
-                            /*
-                            $.ajax({
-                                type: "GET",
-                                url: "/api/clientes_comisionistas/comercial/" + vm.clienteId() + "/" + data.id,
-                                dataType: "json",
-                                contentType: "application/json",
-                                success: function (data, status) {
-                                    if (!data){
-                                        alert("No está");
-                                    }else{
-                                        alert("Ya está");
-                                    }
-                                }
-                            });
-                            */
                         }
                     }
                 });
             }
         },
         error: function (err) {
-            mensErrorAjax(err);
+            if (err.status !== 404){
+                mensErrorAjax(err);
+            }
             // si hay algo más que hacer lo haremos aquí.
         }
     });
