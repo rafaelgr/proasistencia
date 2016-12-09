@@ -77,6 +77,7 @@ function admData() {
     self.contabilidad = ko.observable();
     self.seriePre = ko.observable();
     self.serieFac = ko.observable();
+    self.serieFacS = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -110,6 +111,7 @@ function loadData(data) {
     vm.contabilidad(data.contabilidad);
     vm.seriePre(data.seriePre);
     vm.serieFac(data.serieFac);
+    vm.serieFacS(data.serieFacS);
     loadTiposVia(data.tipoViaId);
 }
 
@@ -216,7 +218,8 @@ function aceptar() {
                 "contabilidad": vm.contabilidad(),
                 "tipoViaId": vm.stipoViaId(),
                 "seriePre": vm.seriePre(),
-                "serieFac": vm.serieFac()
+                "serieFac": vm.serieFac(),
+                "serieFacS": vm.serieFacS()
             }
         };
         if (empId == 0) {
