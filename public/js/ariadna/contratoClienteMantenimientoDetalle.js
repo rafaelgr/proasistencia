@@ -1053,6 +1053,8 @@ function generar() {
     vm.fFinal(vm.fechaFin());
     vm.speriodoId(vm.stipoPagoId());
     var importe = vm.importeAlCliente();
+    var importeAlCliente = vm.importeAlCliente();
+    var coste = vm.coste();
     var cliente = vm.sclienteId();
     if (vm.smantenedorId()) {
         importe = vm.importeMantenedor();
@@ -1061,7 +1063,7 @@ function generar() {
     vm.fImporte(importe);
     var fInicial = new Date(spanishDbDate(vm.fechaFactura()));
     var numpagos = calNumPagos();
-    var pagos = crearPagos(importe, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
+    var pagos = crearPagos(importe, importeAlCliente, coste, fInicial, numpagos, vm.diaPago(), vm.sempresaId(), cliente, vm.sarticuloId());
     vm.numpagos(numpagos);
     vm.listaPagos(pagos);
     loadTablaGenerador(pagos);
@@ -1334,7 +1336,7 @@ function cambioGenerador() {
 // crearPagos()
 // crea un vector provisional con la fecha e importe de cada
 // uno de los pagos
-function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, clienteId, articuloId) {
+function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, diaPago, empresaId, clienteId, articuloId) {
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
@@ -1358,19 +1360,29 @@ function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, cliente
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
     // se supone que la fecha ya está en formato js.
     var importePago = importe / numPagos;
+    var importePagoCliente = importeAlCliente / numPagos;
+    var importeCoste = coste / numPagos;
     var import1 = (importePago / 30) * diffDias;
+    var import11 = (importePagoCliente / 30) * diffDias;
+    var import12 = (coste / 30) * diffDias;
     var import2 = importePago - import1;
+    var import21 = importePagoCliente - import11;
+    var import22 = coste - import12;
     var pagos = [];
     for (var i = 0; i < numPagos; i++) {
         var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         var p = {
             fecha: f,
             importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
+            p.importeCliente = import11;
+            p.importeCoste = import12;
         }
         pagos.push(p);
     }
@@ -1379,6 +1391,8 @@ function crearPagos(importe, fechaInicial, numPagos, diaPago, empresaId, cliente
         var p = {
             fecha: f,
             importe: import2,
+            importeCliente: import21,
+            importeCoste: import22,
             empresaId: empresaId,
             clienteId: clienteId
         };
