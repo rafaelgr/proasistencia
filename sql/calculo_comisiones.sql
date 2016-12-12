@@ -1,7 +1,4 @@
-SELECT 
-#*,
-f.facturaId,
-f.fecha, f.serie, f.ano, f.numero, f.totalAlCliente, f.costeproporcional,
+SELECT f.facturaId, f.fecha, f.serie, f.ano, f.numero, f.totalAlCliente, f.costeproporcional,
 cm.contratoClienteMantenimientoId, cm.referencia, cm.tipoMantenimientoId,
 cmc.comercialId AS comercialId, c.nombre AS nombreComercial, c.nif AS nifComercial, c.tipoComercialId AS tipoComercial, cmc.porComer,
 cm.comercialId AS agenteId, c2.nombre AS nombreAgente, c2.nif AS nifAgente, c2.tipoComercialId AS tipoAgente, cm.manPorComer AS porAgente,
