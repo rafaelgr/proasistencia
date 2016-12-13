@@ -199,13 +199,13 @@ function generarLiquidaciones() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/0/0",
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');
+                mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);

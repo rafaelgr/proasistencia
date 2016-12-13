@@ -38,3 +38,6 @@ CREATE TABLE `liquidacion_comercial`(
   CONSTRAINT `liq_comer_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`),
   CONSTRAINT `liq_comer_contrato` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento`(`contratoClienteMantenimientoId`)
 );
+
+ALTER TABLE `liquidacion_comercial`   
+  ADD COLUMN `base` DECIMAL(12,2) NULL AFTER `porComer`;
