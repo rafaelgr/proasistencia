@@ -44,8 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(contabilizarFacturas());
-    $('#btnDownload').click(buscarFicheros());
+    $('#btnAlta').click(generarLiquidaciones());
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -102,16 +101,6 @@ function initTablaFacturas() {
         },
         data: dataFacturas,
         columns: [{
-            data: "facturaId",
-            width: "10%",
-            render: function (data, type, row) {
-                var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
-                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
-                html += '</label>';
-                return html;
-            }
-        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -131,10 +120,9 @@ function initTablaFacturas() {
         }, {
             data: "facturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                var html = "<div class='pull-right'>" + bt2 + "" + bt3 + "</div>";
                 return html;
             }
         }]
@@ -180,43 +168,6 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
-    data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
-        if (v.sel == 1) {
-            $(field).attr('checked', true);
-        }
-        $(field).change(function () {
-            var quantity = 0;
-            var data = {
-                factura: {
-                    facturaId: v.facturaId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: 0
-                }
-            };
-            if (this.checked) {
-                data.factura.sel = 1;
-            }
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
-        });
-    });
 }
 
 function buscarFacturas() {
@@ -224,7 +175,7 @@ function buscarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -241,15 +192,8 @@ function buscarFacturas() {
     return mf;
 }
 
-function buscarFicheros() {
-    var mf = function () {
-        var url = "ficheros";
-        window.open(url, '_new');
-    };
-    return mf;
-}
 
-function contabilizarFacturas() {
+function generarLiquidaciones() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
