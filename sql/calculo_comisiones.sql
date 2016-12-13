@@ -1,3 +1,11 @@
+SELECT * 
+FROM liquidacion_comercial AS lq
+WHERE lq.facturaId IN
+(SELECT facturaId FROM facturas WHERE fecha >= '2017-01-01' AND fecha <= '2017-12-31');
+
+DELETE FROM liquidacion_comercial WHERE facturaId IN 
+(SELECT facturaId FROM facturas WHERE fecha >= '2017-01-01' AND fecha <= '2017-12-31');
+
 SELECT f.facturaId, f.fecha, f.serie, f.ano, f.numero, f.totalAlCliente, f.costeproporcional,
 cm.contratoClienteMantenimientoId, cm.referencia, cm.tipoMantenimientoId,
 cmc.comercialId AS comercialId, c.nombre AS nombreComercial, c.nif AS nifComercial, c.tipoComercialId AS tipoComercial, cmc.porComer,
@@ -9,4 +17,5 @@ LEFT JOIN contrato_cliente_mantenimiento AS cm ON cm.contratoClienteMantenimient
 LEFT JOIN contrato_cliente_mantenimiento_comisionistas AS cmc ON cmc.contratoClienteMantenimientoId = cm.contratoClienteMantenimientoId
 LEFT JOIN contrato_comercial AS cc ON cc.comercialId = cmc.comercialId AND cc.empresaId = f.empresaId
 LEFT JOIN comerciales AS c ON c.comercialId = cmc.comercialId
-LEFT JOIN comerciales AS c2 ON c2.comercialId = cm.comercialId
+LEFT JOIN comerciales AS c2 ON c2.comercialId = cm.comercialId;
+
