@@ -197,26 +197,60 @@ function generarLiquidaciones() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
+        // Vamos a comprobar si hay datos previos
         $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/0/0",
+            type: "GET",
+            url: myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
-            success: function (data, status) {
-                // borramos datos
-                $("#btnAlta").hide();
-                mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
-                vm.desdeFecha(null);
-                vm.hastaFecha(null);
-                loadTablaFacturas(null);
+            success: function (data) {
+                if (data.length > 0) {
+                    var mens = "Ya hay liquidaciones generadas de estas facturas. ¿Desea borrarlas y generarlas de nuevo?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            generaLiquidaciones2();
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            // no hacemos nada (no quiere borrar)
+                        }
+                    });
+
+                } else {
+                    generaLiquidaciones2();
+                }
             },
             error: function (err) {
                 mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
             }
-        });
+        })
+
     };
     return mf;
+}
+
+function generaLiquidaciones2() {
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/0/0",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            // borramos datos
+            $("#btnAlta").hide();
+            mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
+            vm.desdeFecha(null);
+            vm.hastaFecha(null);
+            loadTablaFacturas(null);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function deleteFactura(id) {

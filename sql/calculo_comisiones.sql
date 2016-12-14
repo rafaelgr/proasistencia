@@ -1,7 +1,7 @@
 SELECT * 
 FROM liquidacion_comercial AS lq
 WHERE lq.facturaId IN
-(SELECT facturaId FROM facturas WHERE fecha >= '2017-01-01' AND fecha <= '2017-12-31');
+(SELECT facturaId FROM facturas WHERE fecha >= '2017-01-01' AND fecha <= '2017-12-31'); 
 
 DELETE FROM liquidacion_comercial WHERE facturaId IN 
 (SELECT facturaId FROM facturas WHERE fecha >= '2017-01-01' AND fecha <= '2017-12-31');
