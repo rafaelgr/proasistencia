@@ -5187,3 +5187,1110 @@ Error: Connection lost: The server closed the connection.
  VERSION: 1.1.28
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/12/02016 12:40:13
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/12/02016 20:40:47
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:49:14
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:49:17
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:50:11
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:50:14
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:50:55
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:50:58
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:51:26
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:51:29
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:51:42
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 09:51:45
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:08:59
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:09:03
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:09:12
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:09:15
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:56:16
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 10:56:19
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 11:16:18
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 11:16:22
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 13:54:15
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 13:54:32
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 13:54:35
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 16:17:25
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 16:29:27
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 16:29:30
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 16:29:45
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/12/02016 16:29:48
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/12/02016 00:30:25
+-------------------------------------------
+ VERSION: 1.1.29
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/12/02016 12:49:06
+-------------------------------------------
+ VERSION: 1.1.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/12/02016 20:49:39
+-------------------------------------------
+ VERSION: 1.1.30
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/12/02016 08:44:12
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/12/02016 09:15:51
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/12/02016 22:41:54
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 06:42:19
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:43:26
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:43:30
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:45:04
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:45:07
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:48:44
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:48:47
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:54:34
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:54:37
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:55:20
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:55:23
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:57:31
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:57:35
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:57:44
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 09:57:47
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:01:12
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:01:15
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:13:32
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:13:35
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:23:39
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:77
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+ReferenceError: callback is not defined
+    at Query._callback (C:\Ariadna\proasistencia\lib\clientes-comisionistas\clientes_comisionistas_db_mysql.js:133:20)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:144:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:128:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:73:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:96:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 10:23:42
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/12/02016 18:36:29
+-------------------------------------------
+ VERSION: 1.1.31
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/12/02016 17:27:43
+-------------------------------------------
+ VERSION: 1.1.32
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:102:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  15/12/02016 01:28:16
+-------------------------------------------
+ VERSION: 1.1.32
+ PORT: 8080
+-------------------------------------------

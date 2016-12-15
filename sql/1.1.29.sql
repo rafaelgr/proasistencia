@@ -5,9 +5,9 @@ CREATE TABLE `tipos_mantenimiento`(
 );
 
 
-ALTER TABLE .`contrato_cliente_mantenimiento`   
+ALTER TABLE `contrato_cliente_mantenimiento`   
   ADD COLUMN `tipoMantenimientoId` INT(11) NULL AFTER `facturaParcial`,
-  ADD CONSTRAINT `ref_ccm_tipomantenimiento` FOREIGN KEY (`tipoMantenimientoId`) REFERENCES .`tipos_mantenimiento`(`tipoMantenimientoId`);
+  ADD CONSTRAINT `ref_ccm_tipomantenimiento` FOREIGN KEY (`tipoMantenimientoId`) REFERENCES `tipos_mantenimiento`(`tipoMantenimientoId`);
 
 # Crear los tipos por defecto
 DELETE FROM tipos_mantenimiento;
@@ -17,7 +17,7 @@ INSERT INTO tipos_mantenimiento VALUES(2, 'SEGUROS');
 UPDATE contrato_cliente_mantenimiento SET tipoMantenimientoId = 1;
 
 # parámetros para seguros en el contrato
-ALTER TABLE `proasistencia`.`contrato_comercial`   
+ALTER TABLE `contrato_comercial`   
   ADD COLUMN `manComision` DECIMAL(5,2) NULL AFTER `comision`,
   ADD COLUMN `segComisAgente` BOOL DEFAULT FALSE NULL AFTER `manComision`,
   ADD COLUMN `segPorImpCliente` DECIMAL(5,2) NULL AFTER `segComisAgente`,
@@ -30,7 +30,7 @@ ALTER TABLE `proasistencia`.`contrato_comercial`
   ADD COLUMN `segComercial` BOOL DEFAULT FALSE NULL AFTER `segAsesorTecnico`,
   ADD COLUMN `segComision` DECIMAL(5,2) NULL AFTER `segComercial`;
 
-ALTER TABLE `proasistencia`.`contrato_comercial`   
+ALTER TABLE `contrato_comercial`   
   CHANGE `manComision` `manComision` DECIMAL(5,2) DEFAULT 0.00 NULL,
   CHANGE `segPorImpCliente` `segPorImpCliente` DECIMAL(5,2) DEFAULT 0.00 NULL,
   CHANGE `segPorImpClienteAgente` `segPorImpClienteAgente` DECIMAL(5,2) DEFAULT 0.00 NULL,

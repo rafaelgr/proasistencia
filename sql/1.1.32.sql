@@ -1,10 +1,10 @@
 ALTER TABLE `prefacturas`   
-  ADD COLUMN `totalAlCliente` DECIMAL(12,2) NULL AFTER `facturaId`,
-  ADD COLUMN `costeProporcional` DECIMAL(12,2) NULL AFTER `totaAlCliente`;
+  ADD COLUMN `totalAlCliente` DECIMAL(12,2) NULL ,
+  ADD COLUMN `costeProporcional` DECIMAL(12,2) NULL;
 
 ALTER TABLE `facturas`   
-  ADD COLUMN `totalAlCliente` DECIMAL(12,2) NULL AFTER `facturaId`,
-  ADD COLUMN `costeProporcional` DECIMAL(12,2) NULL AFTER `totaAlCliente`;  
+  ADD COLUMN `totalAlCliente` DECIMAL(12,2) NULL,
+  ADD COLUMN `costeProporcional` DECIMAL(12,2) NULL;  
 
 ALTER TABLE `contrato_comercial`   
   CHANGE `manComisAgente` `manComisAgente` TINYINT(1) DEFAULT 0 NULL,
