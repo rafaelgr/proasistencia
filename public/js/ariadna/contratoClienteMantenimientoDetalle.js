@@ -977,7 +977,7 @@ function cambioMantenedor(data) {
         contentType: "application/json",
         success: function (data, status) {
             // asignamos el porComer al vm
-            vm.manPorComer(data.manPorVentaNeta);
+            // vm.manPorComer(data.manPorVentaNeta);
         },
         error: function (err) {
             mensErrorAjax(err);
