@@ -33,7 +33,7 @@ function initForm() {
             var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
             var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
             if (!/Invalid|NaN/.test(new Date(fv))) {
-                return new Date(fv) > new Date(fp);
+                return new Date(fv) >= new Date(fp);
             } else {
                 // esto es debido a que permitimos que la segunda fecha nula
                 return true;

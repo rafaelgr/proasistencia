@@ -771,6 +771,8 @@ function initTablaComisionistas() {
         data: dataComisionistas,
         columns: [{
             data: "comercial"
+        },{
+            data: "tipo"
         }, {
             data: "porComer",
             className: "text-right",
