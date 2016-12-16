@@ -127,6 +127,8 @@ function initTablaFacturas() {
         }, {
             data: "totalConIva"
         }, {
+            data: "formaPago"
+        }, {
             data: "observaciones"
         }, {
             data: "facturaId",
