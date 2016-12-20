@@ -106,8 +106,6 @@ function initTablaliquidaciones() {
         }, {
             data: "impCliente"
         }, {
-            data: "coste"
-        }, {
             data: "CA"
         }, {
             data: "PC"
