@@ -1,4 +1,0 @@
-serie;factura;fecha;cuenta_cli;fpago;tipo_operacion;cuenta_ret;imp_ret;tipo_ret;cuenta_ventas;centro_coste;imp_venta;por_iva;imp_iva;por_rec;imp_rec;total_factura;integracion
-FPR;2016000001;20/11/16;430006894;2;0;;;;700000001;;76.39;21;16.04;;;92.43;0
-FPR;2016000002;20/12/16;430006894;2;0;;;;700000001;;104.17;21;21.88;;;126.05;0
-FPR;2016000003;03/11/16;430000671;2;0;;;;700000001;;250;21;52.5;;;302.5;0

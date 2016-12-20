@@ -1,0 +1,3 @@
+serie;factura;fecha;cuenta_cli;fpago;tipo_operacion;cuenta_ret;imp_ret;tipo_ret;cuenta_ventas;centro_coste;imp_venta;por_iva;imp_iva;por_rec;imp_rec;total_factura;integracion
+RS;2017000001;14/01/17;430006961;2;0;;;;700000001;;85.58;21;17.97;;;103.55;0
+S;2017000001;13/01/17;430006961;2;0;;;;700000001;;118.88;21;24.96;;;143.84;0
