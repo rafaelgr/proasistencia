@@ -165,9 +165,13 @@ function buscarComerciales() {
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
+        var url = myconfig.apiUrl + "/api/comerciales/activos/?nombre=" + aBuscar;
+        if ($('#chkTodos').checked){
+            url = myconfig.apiUrl + "/api/comerciales/?nombre=" + aBuscar;
+        }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/comerciales/?nombre=" + aBuscar,
+            url: url,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

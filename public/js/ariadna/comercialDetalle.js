@@ -462,7 +462,7 @@ function loadTiposComerciales(id) {
 function loadAscComerciales(id) {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales",
+        url: "/api/comerciales/colaboradores/activos",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
