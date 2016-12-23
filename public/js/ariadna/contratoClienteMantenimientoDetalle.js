@@ -1364,10 +1364,10 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
     var importeCoste = coste / numPagos;
     var import1 = (importePago / 30) * diffDias;
     var import11 = (importePagoCliente / 30) * diffDias;
-    var import12 = (coste / 30) * diffDias;
+    var import12 = (importeCoste / 30) * diffDias;
     var import2 = importePago - import1;
     var import21 = importePagoCliente - import11;
-    var import22 = coste - import12;
+    var import22 = importeCoste - import12;
     var pagos = [];
     for (var i = 0; i < numPagos; i++) {
         var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');

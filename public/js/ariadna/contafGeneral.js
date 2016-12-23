@@ -245,7 +245,7 @@ function buscarFacturas() {
 
 function buscarFicheros() {
     var mf = function () {
-        var url = "ficheros";
+        var url = "ficheros/contabilidad";
         window.open(url, '_new');
     };
     return mf;
