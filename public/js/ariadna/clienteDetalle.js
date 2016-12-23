@@ -594,7 +594,7 @@ function loadMotivosBaja(id) {
 function loadAgentes(id) {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/agentes",
+        url: "/api/comerciales/agentes/activos",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
