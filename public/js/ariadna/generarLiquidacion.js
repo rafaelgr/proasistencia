@@ -101,6 +101,16 @@ function initTablaFacturas() {
         },
         data: dataFacturas,
         columns: [{
+            data: "facturaId",
+            width: "10%",
+            render: function (data, type, row) {
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
+                return html;
+            }
+        },{
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -170,6 +180,43 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+    data.forEach(function (v) {
+        var field = "#chk" + v.facturaId;
+        if (v.sel == 1) {
+            $(field).attr('checked', true);
+        }
+        $(field).change(function () {
+            var quantity = 0;
+            var data = {
+                factura: {
+                    facturaId: v.facturaId,
+                    empresaId: v.empresaId,
+                    clienteId: v.clienteId,
+                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    sel: 0
+                }
+            };
+            if (this.checked) {
+                data.factura.sel = 1;
+            }
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        });
+    });    
 }
 
 function buscarFacturas() {
