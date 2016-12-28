@@ -178,7 +178,7 @@ function buscarPrefacturas() {
 function crearPrefactura() {
     var mf = function() {
         var url = "PrefacturaDetalle.html?PrefacturaId=0";
-        window.open(url, '_self');
+        window.open(url, '_new');
     };
     return mf;
 }
@@ -221,7 +221,7 @@ function editPrefactura(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
     var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_new');
 }
 
 function cargarPrefacturas() {

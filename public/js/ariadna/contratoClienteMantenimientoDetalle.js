@@ -299,6 +299,9 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: true
+            },
+            txtReferencia:{
+                required: true
             }
         },
         // Messages for form validation
@@ -321,6 +324,9 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
+            },
+            txtReferencia:{
+                required: "Se necesita una referencia"
             }
         },
         // Do not change code below
