@@ -73,7 +73,9 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioMantenedor(e.added);
     });
-
+    // select2 things
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
     /*
     $("#cmbClientes").select2(select2Spanish());
     loadClientes();
@@ -199,6 +201,12 @@ function admData() {
     self.posiblesTiposMantenimientos = ko.observableArray([]);
     self.elegidosTiposMantenimientos = ko.observableArray([]);
     //    
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
     self.contratoClienteMantenimientoComisionistaId = ko.observable();
     self.comercialId = ko.observable();
     //
@@ -259,6 +267,7 @@ function loadData(data) {
     loadTiposPagos(data.tipoPago);
     loadTiposMantenimientos(data.tipoMantenimientoId);
     loadArticulos(data.articuloId);
+    loadFormasPago(data.formaPagoId);
     //
     loadComisionistas(data.contratoClienteMantenimientoId);
     loadPrefacturas(data.contratoClienteMantenimientoId);
@@ -287,6 +296,12 @@ function datosOK() {
             },
             txtCliente: {
                 clienteNecesario: true
+            },
+            cmbFormasPago: {
+                required: true
+            },
+            txtReferencia:{
+                required: true
             }
         },
         // Messages for form validation
@@ -307,6 +322,12 @@ function datosOK() {
             cmbTiposMantenimientos: {
                 required: "Debe elejir un tipo"
             },
+            cmbFormasPago: {
+                required: "Debe elegir una forma de pago"
+            },
+            txtReferencia:{
+                required: "Se necesita una referencia"
+            }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -350,6 +371,7 @@ function aceptar() {
                 "preaviso": vm.preaviso(),
                 "fechaFactura": spanishDbDate(vm.fechaFactura()),
                 "facturaParcial": vm.facturaParcial(),
+                "formaPagoId": vm.sformaPagoId(),
                 "tipoMantenimientoId": vm.stipoMantenimientoId()
             }
         };
@@ -953,7 +975,7 @@ function cambioAgente(data) {
             // asignamos el porComer al vm
             vm.manPorComer(comision);
             // cambiamos los importes
-            if (vm.coste()){
+            if (vm.coste()) {
                 cambioImporteAlCliente()();
             }
         },
@@ -1020,6 +1042,7 @@ function cambioCliente(data) {
         success: function (data, status) {
             // cargamos el código del cliente
             vm.codCliente(data.proId);
+            loadFormasPago(data.formaPagoId);
             // asignamos el agente que corresponda
             if (data.comercialId) {
                 loadAgentes(data.comercialId);
@@ -1699,6 +1722,24 @@ function cambioCodMantenedor(data) {
                 d.id = data.clienteId;
                 cambioMantenedor(d);
             }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadFormasPago(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/formas_pago",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+            vm.posiblesFormasPago(formasPago);
+            $("#cmbFormasPago").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
