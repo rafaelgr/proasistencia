@@ -292,7 +292,12 @@ function datosOK() {
                 number: true
             },
             txtManPorComer: {
-                number: true
+                number: true,
+                max: 100
+            },
+            txtMargen: {
+                number: true,
+                max: 100
             },
             txtCliente: {
                 clienteNecesario: true
