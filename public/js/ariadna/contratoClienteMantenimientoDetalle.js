@@ -1406,7 +1406,9 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
             empresaId: empresaId,
-            clienteId: clienteId
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.margen(),
+            porcentajeAgente: vm.manPorComer()
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -1423,7 +1425,9 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             importeCliente: import21,
             importeCoste: import22,
             empresaId: empresaId,
-            clienteId: clienteId
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.margen(),
+            porcentajeAgente: vm.manPorComer()
         };
         pagos.push(p);
     }

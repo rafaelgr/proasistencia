@@ -7,3 +7,5 @@ ALTER TABLE `prefacturas`
   ADD COLUMN `generada` BOOL DEFAULT TRUE NULL AFTER `coste`,
   ADD COLUMN `porcentajeBeneficio` DECIMAL(5,2) NULL AFTER `generada`,
   ADD COLUMN `porcentajeAgente` DECIMAL(5,2) NULL AFTER `porcentajeBeneficio`;
+ALTER TABLE `facturas`   
+  CHANGE `costeProporcional` `coste` DECIMAL(12,2) NULL;

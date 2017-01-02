@@ -209,6 +209,8 @@ function admData() {
     self.importeUnidad = ko.observable();
     // Nuevo Total de coste para la prefactura
     self.totalCoste = ko.observable();
+    //
+    self.generada = ko.observable();
 }
 
 function loadData(data) {
@@ -220,6 +222,11 @@ function loadData(data) {
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
     vm.contratoClienteMantenimientoId(data.contratoClienteMantenimientoId);
+    vm.generada(data.generada);
+    vm.coste(data.coste);
+    vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.porcentajeAgente(data.porcentajeAgente);
+    recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -241,6 +248,12 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoClienteMantenimientoId);
     vm.observaciones(data.observaciones);
+
+    //
+    if (vm.generada()) {
+        ocultarCamposPrefacturasGeneradas();
+        mostrarMensajeFacturaGenerada();
+    }
 }
 
 
@@ -326,7 +339,8 @@ function aceptar() {
                 "total": numeroDbf(vm.total()),
                 "totalConIva": numeroDbf(vm.totalConIva()),
                 "formaPagoId": vm.sformaPagoId(),
-                "observaciones": vm.observaciones()
+                "observaciones": vm.observaciones(),
+                "generada": 1
             }
         };
         if (empId == 0) {
@@ -763,9 +777,11 @@ function initTablaPrefacturasLineas() {
         }, {
             data: "prefacturaLineaId",
             render: function (data, type, row) {
+                var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if (!vm.generada())
+                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
@@ -783,13 +799,10 @@ function loadDataLinea(data) {
     vm.importe(data.importe);
     vm.totalLinea(data.totalLinea);
     vm.coste(data.coste);
-    vm.porcentajeBeneficio(data.porcentajeBeneficio);
-    vm.porcentajeAgente(data.porcentajeAgente);
     //
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     //
-    recalcularCostesImportesDesdeCoste();
 }
 
 
@@ -1181,4 +1194,17 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
+var ocultarCamposPrefacturasGeneradas = function () {
+    $('#btnAceptar').hide();
+    $('#btnNuevaLinea').hide();
+    // los de input para evitar que se lance 'onblur'
+    $('#txtCoste').prop('disabled', true);
+    $('#txtPorcentajeBeneficio').prop('disabled', true);
+    $('#txtImporteBeneficio').prop('disabled', true);
+    $('#txtPorcentajeAgente').prop('disabled', true);
+}
 
+var mostrarMensajeFacturaGenerada = function () {
+    var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
+    mensNormal(mens);
+}
