@@ -399,7 +399,7 @@
                                                 <section class="col col-md-2">
                                                     <label class="label">Coste</label>
                                                     <label class="input">
-                                                        <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: totalCoste" disabled/>
+                                                        <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
                                                     </label>
                                                 </section>                                                
                                                 <section class="col col-md-2">
@@ -596,7 +596,7 @@
                                                                 <tr>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtCoste" name="txtCoste" data-bind="value:coste" />
+                                                                                <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
                                                                         </label>
                                                                     </td>
                                                                     <td style="text-align:center;">
@@ -626,7 +626,7 @@
                                                                     </td>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtImporteUnidad" name="txtImporteUnidad" data-bind="value:importeUnidad" disabled/>
+                                                                                <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>
                                                                         </label>
                                                                     </td>
                                                                 </tr>
@@ -710,6 +710,9 @@
                                                     <th data-hide="phone" class="text-right">
                                                         Cantidad
                                                     </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        Coste
+                                                    </th>                                                    
                                                     <th data-hide="phone" class="text-right">
                                                         Importe
                                                     </th>
@@ -849,19 +852,25 @@
                                     </section>
                                 </div>
                                 <div class="row">
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
                                         <label class="label">Precio</label>
                                         <label class="input">
-                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importe" disabled />
+                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importe" />
                                         </label>
                                     </section>
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
                                         <label class="label">Cantidad</label>
                                         <label class="input">
                                             <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
                                         </label>
                                     </section>
-                                    <section class="col col-md-6">
+                                    <section class="col col-md-4">
+                                        <label class="label">Coste</label>
+                                        <label class="input">
+                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
+                                        </label>
+                                    </section>                                    
+                                    <section class="col col-md-4">
                                         <label class="label">Importe</label>
                                         <label class="input">
                                             <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
