@@ -1306,6 +1306,7 @@ function calNumPagos() {
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     var fFinal = new Date(spanishDbDate(vm.fechaFin()));
     var numMeses = parseInt(moment(fFinal).diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
@@ -1329,7 +1330,7 @@ function calNumPagos() {
             break;
     }
     var numpagos = parseInt(numMeses / divisor);
-    if (numpagos == 0) numpagos = 1;
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
     return numpagos;
 }
 
