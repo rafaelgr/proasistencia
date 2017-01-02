@@ -66,6 +66,10 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbContratos").select2(select2Spanish());
+    $("#cmbContratos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioContrato(e.added);
+    });
 
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
@@ -116,6 +120,9 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.prefacturaId(0);
+        // ocultamos líneas y bases
+        $("#lineasfactura").hide();
+        $("#basesycuotas").hide();
     }
 }
 
@@ -323,8 +330,6 @@ function aceptar() {
             }
         };
         if (empId == 0) {
-
-
             $.ajax({
                 type: "POST",
                 url: myconfig.apiUrl + "/api/prefacturas",
@@ -369,7 +374,7 @@ function aceptar() {
 
 function salir() {
     var mf = function () {
-        var url = "PrefacturasGeneral.html";
+        var url = "PrefacturaGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -512,6 +517,11 @@ function cambioEmpresa(data) {
 
 }
 
+function cambioContrato(data) {
+    if (!data) return;
+    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoClienteMantenimientoId());
+}
+
 
 
 /*------------------------------------------------------------------
@@ -560,7 +570,6 @@ function limpiaDataLinea(data) {
     loadArticulos();
     loadTiposIva();
     //
-    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoClienteMantenimientoId());
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -804,7 +813,7 @@ function loadLineasPrefactura(id) {
         contentType: "application/json",
         success: function (data, status) {
             var totalCoste = 0;
-            data.forEach(function(linea){
+            data.forEach(function (linea) {
                 totalCoste += (linea.coste * linea.cantidad);
                 vm.totalCoste(numeral(totalCoste).format('0,0.00'));
             })
@@ -876,8 +885,7 @@ function cambioArticulo(data) {
             // cargamos los campos por defecto de receptor
             vm.descripcion(data.nombre);
             vm.cantidad(1);
-            vm.coste(data.precioUnitario);
-            recalcularCostesImportesDesdeCoste();
+            vm.importe(data.precioUnitario);
             //valores para IVA por defecto a partir del  
             // articulo seleccionado.
             $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
