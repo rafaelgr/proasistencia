@@ -292,7 +292,12 @@ function datosOK() {
                 number: true
             },
             txtManPorComer: {
-                number: true
+                number: true,
+                max: 100
+            },
+            txtMargen: {
+                number: true,
+                max: 100
             },
             txtCliente: {
                 clienteNecesario: true
@@ -1301,6 +1306,7 @@ function calNumPagos() {
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     var fFinal = new Date(spanishDbDate(vm.fechaFin()));
     var numMeses = parseInt(moment(fFinal).diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
     // calculamos según la periodicidad
     var divisor = 1;
     switch (vm.stipoPagoId()) {
@@ -1324,7 +1330,7 @@ function calNumPagos() {
             break;
     }
     var numpagos = parseInt(numMeses / divisor);
-    if (numpagos == 0) numpagos = 1;
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
     return numpagos;
 }
 
@@ -1400,7 +1406,9 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
             empresaId: empresaId,
-            clienteId: clienteId
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.margen(),
+            porcentajeAgente: vm.manPorComer()
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -1417,7 +1425,9 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             importeCliente: import21,
             importeCoste: import22,
             empresaId: empresaId,
-            clienteId: clienteId
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.margen(),
+            porcentajeAgente: vm.manPorComer()
         };
         pagos.push(p);
     }
