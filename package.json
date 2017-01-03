@@ -34,5 +34,8 @@
     "numeral": "^1.5.3",
     "serve-index": "^1.7.2",
     "sprintf-js": "^1.0.3"
+  },
+  "devDependencies": {
+    "mysql": "^2.12.0"
   }
 }
