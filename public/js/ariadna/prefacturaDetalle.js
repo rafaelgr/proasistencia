@@ -31,10 +31,10 @@ function initForm() {
     ko.applyBindings(vm);
 
     // Eventos de la calculadora de costes
-    $('#txtCoste').on('blur', recalcularCostesImportesDesdeCoste);
-    $('#txtPorcentajeBeneficio').on('blur', recalcularCostesImportesDesdeCoste);
-    $('#txtImporteBeneficio').on('blur', recalcularCostesImportesDesdeBeneficio);
-    $('#txtPorcentajeAgente').on('blur', recalcularCostesImportesDesdeCoste);
+    $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
+    $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
+    $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
+    $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
@@ -1224,6 +1224,16 @@ var initAutoCliente = function () {
     }, "Debe seleccionar un cliente válido");
 };
 
+var cambioCampoConRecalculoDesdeCoste = function () {
+    recalcularCostesImportesDesdeCoste();
+    actualizarLineasDeLaPrefacturaTrasCambioCostes();
+};
+
+var cambioCampoConRecalculoDesdeBeneficio = function () {
+    recalcularCostesImportesDesdeBeneficio();
+    actualizarLineasDeLaPrefacturaTrasCambioCostes();
+}
+
 var recalcularCostesImportesDesdeCoste = function () {
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio()) {
@@ -1245,6 +1255,38 @@ var recalcularCostesImportesDesdeBeneficio = function () {
         }
     }
     recalcularCostesImportesDesdeCoste();
+};
+
+var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
+    $.ajax({
+        type: "PUT",
+        url: myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(),
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    // loadData(data);
+                    loadLineasPrefactura(data.prefacturaId);
+                    loadBasesPrefactura(data.prefacturaId);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 };
 
 var ocultarCamposPrefacturasGeneradas = function () {
