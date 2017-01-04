@@ -70,10 +70,16 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioContrato(e.added);
     });
-
+    // select2 things
+    $("#cmbGrupoArticulos").select2(select2Spanish());
+    loadGrupoArticulos();
+    $("#cmbGrupoArticulos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioGrupoArticulo(e.added);
+    });
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
-    loadArticulos();
+    // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioArticulo(e.added);
@@ -88,8 +94,8 @@ function initForm() {
     });
 
 
-    $("#txtCantidad").blur(cambioPrecioCantidad());
-    $("#txtPrecio").blur(cambioPrecioCantidad());
+    $("#txtCantidad").blur(cambioPrecioCantidad);
+    $("#txtPrecio").blur(cambioPrecioCantidad);
 
     initTablaPrefacturasLineas();
     initTablaBases();
@@ -189,6 +195,11 @@ function admData() {
     self.importe = ko.observable();
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
+    //
+    self.sgrupoArticuloId = ko.observable();
+    //
+    self.posiblesGrupoArticulos = ko.observableArray([]);
+    self.elegidosGrupoArticulos = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -580,7 +591,8 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadArticulos();
+    loadGrupoArticulos();
+    // loadArticulos();
     loadTiposIva();
     //
 }
@@ -837,6 +849,7 @@ function loadDataLinea(data) {
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
     //
+    loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     //
@@ -898,6 +911,29 @@ function loadArticulos(id) {
     });
 }
 
+function loadGrupoArticulos(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/grupo_articulo",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesGrupoArticulos(grupos);
+            if (id) {
+                $("#cmbGrupoArticulos").val([id]).trigger('change');
+            } else {
+                $("#cmbGrupoArticulos").val([0]).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 function loadTiposIva(id) {
     $.ajax({
         type: "GET",
@@ -933,7 +969,11 @@ function cambioArticulo(data) {
         contentType: "application/json",
         success: function (data, status) {
             // cargamos los campos por defecto de receptor
-            vm.descripcion(data.nombre);
+            if (data.descripcion == null) {
+                vm.descripcion(data.nombre);
+            } else {
+                vm.descripcion(data.nombre + ':\n' + data.descripcion);
+            }
             vm.cantidad(1);
             vm.importe(data.precioUnitario);
             //valores para IVA por defecto a partir del  
@@ -944,6 +984,29 @@ function cambioArticulo(data) {
             };
             cambioTiposIva(data2);
             cambioPrecioCantidad();
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+
+}
+
+function cambioGrupoArticulo(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var grupoArticuloId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos/grupo/" + grupoArticuloId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesArticulos(articulos);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -976,13 +1039,10 @@ function cambioTiposIva(data) {
 
 }
 
-function cambioPrecioCantidad() {
-    var mf = function () {
-        vm.costeLinea(vm.cantidad() * vm.importe());
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    }
-    return mf;
+var cambioPrecioCantidad = function () {
+    vm.costeLinea(vm.cantidad() * vm.importe());
+    recalcularCostesImportesDesdeCoste();
+    vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
 function editPrefacturaLinea(id) {
