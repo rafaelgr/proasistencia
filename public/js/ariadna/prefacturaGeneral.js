@@ -106,6 +106,8 @@ function initTablaPrefacturas() {
                 return html;
             }
         }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"

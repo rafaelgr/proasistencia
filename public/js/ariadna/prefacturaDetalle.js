@@ -195,6 +195,7 @@ function admData() {
     self.importe = ko.observable();
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
+    self.capituloLinea = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -595,6 +596,7 @@ function limpiaDataLinea(data) {
     // loadArticulos();
     loadTiposIva();
     //
+    loadArticulos();
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -634,7 +636,8 @@ function aceptarLinea() {
             totalLinea: vm.totalLinea(),
             coste: vm.costeLinea(),
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            capituloLinea: vm.capituloLinea(),
         }
     }
     if (!lineaEnEdicion) {
@@ -707,6 +710,9 @@ function aceptarLinea() {
 function datosOKLineas() {
     $('#linea-form').validate({
         rules: {
+            txtCapitulo: {
+                required: true
+            },
             txtLinea: {
                 required: true
             },
@@ -731,6 +737,9 @@ function datosOKLineas() {
         },
         // Messages for form validation
         messages: {
+            txtCapitulo: {
+                required: "Debe dar un texto al capítulo"
+            },
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -848,6 +857,7 @@ function loadDataLinea(data) {
     vm.importe(data.importe);
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
+    vm.capituloLinea(data.capituloLinea);
     //
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
