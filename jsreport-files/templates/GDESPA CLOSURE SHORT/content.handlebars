@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>INFORME CIERRE (RESUMEN)</h1>
+    </div>
+    <table class="table">
+    <thead class="txt-color-blue">
+        <tr>
+            <th>FECHA</th>
+            <th>RESPONSABLE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{closureDate}}</td>
+            <td>{{workerName1}}</td>
+        </tr>
+    </tbody>
+    </table> 
+    <div>
+        <strong>Observaciones: </strong>
+        <br/>{{comments1}}
+    </div>
+    <hr/>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Obra</th>
+                <th>Realizado</th>
+                <th>Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each lines}}
+            <tr>
+                <td>{{pwName}}</td>
+                <td>{{done1}}</td>
+                <td>{{amount}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table> 
+</div>

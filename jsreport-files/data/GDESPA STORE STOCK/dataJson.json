@@ -1,0 +1,1112 @@
+{
+"storeId": 1,
+"name": "Almacén David",
+"reportDate": "14/11/2016",
+"nreport": "SITUACION DE ALMACEN",
+"ilines": [
+{
+"name": "*329258 - Perno tipo maquina de 5/8 x 10 pulgadas",
+"lastInvDate": "21/10/2016",
+"lastStock": 165,
+"stock": 9
+},
+{
+"name": "*329337 - Contratuerca cuadrada para perno de 5/8 plg",
+"lastInvDate": "19/10/2016",
+"lastStock": -4,
+"stock": -4
+},
+{
+"name": "*329344 - Abrazadera doble 1/4 x 1 - 1/2 x 8 plg",
+"lastInvDate": "19/10/2016",
+"lastStock": 2,
+"stock": 14
+},
+{
+"name": "*437654 - TORNILLO ACERO GALVANIZADO C/EXAG. C.T. 5/8”x1-3/4”",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 282
+},
+{
+"name": "*437659 - TUERCA EXAGONAL ACERO GALVANIZADO 5/8\"",
+"lastInvDate": "21/10/2016",
+"lastStock": 760,
+"stock": 660
+},
+{
+"name": "*437661 - TUERCA DE OJO DE ACERO GALVANIZADO",
+"lastInvDate": "21/10/2016",
+"lastStock": 341,
+"stock": 339
+},
+{
+"name": "*440944 - ARANDELA PLANA REDONDA 5/8\" ",
+"lastInvDate": "21/10/2016",
+"lastStock": 241,
+"stock": 211
+},
+{
+"name": "*440945 - ARANDELA DE PRESIÓN 5/8\"",
+"lastInvDate": "21/10/2016",
+"lastStock": 111,
+"stock": 114
+},
+{
+"name": "*441264 - ARANDELA CURVA CUADRADA 2-1/4X2-1/4X3/16\"",
+"lastInvDate": "19/10/2016",
+"lastStock": -64,
+"stock": 333
+},
+{
+"name": "*458466 - Terminal preformado retenida 3/8 plg",
+"lastInvDate": "21/10/2016",
+"lastStock": 377,
+"stock": 333
+},
+{
+"name": "*458482 - TUBO ABIERTO SEÑALIZACION Y PROTECCIÓN 2\" X 8'",
+"lastInvDate": "21/10/2016",
+"lastStock": 78,
+"stock": 65
+},
+{
+"name": "*458593 - TORNILLO ACERO INOXIDABLE C/EXAG. C.T. 1/2”x2”",
+"lastInvDate": "21/10/2016",
+"lastStock": 208,
+"stock": 197
+},
+{
+"name": "*458594 - ARANDELA DE PRESIÓN AC. INOX. 1/2\"",
+"lastInvDate": "21/10/2016",
+"lastStock": 122,
+"stock": 111
+},
+{
+"name": "*458595 - ARANDELA PLANA REDONDA AC. INOX. 1/2\"",
+"lastInvDate": "21/10/2016",
+"lastStock": 328,
+"stock": 306
+},
+{
+"name": "*525639 - BRIDA DE SUJECCIÓN HASTA 25 mm",
+"lastInvDate": "19/10/2016",
+"lastStock": 861,
+"stock": 861
+},
+{
+"name": "*525640 - BRIDA DE SUJECCION HASTA 100 MM",
+"lastInvDate": "21/10/2016",
+"lastStock": 100,
+"stock": 2
+},
+{
+"name": "*525655 - PICA DE PUESTA A TIERRA 5/8\" 8' ",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 0
+},
+{
+"name": "*551282 - PERNO ROSCA CORRIDA AC. GALV. 5/8\" X 12\"",
+"lastInvDate": "19/10/2016",
+"lastStock": 109,
+"stock": 93
+},
+{
+"name": "130542 - CINTA AISLANTE DE PLASTICO USO GENERAL",
+"lastInvDate": "30/09/2016",
+"lastStock": 50,
+"stock": 50
+},
+{
+"name": "130545 - CINTA AISLANTE PLASTICA AZUL 3/4 PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 6,
+"stock": 6
+},
+{
+"name": "130546 - CINTA AISLANTE PLASTICA ROJA 3/4 PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 6,
+"stock": 6
+},
+{
+"name": "130547 - CINTA AISLANTE PLASTICA BLANCA 3/4PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 38,
+"stock": 34
+},
+{
+"name": "130557 - CINTA AISLANTE DE VINILO N33+",
+"lastInvDate": "30/09/2016",
+"lastStock": 55,
+"stock": 66
+},
+{
+"name": "329237 - Pararrayo distribución tipo válvula 3KV",
+"lastInvDate": "04/10/2016",
+"lastStock": -2,
+"stock": -2
+},
+{
+"name": "329259 - PERNO TIPO MAQUINA 5/8 X 12PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 187,
+"stock": 898
+},
+{
+"name": "329260 - PERNO TIPO MAQUINA 5/8 X 14PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 748,
+"stock": 740
+},
+{
+"name": "329270 - PERNO DE OJO OVALADO 5/8 X 8PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 129,
+"stock": 129
+},
+{
+"name": "329272 - PERNO DE OJO OVALADO 5/8 X 12 PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 1073,
+"stock": 1046
+},
+{
+"name": "329341 - ABRAZADERA DOBLE 1/4 X 1-1/2 X 4-1/2PLG",
+"lastInvDate": "30/09/2016",
+"lastStock": 12,
+"stock": 10
+},
+{
+"name": "329406 - Conec con sep para # 6 cu a 1/0 acsr",
+"lastInvDate": "30/09/2016",
+"lastStock": 207,
+"stock": 216
+},
+{
+"name": "329410 - Conector forma 6 cond 1/0",
+"lastInvDate": "30/09/2016",
+"lastStock": 41,
+"stock": 41
+},
+{
+"name": "329411 - Conector Forma C para conductor 1/0Al a 6Cu",
+"lastInvDate": "30/09/2016",
+"lastStock": 208,
+"stock": 208
+},
+{
+"name": "329412 - Conector tipo C 1/0 a 1/0 Al",
+"lastInvDate": "30/09/2016",
+"lastStock": 76,
+"stock": 85
+},
+{
+"name": "329414 - Conector de alumbrado publico",
+"lastInvDate": "30/09/2016",
+"lastStock": 304,
+"stock": 250
+},
+{
+"name": "329444 - Conector compresión para fase 6Al a 6Cu",
+"lastInvDate": "21/10/2016",
+"lastStock": 30,
+"stock": 30
+},
+{
+"name": "329543 - ELEMENTO FUSIBLE TIPO T 6A",
+"lastInvDate": "21/10/2016",
+"lastStock": 3,
+"stock": 2
+},
+{
+"name": "329546 - ELEMENTO FUSIBLE TIPO T 12A",
+"lastInvDate": "21/10/2016",
+"lastStock": 1,
+"stock": 2
+},
+{
+"name": "329550 - ELEMENTO FUSIBLE TIPO T 30A",
+"lastInvDate": "30/09/2016",
+"lastStock": 27,
+"stock": 29
+},
+{
+"name": "329553 - ELEMENTO FUSIBLE TIPO T 65A",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 3
+},
+{
+"name": "329554 - ELEMENTO FUSIBLE TIPO T 80A",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 5
+},
+{
+"name": "329897 - Luminaria sodio 100 W tipo II 120voltios",
+"lastInvDate": "30/09/2016",
+"lastStock": 243,
+"stock": 432
+},
+{
+"name": "329908 - Foco alta presion de sodio 100W",
+"lastInvDate": "30/09/2016",
+"lastStock": 184,
+"stock": 115
+},
+{
+"name": "329919 - Control fotoelectrico 250W 240 voltios",
+"lastInvDate": "30/09/2016",
+"lastStock": 16830,
+"stock": 16717
+},
+{
+"name": "329920 - Control fotoelectrico 100W 120voltios",
+"lastInvDate": "04/10/2016",
+"lastStock": 19,
+"stock": 19
+},
+{
+"name": "329946 - Soporte para luminaria 1-1/4\" x 8 pies",
+"lastInvDate": "19/10/2016",
+"lastStock": -46,
+"stock": -46
+},
+{
+"name": "330351 - Transformador conv 10KVA2400/4160Y-120/240",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "330376 - Transformador conv 10KVA 7620/13200Y - 120/240",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "330480 - ML. CONDUCTOR ALUMINIO ACERO ACSR 477 HAWK ",
+"lastInvDate": "30/09/2016",
+"lastStock": 19950,
+"stock": 19950
+},
+{
+"name": "330504 - Alambre cobre #12 awg, TW, rojo",
+"lastInvDate": "30/09/2016",
+"lastStock": 1828,
+"stock": 1820
+},
+{
+"name": "330505 - Alambre cobre #12 awg, TW, blanco",
+"lastInvDate": "30/09/2016",
+"lastStock": 3116,
+"stock": 2652
+},
+{
+"name": "330506 - Alambre cobre #12 awg, TW, negro",
+"lastInvDate": "30/09/2016",
+"lastStock": 4659,
+"stock": 4203
+},
+{
+"name": "330918 - ACCESORIO RETENIDA VIOLIN CABEZAL ",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "330929 - Bastidor  primario fijo canalizado",
+"lastInvDate": "30/09/2016",
+"lastStock": 25,
+"stock": 26
+},
+{
+"name": "331043 - PERNO TODO ROSCA 5/8 X16",
+"lastInvDate": "30/09/2016",
+"lastStock": 474,
+"stock": 477
+},
+{
+"name": "413195 - Aislador de espiga 15 kv polimérico",
+"lastInvDate": "30/09/2016",
+"lastStock": 7,
+"stock": 7
+},
+{
+"name": "413197 - Espiga galvanizada 35 kv fijación",
+"lastInvDate": "30/09/2016",
+"lastStock": 66,
+"stock": 66
+},
+{
+"name": "413198 - Aislador de espiga 35 kv polimérico",
+"lastInvDate": "30/09/2016",
+"lastStock": 102,
+"stock": 102
+},
+{
+"name": "413199 - Gancho espaciador primario 3 cables",
+"lastInvDate": "30/09/2016",
+"lastStock": 72,
+"stock": 72
+},
+{
+"name": "413216 - SOPORTE PARA DOS AISLADORES TIPO ESPIGA",
+"lastInvDate": "30/09/2016",
+"lastStock": 8,
+"stock": 8
+},
+{
+"name": "413263 - Grapa para remate de preformada",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 6
+},
+{
+"name": "413266 - FUSIBLE LIMITADOR DE CORRIENTE 160A 15KV",
+"lastInvDate": "30/09/2016",
+"lastStock": 81,
+"stock": 81
+},
+{
+"name": "413268 - Grapa suspensión angular para 1/0al",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 5
+},
+{
+"name": "413582 - EMPALME PLENA TRACCION ACSR-AAAC #4",
+"lastInvDate": "30/09/2016",
+"lastStock": 3,
+"stock": 3
+},
+{
+"name": "413598 - Terminal  preformada 1/0 15 kv",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 8
+},
+{
+"name": "414250 - CABLE ALUMINIO 1/0AWG 35KV AISL PROT",
+"lastInvDate": "30/09/2016",
+"lastStock": 2125,
+"stock": 0
+},
+{
+"name": "414522 - CONECTOR CUÑA CON ESTRIBO PARA #4 ACSR",
+"lastInvDate": "30/09/2016",
+"lastStock": 2,
+"stock": 6
+},
+{
+"name": "416546 - CONTROL ELECT. PARA RECONECTADORES COOPER DC",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "416728 - CAJA DE DERIVACIÓN MONOFASICA 4 SALIDAS1000 V",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "417105 - POSTE METALICO DE CHAPA200 DAN 9 MTS",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 1
+},
+{
+"name": "434435 - ML. CABLE ACERO GALVANIZADO 3/8\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 3994,
+"stock": 3414
+},
+{
+"name": "434470 - ML. CABLE DE COBRE DESNUDO N° 2 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 3155,
+"stock": 3312
+},
+{
+"name": "436937 - POSTE HORMIGON PRETENSADO CENTRIFUGADO 300 daN 9 m ",
+"lastInvDate": "30/09/2016",
+"lastStock": 31,
+"stock": 97
+},
+{
+"name": "436938 -  POSTE HORMIGON PRETENSADO CENTRIFUGADO 300 daN 10,5 m",
+"lastInvDate": "30/09/2016",
+"lastStock": 32,
+"stock": 58
+},
+{
+"name": "436957 -  POSTE HORMIGON PRETENSADO CENTRIFUGADO 500 daN 12m",
+"lastInvDate": "30/09/2016",
+"lastStock": 169,
+"stock": 168
+},
+{
+"name": "436958 -  POSTE HORMIGON PRETENSADO CENTRIFUGADO 500 daN 14 m",
+"lastInvDate": "30/09/2016",
+"lastStock": 26,
+"stock": 26
+},
+{
+"name": "436978 - ML. CONDUCTOR ALUMINIO ACERO ACSR 1/0 RAVEN ",
+"lastInvDate": "30/09/2016",
+"lastStock": 24381,
+"stock": 29700
+},
+{
+"name": "436990 - ML. CONDUCTOR ALUMINIO ACERO ACSR 266 PARTRIDGE",
+"lastInvDate": "30/09/2016",
+"lastStock": 10000,
+"stock": 10000
+},
+{
+"name": "436991 -  AISLADOR PORCELANA TIPO POSTE 13,2 kV (ANSI 57-1) ",
+"lastInvDate": "30/09/2016",
+"lastStock": 323,
+"stock": 323
+},
+{
+"name": "436992 -  AISLADOR PORCELANA TIPO POSTE 34,5 kV (ANSI 57-3)",
+"lastInvDate": "30/09/2016",
+"lastStock": 157,
+"stock": 146
+},
+{
+"name": "437006 - SOPORTE VERTICAL PARA AISLADOR TIPO POSTE",
+"lastInvDate": "30/09/2016",
+"lastStock": 178,
+"stock": 171
+},
+{
+"name": "437008 - SOPORTE LATERAL PARA AISLADOR TIPO POSTE",
+"lastInvDate": "30/09/2016",
+"lastStock": 120,
+"stock": 130
+},
+{
+"name": "437594 - CONECTOR CUÑA A PRESIÓN 477 MCM - 477 MCM ",
+"lastInvDate": "30/09/2016",
+"lastStock": 144,
+"stock": 144
+},
+{
+"name": "437595 - CONECTOR CUÑA A PRESIÓN 266 MCM - 266 MCM",
+"lastInvDate": "30/09/2016",
+"lastStock": 6,
+"stock": 6
+},
+{
+"name": "437596 - CONECTOR CUÑA A PRESION 1/0 - 1/0 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 7,
+"stock": 230
+},
+{
+"name": "437598 - CONECTOR CUÑA A PRESIÓN 266 MCM - 1/0 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 6,
+"stock": 6
+},
+{
+"name": "437599 - CONECTOR CUÑA A PRESIÓN 477 MCM - 1/0 AWG ",
+"lastInvDate": "30/09/2016",
+"lastStock": 95,
+"stock": 95
+},
+{
+"name": "437600 - CONECTOR CUÑA A PRESIÓN CON ESTRIBO 477 MCM ",
+"lastInvDate": "30/09/2016",
+"lastStock": 26,
+"stock": 26
+},
+{
+"name": "437603 - CONECTOR CUÑA A PRESIÓN CON ESTRIBO 1/0 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 42,
+"stock": 45
+},
+{
+"name": "437604 - CONECTOR CUÑA A PRESIÓN 266 MCM - #2 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 230,
+"stock": 230
+},
+{
+"name": "437607 - CONECTOR CUÑA A PRESIÓN 1/0 - #2 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 148,
+"stock": 176
+},
+{
+"name": "437655 - PERNO CORTO ACERO GALVANIZADO ¾”- ¾”x 3”",
+"lastInvDate": "30/09/2016",
+"lastStock": 686,
+"stock": 694
+},
+{
+"name": "437707 - RETENCIÓN PREFORMADA “Z” AISL.57/1-3 ACSR 1/0",
+"lastInvDate": "30/09/2016",
+"lastStock": 3,
+"stock": 40
+},
+{
+"name": "437708 - RETENCIÓN PREFORMADA “Z” AISL.57/1-3 ACSR 266",
+"lastInvDate": "30/09/2016",
+"lastStock": 25,
+"stock": 25
+},
+{
+"name": "437709 - RETENCIÓN PREFORMADA “Z” AISL.57/1-3 ACSR 477",
+"lastInvDate": "30/09/2016",
+"lastStock": 32,
+"stock": 32
+},
+{
+"name": "437711 - RETENCIÓN PREFORMADA “OMEGA” AISL.57/1-3 ACSR 1/0",
+"lastInvDate": "30/09/2016",
+"lastStock": 19,
+"stock": 25
+},
+{
+"name": "437713 - RETENCIÓN PREFORMADA “OMEGA” DOBLE AISL.57/1-3 ACSR 1/0",
+"lastInvDate": "30/09/2016",
+"lastStock": 103,
+"stock": 101
+},
+{
+"name": "437802 - RETENCIÓN PREFORMADA “OMEGA” AISL.53/2 ACSR 1/0 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 69,
+"stock": 42
+},
+{
+"name": "437805 - AISLADOR PORCELANA TIPO CARRETE (ANSI C29.3) ",
+"lastInvDate": "30/09/2016",
+"lastStock": 430,
+"stock": 454
+},
+{
+"name": "437806 - SOPORTE HORQUILLA PARA AISLADOR TIPO CARRETE",
+"lastInvDate": "30/09/2016",
+"lastStock": 256,
+"stock": 439
+},
+{
+"name": "440860 - GRAPA CONEXIÓN CABLE TIERRA SIN TORNILLO",
+"lastInvDate": "30/09/2016",
+"lastStock": 716,
+"stock": 378
+},
+{
+"name": "441202 - Pararrayos autoválvulas 13,2 kV 10 Ka",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 5
+},
+{
+"name": "441203 - PARARRAYOS AUTOVÁLVULA 34,5 kV 10 kA",
+"lastInvDate": "30/09/2016",
+"lastStock": 22,
+"stock": 23
+},
+{
+"name": "441208 - TRANSFORMADOR MONOF. TIPO POSTE 13,2 kV 10 kVA ",
+"lastInvDate": "30/09/2016",
+"lastStock": 4,
+"stock": 4
+},
+{
+"name": "441209 - TRANSFORMADOR MONOF. TIPO POSTE 13,2 kV 25 kVA ",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 5
+},
+{
+"name": "441212 - TRANSFORMADOR MONOF. TIPO POSTE 34,5 kV 10 kVA ",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 6
+},
+{
+"name": "441213 - TRANSFORMADOR MONOF. TIPO POSTE 34,5 kV 25 kVA ",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 4
+},
+{
+"name": "441248 -  AISLADOR COMPOSITE TIPO POSTE 34,5 KV",
+"lastInvDate": "19/10/2016",
+"lastStock": 0,
+"stock": 3
+},
+{
+"name": "441249 - AISLADOR COMPOSITE TIPO SUSPENSIÓN 13,2 KV ",
+"lastInvDate": "30/09/2016",
+"lastStock": 344,
+"stock": 344
+},
+{
+"name": "441250 - AISLADOR COMPOSITE TIPO SUSPENSIÓN 34,5 KV ",
+"lastInvDate": "30/09/2016",
+"lastStock": 120,
+"stock": 167
+},
+{
+"name": "450701 - SOPORTE PARA SECCIONAMIENTO Y PROTECCIÓN",
+"lastInvDate": "30/09/2016",
+"lastStock": 43,
+"stock": 45
+},
+{
+"name": "450912 - SOPORTE TRANSFORMADOR MONOFASICO TIPO POSTE ",
+"lastInvDate": "30/09/2016",
+"lastStock": 51,
+"stock": 53
+},
+{
+"name": "450948 - ALARGADERA 10\" PARA CADENA DE AISLADORES",
+"lastInvDate": "30/09/2016",
+"lastStock": 129,
+"stock": 175
+},
+{
+"name": "450949 - GRAPA AMARRE ALUMINIO COND. AWG 1/0 (RAVEN)",
+"lastInvDate": "30/09/2016",
+"lastStock": 9,
+"stock": 179
+},
+{
+"name": "450950 - GRAPA AMARRE ALUMINIO COND. AWG 4/0-MCM 266 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 26,
+"stock": 26
+},
+{
+"name": "453776 - EMPALME PLENA TRACCION ACSR-AAAC 1/0 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 51,
+"stock": 59
+},
+{
+"name": "454767 -  POSTE METALICO DE CHAPA 300 daN 9 m",
+"lastInvDate": "19/10/2016",
+"lastStock": 0,
+"stock": 0
+},
+{
+"name": "454768 -  POSTE METALICO DE CHAPA 300 daN 10,5 m",
+"lastInvDate": "30/09/2016",
+"lastStock": 26,
+"stock": 15
+},
+{
+"name": "454770 -  POSTE METALICO DE CHAPA 500 daN 12 m",
+"lastInvDate": "30/09/2016",
+"lastStock": 3,
+"stock": 8
+},
+{
+"name": "454772 -  POSTE METALICO DE CHAPA 500 daN 14 m",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "454857 - CONECTOR AMOVIBLE PARA ESTRIBO",
+"lastInvDate": "30/09/2016",
+"lastStock": 34,
+"stock": 53
+},
+{
+"name": "454874 -  PERNO AC. GALVANIZADO 5/8\"-3/4\"X12\" ",
+"lastInvDate": "30/09/2016",
+"lastStock": 25,
+"stock": 20
+},
+{
+"name": "458414 - HERRAJE DE ANCLAJE PARA RETENIDA VERTICAL",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 60
+},
+{
+"name": "458463 - GRAPA DE SUSPENSION ALUMINIO COND. AWG 1/0 (RAVEN) ",
+"lastInvDate": "30/09/2016",
+"lastStock": 9,
+"stock": 9
+},
+{
+"name": "458467 - GUARDACABOS PARA RETENCION CABLE DE ACERO 3/8\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 1113,
+"stock": 1388
+},
+{
+"name": "458479 - VARILLA DE ANCLAJE DE OJO C.T. 3/4\" X 8'",
+"lastInvDate": "30/09/2016",
+"lastStock": 8,
+"stock": 1
+},
+{
+"name": "458481 - ANCLA DE EXPANSIÓN PARA VARILLA DE 3/4\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 161,
+"stock": 174
+},
+{
+"name": "458523 -  ML. CONDUCTOR TRENZADO TRIPLEX 600V #2 AAC/#2 AAAC ",
+"lastInvDate": "30/09/2016",
+"lastStock": 5176,
+"stock": 5247
+},
+{
+"name": "458524 - ML. CONDUCTOR TRENZADO TRIPLEX 600V 1/0 AAC-1/0 AAAC",
+"lastInvDate": "30/09/2016",
+"lastStock": 3045,
+"stock": 3421
+},
+{
+"name": "458526 - ML. CONDUCTOR TRENZADO CUADRUPLEX 600V 4/0 AAC-4/0 AAAC ",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 500
+},
+{
+"name": "458528 - Base cortacircuitos fusibles de expulsión 15 kV 200 A",
+"lastInvDate": "30/09/2016",
+"lastStock": 29,
+"stock": 41
+},
+{
+"name": "458529 - BASE SECCIONADOR FUSIBLE DE 36 KV 200 A",
+"lastInvDate": "30/09/2016",
+"lastStock": 12,
+"stock": 12
+},
+{
+"name": "458531 - TUBO PORTAFUSIBLES ESPULSION 36 KV",
+"lastInvDate": "30/09/2016",
+"lastStock": 20,
+"stock": 20
+},
+{
+"name": "458533 - Tubo portafusible expulsion 15 kV 100 A",
+"lastInvDate": "30/09/2016",
+"lastStock": 50,
+"stock": 61
+},
+{
+"name": "458556 -  ADAPTADOR TERM. PLETINA-BORNA TIPO EYE-BOLT",
+"lastInvDate": "30/09/2016",
+"lastStock": 66,
+"stock": 66
+},
+{
+"name": "458662 - PLETINA SUJECION PARA RETENIDAS",
+"lastInvDate": "30/09/2016",
+"lastStock": 55,
+"stock": 57
+},
+{
+"name": "520318 - ML. CONDUCTOR TRENZADO DUPLEX 600V #6 AAC/#6 AAC",
+"lastInvDate": "30/09/2016",
+"lastStock": 152,
+"stock": 119
+},
+{
+"name": "520319 - ML. CONDUCTOR TRENZADO TRIPLEX 600V #6 AAC/#6 AAC",
+"lastInvDate": "19/10/2016",
+"lastStock": -18,
+"stock": 717
+},
+{
+"name": "520334 - EMPALME MANGUITO COMPRESIÓN PREAISLADO #2-#2",
+"lastInvDate": "30/09/2016",
+"lastStock": 17,
+"stock": 21
+},
+{
+"name": "520888 - SOPORTE AUXILIAR PARA TERCER TRAFO TIPO POSTE ",
+"lastInvDate": "30/09/2016",
+"lastStock": 18,
+"stock": 50
+},
+{
+"name": "520942 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG UNA SALIDA ",
+"lastInvDate": "30/09/2016",
+"lastStock": 19,
+"stock": 46
+},
+{
+"name": "521069 - GRAPA DE SUSPENSIÓN GS-1200",
+"lastInvDate": "30/09/2016",
+"lastStock": 13,
+"stock": 23
+},
+{
+"name": "521070 - PINZA ANCLAJE ACOMETIDA",
+"lastInvDate": "30/09/2016",
+"lastStock": 278,
+"stock": 278
+},
+{
+"name": "525612 - PINZA ANCLAJE PA-1/0-1500 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 5,
+"stock": 16
+},
+{
+"name": "525613 - PINZA ANCLAJE PA-4/0-2000 ",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 5
+},
+{
+"name": "525797 - CONECTOR CUÑA A PRESIÓN CON ESTRIBO 4/0 AWG",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 9
+},
+{
+"name": "528892 - ML. CONDUCTOR CONCENTRICO DE COBRE 3 X #4 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 3244,
+"stock": 3244
+},
+{
+"name": "530559 - TERMINAL COMPRESIÓN PLETINA COND. CU #2",
+"lastInvDate": "19/10/2016",
+"lastStock": 3,
+"stock": 3
+},
+{
+"name": "530631 - ML. CABLE ACERO GALVANIZADO 1/2”",
+"lastInvDate": "30/09/2016",
+"lastStock": 16830,
+"stock": 16830
+},
+{
+"name": "530635 - VARILLA DE ANCLAJE DE OJO C.T. 1\" X 8'",
+"lastInvDate": "30/09/2016",
+"lastStock": 57,
+"stock": 57
+},
+{
+"name": "530638 - ANCLA DE EXPANSIÓN PARA VARILLA DE 1\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 33,
+"stock": 33
+},
+{
+"name": "530875 - GRILLETE NORMAL RECTO 7/8\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 126,
+"stock": 126
+},
+{
+"name": "530881 - GUARDACABOS PARA RETENCION CABLE DE ACERO 1/2\"",
+"lastInvDate": "30/09/2016",
+"lastStock": 327,
+"stock": 329
+},
+{
+"name": "530882 - Terminal preformada retenida 1/2 plg",
+"lastInvDate": "19/10/2016",
+"lastStock": 1,
+"stock": 4
+},
+{
+"name": "531537 - CONECTOR CUÑA A PRESIÓN PICA DE P.T.-AWG #2 Cu ",
+"lastInvDate": "30/09/2016",
+"lastStock": 588,
+"stock": 607
+},
+{
+"name": "532323 - ML. CONDUCTOR AISLADO 1/0 AWG 35 KV NEUTRO COMPLETO ",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 500
+},
+{
+"name": "532731 - BARRA TRES BORNAS ATORNILLABLES SIN CARGA EN 35 KV 600 A ",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "533839 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG DOS SALIDAS ",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "551265 - CRUCETA ANGULAR METÁLICA 1 400 mm",
+"lastInvDate": "30/09/2016",
+"lastStock": 23,
+"stock": 23
+},
+{
+"name": "551266 - CRUCETA ANGULAR METALICA 1800 MM",
+"lastInvDate": "30/09/2016",
+"lastStock": 47,
+"stock": 43
+},
+{
+"name": "551267 - CRUCETA ANGULAR METÁLICA 2 400 mm ",
+"lastInvDate": "30/09/2016",
+"lastStock": 32,
+"stock": 46
+},
+{
+"name": "551418 - GRILLETE LARGO RECTO 5/8\" 11.300KG ",
+"lastInvDate": "30/09/2016",
+"lastStock": 252,
+"stock": 424
+},
+{
+"name": "551463 - PINZA ANCLAJE PA-#2-1000",
+"lastInvDate": "30/09/2016",
+"lastStock": 87,
+"stock": 50
+},
+{
+"name": "551556 - SOPORTE PARA SECCIONADOR FUSIBLE EN CRUCETA ANGULAR",
+"lastInvDate": "30/09/2016",
+"lastStock": 138,
+"stock": 142
+},
+{
+"name": "551557 - ML. FLEJE DE SUJECIÓN 20 X 0,7 MM",
+"lastInvDate": "30/09/2016",
+"lastStock": 90,
+"stock": 90
+},
+{
+"name": "551560 - EMPALME PLENA TRACCION AISLADO A COMPRESION CONDUCTOR #2 ",
+"lastInvDate": "30/09/2016",
+"lastStock": 7,
+"stock": 9
+},
+{
+"name": "552900 - TERMINAL COMPRESION BIMETALICO CONDUCTOR 1/0 AWG",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 3
+},
+{
+"name": "552902 - TERMINAL COMPRESION BIMETALICO CONDUCTOR 266 MCM",
+"lastInvDate": "30/09/2016",
+"lastStock": 12,
+"stock": 12
+},
+{
+"name": "552903 - TERMINAL COMPRESI¢N PLETINA  COND. 477 MCM",
+"lastInvDate": "30/09/2016",
+"lastStock": 14,
+"stock": 14
+},
+{
+"name": "690290 - CRUCETA ANGULAR METÁLICA 3 000 mm",
+"lastInvDate": "30/09/2016",
+"lastStock": 15,
+"stock": 15
+},
+{
+"name": "690292 - TERMINAL COMPRESIÓN BIMET. CONDUCTOR #2 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 30,
+"stock": 33
+},
+{
+"name": "690293 - TERMINAL COMPRESIÓN BIMET. CONDUCTOR 1/0 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 89,
+"stock": 89
+},
+{
+"name": "690294 - TERMINAL COMPRESIÓN BIMET. CONDUCTOR 4/0 AWG",
+"lastInvDate": "30/09/2016",
+"lastStock": 29,
+"stock": 23
+},
+{
+"name": "692482 - FUSIBLE LIMITADOR DE CORRIENTE TIPO \"k\"- 12A",
+"lastInvDate": "30/09/2016",
+"lastStock": 1,
+"stock": 1
+},
+{
+"name": "699901 - CONECTOR COMPRESION #2-#2 CU",
+"lastInvDate": "30/09/2016",
+"lastStock": 342,
+"stock": 393
+},
+{
+"name": "703751 - CONECTOR PERFORACIÓN 1/0-#2/ 1/0-#6",
+"lastInvDate": "30/09/2016",
+"lastStock": 9,
+"stock": 10
+},
+{
+"name": "703753 - CONECTOR PERFORACIÓN 4/0-1/0 / 4/0-#2",
+"lastInvDate": "21/10/2016",
+"lastStock": 18,
+"stock": 24
+},
+{
+"name": "704164 - HEBILLA PARA FLEJE DE SUJECCIÓN",
+"lastInvDate": "30/09/2016",
+"lastStock": 88,
+"stock": 88
+},
+{
+"name": "705104 - CONECTOR COMPRESION B.T.#2 / #6-#4 AL",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 3
+},
+{
+"name": "707561 - AISLADOR PORCELANA TIPO TENSOR 3/8\" (ANSI 54.2)",
+"lastInvDate": "30/09/2016",
+"lastStock": 390,
+"stock": 395
+},
+{
+"name": "709901 - CONECTOR PERFORACIÓN #2-#6 / #2-#6",
+"lastInvDate": null,
+"lastStock": null,
+"stock": 80
+},
+{
+"name": "709958 - PINZA ANCLAJE ACOMETIDA TRENZADA",
+"lastInvDate": "30/09/2016",
+"lastStock": 103,
+"stock": 76
+},
+{
+"name": "710185 - CONECTOR PERFORACIÓN 1/0-#6 / #10-#14",
+"lastInvDate": "30/09/2016",
+"lastStock": 24,
+"stock": 210
+},
+{
+"name": "715695 - TERMINAL ATORNILLABLE EN T SIN CARGA 750 MCM 15 KV 600 A",
+"lastInvDate": "30/09/2016",
+"lastStock": 8,
+"stock": 8
+},
+{
+"name": "715697 - TERMINACIÓN DE EXTERIOR CONTRÁCTIL EN FRÍO DE 15 KV 750 MCM ",
+"lastInvDate": "30/09/2016",
+"lastStock": 15,
+"stock": 15
+}
+]
+}

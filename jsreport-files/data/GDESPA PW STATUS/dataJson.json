@@ -1,0 +1,292 @@
+{
+"reference": "301012016040797",
+"pwname": "Ubencio Atencio Hidrogo",
+"description": null,
+"initialDate": "22/09/2016",
+"company": "Gas Natural - Union Fenosa",
+"initInCharge": "SAGEL, GASPAR                      ",
+"zone": "David",
+"k": 1,
+"total": 5962.25,
+"STATUS": "ACEPTADO",
+"acepDate": "22/09/2016",
+"acepInCharge": "SAGEL, GASPAR                      ",
+"acepRef": "301012016040797",
+"finDate": null,
+"finInCharge": null,
+"finRef": null,
+"cerDate": null,
+"cerInCharge": null,
+"cerRef": null,
+"invDate": null,
+"invInCharge": null,
+"invRef": null,
+"payDate": null,
+"payInCharge": null,
+"payRef": null,
+"estimate": 4682,
+"done": 4655,
+"percentage": 99.42,
+"cost": 1105.06,
+"nreport": "ESTADO DE OBRA",
+"culines": [
+{
+"name": "02304000 - POSTE HORMIGÓN PRETENSADO CENTRIFUGADO 300 daN 10,5 M",
+"estimate": 6,
+"done": 6,
+"percentage": 100
+},
+{
+"name": "04322200 - ARMADO SIMPLE CIRC. MONOF. ÁNGULO 5 a 30º, ACSR 1/0",
+"estimate": 4,
+"done": 4,
+"percentage": 100
+},
+{
+"name": "04325100 - ARMADO SIMPLE CIRC. MONOFÁSICO FIN DE LÍNEA",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "04327100 -  ARMADO SIMPLE CIRCUITO MONOFASICO ÁNGULO 30 a 60º,ACSR 4/0 y 1/0 AWG",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "04326208 - ARMADO SIMPLE CIRC. MONOFÁSICO PROLONGACIÓN DE LÍNEA, ASCR 1/0",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "05311200 - METRO DE TENDIDO DE LÍNEA MONOF. ACSR 1/0 Y NEUTRO 1/0",
+"estimate": 720,
+"done": 720,
+"percentage": 100
+},
+{
+"name": "0305000055 - ML. DE LINEA DE BT RETENCIONADA Y FLECHADA",
+"estimate": 5,
+"done": 5,
+"percentage": 100
+},
+{
+"name": "06302000 - TRAFO MONOF. AUTOPROTEGIDO SOBRE POSTE, 34,5 kV/120-240 V - 10 kVA",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "08304000 - CONEXIÓN CONDUCTOR ACSR 1/0-ACSR 1/0",
+"estimate": 2,
+"done": 2,
+"percentage": 100
+},
+{
+"name": "08305200 - CONEXIÓN CONDUCTOR ACSR 1/0-Nº2 CU",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "08322300 - CONEXIÓN AMOVIBLE COMPLETA PARA ACSR 1/0",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "08323028 - IMPULSOR COLOR AZUL",
+"estimate": 4,
+"done": 4,
+"percentage": 100
+},
+{
+"name": "08323908 - IMPULSOR COLOR ROJO",
+"estimate": 6,
+"done": 0,
+"percentage": 0
+},
+{
+"name": "09300100 - MONTAJE CONJUNTO RETENIDA 3/8\"",
+"estimate": 3,
+"done": 3,
+"percentage": 100
+},
+{
+"name": "09300210 - MONTAJE CONJUNTO RETENIDA 3/8\" CON AISLADOR TENSOR 24,9 Y 34,5 kV",
+"estimate": 6,
+"done": 6,
+"percentage": 100
+},
+{
+"name": "09310100 - ANCLAJE DE RETENIDA 3/8\" CON ANCLA DE EXPANSION",
+"estimate": 9,
+"done": 9,
+"percentage": 100
+},
+{
+"name": "09351000 - SENALIZACION Y PROTECCION DE RETENIDA",
+"estimate": 11,
+"done": 11,
+"percentage": 100
+},
+{
+"name": "10301100 - AISLADOR PORCELANA TIPO POSTE 34,5 KV",
+"estimate": 8,
+"done": 8,
+"percentage": 100
+},
+{
+"name": "10312800 - CADENA DE AMARRE COMPOSITE 34,5 KV ACSR 1/0 (RAVEN)",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "10322800 - CADENA DE SUSPENSION COMPOSITE 34,5 KV ACSR 1/0 (RAVEN)",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "10302208 - AISLADOR PORCELANA PASO DE FASE SOBRE POSTE 34,5 KV",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "10312808 - CADENA DE AMARRE COMPOSITE 34,5 KV ACSR 1/0 (RAVEN)",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "11301008 - PUENTE SIMPLE CONEXIÓN BT TRAFO TIPO POSTE 10 KVA COND # 2",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "14302000 - ARMADO B.T. ANCLAJE Y ÁNGULO DE 30 A 90º PARA NEUTRO FIADOR #2 EN POSTE B.T.",
+"estimate": 3,
+"done": 3,
+"percentage": 100
+},
+{
+"name": "14303000 - ARMADO B.T. FIN DE LÍNEA PARA NEUTRO FIADOR #2 EN POSTE B.T.",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "14303100 - ARMADO B.T. FIN DE LÍNEA PARA NEUTRO FIADOR #2 EN POSTE M.T.",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "14321000 - ARMADO B.T. FIN DE LÍNEA C/TORNILLO EXISTENTE PARA ACOMETIDAS",
+"estimate": 2,
+"done": 2,
+"percentage": 100
+},
+{
+"name": "15301100 - METRO DE LÍNEA TENSADA TRÍPLEX #6",
+"estimate": 7,
+"done": 7,
+"percentage": 100
+},
+{
+"name": "15301200 - METRO DE LÍNEA TENSADA TRÍPLEX #2",
+"estimate": 252,
+"done": 252,
+"percentage": 100
+},
+{
+"name": "17301600 - CONEXIÓN ACOMETIDA 3 HILOS  A CONTADOR",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "18301000 - DERIVACIÓN UNA ACOMETIDA CONECTOR PERFORACIÓN 1/0",
+"estimate": 9,
+"done": 9,
+"percentage": 100
+},
+{
+"name": "18301200 - DERIVACIÓN DOS ACOMETIDAS CONECTOR PERFORACIÓN 1/0",
+"estimate": 3,
+"done": 3,
+"percentage": 100
+},
+{
+"name": "31341000 - PUESTA A TIERRA EN POSTE DE HORMIGÓN DE HASTA 10 M",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "31342000 - PICA DE PUESTA A TIERRA",
+"estimate": 5,
+"done": 5,
+"percentage": 100
+},
+{
+"name": "31343000 - ML HORIZONTAL DE CONDUCTOR CU DESNUDO #2 PARA TOMA DE TIERRA",
+"estimate": 22,
+"done": 22,
+"percentage": 100
+},
+{
+"name": "31342100 - ANILLO CERRADO DE PUESTA A TIERRA",
+"estimate": 1,
+"done": 1,
+"percentage": 100
+},
+{
+"name": "31343108 - TERMINAL DE COMPRESION #2 CU",
+"estimate": 14,
+"done": 14,
+"percentage": 100
+},
+{
+"name": "0310000035 - FIJACIÓN DE TERMINALES TIPO PLETINA",
+"estimate": 3,
+"done": 3,
+"percentage": 100
+},
+{
+"name": "0310000039 - TORNILLO GALVANIZADO DE OJO 5/8 X 10\"",
+"estimate": 5,
+"done": 5,
+"percentage": 100
+},
+{
+"name": "0316000010 - MONTAJE SOP. 8'  Y CONEX. SUBT. LUMINARIA 100W",
+"estimate": 2,
+"done": 2,
+"percentage": 100
+},
+{
+"name": "0316000015 - MONTAJE SOP.8' Y CONEX. AEREA LUM 100W BT TRENZADA",
+"estimate": 2,
+"done": 2,
+"percentage": 100
+},
+{
+"name": "0315000017 - PODA DE VANO HASTA 50MTS LMT",
+"estimate": 15,
+"done": 15,
+"percentage": 100
+},
+{
+"name": "0315000033 - PERMISOS DE PODA",
+"estimate": 13,
+"done": 13,
+"percentage": 100
+}
+]
+}

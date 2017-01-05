@@ -1,0 +1,86 @@
+{
+    "nreport": "INFORME CIERRE",
+    "closureDate": "26/10/2016",
+    "workerName1": "SAGEL, GASPAR ",
+    "comments1": "ASW",
+    "lines": [
+        {
+        "pwName": "OER GALERITA ABAJO",
+        "e1": 0.04,
+        "done1": 0.04,
+        "amount": 236.31,
+        "lines2": [
+        {
+        "workerName2": "MORAN, HERMOGENES ",
+        "comments2": "Mis pruebas de trabajo",
+        "lines3": [
+        {
+        "cuName": "0315000015 - 0315000015 - ETIQUETADO DE EQUIPOS E INSTALACIONES",
+        "e2": 9,
+        "d2": 0,
+        "quantity": 3
+        },
+        {
+        "cuName": "08323908 - IMPULSOR COLOR ROJO",
+        "e2": 2,
+        "d2": 0,
+        "quantity": 2
+        },
+        {
+        "cuName": "0310000035 - FIJACIÓN DE TERMINALES TIPO PLETINA",
+        "e2": 6,
+        "d2": 0,
+        "quantity": 6
+        },
+        {
+        "cuName": "08323028 - IMPULSOR COLOR AZUL",
+        "e2": 2,
+        "d2": 0,
+        "quantity": 2
+        },
+        {
+        "cuName": "0316000015 - MONTAJE SOP.8' Y CONEX. AEREA LUM 100W BT TRENZADA",
+        "e2": 9,
+        "d2": 0,
+        "quantity": 9
+        }
+        ],
+        "initDate": "24/10/2016"
+        }
+        ]
+        },
+        {
+        "pwName": "OER EL BARNIZ",
+        "e1": 0.01,
+        "done1": 0.01,
+        "amount": 125.13,
+        "lines2": [
+        {
+        "workerName2": "DE LEON, DAYAN ",
+        "comments2": "Otra prueba 2",
+        "lines3": [
+        {
+        "cuName": "0304000023 - BASTIDOR FIJO ALAMBRE APOYO HORMIGÓN 12/14 MTS",
+        "e2": 5,
+        "d2": 0,
+        "quantity": 4
+        },
+        {
+        "cuName": "10301108 - AISLADOR PORCELANA TIPO POSTE 34,5 KV",
+        "e2": 1,
+        "d2": 0,
+        "quantity": 1
+        },
+        {
+        "cuName": "0705000001 - REMOCION HASTA 3 BASTIDORES BT POR APOYO",
+        "e2": 2,
+        "d2": 0,
+        "quantity": 2
+        }
+        ],
+        "initDate": "25/10/2016"
+        }
+        ]
+        }
+    ]
+}

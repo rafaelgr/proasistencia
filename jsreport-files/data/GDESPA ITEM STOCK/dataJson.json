@@ -1,0 +1,89 @@
+{
+"item": "437006 - SOPORTE VERTICAL PARA AISLADOR TIPO POSTE",
+"store": "Almacén David",
+"reportDate": "14/11/2016",
+"invDate": "30/09/2016",
+"lastStock": 178,
+"stock": 171,
+"lastInvDate": "2016-09-30",
+"nreport": "MOVIMENTOS DE ARTÍCULO",
+"ilines": [
+{
+"dMov": "05/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 2,
+"lStock": 176
+},
+{
+"dMov": "05/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 2,
+"lStock": 174
+},
+{
+"dMov": "08/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 1,
+"lStock": 173
+},
+{
+"dMov": "14/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 11,
+"lStock": 162
+},
+{
+"dMov": "15/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 3,
+"lStock": 159
+},
+{
+"dMov": "20/10/2016",
+"type": "ENTRADA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 44,
+"lStock": 203
+},
+{
+"dMov": "21/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 15,
+"lStock": 188
+},
+{
+"dMov": "31/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 16,
+"lStock": 172
+},
+{
+"dMov": "31/10/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 1,
+"lStock": 171
+},
+{
+"dMov": "04/11/2016",
+"type": "SALIDA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 1,
+"lStock": 170
+},
+{
+"dMov": "08/11/2016",
+"type": "ENTRADA",
+"inCharge": "PITTI, YESSICA                     ",
+"quantity": 1,
+"lStock": 171
+}
+]
+}

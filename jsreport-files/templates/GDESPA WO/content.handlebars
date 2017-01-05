@@ -1,0 +1,67 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+    </div>
+    <table class="table table-stripped table-forum">
+    <thead class="txt-color-blue">
+        <tr>
+            <th>FECHA</th>
+            <th>RESPONSABLE</th>
+            <th>OBRA</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{initDate}}</td>
+            <td>{{workerName}}</td>
+            <td>{{pwName}}</td>
+        </tr>
+    </tbody>
+    </table> 
+    <div>
+        <strong>Observaciones: </strong>
+        <br/>{{comments}}
+    </div>
+    <hr/>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Unidad constructiva</th>
+                <th>Pres</th>
+                <th>Hecho</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each lines}}
+            <tr>
+                <td>{{cunit}}</td>
+                <td>{{estimate}}</td>
+                <td>{{done}}</td>
+                <td>{{quantity}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>      
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Trabajador</th>
+                <th>Dias</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each workers}}
+            <tr>
+                <td>{{worker}}</td>
+                <td>{{days}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>     
+</div>

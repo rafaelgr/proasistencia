@@ -1,0 +1,16 @@
+{
+    "nreport":"Toma de inventario",
+    "lastDate": "01/01/2016",
+    "worker": "Susana Calamara",
+    "store": "Almacen de salida",
+    "comments": "Estas son las observaciones",
+    "lines":[
+            {
+                "item": "Articulo 1"
+            },
+            {
+                "item": "Articulo 2"
+            }
+
+        ]
+}

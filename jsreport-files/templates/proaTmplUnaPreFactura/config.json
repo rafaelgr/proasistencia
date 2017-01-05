@@ -3,7 +3,7 @@
     "recipe": "phantom-pdf",
     "engine": "handlebars",
     "modificationDate": {
-        "$$date": 1469093814118
+        "$$date": 1483546740942
     },
     "_id": "4oBS9H0F9AZIH1IC",
     "phantom": {
@@ -11,5 +11,10 @@
     },
     "data": {
         "shortid": "rJdEOk0D"
-    }
+    },
+    "scripts": [
+        {
+            "shortid": "H14ZGyHv"
+        }
+    ]
 }

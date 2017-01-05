@@ -1,0 +1,186 @@
+{
+"reference": "301012016040797",
+"pwname": "Ubencio Atencio Hidrogo",
+"description": null,
+"initialDate": "22/09/2016",
+"company": "Gas Natural - Union Fenosa",
+"initInCharge": "SAGEL, GASPAR                      ",
+"zone": "David",
+"k": 1,
+"total": 5962.25,
+"STATUS": "ACEPTADO",
+"acepDate": "22/09/2016",
+"acepInCharge": "SAGEL, GASPAR                      ",
+"acepRef": "301012016040797",
+"finDate": null,
+"finInCharge": null,
+"finRef": null,
+"cerDate": null,
+"cerInCharge": null,
+"cerRef": null,
+"invDate": null,
+"invInCharge": null,
+"invRef": null,
+"payDate": null,
+"payInCharge": null,
+"payRef": null,
+"estimate": 4682,
+"done": 4655,
+"percentage": 99.42,
+"cost": 1105.06,
+"nreport": "CONSUMO EN OBRA",
+"ilines": [
+{
+"name": "*437661 - TUERCA DE OJO DE ACERO GALVANIZADO",
+"quantity": 3
+},
+{
+"name": "*525639 - BRIDA DE SUJECCIÓN HASTA 25 mm",
+"quantity": 3
+},
+{
+"name": "436992 -  AISLADOR PORCELANA TIPO POSTE 34,5 kV (ANSI 57-3)",
+"quantity": 2
+},
+{
+"name": "437596 - CONECTOR CUÑA A PRESION 1/0 - 1/0 AWG",
+"quantity": 4
+},
+{
+"name": "437713 - RETENCIÓN PREFORMADA “OMEGA” DOBLE AISL.57/1-3 ACSR 1/0",
+"quantity": 2
+},
+{
+"name": "437802 - RETENCIÓN PREFORMADA “OMEGA” AISL.53/2 ACSR 1/0 ",
+"quantity": 2
+},
+{
+"name": "454874 -  PERNO AC. GALVANIZADO 5/8\"-3/4\"X12\" ",
+"quantity": 2
+},
+{
+"name": "520942 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG UNA SALIDA ",
+"quantity": 4
+},
+{
+"name": "521070 - PINZA ANCLAJE ACOMETIDA",
+"quantity": 4
+},
+{
+"name": "533839 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG DOS SALIDAS ",
+"quantity": 2
+}
+],
+"wlines": [
+{
+"name": null,
+"quantity": null,
+"cost": null
+},
+{
+"name": "AGUILAR, VALENTINA                 ",
+"quantity": 0,
+"cost": 0
+},
+{
+"name": "BIRMINGHAN, JOSE                   ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "CASTILLO, LUIS                     ",
+"quantity": 1,
+"cost": 36.25
+},
+{
+"name": "CASTREJON, TOMAS                   ",
+"quantity": 0,
+"cost": 0
+},
+{
+"name": "CERRACIN, ALVARO                   ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "DE LEON, DAYAN                     ",
+"quantity": 0,
+"cost": 0
+},
+{
+"name": "GANTES, ARIEL                      ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "GONZALEZ, JEAN                     ",
+"quantity": 2,
+"cost": 68.44
+},
+{
+"name": "Grúa",
+"quantity": 1,
+"cost": 110
+},
+{
+"name": "JUVENAL, SALDAÑA",
+"quantity": 1,
+"cost": 52.98
+},
+{
+"name": "MIRANDA, ONESIMO                   ",
+"quantity": 1,
+"cost": 44.62
+},
+{
+"name": "MONTES, MAYKOL                     ",
+"quantity": 1,
+"cost": 41.83
+},
+{
+"name": "ORTEGA, YORLINIS                   ",
+"quantity": 2,
+"cost": 72.5
+},
+{
+"name": "PRADO, ROBINSON                    ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "QUINTERO, SAMUEL                   ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "ROBINSON, MAXWELL                  ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "SANTIAGO, OMAR                     ",
+"quantity": 2,
+"cost": 133.84
+},
+{
+"name": "TORREZ, JORGE   H                  ",
+"quantity": 1,
+"cost": 44.62
+},
+{
+"name": "Toyota Hilux",
+"quantity": 3,
+"cost": 192
+},
+{
+"name": "VEGA, ISRAEL                       ",
+"quantity": 1,
+"cost": 34.22
+},
+{
+"name": "VIQUEZ, ABDIEL                     ",
+"quantity": 2,
+"cost": 68.44
+}
+]
+}
