@@ -1438,15 +1438,15 @@ function printPrefactura(id) {
 function informePDF(data) {
     var shortid = "HyGQ0yAP";
     // HkDPG29rl
-    shortid = "HkDPG29rl";
+    // shortid = "HkDPG29rl";
     var data = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    //f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-    apiReport("POST", myconfig.reportUrl + "/api/report", data);
+    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
+    //apiReport("POST", myconfig.reportUrl + "/api/report", data);
 }
 
 var f_open_post = function (verb, url, data, target) {
