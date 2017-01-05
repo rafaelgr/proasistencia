@@ -1,0 +1,49 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+        <h3>{{pw}}</h3>
+    </div>
+    <table class="table table-stripped table-forum">
+    <thead class="txt-color-blue">
+        <tr>
+            <th>FECHA</th>
+            <th>RESPONSABLE</th>
+            <th>ALMACEN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{lastDate}}</td>
+            <td>{{worker}}</td>
+            <td>{{store}}</td>
+        </tr>
+    </tbody>
+    </table> 
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Articulo</th>
+                <th>Previso</th>
+                <th>Servido</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each lines}}
+            <tr>
+                <td>{{item}}</td>
+                <td>{{estimate}}</td>
+                <td>{{done}}</td>
+                <td></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>            
+</div>

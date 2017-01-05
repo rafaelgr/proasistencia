@@ -1,0 +1,46 @@
+{
+    "nreport": "ENTRADA MERCANCIA",
+    "dateIn": "11/10/2016",
+    "workerName": "PITTI, YESSICA ",
+    "storeName": "Almacén David",
+    "deliveryNote": "0001",
+    "comments": "devolución canasta señor bolaños (proyecto peñón)",
+    "lines": [
+        {
+        "item": "530559 - TERMINAL COMPRESIÓN PLETINA COND. CU #2",
+        "quantity": 5
+        },
+        {
+        "item": "699901 - CONECTOR COMPRESION #2-#2 CU",
+        "quantity": 2
+        },
+        {
+        "item": "531537 - CONECTOR CUÑA A PRESIÓN PICA DE P.T.-AWG #2 Cu ",
+        "quantity": 3
+        },
+        {
+        "item": "*458593 - TORNILLO ACERO INOXIDABLE C/EXAG. C.T. 1/2”x2”",
+        "quantity": 3
+        },
+        {
+        "item": "*458594 - ARANDELA DE PRESIÓN AC. INOX. 1/2",
+        "quantity": 2
+        },
+        {
+        "item": "*458595 - ARANDELA PLANA REDONDA AC. INOX. 1/2",
+        "quantity": 4
+        },
+        {
+        "item": "690292 - TERMINAL COMPRESIÓN BIMET. CONDUCTOR #2 AWG",
+        "quantity": 1
+        },
+        {
+        "item": "690294 - TERMINAL COMPRESIÓN BIMET. CONDUCTOR 4/0 AWG",
+        "quantity": 2
+        },
+        {
+        "item": "710185 - CONECTOR PERFORACIÓN 1/0-#6 / #10-#14",
+        "quantity": 1
+        }
+    ]
+}

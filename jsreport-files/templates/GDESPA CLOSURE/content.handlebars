@@ -1,0 +1,76 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+    </div>
+    <table class="table">
+    <thead class="txt-color-blue">
+        <tr>
+            <th>FECHA</th>
+            <th>RESPONSABLE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{closureDate}}</td>
+            <td>{{workerName1}}</td>
+        </tr>
+    </tbody>
+    </table> 
+    <div>
+        <strong>Observaciones: </strong>
+        <br/>{{comments1}}
+    </div>
+    <hr/>
+    <table class="table">
+        {{#each lines}}
+        <tr>
+            <td><strong>OBRA:</strong><br/>{{pwName}}</td>
+            <td><strong>REALIZADO:</strong><br/>{{done1}}</td>
+            <td><strong>IMPORTE:</strong><br/>{{amount}}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <strong>PARTES:</strong><br/>
+                <table class="table table-stripped table-forum  table-bordered">
+                    {{#each lines2}}
+                    <tr>
+                        <td><strong>Fecha:</strong><br/>{{initDate}}</td>
+                        <td><strong>Responsable:</strong><br/>{{workerName2}}</td>
+                        <td><strong>Observaciones:</strong><br/>{{comments2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table class="table table-stripped table-forum">
+                                <thead class="txt-color-blue">
+                                    <tr>
+                                        <th>Unidad constructiva</th>
+                                        <th>Pr.</th>
+                                        <th>Ant.</th>
+                                        <th>Cant.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each lines3}}
+                                    <tr>
+                                        <td>{{cuName}}</td>
+                                        <td>{{e2}}</td>
+                                        <td>{{d2}}</td>
+                                        <td>{{quantity}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table> 
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </td>
+        </tr>
+        {{/each}}
+    </table>            
+</div>

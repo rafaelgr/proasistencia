@@ -1,0 +1,20 @@
+{
+    "nreport":"Reserva / Entrega",
+    "pw": "Esta es la propuesta",
+    "lastDate": "01/01/2016",
+    "worker": "Susana Calamara",
+    "store": "Almacen de salida",
+    "lines":[
+            {
+                "item": "Articulo 1",
+                "estimate": "5.6",
+                "done": "3"
+            },
+            {
+                "item": "Articulo 2",
+                "estimate": "10",
+                "done": "2"
+            }
+
+        ]
+}

@@ -1,0 +1,106 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<style>
+    .page-break    { display: block; page-break-before: always; }
+</style>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+    </div>
+    <table>
+        <tr>
+            <td colspan="2" style="padding:5px;">
+                <strong>Referencia: </strong><br/>{{reference}}
+            </td>
+            <td colspan="2" style="padding:5px;">
+                <strong>Nombre: </strong><br/>{{pw}}
+            </td>            
+        </tr>        
+        <tr>
+            <td style="padding:5px;">
+                <strong>Estado: </strong><br/>{{status}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Fecha incial: </strong><br/>{{initDate}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Empresa: </strong><br/>{{company}}
+            </td>       
+            <td style="padding:5px;">
+                <strong>Responsable: </strong><br/>{{initInCharge}}
+            </td>            
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:5px;">
+                <strong>Zona: </strong><br/>{{zone}}
+            </td>
+            <td style="padding:5px;">
+                <strong>K: </strong><br/>{{globalK}}
+            </td>            
+            <td style="padding:5px;">
+                <strong>Total: </strong><br/>{{total}}
+            </td>            
+        </tr>          
+        <tr>
+            <td colspan="4" style="padding:5px;">
+                <strong>Descripción: </strong><br/>{{description}}
+            </td>
+        </tr>         
+    </table> 
+    <hr/>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Linea</th>
+                <th>Unida constructiva</th>
+                <th>Coste</th>
+                <th>Cantidad</th>
+                <th>K</th>
+                <th>Importe</th>
+                <th>Observaciones</th>
+            </tr>
+            <br/>
+        </thead>
+        <tbody>
+            {{#each lines}}  
+            <tr style="font-size:110%">
+                <td>{{line}}</td>
+                <td>{{cunit}}</td>
+                <td>{{cost}}</td>
+                <td>{{quantity}}</td>
+                <td>{{k}}</td>
+                <td>{{amount}}</td>
+                <td>{{comments}}</td>
+            </tr>
+            <tr>
+                {{#each items}}
+                <tr>
+                    <td></td>
+                    <td colspan="4">
+                        <strong>Artículo: </strong><br/>
+                        {{item}}
+                    </td>
+                    <td>
+                        <strong>C.UC: </strong><br/>
+                        {{qUc}}
+                    </td>
+                    <td>
+                        <strong>C.PR: </strong><br/>
+                        {{qPw}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tr>
+            <tr>
+                <td colspan="7">
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>            
+</div>

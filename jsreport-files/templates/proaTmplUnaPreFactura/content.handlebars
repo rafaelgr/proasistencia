@@ -54,15 +54,17 @@
             </td>
         </tr>
     </table>
+    {{#each capitulos}}
+    <h4>{{nombre}}</h4>
     <table class="table table-stripped table-forum">
         <thead class="txt-color-blue">
             <tr>
                 <th>Linea</th>
                 <th>Descripcion</th>
                 <th>Tipo IVA</th>
-                <th style="text-align:right;">Precio</th>
+                <th style="text-align:right;" width='10%'>Precio</th>
                 <th style="text-align:right;">Cantidad</th>
-                <th style="text-align:right;">Importe</th>
+                <th style="text-align:right;" width='15%'>Importe</th>
             </tr>
         </thead>
         <tbody>
@@ -71,21 +73,20 @@
                 <td>{{linea}}</td>
                 <td>{{descripcion}}</td>
                 <td>{{tipoIva}}</td>
-                <td style="text-align:right;">{{importe}}</td>
+                <td style="text-align:right;" width='10%'>{{importe}}</td>
                 <td style="text-align:right;">{{cantidad}}</td>
-                <td style="text-align:right;">{{totalLinea}}</td>
+                <td style="text-align:right;" width='15%'>{{totalLinea}}</td>
             </tr>
             {{/each}}
             <tr>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td style="text-align:right;">TOTAL :</td>
-                <td style="text-align:right;">{{cabecera.total}}</td>
+                <td colspan="3" style="text-align:right;">TOTAL CAPITULO:</td>
+                <td style="text-align:right;">{{total}}</td>
             </tr>
         </tbody>
     </table> 
+    {{/each}}
     <table class="table table-stripped table-forum">
         <thead class="txt-color-blue">
             <tr>
@@ -106,6 +107,13 @@
                 <td></td>
             </tr>
             {{/each}}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align:right;">TOTAL :</td>
+                <td style="text-align:right;">{{cabecera.total}}</td>
+            </tr>            
             <tr>
                 <td></td>
                 <td></td>

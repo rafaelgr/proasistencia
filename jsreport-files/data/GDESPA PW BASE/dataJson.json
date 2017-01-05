@@ -1,0 +1,64 @@
+{
+    "nreport":"INFORME PROPUESTA",
+    "pw": "Nombre de la propuesta",
+    "initDate": "01/01/2016",
+    "company": "GNF UF",
+    "initInCharge": "Jesús del Gran Poder Y que pasa si esto es enorme u no cabe",
+    "description": "Esta es la descripción del sistema",
+    "reference":"GDDDS789550",
+    "comments": "Esto son los comentarios",
+    "zone": "Zona de la obra",
+    "globalK": "1,2",
+    "total": "20.325,30",
+    "status": "ACEPTADO",
+    "lines":[
+            {
+                "line":"1",
+                "cunit": "Apero de labramza",
+                "cost": "32",
+                "quantity": "5",
+                "k": "1,6",
+                "amount": "253,6",
+                "comments": "Comentarios",
+                "items":[
+                    {
+                        "line": "1",
+                        "item": "Articulo en 1",
+                        "qUc": "3",
+                        "qPw": "6"
+                    },
+                    {
+                        "line": "2",
+                        "item": "Articulo en 2",
+                        "qUc": "4",
+                        "qPw": "16"
+                    }
+                    
+                ]
+            },
+            {
+                "line":"2",
+                "cunit": "Confie 78",
+                "cost": "11,8",
+                "quantity": "9",
+                "k": "1,6",
+                "amount": "5689,6",
+                "comments": null,
+                "items":[
+                    {
+                        "line": "1",
+                        "item": "Si el nombre es realmente largo como se comporta el tema",
+                        "qUc": "5",
+                        "qPw": "23"
+                    },
+                    {
+                        "line": "2",
+                        "item": "Conf 2",
+                        "qUc": "6",
+                        "qPw": "33"
+                    }
+                    
+                ]
+            }
+        ]
+}

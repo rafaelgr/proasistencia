@@ -7,7 +7,7 @@
         "fecha": "01/06/2016",
         "empresaId": "77",
         "clienteId": "4578",
-        "contratoClienteMantenimientoId": "",
+        "contratoMantenimientoId": "",
         "emisorNif": "A78999",
         "emisorNombre": "La Generala S.A.",
         "emisorDirección": "Calle del Pato N.29",
@@ -25,31 +25,67 @@
         "formaPago": "EFECTIVO",
         "observaciones": "EL PAGO SE DESCONTARÁ DEL PENDIENTE"
     },
-    "lineas": [
-        {
-            "prefacturaLineaId": "1",
-            "linea": "1",
-            "prefacturaId": "45788",
-            "articuloId": "00012",
-            "tipoIva": "21%",
-            "porcentaje": "21",
-            "descripcion":"Mantenimiento soportado en globo",
-            "cantidad":"1",
-            "importe": "24,60",
-            "totalLinea": "24,60"
-        },
-        {
-            "prefacturaLineaId": "2",
-            "linea": "2",
-            "prefacturaId": "45788",
-            "articuloId": "00011",
-            "tipoIva": "EXENTO",
-            "porcentaje": "0",
-            "descripcion":"Varios exentos",
-            "cantidad":"2",
-            "importe": "30,20",
-            "totalLinea": "60,40"
-        }
+    "capitulos":[
+            {
+                "nombre": "Capitulo 1",
+                "lineas":[
+                    {
+                        "prefacturaLineaId": "1.1",
+                        "linea": "1",
+                        "prefacturaId": "45788",
+                        "articuloId": "00012",
+                        "tipoIva": "21%",
+                        "porcentaje": "21",
+                        "descripcion":"Mantenimiento soportado en globo saltando",
+                        "cantidad":"1",
+                        "importe": "24,60",
+                        "totalLinea": "24,60"
+                    },
+                    {
+                        "prefacturaLineaId": "1.1",
+                        "linea": "1",
+                        "prefacturaId": "45788",
+                        "articuloId": "00012",
+                        "tipoIva": "21%",
+                        "porcentaje": "21",
+                        "descripcion":"Mantenimiento soportado en globo",
+                        "cantidad":"1",
+                        "importe": "24,60",
+                        "totalLinea": "24,60"
+                    }                    
+                ],
+                "total": 1000.23                
+            },
+            {
+                "nombre": "Capitulo 2",
+                "lineas":[
+                    {
+                        "prefacturaLineaId": "2.1",
+                        "linea": "2.1",
+                        "prefacturaId": "45788",
+                        "articuloId": "00012",
+                        "tipoIva": "21%",
+                        "porcentaje": "21",
+                        "descripcion":"Mantenimiento soportado en globo",
+                        "cantidad":"1",
+                        "importe": "24,60",
+                        "totalLinea": "24,60"
+                    },
+                    {
+                        "prefacturaLineaId": "1.1",
+                        "linea": "2.2",
+                        "prefacturaId": "45788",
+                        "articuloId": "00012",
+                        "tipoIva": "21%",
+                        "porcentaje": "21",
+                        "descripcion":"Mantenimiento soportado en globo",
+                        "cantidad":"1",
+                        "importe": "24,60",
+                        "totalLinea": "24,60"
+                    }                    
+                ],
+                "total": 2000.23
+            }            
     ],
     "bases": [
         {

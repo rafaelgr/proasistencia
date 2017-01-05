@@ -1,0 +1,41 @@
+{
+    "nreport": "SALIDA MERCANCIA",
+    "dateOut": "01/10/2016",
+    "workerName": "PITTI, YESSICA ",
+    "storeName": "Almacén David",
+    "comments": "Generada automáticamente desde la entrega: undefined",
+    "lines": [
+        {
+        "item": "437802 - RETENCIÓN PREFORMADA “OMEGA” AISL.53/2 ACSR 1/0 ",
+        "quantity": 1
+        },
+        {
+        "item": "437713 - RETENCIÓN PREFORMADA “OMEGA” DOBLE AISL.57/1-3 ACSR 1/0",
+        "quantity": 1
+        },
+        {
+        "item": "437596 - CONECTOR CUÑA A PRESION 1/0 - 1/0 AWG",
+        "quantity": 2
+        },
+        {
+        "item": "436992 - AISLADOR PORCELANA TIPO POSTE 34,5 kV (ANSI 57-3)",
+        "quantity": 1
+        },
+        {
+        "item": "454874 - PERNO AC. GALVANIZADO 5/8-3/4 X12 ",
+        "quantity": 1
+        },
+        {
+        "item": "521070 - PINZA ANCLAJE ACOMETIDA",
+        "quantity": 2
+        },
+        {
+        "item": "520942 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG UNA SALIDA ",
+        "quantity": 2
+        },
+        {
+        "item": "533839 - CONECTOR PERFORACIÓN ACOMETIDA B.T. #2-1/0 AWG DOS SALIDAS ",
+        "quantity": 1
+        }
+    ]
+}

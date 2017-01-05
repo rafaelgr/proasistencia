@@ -39,6 +39,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+    $("#btnImprimir").click(imprimir);
     $("#frmPrefactura").submit(function () {
         return false;
     });
@@ -70,10 +71,16 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioContrato(e.added);
     });
-
+    // select2 things
+    $("#cmbGrupoArticulos").select2(select2Spanish());
+    loadGrupoArticulos();
+    $("#cmbGrupoArticulos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioGrupoArticulo(e.added);
+    });
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
-    loadArticulos();
+    // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioArticulo(e.added);
@@ -88,8 +95,8 @@ function initForm() {
     });
 
 
-    $("#txtCantidad").blur(cambioPrecioCantidad());
-    $("#txtPrecio").blur(cambioPrecioCantidad());
+    $("#txtCantidad").blur(cambioPrecioCantidad);
+    $("#txtPrecio").blur(cambioPrecioCantidad);
 
     initTablaPrefacturasLineas();
     initTablaBases();
@@ -121,6 +128,7 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.prefacturaId(0);
         // ocultamos líneas y bases
+        $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
     }
@@ -189,6 +197,12 @@ function admData() {
     self.importe = ko.observable();
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
+    self.capituloLinea = ko.observable();
+    //
+    self.sgrupoArticuloId = ko.observable();
+    //
+    self.posiblesGrupoArticulos = ko.observableArray([]);
+    self.elegidosGrupoArticulos = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -580,9 +594,11 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadArticulos();
+    loadGrupoArticulos();
+    // loadArticulos();
     loadTiposIva();
     //
+    loadArticulos();
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -622,7 +638,8 @@ function aceptarLinea() {
             totalLinea: vm.totalLinea(),
             coste: vm.costeLinea(),
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            capituloLinea: vm.capituloLinea(),
         }
     }
     if (!lineaEnEdicion) {
@@ -695,6 +712,9 @@ function aceptarLinea() {
 function datosOKLineas() {
     $('#linea-form').validate({
         rules: {
+            txtCapitulo: {
+                required: true
+            },
             txtLinea: {
                 required: true
             },
@@ -719,6 +739,9 @@ function datosOKLineas() {
         },
         // Messages for form validation
         messages: {
+            txtCapitulo: {
+                required: "Debe dar un texto al capítulo"
+            },
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -748,7 +771,7 @@ function datosOKLineas() {
 }
 
 function initTablaPrefacturasLineas() {
-    tablaCarro = $('#dt_lineas').dataTable({
+    tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -761,6 +784,17 @@ function initTablaPrefacturasLineas() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            api.column(1, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
+                    );
+                    last = group;
+                }
+            });
         },
         language: {
             processing: "Procesando...",
@@ -786,7 +820,16 @@ function initTablaPrefacturasLineas() {
         columns: [{
             data: "linea"
         }, {
-            data: "descripcion"
+            data: "capituloLinea",
+            "visible": false,
+            render: function (data, type, row) {
+                return "";
+            }
+        }, {
+            data: "descripcion",
+            render: function (data, type, row) {
+                return data.replace('\n', '<br/>');
+            }
         }, {
             data: "importe",
             className: "text-right",
@@ -836,7 +879,9 @@ function loadDataLinea(data) {
     vm.importe(data.importe);
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
+    vm.capituloLinea(data.capituloLinea);
     //
+    loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     //
@@ -898,6 +943,29 @@ function loadArticulos(id) {
     });
 }
 
+function loadGrupoArticulos(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/grupo_articulo",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesGrupoArticulos(grupos);
+            if (id) {
+                $("#cmbGrupoArticulos").val([id]).trigger('change');
+            } else {
+                $("#cmbGrupoArticulos").val([0]).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 function loadTiposIva(id) {
     $.ajax({
         type: "GET",
@@ -933,7 +1001,11 @@ function cambioArticulo(data) {
         contentType: "application/json",
         success: function (data, status) {
             // cargamos los campos por defecto de receptor
-            vm.descripcion(data.nombre);
+            if (data.descripcion == null) {
+                vm.descripcion(data.nombre);
+            } else {
+                vm.descripcion(data.nombre + ':\n' + data.descripcion);
+            }
             vm.cantidad(1);
             vm.importe(data.precioUnitario);
             //valores para IVA por defecto a partir del  
@@ -944,6 +1016,29 @@ function cambioArticulo(data) {
             };
             cambioTiposIva(data2);
             cambioPrecioCantidad();
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+
+}
+
+function cambioGrupoArticulo(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var grupoArticuloId = data.id;
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos/grupo/" + grupoArticuloId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+            vm.posiblesArticulos(articulos);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -976,13 +1071,10 @@ function cambioTiposIva(data) {
 
 }
 
-function cambioPrecioCantidad() {
-    var mf = function () {
-        vm.costeLinea(vm.cantidad() * vm.importe());
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    }
-    return mf;
+var cambioPrecioCantidad = function () {
+    vm.costeLinea(vm.cantidad() * vm.importe());
+    recalcularCostesImportesDesdeCoste();
+    vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
 function editPrefacturaLinea(id) {
@@ -1321,4 +1413,81 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
     return importeAlCliente;
+}
+
+var imprimir = function () {
+    printPrefactura(vm.prefacturaId());
+}
+
+function printPrefactura(id) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            informePDF(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function informePDF(data) {
+    var shortid = "HyGQ0yAP";
+    // HkDPG29rl
+    // shortid = "HkDPG29rl";
+    var data = {
+        "template": {
+            "shortid": shortid
+        },
+        "data": data
+    }
+    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
+    //apiReport("POST", myconfig.reportUrl + "/api/report", data);
+}
+
+var f_open_post = function (verb, url, data, target) {
+    var form = document.createElement("form");
+    form.action = url;
+    form.method = verb;
+    form.target = target || "_blank";
+
+    var input = document.createElement("textarea");
+    input.name = "template[shortid]";
+    input.value = data.template.shortid;
+    form.appendChild(input);
+
+    input = document.createElement("textarea");
+    input.name = "data";
+    input.value = JSON.stringify(data.data);
+    form.appendChild(input);
+
+    form.style.display = 'none';
+    document.body.appendChild(form);
+    form.submit();
+};
+
+var apiReport = function (verb, url, data) {
+    $.ajax({
+        type: verb,
+        url: url,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            var a = 1;
+        },
+        error: function (err) {
+            //mensErrorAjax(err);
+            var file = new Blob([err.responseText], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
+            //var base64EncodedPDF = window.btoa(err.responseText);
+            window.open("data:application/pdf " + err.responseText);
+            //window.open(fileURL);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }

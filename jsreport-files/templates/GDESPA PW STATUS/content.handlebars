@@ -1,0 +1,146 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image logo-gdes-lineman}' style="display:none;" />
+<style>
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+</style>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+        <h1>Fecha: {{reportDate}}</h1>
+    </div>
+    <table>
+        <tr>
+            <td colspan="2" style="padding:5px;">
+                <strong>Referencia: </strong>
+                <br/>{{reference}}
+            </td>
+            <td colspan="2" style="padding:5px;">
+                <strong>Nombre: </strong>
+                <br/>{{pwname}}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;">
+                <strong>Estado: </strong>
+                <br/>{{STATUS}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Fecha incial: </strong>
+                <br/>{{initialDate}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Empresa: </strong>
+                <br/>{{company}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Responsable: </strong>
+                <br/>{{initInCharge}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:5px;">
+                <strong>Zona: </strong>
+                <br/>{{zone}}
+            </td>
+            <td style="padding:5px;">
+                <strong>K: </strong>
+                <br/>{{k}}
+            </td>
+            <td style="padding:5px;">
+                <strong>Total: </strong>
+                <br/>{{total}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:5px;">
+                <strong>Progreso: </strong>
+                <br/>{{percentage}} %
+            </td>
+            <td colspan="2" style="padding:5px;">
+                <strong>Coste: </strong>
+                <br/>{{cost}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding:5px;">
+                <strong>Descripción: </strong>
+                <br/>{{description}}
+            </td>
+        </tr>
+    </table>
+    <hr/>
+    <h3>EVOLUCION DE ESTADOS</h3>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>ESTADO</th>
+                <th>FECHA</th>
+                <th>REFERENCIA</th>
+                <th>RESPONSABLE</th>
+            </tr>
+            <br/>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ACEPTADA</td>
+                <td>{{acepDate}}</td>
+                <td>{{acepRef}}</td>
+                <td>{{acepInCharge}}</td>
+            </tr>
+            <tr>
+                <td>FINALIZADA</td>
+                <td>{{finDate}}</td>
+                <td>{{finRef}}</td>
+                <td>{{finInCharge}}</td>
+            </tr>
+            <tr>
+                <td>CERTIFICADA</td>
+                <td>{{cerDate}}</td>
+                <td>{{cerRef}}</td>
+                <td>{{cerInCharge}}</td>
+            </tr>
+            <tr>
+                <td>FACTURADA</td>
+                <td>{{invDate}}</td>
+                <td>{{invRef}}</td>
+                <td>{{invInCharge}}</td>
+            </tr>
+            <tr>
+                <td>PAGADA</td>
+                <td>{{payDate}}</td>
+                <td>{{payRef}}</td>
+                <td>{{payInCharge}}</td>
+            </tr>            
+        </tbody>
+    </table>
+    <h3>PROGRESO UNIDADES CONSTRUCTIVAS</h3>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>UNIDAD CONSTRUCTIVA</th>
+                <th>PLANEADO</th>
+                <th>REALIZADO</th>
+                <th>PORCENTAJE</th>
+            </tr>
+            <br/>
+        </thead>
+        <tbody>
+            {{#each culines}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{estimate}}</td>
+                <td>{{done}}</td>
+                <td>{{percentage}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>    
+</div>

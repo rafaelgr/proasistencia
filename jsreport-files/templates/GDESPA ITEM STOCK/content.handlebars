@@ -1,0 +1,61 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<img src='{#image logo-gdes-lineman}' style="display:none;"/>
+<div class="well">
+    <div style="text-align:right;">
+        <h1>{{nreport}}</h1>
+        <h1>Fecha: {{reportDate}}</h1>
+    </div>
+    <table class="table">
+        <tr>
+            <td colspan="2">
+                <strong>Artículo: </strong>
+                <br/> {{item}}
+            </td>
+            <td>
+                <strong>Almacén: </strong>
+                <br/> {{store}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Último inventario: </strong>
+                <br/> {{invDate}}
+            </td>
+            <td>
+                <strong>Stock al inventario: </strong>
+                <br/> {{lastStock}}
+            </td>
+            <td>
+                <strong>Stock actual: </strong>
+                <br/> {{stock}}
+            </td>
+        </tr>
+        
+    </table> 
+    <hr/>
+    <table class="table table-stripped table-forum  table-bordered">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Responsable</th>
+                <th>Cantidad</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each ilines}}
+            <tr>
+                <td>{{dMov}}</td>
+                <td>{{type}}</td>
+                <td>{{inCharge}}</td>
+                <td>{{quantity}}</td>
+                <td>{{lStock}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table> 
+</div>
