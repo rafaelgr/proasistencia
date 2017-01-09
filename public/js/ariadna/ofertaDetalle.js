@@ -239,6 +239,9 @@ function loadData(data) {
 function datosOK() {
     $('#frmOferta').validate({
         rules: {
+            txtReferencia:{
+                required: true
+            },
             cmbEmpresas: {
                 required: true
             },
@@ -288,11 +291,11 @@ function aceptar() {
         var data = {
             oferta: {
                 "ofertaId": vm.ofertaId(),
-                "tipoOfertaId": vm.tipoOfertaId(),
+                "tipoOfertaId": vm.stipoOfertaId(),
                 "referencia": vm.referencia(),
                 "empresaId": vm.sempresaId(),
                 "clienteId": vm.sclienteId(),
-                "fechaOferta": spanishDbDate(vm.fecha()),
+                "fechaOferta": spanishDbDate(vm.fechaOferta()),
                 "coste": vm.coste(),
                 "porcentajeBeneficio": vm.porcentajeBeneficio(),
                 "importeBeneficio": vm.importeBeneficio(),
@@ -464,6 +467,7 @@ function cambioCliente(data) {
         contentType: "application/json",
         success: function (data, status) {
             cargaAgente(data.comercialId);
+            vm.agenteId(data.comercialId);
         },
         error: function (err) {
             mensErrorAjax(err);
