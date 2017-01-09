@@ -45,6 +45,7 @@ var facturas_router = require('./lib/facturas/facturas_controller');
 var informes_router = require('./lib/informes/informes_controller');
 var cuentas_router = require('./lib/cuentas/cuentas_controller');
 var liquidaciones_router = require('./lib/liquidaciones/liquidaciones_controller');
+var ofertas_router = require('./lib/ofertas/ofertas_controller');
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
@@ -115,6 +116,7 @@ app.use('/api/motivos_baja', motivos_baja_router);
 app.use('/api/cuentas', cuentas_router);
 app.use('/api/facturas', facturas_router);
 app.use('/api/liquidaciones', liquidaciones_router);
+app.use('/api/ofertas', ofertas_router);
 
 // -- start server
 app.listen(config.apiPort);
