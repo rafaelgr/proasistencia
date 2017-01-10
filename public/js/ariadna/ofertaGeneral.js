@@ -143,7 +143,7 @@ function initTablaOfertas() {
         }, {
             data: "cliente"
         }, {
-            data: "importeCliente"
+            data: "total"
         }, {
             data: "mantenedor"
         }, {
@@ -171,8 +171,9 @@ function initTablaOfertas() {
     });
 
     // Hide some columns by default
-    //tablaOfertas.columns(8).visible(false);
-    //tablaOfertas.columns(10).visible(false);
+    tablaOfertas.columns(7).visible(false);
+    tablaOfertas.columns(8).visible(false);
+    tablaOfertas.columns(9).visible(false);
 }
 
 function datosOK() {

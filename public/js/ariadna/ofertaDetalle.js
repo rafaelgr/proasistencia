@@ -1,5 +1,5 @@
 ﻿/*-------------------------------------------------------------------------- 
-prefacturaDetalle.js
+ofertaDetalle.js
 Funciones js par la página OfertaDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -183,7 +183,7 @@ function admData() {
     self.totalConIva = ko.observable();
 
     // -- Valores para las líneas
-    self.prefacturaLineaId = ko.observable();
+    self.ofertaLineaId = ko.observable();
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
@@ -211,7 +211,7 @@ function admData() {
     self.elegidosTiposIva = ko.observableArray([]);
     //
 
-    // Nuevo Total de coste para la prefactura
+    // Nuevo Total de coste para la oferta
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
@@ -494,19 +494,10 @@ function cambioEmpresa(data) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.emisorNif(data.nif);
-            vm.emisorNombre(data.nombre);
-            vm.emisorDireccion(data.direccion);
-            vm.emisorCodPostal(data.codPostal);
-            vm.emisorPoblacion(data.poblacion);
-            vm.emisorProvincia(data.provincia);
-            // vemos posibles contratos
-            loadContratos();
+
         },
         error: function (err) {
             mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
         }
     });
 
@@ -520,7 +511,7 @@ function cambioContrato(data) {
 
 
 /*------------------------------------------------------------------
-    Funciones relacionadas con las líneas de facturas
+    Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
 
 function nuevaLinea() {
@@ -528,7 +519,7 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/nextlinea/" + vm.ofertaId(),
+        url: "/api/ofertas/nextlinea/" + vm.ofertaId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -544,7 +535,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.prefacturaLineaId(0);
+    vm.ofertaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
     vm.tipoIvaId(null);
@@ -586,8 +577,8 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        prefacturaLinea: {
-            prefacturaLineaId: vm.prefacturaLineaId(),
+        ofertaLinea: {
+            ofertaLineaId: vm.ofertaLineaId(),
             linea: vm.linea(),
             ofertaId: vm.ofertaId(),
             articuloId: vm.sarticuloId(),
@@ -606,7 +597,7 @@ function aceptarLinea() {
     if (!lineaEnEdicion) {
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            url: myconfig.apiUrl + "/api/ofertas/lineas",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -614,7 +605,7 @@ function aceptarLinea() {
                 $('#modalLinea').modal('hide');
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -638,7 +629,7 @@ function aceptarLinea() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId(),
+            url: myconfig.apiUrl + "/api/ofertas/lineas/" + vm.ofertaLineaId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -646,7 +637,7 @@ function aceptarLinea() {
                 $('#modalLinea').modal('hide');
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -816,7 +807,7 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "prefacturaLineaId",
+            data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteOfertaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -830,7 +821,7 @@ function initTablaOfertasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.ofertaLineaId(data.ofertaLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
     vm.tipoIvaId(data.tipoIvaId);
@@ -864,7 +855,7 @@ function loadTablaOfertaLineas(data) {
 function loadLineasOferta(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/lineas/" + id,
+        url: "/api/ofertas/lineas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1042,7 +1033,7 @@ function editOfertaLinea(id) {
     lineaEnEdicion = true;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/linea/" + id,
+        url: "/api/ofertas/linea/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1067,20 +1058,20 @@ function deleteOfertaLinea(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                prefacturaLinea: {
+                ofertaLinea: {
                     ofertaId: vm.ofertaId()
                 }
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/prefacturas/lineas/" + id,
+                url: myconfig.apiUrl + "/api/ofertas/lineas/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     $.ajax({
                         type: "GET",
-                        url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                        url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify(data),
@@ -1188,7 +1179,7 @@ function loadTablaBases(data) {
 function loadBasesOferta(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/bases/" + id,
+        url: "/api/ofertas/bases/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1423,13 +1414,13 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 var actualizarLineasDeLaOfertaTrasCambioCostes = function () {
     $.ajax({
         type: "PUT",
-        url: myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        url: myconfig.apiUrl + "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -1493,7 +1484,7 @@ var imprimir = function () {
 function printOferta(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
