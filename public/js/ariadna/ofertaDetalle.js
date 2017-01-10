@@ -118,6 +118,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.ofertaId(0);
+        obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
@@ -239,7 +240,7 @@ function loadData(data) {
 function datosOK() {
     $('#frmOferta').validate({
         rules: {
-            txtReferencia:{
+            txtReferencia: {
                 required: true
             },
             cmbEmpresas: {
@@ -254,10 +255,10 @@ function datosOK() {
             cmbTiposOferta: {
                 required: true
             },
-            txtCliente:{
+            txtCliente: {
                 clienteNecesario: true
             },
-            txtAgente:{
+            txtAgente: {
                 agenteNecesario: true
             }
         },
@@ -288,13 +289,16 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
+        comprobarSiHayMantenedor();
         var data = {
             oferta: {
                 "ofertaId": vm.ofertaId(),
                 "tipoOfertaId": vm.stipoOfertaId(),
                 "referencia": vm.referencia(),
                 "empresaId": vm.sempresaId(),
-                "clienteId": vm.sclienteId(),
+                "clienteId": vm.clienteId(),
+                "agenteId": vm.agenteId(),
+                "mantenedorId": vm.mantenedorId(),
                 "fechaOferta": spanishDbDate(vm.fechaOferta()),
                 "coste": vm.coste(),
                 "porcentajeBeneficio": vm.porcentajeBeneficio(),
@@ -454,7 +458,7 @@ function loadContratos(id) {
 }
 
 
-function cambioCliente(data) {
+var cambioCliente = function (data) {
     //
     if (!data) {
         return;
@@ -468,6 +472,7 @@ function cambioCliente(data) {
         success: function (data, status) {
             cargaAgente(data.comercialId);
             vm.agenteId(data.comercialId);
+            loadFormasPago(data.formaPagoId);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -1208,6 +1213,7 @@ function loadBasesOferta(id) {
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 var cargaCliente = function (id) {
+    if (!id) return;
     $.ajax({
         type: "GET",
         url: "/api/clientes/" + id,
@@ -1224,6 +1230,7 @@ var cargaCliente = function (id) {
     });
 };
 var cargaMantenedor = function (id) {
+    if (!id) return;
     $.ajax({
         type: "GET",
         url: "/api/clientes/" + id,
@@ -1248,8 +1255,10 @@ var cargaAgente = function (id) {
         contentType: "application/json",
         success: function (data, status) {
             $('#txtAgente').val(data.nombre);
-            vm.sagenteId(data.agenteId);
-            vm.agenteId(data.agenteId);
+            //vm.sagenteId(data.comercialId);
+            vm.agenteId(data.comercialId);
+            vm.porcentajeAgente(data.porComer);
+            recalcularCostesImportesDesdeCoste();
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -1322,6 +1331,7 @@ var initAutoMantenedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.mantenedorId(ui.item.id);
+            recalcularCostesImportesDesdeCoste();
         }
     });
     // regla de validación para el control inicializado
@@ -1345,7 +1355,8 @@ var initAutoAgente = function () {
                     data.forEach(function (d) {
                         var v = {
                             value: d.nombre,
-                            id: d.comercialId
+                            id: d.comercialId,
+                            porcentajeAgente: d.porComer
                         };
                         r.push(v);
                     });
@@ -1359,6 +1370,8 @@ var initAutoAgente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.agenteId(ui.item.id);
+            vm.porcentajeAgente(ui.item.porComer);
+            recalcularCostesImportesDesdeCoste();
         }
     });
     // regla de validación para el control inicializado
@@ -1380,17 +1393,22 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
+    if (!vm.coste()) vm.coste(0);
+    if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio()) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
     }
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if (vm.mantenedorId()){
+        vm.importeMantenedor(roundToTwo(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1543,4 +1561,30 @@ var apiReport = function (verb, url, data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+// funciones de apoyo
+var obtenerPorcentajeBeneficioPorDefecto = function (done) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/parametros/0",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            vm.porcentajeBeneficio(data.margenMantenimiento);
+            recalcularCostesImportesDesdeCoste();
+            if (done) done(null);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+var comprobarSiHayMantenedor = function(){
+    if ($('#txtMantenedor').val() == ''){
+        vm.mantenedorId(null);
+        vm.importeMantenedor(0);
+    }
 }
