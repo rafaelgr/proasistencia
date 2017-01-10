@@ -1498,9 +1498,7 @@ function printOferta(id) {
 }
 
 function informePDF(data) {
-    var shortid = "HyGQ0yAP";
-    // HkDPG29rl
-    // shortid = "HkDPG29rl";
+    var shortid = "rySBxKzIe";
     var data = {
         "template": {
             "shortid": shortid
@@ -1508,7 +1506,6 @@ function informePDF(data) {
         "data": data
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-    //apiReport("POST", myconfig.reportUrl + "/api/report", data);
 }
 
 var f_open_post = function (verb, url, data, target) {
