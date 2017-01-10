@@ -62,6 +62,45 @@ function initForm() {
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Prefacturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -131,9 +170,9 @@ function initTablaPrefacturas() {
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success btn' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
             }
@@ -147,6 +186,10 @@ function initTablaPrefacturas() {
             .search(this.value)
             .draw();
     });
+
+    // Hide some columns by default
+    tablaPrefacturas.columns(8).visible(false);
+    tablaPrefacturas.columns(10).visible(false);
 }
 
 function datosOK() {

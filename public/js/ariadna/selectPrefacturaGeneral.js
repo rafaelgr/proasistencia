@@ -99,6 +99,7 @@ function admData() {
 function initTablaPrefacturas() {
     tablaCarro = $('#dt_prefactura').dataTable({
         autoWidth: true,
+        paging: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
