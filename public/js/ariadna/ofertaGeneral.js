@@ -143,7 +143,7 @@ function initTablaOfertas() {
         }, {
             data: "cliente"
         }, {
-            data: "importeCliente"
+            data: "total"
         }, {
             data: "mantenedor"
         }, {
@@ -171,8 +171,9 @@ function initTablaOfertas() {
     });
 
     // Hide some columns by default
-    //tablaOfertas.columns(8).visible(false);
-    //tablaOfertas.columns(10).visible(false);
+    tablaOfertas.columns(7).visible(false);
+    tablaOfertas.columns(8).visible(false);
+    tablaOfertas.columns(9).visible(false);
 }
 
 function datosOK() {
@@ -302,7 +303,7 @@ function cargarOfertas() {
 function printOferta(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/oferta/" + id,
+        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -316,7 +317,7 @@ function printOferta(id) {
 }
 
 function informePDF(data) {
-    var shortid = "HyGQ0yAP";
+    var shortid = "rySBxKzIe";
     var data = {
         "template": {
             "shortid": shortid

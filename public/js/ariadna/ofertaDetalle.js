@@ -1,5 +1,5 @@
 ﻿/*-------------------------------------------------------------------------- 
-prefacturaDetalle.js
+ofertaDetalle.js
 Funciones js par la página OfertaDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -118,6 +118,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.ofertaId(0);
+        obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
@@ -182,7 +183,7 @@ function admData() {
     self.totalConIva = ko.observable();
 
     // -- Valores para las líneas
-    self.prefacturaLineaId = ko.observable();
+    self.ofertaLineaId = ko.observable();
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
@@ -210,7 +211,7 @@ function admData() {
     self.elegidosTiposIva = ko.observableArray([]);
     //
 
-    // Nuevo Total de coste para la prefactura
+    // Nuevo Total de coste para la oferta
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
@@ -239,7 +240,7 @@ function loadData(data) {
 function datosOK() {
     $('#frmOferta').validate({
         rules: {
-            txtReferencia:{
+            txtReferencia: {
                 required: true
             },
             cmbEmpresas: {
@@ -254,10 +255,10 @@ function datosOK() {
             cmbTiposOferta: {
                 required: true
             },
-            txtCliente:{
+            txtCliente: {
                 clienteNecesario: true
             },
-            txtAgente:{
+            txtAgente: {
                 agenteNecesario: true
             }
         },
@@ -288,13 +289,16 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
+        comprobarSiHayMantenedor();
         var data = {
             oferta: {
                 "ofertaId": vm.ofertaId(),
                 "tipoOfertaId": vm.stipoOfertaId(),
                 "referencia": vm.referencia(),
                 "empresaId": vm.sempresaId(),
-                "clienteId": vm.sclienteId(),
+                "clienteId": vm.clienteId(),
+                "agenteId": vm.agenteId(),
+                "mantenedorId": vm.mantenedorId(),
                 "fechaOferta": spanishDbDate(vm.fechaOferta()),
                 "coste": vm.coste(),
                 "porcentajeBeneficio": vm.porcentajeBeneficio(),
@@ -454,7 +458,7 @@ function loadContratos(id) {
 }
 
 
-function cambioCliente(data) {
+var cambioCliente = function (data) {
     //
     if (!data) {
         return;
@@ -468,6 +472,7 @@ function cambioCliente(data) {
         success: function (data, status) {
             cargaAgente(data.comercialId);
             vm.agenteId(data.comercialId);
+            loadFormasPago(data.formaPagoId);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -489,19 +494,10 @@ function cambioEmpresa(data) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.emisorNif(data.nif);
-            vm.emisorNombre(data.nombre);
-            vm.emisorDireccion(data.direccion);
-            vm.emisorCodPostal(data.codPostal);
-            vm.emisorPoblacion(data.poblacion);
-            vm.emisorProvincia(data.provincia);
-            // vemos posibles contratos
-            loadContratos();
+
         },
         error: function (err) {
             mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
         }
     });
 
@@ -515,7 +511,7 @@ function cambioContrato(data) {
 
 
 /*------------------------------------------------------------------
-    Funciones relacionadas con las líneas de facturas
+    Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
 
 function nuevaLinea() {
@@ -523,7 +519,7 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/nextlinea/" + vm.ofertaId(),
+        url: "/api/ofertas/nextlinea/" + vm.ofertaId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -539,7 +535,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.prefacturaLineaId(0);
+    vm.ofertaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
     vm.tipoIvaId(null);
@@ -550,11 +546,19 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadGrupoArticulos();
+    if (vm.sgrupoArticuloId()) {
+        loadGrupoArticulos(vm.sgrupoArticuloId());
+        var data = {
+            id: vm.sgrupoArticuloId()
+        };
+        cambioGrupoArticulo(data);
+    } else {
+        loadGrupoArticulos();
+        loadArticulos();
+    }
+
     // loadArticulos();
     loadTiposIva();
-    //
-    loadArticulos();
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -581,8 +585,8 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        prefacturaLinea: {
-            prefacturaLineaId: vm.prefacturaLineaId(),
+        ofertaLinea: {
+            ofertaLineaId: vm.ofertaLineaId(),
             linea: vm.linea(),
             ofertaId: vm.ofertaId(),
             articuloId: vm.sarticuloId(),
@@ -601,7 +605,7 @@ function aceptarLinea() {
     if (!lineaEnEdicion) {
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas",
+            url: myconfig.apiUrl + "/api/ofertas/lineas",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -609,7 +613,7 @@ function aceptarLinea() {
                 $('#modalLinea').modal('hide');
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -633,7 +637,7 @@ function aceptarLinea() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId(),
+            url: myconfig.apiUrl + "/api/ofertas/lineas/" + vm.ofertaLineaId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -641,7 +645,7 @@ function aceptarLinea() {
                 $('#modalLinea').modal('hide');
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -811,7 +815,7 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "prefacturaLineaId",
+            data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteOfertaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -825,7 +829,7 @@ function initTablaOfertasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.ofertaLineaId(data.ofertaLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
     vm.tipoIvaId(data.tipoIvaId);
@@ -859,7 +863,7 @@ function loadTablaOfertaLineas(data) {
 function loadLineasOferta(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/lineas/" + id,
+        url: "/api/ofertas/lineas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -982,11 +986,31 @@ function cambioArticulo(data) {
 }
 
 function cambioGrupoArticulo(data) {
-    //
     if (!data) {
         return;
     }
     var grupoArticuloId = data.id;
+    // montar el texto de capítulo si no lo hay
+    if (!vm.capituloLinea()) {
+        var numeroCapitulo = Math.floor(vm.linea());
+        var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
+        // ahora hay que buscar el nombre del capitulo para concatenarlo
+        $.ajax({
+            type: "GET",
+            url: "/api/grupo_articulo/" + grupoArticuloId,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                nombreCapitulo += data.nombre;
+                vm.capituloLinea(nombreCapitulo);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+    //
     $.ajax({
         type: "GET",
         url: "/api/articulos/grupo/" + grupoArticuloId,
@@ -1037,7 +1061,7 @@ function editOfertaLinea(id) {
     lineaEnEdicion = true;
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/linea/" + id,
+        url: "/api/ofertas/linea/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1062,20 +1086,20 @@ function deleteOfertaLinea(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                prefacturaLinea: {
+                ofertaLinea: {
                     ofertaId: vm.ofertaId()
                 }
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/prefacturas/lineas/" + id,
+                url: myconfig.apiUrl + "/api/ofertas/lineas/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     $.ajax({
                         type: "GET",
-                        url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                        url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify(data),
@@ -1183,7 +1207,7 @@ function loadTablaBases(data) {
 function loadBasesOferta(id) {
     $.ajax({
         type: "GET",
-        url: "/api/prefacturas/bases/" + id,
+        url: "/api/ofertas/bases/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1208,6 +1232,7 @@ function loadBasesOferta(id) {
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 var cargaCliente = function (id) {
+    if (!id) return;
     $.ajax({
         type: "GET",
         url: "/api/clientes/" + id,
@@ -1224,6 +1249,7 @@ var cargaCliente = function (id) {
     });
 };
 var cargaMantenedor = function (id) {
+    if (!id) return;
     $.ajax({
         type: "GET",
         url: "/api/clientes/" + id,
@@ -1248,8 +1274,10 @@ var cargaAgente = function (id) {
         contentType: "application/json",
         success: function (data, status) {
             $('#txtAgente').val(data.nombre);
-            vm.sagenteId(data.agenteId);
-            vm.agenteId(data.agenteId);
+            //vm.sagenteId(data.comercialId);
+            vm.agenteId(data.comercialId);
+            vm.porcentajeAgente(data.porComer);
+            recalcularCostesImportesDesdeCoste();
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -1322,6 +1350,7 @@ var initAutoMantenedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.mantenedorId(ui.item.id);
+            recalcularCostesImportesDesdeCoste();
         }
     });
     // regla de validación para el control inicializado
@@ -1345,7 +1374,8 @@ var initAutoAgente = function () {
                     data.forEach(function (d) {
                         var v = {
                             value: d.nombre,
-                            id: d.comercialId
+                            id: d.comercialId,
+                            porcentajeAgente: d.porComer
                         };
                         r.push(v);
                     });
@@ -1359,6 +1389,8 @@ var initAutoAgente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.agenteId(ui.item.id);
+            vm.porcentajeAgente(ui.item.porComer);
+            recalcularCostesImportesDesdeCoste();
         }
     });
     // regla de validación para el control inicializado
@@ -1380,17 +1412,22 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
+    if (!vm.coste()) vm.coste(0);
+    if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio()) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
     }
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if (vm.mantenedorId()) {
+        vm.importeMantenedor(roundToTwo(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1405,13 +1442,13 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 var actualizarLineasDeLaOfertaTrasCambioCostes = function () {
     $.ajax({
         type: "PUT",
-        url: myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        url: myconfig.apiUrl + "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/" + vm.ofertaId(),
+                url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -1475,7 +1512,7 @@ var imprimir = function () {
 function printOferta(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1489,9 +1526,7 @@ function printOferta(id) {
 }
 
 function informePDF(data) {
-    var shortid = "HyGQ0yAP";
-    // HkDPG29rl
-    // shortid = "HkDPG29rl";
+    var shortid = "rySBxKzIe";
     var data = {
         "template": {
             "shortid": shortid
@@ -1499,7 +1534,6 @@ function informePDF(data) {
         "data": data
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-    //apiReport("POST", myconfig.reportUrl + "/api/report", data);
 }
 
 var f_open_post = function (verb, url, data, target) {
@@ -1543,4 +1577,30 @@ var apiReport = function (verb, url, data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+// funciones de apoyo
+var obtenerPorcentajeBeneficioPorDefecto = function (done) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/parametros/0",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            vm.porcentajeBeneficio(data.margenMantenimiento);
+            recalcularCostesImportesDesdeCoste();
+            if (done) done(null);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+var comprobarSiHayMantenedor = function () {
+    if ($('#txtMantenedor').val() == '') {
+        vm.mantenedorId(null);
+        vm.importeMantenedor(0);
+    }
 }

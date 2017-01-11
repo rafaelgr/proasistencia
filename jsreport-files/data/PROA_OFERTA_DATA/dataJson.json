@@ -1,0 +1,122 @@
+{
+"cabecera": {
+"ofertaId": 5,
+"empresaId": 2,
+"clienteId": 35369,
+"emisorNif": "B81323180",
+"emisorNombre": "PROASISTENCIA, S.L.",
+"emisorDireccion": "CAMINO DE REJAS, 1 OFICINA 1L",
+"emisorCodPostal": "28820",
+"emisorPoblacion": "COSLADA",
+"emisorProvincia": "MADRID",
+"receptorNif": "E28635118",
+"receptorNombre": "CP PINTOR ROSALES,7-13 PIN. RIBERA,8-14",
+"receptorDireccion": "PINTOR ROSALES,7-13 PINTOR RIBERA,8-14",
+"receptorCodPostal": "28100",
+"receptorPoblacion": "ALCOBENDAS",
+"receptorProvincia": "MADRID",
+"total": "10.182,10 €",
+"totalConIva": "12.320,34 €",
+"formaPago": "RECIBO 10 DIAs",
+"observaciones": null,
+"fecha": "10/01/2017",
+"referencia": "OF56662"
+},
+"capitulos": [
+    {
+    "nombre": "Capitulo 1: Este es el primero",
+    "lineas": [
+        {
+        "ofertaLineaId": 174,
+        "linea": 1.1,
+        "ofertaId": 5,
+        "articuloId": 4,
+        "tipoIvaId": 3,
+        "porcentaje": 21,
+        "descripcion": "MANTENIMIENTO DE LIMPIEZA Y CUBOS - C.P. PUERTOLLANO, 1",
+        "cantidad": "1,00",
+        "importe": "7.436,67 €",
+        "totalLinea": "7.436,67 €",
+        "coste": 5820,
+        "porcentajeBeneficio": 15,
+        "porcentajeAgente": 10,
+        "capituloLinea": "Capitulo 1: Este es el primero",
+        "tipoIva": "21%",
+        "grupo": "MANTENIMIENTO DE LIMPIEZA"
+        },
+        {
+        "ofertaLineaId": 175,
+        "linea": 1.2,
+        "ofertaId": 5,
+        "articuloId": 8,
+        "tipoIvaId": 3,
+        "porcentaje": 21,
+        "descripcion": "ARRENDAMIENTO DE OFICINA: ARRENDAMIENTO OFICINA 1F , MES EN CURSO",
+        "cantidad": "3,00",
+        "importe": "626,11 €",
+        "totalLinea": "1.878,33 €",
+        "coste": 1470,
+        "porcentajeBeneficio": 15,
+        "porcentajeAgente": 10,
+        "capituloLinea": "Capitulo 1: Este es el primero",
+        "tipoIva": "21%",
+        "grupo": "ARRENDAMIENTO"
+        }
+    ],
+    "total": "9.315,00 €"
+    },
+    {
+    "nombre": "Capitulo 2: Este es el segundo",
+    "lineas": [
+        {
+        "ofertaLineaId": 176,
+        "linea": 2.1,
+        "ofertaId": 5,
+        "articuloId": 6,
+        "tipoIvaId": 3,
+        "porcentaje": 21,
+        "descripcion": "DESRATIZACIÓN PUNTUAL - C.P. TACONA, 105",
+        "cantidad": "1,00",
+        "importe": "198,06 €",
+        "totalLinea": "198,06 €",
+        "coste": 155,
+        "porcentajeBeneficio": 15,
+        "porcentajeAgente": 10,
+        "capituloLinea": "Capitulo 2: Este es el segundo",
+        "tipoIva": "21%",
+        "grupo": "MANTENIMIENTO CONTROL DE PLAGAS"
+        },
+        {
+        "ofertaLineaId": 177,
+        "linea": 2.2,
+        "ofertaId": 5,
+        "articuloId": 7,
+        "tipoIvaId": 3,
+        "porcentaje": 21,
+        "descripcion": "TRATAMIENTO PUNTUAL DESRATIZACIÓN ",
+        "cantidad": "1,00",
+        "importe": "669,04 €",
+        "totalLinea": "669,04 €",
+        "coste": 523.6,
+        "porcentajeBeneficio": 15,
+        "porcentajeAgente": 10,
+        "capituloLinea": "Capitulo 2: Este es el segundo",
+        "tipoIva": "21%",
+        "grupo": "MANTENIMIENTO CONTROL DE PLAGAS"
+        }
+    ],
+    "total": "867,10 €"
+    }
+],
+"bases": [
+    {
+    "ofertaBaseId": 215,
+    "ofertaId": 5,
+    "tipoIvaId": 3,
+    "porcentaje": "21,00",
+    "base": "10.182,10 €",
+    "cuota": "2.138,24 €",
+    "tipoIva": "21%"
+    }
+]
+}
