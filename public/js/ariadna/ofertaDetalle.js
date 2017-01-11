@@ -123,6 +123,8 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        //
+        document.title = "NUEVA OFERTA";
     }
 }
 
@@ -234,6 +236,8 @@ function loadData(data) {
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
     loadFormasPago(data.formaPagoId);
+    //
+    document.title = "OFERTA: " + vm.referencia();
 }
 
 
