@@ -546,11 +546,19 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadGrupoArticulos();
+    if (vm.sgrupoArticuloId()) {
+        loadGrupoArticulos(vm.sgrupoArticuloId());
+        var data = {
+            id: vm.sgrupoArticuloId()
+        };
+        cambioGrupoArticulo(data);
+    } else {
+        loadGrupoArticulos();
+        loadArticulos();
+    }
+
     // loadArticulos();
     loadTiposIva();
-    //
-    loadArticulos();
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -978,11 +986,31 @@ function cambioArticulo(data) {
 }
 
 function cambioGrupoArticulo(data) {
-    //
     if (!data) {
         return;
     }
     var grupoArticuloId = data.id;
+    // montar el texto de capítulo si no lo hay
+    if (!vm.capituloLinea()) {
+        var numeroCapitulo = Math.floor(vm.linea());
+        var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
+        // ahora hay que buscar el nombre del capitulo para concatenarlo
+        $.ajax({
+            type: "GET",
+            url: "/api/grupo_articulo/" + grupoArticuloId,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                nombreCapitulo += data.nombre;
+                vm.capituloLinea(nombreCapitulo);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+    //
     $.ajax({
         type: "GET",
         url: "/api/articulos/grupo/" + grupoArticuloId,
@@ -1397,7 +1425,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
     }
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    if (vm.mantenedorId()){
+    if (vm.mantenedorId()) {
         vm.importeMantenedor(roundToTwo(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
 };
@@ -1570,8 +1598,8 @@ var obtenerPorcentajeBeneficioPorDefecto = function (done) {
     });
 }
 
-var comprobarSiHayMantenedor = function(){
-    if ($('#txtMantenedor').val() == ''){
+var comprobarSiHayMantenedor = function () {
+    if ($('#txtMantenedor').val() == '') {
         vm.mantenedorId(null);
         vm.importeMantenedor(0);
     }

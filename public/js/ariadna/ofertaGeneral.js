@@ -303,7 +303,7 @@ function cargarOfertas() {
 function printOferta(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/oferta/" + id,
+        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -317,7 +317,7 @@ function printOferta(id) {
 }
 
 function informePDF(data) {
-    var shortid = "HyGQ0yAP";
+    var shortid = "rySBxKzIe";
     var data = {
         "template": {
             "shortid": shortid

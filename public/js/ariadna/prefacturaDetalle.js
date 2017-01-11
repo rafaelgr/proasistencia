@@ -1031,6 +1031,26 @@ function cambioGrupoArticulo(data) {
         return;
     }
     var grupoArticuloId = data.id;
+    // montar el texto de capítulo si no lo hay
+    if (!vm.capituloLinea()) {
+        var numeroCapitulo = Math.floor(vm.linea());
+        var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
+        // ahora hay que buscar el nombre del capitulo para concatenarlo
+        $.ajax({
+            type: "GET",
+            url: "/api/grupo_articulo/" + grupoArticuloId,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                nombreCapitulo += data.nombre;
+                vm.capituloLinea(nombreCapitulo);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }    
     $.ajax({
         type: "GET",
         url: "/api/articulos/grupo/" + grupoArticuloId,
