@@ -367,3 +367,39 @@ var mensErrorAjax = function (err) {
         iconSmall: "fa fa-warning shake animated",
     });
 }
+
+
+var llamadaAjax = function (verbo, url, datos, fretorno) {
+    var opciones = {
+        type: verbo,
+        url: url,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            fretorno(null, data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            fretorno(err);
+        }
+    };
+    if (datos) {
+        opciones.data = JSON.stringify(datos);
+    }
+    $.ajax(opciones);
+}
+
+var mensajeAceptarCancelar = function (mensaje, fnAceptar, fnCancelar) {
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mensaje,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            fnAceptar();
+        }
+        if (ButtonPressed === "Cancelar") {
+            fnCancelar();
+        }
+    });
+}
