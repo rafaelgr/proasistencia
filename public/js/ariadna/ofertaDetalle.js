@@ -769,9 +769,9 @@ function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
     if (!vm.capituloLinea()) {
-        crearTextoDeCapituloAutomatico(sgrupoArticuloId);
+        crearTextoDeCapituloAutomatico(grupoArticuloId);
     }
-    cargarArticulosRelacionadosDeUnGrupo(sgrupoArticuloId);
+    cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
 
 var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
