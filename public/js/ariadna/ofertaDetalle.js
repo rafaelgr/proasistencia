@@ -295,7 +295,6 @@ var clicAceptar = function () {
         if (tipo == 'POST') {
             url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
-        loadData(data);
         window.open(url, '_self');
     })
 }
@@ -328,11 +327,13 @@ var guardarOferta = function (done) {
     if (ofertaId == 0) {
         llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas", data, function (err, data) {
             if (err) return errorGeneral(err, done);
+            loadData(data);
             done(null, 'POST');
         });
     } else {
         llamadaAjax('PUT', myconfig.apiUrl + "/api/ofertas/" + ofertaId, data, function (err, data) {
             if (err) return errorGeneral(err, done);
+            loadData(data);
             done(null, 'PUT');
         });
     }
