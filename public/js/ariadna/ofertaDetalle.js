@@ -413,13 +413,6 @@ function cambioEmpresa(data) {
     });
 }
 
-function cambioContrato(data) {
-    if (!data) return;
-    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoClienteMantenimientoId());
-}
-
-
-
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
@@ -460,16 +453,6 @@ function limpiaDataLinea(data) {
 
     // loadArticulos();
     loadTiposIva();
-}
-
-var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
-    llamadaAjax('GET', myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId, null, function (err, data) {
-        if (err) return;
-        vm.porcentajeBeneficio(data.margen);
-        vm.porcentajeAgente(data.manPorComer);
-        if (!vm.coste()) vm.coste(0);
-        recalcularCostesImportesDesdeCoste();
-    });
 }
 
 var guardarLinea = function () {
@@ -991,8 +974,11 @@ var cargaAgente = function (id) {
         if (err) return;
         $('#txtAgente').val(data.nombre);
         vm.agenteId(data.comercialId);
-        vm.porcentajeAgente(data.porComer);
-        recalcularCostesImportesDesdeCoste();
+        obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
+            if (err) return;
+            vm.porcentajeAgente(comision);
+            recalcularCostesImportesDesdeCoste();
+        });
     });
 };
 
@@ -1076,8 +1062,11 @@ var initAutoAgente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.agenteId(ui.item.id);
-            vm.porcentajeAgente(ui.item.porComer);
-            recalcularCostesImportesDesdeCoste();
+            obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
+                if (err) return;
+                vm.porcentajeAgente(comision);
+                recalcularCostesImportesDesdeCoste();
+            });
         }
     });
     // regla de validación para el control inicializado
@@ -1252,4 +1241,16 @@ var comprobarSiHayMantenedor = function () {
         vm.mantenedorId(null);
         vm.importeMantenedor(0);
     }
+}
+
+var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, tipoOfertaId, done) {
+    var url = myconfig.apiUrl + "/api/comerciales/comision";
+    url += "/" + comercialId;
+    url += "/" + clienteId;
+    url += "/" + empresaId;
+    url += "/" + tipoOfertaId;
+    llamadaAjax('GET', url, null, function (err, data) {
+        if (err) return done(err);
+        done(null, data);
+    })
 }
