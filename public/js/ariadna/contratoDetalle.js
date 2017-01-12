@@ -294,6 +294,7 @@ var clicAceptar = function () {
         var url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
         if (tipo == 'POST') {
             url = "ContratoDetalle.html?ContratoId=" + vm.contratoId(); // POST
+            mostrarMensajeNuevoContrato();
         }
         window.open(url, '_self');
     })
@@ -769,9 +770,9 @@ function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
     if (!vm.capituloLinea()) {
-        crearTextoDeCapituloAutomatico(sgrupoArticuloId);
+        crearTextoDeCapituloAutomatico(grupoArticuloId);
     }
-    cargarArticulosRelacionadosDeUnGrupo(sgrupoArticuloId);
+    cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
 
 var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
@@ -1254,4 +1255,9 @@ var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, ti
         if (err) return done(err);
         done(null, data);
     })
+}
+
+var mostrarMensajeNuevoContrato = function () {
+    var mens = "Contrato correctamente dado de alta, introduzca las líneas del mismo.";
+    mensNormal(mens);
 }
