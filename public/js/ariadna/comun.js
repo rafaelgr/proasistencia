@@ -403,3 +403,8 @@ var mensajeAceptarCancelar = function (mensaje, fnAceptar, fnCancelar) {
         }
     });
 }
+
+var errorGeneral = function(err, done){
+    if (done) return done(err);
+    return err;
+}

@@ -37,7 +37,7 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(guardarOferta);
+    $("#btnAceptar").click(clicAceptar);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmOferta").submit(function () {
@@ -288,8 +288,20 @@ function salir() {
     return mf;
 }
 
-var guardarOferta = function () {
-    if (!datosOK()) return;
+var clicAceptar = function () {
+    guardarOferta(function (err, tipo) {
+        if (err) return;
+        var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
+        if (tipo == 'POST') {
+            url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId(); // POST
+        }
+        loadData(data);
+        window.open(url, '_self');
+    })
+}
+
+var guardarOferta = function (done) {
+    if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
     var data = {
         oferta: {
@@ -315,17 +327,13 @@ var guardarOferta = function () {
     };
     if (ofertaId == 0) {
         llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas", data, function (err, data) {
-            if (err) return;
-            loadData(data);
-            var url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId();
-            window.open(url, '_self');
+            if (err) return errorGeneral(err, done);
+            done(null, 'POST');
         });
     } else {
         llamadaAjax('PUT', myconfig.apiUrl + "/api/ofertas/" + ofertaId, data, function (err, data) {
-            if (err) return;
-            loadData(data);
-            var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId();
-            window.open(url, '_self');
+            if (err) return errorGeneral(err, done);
+            done(null, 'PUT');
         });
     }
 }
@@ -855,6 +863,14 @@ var recargaCabeceraLineasBases = function () {
     });
 }
 
+var recargaLineasBases = function () {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        loadLineasOferta(data.ofertaId);
+        loadBasesOferta(data.ofertaId);
+    });
+}
+
 /*
     Funciones relacionadas con la gestión de bases
     y cuotas
@@ -952,81 +968,48 @@ function loadBasesOferta(id) {
 
 var cargaCliente = function (id) {
     if (!id) return;
-    // TODO: por aquí me quedé cambiando llamadas (sigue en casa)
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtCliente').val(data.nombre);
-            vm.sclienteId(data.clienteId);
-            vm.clienteId(data.clienteId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
+        vm.clienteId(data.clienteId);
     });
 };
+
 var cargaMantenedor = function (id) {
     if (!id) return;
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtMantenedor').val(data.nombre);
-            vm.smantenedorId(data.mantenedorId);
-            vm.mantenedorId(data.mantenedorId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtMantenedor').val(data.nombre);
+        vm.smantenedorId(data.mantenedorId);
+        vm.mantenedorId(data.mantenedorId);
     });
 };
 
 var cargaAgente = function (id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/comerciales/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtAgente').val(data.nombre);
-            //vm.sagenteId(data.comercialId);
-            vm.agenteId(data.comercialId);
-            vm.porcentajeAgente(data.porComer);
-            recalcularCostesImportesDesdeCoste();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/comerciales/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtAgente').val(data.nombre);
+        vm.agenteId(data.comercialId);
+        vm.porcentajeAgente(data.porComer);
+        recalcularCostesImportesDesdeCoste();
     });
 };
 
 var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/clientes_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
@@ -1046,25 +1029,17 @@ var initAutoCliente = function () {
 var initAutoMantenedor = function () {
     $("#txtMantenedor").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/mantenedores_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/clientes/mantenedores_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
@@ -1084,26 +1059,18 @@ var initAutoMantenedor = function () {
 var initAutoAgente = function () {
     $("#txtAgente").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/comerciales/agentes_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.comercialId,
-                            porcentajeAgente: d.porComer
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/comerciales/agentes_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.comercialId,
+                        porcentajeAgente: d.porComer
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
@@ -1160,35 +1127,12 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaOfertaTrasCambioCostes = function () {
-    $.ajax({
-        type: "PUT",
-        url: myconfig.apiUrl + "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    // loadData(data);
-                    loadLineasOferta(data.ofertaId);
-                    loadBasesOferta(data.ofertaId);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    llamadaAjax('PUT',
+        "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        null, function (err, data) {
+            if (err) return;
+            recargaLineasBases();
+        });
 };
 
 var ocultarCamposOfertasGeneradas = function () {
@@ -1226,22 +1170,16 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printOferta(vm.ofertaId());
+    guardarOferta(function (err) {
+        if (err) return;
+        printOferta(vm.ofertaId());
+    })
 }
 
 function printOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', myconfig.apiUrl + "/api/informes/ofertas/" + id, null, function (err, data) {
+        if (err) return;
+        informePDF(data);
     });
 }
 
@@ -1301,21 +1239,12 @@ var apiReport = function (verb, url, data) {
 
 // funciones de apoyo
 var obtenerPorcentajeBeneficioPorDefecto = function (done) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/parametros/0",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.porcentajeBeneficio(data.margenMantenimiento);
-            recalcularCostesImportesDesdeCoste();
-            if (done) done(null);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    llamadaAjax('GET', myconfig.apiUrl + "/api/parametros/0", null, function (err, data) {
+        if (err) return done(err);
+        vm.porcentajeBeneficio(data.margenMantenimiento);
+        recalcularCostesImportesDesdeCoste();
+        if (done) done(null);
+    })
 }
 
 var comprobarSiHayMantenedor = function () {
