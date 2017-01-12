@@ -131,6 +131,7 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        document.title = "NUEVA PREFACTURA";
     }
 }
 
@@ -270,6 +271,8 @@ function loadData(data) {
         ocultarCamposPrefacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
+    //
+    document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 }
 
 

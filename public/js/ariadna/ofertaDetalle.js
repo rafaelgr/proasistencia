@@ -37,7 +37,7 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptar());
+    $("#btnAceptar").click(clicAceptar);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmOferta").submit(function () {
@@ -99,21 +99,11 @@ function initForm() {
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/ofertas/" + ofertaId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-                loadLineasOferta(data.ofertaId);
-                loadBasesOferta(data.ofertaId);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
+        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
+            if (err) return;
+            loadData(data);
+            loadLineasOferta(data.ofertaId);
+            loadBasesOferta(data.ofertaId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -123,6 +113,8 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        //
+        document.title = "NUEVA OFERTA";
     }
 }
 
@@ -234,6 +226,8 @@ function loadData(data) {
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
     loadFormasPago(data.formaPagoId);
+    //
+    document.title = "OFERTA: " + vm.referencia();
 }
 
 
@@ -286,75 +280,6 @@ function datosOK() {
     return $('#frmOferta').valid();
 }
 
-function aceptar() {
-    var mf = function () {
-        if (!datosOK()) return;
-        comprobarSiHayMantenedor();
-        var data = {
-            oferta: {
-                "ofertaId": vm.ofertaId(),
-                "tipoOfertaId": vm.stipoOfertaId(),
-                "referencia": vm.referencia(),
-                "empresaId": vm.sempresaId(),
-                "clienteId": vm.clienteId(),
-                "agenteId": vm.agenteId(),
-                "mantenedorId": vm.mantenedorId(),
-                "fechaOferta": spanishDbDate(vm.fechaOferta()),
-                "coste": vm.coste(),
-                "porcentajeBeneficio": vm.porcentajeBeneficio(),
-                "importeBeneficio": vm.importeBeneficio(),
-                "ventaNeta": vm.ventaNeta(),
-                "porcentajeAgente": vm.porcentajeAgente(),
-                "importeAgente": vm.importeAgente(),
-                "importeCliente": vm.importeCliente(),
-                "importeMantenedor": vm.importeMantenedor(),
-                "observaciones": vm.observaciones(),
-                "formaPagoId": vm.sformaPagoId()
-            }
-        };
-        if (ofertaId == 0) {
-            $.ajax({
-                type: "POST",
-                url: myconfig.apiUrl + "/api/ofertas",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // De momento no volvemos al mismo (es alta y hay que introducir líneas)
-                    var url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/ofertas/" + ofertaId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
-
 function salir() {
     var mf = function () {
         var url = "OfertaGeneral.html";
@@ -363,97 +288,102 @@ function salir() {
     return mf;
 }
 
+var clicAceptar = function () {
+    guardarOferta(function (err, tipo) {
+        if (err) return;
+        var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
+        if (tipo == 'POST') {
+            url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId(); // POST
+        }
+        loadData(data);
+        window.open(url, '_self');
+    })
+}
+
+var guardarOferta = function (done) {
+    if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
+    comprobarSiHayMantenedor();
+    var data = {
+        oferta: {
+            "ofertaId": vm.ofertaId(),
+            "tipoOfertaId": vm.stipoOfertaId(),
+            "referencia": vm.referencia(),
+            "empresaId": vm.sempresaId(),
+            "clienteId": vm.clienteId(),
+            "agenteId": vm.agenteId(),
+            "mantenedorId": vm.mantenedorId(),
+            "fechaOferta": spanishDbDate(vm.fechaOferta()),
+            "coste": vm.coste(),
+            "porcentajeBeneficio": vm.porcentajeBeneficio(),
+            "importeBeneficio": vm.importeBeneficio(),
+            "ventaNeta": vm.ventaNeta(),
+            "porcentajeAgente": vm.porcentajeAgente(),
+            "importeAgente": vm.importeAgente(),
+            "importeCliente": vm.importeCliente(),
+            "importeMantenedor": vm.importeMantenedor(),
+            "observaciones": vm.observaciones(),
+            "formaPagoId": vm.sformaPagoId()
+        }
+    };
+    if (ofertaId == 0) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas", data, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            done(null, 'POST');
+        });
+    } else {
+        llamadaAjax('PUT', myconfig.apiUrl + "/api/ofertas/" + ofertaId, data, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            done(null, 'PUT');
+        });
+    }
+}
 
 function loadEmpresas(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
-            vm.posiblesEmpresas(empresas);
-            $("#cmbEmpresas").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
 
 
 function loadTiposOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_mantenimientos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposOferta(tipos);
-            $("#cmbTiposOferta").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposOferta(tipos);
+        $("#cmbTiposOferta").val([id]).trigger('change');
     });
 }
 
 function loadFormasPago(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/formas_pago",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
-            vm.posiblesFormasPago(formasPago);
-            $("#cmbFormasPago").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([id]).trigger('change');
     });
 }
 
 function loadContratos(id) {
     if (id) {
         // caso de un contrato en concreto
-        $.ajax({
-            type: "GET",
-            url: "/api/contratos_cliente_mantenimiento/" + id,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
-                vm.posiblesContratos(contratos);
-                $("#cmbContratos").val([id]).trigger('change');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
+        llamadaAjax('GET', "/api/contratos_cliente_mantenimiento/" + id, null, function (err, data) {
+            if (err) return;
+            var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
+            vm.posiblesContratos(contratos);
+            $("#cmbContratos").val([id]).trigger('change');
         });
     } else {
         // caso cargar contratos de empreas / cliente
-        $.ajax({
-            type: "GET",
-            url: "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
+        llamadaAjax('GET',
+            "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(), null, function (err, data) {
+                if (err) return;
                 var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
                 vm.posiblesContratos(contratos);
                 $("#cmbContratos").val([id]).trigger('change');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+            });
     }
 }
 
@@ -464,22 +394,12 @@ var cambioCliente = function (data) {
         return;
     }
     var clienteId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + clienteId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            cargaAgente(data.comercialId);
-            vm.agenteId(data.comercialId);
-            loadFormasPago(data.formaPagoId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/clientes/" + clienteId, null, function (err, data) {
+        if (err) return;
+        cargaAgente(data.comercialId);
+        vm.agenteId(data.comercialId);
+        loadFormasPago(data.formaPagoId);
     });
-
 }
 
 function cambioEmpresa(data) {
@@ -488,27 +408,10 @@ function cambioEmpresa(data) {
         return;
     }
     var empresaId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas/" + empresaId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/empresas/" + empresaId, null, function (err, data) {
+        if (err) return;
     });
-
 }
-
-function cambioContrato(data) {
-    if (!data) return;
-    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoClienteMantenimientoId());
-}
-
-
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
@@ -517,20 +420,11 @@ function cambioContrato(data) {
 function nuevaLinea() {
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
-    $.ajax({
-        type: "GET",
-        url: "/api/ofertas/nextlinea/" + vm.ofertaId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.linea(data);
-            vm.total(0);
-            vm.totalConIva(0);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        vm.linea(data);
+        vm.total(0);
+        vm.totalConIva(0);
     });
 }
 
@@ -561,26 +455,7 @@ function limpiaDataLinea(data) {
     loadTiposIva();
 }
 
-var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.porcentajeBeneficio(data.margen);
-            vm.porcentajeAgente(data.manPorComer);
-            if (!vm.coste()) vm.coste(0);
-            recalcularCostesImportesDesdeCoste();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-function aceptarLinea() {
+var guardarLinea = function () {
     if (!datosOKLineas()) {
         return;
     }
@@ -602,72 +477,22 @@ function aceptarLinea() {
             capituloLinea: vm.capituloLinea(),
         }
     }
+    var verboAjax = '';
+    var urlAjax = '';
     if (!lineaEnEdicion) {
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/ofertas/lineas",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                $('#modalLinea').modal('hide');
-                $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        // hay que mostrarlo en la zona de datos
-                        loadData(data);
-                        loadLineasOferta(data.ofertaId);
-                        loadBasesOferta(data.ofertaId);
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+        verbo = 'POST';
+        urlAjax = myconfig.apiUrl + "/api/ofertas/lineas";
     } else {
-        $.ajax({
-            type: "PUT",
-            url: myconfig.apiUrl + "/api/ofertas/lineas/" + vm.ofertaLineaId(),
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                $('#modalLinea').modal('hide');
-                $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        // hay que mostrarlo en la zona de datos
-                        loadData(data);
-                        loadLineasOferta(data.ofertaId);
-                        loadBasesOferta(data.ofertaId);
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+        verbo = 'PUT';
+        urlAjax = myconfig.apiUrl + "/api/ofertas/lineas/" + vm.ofertaLineaId();
     }
+    llamadaAjax(verbo, urlAjax, data, function (err, data) {
+        if (err) return;
+        $('#modalLinea').modal('hide');
+        recargaCabeceraLineasBases();
+    });
 }
+
 
 function datosOKLineas() {
     $('#linea-form').validate({
@@ -861,89 +686,53 @@ function loadTablaOfertaLineas(data) {
 
 
 function loadLineasOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/ofertas/lineas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var totalCoste = 0;
-            data.forEach(function (linea) {
-                totalCoste += (linea.coste * linea.cantidad);
-                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-            })
-            loadTablaOfertaLineas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/ofertas/lineas/" + id, null, function (err, data) {
+        if (err) return;
+        var totalCoste = 0;
+        data.forEach(function (linea) {
+            totalCoste += (linea.coste * linea.cantidad);
+            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+        })
+        loadTablaOfertaLineas(data);
     });
 }
 
 function loadArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-            if (id) {
-                $("#cmbArticulos").val([id]).trigger('change');
-            } else {
-                $("#cmbArticulos").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/articulos", null, function (err, data) {
+        if (err) return;
+        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesArticulos(articulos);
+        if (id) {
+            $("#cmbArticulos").val([id]).trigger('change');
+        } else {
+            $("#cmbArticulos").val([0]).trigger('change');
         }
     });
 }
 
 function loadGrupoArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/grupo_articulo",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesGrupoArticulos(grupos);
-            if (id) {
-                $("#cmbGrupoArticulos").val([id]).trigger('change');
-            } else {
-                $("#cmbGrupoArticulos").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/grupo_articulo", null, function (err, data) {
+        if (err) return;
+        var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesGrupoArticulos(grupos);
+        if (id) {
+            $("#cmbGrupoArticulos").val([id]).trigger('change');
+        } else {
+            $("#cmbGrupoArticulos").val([0]).trigger('change');
         }
     });
 }
 
 
 function loadTiposIva(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_iva",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposIva(tiposIva);
-            if (id) {
-                $("#cmbTiposIva").val([id]).trigger('change');
-            } else {
-                $("#cmbTiposIva").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposIva(tiposIva);
+        if (id) {
+            $("#cmbTiposIva").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([0]).trigger('change');
         }
     });
 }
@@ -954,101 +743,63 @@ function cambioArticulo(data) {
         return;
     }
     var articuloId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos/" + articuloId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            if (data.descripcion == null) {
-                vm.descripcion(data.nombre);
-            } else {
-                vm.descripcion(data.nombre + ':\n' + data.descripcion);
-            }
-            vm.cantidad(1);
-            vm.importe(data.precioUnitario);
-            //valores para IVA por defecto a partir del  
-            // articulo seleccionado.
-            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-            var data2 = {
-                id: data.tipoIvaId
-            };
-            cambioTiposIva(data2);
-            cambioPrecioCantidad();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+        if (err) return;
+        // cargamos los campos por defecto de receptor
+        if (data.descripcion == null) {
+            vm.descripcion(data.nombre);
+        } else {
+            vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
+        vm.cantidad(1);
+        vm.importe(data.precioUnitario);
+        //valores para IVA por defecto a partir del  
+        // articulo seleccionado.
+        $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+        var data2 = {
+            id: data.tipoIvaId
+        };
+        cambioTiposIva(data2);
+        cambioPrecioCantidad();
     });
-
 }
 
 function cambioGrupoArticulo(data) {
-    if (!data) {
-        return;
-    }
+    if (!data) return;
     var grupoArticuloId = data.id;
-    // montar el texto de capítulo si no lo hay
     if (!vm.capituloLinea()) {
-        var numeroCapitulo = Math.floor(vm.linea());
-        var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
-        // ahora hay que buscar el nombre del capitulo para concatenarlo
-        $.ajax({
-            type: "GET",
-            url: "/api/grupo_articulo/" + grupoArticuloId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                nombreCapitulo += data.nombre;
-                vm.capituloLinea(nombreCapitulo);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+        crearTextoDeCapituloAutomatico(sgrupoArticuloId);
     }
-    //
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos/grupo/" + grupoArticuloId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    cargarArticulosRelacionadosDeUnGrupo(sgrupoArticuloId);
+}
 
+var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
+    var numeroCapitulo = Math.floor(vm.linea());
+    var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
+    // ahora hay que buscar el nombre del capitulo para concatenarlo
+    llamadaAjax('GET', "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
+        if (err) return;
+        nombreCapitulo += data.nombre;
+        vm.capituloLinea(nombreCapitulo);
+    });
+}
+
+var cargarArticulosRelacionadosDeUnGrupo = function (grupoArticuloId) {
+    llamadaAjax('GET', "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
+        if (err) return;
+        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesArticulos(articulos);
+    });
 }
 
 function cambioTiposIva(data) {
-    if (!data) {
-        return;
-    }
+    if (!data) return;
     var tipoIvaId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_iva/" + tipoIvaId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.tipoIvaId(data.tipoIvaId);
-            vm.porcentaje(data.porcentaje);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
+        if (err) return;
+        vm.tipoIvaId(data.tipoIvaId);
+        vm.porcentaje(data.porcentaje);
     });
-
 }
 
 var cambioPrecioCantidad = function () {
@@ -1059,71 +810,47 @@ var cambioPrecioCantidad = function () {
 
 function editOfertaLinea(id) {
     lineaEnEdicion = true;
-    $.ajax({
-        type: "GET",
-        url: "/api/ofertas/linea/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            if (data.length > 0) {
-                loadDataLinea(data[0]);
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/ofertas/linea/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) {
+            loadDataLinea(data[0]);
         }
     });
 }
 
 function deleteOfertaLinea(id) {
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                ofertaLinea: {
-                    ofertaId: vm.ofertaId()
-                }
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/ofertas/lineas/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    $.ajax({
-                        type: "GET",
-                        url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                            // hay que mostrarlo en la zona de datos
-                            loadData(data);
-                            loadLineasOferta(data.ofertaId);
-                            loadBasesOferta(data.ofertaId);
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        var data = {
+            ofertaLinea: {
+                ofertaId: vm.ofertaId()
+            }
+        };
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/ofertas/lineas/" + id, data, function (err, data) {
+            if (err) return;
+            recargaCabeceraLineasBases();
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+var recargaCabeceraLineasBases = function () {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        loadData(data);
+        loadLineasOferta(data.ofertaId);
+        loadBasesOferta(data.ofertaId);
+    });
+}
+
+var recargaLineasBases = function () {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        loadLineasOferta(data.ofertaId);
+        loadBasesOferta(data.ofertaId);
     });
 }
 
@@ -1205,108 +932,70 @@ function loadTablaBases(data) {
 
 
 function loadBasesOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/ofertas/bases/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // actualizamos los totales
-            var t1 = 0; // total sin iva
-            var t2 = 0; // total con iva
-            for (var i = 0; i < data.length; i++) {
-                t1 += data[i].base;
-                t2 += data[i].base + data[i].cuota;
-            }
-            vm.total(numeral(t1).format('0,0.00'));
-            vm.totalConIva(numeral(t2).format('0,0.00'));
-            loadTablaBases(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax('GET', "/api/ofertas/bases/" + id, null, function (err, data) {
+        if (err) return;
+        // actualizamos los totales
+        var t1 = 0; // total sin iva
+        var t2 = 0; // total con iva
+        for (var i = 0; i < data.length; i++) {
+            t1 += data[i].base;
+            t2 += data[i].base + data[i].cuota;
         }
-    });
+        vm.total(numeral(t1).format('0,0.00'));
+        vm.totalConIva(numeral(t2).format('0,0.00'));
+        loadTablaBases(data);
+    })
 }
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 var cargaCliente = function (id) {
     if (!id) return;
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtCliente').val(data.nombre);
-            vm.sclienteId(data.clienteId);
-            vm.clienteId(data.clienteId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
+        vm.clienteId(data.clienteId);
     });
 };
+
 var cargaMantenedor = function (id) {
     if (!id) return;
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtMantenedor').val(data.nombre);
-            vm.smantenedorId(data.mantenedorId);
-            vm.mantenedorId(data.mantenedorId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+    llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtMantenedor').val(data.nombre);
+        vm.smantenedorId(data.mantenedorId);
+        vm.mantenedorId(data.mantenedorId);
     });
 };
 
 var cargaAgente = function (id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/comerciales/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $('#txtAgente').val(data.nombre);
-            //vm.sagenteId(data.comercialId);
-            vm.agenteId(data.comercialId);
-            vm.porcentajeAgente(data.porComer);
+    llamadaAjax('GET', "/api/comerciales/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtAgente').val(data.nombre);
+        vm.agenteId(data.comercialId);
+        obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
+            if (err) return;
+            vm.porcentajeAgente(comision);
             recalcularCostesImportesDesdeCoste();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
+        });
     });
 };
 
 var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/clientes_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
@@ -1326,25 +1015,17 @@ var initAutoCliente = function () {
 var initAutoMantenedor = function () {
     $("#txtMantenedor").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/mantenedores_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/clientes/mantenedores_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
@@ -1364,33 +1045,28 @@ var initAutoMantenedor = function () {
 var initAutoAgente = function () {
     $("#txtAgente").autocomplete({
         source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: "/api/comerciales/agentes_activos/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.comercialId,
-                            porcentajeAgente: d.porComer
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+            llamadaAjax('GET', "/api/comerciales/agentes_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.comercialId,
+                        porcentajeAgente: d.porComer
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
         },
         minLength: 2,
         select: function (event, ui) {
             vm.agenteId(ui.item.id);
-            vm.porcentajeAgente(ui.item.porComer);
-            recalcularCostesImportesDesdeCoste();
+            obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
+                if (err) return;
+                vm.porcentajeAgente(comision);
+                recalcularCostesImportesDesdeCoste();
+            });
         }
     });
     // regla de validación para el control inicializado
@@ -1440,35 +1116,12 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaOfertaTrasCambioCostes = function () {
-    $.ajax({
-        type: "PUT",
-        url: myconfig.apiUrl + "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    // loadData(data);
-                    loadLineasOferta(data.ofertaId);
-                    loadBasesOferta(data.ofertaId);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    llamadaAjax('PUT',
+        "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        null, function (err, data) {
+            if (err) return;
+            recargaLineasBases();
+        });
 };
 
 var ocultarCamposOfertasGeneradas = function () {
@@ -1506,22 +1159,16 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printOferta(vm.ofertaId());
+    guardarOferta(function (err) {
+        if (err) return;
+        printOferta(vm.ofertaId());
+    })
 }
 
 function printOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax('GET', myconfig.apiUrl + "/api/informes/ofertas/" + id, null, function (err, data) {
+        if (err) return;
+        informePDF(data);
     });
 }
 
@@ -1581,21 +1228,12 @@ var apiReport = function (verb, url, data) {
 
 // funciones de apoyo
 var obtenerPorcentajeBeneficioPorDefecto = function (done) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/parametros/0",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.porcentajeBeneficio(data.margenMantenimiento);
-            recalcularCostesImportesDesdeCoste();
-            if (done) done(null);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    llamadaAjax('GET', myconfig.apiUrl + "/api/parametros/0", null, function (err, data) {
+        if (err) return done(err);
+        vm.porcentajeBeneficio(data.margenMantenimiento);
+        recalcularCostesImportesDesdeCoste();
+        if (done) done(null);
+    })
 }
 
 var comprobarSiHayMantenedor = function () {
@@ -1603,4 +1241,16 @@ var comprobarSiHayMantenedor = function () {
         vm.mantenedorId(null);
         vm.importeMantenedor(0);
     }
+}
+
+var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, tipoOfertaId, done) {
+    var url = myconfig.apiUrl + "/api/comerciales/comision";
+    url += "/" + comercialId;
+    url += "/" + clienteId;
+    url += "/" + empresaId;
+    url += "/" + tipoOfertaId;
+    llamadaAjax('GET', url, null, function (err, data) {
+        if (err) return done(err);
+        done(null, data);
+    })
 }
