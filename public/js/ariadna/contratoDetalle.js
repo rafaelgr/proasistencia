@@ -12,6 +12,7 @@ var lineaEnEdicion = false;
 
 var dataContratosLineas;
 var dataBases;
+var dataComisionistas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -51,7 +52,12 @@ function initForm() {
     $("#linea-form").submit(function () {
         return false;
     });
-
+    $("#frmComisionista").submit(function () {
+        return false;
+    });
+    $("#comisionista-form").submit(function () {
+        return false;
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -96,6 +102,14 @@ function initForm() {
 
     initTablaContratosLineas();
     initTablaBases();
+    initTablaComisionistas();
+
+    $("#cmbComerciales").select2(select2Spanish());
+    loadComerciales();
+    $("#cmbComerciales").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioComercial(e.added);
+    });
 
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
@@ -104,6 +118,7 @@ function initForm() {
             loadData(data);
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
+            loadComisionistas(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -165,7 +180,7 @@ function admData() {
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
     //
-    self.scontratoClienteMantenimientoId = ko.observable();
+    self.scontratoId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
@@ -202,11 +217,17 @@ function admData() {
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
     //
-
     // Nuevo Total de coste para la contrato
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
+    // Valores para comisionistas
+    self.contratoComisionistaId = ko.observable();
+    self.scomercialId = ko.observable();
+    //
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+    self.porcentajeComision = ko.observable();
 }
 
 function loadData(data) {
@@ -227,7 +248,7 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     loadFormasPago(data.formaPagoId);
     //
-    document.title = "OFERTA: " + vm.referencia();
+    document.title = "CONTRATO: " + vm.referencia();
 }
 
 
@@ -373,7 +394,7 @@ function loadContratos(id) {
         // caso de un contrato en concreto
         llamadaAjax('GET', "/api/contratos_cliente_mantenimiento/" + id, null, function (err, data) {
             if (err) return;
-            var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
+            var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
             vm.posiblesContratos(contratos);
             $("#cmbContratos").val([id]).trigger('change');
         });
@@ -382,7 +403,7 @@ function loadContratos(id) {
         llamadaAjax('GET',
             "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(), null, function (err, data) {
                 if (err) return;
-                var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
+                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
                 vm.posiblesContratos(contratos);
                 $("#cmbContratos").val([id]).trigger('change');
             });
@@ -414,6 +435,8 @@ function cambioEmpresa(data) {
         if (err) return;
     });
 }
+
+
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de contratos
@@ -966,7 +989,6 @@ var cargaMantenedor = function (id) {
     llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
         if (err) return;
         $('#txtMantenedor').val(data.nombre);
-        vm.smantenedorId(data.mantenedorId);
         vm.mantenedorId(data.mantenedorId);
     });
 };
@@ -976,7 +998,7 @@ var cargaAgente = function (id) {
         if (err) return;
         $('#txtAgente').val(data.nombre);
         vm.agenteId(data.comercialId);
-        obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
+        obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
             if (err) return;
             vm.porcentajeAgente(comision);
             recalcularCostesImportesDesdeCoste();
@@ -1054,7 +1076,7 @@ var initAutoAgente = function () {
                     var v = {
                         value: d.nombre,
                         id: d.comercialId,
-                        porcentajeAgente: d.porComer
+                        porcentajeAgente: d.porcentajeComision
                     };
                     r.push(v);
                 });
@@ -1064,7 +1086,7 @@ var initAutoAgente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.agenteId(ui.item.id);
-            obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
+            obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
                 vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
@@ -1228,6 +1250,229 @@ var apiReport = function (verb, url, data) {
     });
 }
 
+/*----------------------------------------------------------
+    Funciones relacionadas con las lines de colaboradores
+    comisionistas 
+ -----------------------------------------------------------*/
+function nuevoComisionista() {
+    limpiaComisionista(); // es un alta
+    lineaEnEdicion = false;
+}
+
+function aceptarComisionista() {
+    if (!datosOKComisionistas()) {
+        return;
+    }
+    if (!vm.contratoComisionistaId()) {
+        // es alta
+        vm.contratoComisionistaId(0);
+    }
+    var data = {
+        contratoComisionista: {
+            contratoComisionistaId: vm.contratoComisionistaId(),
+            contratoId: vm.contratoId(),
+            comercialId: vm.scomercialId(),
+            porcentajeComision: vm.porcentajeComision()
+        }
+    }
+    if (!lineaEnEdicion) {
+        data.contratoComisionista.contratoComisionistaId = 0;
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
+            if (err) return;
+            $('#modalComisionista').modal('hide');
+            loadComisionistas(vm.clienteId());
+        });
+    } else {
+        llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/comisionista/" + vm.contratoComisionistaId(), data, function (err, data) {
+            if (err) return;
+            $('#modalComisionista').modal('hide');
+            loadComisionistas(vm.clienteId());
+        });
+    }
+}
+
+function datosOKComisionistas() {
+    $('#comisionista-form').validate({
+        rules: {
+            cmbComerciales: {
+                required: true
+            },
+            txtPorComer: {
+                number: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbComerciales: {
+                required: "Debe elegir un colaborador"
+            },
+            txtPorComer: {
+                number: "Debe ser un número válido"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#comisionista-form").validate().settings;
+    return $('#comisionista-form').valid();
+}
+
+function initTablaComisionistas() {
+    tablaCarro = $('#dt_comisiones').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisiones'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataComisionistas,
+        columnDefs: [
+            { "width": "20%", "targets": 2 }
+        ],
+        columns: [{
+            data: "colaborador"
+        }, {
+            data: "porcentajeComision",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "contratoComisionistaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function editComisionista(id) {
+    lineaEnEdicion = true;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos/comisionista/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadComisionista(data);
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function deleteComisionista(id) {
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        var data = {
+            contratoComisionista: {
+                contratoComisionistaId: id
+            }
+        };
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/comisionista/" + id, data, function (err, data) {
+            if (err) return;
+            loadComisionistas(vm.clienteId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadComisionista(data) {
+    vm.contratoComisionistaId(data.contratoComisionistaId);
+    vm.contratoId(data.contratoId);
+    vm.scomercialId(data.comercialId);
+    vm.porcentajeComision(data.porcentajeComision);
+    //
+    loadComerciales(data.comercialId);
+}
+
+function limpiaComisionista(data) {
+    vm.contratoComisionistaId(0);
+    vm.scomercialId(null);
+    vm.porcentajeComision(null);
+    loadComerciales();
+}
+
+function loadTablaComisionistas(data) {
+    var dt = $('#dt_comisiones').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadComisionistas(id) {
+    llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        loadTablaComisionistas(data);
+    });
+}
+
+function loadComerciales(id) {
+    llamadaAjax('GET', "/api/comerciales/comerciales_activos", null, function (err, data) {
+        if (err) return;
+        var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesComerciales(comerciales);
+        $("#cmbComerciales").val([id]).trigger('change');
+    });
+}
+
+function cambioComercial(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var comercialId = data.id;
+    // hay que buscar el porcentaje
+    obtenerPorcentajeDelAgenteColaborador(comercialId, vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
+        if (err) return;
+        vm.porcentajeComision(comision);
+        recalcularCostesImportesDesdeCoste();
+    });
+}
+
+//------------------------------------------------------------------------------------------
+
 // funciones de apoyo
 var obtenerPorcentajeBeneficioPorDefecto = function (done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/parametros/0", null, function (err, data) {
@@ -1245,7 +1490,7 @@ var comprobarSiHayMantenedor = function () {
     }
 }
 
-var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, tipoContratoId, done) {
+var obtenerPorcentajeDelAgenteColaborador = function (comercialId, clienteId, empresaId, tipoContratoId, done) {
     var url = myconfig.apiUrl + "/api/comerciales/comision";
     url += "/" + comercialId;
     url += "/" + clienteId;
