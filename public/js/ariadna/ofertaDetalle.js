@@ -977,7 +977,7 @@ var cargaAgente = function (id) {
         vm.agenteId(data.comercialId);
         obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
             if (err) return;
-            vm.porcentajeAgente(comision);
+            if (!vm.porcentajeAgente()) vm.porcentajeAgente(comision);
             recalcularCostesImportesDesdeCoste();
         });
     });
