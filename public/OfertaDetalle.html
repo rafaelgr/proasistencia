@@ -519,6 +519,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnGenerarContrato" title="Generar contrato" data-toggle="modal" data-target="#modalContrato" onclick="generarContrato()" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-file-text-o"></i>
+                                                </button>                                                
                                                 <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
                                                 </button>                                                
@@ -796,11 +799,89 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalContrato" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> ACEPTAR OFERTA - GENERAR CONTRATO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generar-contrato-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-md-4">
+                                    <label class="label" style="color: blue;">Fecha aceptación oferta </label>
+                                    <label class="input">
+                                        <input id="txtFechaAceptacionOferta" name="txtFechaAceptacion" data-bind="value: fechaAceptacionOferta" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>                                                    
+                                </section>                                
+                            </div>
+                            <div class="row">
+                                <section class="col col-md-4">
+                                    <label class="label">Fecha inicio </label>
+                                    <label class="input">
+                                        <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>                                                    
+                                </section>
+                                <section class="col col-md-4">
+                                    <label class="label">Fecha final</label>
+                                    <label class="input">
+                                        <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>                                                    
+                                </section>
+                                <section class="col col-md-4">
+                                    <label class="label">Preaviso (meses)</label>
+                                    <label class="input">
+                                        <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
+                                    </label>
+                                </section>   
+                            </div>
+                            <div class="row">
+                                <section class="col col-md-4">
+                                    <label class="label">Fecha primera fact.</label>
+                                    <label class="input">
+                                        <input id="txtFechaPrimeraFactura" name="txtFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>                                                    
+                                </section>
+                                <section class="col col-md-4">
+                                    <label class="label">Fecha original</label>
+                                    <label class="input">
+                                        <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>                                                    
+                                </section>
+                                <section class="col col-md-4">
+                                    <label class="checkbox">
+                                        <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
+                                        <i></i>Facturación parcial
+                                    </label>
+                                </section>                                                                                                                                  
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarContrato" class="btn btn-primary" onclick="guardarContrato()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->    
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">

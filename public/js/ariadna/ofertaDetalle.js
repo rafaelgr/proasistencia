@@ -52,6 +52,10 @@ function initForm() {
         return false;
     });
 
+    $("#generar-contrato-form").submit(function () {
+        return false;
+    });
+    validacionesAdicionalesDelContrato();
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -173,6 +177,8 @@ function admData() {
     //
     self.total = ko.observable();
     self.totalConIva = ko.observable();
+    self.contratoId = ko.observable();
+    self.fechaAceptacionOferta = ko.observable();
 
     // -- Valores para las líneas
     self.ofertaLineaId = ko.observable();
@@ -202,11 +208,17 @@ function admData() {
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
     //
-
     // Nuevo Total de coste para la oferta
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
+    // -- Valores para la generación del contrato
+    self.fechaInicio = ko.observable();
+    self.fechaFinal = ko.observable();
+    self.fechaOriginal = ko.observable();
+    self.fechaPrimeraFactura = ko.observable();
+    self.facturaParcial = ko.observable();
+    self.preaviso = ko.observable();
 }
 
 function loadData(data) {
@@ -226,6 +238,8 @@ function loadData(data) {
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
     loadFormasPago(data.formaPagoId);
+    vm.contratoId(data.contratoId);
+    vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
     document.title = "OFERTA: " + vm.referencia();
 }
@@ -1226,7 +1240,57 @@ var apiReport = function (verb, url, data) {
         }
     });
 }
+//
+var generarContrato = function () {
+    vm.fechaAceptacionOferta(spanishDate(new Date()));
+}
 
+var guardarContrato = function () {
+    if (!contratoOk()) return;
+}
+
+var contratoOk = function () {
+    $('#generar-contrato-form').validate({
+        rules: {
+            txtFechaAceptacionContrato:{
+                required: true
+            },
+            txtFechaInicio: {
+                required: true
+            },
+            txtFechaFinal: {
+                required: true,
+                fechaFinalSuperiorAInicial: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtFechaAceptacionContrato:{
+                required: "Debe escoger una fecha de aceptacion"
+            },
+            txtFechaInicio: {
+                required: "Debe escoger una fecha inicial"
+            },
+            txtFechaFinal: {
+                required: "Debe escoger una fecha final"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#generar-contrato-form").validate().settings;
+    return $('#generar-contrato-form').valid();    
+}
+
+var validacionesAdicionalesDelContrato = function () {
+    jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
+        var fechaInicial = new Date(spanishDbDate(vm.fechaInicio()));
+        var fechaFinal = new Date(spanishDbDate(vm.fechaFinal()));
+        return (fechaFinal >= fechaInicial);
+    }, "La fecha final debe ser superior a la inicial");
+}
 // funciones de apoyo
 var obtenerPorcentajeBeneficioPorDefecto = function (done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/parametros/0", null, function (err, data) {
