@@ -111,6 +111,8 @@ function initForm() {
         cambioComercial(e.added);
     });
 
+    reglasControlDeValidacionAdicionales();
+
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
@@ -153,6 +155,13 @@ function admData() {
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
     self.importeMantenedor = ko.observable();
+    //
+    self.fechaInicio = ko.observable();
+    self.fechaFinal = ko.observable();
+    self.fechaPrimeraFactura = ko.observable();
+    self.fechaOriginal = ko.observable();
+    self.facturaParcial = ko.observable();
+    self.preaviso = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -248,6 +257,13 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     loadFormasPago(data.formaPagoId);
     //
+    vm.fechaInicio(spanishDate(data.fechaInicio));
+    vm.fechaFinal(spanishDate(data.fechaFinal));
+    vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
+    vm.fechaOriginal(spanishDate(data.fechaOriginal));
+    vm.facturaParcial(data.facturaParcial);
+    vm.preaviso(data.preaviso);
+    //
     document.title = "CONTRATO: " + vm.referencia();
 }
 
@@ -275,6 +291,13 @@ function datosOK() {
             },
             txtAgente: {
                 agenteNecesario: true
+            },
+            txtFechaInicio: {
+                required: true
+            },
+            txtFechaFinal: {
+                required: true,
+                fechaFinalSuperiorAInicial: true
             }
         },
         // Messages for form validation
@@ -290,6 +313,12 @@ function datosOK() {
             },
             cmbTiposContrato: {
                 required: "Debe elegir un tipo de contrato"
+            },
+            txtFechaInicio: {
+                required: "Debe escoger una fecha inicial"
+            },
+            txtFechaFinal: {
+                required: "Debe escoger una fecha final"
             }
         },
         // Do not change code below
@@ -343,7 +372,13 @@ var guardarContrato = function (done) {
             "importeCliente": vm.importeCliente(),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
-            "formaPagoId": vm.sformaPagoId()
+            "formaPagoId": vm.sformaPagoId(),
+            "fechaInicio": spanishDbDate(vm.fechaInicio()),
+            "fechaFinal": spanishDbDate(vm.fechaFinal()),
+            "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
+            "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
+            "facturaParcial": vm.facturaParcial(),
+            "preaviso": vm.preaviso()
         }
     };
     if (contratoId == 0) {
@@ -1437,7 +1472,7 @@ function loadTablaComisionistas(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data) dt.fnAddData(data);
     dt.fnDraw();
 }
 
@@ -1505,4 +1540,12 @@ var obtenerPorcentajeDelAgenteColaborador = function (comercialId, clienteId, em
 var mostrarMensajeNuevoContrato = function () {
     var mens = "Contrato correctamente dado de alta, introduzca las líneas del mismo.";
     mensNormal(mens);
+}
+
+var reglasControlDeValidacionAdicionales = function() {
+    jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
+        var fechaInicial = new Date(spanishDbDate(vm.fechaInicio()));
+        var fechaFinal = new Date(spanishDbDate(vm.fechaFinal()));
+        return (fechaFinal >= fechaInicial);
+    }, "La fecha final debe ser superior a la inicial");
 }

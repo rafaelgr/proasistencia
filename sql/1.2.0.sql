@@ -14,3 +14,16 @@ ALTER TABLE `contratos`
 
 ALTER TABLE `contratos_comisionistas`   
   CHANGE `comision` `porcentajeComision` DECIMAL(5,2) NULL;  
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `fechaInicio` DATE NULL AFTER `totalConIva`,
+  ADD COLUMN `fechaFinal` DATE NULL AFTER `fechaInicio`,
+  ADD COLUMN `fechaPrimeraFactura` DATE NULL AFTER `fechaFinal`,
+  ADD COLUMN `ofertaId` INT(11) NULL COMMENT 'Referencia a la  oferta de la que proviene' AFTER `fechaPrimeraFactura`,
+  ADD COLUMN `fechaOriginal` DATE NULL COMMENT 'En las renovaciones de ciontrato la fecha del contrato original' AFTER `ofertaId`,
+  ADD CONSTRAINT `cnt_oferta` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas`(`ofertaId`);
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `facturaParcial` BOOL DEFAULT FALSE NULL AFTER `fechaOriginal`;
+ALTER TABLE `contratos`   
+  ADD COLUMN `preaviso` INT(11) NULL COMMENT 'Meses de preaviso' AFTER `facturaParcial`;  
