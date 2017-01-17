@@ -1149,11 +1149,6 @@ var ocultarCamposOfertasGeneradas = function () {
     $('#txtPorcentajeAgente').prop('disabled', true);
 }
 
-var mostrarMensajeFacturaGenerada = function () {
-    var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
-    mensNormal(mens);
-}
-
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeBeneficio = 0;
     var ventaNeta = 0;
@@ -1273,7 +1268,7 @@ var generarContratoAPI = function () {
     var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
     llamadaAjax('POST', url, data, function (err, data) {
         if (err) return;
-        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId;
+        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
         window.open(url, '_new');
     })
 }

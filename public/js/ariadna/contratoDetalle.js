@@ -113,6 +113,11 @@ function initForm() {
 
     reglasControlDeValidacionAdicionales();
 
+    var cmd = gup('CMD');
+
+    if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
+
+
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
@@ -133,6 +138,22 @@ function initForm() {
         //
         document.title = "NUEVO CONTRATO";
     }
+}
+
+var mostrarMensajeEnFuncionDeCmd = function(cmd){
+    var mens = null;
+    switch (cmd) {
+        case 'NEW':
+            mens = "La cabecera del contrato se ha creado correctamente, recuerde que debe dar de alta las diferentes líneas y asignar los colaboradores relacionados";
+            break;
+        case 'GEN':
+            mens = "Este contrato ha sido generado desde una oferta. Compruebe que sus datos y colaboradores asociados son correctos";
+            break;
+        default:
+            mens = null;
+            break;
+    }
+    mensNormal(mens);
 }
 
 function admData() {
@@ -343,8 +364,7 @@ var clicAceptar = function () {
         if (err) return;
         var url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
         if (tipo == 'POST') {
-            url = "ContratoDetalle.html?ContratoId=" + vm.contratoId(); // POST
-            mostrarMensajeNuevoContrato();
+            url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() +"&CMD=NEW"; // POST
         }
         window.open(url, '_self');
     })
@@ -1191,11 +1211,6 @@ var ocultarCamposContratosGeneradas = function () {
     $('#txtPorcentajeBeneficio').prop('disabled', true);
     $('#txtImporteBeneficio').prop('disabled', true);
     $('#txtPorcentajeAgente').prop('disabled', true);
-}
-
-var mostrarMensajeFacturaGenerada = function () {
-    var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
-    mensNormal(mens);
 }
 
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
