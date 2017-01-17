@@ -32,3 +32,13 @@ ALTER TABLE `ofertas`
   ADD COLUMN `fechaAceptacionOferta` DATE NULL AFTER `totalConIva`,
   ADD COLUMN `contratoId` INT NULL AFTER `fechaAceptacionOferta`,
   ADD CONSTRAINT `of_contrato` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`);
+ALTER TABLE `contratos_comisionistas` DROP FOREIGN KEY `cnt_comisionista_contrato`;
+
+ALTER TABLE `contratos_comisionistas` ADD CONSTRAINT `cnt_comisionista_contrato` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE;
+
+ALTER TABLE `ofertas` DROP FOREIGN KEY `of_contrato`;
+
+ALTER TABLE `ofertas` ADD CONSTRAINT `of_contrato` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE;
+
+ALTER TABLE `contratos`   
+  CHANGE `fechacontrato` `fechaContrato` DATE NOT NULL COMMENT 'Fecha de creación de el contrato';

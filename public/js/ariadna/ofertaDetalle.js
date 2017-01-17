@@ -1247,12 +1247,41 @@ var generarContrato = function () {
 
 var guardarContrato = function () {
     if (!contratoOk()) return;
+    if (vm.contratoId()) {
+        var mens = "Ya hay un contrato generado para esta oferta. ¿Desea eliminarlo y generarlo de nuevo?"
+        mensajeAceptarCancelar(mens, function aceptar() {
+            var url = myconfig.apiUrl + "/api/contratos/" + vm.contratoId();
+            llamadaAjax('DELETE', url, null, function(err){
+                if (err) return;
+                generarContratoAPI();
+            });
+        }, function cancelar() { });
+    } else {
+        generarContratoAPI();
+    }
+}
+
+var generarContratoAPI = function () {
+    var data = {
+        fechaAceptacionOferta: spanishDbDate(vm.fechaAceptacionOferta()),
+        fechaInicio: spanishDbDate(vm.fechaInicio()),
+        fechaFinal: spanishDbDate(vm.fechaFinal()),
+        fechaOriginal: spanishDbDate(vm.fechaOriginal()),
+        preaviso: vm.preaviso(),
+        facturaParcial: vm.facturaParcial()
+    }
+    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
+    llamadaAjax('POST', url, data, function (err, data) {
+        if (err) return;
+        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId;
+        window.open(url, '_new');
+    })
 }
 
 var contratoOk = function () {
     $('#generar-contrato-form').validate({
         rules: {
-            txtFechaAceptacionContrato:{
+            txtFechaAceptacionContrato: {
                 required: true
             },
             txtFechaInicio: {
@@ -1265,7 +1294,7 @@ var contratoOk = function () {
         },
         // Messages for form validation
         messages: {
-            txtFechaAceptacionContrato:{
+            txtFechaAceptacionContrato: {
                 required: "Debe escoger una fecha de aceptacion"
             },
             txtFechaInicio: {
@@ -1281,7 +1310,7 @@ var contratoOk = function () {
         }
     });
     var opciones = $("#generar-contrato-form").validate().settings;
-    return $('#generar-contrato-form').valid();    
+    return $('#generar-contrato-form').valid();
 }
 
 var validacionesAdicionalesDelContrato = function () {
