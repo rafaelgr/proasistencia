@@ -219,6 +219,14 @@ function admData() {
     self.total = ko.observable();
     self.totalConIva = ko.observable();
 
+    //-- Valores para la generación de prefacturs
+    self.posiblesPeriodosPagos = ko.observableArray([]);
+    self.elegidosPeriodosPagos = ko.observableArray([]);
+    self.speriodoPagoId = ko.observableArray([]);
+
+    self.importeAFacturar = ko.observable();
+    self.numPagos = ko.observable();
+
     // -- Valores para las líneas
     self.contratoLineaId = ko.observable();
     self.linea = ko.observable();
@@ -1519,6 +1527,85 @@ function cambioComercial(data) {
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
     });
+}
+
+/*----------------------------------------------------------
+    Funciones relacionadas con la generación de prefacturas
+ -----------------------------------------------------------*/
+
+var loadPeriodosPagos = function(periodoPagoId){
+    var periodosPagos = [
+        { periodoPagoId: 0, nombre: "" },
+        { periodoPagoId: 1, nombre: "Anual" },
+        { periodoPagoId: 2, nombre: "Semestral" },
+        { periodoPagoId: 5, nombre: "Quatrimestral" },
+        { periodoPagoId: 3, nombre: "Trimestral" },
+        { periodoPagoId: 4, nombre: "Mensual" },
+        { periodoPagoId: 6, nombre: "Puntual" }
+    ];
+    vm.posiblesPeriodosPagos(periodosPagos);
+    $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
+}
+
+var generarPrefacturas = function(){
+    $("#cmbPeriodosPagos").select2(select2Spanish());
+    loadPeriodosPagos();
+    $("#cmbPeriodosPagos").select2().on('change', function (e) {
+        cambioPeriodosPagos(e.added);
+    });
+    if (vm.mantenedorId()){
+        vm.importeAFacturar(vm.importeMantenedor());
+    }else{
+        vm.importeAFacturar(vm.importeCliente());
+    }
+}
+
+var cambioPeriodosPagos = function(data){
+
+}
+
+var aceptarGenerarPrefacturas = function(){
+    if (!generarPrefacturasOK()) return;
+}
+
+var generarPrefacturasOK = function(){
+    $('#generar-prefacturas-form').validate({
+        rules: {
+            cmbPeriodosPagos: {
+                required: true
+            },
+            txtGFechaInicio: {
+                required: true
+            },
+            txtGFechaFinal: {
+                required: true
+            },
+            txtGFechaPrimeraFactura:{
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbPeriodosPagos: {
+                required: "Debe elegir un periodo"
+            },
+            txtGFechaInicio: {
+                number: "Debe elegir una fecha"
+            },
+            txtGFechaFinal:{
+                required: "Debe elegir una fecha"
+            },
+            txtGFechaPrimeraFactura:{
+                required: "Debe elegir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#generar-prefacturas-form").validate().settings;
+    return $('#generar-prefacturas-form').valid();    
 }
 
 //------------------------------------------------------------------------------------------
