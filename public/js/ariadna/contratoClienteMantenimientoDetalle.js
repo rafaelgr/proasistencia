@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
 contratoClienteMantenimientoDetalle.js
-Funciones js par la página ContratoClienteMantenimientoDetalle.html
+Funciones js par la página ContratoDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -430,7 +430,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ContratoClienteMantenimientoGeneral.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
+                    var url = "ContratoGeneral.html?ContratoClienteMantenimientoId=" + vm.contratoClienteMantenimientoId();
                     window.open(url, '_self');
                 },
                 error: function (err) {
@@ -445,7 +445,7 @@ function aceptar() {
 
 function salir() {
     var mf = function () {
-        var url = "ContratoClienteMantenimientoGeneral.html";
+        var url = "ContratoGeneral.html";
         window.open(url, '_self');
     }
     return mf;
