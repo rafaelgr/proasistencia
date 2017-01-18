@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
 contratoClientemantenimientoGeneral.js
-Funciones js par la página ContratoClienteMantenimientoGeneral.html
+Funciones js par la página ContratoGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -178,7 +178,7 @@ function loadTablaContratosClienteMantenimiento(data) {
 
 function crearContratoClienteMantenimiento() {
     var mf = function() {
-        var url = "ContratoClienteMantenimientoDetalle.html?ContratoClienteMantenimientoId=0";
+        var url = "ContratoDetalle.html?ContratoClienteMantenimientoId=0";
         window.open(url, '_self');
     };
     return mf;
@@ -241,7 +241,7 @@ function deleteContratoClienteMantenimiento(id) {
 function editContratoClienteMantenimiento(id) {
     // hay que abrir la página de detalle de mantenedor
     // pasando en la url ese ID
-    var url = "ContratoClienteMantenimientoDetalle.html?ContratoClienteMantenimientoId=" + id;
+    var url = "ContratoDetalle.html?ContratoClienteMantenimientoId=" + id;
     window.open(url, '_self');
 }
 
