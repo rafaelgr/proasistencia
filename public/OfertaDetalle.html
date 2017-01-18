@@ -553,7 +553,7 @@
                         <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS</h2>
+                                <h2>LINEAS DE LA OFERTA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -586,25 +586,25 @@
                                             <thead>
                                                 <tr>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Linea
+                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>LINEA
                                                     </th>
                                                     <th data-hide="phone">
-                                                    </th>                                                    
+                                                    </th>   
                                                     <th data-hide="phone">
-                                                        Descripción
+                                                        UD.
+                                                    </th>                                                 
+                                                    <th data-hide="phone">
+                                                        CONCEPTO
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Precio
+                                                        COSTE/UD.
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Cantidad
+                                                        CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Coste
+                                                        TOTAL
                                                     </th>                                                    
-                                                    <th data-hide="phone" class="text-right">
-                                                        Importe
-                                                    </th>
                                                     <th>
                                                     </th>
                                                 </tr>
@@ -726,14 +726,20 @@
                                             <input id="txtLinea" name="txtLinea" type="text" data-bind="value: linea" />
                                         </label>
                                     </section>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label class="label">Capítulo</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
+                                    <div class="col col-md-2">
+                                        <label class="label">Unidades</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'abrev', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
                                     
-                                    <div class="col col-md-5">
+                                    <div class="col col-md-4">
                                         <label class="label">Unidad constructiva</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
@@ -769,7 +775,7 @@
                                         </label>
                                     </section>
                                     <section class="col col-md-4">
-                                        <label class="label">Coste</label>
+                                        <label class="label">Coste / Unidad</label>
                                         <label class="input">
                                             <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
                                         </label>

@@ -84,6 +84,10 @@ function initForm() {
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         cambioGrupoArticulo(e.added);
     });
+
+    $("#cmbUnidades").select2(select2Spanish());
+    loadUnidades();
+
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
@@ -245,6 +249,11 @@ function admData() {
     //
     self.posiblesGrupoArticulos = ko.observableArray([]);
     self.elegidosGrupoArticulos = ko.observableArray([]);
+    //
+    self.sunidadId = ko.observable();
+    //
+    self.posiblesUnidades = ko.observableArray([]);
+    self.elegidosUnidades = ko.observableArray([]);      
     //
     self.sarticuloId = ko.observable();
     //
@@ -542,6 +551,7 @@ function limpiaDataLinea(data) {
 
     // loadArticulos();
     loadTiposIva();
+    loadUnidades();
 }
 
 var guardarLinea = function () {
@@ -554,6 +564,7 @@ var guardarLinea = function () {
             linea: vm.linea(),
             contratoId: vm.contratoId(),
             articuloId: vm.sarticuloId(),
+            unidadId: vm.sunidadId(),
             tipoIvaId: vm.tipoIvaId(),
             porcentaje: vm.porcentaje(),
             descripcion: vm.descripcion(),
@@ -595,6 +606,9 @@ function datosOKLineas() {
             cmbArticulos: {
                 required: true
             },
+            cmbUnidades: {
+                required: true
+            },            
             cmbTiposIva: {
                 required: true
             },
@@ -616,6 +630,9 @@ function datosOKLineas() {
             txtCapitulo: {
                 required: "Debe dar un texto al capítulo"
             },
+            cmbUnidades: {
+                required: "Debe elegir una unidad"
+            },            
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -699,6 +716,8 @@ function initTablaContratosLineas() {
             render: function (data, type, row) {
                 return "";
             }
+        },{
+            data: "unidades"
         }, {
             data: "descripcion",
             render: function (data, type, row) {
@@ -718,12 +737,6 @@ function initTablaContratosLineas() {
             }
         }, {
             data: "coste",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "totalLinea",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -758,6 +771,7 @@ function loadDataLinea(data) {
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
+    loadUnidades(data.unidadId);
     //
 }
 
@@ -808,6 +822,19 @@ function loadGrupoArticulos(id) {
             $("#cmbGrupoArticulos").val([id]).trigger('change');
         } else {
             $("#cmbGrupoArticulos").val([0]).trigger('change');
+        }
+    });
+}
+
+function loadUnidades(id) {
+    llamadaAjax('GET', "/api/unidades", null, function (err, data) {
+        if (err) return;
+        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        vm.posiblesUnidades(unidades);
+        if (id) {
+            $("#cmbUnidades").val([id]).trigger('change');
+        } else {
+            $("#cmbUnidades").val([0]).trigger('change');
         }
     });
 }

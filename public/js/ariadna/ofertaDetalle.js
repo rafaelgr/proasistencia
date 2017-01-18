@@ -82,6 +82,10 @@ function initForm() {
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         cambioGrupoArticulo(e.added);
     });
+
+    $("#cmbUnidades").select2(select2Spanish());
+    loadUnidades();
+
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
@@ -197,6 +201,11 @@ function admData() {
     //
     self.posiblesGrupoArticulos = ko.observableArray([]);
     self.elegidosGrupoArticulos = ko.observableArray([]);
+    //
+    self.sunidadId = ko.observable();
+    //
+    self.posiblesUnidades = ko.observableArray([]);
+    self.elegidosUnidades = ko.observableArray([]);    
     //
     self.sarticuloId = ko.observable();
     //
@@ -479,6 +488,7 @@ var guardarLinea = function () {
             ofertaLineaId: vm.ofertaLineaId(),
             linea: vm.linea(),
             ofertaId: vm.ofertaId(),
+            unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
             porcentaje: vm.porcentaje(),
@@ -518,6 +528,9 @@ function datosOKLineas() {
             txtLinea: {
                 required: true
             },
+            cmbUnidades: {
+                required: true
+            },            
             cmbArticulos: {
                 required: true
             },
@@ -542,6 +555,9 @@ function datosOKLineas() {
             txtCapitulo: {
                 required: "Debe dar un texto al capítulo"
             },
+            cmbUnidades: {
+                required: "Debe elegir una unidad"
+            },            
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -571,7 +587,7 @@ function datosOKLineas() {
 }
 
 function initTablaOfertasLineas() {
-    tablaCarro = $('#dt_lineas').DataTable({
+    tablaOfertasLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -621,11 +637,12 @@ function initTablaOfertasLineas() {
             data: "linea"
         }, {
             data: "capituloLinea",
-            "visible": false,
             render: function (data, type, row) {
                 return "";
             }
-        }, {
+        },{
+            data: "unidades"
+        },{
             data: "descripcion",
             render: function (data, type, row) {
                 return data.replace('\n', '<br/>');
@@ -649,12 +666,6 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "totalLinea",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
             data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -666,6 +677,7 @@ function initTablaOfertasLineas() {
             }
         }]
     });
+    tablaOfertasLineas.columns(2).visible(false);
 }
 
 function loadDataLinea(data) {
@@ -682,6 +694,7 @@ function loadDataLinea(data) {
     vm.capituloLinea(data.capituloLinea);
     //
     loadGrupoArticulos(data.grupoArticuloId);
+    loadUnidades(data.unidadId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     //
@@ -738,6 +751,18 @@ function loadGrupoArticulos(id) {
     });
 }
 
+function loadUnidades(id) {
+    llamadaAjax('GET', "/api/unidades", null, function (err, data) {
+        if (err) return;
+        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        vm.posiblesUnidades(unidades);
+        if (id) {
+            $("#cmbUnidades").val([id]).trigger('change');
+        } else {
+            $("#cmbUnidades").val([0]).trigger('change');
+        }
+    });
+}
 
 function loadTiposIva(id) {
     llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {

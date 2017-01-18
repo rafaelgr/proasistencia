@@ -78,6 +78,11 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioGrupoArticulo(e.added);
     });
+
+
+    $("#cmbUnidades").select2(select2Spanish());
+    loadUnidades();
+
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
@@ -204,6 +209,11 @@ function admData() {
     //
     self.posiblesGrupoArticulos = ko.observableArray([]);
     self.elegidosGrupoArticulos = ko.observableArray([]);
+    //
+    self.sunidadId = ko.observable();
+    //
+    self.posiblesUnidades = ko.observableArray([]);
+    self.elegidosUnidades = ko.observableArray([]);        
     //
     self.sarticuloId = ko.observable();
     //
@@ -602,6 +612,7 @@ function limpiaDataLinea(data) {
     loadTiposIva();
     //
     loadArticulos();
+    loadUnidades();
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
@@ -632,6 +643,7 @@ function aceptarLinea() {
             prefacturaLineaId: vm.prefacturaLineaId(),
             linea: vm.linea(),
             prefacturaId: vm.prefacturaId(),
+            unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
             porcentaje: vm.porcentaje(),
@@ -828,6 +840,8 @@ function initTablaPrefacturasLineas() {
             render: function (data, type, row) {
                 return "";
             }
+        },{
+            data: "unidades"
         }, {
             data: "descripcion",
             render: function (data, type, row) {
@@ -847,12 +861,6 @@ function initTablaPrefacturasLineas() {
             }
         }, {
             data: "coste",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "totalLinea",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -887,6 +895,7 @@ function loadDataLinea(data) {
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
+    loadUnidades(data.unidadId);
     //
 }
 
@@ -990,6 +999,21 @@ function loadTiposIva(id) {
         }
     });
 }
+
+
+function loadUnidades(id) {
+    llamadaAjax('GET', "/api/unidades", null, function (err, data) {
+        if (err) return;
+        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        vm.posiblesUnidades(unidades);
+        if (id) {
+            $("#cmbUnidades").val([id]).trigger('change');
+        } else {
+            $("#cmbUnidades").val([0]).trigger('change');
+        }
+    });
+}
+
 
 function cambioArticulo(data) {
     //
