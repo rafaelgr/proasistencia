@@ -42,3 +42,6 @@ ALTER TABLE `contratos`
 ALTER TABLE `prefacturas`   
   ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `serie`,
   ADD CONSTRAINT `pf_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);  
+
+ALTER TABLE `textos_predeterminados`   
+  CHANGE `nombre` `texto` TEXT CHARSET latin1 COLLATE latin1_swedish_ci NULL;
