@@ -1004,7 +1004,7 @@ function loadTiposIva(id) {
 function loadUnidades(id) {
     llamadaAjax('GET', "/api/unidades", null, function (err, data) {
         if (err) return;
-        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        var unidades = [{ unidadId: 0, nombre: "", abrev: "" }].concat(data);
         vm.posiblesUnidades(unidades);
         if (id) {
             $("#cmbUnidades").val([id]).trigger('change');
