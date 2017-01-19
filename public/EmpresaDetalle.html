@@ -162,7 +162,7 @@
                             <a href="ParametroDetalle.html">
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
-                        </li>                    
+                        </li>
                         <li id="usuarios">
                             <a href="UsuariosGeneral.html">
                                 <i class="fa fa-mortar-board"></i> Usuarios
@@ -172,28 +172,27 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
                         <li id="tiposvia">
                             <a href="TipoViaGeneral.html">
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
-                        </li>  
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
                             </a>
-                        </li> 
+                        </li>
                         <li id="tiposiva">
                             <a href="TipoIvaGeneral.html">
                                 <i class="fa fa-money"></i> Tipos de IVA
                             </a>
-                        </li>  
+                        </li>
                         <li id="empresas">
                             <a href="EmpresasGeneral.html">
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -208,7 +207,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -218,7 +217,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li>   
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -262,7 +261,7 @@
                                 </li>
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
-                                </li>  
+                                </li>
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -275,7 +274,7 @@
                                     <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
                                 </li>
                             </ul>
-                        </li>  
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -410,7 +409,7 @@
                                                     <label class="input">
                                                         <input id="txtContabilidad" name="txtContabilidad" type="text" data-bind="value: contabilidad" />
                                                     </label>
-                                                </section>                                                
+                                                </section>
                                                 <section class="col col-md-3">
                                                     <div class="pull-right">
                                                         <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
@@ -434,12 +433,12 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-												<section class="col col-md-3">
-													<label class="label">Tipo via</label>
-													<label style="width:100%;">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Tipo via</label>
+                                                    <label style="width:100%;">
                                                         <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select><i></i>
                                                     </label>
-												</section>                                                
+                                                </section>
                                                 <section class="col col-md-9">
                                                     <label class="label">Direccion</label>
                                                     <label class="input">
@@ -485,28 +484,27 @@
                                                         <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
                                                         <i></i>La empresa está activa
                                                     </label>
-                                                </section>                                                
-
+                                                </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-3">
                                                     <label class="label">Serie Prefacturas</label>
                                                     <label class="input">
                                                         <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
-                                                    </label>                                                    
+                                                    </label>
                                                 </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Serie Facturas (Mantenimiento)</label>
                                                     <label class="input">
                                                         <input id="txtSerieFac" name="txtSerieFac" data-bind="value: serieFac" />
-                                                    </label>                                                    
+                                                    </label>
                                                 </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Serie Facturas (Seguros)</label>
                                                     <label class="input">
                                                         <input id="txtSerieFacS" name="txtSerieFaS" data-bind="value: serieFacS" />
-                                                    </label>                                                    
-                                                </section>                                                
+                                                    </label>
+                                                </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
@@ -574,7 +572,7 @@
                                                         <input id="txtFirmante" name="txtFirmante" data-bind="value: firmante" />
                                                     </label>
                                                 </section>
-                                            </div>                                            
+                                            </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
@@ -635,7 +633,7 @@
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
-    <script src="js/sprintf/sprintf.min.js"></script>    
+    <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
