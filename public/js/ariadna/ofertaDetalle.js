@@ -67,6 +67,12 @@ function initForm() {
     $("#cmbTiposOferta").select2(select2Spanish());
     loadTiposOferta();
 
+    $("#cmbTipoProyecto").select2(select2Spanish());
+    loadTipoProyecto();
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        cambioTipoProyecto(e.added);
+    });
+
 
     initAutoCliente();
     initAutoMantenedor();
@@ -161,6 +167,12 @@ function admData() {
     self.posiblesTiposOferta = ko.observableArray([]);
     self.elegidosTiposOferta = ko.observableArray([]);
     //
+    self.tipoProyectoId = ko.observable();
+    self.stipoProyectoId = ko.observable();
+    //
+    self.posiblesTipoProyecto = ko.observableArray([]);
+    self.elegidosTipoProyecto = ko.observableArray([]);
+    //
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
     //
@@ -205,7 +217,7 @@ function admData() {
     self.sunidadId = ko.observable();
     //
     self.posiblesUnidades = ko.observableArray([]);
-    self.elegidosUnidades = ko.observableArray([]);    
+    self.elegidosUnidades = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -233,6 +245,7 @@ function admData() {
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
     loadTiposOferta(data.tipoOfertaId);
+    loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
@@ -272,6 +285,9 @@ function datosOK() {
             cmbTiposOferta: {
                 required: true
             },
+            cmbTipoProyecto: {
+                required: true
+            },            
             txtCliente: {
                 clienteNecesario: true
             },
@@ -292,6 +308,9 @@ function datosOK() {
             },
             cmbTiposOferta: {
                 required: "Debe elegir un tipo de oferta"
+            },
+            cmbTipoProyecto: {
+                required: "Debe elegir un tipo de proyecto"
             }
         },
         // Do not change code below
@@ -329,6 +348,7 @@ var guardarOferta = function (done) {
         oferta: {
             "ofertaId": vm.ofertaId(),
             "tipoOfertaId": vm.stipoOfertaId(),
+            "tipoProyectoId": vm.stipoProyectoId(),
             "referencia": vm.referencia(),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.clienteId(),
@@ -378,6 +398,15 @@ function loadTiposOferta(id) {
         var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbTiposOferta").val([id]).trigger('change');
+    });
+}
+
+function loadTipoProyecto(id) {
+    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');
     });
 }
 
@@ -434,6 +463,21 @@ function cambioEmpresa(data) {
     var empresaId = data.id;
     llamadaAjax('GET', "/api/empresas/" + empresaId, null, function (err, data) {
         if (err) return;
+    });
+}
+
+function cambioTipoProyecto(data) {
+    //
+    if (!data || vm.referencia()) {
+        return;
+    }
+    var tipoProyectoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
+        if (err) return;
+        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function(err, nuevaReferencia){
+            if (err) return;
+            vm.referencia(nuevaReferencia);
+        });
     });
 }
 
@@ -530,7 +574,7 @@ function datosOKLineas() {
             },
             cmbUnidades: {
                 required: true
-            },            
+            },
             cmbArticulos: {
                 required: true
             },
@@ -557,7 +601,7 @@ function datosOKLineas() {
             },
             cmbUnidades: {
                 required: "Debe elegir una unidad"
-            },            
+            },
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -640,9 +684,9 @@ function initTablaOfertasLineas() {
             render: function (data, type, row) {
                 return "";
             }
-        },{
+        }, {
             data: "unidades"
-        },{
+        }, {
             data: "descripcion",
             render: function (data, type, row) {
                 return data.replace('\n', '<br/>');
@@ -1270,7 +1314,7 @@ var guardarContrato = function () {
         var mens = "Ya hay un contrato generado para esta oferta. ¿Desea eliminarlo y generarlo de nuevo?"
         mensajeAceptarCancelar(mens, function aceptar() {
             var url = myconfig.apiUrl + "/api/contratos/" + vm.contratoId();
-            llamadaAjax('DELETE', url, null, function(err){
+            llamadaAjax('DELETE', url, null, function (err) {
                 if (err) return;
                 generarContratoAPI();
             });

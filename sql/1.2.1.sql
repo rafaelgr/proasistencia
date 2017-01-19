@@ -29,3 +29,16 @@ CREATE TABLE `textos_predeterminados` (
   `abrev` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`textoPredeterminadoId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `ofertas`   
+  ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `referencia`,
+  ADD CONSTRAINT `of_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `referencia`,
+  ADD CONSTRAINT `cnt_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);
+
+ALTER TABLE `prefacturas`   
+  ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `serie`,
+  ADD CONSTRAINT `pf_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);  

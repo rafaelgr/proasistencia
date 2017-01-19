@@ -66,6 +66,12 @@ function initForm() {
         cambioEmpresa(e.added);
     });
 
+    $("#cmbTipoProyecto").select2(select2Spanish());
+    loadTipoProyecto();
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        cambioTipoProyecto(e.added);
+    });
+
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato();
 
@@ -196,6 +202,12 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
+    self.tipoProyectoId = ko.observable();
+    self.stipoProyectoId = ko.observable();
+    //
+    self.posiblesTipoProyecto = ko.observableArray([]);
+    self.elegidosTipoProyecto = ko.observableArray([]);
+    //
     self.tipoContratoId = ko.observable();
     self.stipoContratoId = ko.observable();
     //
@@ -253,7 +265,7 @@ function admData() {
     self.sunidadId = ko.observable();
     //
     self.posiblesUnidades = ko.observableArray([]);
-    self.elegidosUnidades = ko.observableArray([]);      
+    self.elegidosUnidades = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -280,6 +292,7 @@ function admData() {
 
 function loadData(data) {
     vm.contratoId(data.contratoId);
+    loadTipoProyecto(data.tipoProyectoId);    
     loadTiposContrato(data.tipoContratoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
@@ -322,6 +335,9 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
+            cmbTipoProyecto: {
+                required: true
+            },             
             cmbTiposContrato: {
                 required: true
             },
@@ -358,6 +374,9 @@ function datosOK() {
             },
             txtFechaFinal: {
                 required: "Debe escoger una fecha final"
+            },
+            cmbTipoProyecto: {
+                required: "Debe elegir un tipo de proyecto"
             }
         },
         // Do not change code below
@@ -395,6 +414,7 @@ var guardarContrato = function (done) {
         contrato: {
             "contratoId": vm.contratoId(),
             "tipoContratoId": vm.stipoContratoId(),
+            "tipoProyectoId": vm.stipoProyectoId(),
             "referencia": vm.referencia(),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.clienteId(),
@@ -450,6 +470,15 @@ function loadTiposContrato(id) {
         var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
         vm.posiblesTiposContrato(tipos);
         $("#cmbTiposContrato").val([id]).trigger('change');
+    });
+}
+
+function loadTipoProyecto(id) {
+    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');
     });
 }
 
@@ -510,6 +539,20 @@ function cambioEmpresa(data) {
 }
 
 
+function cambioTipoProyecto(data) {
+    //
+    if (!data || vm.referencia()) {
+        return;
+    }
+    var tipoProyectoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
+        if (err) return;
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev, null, function(err, nuevaReferencia){
+            if (err) return;
+            vm.referencia(nuevaReferencia);
+        });
+    });
+}
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de contratos
@@ -608,7 +651,7 @@ function datosOKLineas() {
             },
             cmbUnidades: {
                 required: true
-            },            
+            },
             cmbTiposIva: {
                 required: true
             },
@@ -632,7 +675,7 @@ function datosOKLineas() {
             },
             cmbUnidades: {
                 required: "Debe elegir una unidad"
-            },            
+            },
             cmbArticulos: {
                 required: "Debe elegir un articulo"
             },
@@ -716,7 +759,7 @@ function initTablaContratosLineas() {
             render: function (data, type, row) {
                 return "";
             }
-        },{
+        }, {
             data: "unidades"
         }, {
             data: "descripcion",
@@ -1609,7 +1652,7 @@ var calcularNumPagos = function () {
     return numpagos;
 }
 
-var obtenerDivisor = function(){
+var obtenerDivisor = function () {
     var divisor = 1;
     switch (vm.speriodoPagoId()) {
         case 1:
@@ -1770,7 +1813,7 @@ var obtenerPorcentajeDelAgenteColaborador = function (comercialId, clienteId, em
 }
 
 var mostrarMensajeNuevoContrato = function () {
-    var mens = "Contrato correctamente dado de alta, introduzca las líneas del mismo.";
+    var mens = "Contrato correctamente dado de alta, introduzca las líneas del mismo. Recuerde la importancia de dar de alta los colaboradores asociados.";
     mensNormal(mens);
 }
 

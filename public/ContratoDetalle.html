@@ -385,7 +385,7 @@
                                                                                         <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-4">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Empresa</label>
                                                                                     <label style="width:100%; height:50px;">
                                                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
@@ -397,7 +397,13 @@
                                                                                         <input id="txtFechaContrato" name="txtFechaContrato" data-bind="value: fechaContrato" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-4">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Tipo Proyecto</label>
+                                                                                    <label style="width:100%; height:50px;">
+                                                                                        <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
+                                                                                    </label>
+                                                                                </section>                                                
+                                                                                <section class="col col-md-3">
                                                                                     <label class="label">Tipo Contrato</label>
                                                                                     <label style="width:100%; height:50px;">
                                                                                         <select style="width:100%" id="cmbTiposContrato" name="cmbTiposContrato" data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
