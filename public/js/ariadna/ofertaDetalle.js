@@ -73,6 +73,11 @@ function initForm() {
         cambioTipoProyecto(e.added);
     });
 
+    $("#cmbTextosPredeterminados").select2(select2Spanish());
+    loadTextosPredeterminados();
+    $("#cmbTextosPredeterminados").select2().on('change', function (e) {
+        cambioTextosPredeterminados(e.added);
+    });
 
     initAutoCliente();
     initAutoMantenedor();
@@ -218,6 +223,12 @@ function admData() {
     //
     self.posiblesUnidades = ko.observableArray([]);
     self.elegidosUnidades = ko.observableArray([]);
+    //
+    self.stextoPredeterminadoId = ko.observable();
+    //
+    self.posiblesTextosPredeterminados = ko.observableArray([]);
+    self.elegidosTextosPredeterminados = ko.observableArray([]);
+
     //
     self.sarticuloId = ko.observable();
     //
@@ -410,6 +421,15 @@ function loadTipoProyecto(id) {
     });
 }
 
+function loadTextosPredeterminados(id) {
+    llamadaAjax('GET', "/api/textos_predeterminados", null, function (err, data) {
+        if (err) return;
+        var textos = [{ textoPredeterminadoId: 0, texto: "", abrev: "" }].concat(data);
+        vm.posiblesTextosPredeterminados(textos);
+        $("#cmbTextPredeterminados").val([id]).trigger('change');
+    });
+}
+
 function loadFormasPago(id) {
     llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
         if (err) return;
@@ -481,6 +501,20 @@ function cambioTipoProyecto(data) {
     });
 }
 
+
+function cambioTextosPredeterminados(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var textoPredeterminadoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/textos_predeterminados/" + textoPredeterminadoId, null, function (err, data) {
+        if (err) return;
+        var observaciones = vm.observaciones();
+        observaciones += data.texto;
+        vm.observaciones(observaciones);
+    });
+}
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
@@ -572,7 +606,7 @@ function datosOKLineas() {
             txtLinea: {
                 required: true
             },
-            cmbUnidades: {
+            cmbTextosPredeterminados: {
                 required: true
             },
             cmbArticulos: {
