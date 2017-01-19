@@ -38,7 +38,7 @@ function initForm() {
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/textosPredeterminados/" + adminId,
+            url: myconfig.apiUrl + "/api/textos_predeterminados/" + adminId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -118,7 +118,7 @@ function aceptar() {
         if (adminId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/textosPredeterminados",
+                url: myconfig.apiUrl + "/api/textos_predeterminados",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -137,7 +137,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/textosPredeterminados/" + adminId,
+                url: myconfig.apiUrl + "/api/textos_predeterminados/" + adminId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
