@@ -1004,8 +1004,7 @@ var cargaMantenedor = function (id) {
     llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
         if (err) return;
         $('#txtMantenedor').val(data.nombre);
-        vm.smantenedorId(data.mantenedorId);
-        vm.mantenedorId(data.mantenedorId);
+        vm.mantenedorId(id);
     });
 };
 
