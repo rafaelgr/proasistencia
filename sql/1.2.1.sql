@@ -14,3 +14,18 @@ ALTER TABLE `prefacturas_lineas`
 ALTER TABLE `facturas_lineas`   
   ADD COLUMN `unidadId` INT(11) NULL AFTER `facturaId`,
   ADD CONSTRAINT `factl_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades`(`unidadId`);
+
+CREATE TABLE `tipos_proyecto` (
+  `tipoProyectoId` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  `abrev` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`tipoProyectoId`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `textos_predeterminados` (
+  `textoPredeterminadoId` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  `abrev` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`textoPredeterminadoId`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
