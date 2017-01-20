@@ -47,6 +47,8 @@ var cuentas_router = require('./lib/cuentas/cuentas_controller');
 var liquidaciones_router = require('./lib/liquidaciones/liquidaciones_controller');
 var ofertas_router = require('./lib/ofertas/ofertas_controller');
 var contratos_router = require('./lib/contratos/contratos_controller');
+var tipos_proyectos_router = require('./lib/tipos_proyectos/tipos_proyectos_controller');
+var textos_predeterminados_router = require('./lib/textos_predeterminados/textos_predeterminados_controller');
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
@@ -119,6 +121,8 @@ app.use('/api/facturas', facturas_router);
 app.use('/api/liquidaciones', liquidaciones_router);
 app.use('/api/ofertas', ofertas_router);
 app.use('/api/contratos', contratos_router);
+app.use('/api/tipos_proyectos', tipos_proyectos_router);
+app.use('/api/textos_predeterminados', textos_predeterminados_router);
 
 // -- start server
 app.listen(config.apiPort);

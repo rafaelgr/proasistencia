@@ -172,12 +172,22 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
+                        <li id="tipos_proyecto">
+                            <a href="TiposProyectoGeneral.html">
+                                <i class="fa fa-asterisk"></i> Tipos de proyecto
+                            </a>
+                        </li>
+                        <li id="textos_predeterminados">
+                            <a href="TextosPredeterminadosGeneral.html">
+                                <i class="fa fa-asterisk"></i> Textos predeterminados
+                            </a>
+                        </li>
                         <li id="tiposvia">
                             <a href="TipoViaGeneral.html">
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
-                        </li>  
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -207,7 +217,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -217,7 +227,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -261,7 +271,7 @@
                                 </li>
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
-                                </li>  
+                                </li>
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -274,7 +284,7 @@
                                     <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -404,7 +414,7 @@
                                                     <label class="input">
                                                         <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
                                                     </label>
-                                                </section>                                                
+                                                </section>
                                                 <section class="col col-md-2">
                                                     <label class="label">Total</label>
                                                     <label class="input">
@@ -417,7 +427,6 @@
                                                         <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
                                                     </label>
                                                 </section>
-
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
@@ -486,7 +495,7 @@
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoClienteMantenimientoId', value: scontratoClienteMantenimientoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
                                                             </label>
-                                                        </section>                                                        
+                                                        </section>
                                                     </div>
                                                 </section>
                                                 <section class="col col-md-6">
@@ -496,10 +505,10 @@
                                                         </header>
                                                     </div>
                                                     <div class="row">
-                                                         <section class="col col-md-12">
+                                                        <section class="col col-md-12">
                                                             <label class="label">Cliente</label>
-                                                              <label class="input">
-                                                                    <input id="txtCliente" name="txtCliente"/>
+                                                            <label class="input">
+                                                                <input id="txtCliente" name="txtCliente" />
                                                             </label>
                                                         </section>
                                                     </div>
@@ -599,51 +608,50 @@
                                                                 <tr>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
+                                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
                                                                         </label>
                                                                     </td>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
+                                                                            <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
                                                                         </label>
                                                                     </td>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio"/>
-                                                                        </label                                                                                
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
+                                                                        </label </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>
-                                                                        </label>
-                                                                    </td>
+                                                                            </label>
+                                                                        </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </section>
-                                            </div>                                
+                                            </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
                                                 <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
-                                                </button>                                                
+                                                </button>
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
@@ -672,7 +680,7 @@
                         <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS</h2>
+                                <h2>LINEAS DE PREFACTURA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -689,7 +697,7 @@
                                         <fieldset>
                                             <div class="pull-left">
                                                 <strong>Total: </strong><span data-bind="text: total"></span>
-                                                 <br/> 
+                                                <br/>
                                                 <strong> Total (+IVA): </strong><span data-bind="text: totalConIva"></span>
                                             </div>
                                             <div class="pull-right">
@@ -708,21 +716,21 @@
                                                         <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Linea
                                                     </th>
                                                     <th data-hide="phone">
-                                                    </th>                                                    
+                                                    </th>
                                                     <th data-hide="phone">
-                                                        Descripción
+                                                        UD.
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        CONCEPTO
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Precio
+                                                        COSTE/UD.
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Cantidad
+                                                        CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Coste
-                                                    </th>                                                    
-                                                    <th data-hide="phone" class="text-right">
-                                                        Importe
+                                                        TOTAL
                                                     </th>
                                                     <th>
                                                     </th>
@@ -811,7 +819,6 @@
                 <!-- end row -->
             </section>
             <!-- end widget grid -->
-
         </div>
         <!-- END MAIN CONTENT -->
     </div>
@@ -835,7 +842,7 @@
                                         <label class="label">Texto del capítulo</label>
                                         <label class="input">
                                             <input id="txtCapitulo" name="txtCapitulo" type="text" data-bind="value: capituloLinea" />
-                                        </label>                                        
+                                        </label>
                                     </section>
                                 </div>
                                 <div class="row">
@@ -845,14 +852,19 @@
                                             <input id="txtLinea" name="txtLinea" type="text" data-bind="value: linea" />
                                         </label>
                                     </section>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label class="label">Capítulo</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
-                                    
-                                    <div class="col col-md-5">
+                                    <div class="col col-md-2">
+                                        <label class="label">Unidades</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'abrev', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-4">
                                         <label class="label">Unidad constructiva</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
@@ -892,14 +904,14 @@
                                         <label class="input">
                                             <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
                                         </label>
-                                    </section>                                    
+                                    </section>
                                     <section class="col col-md-4">
                                         <label class="label">Importe</label>
                                         <label class="input">
                                             <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
                                         </label>
                                     </section>
-                                </div>                                 
+                                </div>
                             </section>
                         </fieldset>
                         <footer>
@@ -922,7 +934,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -951,7 +963,7 @@
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
-    <script src="js/sprintf/sprintf.min.js"></script>    
+    <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>

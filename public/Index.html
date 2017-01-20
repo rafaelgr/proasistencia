@@ -46,29 +46,29 @@
     <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
     <style>
-        body {
-            font-family: Verdana;
-        }
-        
-        .c3-line {
-            stroke-width: 3px;
-        }
-        
-        .c3 circle {
-            stroke: white;
-        }
-        
-        .c3 text {
-            font-size: 12px;
-        }
-        
-        .c3 text {
-            font-size: 12px;
-        }
-        
-        .tick line {
-            stroke: white;
-        }
+    body {
+        font-family: Verdana;
+    }
+    
+    .c3-line {
+        stroke-width: 3px;
+    }
+    
+    .c3 circle {
+        stroke: white;
+    }
+    
+    .c3 text {
+        font-size: 12px;
+    }
+    
+    .c3 text {
+        font-size: 12px;
+    }
+    
+    .tick line {
+        stroke: white;
+    }
     </style>
 </head>
 <!--
@@ -201,12 +201,22 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
+                        <li id="tipos_proyecto">
+                            <a href="TiposProyectoGeneral.html">
+                                <i class="fa fa-asterisk"></i> Tipos de proyecto
+                            </a>
+                        </li>
+                        <li id="textos_predeterminados">
+                            <a href="TextosPredeterminadosGeneral.html">
+                                <i class="fa fa-asterisk"></i> Textos predeterminados
+                            </a>
+                        </li>
                         <li id="tiposvia">
                             <a href="TipoViaGeneral.html">
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
-                        </li>  
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -222,7 +232,6 @@
                                 <i class="fa fa-building-o"></i> Emp. Propias
                             </a>
                         </li>
-
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -237,7 +246,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -247,7 +256,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -291,7 +300,7 @@
                                 </li>
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
-                                </li>  
+                                </li>
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -304,7 +313,7 @@
                                     <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
                                 </li>
                             </ul>
-                        </li>                        
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -413,10 +422,8 @@
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
                                     <h1>Bienvenido a la aplicación general de Proasistencia.</h1>
-                                    <p>Le recordamos que el uso de esta aplicación está sujeto a las normas internas de la empresa
-                                        y de manera general a los compromisos de confidencialidad expresados en la LOPD</p>
-                                    <p>Para poder acceder a las diferentes funcionalidades utilice el menú de la izquierda que
-                                        le mostrará las opciones a las que tiene acceso</p>
+                                    <p>Le recordamos que el uso de esta aplicación está sujeto a las normas internas de la empresa y de manera general a los compromisos de confidencialidad expresados en la LOPD</p>
+                                    <p>Para poder acceder a las diferentes funcionalidades utilice el menú de la izquierda que le mostrará las opciones a las que tiene acceso</p>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -437,13 +444,12 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
                     <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
-                    <i
-                        class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                 </div>
             </div>
         </div>
@@ -454,7 +460,7 @@
     <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
-    <script src="js/sprintf/sprintf.min.js"></script>    
+    <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <script src="myconfig.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->

@@ -67,6 +67,17 @@ function initForm() {
     $("#cmbTiposOferta").select2(select2Spanish());
     loadTiposOferta();
 
+    $("#cmbTipoProyecto").select2(select2Spanish());
+    loadTipoProyecto();
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        cambioTipoProyecto(e.added);
+    });
+
+    $("#cmbTextosPredeterminados").select2(select2Spanish());
+    loadTextosPredeterminados();
+    $("#cmbTextosPredeterminados").select2().on('change', function (e) {
+        cambioTextosPredeterminados(e.added);
+    });
 
     initAutoCliente();
     initAutoMantenedor();
@@ -82,6 +93,10 @@ function initForm() {
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         cambioGrupoArticulo(e.added);
     });
+
+    $("#cmbUnidades").select2(select2Spanish());
+    loadUnidades();
+
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
@@ -157,6 +172,12 @@ function admData() {
     self.posiblesTiposOferta = ko.observableArray([]);
     self.elegidosTiposOferta = ko.observableArray([]);
     //
+    self.tipoProyectoId = ko.observable();
+    self.stipoProyectoId = ko.observable();
+    //
+    self.posiblesTipoProyecto = ko.observableArray([]);
+    self.elegidosTipoProyecto = ko.observableArray([]);
+    //
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
     //
@@ -198,6 +219,17 @@ function admData() {
     self.posiblesGrupoArticulos = ko.observableArray([]);
     self.elegidosGrupoArticulos = ko.observableArray([]);
     //
+    self.sunidadId = ko.observable();
+    //
+    self.posiblesUnidades = ko.observableArray([]);
+    self.elegidosUnidades = ko.observableArray([]);
+    //
+    self.stextoPredeterminadoId = ko.observable();
+    //
+    self.posiblesTextosPredeterminados = ko.observableArray([]);
+    self.elegidosTextosPredeterminados = ko.observableArray([]);
+
+    //
     self.sarticuloId = ko.observable();
     //
     self.posiblesArticulos = ko.observableArray([]);
@@ -224,6 +256,7 @@ function admData() {
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
     loadTiposOferta(data.tipoOfertaId);
+    loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
@@ -244,7 +277,6 @@ function loadData(data) {
     document.title = "OFERTA: " + vm.referencia();
 }
 
-
 function datosOK() {
     $('#frmOferta').validate({
         rules: {
@@ -263,6 +295,9 @@ function datosOK() {
             cmbTiposOferta: {
                 required: true
             },
+            cmbTipoProyecto: {
+                required: true
+            },            
             txtCliente: {
                 clienteNecesario: true
             },
@@ -283,6 +318,9 @@ function datosOK() {
             },
             cmbTiposOferta: {
                 required: "Debe elegir un tipo de oferta"
+            },
+            cmbTipoProyecto: {
+                required: "Debe elegir un tipo de proyecto"
             }
         },
         // Do not change code below
@@ -320,6 +358,7 @@ var guardarOferta = function (done) {
         oferta: {
             "ofertaId": vm.ofertaId(),
             "tipoOfertaId": vm.stipoOfertaId(),
+            "tipoProyectoId": vm.stipoProyectoId(),
             "referencia": vm.referencia(),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.clienteId(),
@@ -369,6 +408,24 @@ function loadTiposOferta(id) {
         var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbTiposOferta").val([id]).trigger('change');
+    });
+}
+
+function loadTipoProyecto(id) {
+    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');
+    });
+}
+
+function loadTextosPredeterminados(id) {
+    llamadaAjax('GET', "/api/textos_predeterminados", null, function (err, data) {
+        if (err) return;
+        var textos = [{ textoPredeterminadoId: 0, texto: "", abrev: "" }].concat(data);
+        vm.posiblesTextosPredeterminados(textos);
+        $("#cmbTextPredeterminados").val([id]).trigger('change');
     });
 }
 
@@ -428,6 +485,37 @@ function cambioEmpresa(data) {
     });
 }
 
+function cambioTipoProyecto(data) {
+    //
+    if (!data || vm.referencia()) {
+        return;
+    }
+    var tipoProyectoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
+        if (err) return;
+        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function(err, nuevaReferencia){
+            if (err) return;
+            vm.referencia(nuevaReferencia);
+        });
+    });
+}
+
+
+function cambioTextosPredeterminados(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var textoPredeterminadoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/textos_predeterminados/" + textoPredeterminadoId, null, function (err, data) {
+        if (err) return;
+        var observaciones = ""
+        if (vm.observaciones()) observaciones = vm.observaciones();
+        observaciones += data.texto;
+        vm.observaciones(observaciones);
+    });
+}
+
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
@@ -479,6 +567,7 @@ var guardarLinea = function () {
             ofertaLineaId: vm.ofertaLineaId(),
             linea: vm.linea(),
             ofertaId: vm.ofertaId(),
+            unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
             porcentaje: vm.porcentaje(),
@@ -518,6 +607,9 @@ function datosOKLineas() {
             txtLinea: {
                 required: true
             },
+            cmbTextosPredeterminados: {
+                required: true
+            },
             cmbArticulos: {
                 required: true
             },
@@ -541,6 +633,9 @@ function datosOKLineas() {
         messages: {
             txtCapitulo: {
                 required: "Debe dar un texto al capítulo"
+            },
+            cmbUnidades: {
+                required: "Debe elegir una unidad"
             },
             cmbArticulos: {
                 required: "Debe elegir un articulo"
@@ -571,7 +666,7 @@ function datosOKLineas() {
 }
 
 function initTablaOfertasLineas() {
-    tablaCarro = $('#dt_lineas').DataTable({
+    tablaOfertasLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -621,10 +716,11 @@ function initTablaOfertasLineas() {
             data: "linea"
         }, {
             data: "capituloLinea",
-            "visible": false,
             render: function (data, type, row) {
                 return "";
             }
+        }, {
+            data: "unidades"
         }, {
             data: "descripcion",
             render: function (data, type, row) {
@@ -649,12 +745,6 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "totalLinea",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
             data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -666,6 +756,7 @@ function initTablaOfertasLineas() {
             }
         }]
     });
+    tablaOfertasLineas.columns(2).visible(false);
 }
 
 function loadDataLinea(data) {
@@ -682,6 +773,7 @@ function loadDataLinea(data) {
     vm.capituloLinea(data.capituloLinea);
     //
     loadGrupoArticulos(data.grupoArticuloId);
+    loadUnidades(data.unidadId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     //
@@ -738,6 +830,18 @@ function loadGrupoArticulos(id) {
     });
 }
 
+function loadUnidades(id) {
+    llamadaAjax('GET', "/api/unidades", null, function (err, data) {
+        if (err) return;
+        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        vm.posiblesUnidades(unidades);
+        if (id) {
+            $("#cmbUnidades").val([id]).trigger('change');
+        } else {
+            $("#cmbUnidades").val([0]).trigger('change');
+        }
+    });
+}
 
 function loadTiposIva(id) {
     llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
@@ -979,8 +1083,7 @@ var cargaMantenedor = function (id) {
     llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
         if (err) return;
         $('#txtMantenedor').val(data.nombre);
-        vm.smantenedorId(data.mantenedorId);
-        vm.mantenedorId(data.mantenedorId);
+        vm.mantenedorId(id);
     });
 };
 
@@ -1246,7 +1349,7 @@ var guardarContrato = function () {
         var mens = "Ya hay un contrato generado para esta oferta. ¿Desea eliminarlo y generarlo de nuevo?"
         mensajeAceptarCancelar(mens, function aceptar() {
             var url = myconfig.apiUrl + "/api/contratos/" + vm.contratoId();
-            llamadaAjax('DELETE', url, null, function(err){
+            llamadaAjax('DELETE', url, null, function (err) {
                 if (err) return;
                 generarContratoAPI();
             });

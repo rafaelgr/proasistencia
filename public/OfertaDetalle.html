@@ -172,12 +172,22 @@
                             <a href="UnidadesGeneral.html">
                                 <i class="fa fa-asterisk"></i> Unidades
                             </a>
-                        </li>   
+                        </li>
+                        <li id="tipos_proyecto">
+                            <a href="TiposProyectoGeneral.html">
+                                <i class="fa fa-asterisk"></i> Tipos de proyecto
+                            </a>
+                        </li>
+                        <li id="textos_predeterminados">
+                            <a href="TextosPredeterminadosGeneral.html">
+                                <i class="fa fa-asterisk"></i> Textos predeterminados
+                            </a>
+                        </li>
                         <li id="tiposvia">
                             <a href="TipoViaGeneral.html">
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
-                        </li>  
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -207,7 +217,7 @@
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
                             </a>
-                        </li>                       
+                        </li>
                         <li id="articulos">
                             <a href="ArticuloGeneral.html">
                                 <i class="fa fa-square-o"></i> Unidades obra
@@ -217,7 +227,7 @@
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -261,7 +271,7 @@
                                 </li>
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
-                                </li>  
+                                </li>
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -274,7 +284,7 @@
                                     <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li id="informes">
@@ -381,7 +391,7 @@
                                                         <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-4">
+                                                <section class="col col-md-2">
                                                     <label class="label">Empresa</label>
                                                     <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
@@ -391,9 +401,15 @@
                                                     <label class="label">Fecha </label>
                                                     <label class="input">
                                                         <input id="txtFechaOferta" name="txtFechaOferta" data-bind="value: fechaOferta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>                                                    
+                                                    </label>
                                                 </section>
-                                                <section class="col col-md-4">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Tipo Proyecto</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>                                                
+                                                <section class="col col-md-3">
                                                     <label class="label">Tipo Oferta</label>
                                                     <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbTiposOferta" name="cmbTiposOferta" data-bind="options: posiblesTiposOferta, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoOfertaId, valueAllowUnset: true, selectedOptions: elegidosTiposOferta, selected2:{}"></select><i></i>
@@ -403,47 +419,49 @@
                                             <div class="row">
                                                 <section class="col col-md-4">
                                                     <label class="label">Cliente</label>
-                                                        <label class="input">
-                                                            <input id="txtCliente" name="txtCliente"/>
+                                                    <label class="input">
+                                                        <input id="txtCliente" name="txtCliente" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-4">
                                                     <label class="label">Mantenedor</label>
-                                                        <label class="input">
-                                                            <input id="txtMantenedor" name="txtMantenedor"/>
+                                                    <label class="input">
+                                                        <input id="txtMantenedor" name="txtMantenedor" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-4">
                                                     <label class="label">Agente</label>
-                                                        <label class="input">
-                                                            <input id="txtAgente" name="txtAgente"/>
+                                                    <label class="input">
+                                                        <input id="txtAgente" name="txtAgente" />
                                                     </label>
                                                 </section>
-                                            </div>                                            
+                                            </div>
                                             <div class="row">
                                                 <section class="col col-md-4">
                                                     <label class="label">Forma de pago</label>
                                                     <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                     </label>
-                                                </section>    
+                                                </section>
                                                 <section class="col col-md-4"></section>
                                                 <section class="col col-md-2">
                                                     <label class="label">Importe Cliente</label>
-                                                        <label class="input">
-                                                            <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeCliente" disabled/>
+                                                    <label class="input">
+                                                        <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeCliente" disabled/>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-2">
                                                     <label class="label">Importe Mantenedor</label>
-                                                        <label class="input">
-                                                            <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
+                                                    <label class="input">
+                                                        <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
                                                     </label>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-12">
-                                                    <label class="label">Observaciones</label>
+                                                    <label class="label">Observaciones <i class="fa fa-lg fa-book"></i>
+                                                        <select id="cmbTextosPredeterminados" style="min-width: 150px;" name="cmbTextosPredeterminados" data-bind="options: posiblesTextosPredeterminados, optionsText: 'abrev', optionsValue: 'textoPredeterminadoId', value: stextoPredeterminadoId, valueAllowUnset: true, selectedOptions: elegidosTextosPredeterminados, selected2:{}"></select>
+                                                    </label>
                                                     <label class="textarea textarea-resizable">
                                                         <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
                                                     </label>
@@ -477,54 +495,53 @@
                                                                 <tr>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
+                                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
                                                                         </label>
                                                                     </td>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
+                                                                            <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
                                                                         </label>
                                                                     </td>
                                                                     <td style="text-align:center;">
                                                                         <label class="input">
-                                                                                <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio"/>
-                                                                        </label                                                                                
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
+                                                                        </label </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
+                                                                            </label>
+                                                                        </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeCliente" disabled/>
-                                                                        </label>
-                                                                    </td>
+                                                                            </label>
+                                                                        </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </section>
-                                            </div>                                
+                                            </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
                                                 <button id="btnGenerarContrato" title="Generar contrato" data-toggle="modal" data-target="#modalContrato" onclick="generarContrato()" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-file-text-o"></i>
-                                                </button>                                                
+                                                </button>
                                                 <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
-                                                </button>                                                
+                                                </button>
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
@@ -553,7 +570,7 @@
                         <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS</h2>
+                                <h2>LINEAS DE LA OFERTA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -570,7 +587,7 @@
                                         <fieldset>
                                             <div class="pull-left">
                                                 <strong>Total: </strong><span data-bind="text: total"></span>
-                                                 <br/> 
+                                                <br/>
                                                 <strong> Total (+IVA): </strong><span data-bind="text: totalConIva"></span>
                                             </div>
                                             <div class="pull-right">
@@ -586,24 +603,24 @@
                                             <thead>
                                                 <tr>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Linea
+                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>LINEA
                                                     </th>
                                                     <th data-hide="phone">
-                                                    </th>                                                    
+                                                    </th>
                                                     <th data-hide="phone">
-                                                        Descripción
+                                                        UD.
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        CONCEPTO
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Precio
+                                                        COSTE/UD.
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Cantidad
+                                                        CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        Coste
-                                                    </th>                                                    
-                                                    <th data-hide="phone" class="text-right">
-                                                        Importe
+                                                        TOTAL
                                                     </th>
                                                     <th>
                                                     </th>
@@ -692,7 +709,6 @@
                 <!-- end row -->
             </section>
             <!-- end widget grid -->
-
         </div>
         <!-- END MAIN CONTENT -->
     </div>
@@ -716,7 +732,7 @@
                                         <label class="label">Texto del capítulo</label>
                                         <label class="input">
                                             <input id="txtCapitulo" name="txtCapitulo" type="text" data-bind="value: capituloLinea" />
-                                        </label>                                        
+                                        </label>
                                     </section>
                                 </div>
                                 <div class="row">
@@ -726,14 +742,19 @@
                                             <input id="txtLinea" name="txtLinea" type="text" data-bind="value: linea" />
                                         </label>
                                     </section>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label class="label">Capítulo</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
-                                    
-                                    <div class="col col-md-5">
+                                    <div class="col col-md-2">
+                                        <label class="label">Unidades</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'abrev', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-4">
                                         <label class="label">Unidad constructiva</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
@@ -756,8 +777,16 @@
                                     </section>
                                 </div>
                                 <div class="row">
+                                    <section class="col col-md-4">
+                                        <!--
+                                        <label class="label">Importe</label>
+                                        <label class="input">
+                                            <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
+                                        </label>
+                                        -->
+                                    </section>                                    
                                     <section class="col col-md-2">
-                                        <label class="label">Precio</label>
+                                        <label class="label">Coste / Ud</label>
                                         <label class="input">
                                             <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importe" />
                                         </label>
@@ -769,18 +798,12 @@
                                         </label>
                                     </section>
                                     <section class="col col-md-4">
-                                        <label class="label">Coste</label>
+                                        <label class="label">Total coste</label>
                                         <label class="input">
                                             <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
                                         </label>
-                                    </section>                                    
-                                    <section class="col col-md-4">
-                                        <label class="label">Importe</label>
-                                        <label class="input">
-                                            <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
-                                        </label>
                                     </section>
-                                </div>                                 
+                                </div>
                             </section>
                         </fieldset>
                         <footer>
@@ -817,8 +840,8 @@
                                     <label class="label" style="color: blue;">Fecha aceptación oferta </label>
                                     <label class="input">
                                         <input id="txtFechaAceptacionOferta" name="txtFechaAceptacion" data-bind="value: fechaAceptacionOferta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>                                                    
-                                </section>                                
+                                    </label>
+                                </section>
                             </div>
                             <header>
                                 Datos para el contrato a generar
@@ -828,40 +851,40 @@
                                     <label class="label">Fecha inicio </label>
                                     <label class="input">
                                         <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>                                                    
+                                    </label>
                                 </section>
                                 <section class="col col-md-4">
                                     <label class="label">Fecha final</label>
                                     <label class="input">
                                         <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>                                                    
+                                    </label>
                                 </section>
                                 <section class="col col-md-4">
                                     <label class="label">Preaviso (meses)</label>
                                     <label class="input">
                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                     </label>
-                                </section>   
+                                </section>
                             </div>
                             <div class="row">
                                 <section class="col col-md-4">
                                     <label class="label">Fecha primera fact.</label>
                                     <label class="input">
                                         <input id="txtFechaPrimeraFactura" name="txtFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>                                                    
+                                    </label>
                                 </section>
                                 <section class="col col-md-4">
                                     <label class="label">Fecha original</label>
                                     <label class="input">
                                         <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>                                                    
+                                    </label>
                                 </section>
                                 <section class="col col-md-4">
                                     <label class="checkbox">
                                         <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
                                         <i></i>Facturación parcial
                                     </label>
-                                </section>                                                                                                                                  
+                                </section>
                             </div>
                         </fieldset>
                         <footer>
@@ -879,7 +902,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->    
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
@@ -913,7 +936,7 @@
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
-    <script src="js/sprintf/sprintf.min.js"></script>    
+    <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
