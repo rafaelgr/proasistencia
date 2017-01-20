@@ -741,7 +741,7 @@ function datosOKLineas() {
 }
 
 function initTablaContratosLineas() {
-    tablaCarro = $('#dt_lineas').DataTable({
+    tablaContratosLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -832,6 +832,7 @@ function initTablaContratosLineas() {
             }
         }]
     });
+    tablaContratosLineas.columns(1).visible(false);
 }
 
 function loadDataLinea(data) {
