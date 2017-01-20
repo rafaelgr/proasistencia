@@ -277,7 +277,6 @@ function loadData(data) {
     document.title = "OFERTA: " + vm.referencia();
 }
 
-
 function datosOK() {
     $('#frmOferta').validate({
         rules: {
@@ -510,11 +509,13 @@ function cambioTextosPredeterminados(data) {
     var textoPredeterminadoId = data.id;
     llamadaAjax('GET', myconfig.apiUrl + "/api/textos_predeterminados/" + textoPredeterminadoId, null, function (err, data) {
         if (err) return;
-        var observaciones = vm.observaciones();
+        var observaciones = ""
+        if (vm.observaciones()) observaciones = vm.observaciones();
         observaciones += data.texto;
         vm.observaciones(observaciones);
     });
 }
+
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
