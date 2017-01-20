@@ -756,7 +756,7 @@ function initTablaOfertasLineas() {
             }
         }]
     });
-    tablaOfertasLineas.columns(2).visible(false);
+    tablaOfertasLineas.columns(1).visible(false);
 }
 
 function loadDataLinea(data) {
