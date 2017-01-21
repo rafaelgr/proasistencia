@@ -261,7 +261,7 @@ function loadData(data) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     cargaMantenedor(data.mantenedorId);
-    cargaAgente(data.agenteId);
+    cargaAgente(data.agenteId, true);
     vm.fechaOferta(spanishDate(data.fechaOferta));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
@@ -297,7 +297,7 @@ function datosOK() {
             },
             cmbTipoProyecto: {
                 required: true
-            },            
+            },
             txtCliente: {
                 clienteNecesario: true
             },
@@ -493,7 +493,7 @@ function cambioTipoProyecto(data) {
     var tipoProyectoId = data.id;
     llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
         if (err) return;
-        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function(err, nuevaReferencia){
+        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
             if (err) return;
             vm.referencia(nuevaReferencia);
         });
@@ -1087,16 +1087,18 @@ var cargaMantenedor = function (id) {
     });
 };
 
-var cargaAgente = function (id) {
+var cargaAgente = function (id, encarga) {
     llamadaAjax('GET', "/api/comerciales/" + id, null, function (err, data) {
         if (err) return;
         $('#txtAgente').val(data.nombre);
         vm.agenteId(data.comercialId);
-        obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
-            if (err) return;
-            if (!vm.porcentajeAgente()) vm.porcentajeAgente(comision);
-            recalcularCostesImportesDesdeCoste();
-        });
+        if (!encarga) {
+            obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
+                if (err) return;
+                if (!vm.porcentajeAgente()) vm.porcentajeAgente(comision);
+                recalcularCostesImportesDesdeCoste();
+            });
+        }
     });
 };
 
@@ -1208,8 +1210,9 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
+    if (!vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);
     if (vm.coste() != null) {
-        if (vm.porcentajeBeneficio()) {
+        if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
