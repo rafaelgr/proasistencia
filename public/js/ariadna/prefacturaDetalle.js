@@ -213,7 +213,7 @@ function admData() {
     self.sunidadId = ko.observable();
     //
     self.posiblesUnidades = ko.observableArray([]);
-    self.elegidosUnidades = ko.observableArray([]);        
+    self.elegidosUnidades = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -840,7 +840,7 @@ function initTablaPrefacturasLineas() {
             render: function (data, type, row) {
                 return "";
             }
-        },{
+        }, {
             data: "unidades"
         }, {
             data: "descripcion",
@@ -1041,6 +1041,8 @@ function cambioArticulo(data) {
             var data2 = {
                 id: data.tipoIvaId
             };
+            // poner la unidades por defecto de ese artículo
+            if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
             cambioTiposIva(data2);
             cambioPrecioCantidad();
         },
@@ -1077,7 +1079,7 @@ function cambioGrupoArticulo(data) {
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
-    }    
+    }
     $.ajax({
         type: "GET",
         url: "/api/articulos/grupo/" + grupoArticuloId,
