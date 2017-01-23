@@ -303,7 +303,7 @@ function admData() {
 
 function loadData(data) {
     vm.contratoId(data.contratoId);
-    loadTipoProyecto(data.tipoProyectoId);    
+    loadTipoProyecto(data.tipoProyectoId);
     loadTiposContrato(data.tipoContratoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
@@ -348,7 +348,7 @@ function datosOK() {
             },
             cmbTipoProyecto: {
                 required: true
-            },             
+            },
             cmbTiposContrato: {
                 required: true
             },
@@ -567,7 +567,7 @@ function cambioTipoProyecto(data) {
     var tipoProyectoId = data.id;
     llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
         if (err) return;
-        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev, null, function(err, nuevaReferencia){
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
             if (err) return;
             vm.referencia(nuevaReferencia);
         });
@@ -628,7 +628,6 @@ function limpiaDataLinea(data) {
         loadArticulos();
     }
 
-    // loadArticulos();
     loadTiposIva();
     loadUnidades();
 }
@@ -955,6 +954,8 @@ function cambioArticulo(data) {
         var data2 = {
             id: data.tipoIvaId
         };
+        // poner la unidades por defecto de ese artículo
+        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
         cambioPrecioCantidad();
     });

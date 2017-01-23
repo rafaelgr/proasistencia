@@ -553,9 +553,8 @@ function limpiaDataLinea(data) {
         loadGrupoArticulos();
         loadArticulos();
     }
-
-    // loadArticulos();
     loadTiposIva();
+    loadUnidades();
 }
 
 var guardarLinea = function () {
@@ -878,6 +877,8 @@ function cambioArticulo(data) {
         var data2 = {
             id: data.tipoIvaId
         };
+        // poner la unidades por defecto de ese artículo
+        if (!vm.sunidadId())  $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
         cambioPrecioCantidad();
     });
