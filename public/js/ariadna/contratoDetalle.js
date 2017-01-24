@@ -13,6 +13,7 @@ var lineaEnEdicion = false;
 var dataContratosLineas;
 var dataBases;
 var dataComisionistas;
+var dataGenerarPrefacturas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -118,6 +119,7 @@ function initForm() {
     initTablaContratosLineas();
     initTablaBases();
     initTablaComisionistas();
+    initTablaGenerarPrefacturas();
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -1717,6 +1719,17 @@ var obtenerDivisor = function () {
 
 var verPrefacturasAGenerar = function () {
     if (!generarPrefacturasOK()) return;
+    // comprobamos si es de mantenedor o cliente final.
+    var importe = vm.importeCliente(); // importe real de la factura;
+    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+    var clienteId = vm.clienteId();
+    // si es un mantenedor su importe de factura es el calculado para él.
+    if (vm.mantenedorId()) {
+        importe = vm.importeMantenedor();
+        clienteId = vm.mantenedorId();
+    }
+    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId);
+    loadTablaGenerarPrefacturas(prefacturas);
 }
 
 var aceptarGenerarPrefacturas = function () {
@@ -1764,7 +1777,7 @@ var generarPrefacturasOK = function () {
     return $('#generar-prefacturas-form').valid();
 }
 
-function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, diaPago, empresaId, clienteId, articuloId) {
+function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId) {
     // calculamos según la periodicidad
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
@@ -1772,10 +1785,16 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
-    // se supone que la fecha ya está en formato js.
-    var importePago = importe / numPagos;
-    var importePagoCliente = importeAlCliente / numPagos;
-    var importeCoste = coste / numPagos;
+
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
     var import1 = (importePago / 30) * diffDias;
     var import11 = (importePagoCliente / 30) * diffDias;
     var import12 = (importeCoste / 30) * diffDias;
@@ -1816,7 +1835,82 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
         };
         pagos.push(p);
     }
+    if (pagos.length > 0){
+        // en la última factura ponemos los restos
+        pagos[pagos.length -1].importe = pagos[pagos.length -1].importe + restoImportePago;
+        pagos[pagos.length -1].importeCliente = pagos[pagos.length -1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length -1].importeCoste = pagos[pagos.length -1].importeCoste + restoImporteCoste;
+    }
     return pagos;
+}
+
+
+function initTablaGenerarPrefacturas() {
+    tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
+        bSort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerarPrefacturas,
+        columnDefs: [
+            { "width": "20%", "targets": [2, 3] }
+        ],
+        columns: [{
+            data: "fecha"
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresaId",
+            className: "text-center"
+        }, {
+            data: "clienteId",
+            className: "text-center"
+        }]
+    });
+}
+
+function loadTablaGenerarPrefacturas(data) {
+    var dt = $('#dt_generar_prefacturas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
 }
 
 //------------------------------------------------------------------------------------------
