@@ -1723,12 +1723,15 @@ var verPrefacturasAGenerar = function () {
     var importe = vm.importeCliente(); // importe real de la factura;
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
     var clienteId = vm.clienteId();
+    var cliente = $("#txtCliente").val();
+    var empresa = $("#cmbEmpresas").text();
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
         importe = vm.importeMantenedor();
         clienteId = vm.mantenedorId();
+        cliente = $("#txtMantenedor").val();
     }
-    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId);
+    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     loadTablaGenerarPrefacturas(prefacturas);
 }
 
@@ -1777,7 +1780,7 @@ var generarPrefacturasOK = function () {
     return $('#generar-prefacturas-form').valid();
 }
 
-function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId) {
+function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId, empresa, cliente ) {
     // calculamos según la periodicidad
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
@@ -1812,7 +1815,9 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -1831,7 +1836,9 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente
         };
         pagos.push(p);
     }
@@ -1894,10 +1901,10 @@ function initTablaGenerarPrefacturas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "empresaId",
+            data: "empresa",
             className: "text-center"
         }, {
-            data: "clienteId",
+            data: "cliente",
             className: "text-center"
         }]
     });
