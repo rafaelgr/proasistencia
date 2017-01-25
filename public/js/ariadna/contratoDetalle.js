@@ -1661,7 +1661,7 @@ var loadPeriodosPagos = function (periodoPagoId) {
 
 var generarPrefacturas = function () {
     $("#cmbPeriodosPagos").select2(select2Spanish());
-    loadPeriodosPagos();
+    loadPeriodosPagos(vm.speriodoPagoId());
     $("#cmbPeriodosPagos").select2().on('change', function (e) {
         cambioPeriodosPagos(e.added);
     });
