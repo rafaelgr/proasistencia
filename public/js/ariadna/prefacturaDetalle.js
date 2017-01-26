@@ -860,7 +860,7 @@ function initTablaPrefacturasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "coste",
+            data: "totalLinea",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');

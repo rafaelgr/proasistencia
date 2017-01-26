@@ -301,6 +301,9 @@ function admData() {
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     self.porcentajeComision = ko.observable();
+    //
+    self.prefacturasAGenerar = ko.observableArray([]);
+
 }
 
 function loadData(data) {
@@ -1724,7 +1727,7 @@ var verPrefacturasAGenerar = function () {
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
     var clienteId = vm.clienteId();
     var cliente = $("#txtCliente").val();
-    var empresa = $("#cmbEmpresas").text();
+    var empresa = $("#cmbEmpresas").select2('data').text;
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
         importe = vm.importeMantenedor();
@@ -1732,11 +1735,23 @@ var verPrefacturasAGenerar = function () {
         cliente = $("#txtMantenedor").val();
     }
     var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
 
 var aceptarGenerarPrefacturas = function () {
     if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0){
+        return;
+    }
+    var data = {
+        prefacturas: vm.prefacturasAGenerar()
+    };
+    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function(err){
+        if (err) {
+            return;
+        }
+    });
 }
 
 var generarPrefacturasOK = function () {
