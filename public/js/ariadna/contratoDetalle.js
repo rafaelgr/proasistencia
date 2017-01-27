@@ -128,7 +128,7 @@ function initForm() {
         cambioComercial(e.added);
     });
 
-    reglasControlDeValidacionAdicionales();
+    reglasDeValidacionAdicionales();
 
     var cmd = gup('CMD');
 
@@ -1205,7 +1205,7 @@ var initAutoCliente = function () {
             cambioCliente(ui.item);
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("clienteNecesario", function (value, element) {
         var r = false;
         if (vm.clienteId()) r = true;
@@ -1235,7 +1235,7 @@ var initAutoMantenedor = function () {
             recalcularCostesImportesDesdeCoste();
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("mantenedorNecesario", function (value, element) {
         var r = false;
         if (vm.mantenedorId()) r = true;
@@ -1270,7 +1270,7 @@ var initAutoAgente = function () {
             });
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("agenteNecesario", function (value, element) {
         var r = false;
         if (vm.agenteId()) r = true;
@@ -1741,16 +1741,23 @@ var verPrefacturasAGenerar = function () {
 
 var aceptarGenerarPrefacturas = function () {
     if (!generarPrefacturasOK()) return;
-    if (vm.prefacturasAGenerar().length == 0){
+    if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
     var data = {
         prefacturas: vm.prefacturasAGenerar()
     };
-    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function(err){
-        if (err) {
+    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
             return;
         }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) return;
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+        });
     });
 }
 
@@ -1795,7 +1802,23 @@ var generarPrefacturasOK = function () {
     return $('#generar-prefacturas-form').valid();
 }
 
-function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId, empresa, cliente ) {
+var controlDePrefacturasYaGeneradas = function (contratoId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId, empresa, cliente) {
     // calculamos según la periodicidad
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
@@ -1857,11 +1880,11 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
         };
         pagos.push(p);
     }
-    if (pagos.length > 0){
+    if (pagos.length > 0) {
         // en la última factura ponemos los restos
-        pagos[pagos.length -1].importe = pagos[pagos.length -1].importe + restoImportePago;
-        pagos[pagos.length -1].importeCliente = pagos[pagos.length -1].importeCliente + restoImportePagoCliente;
-        pagos[pagos.length -1].importeCoste = pagos[pagos.length -1].importeCoste + restoImporteCoste;
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
     }
     return pagos;
 }
@@ -1971,7 +1994,7 @@ var mostrarMensajeNuevoContrato = function () {
     mensNormal(mens);
 }
 
-var reglasControlDeValidacionAdicionales = function () {
+var reglasDeValidacionAdicionales = function () {
     jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
         var fechaInicial = new Date(spanishDbDate(vm.fechaInicio()));
         var fechaFinal = new Date(spanishDbDate(vm.fechaFinal()));
