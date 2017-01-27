@@ -149,7 +149,7 @@ function admData() {
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
-    self.contratoClienteMantenimientoId = ko.observable();
+    self.contratoId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -186,7 +186,7 @@ function admData() {
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
     //
-    self.scontratoClienteMantenimientoId = ko.observable();
+    self.scontratoId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
@@ -247,7 +247,7 @@ function loadData(data) {
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
-    vm.contratoClienteMantenimientoId(data.contratoClienteMantenimientoId);
+    vm.contratoId(data.contratoId);
     vm.generada(data.generada);
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
@@ -273,7 +273,7 @@ function loadData(data) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
-    loadContratos(data.contratoClienteMantenimientoId);
+    loadContratos(data.contratoId);
     vm.observaciones(data.observaciones);
 
     //
@@ -352,7 +352,7 @@ function aceptar() {
                 "fecha": spanishDbDate(vm.fecha()),
                 "empresaId": vm.sempresaId(),
                 "clienteId": vm.sclienteId(),
-                "contratoClienteMantenimientoId": vm.scontratoClienteMantenimientoId(),
+                "contratoId": vm.scontratoId(),
                 "emisorNif": vm.emisorNif(),
                 "emisorNombre": vm.emisorNombre(),
                 "emisorDireccion": vm.emisorDireccion(),
@@ -469,11 +469,11 @@ function loadContratos(id) {
         // caso de un contrato en concreto
         $.ajax({
             type: "GET",
-            url: "/api/contratos_cliente_mantenimiento/" + id,
+            url: "/api/contratos/" + id,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
+                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
                 vm.posiblesContratos(contratos);
                 $("#cmbContratos").val([id]).trigger('change');
             },
@@ -486,11 +486,11 @@ function loadContratos(id) {
         // caso cargar contratos de empreas / cliente
         $.ajax({
             type: "GET",
-            url: "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(),
+            url: "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                var contratos = [{ contratoClienteMantenimientoId: 0, referencia: "" }].concat(data);
+                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
                 vm.posiblesContratos(contratos);
                 $("#cmbContratos").val([id]).trigger('change');
             },
@@ -566,7 +566,7 @@ function cambioEmpresa(data) {
 
 function cambioContrato(data) {
     if (!data) return;
-    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoClienteMantenimientoId());
+    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoId());
 }
 
 
@@ -615,15 +615,15 @@ function limpiaDataLinea(data) {
     loadUnidades();
 }
 
-var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoClienteMantenimientoId) {
+var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/contratos_cliente_mantenimiento/" + contratoClienteMantenimientoId,
+        url: myconfig.apiUrl + "/api/contratos/" + contratoId,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            vm.porcentajeBeneficio(data.margen);
-            vm.porcentajeAgente(data.manPorComer);
+            vm.porcentajeBeneficio(data.porcentajeBeneficio);
+            vm.porcentajeAgente(data.porcentajeAgente);
             if (!vm.coste()) vm.coste(0);
             recalcularCostesImportesDesdeCoste();
         },
