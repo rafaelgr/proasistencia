@@ -7,7 +7,7 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var empId = 0;
+var prefacturaId = 0;
 var lineaEnEdicion = false;
 
 var dataPrefacturasLineas;
@@ -37,7 +37,7 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptar());
+    $("#btnAceptar").click(aceptarPrefactura);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmPrefactura").submit(function () {
@@ -57,7 +57,7 @@ function initForm() {
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioEmpresa(e.added);
+        cambioEmpresa(e.added.id);
     });
 
     // Ahora cliente en autocomplete
@@ -69,14 +69,14 @@ function initForm() {
     $("#cmbContratos").select2(select2Spanish());
     $("#cmbContratos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioContrato(e.added);
+        cambioContrato(e.added.id);
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
     loadGrupoArticulos();
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioGrupoArticulo(e.added);
+        cambioGrupoArticulo(e.added.id);
     });
 
 
@@ -88,7 +88,7 @@ function initForm() {
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added);
+        cambioArticulo(e.added.id);
     });
 
     // select2 things
@@ -96,7 +96,7 @@ function initForm() {
     loadTiposIva();
     $("#cmbTiposIva").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioTiposIva(e.added);
+        cambioTiposIva(e.added.id);
     });
 
 
@@ -106,33 +106,18 @@ function initForm() {
     initTablaPrefacturasLineas();
     initTablaBases();
 
-    empId = gup('PrefacturaId');
-    if (empId != 0) {
-        var data = {
-            prefacturaId: empId
-        }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/prefacturas/" + empId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-                loadLineasPrefactura(data.prefacturaId);
-                loadBasesPrefactura(data.prefacturaId);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+    prefacturaId = gup('PrefacturaId');
+    if (prefacturaId != 0) {
+        // caso edicion
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
+            if (err) return;
+            loadData(data);
+            loadLineasPrefactura(data.prefacturaId);
+            loadBasesPrefactura(data.prefacturaId);
+        })
     } else {
-        // se trata de un alta ponemos el id a cero para indicarlo.
+        // caso alta
         vm.prefacturaId(0);
-        // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -332,91 +317,66 @@ function datosOK() {
     return $('#frmPrefactura').valid();
 }
 
-function aceptar() {
-    var mf = function () {
-        if (!datosOK())
-            return;
-        // Antes de dar de alta hay que inicializar valores
-        // si es modifcación los valores cambiarán solos
-        // ojo!! numeroDbf(n) espera un string.
-        if (!vm.total()) {
-            vm.total('0');
-            vm.totalConIva('0');
-        }
-        var data = {
-            prefactura: {
-                "prefacturaId": vm.prefacturaId(),
-                "ano": vm.ano(),
-                "numero": vm.numero(),
-                "serie": vm.serie(),
-                "fecha": spanishDbDate(vm.fecha()),
-                "empresaId": vm.sempresaId(),
-                "clienteId": vm.sclienteId(),
-                "contratoId": vm.scontratoId(),
-                "emisorNif": vm.emisorNif(),
-                "emisorNombre": vm.emisorNombre(),
-                "emisorDireccion": vm.emisorDireccion(),
-                "emisorCodPostal": vm.emisorCodPostal(),
-                "emisorPoblacion": vm.emisorPoblacion(),
-                "emisorProvincia": vm.emisorProvincia(),
-                "receptorNif": vm.receptorNif(),
-                "receptorNombre": vm.receptorNombre(),
-                "receptorDireccion": vm.receptorDireccion(),
-                "receptorCodPostal": vm.receptorCodPostal(),
-                "receptorPoblacion": vm.receptorPoblacion(),
-                "receptorProvincia": vm.receptorProvincia(),
-                "total": numeroDbf(vm.total()),
-                "totalConIva": numeroDbf(vm.totalConIva()),
-                "formaPagoId": vm.sformaPagoId(),
-                "observaciones": vm.observaciones(),
-                "coste": vm.coste(),
-                "porcentajeAgente": vm.porcentajeAgente(),
-                "porcentajeBeneficio": vm.porcentajeBeneficio(),
-                "totalAlCliente": vm.importeAlCliente(),
-                "generada": 0
-            }
-        };
-        if (empId == 0) {
-            $.ajax({
-                type: "POST",
-                url: myconfig.apiUrl + "/api/prefacturas",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // De momento no volvemos al mismo (es alta y hay que introducir líneas)
-                    var url = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/prefacturas/" + empId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+var aceptarPrefactura = function () {
+    if (!datosOK()) return;
+
+    if (!vm.total()) {
+        vm.total('0');
+        vm.totalConIva('0');
+    }
+    var data = generarPrefacturaDb();
+    // caso alta
+    var verb = "POST";
+    var url = myconfig.apiUrl + "/api/prefacturas";
+    var returnUrl = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
+    // caso modificación
+    if (prefacturaId) {
+        verb = "PUT";
+        url = myconfig.apiUrl + "/api/prefacturas/" + prefacturaId;
+        returnUrl = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
+    }
+
+    llamadaAjax(verb, url, data, function (err, data) {
+        loadData(data);
+        window.open(returnUrl, '_self');
+    });
+}
+
+var generarPrefacturaDb = function () {
+    var data = {
+        prefactura: {
+            "prefacturaId": vm.prefacturaId(),
+            "ano": vm.ano(),
+            "numero": vm.numero(),
+            "serie": vm.serie(),
+            "fecha": spanishDbDate(vm.fecha()),
+            "empresaId": vm.sempresaId(),
+            "clienteId": vm.sclienteId(),
+            "contratoId": vm.scontratoId(),
+            "emisorNif": vm.emisorNif(),
+            "emisorNombre": vm.emisorNombre(),
+            "emisorDireccion": vm.emisorDireccion(),
+            "emisorCodPostal": vm.emisorCodPostal(),
+            "emisorPoblacion": vm.emisorPoblacion(),
+            "emisorProvincia": vm.emisorProvincia(),
+            "receptorNif": vm.receptorNif(),
+            "receptorNombre": vm.receptorNombre(),
+            "receptorDireccion": vm.receptorDireccion(),
+            "receptorCodPostal": vm.receptorCodPostal(),
+            "receptorPoblacion": vm.receptorPoblacion(),
+            "receptorProvincia": vm.receptorProvincia(),
+            "total": numeroDbf(vm.total()),
+            "totalConIva": numeroDbf(vm.totalConIva()),
+            "formaPagoId": vm.sformaPagoId(),
+            "observaciones": vm.observaciones(),
+            "coste": vm.coste(),
+            "porcentajeAgente": vm.porcentajeAgente(),
+            "porcentajeBeneficio": vm.porcentajeBeneficio(),
+            "totalAlCliente": vm.importeAlCliente(),
+            "generada": 0
         }
     };
-    return mf;
+    return data;
 }
 
 function salir() {
@@ -428,145 +388,71 @@ function salir() {
 }
 
 
-function loadEmpresas(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
-            vm.posiblesEmpresas(empresas);
-            $("#cmbEmpresas").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }
 
-function loadFormasPago(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/formas_pago",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
-            vm.posiblesFormasPago(formasPago);
-            $("#cmbFormasPago").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+function loadFormasPago(formaPagoId) {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
 }
 
-function loadContratos(id) {
-    if (id) {
-        // caso de un contrato en concreto
-        $.ajax({
-            type: "GET",
-            url: "/api/contratos/" + id,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
-                vm.posiblesContratos(contratos);
-                $("#cmbContratos").val([id]).trigger('change');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-    } else {
-        // caso cargar contratos de empreas / cliente
-        $.ajax({
-            type: "GET",
-            url: "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
-                vm.posiblesContratos(contratos);
-                $("#cmbContratos").val([id]).trigger('change');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-    }
-}
-
-
-function cambioCliente(data) {
-    //
-    if (!data) {
-        return;
-    }
-    var clienteId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + clienteId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.receptorNif(data.nif);
-            vm.receptorNombre(data.nombreComercial);
-            vm.receptorDireccion(data.direccion);
-            vm.receptorCodPostal(data.codPostal);
-            vm.receptorPoblacion(data.poblacion);
-            vm.receptorProvincia(data.provincia);
-            $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
-            //vm.sformaPagoId(data.formaPagoId);
-            loadContratos();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+var loadContratos = function (contratoId) {
+    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
+    if (contratoId) url = "/api/contratos/" + contratoId;
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+        cargarContratos(data);
     });
-
 }
 
-function cambioEmpresa(data) {
-    //
-    if (!data) {
-        return;
-    }
-    var empresaId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas/" + empresaId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.emisorNif(data.nif);
-            vm.emisorNombre(data.nombre);
-            vm.emisorDireccion(data.direccion);
-            vm.emisorCodPostal(data.codPostal);
-            vm.emisorPoblacion(data.poblacion);
-            vm.emisorProvincia(data.provincia);
-            // vemos posibles contratos
-            loadContratos();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+var cargarContratos = function (data) {
+    var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
+    vm.posiblesContratos(contratos);
+    $("#cmbContratos").val([id]).trigger('change');
+}
+
+
+function cambioCliente(clienteId) {
+    if (!clienteId) return;
+    llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
+        if (err) return;
+        vm.receptorNif(data.nif);
+        vm.receptorNombre(data.nombreComercial);
+        vm.receptorDireccion(data.direccion);
+        vm.receptorCodPostal(data.codPostal);
+        vm.receptorPoblacion(data.poblacion);
+        vm.receptorProvincia(data.provincia);
+        $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
+        loadContratos();
     });
-
 }
 
-function cambioContrato(data) {
-    if (!data) return;
-    obtenerValoresPorDefectoDelContratoMantenimiento(vm.scontratoId());
+function cambioEmpresa(empresaId) {
+    if (!empresaId) return;
+    llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
+        vm.emisorNif(data.nif);
+        vm.emisorNombre(data.nombre);
+        vm.emisorDireccion(data.direccion);
+        vm.emisorCodPostal(data.codPostal);
+        vm.emisorPoblacion(data.poblacion);
+        vm.emisorProvincia(data.provincia);
+        loadContratos();
+    });
+}
+
+function cambioContrato(contratoId) {
+    if (contratoId) return;
+    obtenerValoresPorDefectoDelContratoMantenimiento(contratoId);
 }
 
 
@@ -576,22 +462,12 @@ function cambioContrato(data) {
 --------------------------------------------------------------------*/
 
 function nuevaLinea() {
-    limpiaDataLinea(); // es un alta
+    limpiaDataLinea();
     lineaEnEdicion = false;
-    $.ajax({
-        type: "GET",
-        url: "/api/prefacturas/nextlinea/" + vm.prefacturaId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.linea(data);
-            vm.total(0);
-            vm.totalConIva(0);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.prefacturaId(), null, function (err, data) {
+        vm.linea(data);
+        vm.total(0);
+        vm.totalConIva(0);
     });
 }
 
@@ -616,21 +492,12 @@ function limpiaDataLinea(data) {
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos/" + contratoId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            vm.porcentajeBeneficio(data.porcentajeBeneficio);
-            vm.porcentajeAgente(data.porcentajeAgente);
-            if (!vm.coste()) vm.coste(0);
-            recalcularCostesImportesDesdeCoste();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
+        if (err) return;
+        vm.porcentajeBeneficio(data.porcentajeBeneficio);
+        vm.porcentajeAgente(data.porcentajeAgente);
+        if (!vm.coste()) vm.coste(0);
+        recalcularCostesImportesDesdeCoste();
     });
 }
 
@@ -657,71 +524,17 @@ function aceptarLinea() {
             capituloLinea: vm.capituloLinea(),
         }
     }
-    if (!lineaEnEdicion) {
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                $('#modalLinea').modal('hide');
-                $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(),
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        // hay que mostrarlo en la zona de datos
-                        loadData(data);
-                        loadLineasPrefactura(data.prefacturaId);
-                        loadBasesPrefactura(data.prefacturaId);
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
+    var verbo = "POST";
+    if (lineaEnEdicion) verbo = "PUT";
+    llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturas/lineas", data, function (err, data) {
+        if (err) return;
+        $('#modalLinea').modal('hide');
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+            loadData(data);
+            loadLineasPrefactura(data.prefacturaId);
+            loadBasesPrefactura(data.prefacturaId);
         });
-    } else {
-        $.ajax({
-            type: "PUT",
-            url: myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId(),
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                $('#modalLinea').modal('hide');
-                $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(),
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        // hay que mostrarlo en la zona de datos
-                        loadData(data);
-                        loadLineasPrefactura(data.prefacturaId);
-                        loadBasesPrefactura(data.prefacturaId);
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-    }
+    });
 }
 
 function datosOKLineas() {
@@ -913,89 +726,52 @@ function loadTablaPrefacturaLineas(data) {
 
 
 function loadLineasPrefactura(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/prefacturas/lineas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var totalCoste = 0;
-            data.forEach(function (linea) {
-                totalCoste += (linea.coste * linea.cantidad);
-                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-            })
-            loadTablaPrefacturaLineas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/prefacturas/lineas/" + id, null, function (err, data) {
+        if (err) return;
+        var totalCoste = 0;
+        data.forEach(function (linea) {
+            totalCoste += (linea.coste * linea.cantidad);
+            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+        })
+        loadTablaPrefacturaLineas(data);
     });
 }
 
 function loadArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-            if (id) {
-                $("#cmbArticulos").val([id]).trigger('change');
-            } else {
-                $("#cmbArticulos").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
+        if (err) return;
+        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesArticulos(articulos);
+        if (id) {
+            $("#cmbArticulos").val([id]).trigger('change');
+        } else {
+            $("#cmbArticulos").val([0]).trigger('change');
         }
     });
 }
 
 function loadGrupoArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/grupo_articulo",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesGrupoArticulos(grupos);
-            if (id) {
-                $("#cmbGrupoArticulos").val([id]).trigger('change');
-            } else {
-                $("#cmbGrupoArticulos").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+        var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesGrupoArticulos(grupos);
+        if (id) {
+            $("#cmbGrupoArticulos").val([id]).trigger('change');
+        } else {
+            $("#cmbGrupoArticulos").val([0]).trigger('change');
         }
     });
 }
 
 
 function loadTiposIva(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_iva",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposIva(tiposIva);
-            if (id) {
-                $("#cmbTiposIva").val([id]).trigger('change');
-            } else {
-                $("#cmbTiposIva").val([0]).trigger('change');
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposIva(tiposIva);
+        if (id) {
+            $("#cmbTiposIva").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([0]).trigger('change');
         }
     });
 }
@@ -1015,109 +791,50 @@ function loadUnidades(id) {
 }
 
 
-function cambioArticulo(data) {
-    //
-    if (!data) {
-        return;
-    }
-    var articuloId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos/" + articuloId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            if (data.descripcion == null) {
-                vm.descripcion(data.nombre);
-            } else {
-                vm.descripcion(data.nombre + ':\n' + data.descripcion);
-            }
-            vm.cantidad(1);
-            vm.importe(data.precioUnitario);
-            //valores para IVA por defecto a partir del  
-            // articulo seleccionado.
-            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-            var data2 = {
-                id: data.tipoIvaId
-            };
-            // poner la unidades por defecto de ese artículo
-            if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
-            cambioTiposIva(data2);
-            cambioPrecioCantidad();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+function cambioArticulo(articuloId) {
+    if (!articuloId) return;
+    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+        if (data.descripcion == null) {
+            vm.descripcion(data.nombre);
+        } else {
+            vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
+        vm.cantidad(1);
+        vm.importe(data.precioUnitario);
+        $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        cambioTiposIva(data.tipoIvaId);
+        cambioPrecioCantidad();
     });
-
 }
 
-function cambioGrupoArticulo(data) {
+function cambioGrupoArticulo(grupArticuloId) {
     //
-    if (!data) {
-        return;
-    }
-    var grupoArticuloId = data.id;
+    if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
     if (!vm.capituloLinea()) {
         var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
-        $.ajax({
-            type: "GET",
-            url: "/api/grupo_articulo/" + grupoArticuloId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                nombreCapitulo += data.nombre;
-                vm.capituloLinea(nombreCapitulo);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
+        llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
+            if (err) return;
+            nombreCapitulo += data.nombre;
+            vm.capituloLinea(nombreCapitulo);
         });
     }
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos/grupo/" + grupoArticuloId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
+        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        vm.posiblesArticulos(articulos);
     });
-
 }
 
-function cambioTiposIva(data) {
-    if (!data) {
-        return;
-    }
-    var tipoIvaId = data.id;
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_iva/" + tipoIvaId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // cargamos los campos por defecto de receptor
-            vm.tipoIvaId(data.tipoIvaId);
-            vm.porcentaje(data.porcentaje);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+function cambioTiposIva(tipoIvaId) {
+    if (!tipoIvaId) return;
+    llamadaAjax("GET", "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
+        if (err) return;
+        vm.tipoIvaId(data.tipoIvaId);
+        vm.porcentaje(data.porcentaje);
     });
-
 }
 
 var cambioPrecioCantidad = function () {
@@ -1128,71 +845,32 @@ var cambioPrecioCantidad = function () {
 
 function editPrefacturaLinea(id) {
     lineaEnEdicion = true;
-    $.ajax({
-        type: "GET",
-        url: "/api/prefacturas/linea/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            if (data.length > 0) {
-                loadDataLinea(data[0]);
-            }
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/prefacturas/linea/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLinea(data[0]);
     });
 }
 
-function deletePrefacturaLinea(id) {
+function deletePrefacturaLinea(prefacturaId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                prefacturaLinea: {
-                    prefacturaId: vm.prefacturaId()
-                }
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/prefacturas/lineas/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    $.ajax({
-                        type: "GET",
-                        url: myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(),
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                            // hay que mostrarlo en la zona de datos
-                            loadData(data);
-                            loadLineasPrefactura(data.prefacturaId);
-                            loadBasesPrefactura(data.prefacturaId);
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+    mensajeAceptarCancelar(mensaje, function () {
+        var data = {
+            prefacturaLinea: {
+                prefacturaId: vm.prefacturaId()
+            }
+        };
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/prefacturas/lineas/" + prefacturaId, data, function (err, data) {
+            if (err) return;
+            llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+                if (err) return;
+                loadData(data);
+                loadLineasPrefactura(data.prefacturaId);
+                loadBasesPrefactura(data.prefacturaId);
             });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
+        });
+    }, function () {
+        // cancelar no hace nada
     });
 }
 
@@ -1273,28 +951,19 @@ function loadTablaBases(data) {
 }
 
 
-function loadBasesPrefactura(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/prefacturas/bases/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // actualizamos los totales
-            var t1 = 0; // total sin iva
-            var t2 = 0; // total con iva
-            for (var i = 0; i < data.length; i++) {
-                t1 += data[i].base;
-                t2 += data[i].base + data[i].cuota;
-            }
-            vm.total(numeral(t1).format('0,0.00'));
-            vm.totalConIva(numeral(t2).format('0,0.00'));
-            loadTablaBases(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+function loadBasesPrefactura(prefacturaId) {
+    llamadaAjax("GET", "/api/prefacturas/bases/" + prefacturaId, null, function (err, data) {
+        if (err) return;
+        // actualizamos los totales
+        var t1 = 0; // total sin iva
+        var t2 = 0; // total con iva
+        for (var i = 0; i < data.length; i++) {
+            t1 += data[i].base;
+            t2 += data[i].base + data[i].cuota;
         }
+        vm.total(numeral(t1).format('0,0.00'));
+        vm.totalConIva(numeral(t2).format('0,0.00'));
+        loadTablaBases(data);
     });
 }
 
@@ -1303,20 +972,10 @@ function loadBasesPrefactura(id) {
 // cargaCliente
 // carga en el campo txtCliente el valor seleccionado
 var cargaCliente = function (id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/clientes/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            // poner el nombre en el campo de texto
-            $('#txtCliente').val(data.nombre);
-            vm.sclienteId(data.clienteId);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
     });
 };
 
@@ -1327,34 +986,23 @@ var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
             // call ajax
-            $.ajax({
-                type: "GET",
-                url: "/api/clientes/?nombre=" + request.term,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    var r = []
-                    data.forEach(function (d) {
-                        var v = {
-                            value: d.nombre,
-                            id: d.clienteId
-                        };
-                        r.push(v);
-                    });
-                    response(r);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
             });
-
         },
         minLength: 2,
         select: function (event, ui) {
             vm.sclienteId(ui.item.id);
-            // el cambio de cliente puede implicar cambio de agente
-            cambioCliente(ui.item);
+            cambioCliente(ui.item.id);
         }
     });
     // regla de validación para el control inicializado
@@ -1399,34 +1047,13 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
-    $.ajax({
-        type: "PUT",
-        url: myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    // loadData(data);
-                    loadLineasPrefactura(data.prefacturaId);
-                    loadBasesPrefactura(data.prefacturaId);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente();
+    llamadaAjax("PUT", url, null, function (err, data) {
+        if (err) return;
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+            loadLineasPrefactura(data.prefacturaId);
+            loadBasesPrefactura(data.prefacturaId);
+        });
     });
 };
 
@@ -1469,25 +1096,14 @@ var imprimir = function () {
 }
 
 function printPrefactura(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", "/api/informes/prefacturas/" + id, null, function (err, data) {
+        if (err) return;
+        informePDF(data);
     });
 }
 
 function informePDF(data) {
     var shortid = "HyGQ0yAP";
-    // HkDPG29rl
-    // shortid = "HkDPG29rl";
     var data = {
         "template": {
             "shortid": shortid
@@ -1495,7 +1111,6 @@ function informePDF(data) {
         "data": data
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-    //apiReport("POST", myconfig.reportUrl + "/api/report", data);
 }
 
 var f_open_post = function (verb, url, data, target) {
@@ -1519,24 +1134,3 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-var apiReport = function (verb, url, data) {
-    $.ajax({
-        type: verb,
-        url: url,
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data, status) {
-            var a = 1;
-        },
-        error: function (err) {
-            //mensErrorAjax(err);
-            var file = new Blob([err.responseText], { type: 'application/pdf' });
-            var fileURL = URL.createObjectURL(file);
-            //var base64EncodedPDF = window.btoa(err.responseText);
-            window.open("data:application/pdf " + err.responseText);
-            //window.open(fileURL);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
