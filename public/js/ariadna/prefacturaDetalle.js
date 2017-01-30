@@ -8,6 +8,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var prefacturaId = 0;
+var cmd = "";
 var lineaEnEdicion = false;
 
 var dataPrefacturasLineas;
@@ -57,7 +58,7 @@ function initForm() {
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioEmpresa(e.added.id);
+        if (e.added) cambioEmpresa(e.added.id);
     });
 
     // Ahora cliente en autocomplete
@@ -69,14 +70,14 @@ function initForm() {
     $("#cmbContratos").select2(select2Spanish());
     $("#cmbContratos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioContrato(e.added.id);
+        if (e.added) cambioContrato(e.added.id);
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
     loadGrupoArticulos();
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioGrupoArticulo(e.added.id);
+        if (e.added) cambioGrupoArticulo(e.added.id);
     });
 
 
@@ -88,7 +89,7 @@ function initForm() {
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added.id);
+        if (e.added) cambioArticulo(e.added.id);
     });
 
     // select2 things
@@ -96,7 +97,7 @@ function initForm() {
     loadTiposIva();
     $("#cmbTiposIva").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioTiposIva(e.added.id);
+        if (e.added) cambioTiposIva(e.added.id);
     });
 
 
@@ -107,6 +108,7 @@ function initForm() {
     initTablaBases();
 
     prefacturaId = gup('PrefacturaId');
+    cmd = gup("cmd");
     if (prefacturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
@@ -266,6 +268,9 @@ function loadData(data) {
         ocultarCamposPrefacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
+    if (cmd == "nueva"){
+        mostrarMensajePrefacturaNueva();
+    }
     //
     document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 }
@@ -328,16 +333,17 @@ var aceptarPrefactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?PrefacturaId=" + vm.prefacturaId();
+    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&PrefacturaId=";
     // caso modificación
-    if (prefacturaId) {
+    if (prefacturaId != 0) {
         verb = "PUT";
         url = myconfig.apiUrl + "/api/prefacturas/" + prefacturaId;
-        returnUrl = "PrefacturaGeneral.html?PrefacturaId=" + vm.prefacturaId();
+        returnUrl = "PrefacturaGeneral.html?PrefacturaId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
+        returnUrl = returnUrl + vm.prefacturaId();
         window.open(returnUrl, '_self');
     });
 }
@@ -418,7 +424,7 @@ var loadContratos = function (contratoId) {
 var cargarContratos = function (data) {
     var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
     vm.posiblesContratos(contratos);
-    $("#cmbContratos").val([id]).trigger('change');
+    $("#cmbContratos").val([data.coontratoId]).trigger('change');
 }
 
 
@@ -451,7 +457,7 @@ function cambioEmpresa(empresaId) {
 }
 
 function cambioContrato(contratoId) {
-    if (contratoId) return;
+    if (!contratoId || contratoId == 0) return;
     obtenerValoresPorDefectoDelContratoMantenimiento(contratoId);
 }
 
@@ -720,7 +726,7 @@ function loadTablaPrefacturaLineas(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data != null) dt.fnAddData(data);
     dt.fnDraw();
 }
 
@@ -808,7 +814,7 @@ function cambioArticulo(articuloId) {
     });
 }
 
-function cambioGrupoArticulo(grupArticuloId) {
+function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
@@ -946,7 +952,7 @@ function loadTablaBases(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data != null) dt.fnAddData(data);
     dt.fnDraw();
 }
 
@@ -1069,6 +1075,11 @@ var ocultarCamposPrefacturasGeneradas = function () {
 
 var mostrarMensajeFacturaGenerada = function () {
     var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
+    mensNormal(mens);
+}
+
+var mostrarMensajePrefacturaNueva = function () {
+    var mens = "Introduzca las líneas de la nueva prefactura en el apartado correspondiente";
     mensNormal(mens);
 }
 
