@@ -13,6 +13,7 @@ var lineaEnEdicion = false;
 var dataContratosLineas;
 var dataBases;
 var dataComisionistas;
+var dataGenerarPrefacturas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -118,6 +119,7 @@ function initForm() {
     initTablaContratosLineas();
     initTablaBases();
     initTablaComisionistas();
+    initTablaGenerarPrefacturas();
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -126,7 +128,7 @@ function initForm() {
         cambioComercial(e.added);
     });
 
-    reglasControlDeValidacionAdicionales();
+    reglasDeValidacionAdicionales();
 
     var cmd = gup('CMD');
 
@@ -299,6 +301,9 @@ function admData() {
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     self.porcentajeComision = ko.observable();
+    //
+    self.prefacturasAGenerar = ko.observableArray([]);
+
 }
 
 function loadData(data) {
@@ -1200,7 +1205,7 @@ var initAutoCliente = function () {
             cambioCliente(ui.item);
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("clienteNecesario", function (value, element) {
         var r = false;
         if (vm.clienteId()) r = true;
@@ -1230,7 +1235,7 @@ var initAutoMantenedor = function () {
             recalcularCostesImportesDesdeCoste();
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("mantenedorNecesario", function (value, element) {
         var r = false;
         if (vm.mantenedorId()) r = true;
@@ -1265,7 +1270,7 @@ var initAutoAgente = function () {
             });
         }
     });
-    // regla de validación para el control inicializado
+    // regla de validación para el  inicializado
     jQuery.validator.addMethod("agenteNecesario", function (value, element) {
         var r = false;
         if (vm.agenteId()) r = true;
@@ -1659,7 +1664,7 @@ var loadPeriodosPagos = function (periodoPagoId) {
 
 var generarPrefacturas = function () {
     $("#cmbPeriodosPagos").select2(select2Spanish());
-    loadPeriodosPagos();
+    loadPeriodosPagos(vm.speriodoPagoId());
     $("#cmbPeriodosPagos").select2().on('change', function (e) {
         cambioPeriodosPagos(e.added);
     });
@@ -1717,10 +1722,43 @@ var obtenerDivisor = function () {
 
 var verPrefacturasAGenerar = function () {
     if (!generarPrefacturasOK()) return;
+    // comprobamos si es de mantenedor o cliente final.
+    var importe = vm.importeCliente(); // importe real de la factura;
+    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+    var clienteId = vm.clienteId();
+    var cliente = $("#txtCliente").val();
+    var empresa = $("#cmbEmpresas").select2('data').text;
+    // si es un mantenedor su importe de factura es el calculado para él.
+    if (vm.mantenedorId()) {
+        importe = vm.importeMantenedor();
+        clienteId = vm.mantenedorId();
+        cliente = $("#txtMantenedor").val();
+    }
+    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    vm.prefacturasAGenerar(prefacturas);
+    loadTablaGenerarPrefacturas(prefacturas);
 }
 
 var aceptarGenerarPrefacturas = function () {
     if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    var data = {
+        prefacturas: vm.prefacturasAGenerar()
+    };
+    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) return;
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+        });
+    });
 }
 
 var generarPrefacturasOK = function () {
@@ -1764,7 +1802,23 @@ var generarPrefacturasOK = function () {
     return $('#generar-prefacturas-form').valid();
 }
 
-function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, diaPago, empresaId, clienteId, articuloId) {
+var controlDePrefacturasYaGeneradas = function (contratoId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId, empresa, cliente) {
     // calculamos según la periodicidad
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
@@ -1772,10 +1826,16 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
-    // se supone que la fecha ya está en formato js.
-    var importePago = importe / numPagos;
-    var importePagoCliente = importeAlCliente / numPagos;
-    var importeCoste = coste / numPagos;
+
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
     var import1 = (importePago / 30) * diffDias;
     var import11 = (importePagoCliente / 30) * diffDias;
     var import12 = (importeCoste / 30) * diffDias;
@@ -1793,7 +1853,9 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -1812,11 +1874,88 @@ function crearPagos(importe, importeAlCliente, coste, fechaInicial, numPagos, di
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente
         };
         pagos.push(p);
     }
+    if (pagos.length > 0) {
+        // en la última factura ponemos los restos
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+    }
     return pagos;
+}
+
+
+function initTablaGenerarPrefacturas() {
+    tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
+        bSort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerarPrefacturas,
+        columnDefs: [
+            { "width": "20%", "targets": [2, 3] }
+        ],
+        columns: [{
+            data: "fecha"
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresa",
+            className: "text-center"
+        }, {
+            data: "cliente",
+            className: "text-center"
+        }]
+    });
+}
+
+function loadTablaGenerarPrefacturas(data) {
+    var dt = $('#dt_generar_prefacturas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
 }
 
 //------------------------------------------------------------------------------------------
@@ -1855,7 +1994,7 @@ var mostrarMensajeNuevoContrato = function () {
     mensNormal(mens);
 }
 
-var reglasControlDeValidacionAdicionales = function () {
+var reglasDeValidacionAdicionales = function () {
     jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
         var fechaInicial = new Date(spanishDbDate(vm.fechaInicio()));
         var fechaFinal = new Date(spanishDbDate(vm.fechaFinal()));
