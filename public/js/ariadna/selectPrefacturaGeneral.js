@@ -297,7 +297,7 @@ function crearPrefactura() {
                 loadTablaPrefacturas(null);
             },
             error: function (err) {
-                mensErrorAjax(err);
+                mensErrorAjax(err); 
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
