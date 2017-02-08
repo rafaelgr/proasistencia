@@ -270,6 +270,7 @@ function loadData(data) {
     }
     if (cmd == "nueva"){
         mostrarMensajeFacturaNueva();
+        cmd = "";
     }
     //
     document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
@@ -860,7 +861,7 @@ function editFacturaLinea(id) {
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
-    mensajeAceptarCancelar(mensaje, function () {
+    mensajeAceptarCancelar(mens, function () {
         var data = {
             facturaLinea: {
                 facturaId: vm.facturaId()
