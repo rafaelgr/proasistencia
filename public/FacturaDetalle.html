@@ -42,48 +42,6 @@
     <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 </head>
-<!--
-
-    TABLE OF CONTENTS.
-    
-    Use search to find needed section.
-    
-    ===================================================================
-    
-    |  01. #CSS Links                |  all CSS links and file paths  |
-    |  02. #FAVICONS                 |  Favicon links and file paths  |
-    |  03. #GOOGLE FONT              |  Google font link              |
-    |  04. #APP SCREEN / ICONS       |  app icons, screen backdrops   |
-    |  05. #BODY                     |  body tag                      |
-    |  06. #HEADER                   |  header tag                    |
-    |  07. #PROJECTS                 |  project lists                 |
-    |  08. #TOGGLE LAYOUT BUTTONS    |  layout buttons and actions    |
-    |  09. #MOBILE                   |  mobile view dropdown          |
-    |  10. #SEARCH                   |  search field                  |
-    |  11. #NAVIGATION               |  left panel & navigation       |
-    |  12. #MAIN PANEL               |  main panel                    |
-    |  13. #MAIN CONTENT             |  content holder                |
-    |  14. #PAGE FOOTER              |  page footer                   |
-    |  15. #SHORTCUT AREA            |  dropdown shortcuts area       |
-    |  16. #PLUGINS                  |  all scripts and plugins       |
-    
-    ===================================================================
-    
-    -->
-<!-- #BODY -->
-<!-- Possible Classes
-
-    * 'smart-style-{SKIN#}'
-    * 'smart-rtl'         - Switch theme mode to RTL
-    * 'menu-on-top'       - Switch to top navigation (no DOM change required)
-    * 'no-menu'           - Hides the menu completely
-    * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
-    * 'fixed-header'      - Fixes the header
-    * 'fixed-navigation'  - Fixes the main menu
-    * 'fixed-ribbon'      - Fixes breadcrumb
-    * 'fixed-page-footer' - Fixes footer
-    * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
-    -->
 
 <body class="">
     <!-- #HEADER -->
@@ -305,7 +263,7 @@
                 <li>Inicio</li>
                 <li>Gestion</li>
                 <li>Facturación </li>
-                <li>Prefacturas</li>
+                <li>Facturas</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -329,7 +287,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-th"></i> Detalle prefactura<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-th-list"></i> Detalle factura<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -382,7 +340,7 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmPrefactura" class="smart-form">
+                                    <form id="frmFactura" class="smart-form">
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-1">
@@ -649,7 +607,7 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
+                                                <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
                                                 </button>
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
@@ -680,7 +638,7 @@
                         <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS DE PREFACTURA</h2>
+                                <h2>LINEAS DE FACTURA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -831,7 +789,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> LINEA PREFACTURA</h4>
+                    <h4 class="modal-title"> LINEA FACTURA</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="linea-form" class="smart-form">
@@ -1015,7 +973,7 @@
     <script src="myconfig.js"></script>
     <script src="js/init.utilities.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/prefacturaDetalle.js"></script>
+    <script src="js/ariadna/facturaDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

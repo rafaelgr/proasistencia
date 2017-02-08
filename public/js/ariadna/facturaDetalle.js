@@ -1,17 +1,17 @@
 ﻿/*-------------------------------------------------------------------------- 
-prefacturaDetalle.js
-Funciones js par la página PrefacturaDetalle.html
+facturaDetalle.js
+Funciones js par la página FacturaDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var prefacturaId = 0;
+var facturaId = 0;
 var cmd = "";
 var lineaEnEdicion = false;
 
-var dataPrefacturasLineas;
+var dataFacturasLineas;
 var dataBases;
 
 var breakpointDefinition = {
@@ -38,10 +38,10 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptarPrefactura);
+    $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
-    $("#frmPrefactura").submit(function () {
+    $("#frmFactura").submit(function () {
         return false;
     });
 
@@ -104,22 +104,22 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
 
-    initTablaPrefacturasLineas();
+    initTablaFacturasLineas();
     initTablaBases();
 
-    prefacturaId = gup('PrefacturaId');
+    facturaId = gup('FacturaId');
     cmd = gup("cmd");
-    if (prefacturaId != 0) {
+    if (facturaId != 0) {
         // caso edicion
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+            loadLineasFactura(data.facturaId);
+            loadBasesFactura(data.facturaId);
         })
     } else {
         // caso alta
-        vm.prefacturaId(0);
+        vm.facturaId(0);
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -129,7 +129,7 @@ function initForm() {
 
 function admData() {
     var self = this;
-    self.prefacturaId = ko.observable();
+    self.facturaId = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.serie = ko.observable();
@@ -180,7 +180,7 @@ function admData() {
     self.observaciones = ko.observable();
 
     // -- Valores para las líneas
-    self.prefacturaLineaId = ko.observable();
+    self.facturaLineaId = ko.observable();
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
@@ -220,14 +220,14 @@ function admData() {
     self.porcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeAlCliente = ko.observable();
-    // Nuevo Total de coste para la prefactura
+    // Nuevo Total de coste para la factura
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
 }
 
 function loadData(data) {
-    vm.prefacturaId(data.prefacturaId);
+    vm.facturaId(data.facturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
     vm.serie(data.serie);
@@ -265,11 +265,11 @@ function loadData(data) {
 
     //
     if (vm.generada()) {
-        ocultarCamposPrefacturasGeneradas();
+        ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
     if (cmd == "nueva"){
-        mostrarMensajePrefacturaNueva();
+        mostrarMensajeFacturaNueva();
     }
     //
     document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
@@ -277,7 +277,7 @@ function loadData(data) {
 
 
 function datosOK() {
-    $('#frmPrefactura').validate({
+    $('#frmFactura').validate({
         rules: {
             cmbEmpresas: {
                 required: true
@@ -318,40 +318,40 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmPrefactura").validate().settings;
-    return $('#frmPrefactura').valid();
+    var opciones = $("#frmFactura").validate().settings;
+    return $('#frmFactura').valid();
 }
 
-var aceptarPrefactura = function () {
+var aceptarFactura = function () {
     if (!datosOK()) return;
 
     if (!vm.total()) {
         vm.total('0');
         vm.totalConIva('0');
     }
-    var data = generarPrefacturaDb();
+    var data = generarFacturaDb();
     // caso alta
     var verb = "POST";
-    var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&PrefacturaId=";
+    var url = myconfig.apiUrl + "/api/facturas";
+    var returnUrl = "FacturaDetalle.html?cmd=nueva&FacturaId=";
     // caso modificación
-    if (prefacturaId != 0) {
+    if (facturaId != 0) {
         verb = "PUT";
-        url = myconfig.apiUrl + "/api/prefacturas/" + prefacturaId;
-        returnUrl = "PrefacturaGeneral.html?PrefacturaId=";
+        url = myconfig.apiUrl + "/api/facturas/" + facturaId;
+        returnUrl = "FacturaGeneral.html?FacturaId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
-        returnUrl = returnUrl + vm.prefacturaId();
+        returnUrl = returnUrl + vm.facturaId();
         window.open(returnUrl, '_self');
     });
 }
 
-var generarPrefacturaDb = function () {
+var generarFacturaDb = function () {
     var data = {
-        prefactura: {
-            "prefacturaId": vm.prefacturaId(),
+        factura: {
+            "facturaId": vm.facturaId(),
             "ano": vm.ano(),
             "numero": vm.numero(),
             "serie": vm.serie(),
@@ -387,7 +387,7 @@ var generarPrefacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "PrefacturaGeneral.html";
+        var url = "FacturaGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -470,7 +470,7 @@ function cambioContrato(contratoId) {
 function nuevaLinea() {
     limpiaDataLinea();
     lineaEnEdicion = false;
-    llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.prefacturaId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/facturas/nextlinea/" + vm.facturaId(), null, function (err, data) {
         vm.linea(data);
         vm.total(0);
         vm.totalConIva(0);
@@ -478,7 +478,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.prefacturaLineaId(0);
+    vm.facturaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
     vm.tipoIvaId(null);
@@ -512,10 +512,10 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        prefacturaLinea: {
-            prefacturaLineaId: vm.prefacturaLineaId(),
+        facturaLinea: {
+            facturaLineaId: vm.facturaLineaId(),
             linea: vm.linea(),
-            prefacturaId: vm.prefacturaId(),
+            facturaId: vm.facturaId(),
             unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
@@ -532,13 +532,13 @@ function aceptarLinea() {
     }
     var verbo = "POST";
     if (lineaEnEdicion) verbo = "PUT";
-    llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturas/lineas", data, function (err, data) {
+    llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/lineas", data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
             loadData(data);
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+            loadLineasFactura(data.facturaId);
+            loadBasesFactura(data.facturaId);
         });
     });
 }
@@ -604,7 +604,7 @@ function datosOKLineas() {
     return $('#linea-form').valid();
 }
 
-function initTablaPrefacturasLineas() {
+function initTablaFacturasLineas() {
     tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
@@ -650,7 +650,7 @@ function initTablaPrefacturasLineas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataPrefacturasLineas,
+        data: dataFacturasLineas,
         columns: [{
             data: "linea"
         }, {
@@ -685,11 +685,11 @@ function initTablaPrefacturasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "prefacturaLineaId",
+            data: "facturaLineaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 if (!vm.generada())
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -699,7 +699,7 @@ function initTablaPrefacturasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.facturaLineaId(data.facturaLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
     vm.tipoIvaId(data.tipoIvaId);
@@ -720,7 +720,7 @@ function loadDataLinea(data) {
 
 
 
-function loadTablaPrefacturaLineas(data) {
+function loadTablaFacturaLineas(data) {
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -731,15 +731,15 @@ function loadTablaPrefacturaLineas(data) {
 }
 
 
-function loadLineasPrefactura(id) {
-    llamadaAjax("GET", "/api/prefacturas/lineas/" + id, null, function (err, data) {
+function loadLineasFactura(id) {
+    llamadaAjax("GET", "/api/facturas/lineas/" + id, null, function (err, data) {
         if (err) return;
         var totalCoste = 0;
         data.forEach(function (linea) {
             totalCoste += (linea.coste * linea.cantidad);
             vm.totalCoste(numeral(totalCoste).format('0,0.00'));
         })
-        loadTablaPrefacturaLineas(data);
+        loadTablaFacturaLineas(data);
     });
 }
 
@@ -849,30 +849,30 @@ var cambioPrecioCantidad = function () {
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
-function editPrefacturaLinea(id) {
+function editFacturaLinea(id) {
     lineaEnEdicion = true;
-    llamadaAjax("GET", "/api/prefacturas/linea/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/facturas/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) loadDataLinea(data[0]);
     });
 }
 
-function deletePrefacturaLinea(prefacturaId) {
+function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
-            prefacturaLinea: {
-                prefacturaId: vm.prefacturaId()
+            facturaLinea: {
+                facturaId: vm.facturaId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/prefacturas/lineas/" + prefacturaId, data, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/lineas/" + facturaId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+            llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
-                loadLineasPrefactura(data.prefacturaId);
-                loadBasesPrefactura(data.prefacturaId);
+                loadLineasFactura(data.facturaId);
+                loadBasesFactura(data.facturaId);
             });
         });
     }, function () {
@@ -957,8 +957,8 @@ function loadTablaBases(data) {
 }
 
 
-function loadBasesPrefactura(prefacturaId) {
-    llamadaAjax("GET", "/api/prefacturas/bases/" + prefacturaId, null, function (err, data) {
+function loadBasesFactura(facturaId) {
+    llamadaAjax("GET", "/api/facturas/bases/" + facturaId, null, function (err, data) {
         if (err) return;
         // actualizamos los totales
         var t1 = 0; // total sin iva
@@ -1021,12 +1021,12 @@ var initAutoCliente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    actualizarLineasDeLaPrefacturaTrasCambioCostes();
+    actualizarLineasDeLaFacturaTrasCambioCostes();
 };
 
 var cambioCampoConRecalculoDesdeBeneficio = function () {
     recalcularCostesImportesDesdeBeneficio();
-    actualizarLineasDeLaPrefacturaTrasCambioCostes();
+    actualizarLineasDeLaFacturaTrasCambioCostes();
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
@@ -1052,18 +1052,18 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
-var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
-    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente();
+var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
+    var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente();
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
+            loadLineasFactura(data.facturaId);
+            loadBasesFactura(data.facturaId);
         });
     });
 };
 
-var ocultarCamposPrefacturasGeneradas = function () {
+var ocultarCamposFacturasGeneradas = function () {
     $('#btnAceptar').hide();
     $('#btnNuevaLinea').hide();
     // los de input para evitar que se lance 'onblur'
@@ -1078,8 +1078,8 @@ var mostrarMensajeFacturaGenerada = function () {
     mensNormal(mens);
 }
 
-var mostrarMensajePrefacturaNueva = function () {
-    var mens = "Introduzca las líneas de la nueva prefactura en el apartado correspondiente";
+var mostrarMensajeFacturaNueva = function () {
+    var mens = "Introduzca las líneas de la nueva factura en el apartado correspondiente";
     mensNormal(mens);
 }
 
@@ -1103,11 +1103,11 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printPrefactura(vm.prefacturaId());
+    printFactura(vm.facturaId());
 }
 
-function printPrefactura(id) {
-    llamadaAjax("GET", "/api/informes/prefacturas/" + id, null, function (err, data) {
+function printFactura(id) {
+    llamadaAjax("GET", "/api/informes/facturas/" + id, null, function (err, data) {
         if (err) return;
         informePDF(data);
     });
