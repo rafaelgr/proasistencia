@@ -56,9 +56,6 @@ function initForm() {
     $("#cmbAgentes").select2(select2Spanish());
     loadAgentes();
 
-    $("#cmbArticulos").select2(select2Spanish());
-    loadArticulos();
-
     $("#cmbTiposMantenimientos").select2(select2Spanish());
     loadTiposMantenimientos();
 
@@ -73,11 +70,6 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
-    //
-    self.sarticuloId = ko.observable();
-    //
-    self.posiblesArticulos = ko.observableArray([]);
-    self.elegidosArticulos = ko.observableArray([]);
     //
     self.sclienteId = ko.observable();
     //
@@ -210,55 +202,59 @@ function loadTablaPrefacturas(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
-    dt.fnDraw();
-    data.forEach(function (v) {
-        var field = "#chk" + v.prefacturaId;
-        if (v.sel == 1) {
-            $(field).attr('checked', true);
-        }
-        $(field).change(function () {
-            var quantity = 0;
-            var data = {
-                prefactura: {
-                    prefacturaId: v.prefacturaId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: 0
-                }
-            };
-            if (this.checked) {
-                data.prefactura.sel = 1;
+    if (data != null) {
+        dt.fnAddData(data);
+        data.forEach(function (v) {
+            var field = "#chk" + v.prefacturaId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
             }
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
+            $(field).change(function () {
+                var quantity = 0;
+                var data = {
+                    prefactura: {
+                        prefacturaId: v.prefacturaId,
+                        empresaId: v.empresaId,
+                        clienteId: v.clienteId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: 0
+                    }
+                };
+                if (this.checked) {
+                    data.prefactura.sel = 1;
                 }
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
             });
         });
-    });
+    }
+    dt.fnDraw();
+
 }
 
 function buscarPrefacturas() {
     var mf = function () {
+        // antes comprobamos si han borrado el campo cliente
+        if ($("#txtCliente").val() == "") vm.sclienteId(0);
         if (!datosOK()) return;
         var url = myconfig.apiUrl + "/api/prefacturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
-        if (vm.sarticuloId()) url += "/" + vm.sarticuloId(); else url += "/0"
-        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"   
+        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
         $.ajax({
             type: "GET",
             url: url,
@@ -284,8 +280,7 @@ function crearPrefactura() {
         var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL";
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
-        if (vm.sarticuloId()) url += "/" + vm.sarticuloId(); else url += "/0"
-        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"                
+        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
         $.ajax({
             type: "POST",
             url: url,
@@ -456,23 +451,6 @@ function loadClientes(id) {
     });
 }
 
-function loadArticulos(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/articulos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
-            vm.posiblesArticulos(articulos);
-            $("#cmbArticulos").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
 
 
 function loadAgentes(id) {

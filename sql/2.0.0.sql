@@ -96,3 +96,6 @@ CREATE TABLE `facturas_bases` (
 ) ENGINE=INNODB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE `facturas` ADD COLUMN `nombreFicheroCont` 
+  VARCHAR(255) NULL COMMENT 'Nombre del fichero de exportación a contabilidad' AFTER `contratoId`; 
