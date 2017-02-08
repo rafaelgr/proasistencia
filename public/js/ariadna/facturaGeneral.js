@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+prefacturaGeneral.js
+Funciones js par la página PrefacturaGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,8 +8,8 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facturaId;
+var dataPrefacturas;
+var prefacturaId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -23,41 +23,89 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(crearFactura());
+    $('#btnBuscar').click(buscarPrefacturas());
+    $('#btnAlta').click(crearPrefactura());
     $('#frmBuscar').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
-    //        buscarFacturas();
+    //        buscarPrefacturas();
     //});
     //
-    initTablaFacturas();
+    initTablaPrefacturas();
     // comprobamos parámetros
-    facturaId = gup('FacturaId');
-    if (facturaId !== '') {
+    prefacturaId = gup('PrefacturaId');
+    if (prefacturaId !== '') {
 
         // Si nos pasan una prefafctura determinada esa es
         // la que mostramos en el grid
-        cargarFacturas()(facturaId);
+        cargarPrefacturas()(prefacturaId);
 
     } else {
 
         // Por defecto ahora a la entrada se van a cargar todas 
         // las facturas que tengamos en el sistema. En un futuro este
         // criterio puede cambiar y habrá que adaptarlo.
-        cargarFacturas()();
+        cargarPrefacturas()();
     }
+
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarPrefacturas2All();
+        } else {
+            cargarPrefacturas2();
+        }
+    })
 }
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaPrefacturas() {
+    tablaPrefacturas = $('#dt_prefactura').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Prefacturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -86,37 +134,62 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataPrefacturas,
         columns: [{
+            data: "facturaId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
-                data: "receptorNombre"
-            },{
-                data: "vNum"
-            }, {
-                data: "fecha",
-                render: function (data, type, row) {
-                    return moment(data).format('DD/MM/YYYY');
-                }
-            }, {
-                data: "total"
-            }, {
-                data: "totalConIva"
-            }, {
-                data: "formaPago"
-            }, {
-                data: "observaciones"
-            }, {
-                data: "facturaId",
-                render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
-                    return html;
-                }
-            }]
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "vFac"
+        }, {
+            data: "vFPago"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "prefacturaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
     });
+
+    // Apply the filter
+    $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {
+        tablaPrefacturas
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    // Hide some columns by default
+    tablaPrefacturas.columns(8).visible(false);
+    tablaPrefacturas.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -138,8 +211,8 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaPrefacturas(data) {
+    var dt = $('#dt_prefactura').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -148,22 +221,22 @@ function loadTablaFacturas(data) {
     dt.fnDraw();
 }
 
-function buscarFacturas() {
+function buscarPrefacturas() {
     var mf = function () {
-        cargarFacturas()();
+        cargarPrefacturas()();
     };
     return mf;
 }
 
-function crearFactura() {
+function crearPrefactura() {
     var mf = function () {
-        var url = "FacturaDetalle.html?FacturaId=0";
-        window.open(url, '_self');
+        var url = "PrefacturaDetalle.html?PrefacturaId=0";
+        window.open(url, '_new');
     };
     return mf;
 }
 
-function deleteFactura(id) {
+function deletePrefactura(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -173,19 +246,19 @@ function deleteFactura(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facturaId: id
+                prefacturaId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
+                url: myconfig.apiUrl + "/api/prefacturas/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacturas();
+                    var fn = buscarPrefacturas();
                     fn();
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -197,30 +270,30 @@ function deleteFactura(id) {
     });
 }
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de factura
+function editPrefactura(id) {
+    // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
-    window.open(url, '_self');
+    var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    window.open(url, '_new');
 }
 
-function cargarFacturas() {
+function cargarPrefacturas() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: prefacturaId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                url: myconfig.apiUrl + "/api/prefacturas/" + prefacturaId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaPrefacturas(data);
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -228,14 +301,14 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas",
+                url: myconfig.apiUrl + "/api/prefacturas",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaPrefacturas(data);
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -245,19 +318,19 @@ function cargarFacturas() {
     return mf;
 }
 
-function printFactura(id) {
+function printPrefactura(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/prefacturas/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
             informePDF(data);
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -272,7 +345,7 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
-var f_open_post = function(verb, url, data, target) {
+var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
     form.method = verb;
@@ -292,3 +365,35 @@ var f_open_post = function(verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function cargarPrefacturas2() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/prefacturas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function cargarPrefacturas2All() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/prefacturas/all",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaPrefacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
