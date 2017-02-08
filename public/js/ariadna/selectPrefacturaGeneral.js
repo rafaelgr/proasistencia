@@ -140,6 +140,8 @@ function initTablaPrefacturas() {
         }, {
             data: "receptorNombre"
         }, {
+            data: "agente"
+        }, {
             data: "vNum"
         }, {
             data: "fecha",
