@@ -549,7 +549,7 @@ CREATE TABLE `contratos` (
   CONSTRAINT `cnt_oferta` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas` (`ofertaId`) ON DELETE NO ACTION,
   CONSTRAINT `cnt_tipoMantenimiento` FOREIGN KEY (`tipoContratoId`) REFERENCES `tipos_mantenimiento` (`tipoMantenimientoId`),
   CONSTRAINT `cnt_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `contratos_bases` */
 
@@ -738,7 +738,7 @@ CREATE TABLE `facturas` (
   CONSTRAINT `fac_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `fac_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`),
   CONSTRAINT `fac_tipoProyecto` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `facturas_bases` */
 
@@ -756,7 +756,7 @@ CREATE TABLE `facturas_bases` (
   KEY `factb_tipos_iva` (`tipoIvaId`),
   CONSTRAINT `factb_facturas` FOREIGN KEY (`facturaId`) REFERENCES `facturas` (`facturaId`) ON DELETE CASCADE,
   CONSTRAINT `factb_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=291 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=292 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `facturas_lineas` */
 
@@ -787,7 +787,7 @@ CREATE TABLE `facturas_lineas` (
   CONSTRAINT `factl_facturas` FOREIGN KEY (`facturaId`) REFERENCES `facturas` (`facturaId`) ON DELETE CASCADE,
   CONSTRAINT `factl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`),
   CONSTRAINT `factl_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades` (`unidadId`)
-) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `formas_pago` */
 
@@ -1050,7 +1050,7 @@ CREATE TABLE `prefacturas` (
   CONSTRAINT `pref_empresas` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `pref_facturas` FOREIGN KEY (`facturaId`) REFERENCES `facturas` (`facturaId`),
   CONSTRAINT `pref_formas_pago` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `prefacturas_bases` */
 
@@ -1068,7 +1068,7 @@ CREATE TABLE `prefacturas_bases` (
   KEY `prefb_tipos_iva` (`tipoIvaId`),
   CONSTRAINT `prefb_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefb_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `prefacturas_lineas` */
 
@@ -1099,7 +1099,7 @@ CREATE TABLE `prefacturas_lineas` (
   CONSTRAINT `prefl_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas` (`prefacturaId`) ON DELETE CASCADE,
   CONSTRAINT `prefl_tipos_iva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva` (`tipoIvaId`),
   CONSTRAINT `prefl_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades` (`unidadId`)
-) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `textos_predeterminados` */
 
