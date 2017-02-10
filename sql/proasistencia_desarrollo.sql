@@ -839,14 +839,17 @@ CREATE TABLE `liquidacion_comercial` (
   `porComer` decimal(5,2) DEFAULT NULL,
   `base` decimal(12,2) DEFAULT NULL,
   `comision` decimal(12,2) DEFAULT NULL,
+  `contratoId` int(11) DEFAULT NULL,
   PRIMARY KEY (`liquidacionComercialId`),
   KEY `liq_comer_factura` (`facturaId`),
   KEY `liq_comer_comercial` (`comercialId`),
   KEY `liq_comer_contrato` (`contratoClienteMantenimientoId`),
+  KEY `liq_comer_contratos` (`contratoId`),
   CONSTRAINT `liq_comer_comercial` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`),
   CONSTRAINT `liq_comer_contrato` FOREIGN KEY (`contratoClienteMantenimientoId`) REFERENCES `contrato_cliente_mantenimiento` (`contratoClienteMantenimientoId`),
+  CONSTRAINT `liq_comer_contratos` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
   CONSTRAINT `liq_comer_factura` FOREIGN KEY (`facturaId`) REFERENCES `facturas` (`facturaId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `mantenedores` */
 
