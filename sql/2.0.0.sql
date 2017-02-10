@@ -106,4 +106,9 @@ ALTER TABLE `facturas`
 
 ALTER TABLE `facturas`   
   CHANGE `nombreFicheroCont` `contafich` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NULL COMMENT 'Nombre del fichero de exportación a contabilidad';
+
+ALTER TABLE `liquidacion_comercial`   
+  ADD COLUMN `contratoId` INT(11) NULL AFTER `comision`,
+  ADD CONSTRAINT `liq_comer_contratos` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`);
+
   
