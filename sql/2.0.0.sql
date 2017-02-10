@@ -99,3 +99,11 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 ALTER TABLE `facturas` ADD COLUMN `nombreFicheroCont` 
   VARCHAR(255) NULL COMMENT 'Nombre del fichero de exportación a contabilidad' AFTER `contratoId`; 
+
+ALTER TABLE `facturas`   
+  ADD COLUMN `prefacturaId` INT(11) NULL AFTER `nombreFicheroCont`,
+  ADD CONSTRAINT `fac_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas`(`prefacturaId`);
+
+ALTER TABLE `facturas`   
+  CHANGE `nombreFicheroCont` `contafich` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NULL COMMENT 'Nombre del fichero de exportación a contabilidad';
+  

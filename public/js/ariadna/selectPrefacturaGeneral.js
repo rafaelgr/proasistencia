@@ -70,6 +70,7 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    self.fechaFactura = ko.observable();
     //
     self.sclienteId = ko.observable();
     //
@@ -279,27 +280,17 @@ function buscarPrefacturas() {
 function crearPrefactura() {
     var mf = function () {
         if (!datosOK()) return;
-        var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/NULL";
-        if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
-        if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
-        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // borramos datos
-                $("#btnAlta").hide();
-                mensNormal('Facturas dadas de alta correctamente');
-                vm.desdeFecha(null);
-                vm.hastaFecha(null);
-                loadTablaPrefacturas(null);
-            },
-            error: function (err) {
-                mensErrorAjax(err); 
-                // si hay algo más que hacer lo haremos aquí.
-            }
+        var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura());
+        if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0";
+        if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0";
+        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0";
+        llamadaAjax("POST", url, null, function (err, data) {
+            if (err) return;
+            $("#btnAlta").hide();
+            mensNormal('Facturas dadas de alta correctamente');
+            vm.desdeFecha(null);
+            vm.hastaFecha(null);
+            loadTablaPrefacturas(null);
         });
     };
     return mf;
