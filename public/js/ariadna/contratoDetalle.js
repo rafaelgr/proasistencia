@@ -14,6 +14,8 @@ var dataContratosLineas;
 var dataBases;
 var dataComisionistas;
 var dataGenerarPrefacturas;
+var dataPrefacturas;
+var dataFacturas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -121,6 +123,9 @@ function initForm() {
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
 
+    initTablaPrefacturas();
+    initTablaFacturas();
+
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
     $("#cmbComerciales").select2().on('change', function (e) {
@@ -143,6 +148,8 @@ function initForm() {
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
             loadComisionistas(data.contratoId);
+            loadPrefacturasDelContrato(data.contratoId);
+            loadFacturasDelContrato(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -2000,4 +2007,306 @@ var reglasDeValidacionAdicionales = function () {
         var fechaFinal = new Date(spanishDbDate(vm.fechaFinal()));
         return (fechaFinal >= fechaInicial);
     }, "La fecha final debe ser superior a la inicial");
+}
+
+// --------------- Solapa de prefacturas
+function initTablaPrefacturas() {
+    tablaPrefacturas = $('#dt_prefactura').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Prefacturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataPrefacturas,
+        columns: [{
+            data: "facturaId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "referencia"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "vFac"
+        }, {
+            data: "vFPago"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "prefacturaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {
+        tablaPrefacturas
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    // Hide some columns by default
+    tablaPrefacturas.columns(8).visible(false);
+    tablaPrefacturas.columns(10).visible(false);
+}
+
+function loadPrefacturasDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaPrefacturas(data);
+    });
+}
+
+function loadTablaPrefacturas(data) {
+    var dt = $('#dt_prefactura').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+//---- Solapa facturas
+function initTablaFacturas() {
+    tablaFacturas = $('#dt_factura').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFacturas,
+        columns: [{
+            data: "facturaId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "referencia"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "vFac"
+        }, {
+            data: "vFPago"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "facturaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_factura thead th input[type=text]").on('keyup change', function () {
+        tablaFacturas
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    // Hide some columns by default
+    tablaFacturas.columns(8).visible(false);
+    tablaFacturas.columns(10).visible(false);
+}
+
+function loadFacturasDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaFacturas(data);
+    });
+}
+
+function loadTablaFacturas(data) {
+    var dt = $('#dt_factura').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
 }

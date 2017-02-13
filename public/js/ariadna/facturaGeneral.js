@@ -49,10 +49,58 @@ function initForm() {
         // criterio puede cambiar y habrá que adaptarlo.
         cargarFacturas()();
     }
+
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarFacturas2All();
+        } else {
+            cargarFacturas2();
+        }
+    })
 }
 
 function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+    tablaFacturas = $('#dt_factura').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -88,35 +136,60 @@ function initTablaFacturas() {
         },
         data: dataFacturas,
         columns: [{
+            data: "facturaId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
-                data: "receptorNombre"
-            },{
-                data: "vNum"
-            }, {
-                data: "fecha",
-                render: function (data, type, row) {
-                    return moment(data).format('DD/MM/YYYY');
-                }
-            }, {
-                data: "total"
-            }, {
-                data: "totalConIva"
-            }, {
-                data: "formaPago"
-            }, {
-                data: "observaciones"
-            }, {
-                data: "facturaId",
-                render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
-                    return html;
-                }
-            }]
+            data: "receptorNombre"
+        }, {
+            data: "vNum"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        }, {
+            data: "vFac"
+        }, {
+            data: "vFPago"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "facturaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
     });
+
+    // Apply the filter
+    $("#dt_factura thead th input[type=text]").on('keyup change', function () {
+        tablaFacturas
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    // Hide some columns by default
+    tablaFacturas.columns(8).visible(false);
+    tablaFacturas.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -158,7 +231,7 @@ function buscarFacturas() {
 function crearFactura() {
     var mf = function () {
         var url = "FacturaDetalle.html?FacturaId=0";
-        window.open(url, '_self');
+        window.open(url, '_new');
     };
     return mf;
 }
@@ -185,7 +258,7 @@ function deleteFactura(id) {
                     var fn = buscarFacturas();
                     fn();
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -201,7 +274,7 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaDetalle.html?FacturaId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_new');
 }
 
 function cargarFacturas() {
@@ -220,7 +293,7 @@ function cargarFacturas() {
                 success: function (data, status) {
                     loadTablaFacturas(data);
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -235,7 +308,7 @@ function cargarFacturas() {
                 success: function (data, status) {
                     loadTablaFacturas(data);
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -254,10 +327,10 @@ function printFactura(id) {
         success: function (data, status) {
             informePDF(data);
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -272,7 +345,7 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
-var f_open_post = function(verb, url, data, target) {
+var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
     form.method = verb;
@@ -292,3 +365,35 @@ var f_open_post = function(verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function cargarFacturas2() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/facturas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaFacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function cargarFacturas2All() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/facturas/all",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaFacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}

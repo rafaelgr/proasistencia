@@ -430,10 +430,10 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Unidad obra (Contrato)</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
-                                                    </label>
+                                                    <label class="label">Fecha factura (Solo no generadas)</label>
+                                                    <label class="input">
+                                                        <input id="txtFechaFactura" name="txtFechaFactura" data-bind="value: fechaFactura" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>                                                    
                                                 </section>
                                                 <section class="col col-md-6">
                                                     <label class="label">Tipo de contrato</label>
@@ -468,6 +468,9 @@
                                                     <th data-hide="phone">
                                                         Receptor
                                                     </th>
+                                                    <th data-hide="phone">
+                                                        Agente
+                                                    </th>                                                    
                                                     <th data-hide="phone">
                                                         Numero
                                                     </th>
