@@ -134,6 +134,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.clienteId(0);
+        vm.activa(1);
         // escondemos el grid de colaboradores asociados
         $("#wid-id-2").hide();
         // contador de código
@@ -1002,7 +1003,7 @@ function cambioCodigo(data) {
         contentType: "application/json",
         success: function (data, status) {
             // cuando cambia el código cambiamos la cuenta contable
-            if (data) {
+            if (data && empId != 0) {
                 vm.nombreComercial(data.nombre);
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
