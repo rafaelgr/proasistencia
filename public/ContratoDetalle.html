@@ -574,6 +574,9 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
+                                                                                <button id="btnRenovarContratos" title="Renovar contrato" data-toggle="modal" data-target="#modalRenovarContratos" onclick="prepararRenovacion()" class="btn btn-primary btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-repeat"></i>
+                                                                                </button>
                                                                                 <button id="btnGenerarPrefacturas" title="Generar prefacturas" data-toggle="modal" data-target="#modalGenerarPrefacturas" onclick="generarPrefacturas()" class="btn btn-primary btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-stack-exchange"></i>
                                                                                 </button>
@@ -1173,7 +1176,7 @@
                     <h4 class="modal-title"> GENERAR PREFACTURAS</h4>
                 </div>
                 <div class="modal-body no-padding">
-                    <form id="generar-prefacturas-form" class="smart-form">
+                    <form id="renovarContratos-form" class="smart-form">
                         <fieldset>
                             <section>
                                 <div class="row">
@@ -1272,6 +1275,59 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> RENOVAR CONTRATO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmRenovarContratos" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <div class="form-group">
+                                            <label class="label">Fecha nuevo contrato</label>
+                                            <label class="input">
+                                                <input id="txtNFechaNuevoContrato" type="text" name="txtNFechaNuevoContrato" data-bind="value: nuevaFechaContrato" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>                                
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Inicial (Nuevo contrato)</label>
+                                        <label class="input">
+                                            <input id="txtNFechaInicio" name="txtNFechaInicio" data-bind="value: nuevaFechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Final (Nuevo contrato)</label>
+                                        <label class="input">
+                                            <input id="txtNFechaFinal" name="txtNFechaFinal" data-bind="value: nuevaFechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarNuevoContrato" class="btn btn-primary" onclick="aceptarNuevoContrato()">
+                                RENOVAR
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>    
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

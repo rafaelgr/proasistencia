@@ -48,6 +48,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmRenovarContratos").submit(function () {
+        return false;
+    });
+
     $("#frmLinea").submit(function () {
         return false;
     });
@@ -173,6 +177,9 @@ var mostrarMensajeEnFuncionDeCmd = function (cmd) {
         case 'GEN':
             mens = "Este contrato ha sido generado desde una oferta. Compruebe que sus datos y colaboradores asociados son correctos";
             break;
+        case 'REN':
+            mens = "Este contrato es una renovación de un contrato anterio. Repase que las condiciones del mismo son correctas para este periodo";
+            break;            
         default:
             mens = null;
             break;
@@ -310,7 +317,11 @@ function admData() {
     self.porcentajeComision = ko.observable();
     //
     self.prefacturasAGenerar = ko.observableArray([]);
-
+    // modal de renovación del contrato
+    self.nuevaFechaInicio = ko.observable();
+    self.nuevaFechaFinal = ko.observable();
+    self.nuevaFechaContrato = ko.observable();
+    self.nuevaFacturaParcial = ko.observable();
 }
 
 function loadData(data) {
@@ -2156,7 +2167,7 @@ function loadTablaPrefacturas(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data != null) dt.fnAddData(data);
     dt.fnDraw();
 }
 
@@ -2307,6 +2318,74 @@ function loadTablaFacturas(data) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data != null) dt.fnAddData(data);
     dt.fnDraw();
+}
+
+// -- Modal renovacion del contrato
+
+var prepararRenovacion = function(){
+    proponerFechasRenovacion();
+};
+
+
+var proponerFechasRenovacion = function () {
+    var _fechaInicio = moment(vm.fechaInicio(), 'DD/MM/YYYY');
+    var _fechaFinal = moment(vm.fechaFinal(), 'DD/MM/YYYY');
+    var _diasDiferencia = _fechaFinal.diff(_fechaInicio, 'days');
+
+    //var _nuevaFechaInicio = _fechaFinal;
+    //var _nuevaFechaFinal = _nuevaFechaInicio.add(_diasDiferencia, 'days');
+
+    vm.nuevaFechaInicio(_fechaFinal.format('DD/MM/YYYY'));
+    vm.nuevaFechaFinal(_fechaFinal.add(_diasDiferencia, 'days').format('DD/MM/YYYY'));
+    vm.nuevaFechaContrato(moment(new Date()).format('DD/MM/YYYY'));
+
+}
+
+var aceptarNuevoContrato = function () {
+    if (!nuevoContratoOK()) return;
+    var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
+    url += "/" + spanishDbDate(vm.nuevaFechaInicio());
+    url += "/" + spanishDbDate(vm.nuevaFechaFinal());
+    url += "/" + spanishDbDate(vm.nuevaFechaContrato());
+    llamadaAjax("POST", url, null, function(err,data){
+        if (err) return;
+        window.open("ContratoDetalle.html?ContratoId="+ data + "&CMD=REN", '_new');
+    })
+};
+
+var nuevoContratoOK = function(){
+        $('#frmRenovarContratos').validate({
+        rules: {
+            txtNFechaInicio: {
+                required: true
+            },
+            txtNFechaFinal: {
+                required: true,
+                fechaFinalSuperiorAInicial: true
+            },
+            txtNFechaNuevoContrato: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNFechaInicio: {
+                number: "Debe elegir una fecha"
+            },
+            txtNFechaFinal: {
+                required: "Debe elegir una fecha"
+            },
+            txtNFechaNuevoContrato: {
+                required: "Debe elegir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmRenovarContratos").validate().settings;
+    return $('#frmRenovarContratos').valid();
 }
