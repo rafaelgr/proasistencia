@@ -65,6 +65,9 @@ function initForm() {
     $("#comisionista-form").submit(function () {
         return false;
     });
+    $("#renovarContratos-form").submit(function () {
+        return false;
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -179,7 +182,7 @@ var mostrarMensajeEnFuncionDeCmd = function (cmd) {
             break;
         case 'REN':
             mens = "Este contrato es una renovación de un contrato anterio. Repase que las condiciones del mismo son correctas para este periodo";
-            break;            
+            break;
         default:
             mens = null;
             break;
@@ -418,7 +421,6 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmContrato").validate().settings;
     return $('#frmContrato').valid();
 }
 
@@ -491,7 +493,10 @@ var guardarContrato = function (done) {
 function loadEmpresas(id) {
     llamadaAjax('GET', "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{
+            empresaId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
@@ -501,7 +506,10 @@ function loadEmpresas(id) {
 function loadTiposContrato(id) {
     llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
         if (err) return;
-        var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+        var tipos = [{
+            tipoMantenimientoId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesTiposContrato(tipos);
         $("#cmbTiposContrato").val([id]).trigger('change');
     });
@@ -510,7 +518,10 @@ function loadTiposContrato(id) {
 function loadTipoProyecto(id) {
     llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
         if (err) return;
-        var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
+        var tipos = [{
+            tipoProyectoId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesTipoProyecto(tipos);
         $("#cmbTipoProyecto").val([id]).trigger('change');
     });
@@ -519,7 +530,11 @@ function loadTipoProyecto(id) {
 function loadTextosPredeterminados(id) {
     llamadaAjax('GET', "/api/textos_predeterminados", null, function (err, data) {
         if (err) return;
-        var textos = [{ textoPredeterminadoId: 0, texto: "", abrev: "" }].concat(data);
+        var textos = [{
+            textoPredeterminadoId: 0,
+            texto: "",
+            abrev: ""
+        }].concat(data);
         vm.posiblesTextosPredeterminados(textos);
         $("#cmbTextPredeterminados").val([id]).trigger('change');
     });
@@ -528,7 +543,10 @@ function loadTextosPredeterminados(id) {
 function loadFormasPago(id) {
     llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
         if (err) return;
-        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        var formasPago = [{
+            formaPagoId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesFormasPago(formasPago);
         $("#cmbFormasPago").val([id]).trigger('change');
     });
@@ -539,16 +557,23 @@ function loadContratos(id) {
         // caso de un contrato en concreto
         llamadaAjax('GET', "/api/contratos_cliente_mantenimiento/" + id, null, function (err, data) {
             if (err) return;
-            var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
+            var contratos = [{
+                contratoId: 0,
+                referencia: ""
+            }].concat(data);
             vm.posiblesContratos(contratos);
             $("#cmbContratos").val([id]).trigger('change');
         });
     } else {
         // caso cargar contratos de empreas / cliente
         llamadaAjax('GET',
-            "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(), null, function (err, data) {
+            "/api/contratos_cliente_mantenimiento/empresa_cliente/" + vm.sempresaId() + "/" + vm.sclienteId(), null,
+            function (err, data) {
                 if (err) return;
-                var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
+                var contratos = [{
+                    contratoId: 0,
+                    referencia: ""
+                }].concat(data);
                 vm.posiblesContratos(contratos);
                 $("#cmbContratos").val([id]).trigger('change');
             });
@@ -777,9 +802,13 @@ function initTablaContratosLineas() {
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
             var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
+            var rows = api.rows({
+                page: 'current'
+            }).nodes();
             var last = null;
-            api.column(1, { page: 'current' }).data().each(function (group, i) {
+            api.column(1, {
+                page: 'current'
+            }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
                         '<tr class="group"><td colspan="8">' + group + '</td></tr>'
@@ -905,7 +934,10 @@ function loadLineasContrato(id) {
 function loadArticulos(id) {
     llamadaAjax('GET', "/api/articulos", null, function (err, data) {
         if (err) return;
-        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        var articulos = [{
+            articuloId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
@@ -918,7 +950,10 @@ function loadArticulos(id) {
 function loadGrupoArticulos(id) {
     llamadaAjax('GET', "/api/grupo_articulo", null, function (err, data) {
         if (err) return;
-        var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+        var grupos = [{
+            grupoArticuloId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
             $("#cmbGrupoArticulos").val([id]).trigger('change');
@@ -931,7 +966,11 @@ function loadGrupoArticulos(id) {
 function loadUnidades(id) {
     llamadaAjax('GET', "/api/unidades", null, function (err, data) {
         if (err) return;
-        var unidades = [{ unidadId: 0, nombre: "  ", abrev: "  " }].concat(data);
+        var unidades = [{
+            unidadId: 0,
+            nombre: "  ",
+            abrev: "  "
+        }].concat(data);
         vm.posiblesUnidades(unidades);
         if (id) {
             $("#cmbUnidades").val([id]).trigger('change');
@@ -945,7 +984,10 @@ function loadUnidades(id) {
 function loadTiposIva(id) {
     llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        var tiposIva = [{
+            tipoIvaId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesTiposIva(tiposIva);
         if (id) {
             $("#cmbTiposIva").val([id]).trigger('change');
@@ -1007,7 +1049,10 @@ var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
 var cargarArticulosRelacionadosDeUnGrupo = function (grupoArticuloId) {
     llamadaAjax('GET', "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         if (err) return;
-        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        var articulos = [{
+            articuloId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesArticulos(articulos);
     });
 }
@@ -1337,7 +1382,8 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 var actualizarLineasDeLaContratoTrasCambioCostes = function () {
     llamadaAjax('PUT',
         "/api/contratos/recalculo/" + vm.contratoId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
-        null, function (err, data) {
+        null,
+        function (err, data) {
             if (err) return;
             recargaLineasBases();
         });
@@ -1430,7 +1476,9 @@ var apiReport = function (verb, url, data) {
         },
         error: function (err) {
             //mensErrorAjax(err);
-            var file = new Blob([err.responseText], { type: 'application/pdf' });
+            var file = new Blob([err.responseText], {
+                type: 'application/pdf'
+            });
             var fileURL = URL.createObjectURL(file);
             //var base64EncodedPDF = window.btoa(err.responseText);
             window.open("data:application/pdf " + err.responseText);
@@ -1545,9 +1593,10 @@ function initTablaComisionistas() {
             }
         },
         data: dataComisionistas,
-        columnDefs: [
-            { "width": "20%", "targets": 2 }
-        ],
+        columnDefs: [{
+            "width": "20%",
+            "targets": 2
+        }],
         columns: [{
             data: "colaborador"
         }, {
@@ -1641,7 +1690,10 @@ function loadComisionistas(id) {
 function loadComerciales(id) {
     llamadaAjax('GET', "/api/comerciales/comerciales_activos", null, function (err, data) {
         if (err) return;
-        var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+        var comerciales = [{
+            comercialId: 0,
+            nombre: ""
+        }].concat(data);
         vm.posiblesComerciales(comerciales);
         $("#cmbComerciales").val([id]).trigger('change');
     });
@@ -1666,14 +1718,34 @@ function cambioComercial(data) {
  -----------------------------------------------------------*/
 
 var loadPeriodosPagos = function (periodoPagoId) {
-    var periodosPagos = [
-        { periodoPagoId: 0, nombre: "" },
-        { periodoPagoId: 1, nombre: "Anual" },
-        { periodoPagoId: 2, nombre: "Semestral" },
-        { periodoPagoId: 5, nombre: "Quatrimestral" },
-        { periodoPagoId: 3, nombre: "Trimestral" },
-        { periodoPagoId: 4, nombre: "Mensual" },
-        { periodoPagoId: 6, nombre: "Puntual" }
+    var periodosPagos = [{
+            periodoPagoId: 0,
+            nombre: ""
+        },
+        {
+            periodoPagoId: 1,
+            nombre: "Anual"
+        },
+        {
+            periodoPagoId: 2,
+            nombre: "Semestral"
+        },
+        {
+            periodoPagoId: 5,
+            nombre: "Quatrimestral"
+        },
+        {
+            periodoPagoId: 3,
+            nombre: "Trimestral"
+        },
+        {
+            periodoPagoId: 4,
+            nombre: "Mensual"
+        },
+        {
+            periodoPagoId: 6,
+            nombre: "Puntual"
+        }
     ];
     vm.posiblesPeriodosPagos(periodosPagos);
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
@@ -1775,6 +1847,7 @@ var aceptarGenerarPrefacturas = function () {
             if (err) return;
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
         });
     });
 }
@@ -1816,7 +1889,7 @@ var generarPrefacturasOK = function () {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#generar-prefacturas-form").validate().settings;
+    // var opciones = $("#generar-prefacturas-form").validate().settings;
     return $('#generar-prefacturas-form').valid();
 }
 
@@ -1945,9 +2018,10 @@ function initTablaGenerarPrefacturas() {
             }
         },
         data: dataGenerarPrefacturas,
-        columnDefs: [
-            { "width": "20%", "targets": [2, 3] }
-        ],
+        columnDefs: [{
+            "width": "20%",
+            "targets": [2, 3]
+        }],
         columns: [{
             data: "fecha"
         }, {
@@ -2025,40 +2099,54 @@ function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
-            "aButtons": [
-                {
+            "aButtons": [{
                     "sExtends": "pdf",
                     "sTitle": "Prefacturas Seleccionadas",
                     "sPdfMessage": "proasistencia PDF Export",
                     "sPdfSize": "A4",
                     "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "copy",
                     "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "csv",
                     "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "xls",
                     "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "print",
                     "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
@@ -2176,40 +2264,54 @@ function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
-            "aButtons": [
-                {
+            "aButtons": [{
                     "sExtends": "pdf",
                     "sTitle": "Facturas Seleccionadas",
                     "sPdfMessage": "proasistencia PDF Export",
                     "sPdfSize": "A4",
                     "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "copy",
                     "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "csv",
                     "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "xls",
                     "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "print",
                     "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
@@ -2324,7 +2426,7 @@ function loadTablaFacturas(data) {
 
 // -- Modal renovacion del contrato
 
-var prepararRenovacion = function(){
+var prepararRenovacion = function () {
     proponerFechasRenovacion();
 };
 
@@ -2349,14 +2451,14 @@ var aceptarNuevoContrato = function () {
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
     url += "/" + spanishDbDate(vm.nuevaFechaContrato());
-    llamadaAjax("POST", url, null, function(err,data){
+    llamadaAjax("POST", url, null, function (err, data) {
         if (err) return;
-        window.open("ContratoDetalle.html?ContratoId="+ data + "&CMD=REN", '_new');
+        window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
     })
 };
 
-var nuevoContratoOK = function(){
-        $('#frmRenovarContratos').validate({
+var nuevoContratoOK = function () {
+    $('#frmRenovarContratos').validate({
         rules: {
             txtNFechaInicio: {
                 required: true

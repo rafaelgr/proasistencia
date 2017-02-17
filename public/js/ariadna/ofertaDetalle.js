@@ -1369,6 +1369,7 @@ var generarContratoAPI = function () {
         fechaInicio: spanishDbDate(vm.fechaInicio()),
         fechaFinal: spanishDbDate(vm.fechaFinal()),
         fechaOriginal: spanishDbDate(vm.fechaOriginal()),
+        fechaPrimeraFactura: spanishDbDate(vm.fechaPrimeraFactura()),
         preaviso: vm.preaviso(),
         facturaParcial: vm.facturaParcial()
     }
