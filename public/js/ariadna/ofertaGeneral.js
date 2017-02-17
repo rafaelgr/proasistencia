@@ -32,17 +32,17 @@ function initForm() {
 
     ofertaId = gup('OfertaId');
     if (ofertaId !== '') {
-        cargarOfertas()(ofertaId);
+        cargarOfertas(ofertaId);
 
     } else {
-        cargarOfertas()();
+        cargarOfertasNoAceptadas();
     }
 
     $('#chkAceptadas').change(function () {
         if (this.checked) {
-            // pendiente 
+            cargarOfertas();
         } else {
-            // 
+            cargarOfertasNoAceptadas();
         }
     })
 }
@@ -51,40 +51,54 @@ function initTablaOfertas() {
     tablaOfertas = $('#dt_oferta').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
-            "aButtons": [
-                {
+            "aButtons": [{
                     "sExtends": "pdf",
                     "sTitle": "Ofertas Seleccionadas",
                     "sPdfMessage": "proasistencia PDF Export",
                     "sPdfSize": "A4",
                     "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "copy",
                     "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "csv",
                     "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "xls",
                     "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 },
                 {
                     "sExtends": "print",
                     "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                    "oSelectorOpts": {
+                        filter: 'applied',
+                        order: 'current'
+                    }
                 }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
@@ -207,7 +221,7 @@ function loadTablaOfertas(data) {
 
 function buscarOfertas() {
     var mf = function () {
-        cargarOfertas()();
+        cargarOfertas();
     };
     return mf;
 }
@@ -259,45 +273,24 @@ function editOferta(id) {
     window.open(url, '_new');
 }
 
-function cargarOfertas() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: ofertaId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/ofertas/" + ofertaId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaOfertas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/ofertas",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaOfertas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+var cargarOfertas = function (id) {
+    var url = myconfig.apiUrl + "/api/ofertas";
+    if (id) {
+        var data = {
+            id: ofertaId
         }
+        url = myconfig.apiUrl + "/api/ofertas/" + ofertaId
     };
-    return mf;
+    llamadaAjax("GET", url, null, function (err, data) {
+        loadTablaOfertas(data);
+    });
+}
+
+var cargarOfertasNoAceptadas = function (id) {
+    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas";
+    llamadaAjax("GET", url, null, function (err, data) {
+        loadTablaOfertas(data);
+    });
 }
 
 function printOferta(id) {
