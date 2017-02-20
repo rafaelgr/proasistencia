@@ -166,7 +166,7 @@ function buscarComerciales() {
         var aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
         var url = myconfig.apiUrl + "/api/comerciales/activos/?nombre=" + aBuscar;
-        if ($('#chkTodos').checked){
+        if (document.getElementById('chkTodos').checked){
             url = myconfig.apiUrl + "/api/comerciales/?nombre=" + aBuscar;
         }
         $.ajax({
