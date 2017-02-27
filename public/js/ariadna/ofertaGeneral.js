@@ -51,55 +51,55 @@ function initTablaOfertas() {
     tablaOfertas = $('#dt_oferta').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
             "aButtons": [{
-                    "sExtends": "pdf",
-                    "sTitle": "Ofertas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
+                "sExtends": "pdf",
+                "sTitle": "Ofertas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
                 }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Ofertas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
@@ -311,13 +311,17 @@ function printOferta(id) {
 
 function informePDF(data) {
     var shortid = "rySBxKzIe";
-    var data = {
+    var infData = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
+        if (err) return;
+        if (empresa.infOfertas) infData.template.shortid = empresa.infOfertas;
+        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
+    });
 }
 
 var f_open_post = function (verb, url, data, target) {

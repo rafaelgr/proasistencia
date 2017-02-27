@@ -11864,6 +11864,8 @@ CREATE TABLE `empresas` (
   `seriePre` varchar(255) DEFAULT NULL,
   `serieFac` varchar(255) DEFAULT NULL,
   `serieFacS` varchar(255) DEFAULT NULL,
+  `infOfertas` varchar(255) DEFAULT NULL,
+  `infFacturas` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`empresaId`),
   KEY `ref_empresa_via` (`tipoViaId`),
   CONSTRAINT `ref_empresa_via` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via` (`tipoViaId`)
@@ -11871,10 +11873,10 @@ CREATE TABLE `empresas` (
 
 /*Data for the table `empresas` */
 
-insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`,`contabilidad`,`tipoViaId`,`seriePre`,`serieFac`,`serieFacS`) values 
-(2,'1','PROASISTENCIA, S.L.','B81323180','2001-03-30 00:00:00',NULL,1,NULL,NULL,'CAMINO DE REJAS, 1  OFICINA 1L','28820','COSLADA','MADRID',NULL,NULL,NULL,'PROASISTENCIA@PROASISTENCIA.ES',NULL,'0067698S','ROMÁN ALONSO GARCÍA','ariconta11',1,'PF','PM','PS'),
-(3,'4','FONDOGAR S.L.','B81002057','2011-01-01 00:00:00',NULL,1,NULL,NULL,'RAMON Y CAJAL, 37','28470','CERCEDILLA','MADRID','910611596',NULL,NULL,'reparaciones@fondogar.es','gestion@fondogar.es (correo seguros mutua propietarios)\nAGENTE DE SEGUROS MUTUA DE PROPIETARIOS\nFACTURACIÓN DE PROYECTOS Y OBRAS','70025204W','MARIA ADELA ALONSO GARCIA','ariconta12',2,'M','M','S'),
-(4,'2','ROMÁN ALONSO GARCÍA','00676698S','2001-10-10 00:00:00',NULL,1,'ROMAN ALONSO',NULL,'DE AMERICA   Nº 16    1º IZQUIERDA','28028','MADRID','MADRID','636263511',NULL,NULL,NULL,NULL,'00676698S','ROMÁN ALONSO GARCÍA','ariconta13',2,'RP','RM','RS');
+insert  into `empresas`(`empresaId`,`proId`,`nombre`,`nif`,`fechaAlta`,`fechaBaja`,`activa`,`contacto1`,`contacto2`,`direccion`,`codPostal`,`poblacion`,`provincia`,`telefono1`,`telefono2`,`fax`,`email`,`observaciones`,`dniFirmante`,`firmante`,`contabilidad`,`tipoViaId`,`seriePre`,`serieFac`,`serieFacS`,`infOfertas`,`infFacturas`) values 
+(2,'1','PROASISTENCIA, S.L.','B81323180','2001-03-30 00:00:00',NULL,1,NULL,NULL,'CAMINO DE REJAS, 1  OFICINA 1L','28820','COSLADA','MADRID',NULL,NULL,NULL,'PROASISTENCIA@PROASISTENCIA.ES',NULL,'0067698S','ROMÁN ALONSO GARCÍA','ariconta11',1,'PF','PM','PS',NULL,NULL),
+(3,'4','FONDOGAR S.L.','B81002057','2011-01-01 00:00:00',NULL,1,NULL,NULL,'RAMON Y CAJAL, 37','28470','CERCEDILLA','MADRID','910611596',NULL,NULL,'reparaciones@fondogar.es','gestion@fondogar.es (correo seguros mutua propietarios)\nAGENTE DE SEGUROS MUTUA DE PROPIETARIOS\nFACTURACIÓN DE PROYECTOS Y OBRAS','70025204W','MARIA ADELA ALONSO GARCIA','ariconta12',2,'M','M','S','SkOFecW9l','Sy0sTT-9l'),
+(4,'2','ROMÁN ALONSO GARCÍA','00676698S','2001-10-10 00:00:00',NULL,1,'ROMAN ALONSO',NULL,'DE AMERICA   Nº 16    1º IZQUIERDA','28028','MADRID','MADRID','636263511',NULL,NULL,NULL,NULL,'00676698S','ROMÁN ALONSO GARCÍA','ariconta13',2,'RP','RM','RS',NULL,NULL);
 
 /*Table structure for table `facturas` */
 

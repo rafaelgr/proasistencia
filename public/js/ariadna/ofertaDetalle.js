@@ -878,7 +878,7 @@ function cambioArticulo(data) {
             id: data.tipoIvaId
         };
         // poner la unidades por defecto de ese artículo
-        if (!vm.sunidadId())  $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
         cambioPrecioCantidad();
     });
@@ -1291,13 +1291,17 @@ function printOferta(id) {
 
 function informePDF(data) {
     var shortid = "rySBxKzIe";
-    var data = {
+    var infData = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
+        if (err) return;
+        if (empresa.infOfertas) infData.template.shortid = empresa.infOfertas;
+        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
+    });
 }
 
 var f_open_post = function (verb, url, data, target) {
