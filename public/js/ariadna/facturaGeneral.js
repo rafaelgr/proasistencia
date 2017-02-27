@@ -335,14 +335,18 @@ function printFactura(id) {
 }
 
 function informePDF(data) {
-    var shortid = "HyGQ0yAP";
-    var data = {
+    var shortid = "rJkSiTZ9g";
+    var infData = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
+        if (err) return;
+        if (empresa.infFacturas) infData.template.shortid = empresa.infFacturas;
+        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
+    });
 }
 
 var f_open_post = function (verb, url, data, target) {
