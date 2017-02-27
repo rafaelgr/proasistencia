@@ -289,6 +289,9 @@ var roundToTwo = function (num) {
     return +(Math.round(num + "e+2") + "e-2");
 };
 
+var roundToFour = function (num) {
+    return +(Math.round(num + "e+4") + "e-4");
+};
 
 // Returns number of months between two dates
 function monthDiff(d1, d2) {
