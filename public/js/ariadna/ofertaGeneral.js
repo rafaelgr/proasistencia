@@ -148,7 +148,7 @@ function initTablaOfertas() {
         }, {
             data: "tipo"
         }, {
-            data: "fecha",
+            data: "fechaOferta",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }

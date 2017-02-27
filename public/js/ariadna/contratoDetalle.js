@@ -335,11 +335,11 @@ function loadData(data) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     cargaMantenedor(data.mantenedorId);
+    vm.porcentajeAgente(data.porcentajeAgente);
     cargaAgente(data.agenteId);
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
-    vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeCliente(data.importeCliente);
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
@@ -1240,7 +1240,7 @@ var cargaAgente = function (id) {
         vm.agenteId(data.comercialId);
         obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
             if (err) return;
-            vm.porcentajeAgente(comision);
+            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
             recalcularCostesImportesDesdeCoste();
         });
     });
@@ -1328,7 +1328,7 @@ var initAutoAgente = function () {
             vm.agenteId(ui.item.id);
             obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
-                vm.porcentajeAgente(comision);
+                if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
             });
         }
@@ -2490,4 +2490,9 @@ var nuevoContratoOK = function () {
     });
     var opciones = $("#frmRenovarContratos").validate().settings;
     return $('#frmRenovarContratos').valid();
+}
+
+var editPrefactura = function(id){
+    var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    window.open(url, '_new');   
 }
