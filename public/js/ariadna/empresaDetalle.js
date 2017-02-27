@@ -85,6 +85,8 @@ function admData() {
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
     //
+    self.infOfertas = ko.observable();
+    self.infFacturas = ko.observable();
 }
 
 function loadData(data) {
@@ -113,6 +115,8 @@ function loadData(data) {
     vm.serieFac(data.serieFac);
     vm.serieFacS(data.serieFacS);
     loadTiposVia(data.tipoViaId);
+    vm.infOfertas(data.infOfertas);
+    vm.infFacturas(data.infFacturas);
 }
 
 function datosOK() {
@@ -219,7 +223,9 @@ function aceptar() {
                 "tipoViaId": vm.stipoViaId(),
                 "seriePre": vm.seriePre(),
                 "serieFac": vm.serieFac(),
-                "serieFacS": vm.serieFacS()
+                "serieFacS": vm.serieFacS(),
+                "infOfertas": vm.infOfertas(),
+                "infFacturas": vm.infFacturas()
             }
         };
         if (empId == 0) {
