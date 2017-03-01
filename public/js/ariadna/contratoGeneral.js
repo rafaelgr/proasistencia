@@ -38,12 +38,15 @@ function initForm() {
         cargarContratos()();
     }
 
-    $('#chkAceptadas').change(function () {
+    $('#chkCerrados').change(function () {
+        var url = myconfig.apiUrl + "/api/contratos/activos";
         if (this.checked) {
-            // pendiente 
-        } else {
-            // 
-        }
+            url =  myconfig.apiUrl + "/api/contratos";
+        } 
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            loadTablaContratos(data);
+        });
     })
 }
 
@@ -283,7 +286,7 @@ function cargarContratos() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos",
+                url: myconfig.apiUrl + "/api/contratos/activos",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
