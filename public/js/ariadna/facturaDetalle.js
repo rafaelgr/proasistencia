@@ -265,7 +265,7 @@ function loadData(data) {
 
     //
     if (vm.generada()) {
-        ocultarCamposFacturasGeneradas();
+        //ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
     if (cmd == "nueva"){
