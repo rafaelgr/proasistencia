@@ -22,7 +22,7 @@
         <tr >
             <td>
                 <div>
-                    <h4><strong>{{cabecera.receptorNombre}}</strong></h4>
+                    <h4>{{cabecera.receptorNombre}}</h4>
                     <div>
                         NIF: {{cabecera.receptorNif}}
                     </div>
@@ -33,17 +33,17 @@
             </td>
             <td style="text-align:right;">
                 <div>
-                    <h4>FACTURA Nº: {{cabecera.serie}}-{{cabecera.ano}}-{{cabecera.numero}} FECHA: {{cabecera.fecha}} </h4>
-                    <div>Periodo facturado: </div>
-                    <div>Forma de pago: {{cabecera.formaPago}}</div>
-                    <div>Vencimiento: {{cabecera.vencimiento}} </div>
-                    <div>Cuenta cargo:</div>
+                    <h4>FACTURA Nº: {{cabecera.numFact}} </h4>
+                    <div style="font-size:small;">PERIODO FACTURADO: {{cabecera.periodo}} </div>
+                    <div style="font-size:small;">FORMA DE PAGO: {{cabecera.formaPago}}</div>
+                    <div style="font-size:small;">VENCIMIENTO: {{cabecera.vencimiento}} </div>
+                    <div style="font-size:small;">CUENTA:{{cabecera.iban}}</div>
                 </div>
             </td>
         </tr>
     </table>
     <div>
-       <strong> LUGAR DE TRABAJO: </strong>{{cabecera.direccion2}} ({{cabecera.codPostal2}} {{cabecera.poblacion2}}) {{cabecera.provincia2}}
+       LUGAR DE TRABAJO: {{cabecera.direccion2}} ({{cabecera.codPostal2}} {{cabecera.poblacion2}}) {{cabecera.provincia2}}
     </div>
     {{#each capitulos}}
     <h4>{{nombre}}</h4>
@@ -86,7 +86,7 @@
    <table class="table">
         <tr>
             <td>
-                <strong>Observaciones:</strong>
+                <p>Observaciones:</p>
                 <p>{{cabecera.observaciones}}</p>
             </td>
         </tr>

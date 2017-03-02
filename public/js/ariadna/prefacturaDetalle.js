@@ -224,6 +224,7 @@ function admData() {
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
+    self.periodo = ko.observable();
 }
 
 function loadData(data) {
@@ -268,6 +269,7 @@ function loadData(data) {
         ocultarCamposPrefacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
+    vm.periodo(data.periodo);
     if (cmd == "nueva"){
         mostrarMensajePrefacturaNueva();
     }
@@ -379,7 +381,8 @@ var generarPrefacturaDb = function () {
             "porcentajeAgente": vm.porcentajeAgente(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "totalAlCliente": vm.importeAlCliente(),
-            "generada": 0
+            "generada": 0,
+            "periodo": vm.periodo()
         }
     };
     return data;
@@ -424,7 +427,7 @@ var loadContratos = function (contratoId) {
 var cargarContratos = function (data) {
     var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
     vm.posiblesContratos(contratos);
-    $("#cmbContratos").val([data.coontratoId]).trigger('change');
+    $("#cmbContratos").val([data.contratoId]).trigger('change');
 }
 
 
