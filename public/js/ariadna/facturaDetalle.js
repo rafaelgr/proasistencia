@@ -224,6 +224,7 @@ function admData() {
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
+    self.periodo = ko.observable();
 }
 
 function loadData(data) {
@@ -268,6 +269,7 @@ function loadData(data) {
         //ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
+    vm.periodo(data.periodo);
     if (cmd == "nueva"){
         mostrarMensajeFacturaNueva();
         cmd = "";
@@ -380,7 +382,8 @@ var generarFacturaDb = function () {
             "porcentajeAgente": vm.porcentajeAgente(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "totalAlCliente": vm.importeAlCliente(),
-            "generada": 0
+            "generada": 0,
+            "periodo": vm.periodo()
         }
     };
     return data;
