@@ -91,6 +91,13 @@ function initForm() {
         cambioTextosPredeterminados(e.added);
     });
 
+    $("#cmbTextosPredeterminados2").select2(select2Spanish());
+    loadTextosPredeterminados2();
+    $("#cmbTextosPredeterminados2").select2().on('change', function (e) {
+        cambioTextosPredeterminados2(e.added);
+    });
+
+
     initAutoCliente();
     initAutoMantenedor();
     initAutoAgente();
@@ -243,6 +250,11 @@ function admData() {
     //
     self.posiblesTextosPredeterminados = ko.observableArray([]);
     self.elegidosTextosPredeterminados = ko.observableArray([]);
+    //
+    self.stextoPredeterminadoId2 = ko.observable();
+    //
+    self.posiblesTextosPredeterminados2 = ko.observableArray([]);
+    self.elegidosTextosPredeterminados2 = ko.observableArray([]);
     //    
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
@@ -325,6 +337,8 @@ function admData() {
     self.nuevaFechaFinal = ko.observable();
     self.nuevaFechaContrato = ko.observable();
     self.nuevaFacturaParcial = ko.observable();
+    //
+    self.obsFactura = ko.observable();
 }
 
 function loadData(data) {
@@ -344,6 +358,7 @@ function loadData(data) {
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
+    vm.obsFactura(data.obsFactura);
     loadFormasPago(data.formaPagoId);
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
@@ -472,7 +487,8 @@ var guardarContrato = function (done) {
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
-            "preaviso": vm.preaviso()
+            "preaviso": vm.preaviso(),
+            "obsFactura": vm.obsFactura()
         }
     };
     if (contratoId == 0) {
@@ -537,6 +553,19 @@ function loadTextosPredeterminados(id) {
         }].concat(data);
         vm.posiblesTextosPredeterminados(textos);
         $("#cmbTextPredeterminados").val([id]).trigger('change');
+    });
+}
+
+function loadTextosPredeterminados2(id) {
+    llamadaAjax('GET', "/api/textos_predeterminados", null, function (err, data) {
+        if (err) return;
+        var textos = [{
+            textoPredeterminadoId2: 0,
+            texto: "",
+            abrev: ""
+        }].concat(data);
+        vm.posiblesTextosPredeterminados2(textos);
+        $("#cmbTextPredeterminados2").val([id]).trigger('change');
     });
 }
 
@@ -634,6 +663,21 @@ function cambioTextosPredeterminados(data) {
         if (vm.observaciones()) observaciones = vm.observaciones();
         observaciones += data.texto;
         vm.observaciones(observaciones);
+    });
+}
+
+function cambioTextosPredeterminados2(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var textoPredeterminadoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/textos_predeterminados/" + textoPredeterminadoId, null, function (err, data) {
+        if (err) return;
+        var observaciones = ""
+        if (vm.obsFactura()) observaciones = vm.obsFactura();
+        observaciones += data.texto;
+        vm.obsFactura(observaciones);
     });
 }
 
@@ -1719,33 +1763,33 @@ function cambioComercial(data) {
 
 var loadPeriodosPagos = function (periodoPagoId) {
     var periodosPagos = [{
-            periodoPagoId: 0,
-            nombre: ""
-        },
-        {
-            periodoPagoId: 1,
-            nombre: "Anual"
-        },
-        {
-            periodoPagoId: 2,
-            nombre: "Semestral"
-        },
-        {
-            periodoPagoId: 5,
-            nombre: "Quatrimestral"
-        },
-        {
-            periodoPagoId: 3,
-            nombre: "Trimestral"
-        },
-        {
-            periodoPagoId: 4,
-            nombre: "Mensual"
-        },
-        {
-            periodoPagoId: 6,
-            nombre: "Puntual"
-        }
+        periodoPagoId: 0,
+        nombre: ""
+    },
+    {
+        periodoPagoId: 1,
+        nombre: "Anual"
+    },
+    {
+        periodoPagoId: 2,
+        nombre: "Semestral"
+    },
+    {
+        periodoPagoId: 5,
+        nombre: "Cuatrimestral"
+    },
+    {
+        periodoPagoId: 3,
+        nombre: "Trimestral"
+    },
+    {
+        periodoPagoId: 4,
+        nombre: "Mensual"
+    },
+    {
+        periodoPagoId: 6,
+        nombre: "Puntual"
+    }
     ];
     vm.posiblesPeriodosPagos(periodosPagos);
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
@@ -1946,7 +1990,8 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
-            cliente: cliente
+            cliente: cliente,
+            periodo: ""
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -1967,7 +2012,8 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
-            cliente: cliente
+            cliente: cliente,
+            periodo: ""
         };
         pagos.push(p);
     }
@@ -2099,55 +2145,55 @@ function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
             "aButtons": [{
-                    "sExtends": "pdf",
-                    "sTitle": "Prefacturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
+                "sExtends": "pdf",
+                "sTitle": "Prefacturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
                 }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
@@ -2264,55 +2310,55 @@ function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "oTableTools": {
             "aButtons": [{
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": {
-                        filter: 'applied',
-                        order: 'current'
-                    }
+                "sExtends": "pdf",
+                "sTitle": "Facturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
                 }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
@@ -2492,7 +2538,7 @@ var nuevoContratoOK = function () {
     return $('#frmRenovarContratos').valid();
 }
 
-var editPrefactura = function(id){
+var editPrefactura = function (id) {
     var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
-    window.open(url, '_new');   
+    window.open(url, '_new');
 }
