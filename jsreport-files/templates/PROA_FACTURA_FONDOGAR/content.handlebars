@@ -20,9 +20,9 @@
 <div>
     <table class="table">
         <tr >
-            <td>
+            <td width="50%">
                 <div>
-                    <h4>{{cabecera.receptorNombre}}</h4>
+                    <h4><strong>{{cabecera.receptorNombre}}</strong></h4>
                     <div>
                         NIF: {{cabecera.receptorNif}}
                     </div>
@@ -31,9 +31,9 @@
                     <div>{{cabecera.receptorProvincia}}</div>
                 </div>
             </td>
-            <td style="text-align:right;">
-                <div>
-                    <h4>FACTURA Nº: {{cabecera.numFact}} </h4>
+            <td width="50%">
+                <div style="text-align:justify;">
+                    <h4>FACTURA Nº: {{cabecera.numFact}}  FECHA: {{cabecera.fecha}}</h4>
                     <div style="font-size:small;">PERIODO FACTURADO: {{cabecera.periodo}} </div>
                     <div style="font-size:small;">FORMA DE PAGO: {{cabecera.formaPago}}</div>
                     <div style="font-size:small;">VENCIMIENTO: {{cabecera.vencimiento}} </div>
