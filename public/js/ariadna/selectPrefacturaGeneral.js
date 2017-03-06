@@ -44,7 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarPrefacturas());
-    $('#btnAlta').click(crearPrefactura());
+    $('#btnAlta').click(crearFactura());
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -277,7 +277,7 @@ function buscarPrefacturas() {
     return mf;
 }
 
-function crearPrefactura() {
+function crearFactura() {
     var mf = function () {
         if (!datosOK()) return;
         var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura());

@@ -1959,6 +1959,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
     // de mes 
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
+    var iniContrato = moment(inicioContrato). format('YYYY-MM-DD');
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
@@ -1991,7 +1992,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: ""
+            periodo:  moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i+1) * divisor ), 'month').format('DD/MM/YYYY')
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -2013,7 +2014,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: ""
+            periodo: moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i+1) * divisor ), 'month').format('DD/MM/YYYY')
         };
         pagos.push(p);
     }
@@ -2081,6 +2082,9 @@ function initTablaGenerarPrefacturas() {
             className: "text-center"
         }, {
             data: "cliente",
+            className: "text-center"
+        }, {
+            data: "periodo",
             className: "text-center"
         }]
     });
