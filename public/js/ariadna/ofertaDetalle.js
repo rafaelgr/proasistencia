@@ -1295,12 +1295,17 @@ function informePDF(data) {
         "template": {
             "shortid": shortid
         },
-        "data": data
+        "data": data,
+        "options": {
+            "Content-Disposition": "attachment; esteEsElInforme.pdf",
+            "reports": { "save": true }
+        }
     }
     llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
         if (err) return;
         if (empresa.infOfertas) infData.template.shortid = empresa.infOfertas;
-        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
+        //f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
+        apiReport("POST", myconfig.reportUrl + "/api/report", infData);
     });
 }
 
@@ -1329,10 +1334,9 @@ var apiReport = function (verb, url, data) {
     $.ajax({
         type: verb,
         url: url,
-        dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(data),
-        success: function (data, status) {
+        success: function (data, status, request) {
             var a = 1;
         },
         error: function (err) {
