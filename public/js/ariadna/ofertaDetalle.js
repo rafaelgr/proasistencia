@@ -1231,7 +1231,7 @@ var recalcularCostesImportesDesdeCoste = function () {
 var recalcularCostesImportesDesdeBeneficio = function () {
     if (vm.porcentajeBeneficio() && vm.coste()) {
         if (vm.importeBeneficio()) {
-            vm.porcentajeBeneficio(roundToTwo(((100 * vm.importeBeneficio()) / vm.coste())));
+            vm.porcentajeBeneficio(roundToFour(((100 * vm.importeBeneficio()) / vm.coste())));
         }
     }
     recalcularCostesImportesDesdeCoste();
