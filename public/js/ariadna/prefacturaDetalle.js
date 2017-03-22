@@ -8,6 +8,10 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var prefacturaId = 0;
+var ContratoId = 0;
+var EmpresaId = 0;
+var ClienteId = 0;
+
 var cmd = "";
 var lineaEnEdicion = false;
 
@@ -109,6 +113,9 @@ function initForm() {
 
     prefacturaId = gup('PrefacturaId');
     cmd = gup("cmd");
+    ContratoId = gup("ContratoId");
+    EmpresaId = gup("EmpresaId");
+    ClienteId = gup("ClienteId");
     if (prefacturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
@@ -124,6 +131,17 @@ function initForm() {
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA PREFACTURA";
+        if (EmpresaId != 0) {
+            loadEmpresas(EmpresaId);
+            cambioEmpresa(EmpresaId);
+        } 
+        if (ClienteId != 0) {
+            cargaCliente(ClienteId);
+            cambioCliente(ClienteId);
+        } 
+        if (ContratoId != 0) {
+          loadContratos(ContratoId);
+        } 
     }
 }
 
@@ -266,11 +284,11 @@ function loadData(data) {
 
     //
     if (vm.generada()) {
-        ocultarCamposPrefacturasGeneradas();
+        // ocultarCamposPrefacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva"){
+    if (cmd == "nueva") {
         mostrarMensajePrefacturaNueva();
     }
     //
@@ -534,11 +552,11 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url =  myconfig.apiUrl + "/api/prefacturas/lineas";
+    var url = myconfig.apiUrl + "/api/prefacturas/lineas";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId();
-    } 
+        url = myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId();
+    }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
@@ -1082,7 +1100,7 @@ var ocultarCamposPrefacturasGeneradas = function () {
 }
 
 var mostrarMensajeFacturaGenerada = function () {
-    var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
+    var mens = "Esta es una prefactura generada desde contrato. Aunque puede modificar sus valores plantéese si no seria mejor volver a generarla.";
     mensNormal(mens);
 }
 

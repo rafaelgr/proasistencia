@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "formidable": "^1.0.17",
     "moment": "^2.10.6",
     "multer": "^1.1.0",
-    "mysql": "^2.0.0",
+    "mysql": "^2.13.0",
     "numeral": "^1.5.3",
     "serve-index": "^1.7.2",
     "sprintf-js": "^1.0.3"

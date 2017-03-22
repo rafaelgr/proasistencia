@@ -47,7 +47,9 @@ function initForm() {
     $("#frmContrato").submit(function () {
         return false;
     });
-
+    $("#frmPrefacturas").submit(function () {
+        return false;
+    });
     $("#frmRenovarContratos").submit(function () {
         return false;
     });
@@ -146,6 +148,8 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioComercial(e.added);
     });
+
+    $("#btnAltaPrefactura").click(nuevaPrefactura);
 
     reglasDeValidacionAdicionales();
 
@@ -2544,5 +2548,13 @@ var nuevoContratoOK = function () {
 
 var editPrefactura = function (id) {
     var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    window.open(url, '_new');
+}
+
+var nuevaPrefactura = function(){
+    var url = "PrefacturaDetalle.html?PrefacturaId=0";
+    url += "&EmpresaId=" + vm.sempresaId();
+    url += "&ClienteId=" + vm.sclienteId();
+    url += "&ContratoId=" + vm.contratoId();
     window.open(url, '_new');
 }
