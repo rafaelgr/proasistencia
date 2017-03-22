@@ -534,11 +534,16 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    if (lineaEnEdicion) verbo = "PUT";
-    llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturas/lineas", data, function (err, data) {
+    var url =  myconfig.apiUrl + "/api/prefacturas/lineas";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url =  myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId();
+    } 
+    llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + data.prefacturaId, null, function (err, data) {
+            cmd = "";
             loadData(data);
             loadLineasPrefactura(data.prefacturaId);
             loadBasesPrefactura(data.prefacturaId);
@@ -862,7 +867,7 @@ function editPrefacturaLinea(id) {
 
 function deletePrefacturaLinea(prefacturaId) {
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
             prefacturaLinea: {
@@ -1039,7 +1044,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
