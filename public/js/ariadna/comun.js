@@ -378,8 +378,8 @@ var llamadaAjax = function (verbo, url, datos, fretorno) {
         url: url,
         dataType: "json",
         contentType: "application/json",
-        success: function (data, status) {
-            fretorno(null, data);
+        success: function (data, status, request) {
+            fretorno(null, data, status, request);
         },
         error: function (err) {
             mensErrorAjax(err);

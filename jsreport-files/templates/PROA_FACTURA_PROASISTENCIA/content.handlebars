@@ -1,0 +1,94 @@
+<meta charset="utf-8">
+<!-- #CSS Links -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" href="http://localhost:9000/ficheros/css/bootstrap.min.css">
+-->
+<img src='{#image LogoProasistencia}' style="display:none;"/>
+<style>
+    .cuadro {
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 1px solid #000000;
+        padding: 10px;
+    }
+    .borderless td, .borderless th {
+        border: none;
+    }    
+</style>
+<div>
+    <table class="table">
+        <tr >
+            <td width="50%">
+                <div style="text-align:justify;">
+                    <h4>FACTURA Nº: {{cabecera.numFact}}  FECHA: {{cabecera.fecha}}</h4>
+                    <div style="font-size:small;">PERIODO FACTURADO: {{cabecera.periodo}} </div>
+                    <div style="font-size:small;">FORMA DE PAGO: {{cabecera.formaPago}}</div>
+                    <div style="font-size:small;">VENCIMIENTO: {{cabecera.vencimiento}} </div>
+                    <div style="font-size:small;">CUENTA:{{cabecera.iban}}</div>
+                </div>                
+            </td>
+            <td width="50%">
+                <div>
+                    <h4><strong>{{cabecera.receptorNombre}}</strong></h4>
+                    <div>
+                        NIF: {{cabecera.receptorNif}}
+                    </div>
+                    <div>{{cabecera.receptorDireccion}}</div>
+                    <div>{{cabecera.receptorCodPostal}} {{cabecera.receptorPoblacion}}</div>
+                    <div>{{cabecera.receptorProvincia}}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div>
+       LUGAR DE TRABAJO: {{cabecera.direccion2}} ({{cabecera.codPostal2}} {{cabecera.poblacion2}}) {{cabecera.provincia2}}
+    </div>
+    {{#each capitulos}}
+    <h4>{{nombre}}</h4>
+    <table class="table table-stripped table-forum">
+        <thead class="txt-color-blue">
+            <tr>
+                <th>CONCEPTO</th>
+                <th style="text-align:right;" width='20%'>IMPORTE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each lineas}}
+            <tr>
+                <td>{{descripcion}}</td>
+                <td style="text-align:right;" width='20%'>{{totalLinea}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table> 
+    {{/each}}
+    <table class="table">
+            <tr>
+                <td colspan="3" style="text-align:right; border:none;"></td>
+                <td style="text-align:right; border:none;">TOTAL :</td>
+                <td style="text-align:right; border:none;">{{cabecera.total}}</td>
+            </tr> 
+            {{#each bases}}
+            <tr>
+                <td colspan="3" style="text-align:right; border:none;"></td>
+                <td style="text-align:right; border:none;">IVA {{tipoIva}}</td>
+                <td style="text-align:right; border:none;">{{cuota}}</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td colspan="3" style="text-align:right; border:none;"></td>
+                <td style="text-align:right; border:none;">TOTAL (CON IVA) :</td>
+                <td style="text-align:right; border:none;">{{cabecera.totalConIva}}</td>
+            </tr>
+    </table>   
+   <table class="table">
+        <tr>
+            <td>
+                <p>Observaciones:</p>
+                <p>{{cabecera.observaciones}}</p>
+            </td>
+        </tr>
+   </table>             
+</div>
