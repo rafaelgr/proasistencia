@@ -91,6 +91,19 @@ function initForm() {
         cambioComercial(e.added);
     });
 
+    // autosalto en IBAN
+    $(function () {
+        $(".ibans").keyup(function () {
+            if (this.value.length == this.maxLength) {
+                var r = $(this).attr('id').substr(0,7);
+                var n = $(this).attr('id').substr(7);
+                var n1 = n* 1 + 1;
+                var r2 = r + n1;
+                $("#" + r2).focus();
+            }
+        });
+    });
+
     initTablaComisionistas();
 
     // obtener el número de digitos de la contabilidad
@@ -367,12 +380,12 @@ function datosOK() {
         }
     });
     var opciones = $("#frmCliente").validate().settings;
-    if (vm.stipoClienteId() == 1){
+    if (vm.stipoClienteId() == 1) {
         // Si es mantenedor no necesita agente
         delete opciones.rules.cmbAgentes;
         delete opciones.messages.cmbAgentes;
     }
-    
+
     if (!$('#frmCliente').valid()) return false;
     // mas controles
     // iban
@@ -772,7 +785,7 @@ function initTablaComisionistas() {
         data: dataComisionistas,
         columns: [{
             data: "comercial"
-        },{
+        }, {
             data: "tipo"
         }, {
             data: "porComer",
@@ -986,7 +999,7 @@ function cambioAgente(data) {
             }
         },
         error: function (err) {
-            if (err.status !== 404){
+            if (err.status !== 404) {
                 mensErrorAjax(err);
             }
             // si hay algo más que hacer lo haremos aquí.
