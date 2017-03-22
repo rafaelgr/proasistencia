@@ -1078,7 +1078,7 @@ var ocultarCamposFacturasGeneradas = function () {
 }
 
 var mostrarMensajeFacturaGenerada = function () {
-    var mens = "Esta es una factura generada desde contrato. Para modificar sus valores vuelve a generarlas.";
+    var mens = "Esta es una factura generada desde contrato. Aunque puede modificar sus valores plantéese si no seria mejor volver a generarla.";
     mensNormal(mens);
 }
 
