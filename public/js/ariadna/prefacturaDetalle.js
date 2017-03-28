@@ -1089,7 +1089,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
-    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente();
+    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
