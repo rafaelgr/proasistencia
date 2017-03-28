@@ -1963,7 +1963,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
     // de mes 
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
-    var iniContrato = moment(inicioContrato). format('YYYY-MM-DD');
+    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
@@ -1996,7 +1996,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo:  moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i+1) * divisor ), 'month').format('DD/MM/YYYY')
+            periodo: moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i + 1) * divisor), 'month').format('DD/MM/YYYY')
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -2018,7 +2018,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i+1) * divisor ), 'month').format('DD/MM/YYYY')
+            periodo: moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i + 1) * divisor), 'month').format('DD/MM/YYYY')
         };
         pagos.push(p);
     }
@@ -2551,10 +2551,16 @@ var editPrefactura = function (id) {
     window.open(url, '_new');
 }
 
-var nuevaPrefactura = function(){
+var nuevaPrefactura = function () {
     var url = "PrefacturaDetalle.html?PrefacturaId=0";
     url += "&EmpresaId=" + vm.sempresaId();
-    url += "&ClienteId=" + vm.sclienteId();
+    if (vm.mantenedorId()) {
+        url += "&ClienteId=" + vm.mantenedorId();
+    } else {
+        url += "&ClienteId=" + vm.sclienteId();
+    }
+
+
     url += "&ContratoId=" + vm.contratoId();
     window.open(url, '_new');
 }

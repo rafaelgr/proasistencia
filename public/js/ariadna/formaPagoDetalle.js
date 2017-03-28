@@ -17,37 +17,37 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmFormaPago").submit(function() {
+    $("#frmFormaPago").submit(function () {
         return false;
     });
 
     $("#cmbTiposFormaPago").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
                 return "Buscando…";
             }
         }
@@ -57,27 +57,32 @@ function initForm() {
     empId = gup('FormaPagoId');
     if (empId != 0) {
         var data = {
-                formaPagoId: empId
-            }
-            // hay que buscar ese elemento en concreto
+            formaPagoId: empId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/formas_pago/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.formaPagoId(0);
+        // hay que ofertar el código contable siguiente.
+        llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/codcontable/siguiente", null, function (err, data) {
+            if (err) return;
+            vm.codigoContable(data);
+        });
     }
 }
 
@@ -94,7 +99,7 @@ function admData() {
     self.stipoFormaPagoId = ko.observable();
     //
     self.posiblesTiposFormaPago = ko.observableArray([]);
-    self.elegidosTiposFormaPago = ko.observableArray([]);   
+    self.elegidosTiposFormaPago = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -152,7 +157,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -162,7 +167,7 @@ function datosOK() {
 
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
@@ -183,14 +188,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "FormaPagoGeneral.html?FormaPagoId=" + vm.formaPagoId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -202,14 +207,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "FormaPagoGeneral.html?FormaPagoId=" + vm.formaPagoId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -221,7 +226,7 @@ function aceptar() {
 
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "FormaPagoGeneral.html";
         window.open(url, '_self');
     }
@@ -235,14 +240,14 @@ function loadTiposFormaPago(id) {
         url: "/api/tipos_forma_pago",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var tiposFormaPago = [{ tipoFormaPagoId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposFormaPago(tiposFormaPago);
             $("#cmbTiposFormaPago").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }

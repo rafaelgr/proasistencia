@@ -270,7 +270,7 @@ function loadData(data) {
         mostrarMensajeFacturaGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva"){
+    if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
         cmd = "";
     }
@@ -535,11 +535,15 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    if (lineaEnEdicion) verbo = "PUT";
-    llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/lineas", data, function (err, data) {
+    var url = myconfig.apiUrl + "/api/facturas/lineas";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/facturas/lineas/" + vm.facturaLineaId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + data.facturaId, null, function (err, data) {
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
