@@ -1049,7 +1049,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
