@@ -141,6 +141,7 @@ function initForm() {
         } 
         if (ContratoId != 0) {
           loadContratos(ContratoId);
+          cambioContrato(ContratoId);
         } 
     }
 }
@@ -243,6 +244,8 @@ function admData() {
     //
     self.generada = ko.observable();
     self.periodo = ko.observable();
+    //
+    self.tipoClienteId = ko.observable();
 }
 
 function loadData(data) {
@@ -459,6 +462,7 @@ function cambioCliente(clienteId) {
         vm.receptorCodPostal(data.codPostal);
         vm.receptorPoblacion(data.poblacion);
         vm.receptorProvincia(data.provincia);
+        vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         loadContratos();
     });
@@ -1008,6 +1012,7 @@ var cargaCliente = function (id) {
         if (err) return;
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
+        vm.tipoClienteId(data.tipoClienteId);
     });
 };
 
@@ -1067,6 +1072,10 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if (vm.tipoClienteId() == 1){
+        // es un mantenedor
+        vm.importeAlCliente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1125,6 +1134,10 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
+    if (vm.tipoClienteId() == 1){
+        // es un mantenedor
+        importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
+    }    
     return importeAlCliente;
 }
 
