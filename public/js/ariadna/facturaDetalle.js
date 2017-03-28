@@ -123,7 +123,7 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
-        document.title = "NUEVA PREFACTURA";
+        document.title = "NUEVA FACTURA";
     }
 }
 
@@ -275,7 +275,7 @@ function loadData(data) {
         cmd = "";
     }
     //
-    document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
+    document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 }
 
 
@@ -698,8 +698,9 @@ function initTablaFacturasLineas() {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                if (!vm.generada())
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                // if (!vm.generada())
+                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]

@@ -720,8 +720,9 @@ function initTablaPrefacturasLineas() {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                if (!vm.generada())
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                // if (!vm.generada())
+                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
