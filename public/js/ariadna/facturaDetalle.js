@@ -123,7 +123,7 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
-        document.title = "NUEVA PREFACTURA";
+        document.title = "NUEVA FACTURA";
     }
 }
 
@@ -225,6 +225,8 @@ function admData() {
     //
     self.generada = ko.observable();
     self.periodo = ko.observable();
+    // 
+    self.tipoClienteId = ko.observable();
 }
 
 function loadData(data) {
@@ -275,7 +277,7 @@ function loadData(data) {
         cmd = "";
     }
     //
-    document.title = "PREFACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
+    document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 }
 
 
@@ -442,6 +444,7 @@ function cambioCliente(clienteId) {
         vm.receptorCodPostal(data.codPostal);
         vm.receptorPoblacion(data.poblacion);
         vm.receptorProvincia(data.provincia);
+        vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         loadContratos();
     });
@@ -698,8 +701,9 @@ function initTablaFacturasLineas() {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                if (!vm.generada())
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                // if (!vm.generada())
+                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
@@ -990,6 +994,7 @@ var cargaCliente = function (id) {
         if (err) return;
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
+        vm.tipoClienteId(data.tipoClienteId);
     });
 };
 
@@ -1044,11 +1049,15 @@ var recalcularCostesImportesDesdeCoste = function () {
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if (vm.tipoClienteId() == 1) {
+        // es un mantenedor
+        vm.importeAlCliente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1061,7 +1070,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
-    var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente();
+    var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
@@ -1107,6 +1116,10 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
+    if (vm.tipoClienteId() == 1){
+        // es un mantenedor
+        importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
+    }     
     return importeAlCliente;
 }
 
