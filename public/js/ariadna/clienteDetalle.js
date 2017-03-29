@@ -75,6 +75,10 @@ function initForm() {
     loadTiposVia2();
 
     // select2 things
+    $("#cmbTiposVia3").select2(select2Spanish());
+    loadTiposVia3();
+
+    // select2 things
     $("#cmbAgentes").select2(select2Spanish());
     $("#cmbAgentes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -206,6 +210,10 @@ function admData() {
     self.codPostal2 = ko.observable();
     self.poblacion2 = ko.observable();
     self.provincia2 = ko.observable();
+    self.direccion3 = ko.observable();
+    self.codPostal3 = ko.observable();
+    self.poblacion3 = ko.observable();
+    self.provincia3 = ko.observable();    
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
@@ -238,8 +246,14 @@ function admData() {
     self.tipoViaId2 = ko.observable();
     self.stipoViaId2 = ko.observable();
     //
+    self.tipoViaId3 = ko.observable();
+    self.stipoViaId3 = ko.observable();    
+    //
     self.posiblesTiposVia2 = ko.observableArray([]);
     self.elegidosTiposVia2 = ko.observableArray([]);
+    //
+    self.posiblesTiposVia3 = ko.observableArray([]);
+    self.elegidosTiposVia3 = ko.observableArray([]);    
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -295,7 +309,15 @@ function loadData(data) {
     vm.codPostal2(data.codPostal2);
     vm.provincia2(data.provincia2);
     vm.poblacion2(data.poblacion2);
+    // direccion 3
+    vm.direccion3(data.direccion3);
+    vm.codPostal3(data.codPostal3);
+    vm.provincia3(data.provincia3);
+    vm.poblacion3(data.poblacion3);
+
     loadTiposVia2(data.tipoViaId2);
+    loadTiposVia3(data.tipoViaId3);
+
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
     loadMotivosBaja(data.motivoBajaId);
@@ -462,7 +484,12 @@ function aceptar() {
                 "codPostal2": vm.codPostal2(),
                 "tipoViaId2": vm.stipoViaId2(),
                 "dniFirmante": vm.dniFirmante(),
-                "firmante": vm.firmante()
+                "firmante": vm.firmante(),
+                "direccion3": vm.direccion3(),
+                "poblacion3": vm.poblacion3(),
+                "provincia3": vm.provincia3(),
+                "codPostal3": vm.codPostal3(),
+                "tipoViaId3": vm.stipoViaId3()                
             }
         };
         if (empId == 0) {
@@ -659,6 +686,23 @@ function loadTiposVia2(id) {
     });
 }
 
+function loadTiposVia3(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia3 = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia3(tiposVia3);
+            $("#cmbTiposVia3").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
