@@ -1116,10 +1116,10 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
-    if (vm.tipoClienteId() == 1){
+    if (vm.tipoClienteId() == 1) {
         // es un mantenedor
         importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
-    }     
+    }
     return importeAlCliente;
 }
 
@@ -1128,25 +1128,30 @@ var imprimir = function () {
 }
 
 function printFactura(id) {
-    llamadaAjax("GET", "/api/informes/facturas/" + id, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, empresa) {
         if (err) return;
-        informePDF(data);
+        var shortid = "rJkSiTZ9g";
+        if (empresa.infFacturas) shortid = empresa.infFacturas;
+        var url = "/api/informes/facturas/" + id;
+        if (shortid == "rJRv-UF3l" || shortid == "SynNJ46oe") {
+            url = "/api/informes/facturas2/" + id;
+        }
+        llamadaAjax("GET", url, null, function (err, data) {
+            if (err) return;
+            informePDF(data, shortid);
+        });
     });
+
 }
 
-function informePDF(data) {
-    var shortid = "rJkSiTZ9g";
+function informePDF(data, shortid) {
     var infData = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
-        if (err) return;
-        if (empresa.infFacturas) infData.template.shortid = empresa.infFacturas;
-        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
-    });
+    f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
 }
 
 var f_open_post = function (verb, url, data, target) {

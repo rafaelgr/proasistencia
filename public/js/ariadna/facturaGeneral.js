@@ -321,34 +321,33 @@ function cargarFacturas() {
 }
 
 function printFactura(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + id, null, function (err, data) {
+        if (err) return;
+        empresaId = data.empresaId;
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + empresaId, null, function (err, empresa) {
+            if (err) return;
+            var shortid = "rJkSiTZ9g";
+            if (empresa.infFacturas) shortid = empresa.infFacturas;
+            var url = "/api/informes/facturas/" + id;
+            if (shortid == "rJRv-UF3l" || shortid == "SynNJ46oe") {
+                url = "/api/informes/facturas2/" + id;
+            }
+            llamadaAjax("GET", url, null, function (err, data) {
+                if (err) return;
+                informePDF(data, shortid);
+            });
+        });
     });
 }
 
-function informePDF(data) {
-    var shortid = "rJkSiTZ9g";
+function informePDF(data, shortid) {
     var infData = {
         "template": {
             "shortid": shortid
         },
         "data": data
     }
-    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
-        if (err) return;
-        if (empresa.infFacturas) infData.template.shortid = empresa.infFacturas;
-        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
-    });
+    f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
 }
 
 var f_open_post = function (verb, url, data, target) {

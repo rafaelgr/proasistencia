@@ -30,9 +30,9 @@
         "postalPoblacion": "Sueca",
         "postalProvincia": "VALENCIA"
     },
-    "capitulos":[
+    "tipos":[
             {
-                "nombre": "Capitulo 1",
+                "nombre": "21%",
                 "lineas":[
                     {
                         "prefacturaLineaId": "1.1",
@@ -62,7 +62,7 @@
                 "total": 1000.23                
             },
             {
-                "nombre": "Capitulo 2",
+                "nombre": "Exento",
                 "lineas":[
                     {
                         "prefacturaLineaId": "2.1",
