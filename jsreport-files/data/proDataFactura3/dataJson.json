@@ -1,0 +1,81 @@
+{
+    "cabecera": {
+        "preFacturaId": 581,
+        "ano": 2015,
+        "numero": 2,
+        "serie": "0",
+        "fecha": "01/12/2015",
+        "empresaId": 5,
+        "clienteId": 40103,
+        "contratoClienteMantenimientoId": null,
+        "emisorNif": "A79088159",
+        "emisorNombre": "GRUPO INMOBILIARIO METROPOLITANO S.A.",
+        "emisorDireccion": "DE AMÉRICA Nº 16",
+        "emisorCodPostal": "28028",
+        "emisorPoblacion": "MADRID",
+        "emisorProvincia": "MADRID",
+        "receptorNif": "05240834P",
+        "receptorNombre": "OSCAR IRAOLA PAZOS DE PROVENS 1",
+        "receptorDireccion": "RAMÓN Y CAJAL 31; 3ºB",
+        "receptorCodPostal": "28470",
+        "receptorPoblacion": "CERCEDILLA",
+        "receptorProvincia": "MADRID",
+        "total": "450,00 €",
+        "totalConIva": "450,00 €",
+        "formaPago": "RECIBO BANCARIO 5 DIAS fecha FACTURA",
+        "observaciones": "LA FACTURA CARECE DE VALOR SIN EL JUSTIFICANTE DEL PAGO",
+        "periodo": "01/12/2015-01/01/2016",
+        "numeroVencimientos": 12,
+        "primerVencimiento": 5,
+        "restoVencimiento": 30,
+        "postalTipoVia": "AVENIDA",
+        "postalDireccion": "RAMÓN Y CAJAL 31; 3ºB",
+        "postalCodPostal": "28470",
+        "postalPoblacion": "CERCEDILLA",
+        "postalProvincia": "MADRID",
+        "iban": "ES47****************0387",
+        "direccion2": "RAMÓN Y CAJAL 31; 3ºB",
+        "codPostal2": "28470",
+        "poblacion2": "CERCEDILLA",
+        "provincia2": "MADRID",
+        "vencimiento": "06/12/2015",
+        "numFact": "0-2015-00002"
+    },
+    "tipos": [
+        {
+        "nombre": "Exento",
+        "lineas": [
+            {
+            "facturaLineaId": 308,
+            "linea": 1.1,
+            "facturaId": 304,
+            "unidadId": 9,
+            "articuloId": 31,
+            "tipoIvaId": 4,
+            "porcentaje": 0,
+            "descripcion": "ARRENDAMIENTO VIVIENDA: importe del arrendamiento correspondiente al periodo indicado.",
+            "cantidad": "1,00",
+            "importe": "225,00 €",
+            "totalLinea": "450,00 €",
+            "coste": 225,
+            "porcentajeBeneficio": 100,
+            "porcentajeAgente": 0,
+            "capituloLinea": "Capitulo 1: ARRENDAMIENTO DE VIVIENDAS",
+            "tipoIva": "Exento"
+            }
+        ],
+        "total": "450,00 €"
+        }
+    ],
+    "bases": [
+        {
+        "facturaBaseId": 356,
+        "facturaId": 304,
+        "tipoIvaId": 4,
+        "porcentaje": "0,00",
+        "base": "450,00 €",
+        "cuota": "0,00 €",
+        "tipoIva": "Exento"
+        }
+    ]
+}
