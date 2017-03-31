@@ -496,6 +496,45 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
+                                                                                <section class="col col-md-12" style="border:solid; border-width:1px;">
+                                                                                    <header>Direccion trabajo</header>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Tipo via</label>
+                                                                                            <label style="width:100%;">
+                                                                                                <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select><i></i>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-10">
+                                                                                            <label class="label">Direccion</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Cod.Postal</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
+                                                                                            </label>
+                                                                                        </section>                                                                                        
+                                                                                        <section class="col col-md-5">
+                                                                                            <label class="label">Poblacion</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-5">
+                                                                                            <label class="label">Provincia</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
+                                                                                            </label>
+                                                                                        </section>                                                                                        
+                                                                                    </div>
+                                                                                </section>                                                                                
+                                                                            </div>
+                                                                            <div class="row">
                                                                                 <section class="col col-md-12">
                                                                                     <label class="label">Observaciones <i class="fa fa-lg fa-book"></i>
                                                                                         <select id="cmbTextosPredeterminados" style="min-width: 150px;" name="cmbTextosPredeterminados" data-bind="options: posiblesTextosPredeterminados, optionsText: 'abrev', optionsValue: 'textoPredeterminadoId', value: stextoPredeterminadoId, valueAllowUnset: true, selectedOptions: elegidosTextosPredeterminados, selected2:{}"></select>

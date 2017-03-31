@@ -84,6 +84,9 @@ function initForm() {
         cambioTipoProyecto(e.added);
     });
 
+    $("#cmbTiposVia").select2(select2Spanish());
+    loadTiposVia();
+
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato();
 
@@ -343,6 +346,17 @@ function admData() {
     self.nuevaFacturaParcial = ko.observable();
     //
     self.obsFactura = ko.observable();
+    //
+    self.direccion = ko.observable();
+    self.codPostal = ko.observable();
+    self.poblacion = ko.observable();
+    self.provincia = ko.observable();
+    //
+    self.tipoViaId = ko.observable();
+    self.stipoViaId = ko.observable();
+    //
+    self.posiblesTiposVia = ko.observableArray([]);
+    self.elegidosTiposVia = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -372,6 +386,11 @@ function loadData(data) {
     vm.facturaParcial(data.facturaParcial);
     vm.preaviso(data.preaviso);
     //
+    vm.direccion(data.direccion);
+    vm.codPostal(data.codPostal);
+    vm.poblacion(data.poblacion);
+    vm.provincia(data.provincia);
+    loadTiposVia(data.tipoViaId);
     document.title = "CONTRATO: " + vm.referencia();
 }
 
@@ -492,7 +511,12 @@ var guardarContrato = function (done) {
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
             "preaviso": vm.preaviso(),
-            "obsFactura": vm.obsFactura()
+            "obsFactura": vm.obsFactura(),
+            "tipoViaId": vm.stipoViaId(),
+            "direccion": vm.direccion(),
+            "codPostal": vm.codPostal(),
+            "poblacion": vm.poblacion(),
+            "provincia": vm.provincia()
         }
     };
     if (contratoId == 0) {
@@ -1406,7 +1430,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         if (vm.porcentajeBeneficio()) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
-        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+        vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
@@ -2563,4 +2587,22 @@ var nuevaPrefactura = function () {
 
     url += "&ContratoId=" + vm.contratoId();
     window.open(url, '_new');
+}
+
+function loadTiposVia(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposVia(tiposVia);
+            $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
