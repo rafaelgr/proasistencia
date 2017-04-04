@@ -127,6 +127,7 @@ function initForm() {
     } else {
         // caso alta
         vm.prefacturaId(0);
+        vm.generada(0); // por defecto manual
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -402,7 +403,7 @@ var generarPrefacturaDb = function () {
             "porcentajeAgente": vm.porcentajeAgente(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "totalAlCliente": vm.importeAlCliente(),
-            "generada": 0,
+            "generada": vm.generada(),
             "periodo": vm.periodo()
         }
     };
@@ -1066,7 +1067,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         if (vm.porcentajeBeneficio()) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
-        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+        vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
@@ -1130,7 +1131,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
-    if (vm.porcentajeAgente()) {
+    if (vm.porcentajeAgente() != null) {
         importeAlCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
