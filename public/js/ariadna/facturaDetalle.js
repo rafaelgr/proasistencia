@@ -36,6 +36,7 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
+    $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
@@ -120,6 +121,8 @@ function initForm() {
     } else {
         // caso alta
         vm.facturaId(0);
+        vm.porcentajeRetencion(0);
+        vm.importeRetencion(0);
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -153,6 +156,7 @@ function admData() {
     self.receptorProvincia = ko.observable();
     //
     self.total = ko.observable();
+    self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
     //
     self.empresaId = ko.observable();
@@ -227,6 +231,9 @@ function admData() {
     self.periodo = ko.observable();
     // 
     self.tipoClienteId = ko.observable();
+    //
+    self.porcentajeRetencion = ko.observable();
+    self.importeRetencion = ko.observable();    
 }
 
 function loadData(data) {
@@ -265,7 +272,9 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
     vm.observaciones(data.observaciones);
-
+    //
+    vm.porcentajeRetencion(data.porcentajeRetencion);
+    vm.importeRetencion(data.importeRetencion);
     //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
@@ -385,7 +394,9 @@ var generarFacturaDb = function () {
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "totalAlCliente": vm.importeAlCliente(),
             "generada": 0,
-            "periodo": vm.periodo()
+            "periodo": vm.periodo(),
+            "porcentajeRetencion": vm.porcentajeRetencion(),
+            "importeRetencion": vm.importeRetencion()
         }
     };
     return data;
@@ -974,13 +985,17 @@ function loadBasesFactura(facturaId) {
         if (err) return;
         // actualizamos los totales
         var t1 = 0; // total sin iva
+        var t3 = 0; // total cuotas
         var t2 = 0; // total con iva
         for (var i = 0; i < data.length; i++) {
             t1 += data[i].base;
+            t3 += data[i].cuota;
             t2 += data[i].base + data[i].cuota;
         }
         vm.total(numeral(t1).format('0,0.00'));
+        vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
+        if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
 }
@@ -1040,6 +1055,16 @@ var cambioCampoConRecalculoDesdeCoste = function () {
 var cambioCampoConRecalculoDesdeBeneficio = function () {
     recalcularCostesImportesDesdeBeneficio();
     actualizarLineasDeLaFacturaTrasCambioCostes();
+}
+
+var cambioPorcentajeRetencion = function () {
+    if (vm.porcentajeRetencion()) {
+        var total = numeroDbf(vm.total()) * 1.0;
+        var totalCuota = numeroDbf(vm.totalCuota()) * 1.0;
+        vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
+        var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
+        vm.totalConIva(numeral(totalConIva).format('0,0.00'));
+    }
 }
 
 var recalcularCostesImportesDesdeCoste = function () {

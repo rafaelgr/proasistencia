@@ -40,6 +40,7 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
+    $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarPrefactura);
@@ -128,6 +129,8 @@ function initForm() {
         // caso alta
         vm.prefacturaId(0);
         vm.generada(0); // por defecto manual
+        vm.porcentajeRetencion(0);
+        vm.importeRetencion(0);
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -135,15 +138,15 @@ function initForm() {
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
-        } 
+        }
         if (ClienteId != 0) {
             cargaCliente(ClienteId);
             cambioCliente(ClienteId);
-        } 
+        }
         if (ContratoId != 0) {
-          loadContratos(ContratoId);
-          cambioContrato(ContratoId);
-        } 
+            loadContratos(ContratoId);
+            cambioContrato(ContratoId);
+        }
     }
 }
 
@@ -173,6 +176,7 @@ function admData() {
     self.receptorProvincia = ko.observable();
     //
     self.total = ko.observable();
+    self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
     //
     self.empresaId = ko.observable();
@@ -247,6 +251,9 @@ function admData() {
     self.periodo = ko.observable();
     //
     self.tipoClienteId = ko.observable();
+    //
+    self.porcentajeRetencion = ko.observable();
+    self.importeRetencion = ko.observable();
 }
 
 function loadData(data) {
@@ -285,6 +292,9 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
     vm.observaciones(data.observaciones);
+    //
+    vm.porcentajeRetencion(data.porcentajeRetencion);
+    vm.importeRetencion(data.importeRetencion);
 
     //
     if (vm.generada()) {
@@ -351,6 +361,7 @@ var aceptarPrefactura = function () {
 
     if (!vm.total()) {
         vm.total('0');
+        vm.totalCuota('0');
         vm.totalConIva('0');
     }
     var data = generarPrefacturaDb();
@@ -404,7 +415,9 @@ var generarPrefacturaDb = function () {
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "totalAlCliente": vm.importeAlCliente(),
             "generada": vm.generada(),
-            "periodo": vm.periodo()
+            "periodo": vm.periodo(),
+            "porcentajeRetencion": vm.porcentajeRetencion(),
+            "importeRetencion": vm.importeRetencion()
         }
     };
     return data;
@@ -499,6 +512,7 @@ function nuevaLinea() {
     llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.prefacturaId(), null, function (err, data) {
         vm.linea(data);
         vm.total(0);
+        vm.totalCuota(0);
         vm.totalConIva(0);
     });
 }
@@ -995,12 +1009,16 @@ function loadBasesPrefactura(prefacturaId) {
         // actualizamos los totales
         var t1 = 0; // total sin iva
         var t2 = 0; // total con iva
+        var t3 = 0; // tital cuotas
         for (var i = 0; i < data.length; i++) {
             t1 += data[i].base;
+            t3 += data[i].cuota;
             t2 += data[i].base + data[i].cuota;
         }
         vm.total(numeral(t1).format('0,0.00'));
+        vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
+        if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
 }
@@ -1052,6 +1070,16 @@ var initAutoCliente = function () {
     }, "Debe seleccionar un cliente válido");
 };
 
+var cambioPorcentajeRetencion = function () {
+    if (vm.porcentajeRetencion()) {
+        var total = numeroDbf(vm.total()) * 1.0;
+        var totalCuota = numeroDbf(vm.totalCuota()) * 1.0;
+        vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
+        var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
+        vm.totalConIva(numeral(totalConIva).format('0,0.00'));
+    }
+}
+
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
     actualizarLineasDeLaPrefacturaTrasCambioCostes();
@@ -1074,7 +1102,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    if (vm.tipoClienteId() == 1){
+    if (vm.tipoClienteId() == 1) {
         // es un mantenedor
         vm.importeAlCliente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
@@ -1136,10 +1164,10 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
-    if (vm.tipoClienteId() == 1){
+    if (vm.tipoClienteId() == 1) {
         // es un mantenedor
         importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
-    }    
+    }
     return importeAlCliente;
 }
 
