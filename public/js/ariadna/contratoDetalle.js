@@ -175,6 +175,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.contratoId(0);
+        vm.porcentajeRetencion(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -357,6 +358,8 @@ function admData() {
     //
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
+    //
+    self.porcentajeRetencion = ko.observable();
 }
 
 function loadData(data) {
@@ -392,6 +395,7 @@ function loadData(data) {
     vm.provincia(data.provincia);
     loadTiposVia(data.tipoViaId);
     document.title = "CONTRATO: " + vm.referencia();
+    vm.porcentajeRetencion(data.porcentajeRetencion);
 }
 
 
@@ -516,7 +520,8 @@ var guardarContrato = function (done) {
             "direccion": vm.direccion(),
             "codPostal": vm.codPostal(),
             "poblacion": vm.poblacion(),
-            "provincia": vm.provincia()
+            "provincia": vm.provincia(),
+            "porcentajeRetencion": vm.porcentajeRetencion()
         }
     };
     if (contratoId == 0) {
