@@ -928,7 +928,10 @@ function initTablaContratosLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
-                return data.replace('\n', '<br/>');
+                if (data) {
+                    return data.replace('\n', '<br/>');
+                }
+
             }
         }, {
             data: "importe",
