@@ -139,8 +139,8 @@ function initTablaFacturas() {
             data: "facturaId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
+                if (row.contafich) {
+                    html = "<i class='fa fa-file'></i>";
                 }
                 return html;
             }
@@ -240,36 +240,49 @@ function crearFactura() {
 
 function deleteFactura(id) {
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    var mens = "¿Qué desea hacer con este registro?";
+    mens += "<ul>"
+    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
+    mens += "<li><strong>Borrar:</strong> Elimina completamente la factura. ¡¡ Atención !! Puede dejar huecos en los números de factura de la serie</li>";
+    mens += "</ul>"
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Aceptar][Cancelar]'
+        buttons: '[Cancelar][Descontabilizar factura][Borrar factura]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                facturaId: id
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    var fn = buscarFacturas();
-                    fn();
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        if (ButtonPressed === "Borrar factura") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
+                if (err) return;
+                llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/" + id, data, function (err) {
+                    if (err) return;
+                    mostrarMensajeFacturaBorrada();
+                    buscarFacturas()();
+                });
+            });
+        }
+        if (ButtonPressed === "Descontabilizar factura") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err) {
+                if (err) return;
+                mostrarMensajeFacturaDescontabilizada();
+                buscarFacturas()();
             });
         }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+var mostrarMensajeFacturaDescontabilizada = function () {
+    var mens = "La factura se ha descontabilizado correctamente.";
+    mensNormal(mens);
+}
+
+var mostrarMensajeFacturaBorrada = function () {
+    var mens = "La factura se ha borrado correctamente.";
+    mensNormal(mens);
 }
 
 function editFactura(id) {
