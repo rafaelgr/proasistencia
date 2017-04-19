@@ -123,6 +123,7 @@ app.use('/api/ofertas', ofertas_router);
 app.use('/api/contratos', contratos_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
+app.use('/api/streport', require('./report-controller/reportdb'));
 
 // -- start server
 app.listen(config.apiPort);
