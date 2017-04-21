@@ -169,7 +169,7 @@ function initTablaOfertas() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteOferta(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editOferta(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printOferta(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printOferta2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
             }
@@ -291,6 +291,11 @@ var cargarOfertasNoAceptadas = function (id) {
     llamadaAjax("GET", url, null, function (err, data) {
         loadTablaOfertas(data);
     });
+}
+
+function printOferta2(id) {
+    var url = "VisReport.html?report=oferta_general&ofertaId=" + id;
+    window.open(url, "_new");
 }
 
 function printOferta(id) {

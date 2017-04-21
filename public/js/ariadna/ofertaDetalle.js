@@ -1278,8 +1278,13 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 var imprimir = function () {
     guardarOferta(function (err) {
         if (err) return;
-        printOferta(vm.ofertaId());
+        printOferta2(vm.ofertaId());
     })
+}
+
+function printOferta2(id) {
+    var url = "VisReport.html?report=oferta_general&ofertaId=" + id;
+    window.open(url, "_new");
 }
 
 function printOferta(id) {
