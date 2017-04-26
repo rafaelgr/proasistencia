@@ -9,7 +9,6 @@ var OracleAdapter = require('./OracleAdapter');
 
 router.post('/', function (req, res) {
     var command = req.body;
-    console.log("Command: ", command.database);
     if (command.database == "MySQL") MySQLAdapter.process(command, function(result){
         res.json(result);
     });

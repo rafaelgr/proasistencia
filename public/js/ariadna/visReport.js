@@ -35,8 +35,8 @@ options.appearance.scrollbarsMode = true;
 options.appearance.fullScreenMode = true;
 options.toolbar.showSendEmailButton = true;
 var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
-viewer.onEmailreport = function (e) {
-    console.log(e);
+viewer.onEmailReport = function (event) {
+    console.log('EMAIL REPORT');
 }
 // Create a new report instance
 var report = new Stimulsoft.Report.StiReport();
@@ -50,7 +50,7 @@ report.loadFile(file);
 var connectionString = "Server=" + myconfig.report.host + ";";
 connectionString += "Database=" + myconfig.report.database + ";"
 connectionString += "UserId=" + myconfig.report.user + ";"
-connectionString += " Pwd=" + myconfig.report.password + ";";
+connectionString += "Pwd=" + myconfig.report.password + ";";
 report.dictionary.databases.list[0].connectionString = connectionString;
 var sql = report.dataSources.items[0].sqlCommand;
 
