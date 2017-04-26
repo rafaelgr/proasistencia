@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
     <!-- SmartAdmin RTL Support -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">
+    <!-- Pivot table -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/1.3.0/pivot.min.css" />
+    <script src="js/libs/jquery-2.1.1.min.js"></script>
+    <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
     <!-- We recommend you use "your_style.css" to override SmartAdmin
         specific styles this will also ensure you retrain your customization with each SmartAdmin update.
         <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
@@ -41,6 +45,31 @@
     <link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+    <style>
+    body {
+        font-family: Verdana;
+    }
+    
+    .c3-line {
+        stroke-width: 3px;
+    }
+    
+    .c3 circle {
+        stroke: white;
+    }
+    
+    .c3 text {
+        font-size: 12px;
+    }
+    
+    .c3 text {
+        font-size: 12px;
+    }
+    
+    .tick line {
+        stroke: white;
+    }
+    </style>
 </head>
 <!--
 
@@ -90,7 +119,7 @@
     <header id="header" style="background-color:#FFFFFF; background-image:none;">
         <!-- #PROJECTS: projects dropdown -->
         <div>
-            <span id="logo"> <img src="img/logpro.png" style="height:30px; width: 35px;" alt="Proasistencia"> </span>
+            <span id="logo"> <img src="img/logpro.png" alt="Proasistencia" style="height:30px; width: 35px;"> </span>
         </div>
         <div>
         </div>
@@ -145,6 +174,7 @@
             </a>
             </span>
         </div>
+        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -306,9 +336,7 @@
         <div id="ribbon">
             <!-- breadcrumb -->
             <ol class="breadcrumb">
-                <li>Inicio</li>
-                <li>Administración</li>
-                <li>Capitulos</li>
+                <li>Informes</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -332,7 +360,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-square"></i> Capitulos <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-bar-chart"></i> Informes <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -365,7 +393,7 @@
             <!-- widget grid -->
             <section id="widget-grid" class="">
                 <!-- row -->
-                <div class="row">
+                <div class="row" id="presentacion">
                     <!-- NEW WIDGET START -->
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <!-- Widget ID (each widget will need unique ID)-->
@@ -384,8 +412,8 @@
                                     
                                 -->
                             <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento capitulos </h2>
+                                <span class="widget-icon"> <i class="fa fa-bar-chart"></i> </span>
+                                <h2> Panel de informes </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -398,44 +426,9 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmBuscar" class="smart-form">
-                                        <header>
-                                            Buscar capitulos por nombre.
-                                        </header>
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
-                                                    <label class="input">
-                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-search"></i>
-                                                </button>
-                                                <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <div id="tbGrupoArticulo" style="display:none;">
-                                        <table id="dt_grupoArticulo" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-square text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                    <h1>Haga clic en los enlaces disponibles para acceder a los diferentes informes de la aplicación.</h1>
+                                    <h2>Informes de ofertas</h2>
+                                    <p>Le permite obtener las ofertas seleccionando rangos de fechas, empresa y cliente.<a href="InfOfertas.html" target="_blank">Acceder al informe</a></p>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -470,24 +463,11 @@
     <!--================================================== -->
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
     <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="js/libs/jquery-2.1.1.min.js"></script>
-    <script>
-    if (!window.jQuery) {
-        document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-    }
-    </script>
-    <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
-    <script>
-    if (!window.jQuery.ui) {
-        document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-    }
-    </script>
     <!-- IMPORTANT: APP CONFIG -->
-    <!-- NUMERAL -->
-    <script src="js/numeral.min.js"></script>
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
+    <script src="js/numeral.js"></script>
+    <script src="myconfig.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
@@ -512,6 +492,10 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
+    <!-- Morris: For graphic charts -->
+    <script src="js/plugin/morris/morris.min.js"></script>
+    <script src="js/plugin/morris/raphael.min.js"></script>
+    <script src="js/moment.js"></script>
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -521,17 +505,12 @@
     <!--<script src="js/demo.min.js"></script>-->
     <!-- MAIN APP JS FILE -->
     <script src="js/app.min.js"></script>
-    <!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
-    <!-- Voice command : plugin -->
-    <script src="js/speech/voicecommand.min.js"></script>
-    <!-- SmartChat UI : plugin -->
-    <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
-    <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/grupoArticuloGeneral.js"></script>
+    <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/infGeneral.js"></script>
+    <!-- PAGE RELATED PLUGIN(S) -->
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
