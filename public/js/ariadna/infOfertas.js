@@ -23,7 +23,6 @@ viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
 }
 
-
 function initForm() {
     comprobarLogin();
     // de smart admin
@@ -118,15 +117,8 @@ function admData() {
     self.elegidosClientes = ko.observableArray([]);
 };
 
-var obtainReport = function () {
+var obtainReport = function (id) {
     if (!datosOK()) return;
-    //alert('Desde: ' + vm.dFecha() + ' Hasta:' + vm.hFecha());
-    //alert('Empresa: ' + vm.sempresaId() + ' Cliente:' + vm.sclienteId() );
-    var url = "VisReport.html?report=oferta_general";
-    url += "&dFecha=" + vm.dFecha();
-    url += "&hFecha=" + vm.hFecha();
-    if (vm.sempresaId()) url += "&empresaId=" + vm.sempresaId();
-    if ($('#txtCliente').val() != "" && vm.sclienteId()) url += "&clienteId=" + vm.sclienteId();
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
@@ -143,9 +135,10 @@ var obtainReport = function () {
     report.dictionary.databases.list[0].connectionString = connectionString;
     var sql = report.dataSources.items[0].sqlCommand;
 
-    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql);
+    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql, id);
     // Assign report to the viewer, the report will be built automatically after rendering the viewer
     viewer.report = report;
+    if (id) $('#selector').hide();
 };
 
 var printReport = function (url) {
@@ -204,8 +197,8 @@ var initAutoCliente = function () {
     });
 };
 
-var rptOfertaParametros = function (sql) {
-    var ofertaId = null;
+var rptOfertaParametros = function (sql, id) {
+    var ofertaId = id;
     var clienteId = vm.sclienteId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
@@ -230,3 +223,4 @@ var rptOfertaParametros = function (sql) {
     }
     return sql;
 }
+
