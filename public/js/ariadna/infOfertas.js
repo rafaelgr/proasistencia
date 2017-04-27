@@ -142,7 +142,7 @@ var obtainReport = function () {
     connectionString += "Database=" + myconfig.report.database + ";"
     connectionString += "UserId=" + myconfig.report.user + ";"
     connectionString += "Pwd=" + myconfig.report.password + ";";
-    connectionString += "dateStrings='date'";
+    connectionString += "dateStrings=true";
     report.dictionary.databases.list[0].connectionString = connectionString;
     var sql = report.dataSources.items[0].sqlCommand;
 
