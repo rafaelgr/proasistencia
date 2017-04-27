@@ -9,12 +9,14 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
+// License Key
 
 // Create the report viewer with default options
 var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
+
 options.appearance.scrollbarsMode = true;
 options.appearance.fullScreenMode = true;
 options.toolbar.showSendEmailButton = true;
@@ -96,11 +98,19 @@ function initForm() {
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
-    initAutoCliente();
+    initAutoCliente(); 
+    // verificamos si nos han llamado directamente
+    //     if (id) $('#selector').hide();
+    if (gup('ofertaId') != "") {
+        vm.ofertaId(gup('ofertaId'));
+        obtainReport();
+        $('#selector').hide();
+    }
 }
 
 function admData() {
     var self = this;
+    self.ofertaId = ko.observable();
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     //
@@ -117,7 +127,7 @@ function admData() {
     self.elegidosClientes = ko.observableArray([]);
 };
 
-var obtainReport = function (id) {
+var obtainReport = function () {
     if (!datosOK()) return;
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -135,10 +145,9 @@ var obtainReport = function (id) {
     report.dictionary.databases.list[0].connectionString = connectionString;
     var sql = report.dataSources.items[0].sqlCommand;
 
-    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql, id);
+    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql);
     // Assign report to the viewer, the report will be built automatically after rendering the viewer
     viewer.report = report;
-    if (id) $('#selector').hide();
 };
 
 var printReport = function (url) {
@@ -197,8 +206,8 @@ var initAutoCliente = function () {
     });
 };
 
-var rptOfertaParametros = function (sql, id) {
-    var ofertaId = id;
+var rptOfertaParametros = function (sql) {
+    var ofertaId = vm.ofertaId();
     var clienteId = vm.sclienteId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
@@ -214,10 +223,10 @@ var rptOfertaParametros = function (sql, id) {
             sql += " AND o.empresaId IN (" + empresaId + ")";
         }
         if (dFecha) {
-            sql += " AND o.fechaOferta >= '" + dFecha + "'";
+            sql += " AND o.fechaOferta >= '" + dFecha + " 00:00:00'";
         }
         if (hFecha) {
-            sql += " AND o.fechaOferta <= '" + hFecha + "'";
+            sql += " AND o.fechaOferta <= '" + hFecha + " 23:59:59'";
         }
 
     }
