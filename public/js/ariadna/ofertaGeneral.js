@@ -294,7 +294,7 @@ var cargarOfertasNoAceptadas = function (id) {
 }
 
 function printOferta2(id) {
-    var url = "VisReport.html?report=oferta_general&ofertaId=" + id;
+    var url = "InfOfertas.html?ofertaId=" + id;
     window.open(url, "_new");
 }
 
