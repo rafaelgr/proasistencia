@@ -1172,7 +1172,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printPrefactura(vm.prefacturaId());
+    printPrefactura2(vm.prefacturaId());
 }
 
 function printPrefactura(id) {
@@ -1180,6 +1180,11 @@ function printPrefactura(id) {
         if (err) return;
         informePDF(data);
     });
+}
+
+function printPrefactura2(id) {
+    var url = "InfPrefacturas.html?prefacturaId=" + id;
+    window.open(url, "_new");
 }
 
 function informePDF(data) {
