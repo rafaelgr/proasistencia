@@ -1,4 +1,4 @@
-﻿exports.process = function (command, onResult) {
+exports.process = function (command, onResult) {
 
     var end = function (result) {
         try {
