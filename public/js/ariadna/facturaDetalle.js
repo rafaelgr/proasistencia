@@ -1149,7 +1149,12 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printFactura(vm.facturaId());
+    printFactura2(vm.facturaId());
+}
+
+function printFactura2(id) {
+    var url = "InfFacturas.html?facturaId=" + id;
+    window.open(url, '_new');
 }
 
 function printFactura(id) {
