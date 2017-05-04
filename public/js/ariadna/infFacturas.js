@@ -46,6 +46,10 @@ function initForm() {
     $("#frmRptOfertas").submit(function () {
         return false;
     });
+    $("#frmExportar").submit(function () {
+        return false;
+    });
+    $("#btnExportar").click(exportarPDF);
     //
     $('#txtRFecha').daterangepicker({
         "showDropdowns": true,
@@ -256,3 +260,8 @@ var rptFacturaParametros = function (sql) {
     return sql;
 }
 
+var exportarPDF = function () {
+    alert("EXPORTAR...");
+    $("#mensajeExportacion").hide();
+    $("#mensajeEspera").show();
+}
