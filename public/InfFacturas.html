@@ -29,6 +29,9 @@
 
     <!-- Report viewer scripts, may be external -->
     <script src="js/numeral.js"></script>
+    <script src="js/sprintf/sprintf.min.js"></script>
+    <!-- CUSTOM NOTIFICATION -->
+    <script src="js/notification/SmartNotification.min.js"></script>    
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -135,7 +138,7 @@
                     <form id="frmExportar" class="smart-form">
                         <fieldset>
                             <section>
-                                <div class="row"  id="mensajeExportacion">
+                                <div class="row" id="mensajeExportacion">
                                     <section class="col col-md-12">
                                         <div>
                                             Este proceso exportará las facturas a ficheros PDF individuales, uno por factura, con el nombre S-AAA-NNNNNN.PDF. <br/>                                            Donde: <br/> S = Letra de serie // AAAA = Año de la fectura // NNNNNN = Número
@@ -146,7 +149,7 @@
                                         </div>
                                     </section>
                                 </div>
-                                <div class="row" style="display:none;"  id="mensajeEspera">
+                                <div class="row" style="display:none;" id="mensajeEspera">
                                     <section class="col col-md-4">
                                         <img src="img/jar-loading.gif" style="border: none; width: 100%;" alt="Espere...">
                                     </section>

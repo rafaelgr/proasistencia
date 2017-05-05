@@ -118,7 +118,7 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
-            obtainReport();
+            obtainReportPdf();
             $('#selector').hide();
         });
     }
@@ -167,6 +167,48 @@ var obtainReport = function () {
         report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
         // Assign report to the viewer, the report will be built automatically after rendering the viewer
         viewer.report = report;
+    });
+
+};
+
+var obtainReportPdf = function () {
+    var file = "../reports/factura_general.mrt";
+    // Create a new report instance
+    var report = new Stimulsoft.Report.StiReport();
+    verb = "GET";
+    url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
+    llamadaAjax(verb, url, null, function (err, data) {
+        var infFacturas = data.infFacturas;
+        file = "../reports/" + infFacturas + ".mrt";
+        report.loadFile(file);
+        //report.setVariable("vTest", "11,16,18");
+        //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
+        var connectionString = "Server=" + myconfig.report.host + ";";
+        connectionString += "Database=" + myconfig.report.database + ";"
+        connectionString += "UserId=" + myconfig.report.user + ";"
+        connectionString += "Pwd=" + myconfig.report.password + ";";
+        report.dictionary.databases.list[0].connectionString = connectionString;
+        var sql = report.dataSources.items[0].sqlCommand;
+
+        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
+        // Render report
+        report.render();
+        // Create an PDF settings instance. You can change export settings.
+        var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
+        // Create an PDF service instance.
+        var service = new Stimulsoft.Report.Export.StiPdfExportService();
+
+        // Create a MemoryStream object.
+        var stream = new Stimulsoft.System.IO.MemoryStream();
+        // Export PDF using MemoryStream.
+        service.exportTo(report, stream, settings);
+
+        // Get PDF data from MemoryStream object
+        var data = stream.toArray();
+        // Get report file name
+        var fileName = String.isNullOrEmpty(report.reportAlias) ? report.reportName : report.reportAlias;
+        // Save data to file
+        Object.saveAs(data, fileName + ".pdf", "application/pdf")
     });
 
 };
@@ -261,7 +303,24 @@ var rptFacturaParametros = function (sql) {
 }
 
 var exportarPDF = function () {
-    alert("EXPORTAR...");
     $("#mensajeExportacion").hide();
     $("#mensajeEspera").show();
+    var clienteId = vm.sclienteId();
+    var empresaId = vm.sempresaId();
+
+    if (!empresaId) empresaId = 0;
+    if (!clienteId) clienteId = 0;
+
+    var dFecha = vm.dFecha();
+    var hFecha = vm.hFecha();
+
+    // (1) Obtener una lista de las facturas implicadas.
+    // la lista debe devolver también el fichero de informe asociado
+    var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
+    url += "/" + empresaId;
+    url += "/" + clienteId;
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+
+    });
 }
