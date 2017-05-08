@@ -180,9 +180,11 @@ var obtainReportPdf = function () {
     llamadaAjax(verb, url, null, function (err, data) {
         var infFacturas = data.infFacturas;
         file = "../reports/" + infFacturas + ".mrt";
+        file = "../reports/SampleList.mrt";
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
         //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
+        /*
         var connectionString = "Server=" + myconfig.report.host + ";";
         connectionString += "Database=" + myconfig.report.database + ";"
         connectionString += "UserId=" + myconfig.report.user + ";"
@@ -191,6 +193,7 @@ var obtainReportPdf = function () {
         var sql = report.dataSources.items[0].sqlCommand;
 
         report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
+        */
         // Render report
         report.render();
         // Create an PDF settings instance. You can change export settings.
@@ -201,14 +204,14 @@ var obtainReportPdf = function () {
         // Create a MemoryStream object.
         var stream = new Stimulsoft.System.IO.MemoryStream();
         // Export PDF using MemoryStream.
-        service.exportTo(report, stream, settings);
-
-        // Get PDF data from MemoryStream object
-        var data = stream.toArray();
-        // Get report file name
-        var fileName = String.isNullOrEmpty(report.reportAlias) ? report.reportName : report.reportAlias;
-        // Save data to file
-        Object.saveAs(data, fileName + ".pdf", "application/pdf")
+        service.exportToAsync(function () {
+            // Get PDF data from MemoryStream object
+            var data = stream.toArray();
+            // Get report file name
+            var fileName = String.isNullOrEmpty(report.reportAlias) ? report.reportName : report.reportAlias;
+            // Save data to file
+            Object.saveAs(data, fileName + ".pdf", "application/pdf")
+        }, report, stream, settings);
     });
 
 };
