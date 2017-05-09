@@ -118,7 +118,7 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
-            obtainReportPdf();
+            obtainReport();
             $('#selector').hide();
         });
     }
@@ -180,7 +180,7 @@ var obtainReportPdf = function () {
     llamadaAjax(verb, url, null, function (err, data) {
         var infFacturas = data.infFacturas;
         file = "../reports/" + infFacturas + ".mrt";
-        file = "../reports/SampleList.mrt";
+        file = "../reports/SimpleList.mrt";
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
         //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
@@ -195,7 +195,13 @@ var obtainReportPdf = function () {
         report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
         */
         // Render report
+        report.dictionary.databases.clear();
+        var dataSet = new Stimulsoft.System.Data.DataSet("Demo");
+        dataSet.readJsonFile("../reports/Demo.json");
+        report.dictionary.databases.clear();
+        report.regData("Demo", "Demo", dataSet);
         report.render();
+        //viewer.report = report;
         // Create an PDF settings instance. You can change export settings.
         var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
         // Create an PDF service instance.
