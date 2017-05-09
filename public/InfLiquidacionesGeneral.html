@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>INFORMES FACTURAS</title>
+    <title>INFORMES LIQUIDACIONES GENERAL</title>
 
     <!-- Report viewer Office2013 style -->
     <link href="../css/streport/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet">
@@ -56,7 +56,7 @@
     <!-- MAIN APP JS FILE -->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/infFacturas.js"></script>
+    <script src="js/ariadna/infLiquidacionesGeneral.js"></script>
 </head>
 
 <body>
@@ -66,7 +66,7 @@
                 <h2><i class="fa fa-bar-chart"></i> Informe de facturas</h2>
             </div>
             <div class="row" style="background-color:darkorange; border:solid 1px;">
-                <form id="frmRptOfertas" class="smart-form">
+                <form id="frmRptLiquidaciones" class="smart-form">
                     <fieldset>
                         <div class="row">
                             <section class="col col-md-2">
@@ -76,27 +76,17 @@
                                 </label>
                             </section>
                             <div class="col col-md-5">
-                                <label class="label">Empresa</label>
+                                <label class="label">Colaborador</label>
                                 <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbColaboradores" name="cmbColaboradores" data-bind="options: posiblesColaboradores, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosColaboradores, selected2:{}"></select><i></i>
                                                     </label>
                             </div>
-                            <section class="col col-md-5">
-                                <label class="label">Cliente</label>
-                                <label class="input">
-                                    <input id="txtCliente" name="txtCliente" />
-                                </label>
-                            </section>
                         </div>
                     </fieldset>
                     <fieldset>
                         <div class="pull-right">
-                            <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
+                            <button id="btnImprimir" title="Imprimir informe" class="btn btn-success btn-circle btn-lg">
                                 <i class="fa fa-lg fa-print"></i>
-                            </button>
-                            <button id="btnMostrarModal" data-toggle="modal" data-target="#modalExportar" title="Exportar facturas en ficheros PDF individuales"
-                                class="btn btn-success btn-circle btn-lg">
-                                <i class="fa fa-lg fa-file-pdf-o"></i>
                             </button>
                         </div>
                     </fieldset>
@@ -124,60 +114,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="modalExportar" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title"> EXPORTACION PDF</h4>
-                </div>
-                <div class="modal-body no-padding">
-                    <form id="frmExportar" class="smart-form">
-                        <fieldset>
-                            <section>
-                                <div class="row" id="mensajeExportacion">
-                                    <section class="col col-md-12">
-                                        <div>
-                                            Este proceso exportará las facturas a ficheros PDF individuales, uno por factura, con el nombre S-AAA-NNNNNN.PDF. <br/>                                            Donde: <br/> S = Letra de serie // AAAA = Año de la fectura // NNNNNN = Número
-                                            de la factura <br/> Al final del proceso de exportación se le mostrará el directorio
-                                            donde se encuentran todos los ficheros exportados. Puede acceder a ese mismo
-                                            directorio por un enlace que figura en la pantalla principal de informes, en
-                                            el apartado "Informes de facturas".
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="row" style="display:none;" id="mensajeEspera">
-                                    <section class="col col-md-4">
-                                        <img src="img/jar-loading.gif" style="border: none; width: 100%;" alt="Espere...">
-                                    </section>
-                                    <section class="col col-md-8">
-                                        <div>
-                                            <br/><br/><br/>
-                                            <h3>ESPERE POR FAVOR...</h3>
-                                            Sus facturas se están exportando, este proceso puede tardar un tiempo considerable dependiendo del número de facturas a procesar.
-                                            <br/>
-                                        </div>
-                                    </section>
-                                </div>
-                            </section>
-                        </fieldset>
-                        <footer>
-                            <button id="btnExportar" class="btn btn-primary">
-                                Exportar
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Cancelar
-                            </button>
-                        </footer>
-                    </form>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
     </div>
     <script type="text/javascript">
         (function ($) {

@@ -43,13 +43,9 @@ function initForm() {
     //
     $("#btnImprimir").click(obtainReport);
     // avoid form submmit
-    $("#frmRptOfertas").submit(function () {
+    $("#frmRptLiquidaciones").submit(function () {
         return false;
     });
-    $("#frmExportar").submit(function () {
-        return false;
-    });
-    $("#btnExportar").click(exportarPDF);
     //
     $('#txtRFecha').daterangepicker({
         "showDropdowns": true,
@@ -107,8 +103,8 @@ function initForm() {
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
     //
-    $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
+    $("#cmbColaboradores").select2(select2Spanish());
+    loadColaboradores();
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -133,8 +129,8 @@ function admData() {
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
     //
-    self.posiblesEmpresas = ko.observableArray([]);
-    self.elegidosEmpresas = ko.observableArray([]);
+    self.posiblesColaboradores = ko.observableArray([]);
+    self.elegidosColaboradores = ko.observableArray([]);
     //
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
@@ -229,13 +225,13 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptOfertas').validate({
         rules: {
-            cmbEmpresas: {
+            cmbColaboradores: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            cmbEmpresas: {
+            cmbColaboradores: {
                 required: "Debe elegir una empresa"
             }
         },
@@ -248,12 +244,12 @@ function datosOK() {
     return $('#frmRptOfertas').valid();
 }
 
-function loadEmpresas(empresaId) {
+function loadColaboradores(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
         var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
-        vm.posiblesEmpresas(empresas);
-        $("#cmbEmpresas").val([empresaId]).trigger('change');
+        vm.posiblesColaboradores(empresas);
+        $("#cmbColaboradores").val([empresaId]).trigger('change');
     });
 }
 

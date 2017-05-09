@@ -17699,3 +17699,774 @@ Error: Connection lost: The server closed the connection.
  VERSION: 2.0.26
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/04/02017 16:36:51
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/04/02017 00:39:08
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/04/02017 13:09:41
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/04/02017 13:09:44
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/04/02017 13:09:56
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/04/02017 13:10:00
+-------------------------------------------
+ VERSION: 2.0.27
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/05/02017 18:36:33
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/05/02017 02:37:26
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/05/02017 18:06:36
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 07:44:54
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 07:44:58
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 07:45:02
+-------------------------------------------
+ VERSION: 2.0.28
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 09:35:53
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    at TCP.onread (net.js:531:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\tipos_mantenimientos\tipos_mantenimientos_db_mysql.js:21:16)
+    at Object.module.exports.getTiposMantenimientos (C:\Ariadna\proasistencia\lib\tipos_mantenimientos\tipos_mantenimientos_db_mysql.js:48:22)
+    at C:\Ariadna\proasistencia\lib\tipos_mantenimientos\tipos_mantenimientos_controller.js:9:27
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 13:53:15
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:11:41
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'proasistencia'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:25:29
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'proasistencia'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:25:32
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'proasistencia'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:25:35
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'proasistencia'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:25:50
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_BAD_DB_ERROR: Unknown database 'proasistencia'
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 16:25:53
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 17:00:50
+-------------------------------------------
+ VERSION: 2.0.29
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/05/02017 17:43:04
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/05/02017 01:53:15
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/05/02017 13:49:00
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/05/02017 13:49:03
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: Cannot read property 'fecha' of null
+    at C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:332:51
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3694:9
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3691:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+    at Query._callback (C:\Ariadna\proasistencia\lib\informes\informes_db_mysql.js:314:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/05/02017 13:49:06
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/05/02017 21:59:10
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/05/02017 01:56:13
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 10:41:08
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:22
+        if (err) throw err;
+                 ^
+
+Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 10:55:08
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:22
+        if (err) throw err;
+                 ^
+
+Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 10:55:13
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:22
+        if (err) throw err;
+                 ^
+
+Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 10:55:18
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:22
+        if (err) throw err;
+                 ^
+
+Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 11:10:42
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:22
+        if (err) throw err;
+                 ^
+
+Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:21:16)
+    at Object.module.exports.loginUsuarios (C:\Ariadna\proasistencia\lib\usuarios\usuarios_db_mysql.js:82:19)
+    at C:\Ariadna\proasistencia\lib\usuarios\usuarios_controller.js:52:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 11:10:46
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/05/02017 16:36:02
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:115:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/05/02017 02:07:21
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:78
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:74:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    at TCP.onread (net.js:531:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:136:18)
+    at Object.module.exports.getConnection (C:\Ariadna\proasistencia\lib\comun\comun.js:21:16)
+    at Object.module.exports.getCliente (C:\Ariadna\proasistencia\lib\clientes\clientes_db_mysql.js:306:26)
+    at C:\Ariadna\proasistencia\lib\clientes\clientes_controller.js:146:16
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/05/02017 13:07:22
+-------------------------------------------
+ VERSION: 2.0.30
+ PORT: 8080
+-------------------------------------------

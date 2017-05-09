@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.0.30",
+  "version": "2.0.31",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,8 @@
     "mysql": "^2.13.0",
     "numeral": "^1.5.3",
     "serve-index": "^1.7.2",
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "^1.0.3",
+    "stimulsoft-reports-js": "latest"
   },
   "devDependencies": {
     "mysql": "^2.12.0"
