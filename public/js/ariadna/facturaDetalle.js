@@ -233,7 +233,9 @@ function admData() {
     self.tipoClienteId = ko.observable();
     //
     self.porcentajeRetencion = ko.observable();
-    self.importeRetencion = ko.observable();    
+    self.importeRetencion = ko.observable();
+    //
+    self.mantenedorDesactivado = ko.observable();
 }
 
 function loadData(data) {
@@ -275,6 +277,7 @@ function loadData(data) {
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
+    vm.mantenedorDesactivado(data.mantenedorDesactivado);
     //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
@@ -396,7 +399,8 @@ var generarFacturaDb = function () {
             "generada": 0,
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
-            "importeRetencion": vm.importeRetencion()
+            "importeRetencion": vm.importeRetencion(),
+            "mantenedorDesactivado": vm.mantenedorDesactivado()
         }
     };
     return data;
@@ -1069,7 +1073,7 @@ var cambioPorcentajeRetencion = function () {
 
 var recalcularCostesImportesDesdeCoste = function () {
     if (vm.coste() != null) {
-        if (vm.porcentajeBeneficio()) {
+        if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
@@ -1079,7 +1083,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    if (vm.tipoClienteId() == 1) {
+    if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
         // es un mantenedor
         vm.importeAlCliente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
@@ -1096,6 +1100,9 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 
 var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
     var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+    if (vm.mantenedorDesactivado()) {
+        url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
+    }
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
@@ -1141,7 +1148,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
-    if (vm.tipoClienteId() == 1) {
+    if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
         // es un mantenedor
         importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
     }
