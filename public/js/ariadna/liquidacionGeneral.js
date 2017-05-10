@@ -44,6 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarLiquidacionesAcumuladas());
+    $('#btnPrint').click(printGeneral);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -185,6 +186,7 @@ function buscarLiquidacionesAcumuladas() {
 
 
 
+
 function editLiquidacion(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
@@ -240,3 +242,9 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+var printGeneral = function () {
+    if (!datosOK()) return;
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha());
+    window.open(url, '_new');
+}

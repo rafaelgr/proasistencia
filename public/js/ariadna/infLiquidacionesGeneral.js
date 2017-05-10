@@ -108,7 +108,7 @@ function initForm() {
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
-    if (gup('dFecha') != "" && gup("hFecha" != "")) {
+    if (gup('dFecha') != "" && gup('hFecha') != "") {
         vm.dFecha(gup('dFecha'));
         vm.hFecha(gup('hFecha'));
         obtainReport();
