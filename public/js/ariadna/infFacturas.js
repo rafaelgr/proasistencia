@@ -49,7 +49,7 @@ function initForm() {
     $("#frmExportar").submit(function () {
         return false;
     });
-    $("#btnExportar").click(exportarPDF);
+    $("#btnExportar").click(obtainReportPdf);
     //
     $('#txtRFecha').daterangepicker({
         "showDropdowns": true,
@@ -321,6 +321,5 @@ var exportarPDF = function () {
     url += "/" + clienteId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
-
     });
 }
