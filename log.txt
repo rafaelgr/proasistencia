@@ -18470,3 +18470,316 @@ Error: ER_CON_COUNT_ERROR: Too many connections
  VERSION: 2.0.30
  PORT: 8080
 -------------------------------------------
+module.js:427
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\config.json: Unexpected string
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:424:27)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\sqlany\sqlany_db_mysql.js:2:14)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+module.js:427
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\config.json: Unexpected string
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:424:27)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\sqlany\sqlany_db_mysql.js:2:14)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+module.js:427
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\config.json: Unexpected string
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:424:27)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\sqlany\sqlany_db_mysql.js:2:14)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+module.js:427
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\config.json: Unexpected string
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:424:27)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\sqlany\sqlany_db_mysql.js:2:14)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+module.js:427
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\config.json: Unexpected string
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:424:27)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\sqlany\sqlany_db_mysql.js:2:14)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'stimulsoft-reports-js'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\facturas\facturas_db_mysql.js:15:18)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'stimulsoft-reports-js'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\facturas\facturas_db_mysql.js:15:18)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'stimulsoft-reports-js'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\facturas\facturas_db_mysql.js:15:18)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'stimulsoft-reports-js'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\facturas\facturas_db_mysql.js:15:18)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'stimulsoft-reports-js'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\facturas\facturas_db_mysql.js:15:18)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'pako'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\lib\flate.js:4:12)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'pako'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\lib\flate.js:4:12)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module './lib/utils/common'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\node_modules\pako\index.js:4:17)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module './lib/utils/common'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\node_modules\pako\index.js:4:17)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module './lib/utils/common'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\node_modules\pako\index.js:4:17)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module './lib/utils/common'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\node_modules\pako\index.js:4:17)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module './lib/utils/common'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\jszip\node_modules\pako\index.js:4:17)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module 'tiny-inflate'
+    at Function.Module._resolveFilename (module.js:325:15)
+    at Function.Module._load (module.js:276:25)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\stimulsoft-reports-js\node_modules\opentype.js\src\opentype.js:10:15)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/05/02017 18:20:44
+-------------------------------------------
+ VERSION: 2.0.31
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/05/02017 18:21:56
+-------------------------------------------
+ VERSION: 2.0.31
+ PORT: 8080
+-------------------------------------------
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:72:20)
+    at Socket.emit (events.js:166:7)
+    at endReadableNT (_stream_readable.js:913:12)
+    at nextTickCallbackWith2Args (node.js:442:9)
+    at process._tickCallback (node.js:356:17)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/05/02017 05:40:48
+-------------------------------------------
+ VERSION: 2.0.31
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/05/02017 15:00:41
+-------------------------------------------
+ VERSION: 2.0.31
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/05/02017 16:40:18
+-------------------------------------------
+ VERSION: 2.0.31
+ PORT: 8080
+-------------------------------------------
