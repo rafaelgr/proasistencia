@@ -1,1 +1,852 @@
-{"ReportVersion":"2017.1.1","ReportGuid":"552a09e30f0e56fcecc57cff376a5f06","ReportName":"FacturaFondogar","ReportAlias":"FacturaFondogar","ReportFile":"factura_fondogar.mrt","ReportAuthor":"rafa@myariadna.com","ReportCreated":"/Date(1493758043000+0200)/","ReportChanged":"/Date(1493758043000+0200)/","EngineVersion":"EngineV2","CalculationMode":"Interpretation","Dictionary":{"DataSources":{"0":{"Ident":"StiMySqlSource","Name":"cabecera","Alias":"cabecera","Columns":{"0":{"Name":"ano","Index":-1,"NameInSource":"ano","Alias":"ano","Type":"System.Int32"},"1":{"Name":"clienteId","Index":-1,"NameInSource":"clienteId","Alias":"clienteId","Type":"System.Int32"},"2":{"Name":"codPostal2","Index":-1,"NameInSource":"codPostal2","Alias":"codPostal2","Type":"System.String"},"3":{"Name":"contratoClienteMantenimientoId","Index":-1,"NameInSource":"contratoClienteMantenimientoId","Alias":"contratoClienteMantenimientoId","Type":"System.Int32"},"4":{"Name":"cuenta","Index":-1,"NameInSource":"cuenta","Alias":"cuenta","Type":"System.String"},"5":{"Name":"direccion2","Index":-1,"NameInSource":"direccion2","Alias":"direccion2","Type":"System.String"},"6":{"Name":"emisorCodPostal","Index":-1,"NameInSource":"emisorCodPostal","Alias":"emisorCodPostal","Type":"System.String"},"7":{"Name":"emisorDireccion","Index":-1,"NameInSource":"emisorDireccion","Alias":"emisorDireccion","Type":"System.String"},"8":{"Name":"emisorNif","Index":-1,"NameInSource":"emisorNif","Alias":"emisorNif","Type":"System.String"},"9":{"Name":"emisorNombre","Index":-1,"NameInSource":"emisorNombre","Alias":"emisorNombre","Type":"System.String"},"10":{"Name":"emisorPoblacion","Index":-1,"NameInSource":"emisorPoblacion","Alias":"emisorPoblacion","Type":"System.String"},"11":{"Name":"emisorProvincia","Index":-1,"NameInSource":"emisorProvincia","Alias":"emisorProvincia","Type":"System.String"},"12":{"Name":"empresaId","Index":-1,"NameInSource":"empresaId","Alias":"empresaId","Type":"System.Int32"},"13":{"Name":"facturaId","Index":-1,"NameInSource":"facturaId","Alias":"facturaId","Type":"System.Int32"},"14":{"Name":"fecha","Index":-1,"NameInSource":"fecha","Alias":"fecha","Type":"System.DateTime"},"15":{"Name":"formaPago","Index":-1,"NameInSource":"formaPago","Alias":"formaPago","Type":"System.String"},"16":{"Name":"iban","Index":-1,"NameInSource":"iban","Alias":"iban","Type":"System.String"},"17":{"Name":"importeRetencion","Index":-1,"NameInSource":"importeRetencion","Alias":"importeRetencion","Type":"System.Nullable`1[System.Decimal]"},"18":{"Name":"numero","Index":-1,"NameInSource":"numero","Alias":"numero","Type":"System.Int32"},"19":{"Name":"numeroVencimientos","Index":-1,"NameInSource":"numeroVencimientos","Alias":"numeroVencimientos","Type":"System.Int32"},"20":{"Name":"observaciones","Index":-1,"NameInSource":"observaciones","Alias":"observaciones","Type":"System.String"},"21":{"Name":"periodo","Index":-1,"NameInSource":"periodo","Alias":"periodo","Type":"System.String"},"22":{"Name":"poblacion2","Index":-1,"NameInSource":"poblacion2","Alias":"poblacion2","Type":"System.String"},"23":{"Name":"porcentajeRetencion","Index":-1,"NameInSource":"porcentajeRetencion","Alias":"porcentajeRetencion","Type":"System.Decimal"},"24":{"Name":"postalCodPostal","Index":-1,"NameInSource":"postalCodPostal","Alias":"postalCodPostal","Type":"System.String"},"25":{"Name":"postalDireccion","Index":-1,"NameInSource":"postalDireccion","Alias":"postalDireccion","Type":"System.String"},"26":{"Name":"postalPoblacion","Index":-1,"NameInSource":"postalPoblacion","Alias":"postalPoblacion","Type":"System.String"},"27":{"Name":"postalProvincia","Index":-1,"NameInSource":"postalProvincia","Alias":"postalProvincia","Type":"System.String"},"28":{"Name":"postalTipoVia","Index":-1,"NameInSource":"postalTipoVia","Alias":"postalTipoVia","Type":"System.String"},"29":{"Name":"prefacturaId","Index":-1,"NameInSource":"prefacturaId","Alias":"prefacturaId","Type":"System.String"},"30":{"Name":"primerVencimiento","Index":-1,"NameInSource":"primerVencimiento","Alias":"primerVencimiento","Type":"System.Decimal"},"31":{"Name":"provincia2","Index":-1,"NameInSource":"provincia2","Alias":"provincia2","Type":"System.String"},"32":{"Name":"receptorCodPostal","Index":-1,"NameInSource":"receptorCodPostal","Alias":"receptorCodPostal","Type":"System.String"},"33":{"Name":"receptorDireccion","Index":-1,"NameInSource":"receptorDireccion","Alias":"receptorDireccion","Type":"System.String"},"34":{"Name":"receptorNif","Index":-1,"NameInSource":"receptorNif","Alias":"receptorNif","Type":"System.String"},"35":{"Name":"receptorNombre","Index":-1,"NameInSource":"receptorNombre","Alias":"receptorNombre","Type":"System.String"},"36":{"Name":"receptorPoblacion","Index":-1,"NameInSource":"receptorPoblacion","Alias":"receptorPoblacion","Type":"System.String"},"37":{"Name":"receptorProvincia","Index":-1,"NameInSource":"receptorProvincia","Alias":"receptorProvincia","Type":"System.String"},"38":{"Name":"restoVencimiento","Index":-1,"NameInSource":"restoVencimiento","Alias":"restoVencimiento","Type":"System.Decimal"},"39":{"Name":"serie","Index":-1,"NameInSource":"serie","Alias":"serie","Type":"System.String"},"40":{"Name":"total","Index":-1,"NameInSource":"total","Alias":"total","Type":"System.Decimal"},"41":{"Name":"totalConIva","Index":-1,"NameInSource":"totalConIva","Alias":"totalConIva","Type":"System.Decimal"},"42":{"Name":"vencimiento","Index":-1,"NameInSource":"vencimiento","Alias":"vencimiento","Type":"System.DateTime"}},"NameInSource":"PROA_REPORT","SqlCommand":"SELECT\r\npf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento,\r\ntpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,\r\ncl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,4), \"****************\", SUBSTR(cl.iban,20))  AS cuenta,\r\ncnt.direccion AS direccion2, cnt.codPostal AS codPostal2, cnt.poblacion AS poblacion2, cnt.provincia AS provincia2\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3"},"1":{"Ident":"StiMySqlSource","Name":"lineas","Alias":"lineas","Columns":{"0":{"Name":"articuloId","Index":-1,"NameInSource":"articuloId","Alias":"articuloId","Type":"System.Int32"},"1":{"Name":"cantidad","Index":-1,"NameInSource":"cantidad","Alias":"cantidad","Type":"System.Decimal"},"2":{"Name":"capituloLinea","Index":-1,"NameInSource":"capituloLinea","Alias":"capituloLinea","Type":"System.String"},"3":{"Name":"coste","Index":-1,"NameInSource":"coste","Alias":"coste","Type":"System.Decimal"},"4":{"Name":"descripcion","Index":-1,"NameInSource":"descripcion","Alias":"descripcion","Type":"System.String"},"5":{"Name":"facturaId","Index":-1,"NameInSource":"facturaId","Alias":"facturaId","Type":"System.Int32"},"6":{"Name":"facturaLineaId","Index":-1,"NameInSource":"facturaLineaId","Alias":"facturaLineaId","Type":"System.Int32"},"7":{"Name":"grupo","Index":-1,"NameInSource":"grupo","Alias":"grupo","Type":"System.String"},"8":{"Name":"importe","Index":-1,"NameInSource":"importe","Alias":"importe","Type":"System.Decimal"},"9":{"Name":"linea","Index":-1,"NameInSource":"linea","Alias":"linea","Type":"System.Decimal"},"10":{"Name":"porcentaje","Index":-1,"NameInSource":"porcentaje","Alias":"porcentaje","Type":"System.Decimal"},"11":{"Name":"porcentajeAgente","Index":-1,"NameInSource":"porcentajeAgente","Alias":"porcentajeAgente","Type":"System.Decimal"},"12":{"Name":"porcentajeBeneficio","Index":-1,"NameInSource":"porcentajeBeneficio","Alias":"porcentajeBeneficio","Type":"System.Decimal"},"13":{"Name":"tipoIva","Index":-1,"NameInSource":"tipoIva","Alias":"tipoIva","Type":"System.String"},"14":{"Name":"tipoIvaId","Index":-1,"NameInSource":"tipoIvaId","Alias":"tipoIvaId","Type":"System.Int32"},"15":{"Name":"totalLinea","Index":-1,"NameInSource":"totalLinea","Alias":"totalLinea","Type":"System.Decimal"},"16":{"Name":"unidadId","Index":-1,"NameInSource":"unidadId","Alias":"unidadId","Type":"System.Int32"},"17":{"Name":"capitulo","Index":-1,"NameInSource":"capitulo","Alias":"capitulo","Type":"System.String"}},"NameInSource":"PROA_REPORT","Type":"Table","SqlCommand":"SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, SUBSTRING_INDEX(pfl.capituloLinea, ':', -1) as capitulo\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId"},"2":{"Ident":"StiMySqlSource","Name":"bases","Alias":"bases","Columns":{"0":{"Name":"base","Index":-1,"NameInSource":"base","Alias":"base","Type":"System.Decimal"},"1":{"Name":"cuota","Index":-1,"NameInSource":"cuota","Alias":"cuota","Type":"System.Decimal"},"2":{"Name":"facturaBaseId","Index":-1,"NameInSource":"facturaBaseId","Alias":"facturaBaseId","Type":"System.Int32"},"3":{"Name":"facturaId","Index":-1,"NameInSource":"facturaId","Alias":"facturaId","Type":"System.Int32"},"4":{"Name":"porcentaje","Index":-1,"NameInSource":"porcentaje","Alias":"porcentaje","Type":"System.Decimal"},"5":{"Name":"tipoIva","Index":-1,"NameInSource":"tipoIva","Alias":"tipoIva","Type":"System.String"},"6":{"Name":"tipoIvaId","Index":-1,"NameInSource":"tipoIvaId","Alias":"tipoIvaId","Type":"System.Int32"}},"NameInSource":"PROA_REPORT","SqlCommand":"SELECT pfb.*, t.nombre AS tipoIva\r\nFROM facturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"}},"Databases":{"0":{"Ident":"StiMySqlDatabase","Name":"PROA_REPORT","Alias":"PROA_REPORT","ConnectionStringEncrypted":"41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"}},"Relations":{"0":{"Name":"cabecera_lineas","ChildColumns":{"0":"facturaId"},"ParentColumns":{"0":"facturaId"},"NameInSource":"cabecera_lineas","Alias":"cabecera_lineas","IsCloud":null,"ParentSource":"cabecera","ChildSource":"lineas"},"1":{"Name":"cabecera_bases","ChildColumns":{"0":"facturaId"},"ParentColumns":{"0":"facturaId"},"NameInSource":"cabecera_bases","Alias":"cabecera_bases","IsCloud":null,"ParentSource":"cabecera","ChildSource":"bases"}}},"Pages":{"0":{"Ident":"StiPage","Name":"Page1","Guid":"38f26eb7b6405f95fef070b22c8c1cfc","Interaction":{"Ident":"StiInteraction"},"Border":";;2;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiPageHeaderBand","Name":"PageHeaderBand1","ClientRectangle":"0,0.4,19,2.2","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiImage","Name":"Image1","Guid":"d28b88a72f6d7eb7bb2d6d88b75e75d3","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"15.6,0.2,3.2,2","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Stretch":true,"Image":"data:image/png;base64,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"}}},"1":{"Ident":"StiPageFooterBand","Name":"PageFooterBand1","ClientRectangle":"0,31.64,19,1.6","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text46","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,0.96,18.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{PageNumber} de {TotalPageCount}"},"HorAlignment":"Center","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"1":{"Ident":"StiText","Name":"Text7","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,0.36,18.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"FONDOGAR, S.L.  R.M. MADRID. Tomo 8618, Secc. 8ª, Folio 166, Hoja M-138714 C.I.F.: B-81002057 – Avda. Ramón y Cajal 37 – 28470 - Cercedilla (Madrid)"},"HorAlignment":"Center","Font":";7;;","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"}}},"2":{"Ident":"StiDataBand","Name":"Datacabecera","ClientRectangle":"0,3.4,19,4.6","Interaction":{"Ident":"StiBandInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text11","Guid":"ae6f670a871fb23678ae6720e4aaa44f","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,0.8,8.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"NIF: {cabecera.receptorNif}"},"Font":";10;;","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"1":{"Ident":"StiText","Name":"Text12","Guid":"81cfcdecc907ac3cd1e9b1899f4e428b","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,0.2,8.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.receptorNombre}"},"Font":";11;Bold;","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"},"2":{"Ident":"StiText","Name":"Text13","Guid":"d91479a04b85019e78ddea8554b914ce","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,1.4,8.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.receptorDireccion}"},"Font":";10;;","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"},"3":{"Ident":"StiText","Name":"Text14","Guid":"a42d8c169076de1c6194f5108f58af87","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,2,8.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}"},"Font":";10;;","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"},"4":{"Ident":"StiText","Name":"Text1","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"9.6,0.2,2.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"FACTURA Nº: "},"Font":";10;;","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"5":{"Ident":"StiText","Name":"Text2","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"9.6,1,9.2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"PERIODO FACTURADO: {cabecera.periodo}"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"6":{"Ident":"StiText","Name":"Text3","Guid":"5ffb76caf207fddb6b054e673fb7072b","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"9.6,1.6,9.2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"FORMA DE PAGO: {cabecera.formaPago}"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"7":{"Ident":"StiText","Name":"Text4","Guid":"d495c8dfce906ed9f13cf12fa22036fa","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"9.6,2.8,9.2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"CUENTA: {cabecera.cuenta}"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"8":{"Ident":"StiText","Name":"Text5","Guid":"fb4412266ffd6f1568b1d36d79e3497a","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"9.6,2.2,9.2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"VENCIMIENTO: {cabecera.vencimiento.ToString(\"dd/MM/yyyy\")}"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"9":{"Ident":"StiText","Name":"Text6","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,3.6,18.6,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"LUGAR DE TRABAJO: {cabecera.direccion2} ({cabecera.codPostal2} {cabecera.poblacion2}) {cabecera.provincia2}"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"10":{"Ident":"StiText","Name":"Text8","Guid":"f137eef8631234063c83060fa14665cf","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"12,0.2,2.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")}"},"Font":";10;;","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"11":{"Ident":"StiText","Name":"Text9","Guid":"2f7c0b5bc953bc3c6497de0bc2c1b935","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"14.4,0.2,1.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"FECHA: "},"Font":";10;;","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"12":{"Ident":"StiText","Name":"Text10","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"15.8,0.2,3,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.fecha}"},"Font":";10;;","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","TextFormat":{"Ident":"StiDateFormatService","StringFormat":"dd/MM/yyyy"}}},"DataSourceName":"cabecera","Sort":{"0":"ASC","1":"fecha"}},"3":{"Ident":"StiGroupHeaderBand","Name":"GroupHeaderBand1","ClientRectangle":"0,8.8,19,1.8","Interaction":{"Ident":"StiBandInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text15","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.2,0.2,18.6,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{lineas.capitulo}"},"Font":";12;;","Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"DataColumn"},"1":{"Ident":"StiText","Name":"Text17","Guid":"8730f39cdfba52873bd9d8d20dd3762f","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.2,1.2,16,0.4","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"Concepto"},"Font":";10;Bold;","Border":"Bottom;;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"2":{"Ident":"StiText","Name":"Text21","Guid":"670d95fa334f472d81d27a91a71f6bc2","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,1.2,2,0.4","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"Importe"},"HorAlignment":"Right","Font":";10;Bold;","Border":"Bottom;;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"}},"Condition":{"Value":"{lineas.capituloLinea}"}},"4":{"Ident":"StiDataBand","Name":"Datalineas","ClientRectangle":"0,11.4,19,0.8","Interaction":{"Ident":"StiBandInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text23","CanGrow":true,"MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.4,0,16,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{lineas.descripcion}"},"Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","TextOptions":{"WordWrap":true},"Type":"DataColumn"},"1":{"Ident":"StiText","Name":"Text27","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,0,2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{lineas.totalLinea}"},"HorAlignment":"Right","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","TextFormat":{"Ident":"StiCurrencyFormatService","NegativePattern":8,"DecimalSeparator":",","GroupSeparator":".","UseLocalSetting":false,"PositivePattern":3,"Symbol":"€"}}},"DataSourceName":"lineas","DataRelationName":"cabecera_lineas","MasterComponent":"Datacabecera","Sort":{"0":"ASC","1":"linea"}},"5":{"Ident":"StiGroupFooterBand","Name":"GroupFooterBand1","ClientRectangle":"0,13,19,0.8","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text28","Guid":"1ea8de7c28d9a88ff9695344cc9ca9be","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,0,2,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{Sum(lineas.totalLinea)}"},"HorAlignment":"Right","VertAlignment":"Center","Border":"Top;;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Totals","TextFormat":{"Ident":"StiCurrencyFormatService","NegativePattern":8,"DecimalSeparator":",","GroupSeparator":".","UseLocalSetting":false,"PositivePattern":3,"Symbol":"€"}},"1":{"Ident":"StiText","Name":"Text29","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"11.2,0,5.4,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"TOTAL CAPITULO: "},"HorAlignment":"Right","VertAlignment":"Center","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"}}},"6":{"Ident":"StiFooterBand","Name":"FooterBand2","ClientRectangle":"0,14.6,19,0.8","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text40","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,0,2,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.total}"},"HorAlignment":"Right","VertAlignment":"Center","Border":"Top;;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:Black","TextFormat":{"Ident":"StiCurrencyFormatService","NegativePattern":8,"DecimalSeparator":",","GroupSeparator":".","UseLocalSetting":false,"PositivePattern":3,"Symbol":"€"}},"1":{"Ident":"StiText","Name":"Text38","Guid":"4c49cdd9ff1e3b05554215f7b13efb29","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"11.2,0,5.4,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"TOTAL: "},"HorAlignment":"Right","VertAlignment":"Center","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"}},"PrintIfEmpty":true},"7":{"Ident":"StiDataBand","Name":"Databases","ClientRectangle":"0,16.2,19,0.8","Interaction":{"Ident":"StiBandInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text34","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"11.2,0,5.4,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{bases.tipoIva}: "},"HorAlignment":"Right","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"},"1":{"Ident":"StiText","Name":"Text37","Guid":"d5bafb80bb1bfa3665e7bd7ec54351d9","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,0,2,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{bases.cuota}"},"HorAlignment":"Right","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"DataColumn","TextFormat":{"Ident":"StiCurrencyFormatService","NegativePattern":8,"DecimalSeparator":",","GroupSeparator":".","UseLocalSetting":false,"PositivePattern":3,"Symbol":"€"}}},"DataSourceName":"bases","DataRelationName":"cabecera_bases","MasterComponent":"Datacabecera"},"8":{"Ident":"StiFooterBand","Name":"FooterBand1","ClientRectangle":"0,17.8,19,2.8","Interaction":{"Ident":"StiInteraction"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","Components":{"0":{"Ident":"StiText","Name":"Text39","Guid":"bbf14fc4f5944a48ea1bcdc085b990d8","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"11.2,0,5.4,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"TOTAL (CON IVA): "},"HorAlignment":"Right","VertAlignment":"Center","Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","Type":"Expression"},"1":{"Ident":"StiText","Name":"Text41","Guid":"327da162a0c9d9011b99f5f2daeb2614","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"16.8,0,2,0.8","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.totalConIva}"},"HorAlignment":"Right","VertAlignment":"Center","Border":"Top;;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"DataColumn","TextFormat":{"Ident":"StiCurrencyFormatService","NegativePattern":8,"DecimalSeparator":",","GroupSeparator":".","UseLocalSetting":false,"PositivePattern":3,"Symbol":"€"}},"2":{"Ident":"StiText","Name":"Text42","MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.2,1.2,18.6,0.4","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"Observaciones:"},"Border":";;;;;;;solid:Black","Brush":"solid:Transparent","TextBrush":"solid:Black","Type":"Expression"},"3":{"Ident":"StiText","Name":"Text44","CanGrow":true,"MinSize":"0,0","MaxSize":"0,0","ClientRectangle":"0.2,1.6,18.6,0.6","Interaction":{"Ident":"StiInteraction"},"Text":{"Value":"{cabecera.observaciones}"},"Border":";;;;;;;solid:0,0,0","Brush":"solid:Transparent","TextBrush":"solid:0,0,0","TextOptions":{"WordWrap":true}}},"ResetPageNumber":true,"NewPageAfter":true,"PrintIfEmpty":true}},"PageWidth":21,"PageHeight":29.7,"Watermark":{"TextBrush":"solid:50,0,0,0"},"Margins":{"Left":1,"Right":1,"Top":1,"Bottom":1}}}}
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <PROA_REPORT Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase" isKey="true">
+        <Alias>PROA_REPORT</Alias>
+        <ConnectionStringEncrypted>41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410</ConnectionStringEncrypted>
+        <Name>PROA_REPORT</Name>
+      </PROA_REPORT>
+    </Databases>
+    <DataSources isList="true" count="3">
+      <bases Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
+        <Alias>bases</Alias>
+        <Columns isList="true" count="7">
+          <value>base,System.Decimal</value>
+          <value>cuota,System.Decimal</value>
+          <value>facturaBaseId,System.Int32</value>
+          <value>facturaId,System.Int32</value>
+          <value>porcentaje,System.Decimal</value>
+          <value>tipoIva,System.String</value>
+          <value>tipoIvaId,System.Int32</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>bases</Name>
+        <NameInSource>PROA_REPORT</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>SELECT pfb.*, t.nombre AS tipoIva
+FROM facturas_bases AS pfb
+LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
+      </bases>
+      <cabecera Ref="4" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
+        <Alias>cabecera</Alias>
+        <Columns isList="true" count="43">
+          <value>ano,System.Int32</value>
+          <value>clienteId,System.Int32</value>
+          <value>codPostal2,System.String</value>
+          <value>contratoClienteMantenimientoId,System.Int32</value>
+          <value>cuenta,System.String</value>
+          <value>direccion2,System.String</value>
+          <value>emisorCodPostal,System.String</value>
+          <value>emisorDireccion,System.String</value>
+          <value>emisorNif,System.String</value>
+          <value>emisorNombre,System.String</value>
+          <value>emisorPoblacion,System.String</value>
+          <value>emisorProvincia,System.String</value>
+          <value>empresaId,System.Int32</value>
+          <value>facturaId,System.Int32</value>
+          <value>fecha,System.DateTime</value>
+          <value>formaPago,System.String</value>
+          <value>iban,System.String</value>
+          <value>importeRetencion,System.Nullable`1[System.Decimal]</value>
+          <value>numero,System.Int32</value>
+          <value>numeroVencimientos,System.Int32</value>
+          <value>observaciones,System.String</value>
+          <value>periodo,System.String</value>
+          <value>poblacion2,System.String</value>
+          <value>porcentajeRetencion,System.Decimal</value>
+          <value>postalCodPostal,System.String</value>
+          <value>postalDireccion,System.String</value>
+          <value>postalPoblacion,System.String</value>
+          <value>postalProvincia,System.String</value>
+          <value>postalTipoVia,System.String</value>
+          <value>prefacturaId,System.String</value>
+          <value>primerVencimiento,System.Decimal</value>
+          <value>provincia2,System.String</value>
+          <value>receptorCodPostal,System.String</value>
+          <value>receptorDireccion,System.String</value>
+          <value>receptorNif,System.String</value>
+          <value>receptorNombre,System.String</value>
+          <value>receptorPoblacion,System.String</value>
+          <value>receptorProvincia,System.String</value>
+          <value>restoVencimiento,System.Decimal</value>
+          <value>serie,System.String</value>
+          <value>total,System.Decimal</value>
+          <value>totalConIva,System.Decimal</value>
+          <value>vencimiento,System.DateTime</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>cabecera</Name>
+        <NameInSource>PROA_REPORT</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>SELECT
+pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,
+pf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,
+pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,
+pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,
+pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,
+fp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento,
+tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,
+cl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,
+CONCAT(SUBSTR(cl.iban,1,4), "****************", SUBSTR(cl.iban,20))  AS cuenta,
+cnt.direccion AS direccion2, cnt.codPostal AS codPostal2, cnt.poblacion AS poblacion2, cnt.provincia AS provincia2
+FROM facturas AS pf
+LEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId
+LEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId
+LEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId
+LEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId
+LEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3</SqlCommand>
+      </cabecera>
+      <lineas Ref="5" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
+        <Alias>lineas</Alias>
+        <Columns isList="true" count="18">
+          <value>articuloId,System.Int32</value>
+          <value>cantidad,System.Decimal</value>
+          <value>capitulo,System.String</value>
+          <value>capituloLinea,System.String</value>
+          <value>coste,System.Decimal</value>
+          <value>descripcion,System.String</value>
+          <value>facturaId,System.Int32</value>
+          <value>facturaLineaId,System.Int32</value>
+          <value>grupo,System.String</value>
+          <value>importe,System.Decimal</value>
+          <value>linea,System.Decimal</value>
+          <value>porcentaje,System.Decimal</value>
+          <value>porcentajeAgente,System.Decimal</value>
+          <value>porcentajeBeneficio,System.Decimal</value>
+          <value>tipoIva,System.String</value>
+          <value>tipoIvaId,System.Int32</value>
+          <value>totalLinea,System.Decimal</value>
+          <value>unidadId,System.Int32</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>lineas</Name>
+        <NameInSource>PROA_REPORT</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, SUBSTRING_INDEX(pfl.capituloLinea, ':', -1) as capitulo
+FROM facturas_lineas AS pfl
+LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId
+LEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId
+LEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId</SqlCommand>
+      </lineas>
+    </DataSources>
+    <Relations isList="true" count="2">
+      <cabecera_lineas Ref="6" type="DataRelation" isKey="true">
+        <Alias>cabecera_lineas</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>facturaId</value>
+        </ChildColumns>
+        <ChildSource isRef="5" />
+        <Dictionary isRef="1" />
+        <Name>cabecera_lineas</Name>
+        <NameInSource>cabecera_lineas</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>facturaId</value>
+        </ParentColumns>
+        <ParentSource isRef="4" />
+      </cabecera_lineas>
+      <cabecera_bases Ref="7" type="DataRelation" isKey="true">
+        <Alias>cabecera_bases</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>facturaId</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>cabecera_bases</Name>
+        <NameInSource>cabecera_bases</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>facturaId</value>
+        </ParentColumns>
+        <ParentSource isRef="4" />
+      </cabecera_bases>
+    </Relations>
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="8" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="9">
+        <PageHeaderBand1 Ref="9" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,2.2</ClientRectangle>
+          <Components isList="true" count="1">
+            <Image1 Ref="10" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,0.2,3.2,2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Guid>d28b88a72f6d7eb7bb2d6d88b75e75d3</Guid>
+              <Image>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</Image>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="8" />
+              <Parent isRef="9" />
+              <Stretch>True</Stretch>
+            </Image1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="11" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,26.1,19,1.6</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text46 Ref="12" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,0.96,18.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="8" />
+              <Parent isRef="11" />
+              <Text>{PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text46>
+            <Text7 Ref="13" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,0.36,18.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="8" />
+              <Parent isRef="11" />
+              <Text>FONDOGAR, S.L.  R.M. MADRID. Tomo 8618, Secc. 8ª, Folio 166, Hoja M-138714 C.I.F.: B-81002057 – Avda. Ramón y Cajal 37 – 28470 - Cercedilla (Madrid)</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text7>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+        </PageFooterBand1>
+        <Datacabecera Ref="14" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.4,19,4.6</ClientRectangle>
+          <Components isList="true" count="13">
+            <Text11 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,0.8,8.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>ae6f670a871fb23678ae6720e4aaa44f</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>NIF: {cabecera.receptorNif}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text11>
+            <Text12 Ref="16" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,0.2,8.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,11,Bold</Font>
+              <Guid>81cfcdecc907ac3cd1e9b1899f4e428b</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>{cabecera.receptorNombre}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text12>
+            <Text13 Ref="17" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,1.4,8.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>d91479a04b85019e78ddea8554b914ce</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>{cabecera.receptorDireccion}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text13>
+            <Text14 Ref="18" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,2,8.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>a42d8c169076de1c6194f5108f58af87</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text14>
+            <Text1 Ref="19" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,0.2,2.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>FACTURA Nº: </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text1>
+            <Text2 Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,1,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>PERIODO FACTURADO: {cabecera.periodo}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text2>
+            <Text3 Ref="21" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,1.6,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>5ffb76caf207fddb6b054e673fb7072b</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>FORMA DE PAGO: {cabecera.formaPago}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text3>
+            <Text4 Ref="22" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,2.8,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>d495c8dfce906ed9f13cf12fa22036fa</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>CUENTA: {cabecera.cuenta}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text4>
+            <Text5 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,2.2,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>fb4412266ffd6f1568b1d36d79e3497a</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>VENCIMIENTO: {cabecera.vencimiento.ToString("dd/MM/yyyy")}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text5>
+            <Text6 Ref="24" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,3.6,18.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>LUGAR DE TRABAJO: {cabecera.direccion2} ({cabecera.codPostal2} {cabecera.poblacion2}) {cabecera.provincia2}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text6>
+            <Text8 Ref="25" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12,0.2,2.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>f137eef8631234063c83060fa14665cf</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>{cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString("000000")}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text8>
+            <Text9 Ref="26" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.4,0.2,1.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>2f7c0b5bc953bc3c6497de0bc2c1b935</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>FECHA: </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text9>
+            <Text10 Ref="27" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.8,0.2,3,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="8" />
+              <Parent isRef="14" />
+              <Text>{cabecera.fecha}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextFormat Ref="28" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+            </Text10>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName>cabecera</DataSourceName>
+          <Filters isList="true" count="0" />
+          <Name>Datacabecera</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+          <Sort isList="true" count="2">
+            <value>ASC</value>
+            <value>fecha</value>
+          </Sort>
+        </Datacabecera>
+        <GroupHeaderBand1 Ref="29" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,8.8,19,1.8</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text15 Ref="30" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0.2,18.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,12</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="8" />
+              <Parent isRef="29" />
+              <Text>{lineas.capitulo}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+            </Text15>
+            <Text17 Ref="31" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,1.2,16,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>8730f39cdfba52873bd9d8d20dd3762f</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="8" />
+              <Parent isRef="29" />
+              <Text>Concepto</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text17>
+            <Text21 Ref="32" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,1.2,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>670d95fa334f472d81d27a91a71f6bc2</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="8" />
+              <Parent isRef="29" />
+              <Text>Importe</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text21>
+          </Components>
+          <Condition>{lineas.capituloLinea}</Condition>
+          <Conditions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+        </GroupHeaderBand1>
+        <Datalineas Ref="33" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,11.4,19,0.8</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text23 Ref="34" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.4,0,16,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="8" />
+              <Parent isRef="33" />
+              <Text>{lineas.descripcion}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+            </Text23>
+            <Text27 Ref="35" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="8" />
+              <Parent isRef="33" />
+              <Text>{lineas.totalLinea}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+            </Text27>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>cabecera_lineas</DataRelationName>
+          <DataSourceName>lineas</DataSourceName>
+          <Filters isList="true" count="0" />
+          <MasterComponent isRef="14" />
+          <Name>Datalineas</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+          <Sort isList="true" count="2">
+            <value>ASC</value>
+            <value>linea</value>
+          </Sort>
+        </Datalineas>
+        <GroupFooterBand1 Ref="37" type="GroupFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,13,19,0.8</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text28 Ref="38" type="Text" isKey="true">
+              <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>1ea8de7c28d9a88ff9695344cc9ca9be</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="8" />
+              <Parent isRef="37" />
+              <Text>{Sum(lineas.totalLinea)}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextFormat Ref="39" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+            <Text29 Ref="40" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="8" />
+              <Parent isRef="37" />
+              <Text>TOTAL CAPITULO: </Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+        </GroupFooterBand1>
+        <FooterBand2 Ref="41" type="FooterBand" isKey="true">
+          <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,14.6,19,0.8</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text40 Ref="42" type="Text" isKey="true">
+              <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text40</Name>
+              <Page isRef="8" />
+              <Parent isRef="41" />
+              <Text>{cabecera.total}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <VertAlignment>Center</VertAlignment>
+            </Text40>
+            <Text38 Ref="44" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>4c49cdd9ff1e3b05554215f7b13efb29</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text38</Name>
+              <Page isRef="8" />
+              <Parent isRef="41" />
+              <Text>TOTAL: </Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text38>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>FooterBand2</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+          <PrintIfEmpty>True</PrintIfEmpty>
+        </FooterBand2>
+        <Databases Ref="45" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,16.2,19,0.8</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text34 Ref="46" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.2,0,5.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="8" />
+              <Parent isRef="45" />
+              <Text>{bases.tipoIva}: </Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text34>
+            <Text37 Ref="47" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>d5bafb80bb1bfa3665e7bd7ec54351d9</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text37</Name>
+              <Page isRef="8" />
+              <Parent isRef="45" />
+              <Text>{bases.cuota}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+            </Text37>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>cabecera_bases</DataRelationName>
+          <DataSourceName>bases</DataSourceName>
+          <Filters isList="true" count="0" />
+          <MasterComponent isRef="14" />
+          <Name>Databases</Name>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+          <Sort isList="true" count="0" />
+        </Databases>
+        <FooterBand1 Ref="49" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,17.8,19,2.8</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text39 Ref="50" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>bbf14fc4f5944a48ea1bcdc085b990d8</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="8" />
+              <Parent isRef="49" />
+              <Text>TOTAL (CON IVA): </Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text39>
+            <Text41 Ref="51" type="Text" isKey="true">
+              <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>327da162a0c9d9011b99f5f2daeb2614</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="8" />
+              <Parent isRef="49" />
+              <Text>{cabecera.totalConIva}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+            <Text42 Ref="53" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,1.2,18.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text42</Name>
+              <Page isRef="8" />
+              <Parent isRef="49" />
+              <Text>Observaciones:</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text42>
+            <Text44 Ref="54" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,1.6,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="8" />
+              <Parent isRef="49" />
+              <Text>{cabecera.observaciones}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+            </Text44>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>FooterBand1</Name>
+          <NewPageAfter>True</NewPageAfter>
+          <Page isRef="8" />
+          <Parent isRef="8" />
+          <PrintIfEmpty>True</PrintIfEmpty>
+          <ResetPageNumber>True</ResetPageNumber>
+        </FooterBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>38f26eb7b6405f95fef070b22c8c1cfc</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+      <Watermark Ref="55" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="56" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>FacturaFondogar</ReportAlias>
+  <ReportAuthor>rafa@myariadna.com</ReportAuthor>
+  <ReportChanged>5/2/2017 10:47:23 PM</ReportChanged>
+  <ReportCreated>5/2/2017 10:47:23 PM</ReportCreated>
+  <ReportFile>C:\PROYECTOS\proasistencia\public\reports\factura_fondogar.mrt</ReportFile>
+  <ReportGuid>552a09e30f0e56fcecc57cff376a5f06</ReportGuid>
+  <ReportImage isNull="true" />
+  <ReportName>FacturaFondogar</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2017.1.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class FacturaFondogar : Stimulsoft.Report.StiReport
+    {
+        public FacturaFondogar()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

@@ -44,6 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarLiquidacionesAcumuladas());
+    $('#btnPrint').click(printGeneral);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -185,6 +186,7 @@ function buscarLiquidacionesAcumuladas() {
 
 
 
+
 function editLiquidacion(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
@@ -194,19 +196,8 @@ function editLiquidacion(id) {
 
 
 function printLiquidacion(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id;
+    window.open(url, '_new');
 }
 
 function informePDF(data) {
@@ -240,3 +231,9 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+var printGeneral = function () {
+    if (!datosOK()) return;
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha());
+    window.open(url, '_new');
+}
