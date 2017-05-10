@@ -108,15 +108,11 @@ function initForm() {
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
-    if (gup('facturaId') != "") {
-        vm.facturaId(gup('facturaId'));
-        verb = "GET";
-        var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
-        llamadaAjax(verb, url, null, function (err, data) {
-            vm.sempresaId(data.empresaId);
-            obtainReport();
-            $('#selector').hide();
-        });
+    if (gup('dFecha') != "" && gup("hFecha" != "")) {
+        vm.dFecha(gup('dFecha'));
+        vm.hFecha(gup('hFecha'));
+        obtainReport();
+        $('#selector').hide();
     }
 }
 
@@ -126,8 +122,8 @@ function admData() {
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     //
-    self.empresaId = ko.observable();
-    self.sempresaId = ko.observable();
+    self.comercialId = ko.observable();
+    self.scomercialId = ko.observable();
     //
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
@@ -141,31 +137,23 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/factura_general.mrt";
+    var file = "../reports/liquidacion_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
-    verb = "GET";
-    url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
-    llamadaAjax(verb, url, null, function (err, data) {
-        var infFacturas = data.infFacturas;
-        file = "../reports/" + infFacturas + ".mrt";
-        var rpt = gup("report");
-        report.loadFile(file);
-        //report.setVariable("vTest", "11,16,18");
-        //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
-        var connectionString = "Server=" + myconfig.report.host + ";";
-        connectionString += "Database=" + myconfig.report.database + ";"
-        connectionString += "UserId=" + myconfig.report.user + ";"
-        connectionString += "Pwd=" + myconfig.report.password + ";";
-        report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
+    report.loadFile(file);
+    //report.setVariable("vTest", "11,16,18");
+    //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
+    var connectionString = "Server=" + myconfig.report.host + ";";
+    connectionString += "Database=" + myconfig.report.database + ";"
+    connectionString += "UserId=" + myconfig.report.user + ";"
+    connectionString += "Pwd=" + myconfig.report.password + ";";
+    report.dictionary.databases.list[0].connectionString = connectionString;
+    //var sql = report.dataSources.items[0].sqlCommand;
 
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
-        // Assign report to the viewer, the report will be built automatically after rendering the viewer
-        viewer.report = report;
-    });
-
-};
+    report.dataSources.items[0].sqlCommand = rptLiquidacionGeneralParametros();
+    // Assign report to the viewer, the report will be built automatically after rendering the viewer
+    viewer.report = report;
+}
 
 var obtainReportPdf = function () {
     var file = "../reports/factura_general.mrt";
@@ -187,8 +175,8 @@ var obtainReportPdf = function () {
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
         var sql = report.dataSources.items[0].sqlCommand;
-
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
+ 
+        report.dataSources.items[0].sqlCommand = rptLiquidacionGeneralParametros(sql);
         */
         // Render report
         report.dictionary.databases.clear();
@@ -223,33 +211,28 @@ var printReport = function (url) {
 };
 
 function datosOK() {
-    $('#frmRptOfertas').validate({
+    $('#frmRptLiquidaciones').validate({
         rules: {
-            cmbColaboradores: {
-                required: true
-            }
+
         },
         // Messages for form validation
         messages: {
-            cmbColaboradores: {
-                required: "Debe elegir una empresa"
-            }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmRptOfertas").validate().settings;
-    return $('#frmRptOfertas').valid();
+    var opciones = $("#frmRptLiquidaciones").validate().settings;
+    return $('#frmRptLiquidaciones').valid();
 }
 
-function loadColaboradores(empresaId) {
-    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+function loadColaboradores(comercialId) {
+    llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
-        vm.posiblesColaboradores(empresas);
-        $("#cmbColaboradores").val([empresaId]).trigger('change');
+        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesColaboradores(colaboradores);
+        $("#cmbColaboradores").val([comercialId]).trigger('change');
     });
 }
 
@@ -280,52 +263,21 @@ var initAutoCliente = function () {
     });
 };
 
-var rptFacturaParametros = function (sql) {
-    var facturaId = vm.facturaId();
-    var clienteId = vm.sclienteId();
-    var empresaId = vm.sempresaId();
+var rptLiquidacionGeneralParametros = function () {
+    var comercialId = vm.scomercialId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    sql += " WHERE TRUE"
-    if (facturaId) {
-        sql += " AND pf.facturaId IN (" + facturaId + ")";
-    } else {
-        if (clienteId) {
-            sql += " AND pf.clienteId IN (" + clienteId + ")";
-        }
-        if (empresaId) {
-            sql += " AND pf.empresaId IN (" + empresaId + ")";
-        }
-        if (dFecha) {
-            sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";
-        }
-        if (hFecha) {
-            sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
-        }
-
-    }
+    sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
+    sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha";
+    sql += " FROM liquidacion_comercial AS lf";
+    sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
+    sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
+    sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
+    sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
+    if (comercialId) {
+        sql += " AND lf.comercialId IN (" + comercialId + ")";
+    }    
+    sql += " GROUP BY lf.comercialId";
     return sql;
 }
 
-var exportarPDF = function () {
-    $("#mensajeExportacion").hide();
-    $("#mensajeEspera").show();
-    var clienteId = vm.sclienteId();
-    var empresaId = vm.sempresaId();
-
-    if (!empresaId) empresaId = 0;
-    if (!clienteId) clienteId = 0;
-
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
-
-    // (1) Obtener una lista de las facturas implicadas.
-    // la lista debe devolver también el fichero de informe asociado
-    var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
-    url += "/" + empresaId;
-    url += "/" + clienteId;
-    llamadaAjax("GET", url, null, function (err, data) {
-        if (err) return;
-
-    });
-}
