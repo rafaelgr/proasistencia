@@ -196,19 +196,8 @@ function editLiquidacion(id) {
 
 
 function printLiquidacion(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id;
+    window.open(url, '_new');
 }
 
 function informePDF(data) {

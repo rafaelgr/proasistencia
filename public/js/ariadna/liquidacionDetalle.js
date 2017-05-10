@@ -41,6 +41,10 @@ function initForm() {
     vm.desdeFecha(moment(dFecha).format('DD/MM/YYYY'));
     vm.hastaFecha(moment(hFecha).format('DD/MM/YYYY'));
     //
+    $('#btnPrint').click(printGeneral);
+    $('#frmBuscar').submit(function () {
+        return false
+    });
     buscarLiquidacionesDetalladas()();
 }
 
@@ -148,12 +152,12 @@ function buscarLiquidacionesDetalladas() {
     var mf = function () {
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/" + vm.comercialId(),
+            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.comercialId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 var tComis = 0;
-                data.forEach(function(d){
+                data.forEach(function (d) {
                     vm.colaborador(d.nombre);
                     vm.tipo(d.tipo);
                     tComis += d.comision;
@@ -227,3 +231,8 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+var printGeneral = function () {
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + vm.comercialId();
+    window.open(url, '_new');
+}

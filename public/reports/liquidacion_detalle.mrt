@@ -12,50 +12,48 @@
     <DataSources isList="true" count="1">
       <liqdet Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>liqdet</Alias>
-        <Columns isList="true" count="26">
-          <value>nombre,System.String</value>
-          <value>tipo,System.String</value>
-          <value>liquidacionComercialId,System.Int32</value>
-          <value>facturaId,System.Int32</value>
-          <value>comercialId,System.Int32</value>
-          <value>contratoClienteMantenimientoId,System.Int32</value>
-          <value>impCliente,System.Decimal</value>
-          <value>coste,System.Decimal</value>
+        <Columns isList="true" count="27">
+          <value>base,System.Decimal</value>
           <value>CA,System.Decimal</value>
+          <value>comercialId,System.Int32</value>
+          <value>comision,System.Decimal</value>
+          <value>contrato,System.String</value>
+          <value>contratoClienteMantenimientoId,System.Int32</value>
+          <value>contratoId,System.Int32</value>
+          <value>coste,System.Decimal</value>
+          <value>dFecha,System.String</value>
+          <value>facNum,System.String</value>
+          <value>facturaId,System.Int32</value>
+          <value>fechaFactura,System.DateTime</value>
+          <value>hFecha,System.String</value>
+          <value>IAT,System.Decimal</value>
+          <value>IC,System.Decimal</value>
+          <value>ICO,System.Decimal</value>
+          <value>IJO,System.Decimal</value>
+          <value>impCliente,System.Decimal</value>
+          <value>IOT,System.Decimal</value>
+          <value>liquidacionComercialId,System.Int32</value>
+          <value>nombre,System.String</value>
           <value>PC,System.Decimal</value>
           <value>PCA,System.Decimal</value>
           <value>PCO,System.Decimal</value>
-          <value>ICO,System.Decimal</value>
-          <value>IJO,System.Decimal</value>
-          <value>IOT,System.Decimal</value>
-          <value>IAT,System.Decimal</value>
-          <value>IC,System.Decimal</value>
           <value>porComer,System.Decimal</value>
-          <value>base,System.Decimal</value>
-          <value>comision,System.Decimal</value>
-          <value>contratoId,System.Int32</value>
-          <value>facNum,System.String</value>
-          <value>fechaFactura,System.DateTime</value>
-          <value>dFecha,System.String</value>
-          <value>hFecha,System.String</value>
-          <value>contrato,System.String</value>
+          <value>tipo,System.String</value>
+          <value>base2,System.Decimal</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
         <Name>liqdet</Name>
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*,
-CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, f.fecha AS fechaFactura,
-'01/01/2017' AS dFecha, '31/12/2017' AS hFecha,
-ccm.referencia AS contrato
-FROM liquidacion_comercial AS lf
-LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId
-LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId
-LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId
-LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
-WHERE lf.comercialId = 24
-AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
+        <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,
+f.fecha AS fechaFactura,'01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato 
+FROM liquidacion_comercial AS lf 
+LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
+LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
+LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId 
+LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId 
+WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
       </liqdet>
     </DataSources>
     <Relations isList="true" count="0" />
@@ -76,7 +74,6 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
           <ClientRectangle>0,0.4,27.7,2.4</ClientRectangle>
           <Components isList="true" count="2">
             <Text3 Ref="6" type="Text" isKey="true">
-              <Border>None;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0.2,13.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -366,7 +363,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Headerliqdet_contrato Ref="24" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.4,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -382,7 +379,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Headerliqdet_facNum Ref="25" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>1.8,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -398,7 +395,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Headerliqdet_impCliente Ref="26" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.4,0,2,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -443,7 +440,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Dataliqdet_impCliente Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.4,0,2,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -503,7 +500,6 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_PC>
             <Dataliqdet_PCA Ref="34" type="Text" isKey="true">
-              <Border>None;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>10.4,0,1.8,0.8</ClientRectangle>
@@ -661,7 +657,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Name>Dataliqdet_base_</Name>
               <Page isRef="4" />
               <Parent isRef="28" />
-              <Text>{liqdet.base_}</Text>
+              <Text>{liqdet.base2}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -671,6 +667,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
                 <Symbol>€</Symbol>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_base_>
             <Dataliqdet_comision Ref="48" type="Text" isKey="true">
@@ -699,7 +696,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Dataliqdet_facNum Ref="50" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>1.8,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>1.8,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
@@ -730,7 +727,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <Dataliqdet_contrato Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.4,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
@@ -776,7 +773,6 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
           <ClientRectangle>0,9,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
             <Text1 Ref="56" type="Text" isKey="true">
-              <Border>None;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -817,6 +813,7 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
           </Components>
           <Conditions isList="true" count="0" />
           <Name>GroupFooterBand1</Name>
+          <NewPageAfter>True</NewPageAfter>
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand1>
@@ -848,10 +845,10 @@ AND f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/10/2017 12:03:38 PM</ReportChanged>
+  <ReportChanged>5/10/2017 4:21:05 PM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
   <ReportFile>C:\PROYECTOS\proasistencia\public\reports\liquidacion_detalle.mrt</ReportFile>
-  <ReportGuid>24359b3b84fb48deb38366b80c7720a1</ReportGuid>
+  <ReportGuid>04dcfebe0c9f4819bccfaf1e8a105db9</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
