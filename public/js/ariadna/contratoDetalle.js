@@ -86,9 +86,14 @@ function initForm() {
 
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    
 
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato();
+    $("#cmbTiposContrato").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioTipoContrato(e.added);
+    });    
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
@@ -681,6 +686,20 @@ function cambioTipoProyecto(data) {
             if (err) return;
             vm.referencia(nuevaReferencia);
         });
+    });
+}
+
+function cambioTipoContrato(data) {
+    //
+    var tipoContratoId = data.id;
+    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/proyectos-departamento/" + tipoContratoId, null, function (err, data) {
+        if (err) return;
+        var tipos = [{
+            tipoProyectoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');        
     });
 }
 
