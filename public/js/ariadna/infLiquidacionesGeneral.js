@@ -111,6 +111,9 @@ function initForm() {
     if (gup('dFecha') != "" && gup('hFecha') != "") {
         vm.dFecha(gup('dFecha'));
         vm.hFecha(gup('hFecha'));
+        if (gup("tipoComercialId") != ""){
+            vm.tipoComercialId(gup("tipoComercialId"))
+        }
         obtainReport();
         $('#selector').hide();
     }
@@ -121,6 +124,7 @@ function admData() {
     self.facturaId = ko.observable();
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
+    self.tipoComercialId = ko.observable();
     //
     self.comercialId = ko.observable();
     self.scomercialId = ko.observable();
@@ -265,6 +269,7 @@ var initAutoCliente = function () {
 
 var rptLiquidacionGeneralParametros = function () {
     var comercialId = vm.scomercialId();
+    var tipoComercialId = vm.tipoComercialId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
@@ -277,6 +282,9 @@ var rptLiquidacionGeneralParametros = function () {
     if (comercialId) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";
     }    
+    if (tipoComercialId){
+        sql += " AND lf.comercialId IN (SELECT comercialId from comerciales where tipoComercialId = " + tipoComercialId + ")";
+    }
     sql += " GROUP BY lf.comercialId";
     return sql;
 }

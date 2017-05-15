@@ -48,6 +48,8 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+    $("#cmbTiposComerciales").select2(select2Spanish());
+    loadTiposComerciales();    
 
     initTablaLiquidaciones();
     // comprobamos parámetros
@@ -60,6 +62,12 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    //
+    self.tipoComercialId = ko.observable();
+    self.stipoComercialId = ko.observable();
+    //
+    self.posiblesTiposComerciales = ko.observableArray([]);
+    self.elegidosTiposComerciales = ko.observableArray([]);    
 }
 
 function initTablaLiquidaciones() {
@@ -164,9 +172,11 @@ function loadTablaLiquidaciones(data) {
 function buscarLiquidacionesAcumuladas() {
     var mf = function () {
         if (!datosOK()) return;
+        var tipoComercialId = 0;
+        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -234,6 +244,29 @@ var f_open_post = function (verb, url, data, target) {
 
 var printGeneral = function () {
     if (!datosOK()) return;
-    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha());
+    var tipoComercialId = 0;
+    if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId;
     window.open(url, '_new');
+}
+
+function loadTiposComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposComerciales(tiposComerciales);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbTiposComerciales").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
