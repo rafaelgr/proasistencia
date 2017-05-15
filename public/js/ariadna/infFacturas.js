@@ -49,7 +49,7 @@ function initForm() {
     $("#frmExportar").submit(function () {
         return false;
     });
-    $("#btnExportar").click(obtainReportPdf);
+    $("#btnExportar").click(exportarPDF);
     //
     $('#txtRFecha').daterangepicker({
         "showDropdowns": true,
