@@ -252,7 +252,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -294,7 +294,7 @@
                         <li>
                             <a href="InfGeneral.html"><i class="fa fa-fw fa-bar-chart"></i> Informes generales</a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </li>
         </nav>
         <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -418,6 +418,26 @@
                                                     </label>
                                                 </section>
                                             </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Departamento</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbTiposContrato" name="cmbTiposContrato" data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Empresa</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6" style="display:none;">
+                                                    <label class="label">Tipo actividad (No aplica en la selección, sólo en generación)</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                            </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
@@ -443,6 +463,9 @@
                                                     </th>
                                                     <th data-hide="phone">
                                                         Receptor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Dir. Trabajo
                                                     </th>
                                                     <th data-hide="phone">
                                                         Numero
@@ -488,7 +511,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -505,15 +528,15 @@
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="js/libs/jquery-2.1.1.min.js"></script>
     <script>
-    if (!window.jQuery) {
-        document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-    }
+        if (!window.jQuery) {
+            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
+        }
     </script>
     <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
     <script>
-    if (!window.jQuery.ui) {
-        document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-    }
+        if (!window.jQuery.ui) {
+            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+        }
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
@@ -573,26 +596,26 @@
     <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
     <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
     <script type="text/javascript">
-    (function($) {
-        $(document).ready(function() {
-            initForm();
-        });
-    })(jQuery);
+        (function ($) {
+            $(document).ready(function () {
+                initForm();
+            });
+        })(jQuery);
     </script>
     <!-- Your GOOGLE ANALYTICS CODE Below -->
     <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-    _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+        _gaq.push(['_trackPageview']);
 
-    (function() {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
     </script>
 </body>
 

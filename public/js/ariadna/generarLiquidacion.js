@@ -48,6 +48,16 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+    //
+    $("#cmbTiposContrato").select2(select2Spanish());
+    loadTiposContrato();
+
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
+
+    $("#cmbTiposComerciales").select2(select2Spanish());
+    loadTiposComerciales();
+
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
@@ -62,11 +72,30 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    //
+    self.tipoContratoId = ko.observable();
+    self.stipoContratoId = ko.observable();
+    //
+    self.posiblesTiposContrato = ko.observableArray([]);
+    self.elegidosTiposContrato = ko.observableArray([]);
+    //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.tipoComercialId = ko.observable();
+    self.stipoComercialId = ko.observable();
+    //
+    self.posiblesTiposComerciales = ko.observableArray([]);
+    self.elegidosTiposComerciales = ko.observableArray([]);
 }
 
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
+        paging: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -110,10 +139,12 @@ function initTablaFacturas() {
                 html += '</label>';
                 return html;
             }
-        },{
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
+        }, {
+            data: "dirTrabajo"
         }, {
             data: "vNum"
         }, {
@@ -134,7 +165,7 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt2 + "" + bt3 + "</div>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
         }]
@@ -216,15 +247,25 @@ function loadTablaFacturas(data) {
                 }
             });
         });
-    });    
+    });
 }
 
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
+        var tipoContratoId = 0;
+        if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+        var empresaId = 0;
+        if (vm.sempresaId()) empresaId = vm.sempresaId();
+        var tipoComercialId = 0;
+        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+        var url = myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        url += "/" + tipoContratoId;
+        url += "/" + empresaId;
+        url += "/" + tipoComercialId;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: url,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -246,10 +287,20 @@ function generarLiquidaciones() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
+        var tipoContratoId = 0;
+        if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+        var empresaId = 0;
+        if (vm.sempresaId()) empresaId = vm.sempresaId();
+        var tipoComercialId = 0;
+        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+        var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        url += "/" + tipoContratoId;
+        url += "/" + empresaId;
+        url += "/" + tipoComercialId;
         // Vamos a comprobar si hay datos previos
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: url,
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
@@ -282,9 +333,19 @@ function generarLiquidaciones() {
 }
 
 function generaLiquidaciones2() {
+    var tipoContratoId = 0;
+    if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+    var empresaId = 0;
+    if (vm.sempresaId()) empresaId = vm.sempresaId();
+    var tipoComercialId = 0;
+    if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+    var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+    url += "/" + tipoContratoId;
+    url += "/" + empresaId;
+    url += "/" + tipoComercialId;
     $.ajax({
         type: "POST",
-        url: myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/0/0",
+        url: url,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -431,3 +492,48 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function loadTiposContrato(id) {
+    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{
+            tipoMantenimientoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesTiposContrato(tipos);
+        $("#cmbTiposContrato").val([id]).trigger('change');
+    });
+}
+
+function loadEmpresas(id) {
+    llamadaAjax('GET', "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{
+            empresaId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([id]).trigger('change');
+    });
+}
+
+function loadTiposComerciales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposComerciales(tiposComerciales);
+            //if (id){
+            //    vm.stipoComercialId(id);
+            //}
+            $("#cmbTiposComerciales").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}

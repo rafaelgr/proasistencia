@@ -252,7 +252,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -416,6 +416,15 @@
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6"></section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Tipo actividad</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>                                                
                                             </div>
                                         </fieldset>
                                         <fieldset>

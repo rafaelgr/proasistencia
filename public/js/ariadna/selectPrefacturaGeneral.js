@@ -141,6 +141,8 @@ function initTablaPrefacturas() {
         }, {
             data: "receptorNombre"
         }, {
+            data: "dirTrabajo"
+        }, {
             data: "agente"
         }, {
             data: "vNum"

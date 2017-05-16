@@ -253,7 +253,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -419,6 +419,15 @@
                                                         <input id="txtAbrev" name="txtAbrev" type="text" data-bind="value: abrev" />
                                                     </label>
                                                 </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-3">
+                                                    <label class="label">Departamento</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbTiposContrato" name="cmbTiposContrato" data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>   
+                                                <section class="col col-md-9"></section>                                             
                                             </div>
                                         </fieldset>
                                         <fieldset>
