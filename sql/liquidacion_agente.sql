@@ -1,4 +1,5 @@
-SELECT '01/01/2017' AS dFecha, '31/12/2017' AS hFecha,
+SELECT 
+'01/01/2017' AS dFecha, '31/12/2017' AS hFecha,
 com.comercialId, com.nombre AS nomComercial,
 cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,
 fac.facturaId, fac.fecha, fac.serie, fac.ano, fac.numero, 
