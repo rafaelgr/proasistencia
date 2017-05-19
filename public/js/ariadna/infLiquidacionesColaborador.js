@@ -105,6 +105,11 @@ function initForm() {
     //
     $("#cmbColaboradores").select2(select2Spanish());
     loadColaboradores();
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
+    $("#cmbTiposComerciales").select2(select2Spanish());
+    loadTiposComerciales();
+
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
     if (gup('dFecha') != "" && gup('hFecha') != "") {
@@ -128,11 +133,18 @@ function admData() {
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
     //
-    self.clienteId = ko.observable();
-    self.sclienteId = ko.observable();
+    self.tipoMantenimientolId = ko.observable();
+    self.stipoMantenimientoId = ko.observable();
     //
-    self.posiblesClientes = ko.observableArray([]);
-    self.elegidosClientes = ko.observableArray([]);
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.tipoComerciallId = ko.observable();
+    self.stipoComercialId = ko.observable();
+    //
+    self.posiblesTiposComerciales = ko.observableArray([]);
+    self.elegidosTiposComerciales = ko.observableArray([]);
+    //    
 };
 
 var obtainReport = function () {
@@ -236,11 +248,32 @@ function loadColaboradores(comercialId) {
     });
 }
 
+function loadDepartamentos(tipoMantenimientoId) {
+    llamadaAjax("GET", "/api/tipos_mantenimientos", null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([tipoMantenimientoId]).trigger('change');
+    });
+}
+
+function loadTiposComerciales(tipoComercialId) {
+    llamadaAjax("GET", "/api/tipos_comerciales", null, function (err, data) {
+        if (err) return;
+        var tipos = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposComerciales(tipos);
+        $("#cmbTiposComerciales").val([tipoComercialId]).trigger('change');
+    });
+}
+
+
 // initAutoCliente
 // inicializa el control del cliente como un autocomplete
 
 var rptLiquidacionGeneralParametros = function () {
     var comercialId = vm.scomercialId();
+    var tipoComercialId = vm.stipoComercialId();
+    var tipoMantenimientoId = vm.stipoMantenimientoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     var sql = "SELECT";
@@ -248,15 +281,24 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " com.comercialId, com.nombre AS nomComercial,";
     sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
     sql += " fac.facturaId, fac.fecha, fac.serie, fac.ano, fac.numero,";
-    sql += " liq.impCliente, liq.base, liq.porComer, liq.comision";
+    sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
+    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador";
     sql += " FROM liquidacion_comercial AS liq";
     sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
     sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
     sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+    sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
+    sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
+    }
+    if (tipoComercialId) {
+        sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+    }
+    if (tipoMantenimientoId) {
+        sql += " AND cnt.tipoContratoId IN (" + tipoMantenimientoId + ")";
     }
     return sql;
 }
