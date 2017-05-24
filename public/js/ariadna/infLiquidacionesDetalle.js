@@ -270,7 +270,7 @@ var rptLiquidacionGeneralParametros = function () {
     var hFecha = vm.hFecha();
     sql = "SELECT c.nombre, tc.nombre AS tipo, lf.*,  lf.base as base2,";
     sql += " CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, f.fecha AS fechaFactura,";
-    sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
+    sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha, 'OPERACIONES PERIODO ACTUAL' AS periodo,";
     sql += " ccm.referencia AS contrato";
     sql += " FROM liquidacion_comercial AS lf";
     sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
