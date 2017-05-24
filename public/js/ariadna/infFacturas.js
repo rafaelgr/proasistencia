@@ -162,9 +162,9 @@ var obtainReport = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
+        var sql = report.dataSources.items[1].sqlCommand;
 
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
+        report.dataSources.items[1].sqlCommand = rptFacturaParametros(sql);
         // Assign report to the viewer, the report will be built automatically after rendering the viewer
         viewer.report = report;
     });
@@ -187,9 +187,9 @@ var obtainReportPdf = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
+        var sql = report.dataSources.items[1].sqlCommand;
 
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
+        report.dataSources.items[1].sqlCommand = rptFacturaParametros(sql);
 
         // Render report
         report.render();
