@@ -1083,9 +1083,10 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    vm.total(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
         // es un mantenedor
-        vm.importeAlCliente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+        vm.total(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
 };
 

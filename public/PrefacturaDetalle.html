@@ -630,6 +630,7 @@
                                                                     <th colspan="2" style="text-align:center;">BENEFICIO</th>
                                                                     <th style="text-align:center;">VENTA NETA</th>
                                                                     <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                                    <th style="text-align:center;">IMPORTE FACTURA</th>
                                                                     <th style="text-align:center;">IMPORTE CLIENTE</th>
                                                                 </tr>
                                                             </thead>
@@ -641,6 +642,7 @@
                                                                     <td></td>
                                                                     <td style="text-align:center;">%</td>
                                                                     <td style="text-align:center;">IMPORTE</td>
+                                                                    <td></td>
                                                                     <td></td>
                                                                 </tr>
                                                                 <tr>
@@ -673,6 +675,11 @@
                                                                                 <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
                                                                             </label>
                                                                         </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
+                                                                                <input id="txtTotalFactura" name="txtTotalFactura" data-bind="value:total" disabled/>
+                                                                            </label>
+                                                                        </td>                                                                        
                                                                         <td style="text-align:center;">
                                                                             <label class="input">
                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>
