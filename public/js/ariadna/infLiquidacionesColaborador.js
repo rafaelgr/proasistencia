@@ -278,7 +278,7 @@ var rptLiquidacionGeneralParametros = function () {
     var hFecha = vm.hFecha();
     var sql = "SELECT";
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
-    sql += " com.comercialId, com.nombre AS nomComercial,";
+    sql += " com.comercialId, com.nombre AS nomComercial, tpp.nombre AS tipoProyecto,";
     sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
     sql += " fac.facturaId, fac.fecha, fac.serie, fac.ano, fac.numero,";
     sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
@@ -290,6 +290,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
     sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+    sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
     sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
