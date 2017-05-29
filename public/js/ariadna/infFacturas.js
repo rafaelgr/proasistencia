@@ -161,8 +161,15 @@ var obtainReport = function () {
         connectionString += "Database=" + myconfig.report.database + ";"
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
-        report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
+        // obtener el indice de los sql que contiene el informe que trata 
+        // la cabecera ('pf.facturaId')
+        var pos = 0;
+        for (var i = 0; i < report.dataSources.items.length; i++){
+            var str = report.dataSources.items[i].sqlCommand;
+            if (str.indexOf("pf.facturaId") > -1) pos = i;
+        }
+        var sql = report.dataSources.items[pos].sqlCommand;
+        report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
 
         report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
         // Assign report to the viewer, the report will be built automatically after rendering the viewer
@@ -187,10 +194,15 @@ var obtainReportPdf = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
-
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
-
+        // obtener el indice de los sql que contiene el informe que trata 
+        // la cabecera ('pf.facturaId')
+        var pos = 0;
+        for (var i = 0; i < report.dataSources.items.length; i++){
+            var str = report.dataSources.items[i];
+            if (str.indexOf("pf.facturaId") > -1) pos = i;
+        }
+        var sql = report.dataSources.items[pos].sqlCommand;
+        report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
         // Render report
         report.render();
         // Create an PDF settings instance. You can change export settings.
