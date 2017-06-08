@@ -105,6 +105,17 @@ function admData() {
     self.segComercial = ko.observable();
     self.segComision = ko.observable();
     //
+    self.finComisAgente = ko.observable();
+    self.finPorImpCliente = ko.observable();
+    self.finPorImpClienteAgente = ko.observable();
+    self.finPorCostes = ko.observable();
+    self.finCostes = ko.observable();
+    self.finJefeObra = ko.observable();
+    self.finOficinaTecnica = ko.observable();
+    self.finAsesorTecnico = ko.observable();
+    self.finComercial = ko.observable();
+    self.finComision = ko.observable();    
+    //
     self.sempresaId = ko.observable();
     //
     self.posiblesEmpresas = ko.observableArray([]);
@@ -159,6 +170,18 @@ function loadData(data) {
     vm.segAsesorTecnico(data.segAsesorTecnico);
     vm.segComercial(data.segComercial);
     vm.segComision(data.segComision);
+    //
+    vm.finComisAgente(data.finComisAgente);
+    vm.finPorImpCliente(data.finPorImpCliente);
+    vm.finPorImpClienteAgente(data.finPorImpClienteAgente);
+    vm.finPorCostes(data.finPorCostes);
+    vm.finCostes(data.finCostes);
+    vm.finJefeObra(data.finJefeObra);
+    vm.finOficinaTecnica(data.finOficinaTecnica);
+    vm.finAsesorTecnico(data.finAsesorTecnico);
+    vm.finComercial(data.finComercial);
+    vm.finComision(data.finComision);
+
 
     vm.comision(data.comision);
 
@@ -170,6 +193,10 @@ function loadData(data) {
     if (data.segPorImpClienteAgente > 0) $('#chkSegPorImpClienteAgente').attr('checked', 'true');
     if (data.segPorCostes > 0) $('#chkSegPorCostes').attr('checked', 'true');    
     //
+    if (data.finPorImpCliente > 0) $('#chkFinPorImpCliente').attr('checked', 'true');
+    if (data.finPorImpClienteAgente > 0) $('#chkFinPorImpClienteAgente').attr('checked', 'true');
+    if (data.finPorCostes > 0) $('#chkFinPorCostes').attr('checked', 'true');    
+    //    
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
     loadTiposPagos(data.tipoPago);
@@ -267,7 +294,18 @@ function aceptar() {
                 "segOficinaTecnica": vm.segOficinaTecnica(),
                 "segAsesorTecnico": vm.segAsesorTecnico(),
                 "segComercial": vm.segComercial(),
-                "segComision": vm.segComision()
+                "segComision": vm.segComision(),
+
+                "finComisAgente": vm.finComisAgente(),
+                "finPorImpCliente": vm.finPorImpCliente(),
+                "finPorImpClienteAgente": vm.finPorImpClienteAgente(),
+                "finPorCostes": vm.finPorCostes(),
+                "finCostes": vm.finCostes(),
+                "finJefeObra": vm.finJefeObra(),
+                "finOficinaTecnica": vm.finOficinaTecnica(),
+                "finAsesorTecnico": vm.finAsesorTecnico(),
+                "finComercial": vm.finComercial(),
+                "finComision": vm.finComision()
             }
         };
         var url = "";
