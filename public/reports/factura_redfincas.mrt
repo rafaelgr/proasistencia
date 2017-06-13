@@ -79,7 +79,8 @@ LEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId
 LEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId
 LEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId
 LEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId
-LEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3</SqlCommand>
+LEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3
+</SqlCommand>
       </cabecera>
       <lineas Ref="4" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>lineas</Alias>
@@ -175,7 +176,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
     <Page1 Ref="8" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="11">
+      <Components isList="true" count="9">
         <PageHeaderBand1 Ref="9" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,19,3.2</ClientRectangle>
@@ -194,7 +195,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             </Image1>
             <Text8 Ref="11" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,2.4,8.4,0.6</ClientRectangle>
+              <ClientRectangle>0.4,2.2,8.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>615d8332c0629e3c9edc19b1958e4688</Guid>
@@ -209,9 +210,9 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             <Text9 Ref="12" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,0.4,8.4,0.6</ClientRectangle>
+              <ClientRectangle>0.4,0.4,14,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,16</Font>
+              <Font>Arial,14</Font>
               <Guid>016376798d8dce93096405ad22031708</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
@@ -224,7 +225,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             <Text10 Ref="13" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,1.2,8.4,0.6</ClientRectangle>
+              <ClientRectangle>0.4,1,8.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>d58a1c67ae680e38afea0b972896b586</Guid>
@@ -239,7 +240,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             <Text16 Ref="14" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,1.8,8.4,0.6</ClientRectangle>
+              <ClientRectangle>0.4,1.6,8.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>833ea5689b69abeacf3474f9eeab1a59</Guid>
@@ -259,7 +260,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
         </PageHeaderBand1>
         <PageFooterBand1 Ref="15" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,31.64,19,1.6</ClientRectangle>
+          <ClientRectangle>0,26.1,19,1.6</ClientRectangle>
           <Components isList="true" count="2">
             <Text46 Ref="16" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -300,7 +301,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,4.4,19,3.4</ClientRectangle>
-          <Components isList="true" count="8">
+          <Components isList="true" count="10">
             <Text11 Ref="19" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>10.4,0.8,8.4,0.6</ClientRectangle>
@@ -377,7 +378,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,1.4,9.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="8" />
@@ -415,6 +416,34 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>DataColumn</Type>
             </Text20>
+            <Text22 Ref="27" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,2,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="8" />
+              <Parent isRef="18" />
+              <Text>VENCIMIENTO: {cabecera.vencimiento.ToString("dd/MM/yyyy")}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text22>
+            <Text24 Ref="28" type="Text" isKey="true">
+              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,2.6,9.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="8" />
+              <Parent isRef="18" />
+              <Text>CUENTA: {cabecera.cuenta}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text24>
           </Components>
           <Conditions isList="true" count="0" />
           <DataSourceName>cabecera</DataSourceName>
@@ -427,39 +456,16 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             <value>fecha</value>
           </Sort>
         </Datacabecera>
-        <GroupHeaderBand1 Ref="27" type="GroupHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,8.6,19,0.8</ClientRectangle>
-          <Components isList="true" count="1">
-            <Text15 Ref="28" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,18.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text15</Name>
-              <Page isRef="8" />
-              <Parent isRef="27" />
-              <Text>{lineas.capituloLinea}</Text>
-              <TextBrush>Black</TextBrush>
-            </Text15>
-          </Components>
-          <Condition>{lineas.capituloLinea}</Condition>
-          <Conditions isList="true" count="0" />
-          <Name>GroupHeaderBand1</Name>
-          <Page isRef="8" />
-          <Parent isRef="8" />
-        </GroupHeaderBand1>
         <HeaderBand1 Ref="29" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,10.2,19,0.8</ClientRectangle>
+          <ClientRectangle>0,8.6,19,0.8</ClientRectangle>
           <Components isList="true" count="2">
             <Text17 Ref="30" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0.2,16,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>8730f39cdfba52873bd9d8d20dd3762f</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
@@ -474,7 +480,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>670d95fa334f472d81d27a91a71f6bc2</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -495,7 +501,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
         <Datalineas Ref="32" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,11.8,19,0.8</ClientRectangle>
+          <ClientRectangle>0,10.2,19,0.8</ClientRectangle>
           <Components isList="true" count="2">
             <Text23 Ref="33" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
@@ -503,7 +509,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0.4,0,16,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
               <Page isRef="8" />
@@ -518,7 +524,7 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,0,2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
@@ -549,76 +555,25 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
             <value>linea</value>
           </Sort>
         </Datalineas>
-        <GroupFooterBand1 Ref="36" type="GroupFooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,13.4,19,0.8</ClientRectangle>
-          <Components isList="true" count="2">
-            <Text28 Ref="37" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Guid>1ea8de7c28d9a88ff9695344cc9ca9be</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text28</Name>
-              <Page isRef="8" />
-              <Parent isRef="36" />
-              <Text>{Sum(lineas.totalLinea)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <Symbol>€</Symbol>
-                <UseLocalSetting>False</UseLocalSetting>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text28>
-            <Text29 Ref="39" type="Text" isKey="true">
-              <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text29</Name>
-              <Page isRef="8" />
-              <Parent isRef="36" />
-              <Text>TOTAL CAPITULO: </Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text29>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Name>GroupFooterBand1</Name>
-          <Page isRef="8" />
-          <Parent isRef="8" />
-        </GroupFooterBand1>
-        <FooterBand2 Ref="40" type="FooterBand" isKey="true">
+        <FooterBand2 Ref="36" type="FooterBand" isKey="true">
           <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,15,19,0.8</ClientRectangle>
+          <ClientRectangle>0,11.8,19,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text40 Ref="41" type="Text" isKey="true">
+            <Text40 Ref="37" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text40</Name>
               <Page isRef="8" />
-              <Parent isRef="40" />
+              <Parent isRef="36" />
               <Text>{cabecera.total}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -628,18 +583,18 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               </TextFormat>
               <VertAlignment>Center</VertAlignment>
             </Text40>
-            <Text38 Ref="43" type="Text" isKey="true">
+            <Text38 Ref="39" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>4c49cdd9ff1e3b05554215f7b13efb29</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text38</Name>
               <Page isRef="8" />
-              <Parent isRef="40" />
+              <Parent isRef="36" />
               <Text>TOTAL: </Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
@@ -652,53 +607,53 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
           <Parent isRef="8" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </FooterBand2>
-        <HeaderBand2 Ref="44" type="HeaderBand" isKey="true">
+        <HeaderBand2 Ref="40" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,16.6,19,0.8</ClientRectangle>
+          <ClientRectangle>0,13.4,19,0.8</ClientRectangle>
           <Components isList="true" count="3">
-            <Text4 Ref="45" type="Text" isKey="true">
+            <Text4 Ref="41" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
               <Page isRef="8" />
-              <Parent isRef="44" />
+              <Parent isRef="40" />
               <Text>% IVA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text4>
-            <Text5 Ref="46" type="Text" isKey="true">
+            <Text5 Ref="42" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>3.2,0,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>66c9daff89f52bf4b66bac13ca47b6e7</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="8" />
-              <Parent isRef="44" />
+              <Parent isRef="40" />
               <Text>Base imponible</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text5>
-            <Text6 Ref="47" type="Text" isKey="true">
+            <Text6 Ref="43" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>6.2,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>4757ab32d7f6a51563d7bdd0788a1371</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="8" />
-              <Parent isRef="44" />
+              <Parent isRef="40" />
               <Text>Total</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -710,25 +665,25 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
           <Parent isRef="8" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderBand2>
-        <Databases Ref="48" type="DataBand" isKey="true">
+        <Databases Ref="44" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,18.2,19,0.8</ClientRectangle>
+          <ClientRectangle>0,15,19,0.8</ClientRectangle>
           <Components isList="true" count="3">
-            <Text34 Ref="49" type="Text" isKey="true">
+            <Text34 Ref="45" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,0,2.2,0.6</ClientRectangle>
+              <ClientRectangle>3.2,0,2.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text34</Name>
               <Page isRef="8" />
-              <Parent isRef="48" />
+              <Parent isRef="44" />
               <Text>{bases.base}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -738,21 +693,21 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               </TextFormat>
               <Type>DataColumn</Type>
             </Text34>
-            <Text37 Ref="51" type="Text" isKey="true">
+            <Text37 Ref="47" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>6.2,0,2.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>d5bafb80bb1bfa3665e7bd7ec54351d9</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text37</Name>
               <Page isRef="8" />
-              <Parent isRef="48" />
+              <Parent isRef="44" />
               <Text>{bases.cuota}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -762,20 +717,20 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               </TextFormat>
               <Type>DataColumn</Type>
             </Text37>
-            <Text18 Ref="53" type="Text" isKey="true">
+            <Text18 Ref="49" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="8" />
-              <Parent isRef="48" />
+              <Parent isRef="44" />
               <Text>{bases.porcentaje}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="54" type="NumberFormat" isKey="true">
+              <TextFormat Ref="50" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator> </GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -793,42 +748,42 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
           <Parent isRef="8" />
           <Sort isList="true" count="0" />
         </Databases>
-        <FooterBand1 Ref="55" type="FooterBand" isKey="true">
+        <FooterBand1 Ref="51" type="FooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,19.8,19,2.8</ClientRectangle>
+          <ClientRectangle>0,16.6,19,2.8</ClientRectangle>
           <Components isList="true" count="5">
-            <Text39 Ref="56" type="Text" isKey="true">
+            <Text39 Ref="52" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.2,0,5.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>bbf14fc4f5944a48ea1bcdc085b990d8</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text39</Name>
               <Page isRef="8" />
-              <Parent isRef="55" />
+              <Parent isRef="51" />
               <Text>TOTAL (CON IVA): </Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text39>
-            <Text41 Ref="57" type="Text" isKey="true">
+            <Text41 Ref="53" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Guid>327da162a0c9d9011b99f5f2daeb2614</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
               <Page isRef="8" />
-              <Parent isRef="55" />
+              <Parent isRef="51" />
               <Text>{cabecera.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="54" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -839,43 +794,43 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Text41>
-            <Text42 Ref="59" type="Text" isKey="true">
+            <Text42 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,1.2,18.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
               <Page isRef="8" />
-              <Parent isRef="55" />
+              <Parent isRef="51" />
               <Text>Observaciones:</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text42>
-            <Text44 Ref="60" type="Text" isKey="true">
+            <Text44 Ref="56" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0.2,1.6,18.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
               <Page isRef="8" />
-              <Parent isRef="55" />
+              <Parent isRef="51" />
               <Text>{cabecera.observaciones}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
             </Text44>
-            <Text19 Ref="61" type="Text" isKey="true">
+            <Text19 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0.2,10.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
               <Page isRef="8" />
-              <Parent isRef="55" />
+              <Parent isRef="51" />
               <Text>FORMA DE PAGO: {cabecera.formaPago}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -897,13 +852,13 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="62" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="58" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="63" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="59" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -916,14 +871,14 @@ LEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>FacturaRedFincas</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/10/2017 4:47:53 PM</ReportChanged>
+  <ReportChanged>6/13/2017 8:46:19 AM</ReportChanged>
   <ReportCreated>5/3/2017 4:47:23 AM</ReportCreated>
   <ReportFile />
-  <ReportGuid>b1f3da4e8d94457a920a27328393335f</ReportGuid>
+  <ReportGuid>ff1afeb4ffdd4eba82bd8620d0b3b4f3</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturaRedFincas</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.1.1.0</ReportVersion>
+  <ReportVersion>2017.1.4.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;

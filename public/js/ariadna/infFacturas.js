@@ -170,8 +170,6 @@ var obtainReport = function () {
         }
         var sql = report.dataSources.items[pos].sqlCommand;
         report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
-
-        report.dataSources.items[0].sqlCommand = rptFacturaParametros(sql);
         // Assign report to the viewer, the report will be built automatically after rendering the viewer
         viewer.report = report;
     });
