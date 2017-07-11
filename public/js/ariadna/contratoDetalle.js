@@ -86,14 +86,14 @@ function initForm() {
 
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
-    
+
 
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato();
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioTipoContrato(e.added);
-    });    
+    });
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
@@ -234,6 +234,7 @@ function admData() {
     self.fechaInicio = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
+    self.fechaSiguientesFacturas = ko.observable();
     self.fechaOriginal = ko.observable();
     self.facturaParcial = ko.observable();
     self.preaviso = ko.observable();
@@ -390,6 +391,7 @@ function loadData(data) {
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
+    vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.preaviso(data.preaviso);
@@ -517,6 +519,7 @@ var guardarContrato = function (done) {
             "fechaInicio": spanishDbDate(vm.fechaInicio()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
+            "fechaSiguientesFacturas": spanishDbDate(vm.fechaSiguientesFacturas()),
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
             "preaviso": vm.preaviso(),
@@ -691,6 +694,7 @@ function cambioTipoProyecto(data) {
 
 function cambioTipoContrato(data) {
     //
+    if (!data) return;
     var tipoContratoId = data.id;
     llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/proyectos-departamento/" + tipoContratoId, null, function (err, data) {
         if (err) return;
@@ -699,7 +703,7 @@ function cambioTipoContrato(data) {
             nombre: ""
         }].concat(data);
         vm.posiblesTipoProyecto(tipos);
-        $("#cmbTipoProyecto").val([id]).trigger('change');        
+        $("#cmbTipoProyecto").val([id]).trigger('change');
     });
 }
 
@@ -1923,7 +1927,7 @@ var verPrefacturasAGenerar = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
@@ -1966,6 +1970,9 @@ var generarPrefacturasOK = function () {
             },
             txtGFechaPrimeraFactura: {
                 required: true
+            },
+            txtGFechaSiguientesFacturas: {
+                required: true
             }
         },
         // Messages for form validation
@@ -1980,6 +1987,9 @@ var generarPrefacturasOK = function () {
                 required: "Debe elegir una fecha"
             },
             txtGFechaPrimeraFactura: {
+                required: "Debe elegir una fecha"
+            },
+            txtGFechaSiguientesFacturas: {
                 required: "Debe elegir una fecha"
             }
         },
@@ -2008,7 +2018,7 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
     });
 }
 
-function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPagos, empresaId, clienteId, empresa, cliente) {
+function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
     // calculamos según la periodicidad
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
@@ -2035,7 +2045,10 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
     var import22 = importeCoste - import12;
     var pagos = [];
     for (var i = 0; i < numPagos; i++) {
-        var f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
+        var f = moment(fechaSiguientesFacturas).add(i * divisor, 'month').format('DD/MM/YYYY');
+        if (i == 0){
+            f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
+        }
         var p = {
             fecha: f,
             importe: importePago,
@@ -2047,12 +2060,13 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY') + "-" + moment(iniContrato).add(((i + 1) * divisor), 'month').format('DD/MM/YYYY')
+            periodo: moment(f, 'DD/MM/YYYY').add(-1, 'month').format('DD/MM/YYYY') + "-" + f
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
             p.importeCliente = import11;
             p.importeCoste = import12;
+            p.periodo = moment(iniContrato).format('DD/MM/YYYY') + "-" +moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         }
         pagos.push(p);
     }
@@ -2073,11 +2087,16 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, numPag
         };
         pagos.push(p);
     }
-    if (pagos.length > 0) {
+    if (pagos.length > 1) {
         // en la última factura ponemos los restos
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        var mperiodo = pagos[pagos.length - 1].periodo;
+        var mperiodo2 = pagos[pagos.length - 2].periodo;
+        var p1 = mperiodo.split('-')[0];
+        var p2 = mperiodo2.split('-')[1];
+        pagos[pagos.length - 1].periodo = p2 + "-" + p1;
     }
     return pagos;
 }
