@@ -1,6 +1,7 @@
 {
     "apiPort": 5000,
-    "apiHost": "127.0.0.1",
+    "stiPort": 5001,
+    "apiHost": "localhost",
     "dsn":"proasistenciag2",
     "conta_dir": "C:\\Proyectos\\proasistencia\\public\\ficheros\\contabilidad",
     "factura_dir": "C:\\Proyectos\\proasistencia\\public\\ficheros\\facturas",

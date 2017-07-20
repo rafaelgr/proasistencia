@@ -15,6 +15,7 @@ var breakpointDefinition = {
 var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 StiOptions.WebServer.url = "/api/streport";
+//StiOptions.WebServer.url = "http://localhost:9615";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
 Stimulsoft.Base.StiLicense.key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHltN9ZO4D78QwpEoh6+UpBm5mrGyhSAIsuWoljPQdUv6R6vgv" +
     "iStsx8W3jirJvfPH27oRYrC2WIPEmaoAZTNtqb+nDxUpJlSmG62eA46oRJDV8kJ2cJSEx19GMJXYgZvv7yQT9aJHYa" +
