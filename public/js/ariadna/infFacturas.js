@@ -15,6 +15,7 @@ var breakpointDefinition = {
 var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 StiOptions.WebServer.url = "/api/streport";
+//StiOptions.WebServer.url = "http://localhost:9615";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
 Stimulsoft.Base.StiLicense.key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHltN9ZO4D78QwpEoh6+UpBm5mrGyhSAIsuWoljPQdUv6R6vgv" +
     "iStsx8W3jirJvfPH27oRYrC2WIPEmaoAZTNtqb+nDxUpJlSmG62eA46oRJDV8kJ2cJSEx19GMJXYgZvv7yQT9aJHYa" +
@@ -164,7 +165,7 @@ var obtainReport = function () {
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
         var pos = 0;
-        for (var i = 0; i < report.dataSources.items.length; i++){
+        for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
             if (str.indexOf("pf.facturaId") > -1) pos = i;
         }
@@ -195,8 +196,8 @@ var obtainReportPdf = function () {
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
         var pos = 0;
-        for (var i = 0; i < report.dataSources.items.length; i++){
-            var str = report.dataSources.items[i];
+        for (var i = 0; i < report.dataSources.items.length; i++) {
+            var str = report.dataSources.items[i].sqlCommand;
             if (str.indexOf("pf.facturaId") > -1) pos = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
@@ -330,6 +331,14 @@ var exportarPDF = function () {
     url += "/" + empresaId;
     url += "/" + clienteId;
     llamadaAjax("GET", url, null, function (err, data) {
-        if (err) return;
+        if (err) {
+            // hay que informar de error durante la exportación
+            return;
+        }
+        $("#mensajeEspera").hide();
+        $("#mensajeExportacion").show();
+        $('#modalExportar').modal('hide');
+        var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
+        mensNormal(mens);
     });
 }
