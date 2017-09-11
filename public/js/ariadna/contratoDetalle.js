@@ -1875,19 +1875,6 @@ var cambioPeriodosPagos = function (data) {
     vm.numPagos(calcularNumPagos());
 }
 
-var calcularNumPagos = function () {
-    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
-    var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
-    var numMeses = parseInt(moment(fFinal).diff(fInicial, 'months', true));
-    if (numMeses == 0) numMeses = 1; // por lo menos un pago
-    // calculamos según la periodicidad
-    var divisor = obtenerDivisor();
-    var numpagos = 1
-    if (divisor != 0) numpagos = parseInt(numMeses / divisor);
-    if (numpagos == 0) numpagos = 1; // por lo menos uno
-    return numpagos;
-}
-
 var obtenerDivisor = function () {
     var divisor = 1;
     switch (vm.speriodoPagoId()) {
@@ -1927,7 +1914,8 @@ var verPrefacturasAGenerar = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    // var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    var prefacturas = crearPrefacturas2(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
@@ -2046,7 +2034,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     var pagos = [];
     for (var i = 0; i < numPagos; i++) {
         var f = moment(fechaSiguientesFacturas).add(i * divisor, 'month').format('DD/MM/YYYY');
-        if (i == 0){
+        if (i == 0) {
             f = moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         }
         var p = {
@@ -2066,7 +2054,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             p.importe = import1;
             p.importeCliente = import11;
             p.importeCoste = import12;
-            p.periodo = moment(iniContrato).format('DD/MM/YYYY') + "-" +moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
+            p.periodo = moment(iniContrato).format('DD/MM/YYYY') + "-" + moment(fechaInicial).add(i * divisor, 'month').format('DD/MM/YYYY');
         }
         pagos.push(p);
     }
@@ -2684,4 +2672,88 @@ function deletePrefactura(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
+    var divisor = obtenerDivisor();
+    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
+    // de mes 
+    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
+    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
+    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
+    var fContrato = moment(finContrato).format('YYYY-MM-DD');
+    var diffDias = moment(fechaPrimeraFactura).diff(inicioContrato, 'days');
+
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
+    var import1 = (importePago / 30) * diffDias;
+    var import11 = (importePagoCliente / 30) * diffDias;
+    var import12 = (importeCoste / 30) * diffDias;
+    var import2 = importePago - import1;
+    var import21 = importePagoCliente - import11;
+    var import22 = importeCoste - import12;
+    var pagos = [];
+    var nPagos = numPagos;
+    if (vm.facturaParcial()) nPagos++
+    for (var i = 0; i < nPagos; i++) {
+        var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+        var f2 = f;
+        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        if (i > 0) f0 = moment(fechaPrimeraFactura).add((i - 1) * divisor, 'month').format('DD/MM/YYYY');
+        if (i == (nPagos - 1)) {
+            f2 = moment(fContrato).format('DD/MM/YYYY');
+        }
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2
+        };
+        if (vm.facturaParcial() && i == 0) {
+            p.importe = import1;
+            p.importeCliente = import11;
+            p.importeCoste = import12;
+        }
+        if (vm.facturaParcial() && i == (nPagos - 1)) {
+            p.importe = import2;
+            p.importeCliente = import21;
+            p.importeCoste = import22;
+        }
+        pagos.push(p);
+    }
+    if (pagos.length > 1) {
+        // en la última factura ponemos los restos
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+    }
+    return pagos;
+}
+
+var calcularNumPagos = function () {
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
+    // añadimos un dia a la feha final para contemplar el caso en el que ponen
+    // como fecha final de contrato la de fin de mes.
+    var numMeses = parseInt(moment(fFinal).add(1, 'days').diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
+    // calculamos según la periodicidad
+    var divisor = obtenerDivisor();
+    var numpagos = 1
+    if (divisor != 0) numpagos = parseInt(numMeses / divisor);
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
+    return numpagos;
 }
