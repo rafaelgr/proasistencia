@@ -33,6 +33,8 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
+    $("#btnTrabajoFiscal").click(copiarDireccionTrabajoEnFiscal);
+    $("#btnFiscalPostal").click(copiarDireccionFiscalEnPostal);
     $("#frmCliente").submit(function () {
         return false;
     });
@@ -99,9 +101,9 @@ function initForm() {
     $(function () {
         $(".ibans").keyup(function () {
             if (this.value.length == this.maxLength) {
-                var r = $(this).attr('id').substr(0,7);
+                var r = $(this).attr('id').substr(0, 7);
                 var n = $(this).attr('id').substr(7);
-                var n1 = n* 1 + 1;
+                var n1 = n * 1 + 1;
                 var r2 = r + n1;
                 $("#" + r2).focus();
             }
@@ -213,7 +215,7 @@ function admData() {
     self.direccion3 = ko.observable();
     self.codPostal3 = ko.observable();
     self.poblacion3 = ko.observable();
-    self.provincia3 = ko.observable();    
+    self.provincia3 = ko.observable();
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
@@ -247,13 +249,13 @@ function admData() {
     self.stipoViaId2 = ko.observable();
     //
     self.tipoViaId3 = ko.observable();
-    self.stipoViaId3 = ko.observable();    
+    self.stipoViaId3 = ko.observable();
     //
     self.posiblesTiposVia2 = ko.observableArray([]);
     self.elegidosTiposVia2 = ko.observableArray([]);
     //
     self.posiblesTiposVia3 = ko.observableArray([]);
-    self.elegidosTiposVia3 = ko.observableArray([]);    
+    self.elegidosTiposVia3 = ko.observableArray([]);
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -489,7 +491,7 @@ function aceptar() {
                 "poblacion3": vm.poblacion3(),
                 "provincia3": vm.provincia3(),
                 "codPostal3": vm.codPostal3(),
-                "tipoViaId3": vm.stipoViaId3()                
+                "tipoViaId3": vm.stipoViaId3()
             }
         };
         if (empId == 0) {
@@ -1092,4 +1094,20 @@ function cambioCodComercial(data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+var copiarDireccionTrabajoEnFiscal = function () {
+    vm.direccion(vm.direccion2());
+    vm.codPostal(vm.codPostal2());
+    vm.provincia(vm.provincia2());
+    vm.poblacion(vm.poblacion2());
+    loadTiposVia(vm.stipoViaId2());
+}
+var copiarDireccionFiscalEnPostal = function () {
+    vm.direccion3(vm.direccion());
+    vm.codPostal3(vm.codPostal());
+    vm.provincia3(vm.provincia());
+    vm.poblacion3(vm.poblacion());
+    loadTiposVia3(vm.stipoViaId());
+
 }

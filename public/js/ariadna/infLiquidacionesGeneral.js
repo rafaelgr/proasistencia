@@ -111,7 +111,7 @@ function initForm() {
     if (gup('dFecha') != "" && gup('hFecha') != "") {
         vm.dFecha(gup('dFecha'));
         vm.hFecha(gup('hFecha'));
-        if (gup("tipoComercialId") != ""){
+        if (gup("tipoComercialId") != "0"){
             vm.tipoComercialId(gup("tipoComercialId"))
         }
         obtainReport();
