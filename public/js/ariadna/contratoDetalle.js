@@ -2681,7 +2681,10 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
     var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
     var fContrato = moment(finContrato).format('YYYY-MM-DD');
-    var diffDias = moment(fechaPrimeraFactura).diff(inicioContrato, 'days');
+    var finMesInicioContrato = moment(inicioContrato).endOf('month');
+    var aux = iniContrato.split('-');
+    var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
     var importePago = roundToTwo(importe / numPagos);
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
@@ -2700,12 +2703,22 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var import22 = importeCoste - import12;
     var pagos = [];
     var nPagos = numPagos;
-    if (vm.facturaParcial()) nPagos++
+    if (vm.facturaParcial()) {
+        nPagos++
+    }
     for (var i = 0; i < nPagos; i++) {
+        // sucesivas fechas de factura
         var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
-        var f2 = f;
+        // inicio de periodo
         var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
-        if (i > 0) f0 = moment(fechaPrimeraFactura).add((i - 1) * divisor, 'month').format('DD/MM/YYYY');
+        // fin de periodo
+        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        if (vm.facturaParcial()) {
+            if (i > 0) {
+                f0 = moment(inicioMesInicioContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+            }
+            f2 = moment(inicioMesInicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        }
         if (i == (nPagos - 1)) {
             f2 = moment(fContrato).format('DD/MM/YYYY');
         }
@@ -2745,6 +2758,10 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
 
 var calcularNumPagos = function () {
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    // if (vm.facturaParcial()){
+    //     var aux = moment(fInicial).format('YYYY-MM-DD').split('-');
+    //     fInicial = aux[0] + "-" + aux[1] + "-01";
+    // }
     var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
     // añadimos un dia a la feha final para contemplar el caso en el que ponen
     // como fecha final de contrato la de fin de mes.
