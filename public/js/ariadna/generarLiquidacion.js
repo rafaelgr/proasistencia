@@ -55,8 +55,8 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
-    $("#cmbTiposComerciales").select2(select2Spanish());
-    loadTiposComerciales();
+    $("#cmbComerciales").select2(select2Spanish());
+    loadComerciales();
 
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
@@ -85,11 +85,11 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
-    self.tipoComercialId = ko.observable();
-    self.stipoComercialId = ko.observable();
+    self.comercialId = ko.observable();
+    self.scomercialId = ko.observable();
     //
-    self.posiblesTiposComerciales = ko.observableArray([]);
-    self.elegidosTiposComerciales = ko.observableArray([]);
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
 }
 
 function initTablaFacturas() {
@@ -257,12 +257,12 @@ function buscarFacturas() {
         if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
-        var tipoComercialId = 0;
-        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+        var comercialId = 0;
+        if (vm.scomercialId()) comercialId = vm.scomercialId();
         var url = myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         url += "/" + tipoContratoId;
         url += "/" + empresaId;
-        url += "/" + tipoComercialId;
+        url += "/" + comercialId;
         $.ajax({
             type: "GET",
             url: url,
@@ -291,12 +291,12 @@ function generarLiquidaciones() {
         if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
-        var tipoComercialId = 0;
-        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+        var comercialId = 0;
+        if (vm.scomercialId()) comercialId = vm.scomercialId();
         var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         url += "/" + tipoContratoId;
         url += "/" + empresaId;
-        url += "/" + tipoComercialId;
+        url += "/" + comercialId;
         // Vamos a comprobar si hay datos previos
         $.ajax({
             type: "GET",
@@ -337,12 +337,12 @@ function generaLiquidaciones2() {
     if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
     var empresaId = 0;
     if (vm.sempresaId()) empresaId = vm.sempresaId();
-    var tipoComercialId = 0;
-    if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+    var comercialId = 0;
+    if (vm.scomercialId()) comercialId = vm.scomercialId();
     var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
     url += "/" + tipoContratoId;
     url += "/" + empresaId;
-    url += "/" + tipoComercialId;
+    url += "/" + comercialId;
     $.ajax({
         type: "POST",
         url: url,
@@ -355,6 +355,7 @@ function generaLiquidaciones2() {
             vm.desdeFecha(null);
             vm.hastaFecha(null);
             loadTablaFacturas(null);
+            loadComerciales(0);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -517,19 +518,19 @@ function loadEmpresas(id) {
     });
 }
 
-function loadTiposComerciales(id) {
+function loadComerciales(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_comerciales",
+        url: "/api/comerciales",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposComerciales(tiposComerciales);
+            var tiposComerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(tiposComerciales);
             //if (id){
-            //    vm.stipoComercialId(id);
+            //    vm.scomercialId(id);
             //}
-            $("#cmbTiposComerciales").val([id]).trigger('change');
+            $("#cmbComerciales").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
