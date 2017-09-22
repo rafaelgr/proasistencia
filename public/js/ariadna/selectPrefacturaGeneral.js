@@ -59,6 +59,9 @@ function initForm() {
     $("#cmbTiposMantenimientos").select2(select2Spanish());
     loadTiposMantenimientos();
 
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
+
     initTablaPrefacturas();
     // comprobamos parámetros
     prefacturaId = gup('PrefacturaId');
@@ -87,6 +90,11 @@ function admData() {
     //
     self.posiblesTiposMantenimientos = ko.observableArray([]);
     self.elegidosTiposMantenimientos = ko.observableArray([]);
+    //
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);    
 }
 
 function initTablaPrefacturas() {
@@ -260,6 +268,7 @@ function buscarPrefacturas() {
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
         if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
+        if (vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0"
         $.ajax({
             type: "GET",
             url: url,
@@ -476,6 +485,24 @@ function loadTiposMantenimientos(id) {
             var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposMantenimientos(tiposMantenimientos);
             $("#cmbTiposMantenimientos").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadEmpresas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+            vm.posiblesEmpresas(empresas);
+            $("#cmbEmpresas").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
