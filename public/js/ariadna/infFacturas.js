@@ -170,9 +170,19 @@ var obtainReport = function () {
             if (str.indexOf("pf.facturaId") > -1) pos = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
-        report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
-        // Assign report to the viewer, the report will be built automatically after rendering the viewer
-        viewer.report = report;
+        var sql2 = rptFacturaParametros(sql);
+        verb = "POST"; 
+        url = myconfig.apiUrl + "/api/informes/sql";
+        llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
+            if (err) return;
+            if (data) {
+                report.dataSources.items[pos].sqlCommand = sql2;
+                // Assign report to the viewer, the report will be built automatically after rendering the viewer
+                viewer.report = report;
+            } else {
+                alert("No hay registros con estas condiciones");
+            }
+        })
     });
 
 };

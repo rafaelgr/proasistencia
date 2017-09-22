@@ -2371,6 +2371,11 @@ function loadTablaPrefacturas(data) {
     dt.fnDraw();
 }
 
+printPrefactura = function(id){
+    var url = "InfPrefacturas.html?prefacturaId=" + id;
+    window.open(url, '_blank');
+}
+
 //---- Solapa facturas
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
@@ -2534,6 +2539,11 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();
+}
+
+printFactura = function(id){
+    var url = "InfFacturas.html?facturaId=" + id;
+    window.open(url, '_blank');
 }
 
 // -- Modal renovacion del contrato
