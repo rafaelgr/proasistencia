@@ -25,6 +25,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
+    $('#btnPrint').click(imprimirFactura);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -419,4 +420,9 @@ function cargarFacturas2All() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+imprimirFactura = function () {
+    var url = "InfFacturas.html";
+    window.open(url, '_blank');
 }

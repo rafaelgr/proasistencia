@@ -25,6 +25,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarOfertas());
     $('#btnAlta').click(crearOferta());
+    $('#btnPrint').click(imprimirOferta);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -380,4 +381,9 @@ function cargarOfertas2All() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+imprimirOferta = function () {
+    var url = "InfOfertas.html";
+    window.open(url, '_blank');
 }
