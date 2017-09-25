@@ -57,6 +57,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    } else {
+        buscarTodos();
     }
 }
 
@@ -221,4 +223,10 @@ function editTipoIva(id) {
     window.open(url, '_self');
 }
 
-
+buscarTodos = function(){
+    var url = myconfig.apiUrl + "/api/tipos_iva/?nombre=*";
+    llamadaAjax("GET", url, null, function(err, data){
+        if (err) return;
+        loadTablaTiposIva(data);
+    });
+}

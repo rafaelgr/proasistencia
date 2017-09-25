@@ -57,6 +57,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    } else {
+        buscarTodos();
     }
 }
 
@@ -219,4 +221,10 @@ function editMotivoBaja(id) {
     window.open(url, '_self');
 }
 
-
+buscarTodos = function(){
+    var url =  myconfig.apiUrl + "/api/motivos_baja/?nombre=*";
+    llamadaAjax("GET", url, null, function(err,data){
+        if (err) return;
+        loadTablaMotivosBaja(data);        
+    });
+}

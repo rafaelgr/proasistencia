@@ -57,6 +57,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    } else {
+        buscarTodos();
     }
 }
 
@@ -220,4 +222,10 @@ function editFormaPago(id) {
     window.open(url, '_self');
 }
 
-
+buscarTodos = function(){
+    var url = myconfig.apiUrl + "/api/formas_pago/?nombre=*";
+    llamadaAjax("GET", url, null, function(err, data){
+        if (err) return;
+        loadTablaFormasPago(data);
+    });
+}

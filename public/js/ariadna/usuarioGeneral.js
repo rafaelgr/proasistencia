@@ -58,6 +58,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    }else {
+        buscarTodos();
     }
 }
 
@@ -224,3 +226,35 @@ function editUsuario(id) {
 }
 
 
+function buscarUsuarios() {
+    var mf = function () {
+        if (!datosOK()) {
+            return;
+        }
+        // obtener el n.serie del certificado para la firma.
+        var aBuscar = $('#txtBuscar').val();
+        // enviar la consulta por la red (AJAX)
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/usuarios/?nombre=" + aBuscar,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaUsuarios(data);
+            },
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+        });
+    };
+    return mf;
+}
+
+buscarTodos = function(){
+    var url = myconfig.apiUrl + "/api/usuarios/?nombre=*";
+    llamadaAjax("GET",url, null, function(err, data){
+        loadTablaUsuarios(data);
+    });
+}

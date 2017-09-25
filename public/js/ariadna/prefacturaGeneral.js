@@ -25,6 +25,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarPrefacturas());
     $('#btnAlta').click(crearPrefactura());
+    $('#btnPrint').click(imprimirPrefactura);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -404,4 +405,10 @@ function cargarPrefacturas2All() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+
+imprimirPrefactura = function () {
+    var url = "InfPrefacturas.html";
+    window.open(url, '_blank');
 }

@@ -57,6 +57,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    } else {
+        buscarTodos();
     }
 }
 
@@ -223,4 +225,10 @@ function editArticulo(id) {
     window.open(url, '_self');
 }
 
-
+buscarTodos = function() {
+    var url = myconfig.apiUrl + "/api/articulos/?nombre=*";
+    llamadaAjax("GET", url, null, function(err, data){
+        if (err) return;
+        loadTablaArticulos(data);        
+    });
+};

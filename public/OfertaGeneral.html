@@ -294,7 +294,7 @@
                         <li>
                             <a href="InfGeneral.html"><i class="fa fa-fw fa-bar-chart"></i> Informes generales</a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </li>
         </nav>
         <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -331,9 +331,9 @@
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                     <h1 class="page-title txt-color-blueDark">
 
-                    <!-- PAGE HEADER -->
-                    <i class="fa-fw fa fa-file-o"></i> Ofertas <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
-                </h1>
+                        <!-- PAGE HEADER -->
+                        <i class="fa-fw fa fa-file-o"></i> Ofertas <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                    </h1>
                 </div>
                 <!-- end col -->
                 <!-- right side of the page with the sparkline graphs -->
@@ -414,6 +414,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnPrint" title="Informes" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-print"></i>
+                                                </button>
                                                 <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
                                                 </button>
@@ -522,7 +525,7 @@
         </div>
         <div class="col-xs-6 col-sm-6 text-right hidden-xs">
             <div class="txt-color-white inline-block">
-                <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong> <i class="fa fa-envelope"></i><strong> &nbsp;</strong> </i>
+                <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i>                                                        <strong> &nbsp;</strong> <i class="fa fa-envelope"></i><strong> &nbsp;</strong>                                                        </i>
                                     </div>
                                 </div>
                             </div>
@@ -534,15 +537,15 @@
                         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
                         <script src="js/libs/jquery-2.1.1.min.js"></script>
                         <script>
-                        if (!window.jQuery) {
-                            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-                        }
+                            if (!window.jQuery) {
+                                document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
+                            }
                         </script>
                         <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
                         <script>
-                        if (!window.jQuery.ui) {
-                            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-                        }
+                            if (!window.jQuery.ui) {
+                                document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+                            }
                         </script>
                         <!-- IMPORTANT: APP CONFIG -->
                         <script src="js/app.config.js"></script>
@@ -600,26 +603,26 @@
                         <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
                         <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
                         <script type="text/javascript">
-                        (function($) {
-                            $(document).ready(function() {
-                                initForm();
-                            });
-                        })(jQuery);
+                            (function ($) {
+                                $(document).ready(function () {
+                                    initForm();
+                                });
+                            })(jQuery);
                         </script>
                         <!-- Your GOOGLE ANALYTICS CODE Below -->
                         <script type="text/javascript">
-                        var _gaq = _gaq || [];
-                        _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-                        _gaq.push(['_trackPageview']);
+                            var _gaq = _gaq || [];
+                            _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+                            _gaq.push(['_trackPageview']);
 
-                        (function() {
-                            var ga = document.createElement('script');
-                            ga.type = 'text/javascript';
-                            ga.async = true;
-                            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                            var s = document.getElementsByTagName('script')[0];
-                            s.parentNode.insertBefore(ga, s);
-                        })();
+                            (function () {
+                                var ga = document.createElement('script');
+                                ga.type = 'text/javascript';
+                                ga.async = true;
+                                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(ga, s);
+                            })();
                         </script>
 </body>
 
