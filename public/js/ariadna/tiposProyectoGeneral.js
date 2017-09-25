@@ -58,6 +58,8 @@ function initForm() {
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
+    } else {
+        buscarTodos();
     }
 }
 
@@ -224,3 +226,9 @@ function editTipoProyecto(id) {
 }
 
 
+buscarTodos = function(){
+    var url = myconfig.apiUrl + "/api/tipos_proyectos/?nombre=*";
+    llamadaAjax("GET", url, null, function(err, data){
+        loadTablaTiposProyecto(data);
+    });
+}

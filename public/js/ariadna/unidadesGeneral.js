@@ -58,6 +58,8 @@ function initForm() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
         });
+    } else{
+        buscarTodos();
     }
 }
 
@@ -222,3 +224,9 @@ function editUnidad(id) {
 }
 
 
+buscarTodos = function() {
+    var url = myconfig.apiUrl + "/api/unidades/?nombre=*";
+    llamadaAjax("GET", url, null, function(err, data){
+        loadTablaUnidades(data);
+    });
+}
