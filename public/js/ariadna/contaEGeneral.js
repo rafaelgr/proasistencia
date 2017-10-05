@@ -44,7 +44,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(contabilizarFacturas());
+    $('#btnAlta').click(enviarCorreos());
     $('#btnDownload').click(buscarFicheros());
     $('#frmBuscar').submit(function () {
         return false
@@ -229,7 +229,7 @@ function buscarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -275,6 +275,25 @@ function contabilizarFacturas() {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
+        });
+    };
+    return mf;
+}
+
+function enviarCorreos() {
+    var mf = function () {
+        // de momento nada
+        if (!datosOK()) return;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        llamadaAjax("POST", url, null, function (err, data) {
+            if (err) return;
+            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            llamadaAjax("POST", url, data, function (err, data) {
+                if (err) return;
+                $("#btnAlta").hide();
+                mensNormal('Las facturas se han enviado por correo');
+            });
+
         });
     };
     return mf;
