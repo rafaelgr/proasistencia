@@ -322,8 +322,9 @@ function enviarCorreos() {
                 }
                 $("#btnAlta").hide();
                 $('#progress').hide();
-                alert(data);
-                mensNormal('Las facturas se han enviado por correo');
+                $("#resEnvio").html(data);
+                $("#modalResultado").modal('show');
+                // mensNormal('Las facturas se han enviado por correo');
             });
 
         });
