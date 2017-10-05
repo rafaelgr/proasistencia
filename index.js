@@ -130,7 +130,13 @@ app.use('/api/streport', require('./report-controller/reportdb'));
 app.use('/api/correoElectronico', correoElectronico);
 
 // -- start server
-app.listen(config.apiPort);
+var server = require('http').createServer(app); 
+var io = require('socket.io')(server);
+server.listen(config.apiPort);
+
+// -- io calls
+var ioAPI = require('./lib/ioapi/ioapi');
+ioAPI.init(io);
 
 
 // -- console message

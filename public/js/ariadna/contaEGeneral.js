@@ -55,6 +55,26 @@ function initForm() {
     initTablaFacturas();
     // comprobamos parámetros
     facturaId = gup('FacturaId');
+    //
+    var socket = io.connect('/');
+    socket.on('message', function (data) {
+        alert(data);
+    });
+    socket.on('progress', function (data) {
+        vm.numReg(data.numReg);
+        vm.totalReg(data.totalReg);
+        // calculate the percentage of upload completed
+        var percentComplete = vm.numReg() / vm.totalReg();
+        percentComplete = parseInt(percentComplete * 100);
+        // update the Bootstrap progress bar with the new percentage
+        $('.progress-bar').text(percentComplete + '%');
+        $('.progress-bar').width(percentComplete + '%');
+        // once the upload reaches 100%, set the progress bar text to done
+        if (percentComplete === 100) {
+            $('.progress-bar').html('Proceso terminado');
+        }
+    });
+
 }
 
 // tratamiento knockout
@@ -63,6 +83,8 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    self.numReg = ko.observable();
+    self.totalReg = ko.observable();
 }
 
 function initTablaFacturas() {
@@ -282,15 +304,22 @@ function contabilizarFacturas() {
 
 function enviarCorreos() {
     var mf = function () {
-        // de momento nada
         if (!datosOK()) return;
+        $('#progress').show();
         var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         llamadaAjax("POST", url, null, function (err, data) {
-            if (err) return;
+            if (err) {
+                $('#progress').hide();
+                return;
+            }
             url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
-                if (err) return;
+                if (err) {
+                    $('#progress').hide();
+                    return;
+                }
                 $("#btnAlta").hide();
+                $('#progress').hide();
                 mensNormal('Las facturas se han enviado por correo');
             });
 
