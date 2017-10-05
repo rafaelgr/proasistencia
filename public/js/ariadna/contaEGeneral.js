@@ -61,6 +61,7 @@ function initForm() {
         alert(data);
     });
     socket.on('progress', function (data) {
+        vm.titleReg(data.titleReg);
         vm.numReg(data.numReg);
         vm.totalReg(data.totalReg);
         // calculate the percentage of upload completed
@@ -83,6 +84,7 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    self.titleReg = ko.observable();
     self.numReg = ko.observable();
     self.totalReg = ko.observable();
 }
@@ -320,6 +322,7 @@ function enviarCorreos() {
                 }
                 $("#btnAlta").hide();
                 $('#progress').hide();
+                alert(data);
                 mensNormal('Las facturas se han enviado por correo');
             });
 
