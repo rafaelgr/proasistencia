@@ -5,8 +5,8 @@
         "secure": true,
         "auth": {
             "user": "rafa@myariadna.com",
-            "pass": "****"
+            "pass": "*****"
         }
     },
-    "fakeEmail": "rafael.garcia@ariadnasoftware.com"
+    "fakeEmail": "dev.ragare@gmail.com"
 }
