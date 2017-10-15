@@ -1,0 +1,12 @@
+{
+    "smtpConfig": {
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "secure": true,
+        "auth": {
+            "user": "rafa@myariadna.com",
+            "pass": "****"
+        }
+    },
+    "fakeEmail": "rafael.garcia@ariadnasoftware.com"
+}

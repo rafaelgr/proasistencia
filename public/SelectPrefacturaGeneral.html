@@ -252,7 +252,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -271,6 +271,9 @@
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
                                 </li>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
+                                </li> 
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -421,6 +424,14 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
+                                                    <label class="label">Empresa</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                            </div>                                            
+                                            <div class="row">
+                                                <section class="col col-md-6">
                                                     <label class="label">Cliente</label>
                                                     <label class="input">
                                                         <input id="txtCliente" name="txtCliente" />
@@ -441,7 +452,7 @@
                                                     </label>                                                    
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Tipo de contrato</label>
+                                                    <label class="label">Departamaneto</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbTiposMantenimientos" name="cmbTiposMantenimientos" data-bind="options: posiblesTiposMantenimientos, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoMantenimientoId, valueAllowUnset: true, selectedOptions: elegidosTiposMantenimientos, selected2:{}"></select><i></i>
                                                     </label>
@@ -472,6 +483,9 @@
                                                     </th>
                                                     <th data-hide="phone">
                                                         Receptor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Dir. Trabajo
                                                     </th>
                                                     <th data-hide="phone">
                                                         Agente

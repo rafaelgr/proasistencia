@@ -1,6 +1,16 @@
 {
     "apiPort": 5000,
-    "apiHost": "127.0.0.1",
+    "stiPort": 5001,
+    "apiHost": "localhost",
     "dsn":"proasistenciag2",
-    "conta_dir": "C:\\Proyectos\\proasistencia\\public\\ficheros\\contabilidad"
+    "conta_dir": "C:\\Proyectos\\proasistencia\\public\\ficheros\\contabilidad",
+    "factura_dir": "C:\\Proyectos\\proasistencia\\public\\ficheros\\facturas",
+    "reports_dir": "C:\\Proyectos\\proasistencia\\public\\reports",
+    "report": {
+        "host": "localhost",
+        "user": "root",
+        "password": "aritel",
+        "database": "proasistencia",
+        "port": 3306
+    }
 }

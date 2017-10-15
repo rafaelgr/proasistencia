@@ -26,30 +26,32 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmTipoProyecto").submit(function() {
+    $("#frmTipoProyecto").submit(function () {
         return false;
     });
+    $("#cmbTiposContrato").select2(select2Spanish());
+    loadTiposContrato();
 
     adminId = gup('TipoProyectoId');
     if (adminId != 0) {
         var data = {
-                tipoProyectoId: adminId
-            }
-            // hay que buscar ese elemento en concreto
+            tipoProyectoId: adminId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/tipos_proyectos/" + adminId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -62,12 +64,19 @@ function admData() {
     self.tipoProyectoId = ko.observable();
     self.nombre = ko.observable();
     self.abrev = ko.observable();
+    //
+    self.tipoContratoId = ko.observable();
+    self.stipoContratoId = ko.observable();
+    //
+    self.posiblesTiposContrato = ko.observableArray([]);
+    self.elegidosTiposContrato = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.tipoProyectoId(data.tipoProyectoId);
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
+    loadTiposContrato(data.tipoMantenimientoId);
 }
 
 function datosOK() {
@@ -96,7 +105,7 @@ function datosOK() {
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -105,14 +114,15 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
             tipoProyecto: {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
-                "abrev": vm.abrev()
+                "abrev": vm.abrev(),
+                "tipoMantenimientoId": vm.stipoContratoId()
             }
         };
         if (adminId == 0) {
@@ -122,14 +132,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "TiposProyectoGeneral.html?TipoProyectoId=" + vm.tipoProyectoId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -141,14 +151,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "TiposProyectoGeneral.html?TipoProyectoId=" + vm.tipoProyectoId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -159,9 +169,21 @@ function aceptar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "TiposProyectoGeneral.html";
         window.open(url, '_self');
     }
     return mf;
+}
+
+function loadTiposContrato(id) {
+    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{
+            tipoMantenimientoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesTiposContrato(tipos);
+        $("#cmbTiposContrato").val([id]).trigger('change');
+    });
 }

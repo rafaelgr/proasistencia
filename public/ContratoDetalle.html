@@ -253,7 +253,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -272,6 +272,9 @@
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
                                 </li>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
+                                </li> 
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -409,17 +412,17 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-3">
+                                                                                    <label class="label">Departamento</label>
+                                                                                    <label style="width:100%; height:50px;">
+                                                                                        <select style="width:100%" id="cmbTiposContrato" name="cmbTiposContrato" data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
+                                                                                    </label>
+                                                                                </section>                                                                                
+                                                                                <section class="col col-md-3">
                                                                                     <label class="label">Tipo Proyecto</label>
                                                                                     <label style="width:100%; height:50px;">
                                                                                         <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>                                                
-                                                                                <section class="col col-md-3">
-                                                                                    <label class="label">Tipo Contrato</label>
-                                                                                    <label style="width:100%; height:50px;">
-                                                                                        <select style="width:100%" id="cmbTiposContrato" name="cmbTiposContrato" data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
-                                                                                    </label>
-                                                                                </section>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-4">
@@ -482,8 +485,8 @@
                                                                                         <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2">
-                                                                                    <label class="label">Preaviso (dias)</label>
+                                                                                <section class="col col-md-1">
+                                                                                    <label class="label">Preaviso</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                                                                     </label>
@@ -495,12 +498,20 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
+                                                                                    <!--
+                                                                                    <label class="label">Fecha ref. siguientes.</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaSiguientesFacturas" name="txtFechaSiguientesFacturas" data-bind="value: fechaSiguientesFacturas" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                    -->
+                                                                                </section>
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Fecha original</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2">
+                                                                                <section class="col col-md-1">
                                                                                     <label class="checkbox">
                                                                                         <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
                                                                                         <i></i>Facturación parcial
@@ -1265,13 +1276,23 @@
                                     </section>
                                 </div>
                                 <div class="row">
-                                    <section class="col col-md-6">
+                                    <section class="col col-md-3">
                                         <div class="form-group">
                                             <label class="label">Fecha primera factura</label>
                                             <label class="input">
                                                 <input id="txtGFechaPrimeraFactura" type="text" name="txtGFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
                                             </label>
                                         </div>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <!--
+                                        <div class="form-group">
+                                            <label class="label">Fecha ref. siguientes</label>
+                                            <label class="input">
+                                                <input id="txtGFechaSiguientesFacturas" type="text" name="txtGFechaSiguientesFacturas" data-bind="value: fechaSiguientesFacturas" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                        -->
                                     </section>
                                     <section class="col col-md-6">
                                         <label class="checkbox">
@@ -1362,6 +1383,7 @@
                     <form id="frmRenovarContratos" class="smart-form">
                         <fieldset>
                             <section>
+                                <!--
                                 <div class="row">
                                     <section class="col col-md-6">
                                         <div class="form-group">
@@ -1372,6 +1394,7 @@
                                         </div>
                                     </section>
                                 </div>                                
+                                -->
                                 <div class="row">
                                     <section class="col col-md-6">
                                         <label class="label">Fecha Inicial (Nuevo contrato)</label>

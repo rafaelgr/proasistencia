@@ -1,0 +1,83 @@
+﻿{
+cabecera: {
+prefacturaId: 382,
+ano: 2017,
+numero: 1,
+serie: "M",
+fecha: "10/01/2017",
+empresaId: 3,
+clienteId: 40097,
+contratoClienteMantenimientoId: null,
+emisorNif: "B81002057",
+emisorNombre: "FONDOGAR S.L.",
+emisorDireccion: "RAMON Y CAJAL, 37",
+emisorCodPostal: "28470",
+emisorPoblacion: "CERCEDILLA",
+emisorProvincia: "MADRID",
+receptorNif: "B82796269",
+receptorNombre: "ASCENSORES SATEL, S.L.",
+receptorDireccion: "GARGANTA DE AISA, 59",
+receptorCodPostal: "28038",
+receptorPoblacion: "MADRID",
+receptorProvincia: "MADRID",
+total: "336,60 €",
+totalConIva: "407,29 €",
+formaPago: "RECIBO DOMICILIADO 10 DÍAS F.F.",
+observaciones: null,
+periodo: "01/01/2017-31/03/2017",
+porcentajeRetencion: "0,00",
+importeRetencion: "0,00 €",
+numeroVencimientos: 1,
+primerVencimiento: 10,
+restoVencimiento: 0,
+postalTipoVia: "CALLE",
+postalDireccion: "GARGANTA DE AISA, 59",
+postalCodPostal: "28038",
+postalPoblacion: "MADRID",
+postalProvincia: "MADRID",
+iban: "ES33****************3968",
+direccion2: "DEL TALGO, 214 - 226",
+codPostal2: "28023",
+poblacion2: "MADRID",
+provincia2: "MADRID",
+vencimiento: "20/01/2017",
+numFact: "M-2017-00001"
+},
+tipos: [
+{
+nombre: "21%",
+lineas: [
+{
+facturaLineaId: 282,
+linea: 1.1,
+facturaId: 278,
+unidadId: 9,
+articuloId: 16,
+tipoIvaId: 3,
+porcentaje: 21,
+descripcion: "COMERCIALIZACIÓN DE SERVICIOS: Importe de comercialización de Mantenimiento de Ascensores del periodo en curso.",
+cantidad: "1,00",
+importe: "336,60 €",
+totalLinea: "336,60 €",
+coste: 2160,
+porcentajeBeneficio: 4.03,
+porcentajeAgente: 10,
+capituloLinea: "Capitulo 1: MANTENIMIENTO DE ASCENSORES",
+tipoIva: "21%"
+}
+],
+total: "336,60 €"
+}
+],
+bases: [
+{
+facturaBaseId: 330,
+facturaId: 278,
+tipoIvaId: 3,
+porcentaje: "21,00",
+base: "336,60 €",
+cuota: "70,69 €",
+tipoIva: "21%"
+}
+]
+}

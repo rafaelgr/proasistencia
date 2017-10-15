@@ -117,6 +117,8 @@ function initTablaFacturas() {
         }, {
             data: "receptorNombre"
         }, {
+            data: "dirTrabajo"
+        }, {
             data: "vNum"
         }, {
             data: "fecha",

@@ -211,7 +211,7 @@
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contrato mantenimiento</a>
+                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
@@ -230,6 +230,9 @@
                                 <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
                                 </li>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
+                                </li> 
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -378,7 +381,12 @@
                                                         <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo"/>
                                                     </label>
                                                 </section>    
-                                                <section class="col col-md-3"></section>                                            
+                                                <section class="col col-md-3">
+                                                    <label class="checkbox">
+                                                        <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado">
+                                                        <i></i>Desactivar el cliente como mantenedor
+                                                    </label>                                                    
+                                                </section>                                            
                                                 <section class="col col-md-2">
                                                     <label class="label">Coste</label>
                                                     <label class="input">
@@ -583,6 +591,7 @@
                                                                     <th colspan="2" style="text-align:center;">BENEFICIO</th>
                                                                     <th style="text-align:center;">VENTA NETA</th>
                                                                     <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                                    <th style="text-align:center;">IMPORTE FACTURA</th>
                                                                     <th style="text-align:center;">IMPORTE CLIENTE</th>
                                                                 </tr>
                                                             </thead>
@@ -594,6 +603,7 @@
                                                                     <td></td>
                                                                     <td style="text-align:center;">%</td>
                                                                     <td style="text-align:center;">IMPORTE</td>
+                                                                    <td></td>
                                                                     <td></td>
                                                                 </tr>
                                                                 <tr>
@@ -626,6 +636,11 @@
                                                                                 <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
                                                                             </label>
                                                                         </td>
+                                                                        <td style="text-align:center;">
+                                                                            <label class="input">
+                                                                                <input id="txtTotalFac" name="txtTotalFac" data-bind="value:total" disabled/>
+                                                                            </label>
+                                                                        </td>                                                                        
                                                                         <td style="text-align:center;">
                                                                             <label class="input">
                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>

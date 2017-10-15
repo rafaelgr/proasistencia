@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>INFORMES LIQUIDACIONES DETALLE</title>
+
+    <!-- Report viewer Office2013 style -->
+    <link href="../css/streport/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet">
+    <!-- Basic Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+    <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
+    <!-- Include Date Range Picker -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+    <script src="js/libs/jquery-2.1.1.min.js"></script>
+    <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
+    <!-- #FAVICONS -->
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <!-- Stimusloft Reports.JS -->
+
+    <script src="../js/streport/stimulsoft.reports.js" type="text/javascript"></script>
+    <script src="../js/streport/stimulsoft.viewer.js" type="text/javascript"></script>
+
+    <!-- Report viewer scripts, may be external -->
+    <script src="js/numeral.js"></script>
+    <script src="js/sprintf/sprintf.min.js"></script>
+    <!-- CUSTOM NOTIFICATION -->
+    <script src="js/notification/SmartNotification.min.js"></script>    
+    <script src="js/ariadna/comun.js"></script>
+    <script src="myconfig.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <!--- KNOCKOUT JS -->
+    <script src="js/knockout-3.1.0.js"></script>
+    <!-- BOOTSTRAP JS -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- DATERANGE PICKER -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <!-- JQUERY SELECT2 INPUT -->
+    <script src="js/plugin/select2/select2.min.js"></script>
+    <!-- JQUERY VALIDATE -->
+    <script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
+
+    <!-- Report viewer scripts, may be external -->
+    <!--
+    <script type="text/javascript">
+        // Create the report viewer with default options
+        var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
+    </script>
+    -->
+    <!-- MAIN APP JS FILE -->
+    <script src="myconfig.js"></script>
+    <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/infLiquidacionesDetalle.js"></script>
+</head>
+
+<body>
+    <div style="margin: 0px 5px; padding:10px;">
+        <div style="padding:10px;" id="selector">
+            <div class="row">
+                <h2><i class="fa fa-bar-chart"></i> Informe de liquidaciones detalle</h2>
+            </div>
+            <div class="row" style="background-color:darkorange; border:solid 1px;">
+                <form id="frmRptLiquidaciones" class="smart-form">
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-md-2">
+                                <label class="label">Desde fecha - Hasta fecha </label>
+                                <label class="input">
+                                    <input id="txtRFecha" name="txtRFecha"/>
+                                </label>
+                            </section>
+                            <div class="col col-md-5">
+                                <label class="label">Colaborador</label>
+                                <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbColaboradores" name="cmbColaboradores" data-bind="options: posiblesColaboradores, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosColaboradores, selected2:{}"></select><i></i>
+                                                    </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="pull-right">
+                            <button id="btnImprimir" title="Imprimir informe" class="btn btn-success btn-circle btn-lg">
+                                <i class="fa fa-lg fa-print"></i>
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div>
+            <script type="text/javascript">
+                // Show the report viewer in this place
+                viewer.renderHtml();
+            </script>
+        </div>
+        <div style="margin:5px; padding:10px;">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <span>Proasistencia <span id="versionFooter">NO VERSION</span>
+                    <span class="hidden-xs"> - Aplicación general</span>
+                    <span> © Ariadna Software S.L. 2016-2017</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+                    <div class="txt-color-white inline-block">
+                        <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
+                        <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function ($) {
+            $(document).ready(function () {
+                initForm();
+            });
+        })(jQuery);
+    </script>
+</body>
+
+</html>
