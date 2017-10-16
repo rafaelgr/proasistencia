@@ -236,6 +236,8 @@ function admData() {
     self.importeRetencion = ko.observable();
     //
     self.mantenedorDesactivado = ko.observable();
+    // 
+    self.enviadaCorreo = ko.observable();
 }
 
 function loadData(data) {
@@ -288,6 +290,7 @@ function loadData(data) {
         mostrarMensajeFacturaNueva();
         cmd = "";
     }
+    vm.enviadaCorreo(data.enviadaCorreo);
     //
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 }
@@ -400,7 +403,8 @@ var generarFacturaDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "mantenedorDesactivado": vm.mantenedorDesactivado()
+            "mantenedorDesactivado": vm.mantenedorDesactivado(),
+            "enviadaCorreo": vm.enviadaCorreo()
         }
     };
     return data;

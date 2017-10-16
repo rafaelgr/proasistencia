@@ -49,6 +49,8 @@ var ofertas_router = require('./lib/ofertas/ofertas_controller');
 var contratos_router = require('./lib/contratos/contratos_controller');
 var tipos_proyectos_router = require('./lib/tipos_proyectos/tipos_proyectos_controller');
 var textos_predeterminados_router = require('./lib/textos_predeterminados/textos_predeterminados_controller');
+var correoElectronico = require('./lib/correoElectronico/correoElectronico.controller');
+
 
 
 var pack = require('./package.json');
@@ -125,9 +127,16 @@ app.use('/api/contratos', contratos_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
 app.use('/api/streport', require('./report-controller/reportdb'));
+app.use('/api/correoElectronico', correoElectronico);
 
 // -- start server
-app.listen(config.apiPort);
+var server = require('http').createServer(app); 
+var io = require('socket.io')(server);
+server.listen(config.apiPort);
+
+// -- io calls
+var ioAPI = require('./lib/ioapi/ioapi');
+ioAPI.init(io);
 
 
 // -- console message
