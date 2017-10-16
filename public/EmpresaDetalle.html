@@ -90,7 +90,8 @@
     <header id="header" style="background-color:#FFFFFF; background-image:none;">
         <!-- #PROJECTS: projects dropdown -->
         <div>
-            <span id="logo"> <img src="img/logpro.png" style="height:30px; width: 35px;" alt="Proasistencia"> </span>
+            <span id="logo">
+                <img src="img/logpro.png" style="height:30px; width: 35px;" alt="Proasistencia"> </span>
         </div>
         <div>
         </div>
@@ -104,28 +105,28 @@
             <!-- collapse menu button -->
             <div id="hide-menu" class="btn-header pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
-                            <i class="fa fa-reorder"></i>
-                        </a>
-                    </span>
+                    <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
+                        <i class="fa fa-reorder"></i>
+                    </a>
+                </span>
             </div>
             <!-- end collapse menu -->
             <!-- logout button -->
             <div id="logout" class="btn-header transparent pull-right">
                 <span>
-                        <a href="login.html" title="Salir">
-                            <i class="fa fa-sign-out"></i>
-                        </a>
-                    </span>
+                    <a href="login.html" title="Salir">
+                        <i class="fa fa-sign-out"></i>
+                    </a>
+                </span>
             </div>
             <!-- end logout button -->
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
-                            <i class="fa fa-arrows-alt"></i>
-                        </a>
-                    </span>
+                    <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
+                        <i class="fa fa-arrows-alt"></i>
+                    </a>
+                </span>
             </div>
             <!-- end fullscreen button -->
         </div>
@@ -137,12 +138,13 @@
     <!-- Note: This width of the aside area can be adjusted through LESS variables -->
     <aside id="left-panel">
         <div class="login-info">
-            <span> <!-- User image size is adjusted inside CSS, it should stay as it -->
+            <span>
+                <!-- User image size is adjusted inside CSS, it should stay as it -->
 
-                    <a href="javascript:void(0);" id="show-shortcut">
-                        <i class="fa fa-user fa-2x"></i>
-                        <span id="userName"></span>
-            </a>
+                <a href="javascript:void(0);" id="show-shortcut">
+                    <i class="fa fa-user fa-2x"></i>
+                    <span id="userName"></span>
+                </a>
             </span>
         </div>
         <!-- NAVIGATION : This navigation is also responsive-->
@@ -150,12 +152,14 @@
             <ul>
                 <li id="inicio">
                     <a href="Index.html" title="Inicio">
-                        <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">INICIO</span>
+                        <i class="fa fa-lg fa-fw fa-home"></i>
+                        <span class="menu-item-parent">INICIO</span>
                     </a>
                 </li>
                 <li id="administracion">
                     <a href="#">
-                        <i class="fa fa-lg fa-fw fa-bank"></i> <span class="menu-item-parent">ADMINISTRACIÓN</span>
+                        <i class="fa fa-lg fa-fw fa-bank"></i>
+                        <span class="menu-item-parent">ADMINISTRACIÓN</span>
                     </a>
                     <ul>
                         <li id="parametros">
@@ -232,59 +236,75 @@
                 </li>
                 <li id="gestion">
                     <a href="#">
-                        <i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">GESTION</span>
+                        <i class="fa fa-lg fa-fw fa-puzzle-piece"></i>
+                        <span class="menu-item-parent">GESTION</span>
                     </a>
                     <ul>
                         <li id="ofertas">
-                            <a href="OfertaGeneral.html"><i class="fa fa-fw fa-file-o"></i> Ofertas</a>
+                            <a href="OfertaGeneral.html">
+                                <i class="fa fa-fw fa-file-o"></i> Ofertas</a>
                         </li>
                         <li id="contratos">
-                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
+                            <a href="#">
+                                <i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoComercialGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
+                                    <a href="ContratoComercialGeneral.html">
+                                        <i class="fa fa-fw fa-file-o"></i> Contrato agente / colaborador</a>
                                 </li>
                                 <li>
-                                    <a href="ContratoMantenedorGeneral.html"><i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
+                                    <a href="ContratoMantenedorGeneral.html">
+                                        <i class="fa fa-fw fa-file-o"></i> Contrato mantenedor</a>
                                 </li>
                             </ul>
                         </li>
                         <li id="contratos">
-                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
+                            <a href="#">
+                                <i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
-                                    <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
+                                    <a href="ContratoGeneral.html">
+                                        <i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
                             </ul>
                         </li>
                         <li id="facturacion">
-                            <a href="#"><i class="fa fa-fw fa-th-large"></i> Facturación</a>
+                            <a href="#">
+                                <i class="fa fa-fw fa-th-large"></i> Facturación</a>
                             <ul>
                                 <li>
-                                    <a href="PrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Prefacturas</a>
+                                    <a href="PrefacturaGeneral.html">
+                                        <i class="fa fa-fw fa-th"></i> Prefacturas</a>
                                 </li>
                                 <li>
-                                    <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir facturas</a>
+                                    <a href="SelectPrefacturaGeneral.html">
+                                        <i class="fa fa-fw fa-th-list"></i> Emitir facturas</a>
                                 </li>
                                 <li>
-                                    <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
+                                    <a href="FacturaGeneral.html">
+                                        <i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                                 <li>
-                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
+                                    <a href="ContafGeneral.html">
+                                        <i class="fa fa-fw fa-bell"></i> Contabilizar</a>
                                 </li>
                                 <li>
-                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li> 
+                                    <a href="ContaEGeneral.html">
+                                        <i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
+                                </li>
                             </ul>
                         </li>
                         <li id="liquidacion">
-                            <a href="#"><i class="fa fa-fw fa-address-book-o"></i> Liquidaciones</a>
+                            <a href="#">
+                                <i class="fa fa-fw fa-address-book-o"></i> Liquidaciones</a>
                             <ul>
                                 <li>
-                                    <a href="GenerarLiquidacion.html"><i class="fa fa-fw fa-address-card-o"></i> Generar liquidaciones</a>
+                                    <a href="GenerarLiquidacion.html">
+                                        <i class="fa fa-fw fa-address-card-o"></i> Generar liquidaciones</a>
                                 </li>
                                 <li>
-                                    <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
+                                    <a href="LiquidacionGeneral.html">
+                                        <i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
                                 </li>
                             </ul>
                         </li>
@@ -292,16 +312,20 @@
                 </li>
                 <li id="informes">
                     <a href="#">
-                        <i class="fa fa-lg fa-fw fa-bar-chart"></i> <span class="menu-item-parent">INFORMES</span>
+                        <i class="fa fa-lg fa-fw fa-bar-chart"></i>
+                        <span class="menu-item-parent">INFORMES</span>
                     </a>
                     <ul>
                         <li>
-                            <a href="InfGeneral.html"><i class="fa fa-fw fa-bar-chart"></i> Informes generales</a>
+                            <a href="InfGeneral.html">
+                                <i class="fa fa-fw fa-bar-chart"></i> Informes generales</a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </li>
         </nav>
-        <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+        <span class="minifyme" data-action="minifyMenu">
+            <i class="fa fa-arrow-circle-left hit"></i>
+        </span>
     </aside>
     <!-- END NAVIGATION -->
     <!-- MAIN PANEL -->
@@ -337,7 +361,10 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-building-o"></i> Detalle empresa propia<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-building-o"></i> Detalle empresa propia
+                        <a href="#" title="Ayuda">
+                            <i class="fa fa-question"></i>
+                        </a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -373,258 +400,290 @@
                 <div class="row">
                     <!-- NEW WIDGET START -->
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-                                    
-                                data-widget-colorbutton="false" 
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true" 
-                                data-widget-sortable="false"
-                                    
-                                -->
+                        <!-- New jarviswidget -->
+                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento empresas propias </h2>
+                                <span class="widget-icon">
+                                    <i class="fa fa-edit"></i>
+                                </span>
+                                <h2>Empresa propia</h2>
+                                <ul class="nav nav-tabs pull-right in">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#s1">
+                                            <i class="fa  fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">Datos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s2">
+                                            <i class="fa fa-user"></i>
+                                            <span class="hidden-mobile hidden-tablet">Colaboradores</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </header>
-                            <!-- widget div-->
                             <div>
-                                <!-- widget edit box -->
                                 <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
                                     <input class="form-control" type="text">
                                 </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
                                 <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmEmpresa" class="smart-form">
-                                        <header>
-                                            Datos de la empresa propia.
-                                        </header>
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">ID</label>
-                                                    <label class="input">
-                                                        <input id="txtEmpresaId" name="txtEmpresaId" type="text" data-bind="value: empresaId" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Cod. anterior:</label>
-                                                    <label class="input">
-                                                        <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">CONTABILIDAD:</label>
-                                                    <label class="input">
-                                                        <input id="txtContabilidad" name="txtContabilidad" type="text" data-bind="value: contabilidad" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <div class="pull-right">
-                                                        <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
-                                                            <i class="fa fa-lg fa-refresh"></i>
-                                                        </button>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">NIF</label>
-                                                    <label class="input">
-                                                        <input id="txtNif" name="txtNif" data-bind="value: nif" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-9">
-                                                    <label class="label">Nombre</label>
-                                                    <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Tipo via</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-9">
-                                                    <label class="label">Direccion</label>
-                                                    <label class="input">
-                                                        <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Poblacion</label>
-                                                    <label class="input">
-                                                        <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Cod.Postal</label>
-                                                    <label class="input">
-                                                        <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Provincia</label>
-                                                    <label class="input">
-                                                        <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha alta</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fecha baja</label>
-                                                    <label class="input">
-                                                        <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="checkbox">
-                                                        <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                        <i></i>La empresa está activa
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Serie Prefacturas</label>
-                                                    <label class="input">
-                                                        <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Serie Facturas (Mantenimiento)</label>
-                                                    <label class="input">
-                                                        <input id="txtSerieFac" name="txtSerieFac" data-bind="value: serieFac" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Serie Facturas (Seguros)</label>
-                                                    <label class="input">
-                                                        <input id="txtSerieFacS" name="txtSerieFaS" data-bind="value: serieFacS" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (1)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto1" name="txtContacto1" data-bind="value: contacto1" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Persona de contacto (2)</label>
-                                                    <label class="input">
-                                                        <input id="txtContacto2" name="txtContacto2" data-bind="value: contacto2" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Teléfono (1)</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Teléfono (2)</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Fax</label>
-                                                    <label class="input">
-                                                        <input id="txtFax" name="txtFax" data-bind="value: fax" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Correo electrónico</label>
-                                                    <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" data-bind="value: email" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Observaciones</label>
-                                                    <label class="textarea textarea-resizable">
-                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <header>
-                                                Datos de firmante habitual
-                                            </header>
-                                            <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">DNI</label>
-                                                    <label class="input">
-                                                        <input id="txtDniFirmante" name="txtDniFirmante" data-bind="value: dniFirmante" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-9">
-                                                    <label class="label">Firmante</label>
-                                                    <label class="input">
-                                                        <input id="txtFirmante" name="txtFirmante" data-bind="value: firmante" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <header>
-                                                Informes relacionados
-                                            </header>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    <label class="label">Ofertas</label>
-                                                    <label class="input">
-                                                        <input id="txtInfOfertas" name="txtInfOfertas" data-bind="value: infOfertas" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Facturas</label>
-                                                    <label class="input">
-                                                        <input id="txtInfFacturas" name="txtInfFacturas" data-bind="value: infFacturas" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
-                                                </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
+                                    <div id="myTabContent" class="tab-content">
+                                        <div class="tab-pane fade active in padding-10 no-padding-bottom" id="s1">
+                                            <section id="widget-grid" class="">
+                                                <div class="row">
+                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <!-- Widget ID (each widget will need unique ID)-->
+                                                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                            <header>
+                                                                <span class="widget-icon">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </span>
+                                                                <h2>Mantenimiento empresas propias </h2>
+                                                            </header>
+                                                            <!-- widget div-->
+                                                            <div>
+                                                                <!-- widget edit box -->
+                                                                <div class="jarviswidget-editbox">
+                                                                    <!-- This area used as dropdown edit box -->
+                                                                    <input class="form-control" type="text">
+                                                                </div>
+                                                                <!-- end widget edit box -->
+                                                                <!-- widget content -->
+                                                                <div class="widget-body">
+                                                                    <!-- this is what the user will see -->
+                                                                    <form id="frmEmpresa" class="smart-form">
+                                                                        <header>
+                                                                            Datos de la empresa propia.
+                                                                        </header>
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">ID</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtEmpresaId" name="txtEmpresaId" type="text" data-bind="value: empresaId" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Cod. anterior:</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtProId" name="txtProId" type="text" data-bind="value: proId" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">CONTABILIDAD:</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtContabilidad" name="txtContabilidad" type="text" data-bind="value: contabilidad" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <div class="pull-right">
+                                                                                        <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
+                                                                                            <i class="fa fa-lg fa-refresh"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">NIF</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtNif" name="txtNif" data-bind="value: nif" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-9">
+                                                                                    <label class="label">Nombre</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Tipo via</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbTiposVia" name="cmbTiposVia" data-bind="options: posiblesTiposVia, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaId, valueAllowUnset: true, selectedOptions: elegidosTiposVia, selected2:{}"></select>
+                                                                                        <i></i>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-9">
+                                                                                    <label class="label">Direccion</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtDireccion" name="txtDireccion" data-bind="value: direccion" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-6">
+                                                                                    <label class="label">Poblacion</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtPoblacion" name="txtPoblacion" data-bind="value: poblacion" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Cod.Postal</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCodPostal" name="txtCodPostal" data-bind="value: codPostal" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Provincia</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Fecha alta</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Fecha baja</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
+                                                                                    <label class="checkbox">
+                                                                                        <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                                                        <i></i>La empresa está activa
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Serie Prefacturas</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Serie Facturas (Mantenimiento)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtSerieFac" name="txtSerieFac" data-bind="value: serieFac" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Serie Facturas (Seguros)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtSerieFacS" name="txtSerieFaS" data-bind="value: serieFacS" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-6">
+                                                                                    <label class="label">Persona de contacto (1)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtContacto1" name="txtContacto1" data-bind="value: contacto1" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
+                                                                                    <label class="label">Persona de contacto (2)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtContacto2" name="txtContacto2" data-bind="value: contacto2" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Teléfono (1)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono1" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Teléfono (2)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Fax</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFax" name="txtFax" data-bind="value: fax" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Correo electrónico</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtEmail" name="txtEmail" data-bind="value: email" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <label class="label">Observaciones</label>
+                                                                                    <label class="textarea textarea-resizable">
+                                                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <fieldset>
+                                                                            <header>
+                                                                                Datos de firmante habitual
+                                                                            </header>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">DNI</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtDniFirmante" name="txtDniFirmante" data-bind="value: dniFirmante" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-9">
+                                                                                    <label class="label">Firmante</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFirmante" name="txtFirmante" data-bind="value: firmante" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <fieldset>
+                                                                            <header>
+                                                                                Informes relacionados
+                                                                            </header>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Ofertas</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtInfOfertas" name="txtInfOfertas" data-bind="value: infOfertas" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Facturas</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtInfFacturas" name="txtInfFacturas" data-bind="value: infFacturas" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <fieldset>
+                                                                            <div class="pull-right">
+                                                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-sign-out"></i>
+                                                                                </button>
+                                                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-check"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </form>
+                                                                </div>
+                                                                <!-- end widget content -->
+                                                            </div>
+                                                            <!-- end widget div -->
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div class="tab-pane fade" id="s2">
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- end widget content -->
                             </div>
-                            <!-- end widget div -->
                         </div>
                         <!-- end widget -->
                     </article>
@@ -641,12 +700,18 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span>                © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia
+                    <span id="versionFooter">1.0</span>
+                    <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
-                    <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong> <i
-                        class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="txt-color-blueLight hidden-mobile">
+                        <i class="fa fa-phone"></i>
+                        <strong> &nbsp;</strong>
+                        <i class="fa fa-envelope"></i>
+                        <strong> &nbsp;</strong>
+                    </i>
                 </div>
             </div>
         </div>
