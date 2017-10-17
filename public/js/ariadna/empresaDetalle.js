@@ -17,6 +17,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+    $("#btnGuardarPlantilla").click(aceptar());
     $("#btnImportar").click(importar());
     $("#frmEmpresa").submit(function () {
         return false;
@@ -24,6 +25,8 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    // carga del editor de plantillas
+    CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
 
     empId = gup('EmpresaId');
     if (empId != 0) {
@@ -41,10 +44,10 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -87,6 +90,8 @@ function admData() {
     //
     self.infOfertas = ko.observable();
     self.infFacturas = ko.observable();
+    // 
+    self.plantillaCorreoFacturas = ko.observable();
 }
 
 function loadData(data) {
@@ -117,6 +122,9 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     vm.infOfertas(data.infOfertas);
     vm.infFacturas(data.infFacturas);
+    // 
+    vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
+    CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
 }
 
 function datosOK() {
@@ -195,8 +203,8 @@ function datosImportOK() {
 
 function aceptar() {
     var mf = function () {
-        if (!datosOK())
-            return;
+        if (!datosOK()) return;
+        vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
         var data = {
             empresa: {
                 "empresaId": vm.empresaId(),
@@ -225,7 +233,8 @@ function aceptar() {
                 "serieFac": vm.serieFac(),
                 "serieFacS": vm.serieFacS(),
                 "infOfertas": vm.infOfertas(),
-                "infFacturas": vm.infFacturas()
+                "infFacturas": vm.infFacturas(),
+                "plantillaCorreoFacturas": vm.plantillaCorreoFacturas()
             }
         };
         if (empId == 0) {
@@ -242,7 +251,7 @@ function aceptar() {
                     var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -261,7 +270,7 @@ function aceptar() {
                     var url = "EmpresasGeneral.html?EmpresaId=" + vm.empresaId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -294,10 +303,10 @@ function importar() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;
@@ -322,9 +331,10 @@ function loadTiposVia(id) {
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
+
