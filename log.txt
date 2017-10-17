@@ -24406,3 +24406,678 @@ Error: Connection lost: The server closed the connection.
  VERSION: 2.0.48
  PORT: 8080
 -------------------------------------------
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+C:\Ariadna\proasistencia\node_modules\nodemailer\lib\mailer\index.js:31
+            compile: [(...args) => this._convertDataImages(...args)],
+                       ^^^
+
+SyntaxError: Unexpected token ...
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Module.require (module.js:353:17)
+    at require (internal/module.js:12:17)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\node_modules\nodemailer\lib\nodemailer.js:3:16)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/10/02017 10:57:37
+-------------------------------------------
+ VERSION: 2.0.49
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/10/02017 11:47:31
+-------------------------------------------
+ VERSION: 2.0.49
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/10/02017 20:11:25
+-------------------------------------------
+ VERSION: 2.0.49
+ PORT: 8080
+-------------------------------------------

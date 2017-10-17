@@ -33,7 +33,7 @@
     "moment": "^2.10.6",
     "multer": "^1.1.0",
     "mysql": "^2.13.0",
-    "nodemailer": "^4.1.2",
+    "nodemailer": "^4.2.0",
     "numeral": "^1.5.3",
     "serve-index": "^1.7.2",
     "socket.io": "^2.0.3",
