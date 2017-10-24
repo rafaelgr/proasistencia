@@ -3,6 +3,7 @@
 // API to communicate to PROASISTENCIA
 //========================================
 // Author: Rafael Garcia (rafa@myariadna.com)
+// Vicent (vicent@myariadna.com)
 // 2015 [License CC-BY-NC-4.0]
 
 
