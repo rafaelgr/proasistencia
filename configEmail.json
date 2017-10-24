@@ -4,9 +4,9 @@
         "port": 465,
         "secure": true,
         "auth": {
-            "user": "rafa@myariadna.com",
-            "pass": "***"
+            "user": "vicent@myariadna.com",
+            "pass": "pipo123@"
         }
     },
-    "fakeEmail": "rafael.garcia@ariadnasoftware.com"
+    "fakeEmail": "vicent@myariadna.com"
 }

@@ -420,6 +420,12 @@
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Cliente:</label>
+                                                    <select style="width:100%;" id="cmbClientes" name="cmbClientes" data-bind="options: optionsClientes, optionsText: 'nombre', optionsValue: 'clienteId', 
+                                                        value: sCliente, valueAllowUnset: true, selectedOptions: selectedClientes, selected2:{}">
+                                                    </select>
+                                                </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>

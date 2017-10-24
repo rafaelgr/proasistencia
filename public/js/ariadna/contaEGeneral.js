@@ -27,6 +27,13 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+
+    $('#cmbClientes').select2();
+    loadComboClientes();
+    
+   
+   
+   
     //
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -87,6 +94,9 @@ function admData() {
     self.titleReg = ko.observable();
     self.numReg = ko.observable();
     self.totalReg = ko.observable();
+    self.optionsClientes = ko.observableArray([]);
+    self.selectedClientes = ko.observableArray([]);
+    self.sCliente = ko.observable();
 }
 
 function initTablaFacturas() {
@@ -201,6 +211,15 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
+function loadComboClientes(id){
+    buscarClientes(function(clientes, status){
+        if (status != 'succes')
+        var options = [{ clienteId: 0, nombre: " " }].concat(clientes);
+        vm.optionsClientes(options);
+        $("#cmbClientes").val([clientes[0].clienteId]).trigger('change');
+    });
+}
+
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
     if (data !== null && data.length === 0) {
@@ -245,6 +264,23 @@ function loadTablaFacturas(data) {
                 }
             });
         });
+    });
+}
+
+function buscarClientes(done){
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/todosClientes",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            //loadComboClientes(data);
+            return done(data, status);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
