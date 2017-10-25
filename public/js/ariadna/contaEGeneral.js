@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var clienteId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -28,8 +29,10 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
 
-    $('#cmbClientes').select2();
-    loadComboClientes();
+    $('#txtClientes').select2();
+    //loadComboClientes();
+
+    initAutoCliente();
     
    
    
@@ -94,9 +97,8 @@ function admData() {
     self.titleReg = ko.observable();
     self.numReg = ko.observable();
     self.totalReg = ko.observable();
-    self.optionsClientes = ko.observableArray([]);
-    self.selectedClientes = ko.observableArray([]);
-    self.sCliente = ko.observable();
+    self.cliente = ko.observable();
+    
 }
 
 function initTablaFacturas() {
@@ -210,13 +212,37 @@ function datosOK() {
     });
     return $('#frmBuscar').valid();
 }
-
+//FUNCIÓN CARGAR COMBO CLIENTE PARA BORRAR
 function loadComboClientes(id){
     buscarClientes(function(clientes, status){
         if (status != 'succes')
         var options = [{ clienteId: 0, nombre: " " }].concat(clientes);
         vm.optionsClientes(options);
-        $("#cmbClientes").val([clientes[0].clienteId]).trigger('change');
+        $("#txtClientes").val([clientes[0].clienteId]).trigger('change');
+    });
+}
+//FUNCIÓN DE AUTOCOMPLETE
+var initAutoCliente = function () {
+    $("#txtCliente").autocomplete({
+        source: function (request, response) {
+            llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            vm.cliente(ui.item.value);
+            clienteId = ui.item.id;
+        }
     });
 }
 
@@ -289,7 +315,7 @@ function buscarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + clienteId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
