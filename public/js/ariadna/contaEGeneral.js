@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
-var clienteId;
+var clienteId = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -370,7 +370,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/" + clienteId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
