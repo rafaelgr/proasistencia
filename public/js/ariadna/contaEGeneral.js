@@ -10,6 +10,11 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var clienteId = 0;
+var mantenedorId = 0;
+var comercialId = 0;
+var contratoId = 0;
+
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -27,6 +32,20 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+
+    
+    initAutoCliente();
+
+    $('#cmbMantenedores').select2();
+    loadMantenedores();
+
+    $('#cmbAgentes').select2();
+    loadComerciales();
+
+    $('#cmbContratos').select2();
+    loadContratosActivos();
+    
+   
     //
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -87,6 +106,20 @@ function admData() {
     self.titleReg = ko.observable();
     self.numReg = ko.observable();
     self.totalReg = ko.observable();
+    self.cliente = ko.observable();
+
+    self.posiblesMantenedores = ko.observableArray([]);
+    self.elegidosMantenedores = ko.observableArray([]);
+    self.sMantenedorId = ko.observable();
+
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+    self.sComercialId = ko.observable();
+
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
+    self.sContratoId = ko.observable();
+    
 }
 
 function initTablaFacturas() {
@@ -201,6 +234,69 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
+//FUNCIÓN DE AUTOCOMPLETE
+var initAutoCliente = function () {
+    $("#txtCliente").autocomplete({
+        source: function (request, response) {
+            llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+                clienteId = 0;
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nombre,
+                        id: d.clienteId
+                    };
+                    r.push(v);
+                });
+                response(r);
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            vm.cliente(ui.item.value);
+            clienteId = ui.item.id;
+        }
+    });
+}
+
+function loadMantenedores(id){
+    llamadaAjax('GET', "/api/clientes/mantenedores_activos", null, function (err, data) {
+        if (err) return
+        var mantenedores = [{
+            clienteId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesMantenedores(mantenedores);
+        $("#cmbMantenedores").val([id]).trigger('change');
+    });
+}
+
+function loadComerciales(id){
+    llamadaAjax('GET', "/api/comerciales", null, function (err, data) {
+        if (err) return
+        var comerciales = [{
+            comercialId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesComerciales(comerciales);
+        $("#cmbComerciales").val([id]).trigger('change');
+    });
+}
+
+function loadContratosActivos(id){
+    llamadaAjax('GET', "/api/contratos/activos", null, function (err, data) {
+        if (err) return
+        var contratos = [{
+            contratoId: 0,
+            referencia: ""
+        }].concat(data);
+        vm.posiblesContratos(contratos);
+        $("#cmbContratos").val([id]).trigger('change');
+    });
+}
+
+
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
     if (data !== null && data.length === 0) {
@@ -248,12 +344,32 @@ function loadTablaFacturas(data) {
     });
 }
 
+function buscarClientes(done){
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/todosClientes",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            //loadComboClientes(data);
+            return done(data, status);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
+        mantenedorId = vm.sMantenedorId();
+        comercialId = vm.sComercialId();
+        contratoId = vm.sContratoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId +"/"+ contratoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -308,7 +424,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
