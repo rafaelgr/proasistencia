@@ -12,6 +12,8 @@ var dataFacturas;
 var facturaId;
 var clienteId = 0;
 var mantenedorId = 0;
+var comercialId = 0;
+var contratoId = 0;
 
 
 var breakpointDefinition = {
@@ -36,6 +38,12 @@ function initForm() {
 
     $('#cmbMantenedores').select2();
     loadMantenedores();
+
+    $('#cmbAgentes').select2();
+    loadComerciales();
+
+    $('#cmbContratos').select2();
+    loadContratosActivos();
     
    
     //
@@ -102,7 +110,15 @@ function admData() {
 
     self.posiblesMantenedores = ko.observableArray([]);
     self.elegidosMantenedores = ko.observableArray([]);
-    self.sClienteId = ko.observable();
+    self.sMantenedorId = ko.observable();
+
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+    self.sComercialId = ko.observable();
+
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
+    self.sContratoId = ko.observable();
     
 }
 
@@ -223,6 +239,7 @@ var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
             llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+                clienteId = 0;
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
@@ -243,17 +260,39 @@ var initAutoCliente = function () {
     });
 }
 
- 
-
-function loadMantenedores(){
+function loadMantenedores(id){
     llamadaAjax('GET', "/api/clientes/mantenedores_activos", null, function (err, data) {
         if (err) return
         var mantenedores = [{
-            mantenedorId: 0,
+            clienteId: 0,
             nombre: ""
         }].concat(data);
         vm.posiblesMantenedores(mantenedores);
-        $("#cmbMantenedores").val([0]).trigger('change');
+        $("#cmbMantenedores").val([id]).trigger('change');
+    });
+}
+
+function loadComerciales(id){
+    llamadaAjax('GET', "/api/comerciales", null, function (err, data) {
+        if (err) return
+        var comerciales = [{
+            comercialId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesComerciales(comerciales);
+        $("#cmbComerciales").val([id]).trigger('change');
+    });
+}
+
+function loadContratosActivos(id){
+    llamadaAjax('GET', "/api/contratos/activos", null, function (err, data) {
+        if (err) return
+        var contratos = [{
+            contratoId: 0,
+            referencia: ""
+        }].concat(data);
+        vm.posiblesContratos(contratos);
+        $("#cmbContratos").val([id]).trigger('change');
     });
 }
 
@@ -325,10 +364,12 @@ function buscarClientes(done){
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
-        mantenedorId = vm.sClienteId();
+        mantenedorId = vm.sMantenedorId();
+        comercialId = vm.sComercialId();
+        contratoId = vm.sContratoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + clienteId +"/" + mantenedorId,
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId +"/"+ contratoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -383,7 +424,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();

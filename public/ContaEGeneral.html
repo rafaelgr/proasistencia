@@ -424,7 +424,7 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Cliente:</label>
+                                                    <label class="label">Cliente (Comunidad):</label>
                                                     <label class="input">
                                                         <input id="txtCliente" name="txtCliente" type="text" data-bind="value: cliente" />
                                                     </label>
@@ -433,9 +433,25 @@
                                                     <label class="label">Mantenedor</label>
                                                     <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbMantenedores" name="cmbMantenedores" 
-                                                        data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: sClienteId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
+                                                        data-bind="options: posiblesMantenedores, optionsText: 'nombre', optionsValue: 'clienteId', value: sMantenedorId, valueAllowUnset: true, selectedOptions: elegidosMantenedores, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>   
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Agentes</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbAgentes" name="cmbAgentes" 
+                                                        data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: sComercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Referencia De Contrato</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbContratos" name="cmbContratos" 
+                                                        data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: sContratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>      
                                             </div>
                                         </fieldset>
                                         <fieldset>
