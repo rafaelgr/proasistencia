@@ -25552,3 +25552,286 @@ POST : {}
 POST : {}
 POST : {}
 POST : {}
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/10/02017 12:14:47
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    at TCP.onread (net.js:547:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\empresas\empresas_db_mysql.js:21:16)
+    at Object.module.exports.getEmpresas (C:\Ariadna\proasistencia\lib\empresas\empresas_db_mysql.js:63:22)
+    at C:\Ariadna\proasistencia\lib\empresas\empresas_controller.js:22:20
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/10/02017 14:14:31
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    at TCP.onread (net.js:547:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:21:16)
+    at buscarComisionBase (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:385:16)
+    at base (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:367:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3686:9
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:882:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:886:9
+    at eachOfLimit (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:913:22)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/10/02017 16:34:09
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    at TCP.onread (net.js:547:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:21:16)
+    at buscarComisionBase (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:385:16)
+    at base (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:367:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3686:9
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:882:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:886:9
+    at eachOfLimit (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:913:22)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/10/02017 17:11:52
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  31/10/02017 01:11:57
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  31/10/02017 17:39:53
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/11/02017 01:40:57
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/11/02017 17:21:51
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/11/02017 00:22:37
+-------------------------------------------
+ VERSION: 2.0.51
+ PORT: 8080
+-------------------------------------------

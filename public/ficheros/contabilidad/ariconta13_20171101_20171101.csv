@@ -1,0 +1,3 @@
+serie;factura;fecha;cuenta_cli;fpago;tipo_operacion;cuenta_ret;imp_ret;tipo_ret;cuenta_ventas;centro_coste;imp_venta;por_iva;imp_iva;por_rec;imp_rec;total_factura;integracion;iban;observacion
+M;2017000187;01/11/17;430007088;2;0;;;;700000001;;351;21;73.71;;;424.71;0;ES0400750226210500109441;
+M;2017000188;01/11/17;430007088;2;0;;;;700000001;;202.5;21;42.53;;;245.03;0;ES0400750226210500109441;
