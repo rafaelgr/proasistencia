@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.2.3.0",
-  "ReportGuid": "2ef5950eec114249b88522d1bee062f3",
+  "ReportGuid": "536eb624446b4d68a7b350bde28af348",
   "ReportName": "FacturaSierra",
   "ReportAlias": "FacturaSierra",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1510219136461+0100)/",
+  "ReportChanged": "/Date(1510232071818+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaSierra : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaSierra()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -759,7 +759,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FACTURA Nº: {cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")} FECHA: {cabecera.fecha.ToString(\"dd/MM/yyyy\")}"
+                "Value": "Proforma Nº: {cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")} FECHA: {cabecera.fecha.ToString(\"dd/MM/yyyy\")}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",

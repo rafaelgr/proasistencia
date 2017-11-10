@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.2.3.0",
-  "ReportGuid": "0637551597144cd6bdc0478f96c0a632",
+  "ReportGuid": "af76cd28cc76453ea7d72e848cc3e165",
   "ReportName": "FacturaRoman",
   "ReportAlias": "FacturaRoman",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
-  "ReportChanged": "/Date(1510218964132+0100)/",
+  "ReportChanged": "/Date(1510228461213+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaRoman : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaRoman()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -732,7 +732,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FACTURA Nº: {cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")} FECHA: {cabecera.fecha.ToString(\"dd/MM/yyyy\")}"
+                "Value": "Proforma Nº: {cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")} FECHA: {cabecera.fecha.ToString(\"dd/MM/yyyy\")}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.2.3.0",
-  "ReportGuid": "a7ff28517c044b1a86f70c30573e205a",
+  "ReportGuid": "5e7bdb85bd7e496396bbc98b77b234d4",
   "ReportName": "FacturaRedFincas",
   "ReportAlias": "FacturaRedFincas",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(3600000+0100)/",
-  "ReportChanged": "/Date(1510218527218+0100)/",
+  "ReportChanged": "/Date(1510231777565+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaGrupo : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaGrupo()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -62,13 +62,27 @@
             "Type": "System.Decimal"
           },
           "5": {
+            "Name": "prefacturaBaseId",
+            "Index": -1,
+            "NameInSource": "prefacturaBaseId",
+            "Alias": "prefacturaBaseId",
+            "Type": "System.Int32"
+          },
+          "6": {
+            "Name": "prefacturaId",
+            "Index": -1,
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32"
+          },
+          "7": {
             "Name": "tipoIva",
             "Index": -1,
             "NameInSource": "tipoIva",
             "Alias": "tipoIva",
             "Type": "System.String"
           },
-          "6": {
+          "8": {
             "Name": "tipoIvaId",
             "Index": -1,
             "NameInSource": "tipoIvaId",
@@ -77,7 +91,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfb.*, t.nombre AS tipoIva\r\nFROM facturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"
+        "SqlCommand": "SELECT pfb.prefacturaId, pfb.prefacturaBaseId, pfb.base, pfb.cuota,pfb.porcentaje, pfb.tipoIvaId, t.nombre AS tipoIva\r\nFROM prefacturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -292,7 +306,7 @@
             "Index": -1,
             "NameInSource": "prefacturaId",
             "Alias": "prefacturaId",
-            "Type": "System.String"
+            "Type": "System.Int32"
           },
           "30": {
             "Name": "primerVencimiento",
@@ -387,7 +401,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT\r\npf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento,\r\ntpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,\r\ncl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,4), \"****************\", SUBSTR(cl.iban,20))  AS cuenta,\r\ncnt.direccion AS direccion2, cnt.codPostal AS codPostal2, cnt.poblacion AS poblacion2, cnt.provincia AS provincia2\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\n"
+        "SqlCommand": "SELECT\r\npf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento,\r\ntpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,\r\ncl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,4), \"****************\", SUBSTR(cl.iban,20))  AS cuenta,\r\ncnt.direccion AS direccion2, cnt.codPostal AS codPostal2, cnt.poblacion AS poblacion2, cnt.provincia AS provincia2\r\nFROM prefacturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\n"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -409,104 +423,111 @@
             "Type": "System.Decimal"
           },
           "2": {
+            "Name": "capitulo",
+            "Index": -1,
+            "NameInSource": "capitulo",
+            "Alias": "capitulo",
+            "Type": "System.String"
+          },
+          "3": {
             "Name": "capituloLinea",
             "Index": -1,
             "NameInSource": "capituloLinea",
             "Alias": "capituloLinea",
             "Type": "System.String"
           },
-          "3": {
+          "4": {
             "Name": "coste",
             "Index": -1,
             "NameInSource": "coste",
             "Alias": "coste",
             "Type": "System.Decimal"
           },
-          "4": {
+          "5": {
             "Name": "descripcion",
             "Index": -1,
             "NameInSource": "descripcion",
             "Alias": "descripcion",
             "Type": "System.String"
           },
-          "5": {
-            "Name": "facturaId",
-            "Index": -1,
-            "NameInSource": "facturaId",
-            "Alias": "facturaId",
-            "Type": "System.Int32"
-          },
           "6": {
-            "Name": "facturaLineaId",
-            "Index": -1,
-            "NameInSource": "facturaLineaId",
-            "Alias": "facturaLineaId",
-            "Type": "System.Int32"
-          },
-          "7": {
             "Name": "grupo",
             "Index": -1,
             "NameInSource": "grupo",
             "Alias": "grupo",
             "Type": "System.String"
           },
-          "8": {
+          "7": {
             "Name": "importe",
             "Index": -1,
             "NameInSource": "importe",
             "Alias": "importe",
             "Type": "System.Decimal"
           },
-          "9": {
+          "8": {
             "Name": "linea",
             "Index": -1,
             "NameInSource": "linea",
             "Alias": "linea",
             "Type": "System.Decimal"
           },
-          "10": {
+          "9": {
             "Name": "porcentaje",
             "Index": -1,
             "NameInSource": "porcentaje",
             "Alias": "porcentaje",
             "Type": "System.Decimal"
           },
-          "11": {
+          "10": {
             "Name": "porcentajeAgente",
             "Index": -1,
             "NameInSource": "porcentajeAgente",
             "Alias": "porcentajeAgente",
             "Type": "System.Decimal"
           },
-          "12": {
+          "11": {
             "Name": "porcentajeBeneficio",
             "Index": -1,
             "NameInSource": "porcentajeBeneficio",
             "Alias": "porcentajeBeneficio",
             "Type": "System.Decimal"
           },
+          "12": {
+            "Name": "prefacturaId",
+            "Index": -1,
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32"
+          },
           "13": {
+            "Name": "prefacturaLineaId",
+            "Index": -1,
+            "NameInSource": "prefacturaLineaId",
+            "Alias": "prefacturaLineaId",
+            "Type": "System.Int32"
+          },
+          "14": {
             "Name": "tipoIva",
             "Index": -1,
             "NameInSource": "tipoIva",
             "Alias": "tipoIva",
             "Type": "System.String"
           },
-          "14": {
+          "15": {
             "Name": "tipoIvaId",
             "Index": -1,
             "NameInSource": "tipoIvaId",
             "Alias": "tipoIvaId",
             "Type": "System.Int32"
           },
-          "15": {
+          "16": {
             "Name": "totalLinea",
             "Index": -1,
             "NameInSource": "totalLinea",
             "Alias": "totalLinea",
             "Type": "System.Decimal"
           },
-          "16": {
+          "17": {
             "Name": "unidadId",
             "Index": -1,
             "NameInSource": "unidadId",
@@ -515,7 +536,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId"
+        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, SUBSTRING_INDEX(pfl.capituloLinea, ':', -1) as capitulo\r\nFROM prefacturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\n"
       }
     },
     "Databases": {
@@ -530,10 +551,10 @@
       "0": {
         "Name": "cabecera_lineas",
         "ChildColumns": {
-          "0": "facturaId"
+          "0": "prefacturaId"
         },
         "ParentColumns": {
-          "0": "facturaId"
+          "0": "prefacturaId"
         },
         "NameInSource": "cabecera_lineas",
         "Alias": "cabecera_lineas",
@@ -543,12 +564,12 @@
       "1": {
         "Name": "cabecera_bases",
         "ChildColumns": {
-          "0": "facturaId"
+          "0": "prefacturaId"
         },
         "ParentColumns": {
-          "0": "facturaId"
+          "0": "prefacturaId"
         },
-        "NameInSource": "cabecera_bases",
+        "NameInSource": "Relación",
         "Alias": "cabecera_bases",
         "ParentSource": "cabecera",
         "ChildSource": "bases"
@@ -672,7 +693,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,26.1,19,1.6",
+          "ClientRectangle": "0,31.64,19,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1269,7 +1290,7 @@
             }
           },
           "DataSourceName": "bases",
-          "DataRelationName": "cabecera_bases",
+          "DataRelationName": "Relación",
           "MasterComponent": "Datacabecera"
         },
         "8": {
