@@ -49,7 +49,10 @@ function initForm() {
         return false
     });
     $("#cmbTiposComerciales").select2(select2Spanish());
-    loadTiposComerciales();    
+    $("#cmbDirecciones").select2(select2Spanish());
+
+    loadTiposComerciales();
+    loadDirecciones();    
 
     initTablaLiquidaciones();
     // comprobamos parámetros
@@ -67,7 +70,13 @@ function admData() {
     self.stipoComercialId = ko.observable();
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
-    self.elegidosTiposComerciales = ko.observableArray([]);    
+    self.elegidosTiposComerciales = ko.observableArray([]);
+    //
+    self.contratoId = ko.observable();
+    self.sContratoId = ko.observable();
+    //
+    self.posiblesDirecciones = ko.observableArray([]);
+    self.elegidasDirecciones = ko.observableArray([]);
 }
 
 function initTablaLiquidaciones() {
@@ -173,10 +182,12 @@ function buscarLiquidacionesAcumuladas() {
     var mf = function () {
         if (!datosOK()) return;
         var tipoComercialId = 0;
+        var contratoId = 0;
         if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
+        if (vm.sContratoId()) contratoId = vm.sContratoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId,
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -245,8 +256,10 @@ var f_open_post = function (verb, url, data, target) {
 var printGeneral = function () {
     if (!datosOK()) return;
     var tipoComercialId = 0;
+    var contratoId = 0;
     if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
-    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId;
+    if (vm.sContratoId()) contratoId = vm.sContratoId();
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId;
     window.open(url, '_new');
 }
 
@@ -263,6 +276,27 @@ function loadTiposComerciales(id) {
             //    vm.stipoComercialId(id);
             //}
             $("#cmbTiposComerciales").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadDirecciones(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos/buscar/direcciones",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var direcciones = [{ contratoId: 0, direccion: "" }].concat(data);
+            vm.posiblesDirecciones(direcciones);
+            //if (id){
+            //    vm.sContratoId(id);
+            //}
+            $("#cmbDirecciones").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);

@@ -1,0 +1,1585 @@
+{
+  "ReportVersion": "2017.2.3.0",
+  "ReportGuid": "97426b2dd8d64113bc39775e1303c149",
+  "ReportName": "FacturaGrupo",
+  "ReportAlias": "FacturaGrupo",
+  "ReportAuthor": "rafa@myariadna.com",
+  "ReportCreated": "/Date(-3600000+0100)/",
+  "ReportChanged": "/Date(1510218683998+0100)/",
+  "EngineVersion": "EngineV2",
+  "CalculationMode": "Interpretation",
+  "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaGrupo : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaGrupo()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
+  "ReferencedAssemblies": {
+    "0": "System.Dll",
+    "1": "System.Drawing.Dll",
+    "2": "System.Windows.Forms.Dll",
+    "3": "System.Data.Dll",
+    "4": "System.Xml.Dll",
+    "5": "Stimulsoft.Controls.Dll",
+    "6": "Stimulsoft.Base.Dll",
+    "7": "Stimulsoft.Report.Dll"
+  },
+  "Dictionary": {
+    "DataSources": {
+      "0": {
+        "Ident": "StiMySqlSource",
+        "Name": "bases",
+        "Alias": "bases",
+        "Columns": {
+          "0": {
+            "Name": "base",
+            "Index": -1,
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "cuota",
+            "Index": -1,
+            "NameInSource": "cuota",
+            "Alias": "cuota",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "facturaBaseId",
+            "Index": -1,
+            "NameInSource": "facturaBaseId",
+            "Alias": "facturaBaseId",
+            "Type": "System.Int32"
+          },
+          "3": {
+            "Name": "facturaId",
+            "Index": -1,
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Int32"
+          },
+          "4": {
+            "Name": "porcentaje",
+            "Index": -1,
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "prefacturaBaseId",
+            "Index": -1,
+            "NameInSource": "prefacturaBaseId",
+            "Alias": "prefacturaBaseId",
+            "Type": "System.Int32"
+          },
+          "6": {
+            "Name": "prefacturaId",
+            "Index": -1,
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32"
+          },
+          "7": {
+            "Name": "tipoIva",
+            "Index": -1,
+            "NameInSource": "tipoIva",
+            "Alias": "tipoIva",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "tipoIvaId",
+            "Index": -1,
+            "NameInSource": "tipoIvaId",
+            "Alias": "tipoIvaId",
+            "Type": "System.Int32"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT pfb.prefacturaId, pfb.prefacturaBaseId, pfb.base, pfb.cuota,pfb.porcentaje, pfb.tipoIvaId, t.nombre AS tipoIva\r\nFROM prefacturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"
+      },
+      "1": {
+        "Ident": "StiMySqlSource",
+        "Name": "cabecera",
+        "Alias": "cabecera",
+        "Columns": {
+          "0": {
+            "Name": "ano",
+            "Index": -1,
+            "NameInSource": "ano",
+            "Alias": "ano",
+            "Type": "System.Int32"
+          },
+          "1": {
+            "Name": "clienteId",
+            "Index": -1,
+            "NameInSource": "clienteId",
+            "Alias": "clienteId",
+            "Type": "System.Int32"
+          },
+          "2": {
+            "Name": "codPostal2",
+            "Index": -1,
+            "NameInSource": "codPostal2",
+            "Alias": "codPostal2",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "contratoClienteMantenimientoId",
+            "Index": -1,
+            "NameInSource": "contratoClienteMantenimientoId",
+            "Alias": "contratoClienteMantenimientoId",
+            "Type": "System.Int32"
+          },
+          "4": {
+            "Name": "cuenta",
+            "Index": -1,
+            "NameInSource": "cuenta",
+            "Alias": "cuenta",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "direccion2",
+            "Index": -1,
+            "NameInSource": "direccion2",
+            "Alias": "direccion2",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "emisorCodPostal",
+            "Index": -1,
+            "NameInSource": "emisorCodPostal",
+            "Alias": "emisorCodPostal",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "emisorDireccion",
+            "Index": -1,
+            "NameInSource": "emisorDireccion",
+            "Alias": "emisorDireccion",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "emisorNif",
+            "Index": -1,
+            "NameInSource": "emisorNif",
+            "Alias": "emisorNif",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "emisorNombre",
+            "Index": -1,
+            "NameInSource": "emisorNombre",
+            "Alias": "emisorNombre",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "emisorPoblacion",
+            "Index": -1,
+            "NameInSource": "emisorPoblacion",
+            "Alias": "emisorPoblacion",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "emisorProvincia",
+            "Index": -1,
+            "NameInSource": "emisorProvincia",
+            "Alias": "emisorProvincia",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "empresaId",
+            "Index": -1,
+            "NameInSource": "empresaId",
+            "Alias": "empresaId",
+            "Type": "System.Int32"
+          },
+          "13": {
+            "Name": "facturaId",
+            "Index": -1,
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Int32"
+          },
+          "14": {
+            "Name": "fecha",
+            "Index": -1,
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.DateTime"
+          },
+          "15": {
+            "Name": "formaPago",
+            "Index": -1,
+            "NameInSource": "formaPago",
+            "Alias": "formaPago",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "iban",
+            "Index": -1,
+            "NameInSource": "iban",
+            "Alias": "iban",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "importeRetencion",
+            "Index": -1,
+            "NameInSource": "importeRetencion",
+            "Alias": "importeRetencion",
+            "Type": "System.Nullable`1[System.Decimal]"
+          },
+          "18": {
+            "Name": "numero",
+            "Index": -1,
+            "NameInSource": "numero",
+            "Alias": "numero",
+            "Type": "System.Int32"
+          },
+          "19": {
+            "Name": "numeroVencimientos",
+            "Index": -1,
+            "NameInSource": "numeroVencimientos",
+            "Alias": "numeroVencimientos",
+            "Type": "System.Int32"
+          },
+          "20": {
+            "Name": "observaciones",
+            "Index": -1,
+            "NameInSource": "observaciones",
+            "Alias": "observaciones",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "periodo",
+            "Index": -1,
+            "NameInSource": "periodo",
+            "Alias": "periodo",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "poblacion2",
+            "Index": -1,
+            "NameInSource": "poblacion2",
+            "Alias": "poblacion2",
+            "Type": "System.String"
+          },
+          "23": {
+            "Name": "porcentajeRetencion",
+            "Index": -1,
+            "NameInSource": "porcentajeRetencion",
+            "Alias": "porcentajeRetencion",
+            "Type": "System.Decimal"
+          },
+          "24": {
+            "Name": "postalCodPostal",
+            "Index": -1,
+            "NameInSource": "postalCodPostal",
+            "Alias": "postalCodPostal",
+            "Type": "System.String"
+          },
+          "25": {
+            "Name": "postalDireccion",
+            "Index": -1,
+            "NameInSource": "postalDireccion",
+            "Alias": "postalDireccion",
+            "Type": "System.String"
+          },
+          "26": {
+            "Name": "postalPoblacion",
+            "Index": -1,
+            "NameInSource": "postalPoblacion",
+            "Alias": "postalPoblacion",
+            "Type": "System.String"
+          },
+          "27": {
+            "Name": "postalProvincia",
+            "Index": -1,
+            "NameInSource": "postalProvincia",
+            "Alias": "postalProvincia",
+            "Type": "System.String"
+          },
+          "28": {
+            "Name": "postalTipoVia",
+            "Index": -1,
+            "NameInSource": "postalTipoVia",
+            "Alias": "postalTipoVia",
+            "Type": "System.String"
+          },
+          "29": {
+            "Name": "prefacturaId",
+            "Index": -1,
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32"
+          },
+          "30": {
+            "Name": "primerVencimiento",
+            "Index": -1,
+            "NameInSource": "primerVencimiento",
+            "Alias": "primerVencimiento",
+            "Type": "System.Decimal"
+          },
+          "31": {
+            "Name": "provincia2",
+            "Index": -1,
+            "NameInSource": "provincia2",
+            "Alias": "provincia2",
+            "Type": "System.String"
+          },
+          "32": {
+            "Name": "receptorCodPostal",
+            "Index": -1,
+            "NameInSource": "receptorCodPostal",
+            "Alias": "receptorCodPostal",
+            "Type": "System.String"
+          },
+          "33": {
+            "Name": "receptorDireccion",
+            "Index": -1,
+            "NameInSource": "receptorDireccion",
+            "Alias": "receptorDireccion",
+            "Type": "System.String"
+          },
+          "34": {
+            "Name": "receptorNif",
+            "Index": -1,
+            "NameInSource": "receptorNif",
+            "Alias": "receptorNif",
+            "Type": "System.String"
+          },
+          "35": {
+            "Name": "receptorNombre",
+            "Index": -1,
+            "NameInSource": "receptorNombre",
+            "Alias": "receptorNombre",
+            "Type": "System.String"
+          },
+          "36": {
+            "Name": "receptorPoblacion",
+            "Index": -1,
+            "NameInSource": "receptorPoblacion",
+            "Alias": "receptorPoblacion",
+            "Type": "System.String"
+          },
+          "37": {
+            "Name": "receptorProvincia",
+            "Index": -1,
+            "NameInSource": "receptorProvincia",
+            "Alias": "receptorProvincia",
+            "Type": "System.String"
+          },
+          "38": {
+            "Name": "restoVencimiento",
+            "Index": -1,
+            "NameInSource": "restoVencimiento",
+            "Alias": "restoVencimiento",
+            "Type": "System.Decimal"
+          },
+          "39": {
+            "Name": "serie",
+            "Index": -1,
+            "NameInSource": "serie",
+            "Alias": "serie",
+            "Type": "System.String"
+          },
+          "40": {
+            "Name": "total",
+            "Index": -1,
+            "NameInSource": "total",
+            "Alias": "total",
+            "Type": "System.Decimal"
+          },
+          "41": {
+            "Name": "totalConIva",
+            "Index": -1,
+            "NameInSource": "totalConIva",
+            "Alias": "totalConIva",
+            "Type": "System.Decimal"
+          },
+          "42": {
+            "Name": "vencimiento",
+            "Index": -1,
+            "NameInSource": "vencimiento",
+            "Alias": "vencimiento",
+            "Type": "System.DateTime"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT\r\npf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento,\r\ntpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,\r\ncl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,4), \"****************\", SUBSTR(cl.iban,20))  AS cuenta,\r\ncnt.direccion AS direccion2, cnt.codPostal AS codPostal2, cnt.poblacion AS poblacion2, cnt.provincia AS provincia2\r\nFROM prefacturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN contratos AS cnt ON cnt.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS cl2 ON cl2.clienteId = cnt.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\n"
+      },
+      "2": {
+        "Ident": "StiMySqlSource",
+        "Name": "lineas",
+        "Alias": "lineas",
+        "Columns": {
+          "0": {
+            "Name": "articuloId",
+            "Index": -1,
+            "NameInSource": "articuloId",
+            "Alias": "articuloId",
+            "Type": "System.Int32"
+          },
+          "1": {
+            "Name": "cantidad",
+            "Index": -1,
+            "NameInSource": "cantidad",
+            "Alias": "cantidad",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "capitulo",
+            "Index": -1,
+            "NameInSource": "capitulo",
+            "Alias": "capitulo",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "capituloLinea",
+            "Index": -1,
+            "NameInSource": "capituloLinea",
+            "Alias": "capituloLinea",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "coste",
+            "Index": -1,
+            "NameInSource": "coste",
+            "Alias": "coste",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "descripcion",
+            "Index": -1,
+            "NameInSource": "descripcion",
+            "Alias": "descripcion",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "grupo",
+            "Index": -1,
+            "NameInSource": "grupo",
+            "Alias": "grupo",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "importe",
+            "Index": -1,
+            "NameInSource": "importe",
+            "Alias": "importe",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "linea",
+            "Index": -1,
+            "NameInSource": "linea",
+            "Alias": "linea",
+            "Type": "System.Decimal"
+          },
+          "9": {
+            "Name": "porcentaje",
+            "Index": -1,
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.Decimal"
+          },
+          "10": {
+            "Name": "porcentajeAgente",
+            "Index": -1,
+            "NameInSource": "porcentajeAgente",
+            "Alias": "porcentajeAgente",
+            "Type": "System.Decimal"
+          },
+          "11": {
+            "Name": "porcentajeBeneficio",
+            "Index": -1,
+            "NameInSource": "porcentajeBeneficio",
+            "Alias": "porcentajeBeneficio",
+            "Type": "System.Decimal"
+          },
+          "12": {
+            "Name": "prefacturaId",
+            "Index": -1,
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32"
+          },
+          "13": {
+            "Name": "prefacturaLineaId",
+            "Index": -1,
+            "NameInSource": "prefacturaLineaId",
+            "Alias": "prefacturaLineaId",
+            "Type": "System.Int32"
+          },
+          "14": {
+            "Name": "tipoIva",
+            "Index": -1,
+            "NameInSource": "tipoIva",
+            "Alias": "tipoIva",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "tipoIvaId",
+            "Index": -1,
+            "NameInSource": "tipoIvaId",
+            "Alias": "tipoIvaId",
+            "Type": "System.Int32"
+          },
+          "16": {
+            "Name": "totalLinea",
+            "Index": -1,
+            "NameInSource": "totalLinea",
+            "Alias": "totalLinea",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "unidadId",
+            "Index": -1,
+            "NameInSource": "unidadId",
+            "Alias": "unidadId",
+            "Type": "System.Int32"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, SUBSTRING_INDEX(pfl.capituloLinea, ':', -1) as capitulo\r\nFROM prefacturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\n"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiMySqlDatabase",
+        "Name": "PROA_REPORT",
+        "Alias": "PROA_REPORT",
+        "ConnectionStringEncrypted": "41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"
+      }
+    },
+    "Relations": {
+      "0": {
+        "Name": "cabecera_lineas",
+        "ChildColumns": {
+          "0": "prefacturaId"
+        },
+        "ParentColumns": {
+          "0": "prefacturaId"
+        },
+        "NameInSource": "cabecera_lineas",
+        "Alias": "cabecera_lineas",
+        "ParentSource": "cabecera",
+        "ChildSource": "lineas"
+      },
+      "1": {
+        "Name": "cabecera_bases",
+        "ChildColumns": {
+          "0": "prefacturaId"
+        },
+        "ParentColumns": {
+          "0": "prefacturaId"
+        },
+        "NameInSource": "Relación",
+        "Alias": "cabecera_bases",
+        "ParentSource": "cabecera",
+        "ChildSource": "bases"
+      }
+    }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "38f26eb7b6405f95fef070b22c8c1cfc",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiPageHeaderBand",
+          "Name": "PageHeaderBand1",
+          "ClientRectangle": "0,0.4,19,2.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiImage",
+              "Name": "Image1",
+              "Guid": "d28b88a72f6d7eb7bb2d6d88b75e75d3",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "6.4,0.2,5.4,2.2",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageBytes": "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"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiPageFooterBand",
+          "Name": "PageFooterBand1",
+          "ClientRectangle": "0,37.18,19,1.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text46",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,0.96,18.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{PageNumber} de {TotalPageCount}"
+              },
+              "HorAlignment": "Center",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text25",
+              "Guid": "98e79b7b54aadbf2f35be74249c1c016",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,0.62,18.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Inscrita en el Registro Mercantil de Madrid , Tomo 9424 general, 8178 de la sección 3ª, del libro de sociedades, folio 20, hoja nº 87577 , inscripción 1ª"
+              },
+              "HorAlignment": "Center",
+              "Font": ";7;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiDataBand",
+          "Name": "Datacabecera",
+          "ClientRectangle": "0,3.8,19,8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "Guid": "ae6f670a871fb23678ae6720e4aaa44f",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,1.2,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "NIF: {cabecera.receptorNif}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "81cfcdecc907ac3cd1e9b1899f4e428b",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,0.2,8.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.receptorNombre}"
+              },
+              "Font": ";12;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "Guid": "d91479a04b85019e78ddea8554b914ce",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,1.8,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.receptorDireccion}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "Guid": "a42d8c169076de1c6194f5108f58af87",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,2.6,8.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,4.4,9.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PERIODO FACTURADO: {cabecera.periodo}"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "5ffb76caf207fddb6b054e673fb7072b",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,5,9.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "FORMA DE PAGO: {cabecera.formaPago}"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "d495c8dfce906ed9f13cf12fa22036fa",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,6.2,9.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "CUENTA: {cabecera.cuenta}"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "fb4412266ffd6f1568b1d36d79e3497a",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,5.6,9.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "VENCIMIENTO: {cabecera.vencimiento.ToString(\"dd/MM/yyyy\")}"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,7,18.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "INMUEBLE: {cabecera.direccion2} ({cabecera.codPostal2} {cabecera.poblacion2}) {cabecera.provincia2}"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "Guid": "93054957ded0f687d3cda265e99959f9",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "10.4,0.2,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.receptorNombre}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text9",
+              "Guid": "1b64a8a6dc701caad1e8735aea6f2996",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "10.4,1,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.postalDireccion}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "Text10",
+              "Guid": "ea4dfc838f5c52eaa083b9476e797864",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "10.4,1.8,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "({cabecera.postalCodPostal}){cabecera.postalPoblacion}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "Guid": "8b957417ebd17a2c7b13579a93c4b226",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "10.4,2.4,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.postalProvincia}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "13": {
+              "Ident": "StiText",
+              "Name": "Text26",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "6.8,3.6,2.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.fecha}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "dd/MM/yyyy"
+              }
+            },
+            "14": {
+              "Ident": "StiText",
+              "Name": "Text30",
+              "Guid": "16e6e2d618a59a33f2923616bc1ef913",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,3.6,2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Proforma: "
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "15": {
+              "Ident": "StiText",
+              "Name": "Text31",
+              "Guid": "3ddbb1fc06aab31efe10924664c6ed2a",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "2.4,3.6,2.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "16": {
+              "Ident": "StiText",
+              "Name": "Text32",
+              "Guid": "7c1c994bc345f2e0930c017b5ffe8e64",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "5.2,3.6,1.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "FECHA: "
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          },
+          "DataSourceName": "cabecera",
+          "Sort": {
+            "0": "ASC",
+            "1": "fecha"
+          }
+        },
+        "3": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand1",
+          "ClientRectangle": "0,12.6,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text17",
+              "Guid": "8730f39cdfba52873bd9d8d20dd3762f",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,0.2,16,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Concepto"
+              },
+              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text21",
+              "Guid": "670d95fa334f472d81d27a91a71f6bc2",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "16.8,0.2,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Importe"
+              },
+              "HorAlignment": "Right",
+              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          },
+          "PrintIfEmpty": true
+        },
+        "4": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "ClientRectangle": "0,14.2,19,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,0,18.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "IVA {lineas.tipoIva}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          },
+          "Condition": {
+            "Value": "{lineas.tipoIva}"
+          }
+        },
+        "5": {
+          "Ident": "StiDataBand",
+          "Name": "Datalineas",
+          "ClientRectangle": "0,15.8,19,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text23",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,0,16,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.descripcion}"
+              },
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "DataColumn"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text27",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "16.8,0,2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.totalLinea}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            }
+          },
+          "DataSourceName": "lineas",
+          "DataRelationName": "cabecera_lineas",
+          "MasterComponent": "Datacabecera",
+          "Sort": {
+            "0": "ASC",
+            "1": "linea"
+          }
+        },
+        "6": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "ClientRectangle": "0,17.4,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "Guid": "1ea8de7c28d9a88ff9695344cc9ca9be",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "16.8,0,2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(lineas.totalLinea)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Totals",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text29",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "11.2,0,5.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL CAPITULO: "
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "7": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBand2",
+          "ClientRectangle": "0,19,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:0,0,0",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text40",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "16.8,0,2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.total}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text38",
+              "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "11.2,0,5.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL: "
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          },
+          "PrintIfEmpty": true
+        },
+        "8": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand2",
+          "ClientRectangle": "0,20.6,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text18",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "BASE"
+              },
+              "HorAlignment": "Right",
+              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text19",
+              "Guid": "c738bd4d195a3cb57eae075c50a4d662",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "2.8,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "% IVA"
+              },
+              "HorAlignment": "Right",
+              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text20",
+              "Guid": "14dcaccedb0930ee538359832d7df00c",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "5.4,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "CUOTA"
+              },
+              "HorAlignment": "Right",
+              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          },
+          "PrintIfEmpty": true
+        },
+        "9": {
+          "Ident": "StiDataBand",
+          "Name": "Databases",
+          "ClientRectangle": "0,22.2,19,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text37",
+              "Guid": "d5bafb80bb1bfa3665e7bd7ec54351d9",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "5.4,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{bases.cuota}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text22",
+              "Guid": "824c8bc2ae77eb098cb0fe6def43a92f",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{bases.base}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text24",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "2.8,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{bases.porcentaje}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false
+              }
+            }
+          },
+          "DataSourceName": "bases",
+          "DataRelationName": "Relación",
+          "MasterComponent": "Datacabecera"
+        },
+        "10": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBand1",
+          "ClientRectangle": "0,23.8,19,2.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text39",
+              "Guid": "bbf14fc4f5944a48ea1bcdc085b990d8",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "11.2,0,5.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL A ABONAR: "
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text41",
+              "Guid": "327da162a0c9d9011b99f5f2daeb2614",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "16.8,0,2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.totalConIva}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "DataColumn",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text42",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,1.2,18.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Observaciones:"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text44",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.2,1.6,18.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.observaciones}"
+              },
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.4,2.46,18.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "GRUPO INMOBILIARIO METROPOLITANO S.A. CIF: A79088159 -AVDA DE AMERICA, 16 - 28028 MADRID. TEL. 913 686 943"
+              },
+              "HorAlignment": "Center",
+              "Font": ";7;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          },
+          "ResetPageNumber": true,
+          "NewPageAfter": true,
+          "PrintIfEmpty": true
+        }
+      },
+      "PageWidth": 21.0,
+      "PageHeight": 29.7,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1.0,
+        "Right": 1.0,
+        "Top": 1.0,
+        "Bottom": 1.0
+      }
+    }
+  }
+}

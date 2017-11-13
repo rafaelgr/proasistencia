@@ -110,8 +110,13 @@ function initForm() {
     //     if (id) $('#selector').hide();
     if (gup('prefacturaId') != "") {
         vm.prefacturaId(gup('prefacturaId'));
-        obtainReport();
-        $('#selector').hide();
+        verb = "GET";
+        var url = myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId();
+        llamadaAjax(verb, url, null, function (err, data) {
+            vm.sempresaId(data.empresaId);
+            obtainReport();
+            $('#selector').hide();
+        });
     }
 }
 
@@ -140,21 +145,44 @@ var obtainReport = function () {
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
     //report.loadFile("../reports/SimpleList.mrt");
-    var rpt = gup("report");
     var file = "../reports/prefactura_general.mrt";
+    verb = "GET";
+    url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     report.loadFile(file);
-    //report.setVariable("vTest", "11,16,18");
-    //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
-    var connectionString = "Server=" + myconfig.report.host + ";";
-    connectionString += "Database=" + myconfig.report.database + ";"
-    connectionString += "UserId=" + myconfig.report.user + ";"
-    connectionString += "Pwd=" + myconfig.report.password + ";";
-    report.dictionary.databases.list[0].connectionString = connectionString;
-    var sql = report.dataSources.items[0].sqlCommand;
 
-    report.dataSources.items[0].sqlCommand = rptPrefacturaParametros(sql);
-    // Assign report to the viewer, the report will be built automatically after rendering the viewer
-    viewer.report = report;
+    llamadaAjax(verb, url, null, function (err, data) {
+        var infPreFacturas = data.infPreFacturas;
+        file = "../reports/" + infPreFacturas + ".mrt";
+        var rpt = gup("report");
+        report.loadFile(file);
+        //report.setVariable("vTest", "11,16,18");
+        //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
+        var connectionString = "Server=" + myconfig.report.host + ";";
+        connectionString += "Database=" + myconfig.report.database + ";"
+        connectionString += "UserId=" + myconfig.report.user + ";"
+        connectionString += "Pwd=" + myconfig.report.password + ";";
+        // obtener el indice de los sql que contiene el informe que trata 
+        // la cabecera ('pf.prefacturaId')
+        var pos = 0;
+        for (var i = 0; i < report.dataSources.items.length; i++) {
+            var str = report.dataSources.items[i].sqlCommand;
+            if (str.indexOf("pf.prefacturaId") > -1) pos = i;
+        }
+        var sql = report.dataSources.items[pos].sqlCommand;
+        var sql2 = rptPrefacturaParametros(sql);
+        verb = "POST"; 
+        url = myconfig.apiUrl + "/api/informes/sql";
+        llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
+            if (err) return;
+            if (data) {
+                report.dataSources.items[pos].sqlCommand = sql2;
+                // Assign report to the viewer, the report will be built automatically after rendering the viewer
+                viewer.report = report;
+            } else {
+                alert("No hay registros con estas condiciones");
+            }
+        })
+    });
 };
 
 var printReport = function (url) {

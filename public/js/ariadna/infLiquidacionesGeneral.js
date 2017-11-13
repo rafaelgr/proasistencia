@@ -114,6 +114,9 @@ function initForm() {
         if (gup("tipoComercialId") != "0"){
             vm.tipoComercialId(gup("tipoComercialId"))
         }
+        if (gup("contratoId") != "0"){
+            vm.contratoId(gup("contratoId"))
+        }
         obtainReport();
         $('#selector').hide();
     }
@@ -125,6 +128,7 @@ function admData() {
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     self.tipoComercialId = ko.observable();
+    self.contratoId = ko.observable();
     //
     self.comercialId = ko.observable();
     self.scomercialId = ko.observable();
@@ -272,6 +276,7 @@ var rptLiquidacionGeneralParametros = function () {
     var tipoComercialId = vm.tipoComercialId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var contratoId = vm.contratoId();
     sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha";
     sql += " FROM liquidacion_comercial AS lf";
@@ -284,6 +289,9 @@ var rptLiquidacionGeneralParametros = function () {
     }    
     if (tipoComercialId){
         sql += " AND lf.comercialId IN (SELECT comercialId from comerciales where tipoComercialId = " + tipoComercialId + ")";
+    }
+    if (contratoId){
+       sql += " AND lf.contratoId = "+contratoId;
     }
     sql += " GROUP BY lf.comercialId";
     return sql;

@@ -90,6 +90,7 @@ function admData() {
     //
     self.infOfertas = ko.observable();
     self.infFacturas = ko.observable();
+    self.infPreFacturas = ko.observable();
     // 
     self.plantillaCorreoFacturas = ko.observable();
 }
@@ -122,6 +123,7 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     vm.infOfertas(data.infOfertas);
     vm.infFacturas(data.infFacturas);
+    vm.infPreFacturas(data.infPreFacturas);
     // 
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
@@ -234,6 +236,7 @@ function aceptar() {
                 "serieFacS": vm.serieFacS(),
                 "infOfertas": vm.infOfertas(),
                 "infFacturas": vm.infFacturas(),
+                "infPreFacturas": vm.infPreFacturas(),
                 "plantillaCorreoFacturas": vm.plantillaCorreoFacturas()
             }
         };
