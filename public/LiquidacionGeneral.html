@@ -421,7 +421,12 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-6"></section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Dirección</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbDirecciones" name="cmbDirecciones" data-bind="options: posiblesDirecciones, optionsText: 'direccion', optionsValue: 'contratoId', value: sContratoId, valueAllowUnset: true, selectedOptions: elegidasDirecciones, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
                                                 <section class="col col-md-6">
                                                     <label class="label">Tipo actividad</label>
                                                     <label style="width:100%;">
