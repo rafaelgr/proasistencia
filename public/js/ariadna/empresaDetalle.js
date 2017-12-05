@@ -75,6 +75,7 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+    self.asunto = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
     self.contabilidad = ko.observable();
@@ -113,6 +114,7 @@ function loadData(data) {
     vm.fax(data.fax);
     vm.email(data.email);
     vm.observaciones(data.observaciones);
+    vm.asunto(data.asuntoCorreo);
     vm.poblacion(data.poblacion);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
@@ -237,7 +239,8 @@ function aceptar() {
                 "infOfertas": vm.infOfertas(),
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
-                "plantillaCorreoFacturas": vm.plantillaCorreoFacturas()
+                "plantillaCorreoFacturas": vm.plantillaCorreoFacturas(),
+                "asuntoCorreo": vm.asunto()
             }
         };
         if (empId == 0) {
