@@ -1,0 +1,16 @@
+{
+    "apiPort": 8080,
+	"stiPort": 5001,
+    "apiHost": "127.0.0.1",
+    "dsn": "ProaGestion",
+    "conta_dir": "C:\\Ariadna\\proasistencia\\public\\ficheros\\contabilidad",
+    "factura_dir": "C:\\Ariadna\\proasistencia\\public\\ficheros\\facturas",
+    "reports_dir": "C:\\Ariadna\\proasistencia\\public\\reports",
+    "report": {
+        "host": "localhost",
+        "user": "root",
+        "password": "aritel",
+        "database": "proasistencia",
+        "port": 3306
+    }
+}
