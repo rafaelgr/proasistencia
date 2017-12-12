@@ -316,9 +316,7 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administración</li>
-                <li>Gestion</li>
-                <li>Contratos terceros</li>
-                <li>Contrato agente / colaborador</li>
+                <li>Proveedores</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -342,8 +340,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-file-o"></i>
-                            Contrato agente / colaborador <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-building-o"></i>
+                            Proveedores <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -396,7 +394,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento contratos comerciales</h2>
+                                <h2>Mantenimiento proveedores </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -409,14 +407,24 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmCrear" class="smart-form">
+                                    <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Si desea crear un nuevo contrato haga clic en el botón <i class="fa fa-lg fa-plus"></i>
+                                            Buscar proveedores por nombre.
                                         </header>
                                         <fieldset>
+                                            <div class="row">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
+                                                    <label class="input">
+                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnRefrescar" title="Volver a cargar todos los registros" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-refresh"></i>
+                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
                                                 </button>
                                                 <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
@@ -424,22 +432,15 @@
                                             </div>
                                         </fieldset>
                                     </form>
-                                    <!-- Ahora no hay busqueda, se muestran todos de entrada -->
-                                    <div id="tbContratoComercial">
-                                        <table id="dt_contratoComercial" class="table table-striped table-bordered table-hover" width="100%">
+                                    <div id="tbProveedor" style="display:none;">
+                                        <table id="dt_proveedor" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Agente / colborador
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
                                                     </th>
                                                     <th data-hide="phone">
-                                                        Empresa
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Fecha inicio
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Fecha final
+                                                        NIF
                                                     </th>
                                                     <th>
                                                     </th>
@@ -536,12 +537,11 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
-    <script type="text/javascript" src="js/moment.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/contratoComercialGeneral.js"></script>
+    <script src="js/ariadna/proveedorGeneral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
