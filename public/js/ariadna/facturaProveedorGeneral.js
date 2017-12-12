@@ -24,7 +24,7 @@ function initForm() {
     getVersionFooter();
     //
     $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(crearPrefactura());
+    $('#btnAlta').click(crearFactura());
     $('#btnPrint').click(imprimirPrefactura);
     $('#frmBuscar').submit(function () {
         return false
@@ -223,9 +223,9 @@ function buscarFacturas() {
     return mf;
 }
 
-function crearPrefactura() {
+function crearFactura() {
     var mf = function () {
-        var url = "PrefacturaDetalle.html?facproveId=0";
+        var url = "FacturaProveedorDetalle.html?facproveId=0";
         window.open(url, '_new');
     };
     return mf;
