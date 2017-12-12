@@ -14,6 +14,8 @@ var clienteId = 0;
 var mantenedorId = 0;
 var comercialId = 0;
 var contratoId = 0;
+var empresaId = 0;
+var tipoMantenimientoId = 0;
 
 
 var breakpointDefinition = {
@@ -44,6 +46,12 @@ function initForm() {
 
     $('#cmbContratos').select2();
     loadContratosActivos();
+
+    $('#cmbEmpresas').select2();
+    loadEmpresas();
+
+    $('#cmbDepartamentos').select2();
+    loadDepartamentos();
     
    
     //
@@ -119,6 +127,14 @@ function admData() {
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
     self.sContratoId = ko.observable();
+
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidasEmpresas = ko.observableArray([]);
+    self.sEmpresaId = ko.observable();
+
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    self.sTipoMantenimientoId = ko.observable();
     
 }
 
@@ -296,6 +312,30 @@ function loadContratosActivos(id){
     });
 }
 
+function loadEmpresas(id){
+    llamadaAjax('GET', "/api/empresas", null, function (err, data) {
+        if (err) return
+        var empresas = [{
+            empresaId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([id]).trigger('change');
+    });
+}
+
+function loadDepartamentos(id){
+    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+        if (err) return
+        var departamentos = [{
+            tipoMantenimientoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([id]).trigger('change');
+    });
+}
+
 
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
@@ -367,9 +407,12 @@ function buscarFacturas() {
         mantenedorId = vm.sMantenedorId();
         comercialId = vm.sComercialId();
         contratoId = vm.sContratoId();
+        empresaId = vm.sEmpresaId();
+        tipoMantenimientoId = vm.sTipoMantenimientoId();
+
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId +"/"+ contratoId,
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId  +"/"+ contratoId +"/"+ empresaId +"/"+ tipoMantenimientoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -424,7 +467,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + tipoMantenimientoId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
