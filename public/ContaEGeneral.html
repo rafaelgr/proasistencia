@@ -458,6 +458,22 @@
                                                     </label>
                                                 </section>      
                                             </div>
+                                            <div class="row">
+                                                    <section class="col col-md-6">
+                                                        <label class="label">Empresa</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" 
+                                                            data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sEmpresaId, valueAllowUnset: true, selectedOptions: elegidasEmpresas, selected2:{}"></select><i></i>
+                                                        </label>
+                                                    </section>    
+                                                    <section class="col col-md-6">
+                                                        <label class="label">Departamento</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" 
+                                                            data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: sTipoMantenimientoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                        </label>
+                                                    </section>      
+                                            </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="row">
