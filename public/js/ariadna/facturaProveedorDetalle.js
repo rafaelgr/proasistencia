@@ -9,7 +9,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var prefacturaId = 0;
 var ContratoId = 0;
-var ProveedorId = 0;
+var EmpresaId = 0;
 var ClienteId = 0;
 
 var cmd = "";
@@ -59,11 +59,11 @@ function initForm() {
     });
 
     // select2 things
-    $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
-    $("#cmbProveedores").select2().on('change', function (e) {
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
+    $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if (e.added) cambioProveedor(e.added.id);
+        if (e.added) cambioEmpresa(e.added.id);
     });
 
     // Ahora cliente en autocomplete
@@ -115,7 +115,7 @@ function initForm() {
     prefacturaId = gup('PrefacturaId');
     cmd = gup("cmd");
     ContratoId = gup("ContratoId");
-    ProveedorId = gup("ProveedorId");
+    EmpresaId = gup("EmpresaId");
     ClienteId = gup("ClienteId");
     if (prefacturaId != 0) {
         // caso edicion
@@ -135,9 +135,9 @@ function initForm() {
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA PREFACTURA";
-        if (ProveedorId != 0) {
-            loadProveedores(ProveedorId);
-            cambioProveedor(ProveedorId);
+        if (EmpresaId != 0) {
+            loadEmpresas(EmpresaId);
+            cambioEmpresa(EmpresaId);
         }
         if (ClienteId != 0) {
             cargaCliente(ClienteId);
@@ -157,7 +157,7 @@ function admData() {
     self.numero = ko.observable();
     self.serie = ko.observable();
     self.fecha = ko.observable();
-    self.proveedorId = ko.observable();
+    self.empresaId = ko.observable();
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
     //
@@ -179,11 +179,11 @@ function admData() {
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
     //
-    self.proveedorId = ko.observable();
-    self.sproveedorId = ko.observable();
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
     //
-    self.posiblesProveedores = ko.observableArray([]);
-    self.elegidosProveedores = ko.observableArray([]);
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
     //
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
@@ -255,7 +255,7 @@ function admData() {
     self.porcentajeRetencion = ko.observable();
     self.importeRetencion = ko.observable();
     //
-   
+    self.mantenedorDesactivado = ko.observable();
 }
 
 function loadData(data) {
@@ -264,7 +264,7 @@ function loadData(data) {
     vm.numero(data.numero);
     vm.serie(data.serie);
     vm.fecha(spanishDate(data.fecha));
-    vm.proveedorId(data.proveedorId);
+    vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
     vm.contratoId(data.contratoId);
     vm.generada(data.generada);
@@ -274,22 +274,22 @@ function loadData(data) {
     vm.importeAlCliente(data.totalAlCliente);
     recalcularCostesImportesDesdeCoste();
     //
-    vm.emisorNif(data.emisorNif);
-    vm.emisorNombre(data.emisorNombre);
-    vm.emisorCodPostal(data.emisorCodPostal);
-    vm.emisorPoblacion(data.emisorPoblacion);
-    vm.emisorProvincia(data.emisorProvincia);
-    vm.emisorDireccion(data.emisorDireccion);
-    //
     vm.receptorNif(data.receptorNif);
     vm.receptorNombre(data.receptorNombre);
     vm.receptorCodPostal(data.receptorCodPostal);
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
+    //
+    vm.emisorNif(data.emisorNif);
+    vm.emisorNombre(data.emisorNombre);
+    vm.emisorCodPostal(data.emisorCodPostal);
+    vm.emisorPoblacion(data.emisorPoblacion);
+    vm.emisorProvincia(data.emisorProvincia);
+    vm.emisorDireccion(data.emisorDireccion);
 
     //
-    loadProveedores(data.proveedorId);
+    loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
@@ -297,7 +297,7 @@ function loadData(data) {
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
-   
+    vm.mantenedorDesactivado(data.mantenedorDesactivado);
     //
     if (vm.generada()) {
         // ocultarCamposPrefacturasGeneradas();
@@ -313,9 +313,9 @@ function loadData(data) {
 
 
 function datosOK() {
-    $('#frmPrefactura').validate({
+    $('#frmFactura').validate({
         rules: {
-            cmbProveedores: {
+            cmbEmpresas: {
                 required: true
             },
             cmbClientes: {
@@ -333,11 +333,11 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
-            cmbProveedores: {
-                required: "Debe elegir un emisor"
+            cmbEmpresas: {
+                required: "Debe elegir un receptor"
             },
             cmbClientes: {
-                required: 'Debe elegir un receptor'
+                required: 'Debe elegir un emisor'
             },
             txtFecha: {
                 required: 'Debe elegir una fecha'
@@ -354,8 +354,8 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmPrefactura").validate().settings;
-    return $('#frmPrefactura').valid();
+    var opciones = $("#frmFactura").validate().settings;
+    return $('#frmFactura').valid();
 }
 
 var aceptarPrefactura = function () {
@@ -385,7 +385,7 @@ var aceptarPrefactura = function () {
     });
 }
 
-var generarFacturaDb = function () {
+var generarPrefacturaDb = function () {
     var data = {
         prefactura: {
             "prefacturaId": vm.prefacturaId(),
@@ -393,7 +393,7 @@ var generarFacturaDb = function () {
             "numero": vm.numero(),
             "serie": vm.serie(),
             "fecha": spanishDbDate(vm.fecha()),
-            "proveedorId": vm.sproveedorId(),
+            "empresaId": vm.sempresaId(),
             "clienteId": vm.sclienteId(),
             "contratoId": vm.scontratoId(),
             "emisorNif": vm.emisorNif(),
@@ -420,7 +420,7 @@ var generarFacturaDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            
+            "mantenedorDesactivado": vm.mantenedorDesactivado()
         }
     };
     return data;
@@ -428,19 +428,19 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaProveedoresGeneral.html";
+        var url = "PrefacturaGeneral.html";
         window.open(url, '_self');
     }
     return mf;
 }
 
 
-function loadProveedores(proveedorId) {
-    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ proveedorId: 0, nombre: "" }].concat(data);
-        vm.posiblesProveedores(empresas);
-        $("#cmbProveedores").val([proveedorId]).trigger('change');
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }
 
@@ -454,7 +454,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sproveedorId() + "/" + vm.sclienteId();
+    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
     if (contratoId) url = "/api/contratos/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -473,27 +473,27 @@ function cambioCliente(clienteId) {
     if (!clienteId) return;
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
-        vm.receptorNif(data.nif);
-        vm.receptorNombre(data.nombreComercial);
-        vm.receptorDireccion(data.direccion);
-        vm.receptorCodPostal(data.codPostal);
-        vm.receptorPoblacion(data.poblacion);
-        vm.receptorProvincia(data.provincia);
+        vm.emisorNif(data.nif);
+        vm.emisorNombre(data.nombreComercial);
+        vm.emisorDireccion(data.direccion);
+        vm.emisorCodPostal(data.codPostal);
+        vm.emisorPoblacion(data.poblacion);
+        vm.emisorProvincia(data.provincia);
         vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         loadContratos();
     });
 }
 
-function cambioProveedor(proveedorId) {
-    if (!proveedorId) return;
+function cambioEmpresa(empresaId) {
+    if (!empresaId) return;
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
-        vm.emisorNif(data.nif);
-        vm.emisorNombre(data.nombre);
-        vm.emisorDireccion(data.direccion);
-        vm.emisorCodPostal(data.codPostal);
-        vm.emisorPoblacion(data.poblacion);
-        vm.emisorProvincia(data.provincia);
+        vm.receptorNif(data.nif);
+        vm.receptorNombre(data.nombre);
+        vm.receptorDireccion(data.direccion);
+        vm.receptorCodPostal(data.codPostal);
+        vm.receptorPoblacion(data.poblacion);
+        vm.receptorProvincia(data.provincia);
         loadContratos();
     });
 }
@@ -1029,11 +1029,11 @@ function loadBasesPrefactura(prefacturaId) {
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 // cargaCliente
-// carga en el campo txtEmpresa el valor seleccionado
+// carga en el campo txtCliente el valor seleccionado
 var cargaCliente = function (id) {
     llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
         if (err) return;
-        $('#txtEmpresa').val(data.nombre);
+        $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.tipoClienteId(data.tipoClienteId);
     });
@@ -1043,7 +1043,7 @@ var cargaCliente = function (id) {
 // inicializa el control del cliente como un autocomplete
 var initAutoCliente = function () {
     // incialización propiamente dicha
-    $("#txtEmpresa").autocomplete({
+    $("#txtCliente").autocomplete({
         source: function (request, response) {
             // call ajax
             llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
@@ -1106,7 +1106,10 @@ var recalcularCostesImportesDesdeCoste = function () {
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     vm.total(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    
+    if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
+        // es un mantenedor
+        vm.total(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1120,7 +1123,9 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 
 var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
     var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
-    
+    if (vm.mantenedorDesactivado()) {
+        url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
+    }
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
@@ -1166,7 +1171,10 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         importeAgente = roundToTwo(importeAlCliente - ventaNeta);
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
-    
+    if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
+        // es un mantenedor
+        importeAlCliente = roundToTwo(importeAlCliente - ventaNeta + importeBeneficio);
+    }
     return importeAlCliente;
 }
 
@@ -1217,3 +1225,4 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
