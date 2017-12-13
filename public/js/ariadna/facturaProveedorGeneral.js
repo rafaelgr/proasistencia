@@ -165,8 +165,8 @@ function initTablaFacturas() {
         }, {
             data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
@@ -231,7 +231,7 @@ function crearFactura() {
     return mf;
 }
 
-function deletePrefactura(id) {
+function deleteFactura(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -265,10 +265,10 @@ function deletePrefactura(id) {
     });
 }
 
-function editPrefactura(id) {
+function editFactura(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
-    var url = "PrefacturaDetalle.html?facproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
     window.open(url, '_new');
 }
 

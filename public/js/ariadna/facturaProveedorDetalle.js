@@ -7,10 +7,10 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var prefacturaId = 0;
+var facproveId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
-var ClienteId = 0;
+var ProveedorId = 0;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -66,8 +66,8 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
-    // Ahora cliente en autocomplete
-    initAutoCliente();
+    // Ahora Proveedor en autocomplete
+    initAutoProveedor();
 
     // select2 things
     $("#cmbFormasPago").select2(select2Spanish());
@@ -112,22 +112,22 @@ function initForm() {
     initTablaPrefacturasLineas();
     initTablaBases();
 
-    prefacturaId = gup('PrefacturaId');
+    facproveId = gup('facproveId');
     cmd = gup("cmd");
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
-    ClienteId = gup("ClienteId");
-    if (prefacturaId != 0) {
+    ProveedorId = gup("ProveedorId");
+    if (facproveId != 0) {
         // caso edicion
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+            loadLineasPrefactura(data.facproveId);
+            loadBasesPrefactura(data.facproveId);
         })
     } else {
         // caso alta
-        vm.prefacturaId(0);
+        vm.facproveId(0);
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -139,9 +139,9 @@ function initForm() {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
         }
-        if (ClienteId != 0) {
-            cargaCliente(ClienteId);
-            cambioCliente(ClienteId);
+        if (ProveedorId != 0) {
+            cargaProveedor(ProveedorId);
+            cambioProveedor(ProveedorId);
         }
         if (ContratoId != 0) {
             loadContratos(ContratoId);
@@ -152,13 +152,13 @@ function initForm() {
 
 function admData() {
     var self = this;
-    self.prefacturaId = ko.observable();
+    self.facproveId = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.serie = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
-    self.clienteId = ko.observable();
+    self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
     //
     self.emisorNif = ko.observable();
@@ -185,11 +185,11 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
-    self.clienteId = ko.observable();
-    self.sclienteId = ko.observable();
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
     //
-    self.posiblesClientes = ko.observableArray([]);
-    self.elegidosClientes = ko.observableArray([]);
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -259,13 +259,13 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.prefacturaId(data.prefacturaId);
+    vm.facproveId(data.facproveId);
     vm.ano(data.ano);
     vm.numero(data.numero);
     vm.serie(data.serie);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
-    vm.clienteId(data.clienteId);
+    vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
     vm.generada(data.generada);
     vm.coste(data.coste);
@@ -290,7 +290,7 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
-    cargaCliente(data.clienteId);
+    cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
     vm.observaciones(data.observaciones);
@@ -318,7 +318,7 @@ function datosOK() {
             cmbEmpresas: {
                 required: true
             },
-            cmbClientes: {
+            cmbProveedores: {
                 required: true
             },
             txtFecha: {
@@ -336,7 +336,7 @@ function datosOK() {
             cmbEmpresas: {
                 required: "Debe elegir un receptor"
             },
-            cmbClientes: {
+            cmbProveedores: {
                 required: 'Debe elegir un emisor'
             },
             txtFecha: {
@@ -370,17 +370,17 @@ var aceptarPrefactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&PrefacturaId=";
+    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&facproveId=";
     // caso modificación
-    if (prefacturaId != 0) {
+    if (facproveId != 0) {
         verb = "PUT";
-        url = myconfig.apiUrl + "/api/prefacturas/" + prefacturaId;
-        returnUrl = "PrefacturaGeneral.html?PrefacturaId=";
+        url = myconfig.apiUrl + "/api/prefacturas/" + facproveId;
+        returnUrl = "PrefacturaGeneral.html?facproveId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
-        returnUrl = returnUrl + vm.prefacturaId();
+        returnUrl = returnUrl + vm.facproveId();
         window.open(returnUrl, '_self');
     });
 }
@@ -388,13 +388,13 @@ var aceptarPrefactura = function () {
 var generarPrefacturaDb = function () {
     var data = {
         prefactura: {
-            "prefacturaId": vm.prefacturaId(),
+            "facproveId": vm.facproveId(),
             "ano": vm.ano(),
             "numero": vm.numero(),
             "serie": vm.serie(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
-            "clienteId": vm.sclienteId(),
+            "proveedorId": vm.sproveedorId(),
             "contratoId": vm.scontratoId(),
             "emisorNif": vm.emisorNif(),
             "emisorNombre": vm.emisorNombre(),
@@ -454,7 +454,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
+    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sproveedorId();
     if (contratoId) url = "/api/contratos/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -469,9 +469,9 @@ var cargarContratos = function (data) {
 }
 
 
-function cambioCliente(clienteId) {
-    if (!clienteId) return;
-    llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
+function cambioProveedor(proveedorId) {
+    if (!proveedorId) return;
+    llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
         if (err) return;
         vm.emisorNif(data.nif);
         vm.emisorNombre(data.nombreComercial);
@@ -479,7 +479,6 @@ function cambioCliente(clienteId) {
         vm.emisorCodPostal(data.codPostal);
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
-        vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         loadContratos();
     });
@@ -512,7 +511,7 @@ function cambioContrato(contratoId) {
 function nuevaLinea() {
     limpiaDataLinea();
     lineaEnEdicion = false;
-    llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.prefacturaId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.facproveId(), null, function (err, data) {
         vm.linea(data);
         vm.total(0);
         vm.totalCuota(0);
@@ -558,7 +557,7 @@ function aceptarLinea() {
         prefacturaLinea: {
             prefacturaLineaId: vm.prefacturaLineaId(),
             linea: vm.linea(),
-            prefacturaId: vm.prefacturaId(),
+            facproveId: vm.facproveId(),
             unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
             tipoIvaId: vm.tipoIvaId(),
@@ -582,11 +581,11 @@ function aceptarLinea() {
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + data.prefacturaId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + data.facproveId, null, function (err, data) {
             cmd = "";
             loadData(data);
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+            loadLineasPrefactura(data.facproveId);
+            loadBasesPrefactura(data.facproveId);
         });
     });
 }
@@ -906,22 +905,22 @@ function editPrefacturaLinea(id) {
     });
 }
 
-function deletePrefacturaLinea(prefacturaId) {
+function deletePrefacturaLinea(facproveId) {
     // mensaje de confirmación
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
             prefacturaLinea: {
-                prefacturaId: vm.prefacturaId()
+                facproveId: vm.facproveId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/prefacturas/lineas/" + prefacturaId, data, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/prefacturas/lineas/" + facproveId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
+            llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.facproveId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
-                loadLineasPrefactura(data.prefacturaId);
-                loadBasesPrefactura(data.prefacturaId);
+                loadLineasPrefactura(data.facproveId);
+                loadBasesPrefactura(data.facproveId);
             });
         });
     }, function () {
@@ -1006,8 +1005,8 @@ function loadTablaBases(data) {
 }
 
 
-function loadBasesPrefactura(prefacturaId) {
-    llamadaAjax("GET", "/api/prefacturas/bases/" + prefacturaId, null, function (err, data) {
+function loadBasesPrefactura(facproveId) {
+    llamadaAjax("GET", "/api/prefacturas/bases/" + facproveId, null, function (err, data) {
         if (err) return;
         // actualizamos los totales
         var t1 = 0; // total sin iva
@@ -1028,31 +1027,30 @@ function loadBasesPrefactura(prefacturaId) {
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
-// cargaCliente
-// carga en el campo txtCliente el valor seleccionado
-var cargaCliente = function (id) {
-    llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+// cargaProveedor
+// carga en el campo txtProveedor el valor seleccionado
+var cargaProveedor = function (id) {
+    llamadaAjax("GET", "/api/proveedores/" + id, null, function (err, data) {
         if (err) return;
-        $('#txtCliente').val(data.nombre);
-        vm.sclienteId(data.clienteId);
-        vm.tipoClienteId(data.tipoClienteId);
+        $('#txtProveedor').val(data.nombre);
+        vm.sproveedorId(data.proveedorId);
     });
 };
 
-// initAutoCliente
-// inicializa el control del cliente como un autocomplete
-var initAutoCliente = function () {
+// initAutoProveedor
+// inicializa el control del Proveedor como un autocomplete
+var initAutoProveedor = function () {
     // incialización propiamente dicha
-    $("#txtCliente").autocomplete({
+    $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("GET", "/api/proveedores/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
                         value: d.nombre,
-                        id: d.clienteId
+                        id: d.proveedorId
                     };
                     r.push(v);
                 });
@@ -1061,16 +1059,16 @@ var initAutoCliente = function () {
         },
         minLength: 2,
         select: function (event, ui) {
-            vm.sclienteId(ui.item.id);
-            cambioCliente(ui.item.id);
+            vm.sproveedorId(ui.item.id);
+            cambioProveedor(ui.item.id);
         }
     });
     // regla de validación para el control inicializado
-    jQuery.validator.addMethod("clienteNecesario", function (value, element) {
+    jQuery.validator.addMethod("proveedorNecesario", function (value, element) {
         var r = false;
-        if (vm.sclienteId()) r = true;
+        if (vm.sproveedorId()) r = true;
         return r;
-    }, "Debe seleccionar un cliente válido");
+    }, "Debe seleccionar un Proveedor válido");
 };
 
 var cambioPorcentajeRetencion = function () {
@@ -1122,15 +1120,15 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
-    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     if (vm.mantenedorDesactivado()) {
-        url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
+        url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
     }
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.facproveId(), null, function (err, data) {
+            loadLineasPrefactura(data.facproveId);
+            loadBasesPrefactura(data.facproveId);
         });
     });
 };
@@ -1179,7 +1177,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printPrefactura2(vm.prefacturaId());
+    printPrefactura2(vm.facproveId());
 }
 
 function printPrefactura(id) {
@@ -1190,7 +1188,7 @@ function printPrefactura(id) {
 }
 
 function printPrefactura2(id) {
-    var url = "InfPrefacturas.html?prefacturaId=" + id;
+    var url = "InfPrefacturas.html?facproveId=" + id;
     window.open(url, "_new");
 }
 
