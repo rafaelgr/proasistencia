@@ -204,7 +204,7 @@ function admData() {
     self.observaciones = ko.observable();
 
     // -- Valores para las líneas
-    self.prefacturaLineaId = ko.observable();
+    self.facproveLineaId = ko.observable();
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
@@ -517,7 +517,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.prefacturaLineaId(0);
+    vm.facproveLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
     vm.tipoIvaId(null);
@@ -551,8 +551,8 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        prefacturaLinea: {
-            prefacturaLineaId: vm.prefacturaLineaId(),
+        facproveLinea: {
+            facproveLineaId: vm.facproveLineaId(),
             linea: vm.linea(),
             facproveId: vm.facproveId(),
             unidadId: vm.sunidadId(),
@@ -570,10 +570,10 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url = myconfig.apiUrl + "/api/prefacturas/lineas";
+    var url = myconfig.apiUrl + "/api/facturasProveedores/lineas";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url = myconfig.apiUrl + "/api/prefacturas/lineas/" + vm.prefacturaLineaId();
+        url = myconfig.apiUrl + "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -733,7 +733,7 @@ function initTablaFacturasLineas() {
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editPrefacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -744,7 +744,7 @@ function initTablaFacturasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.prefacturaLineaId(data.prefacturaLineaId);
+    vm.facproveLineaId(data.facproveLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
     vm.tipoIvaId(data.tipoIvaId);
@@ -894,9 +894,9 @@ var cambioPrecioCantidad = function () {
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
-function editPrefacturaLinea(id) {
+function editFacturaLinea(id) {
     lineaEnEdicion = true;
-    llamadaAjax("GET", "/api/prefacturas/linea/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) loadDataLinea(data[0]);
     });
@@ -907,7 +907,7 @@ function deletePrefacturaLinea(facproveId) {
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
-            prefacturaLinea: {
+            facproveLinea: {
                 facproveId: vm.facproveId()
             }
         };
