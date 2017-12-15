@@ -732,7 +732,7 @@ function initTablaFacturasLineas() {
             data: "facproveLineaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletePrefacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -902,7 +902,7 @@ function editFacturaLinea(id) {
     });
 }
 
-function deletePrefacturaLinea(facproveId) {
+function deleteFacturaLinea(facproveLineaId) {
     // mensaje de confirmación
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
@@ -911,9 +911,9 @@ function deletePrefacturaLinea(facproveId) {
                 facproveId: vm.facproveId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/prefacturas/lineas/" + facproveId, data, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturasProveedores/lineas/" + facproveLineaId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.facproveId(), null, function (err, data) {
+            llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasFactura(data.facproveId);
