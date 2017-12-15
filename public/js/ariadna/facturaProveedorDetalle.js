@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
 prefacturaDetalle.js
-Funciones js par la página PrefacturaDetalle.html
+Funciones js par la página facturaProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -244,7 +244,7 @@ function admData() {
     self.porcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeAlCliente = ko.observable();
-    // Nuevo Total de coste para la prefactura
+    // Nuevo Total de coste para la factura
     self.totalCoste = ko.observable();
     //
     self.generada = ko.observable();
@@ -298,12 +298,12 @@ function loadData(data) {
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
     if (vm.generada()) {
-        // ocultarCamposPrefacturasGeneradas();
+        // ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
-        mostrarMensajePrefacturaNueva();
+        mostrarMensajeFacturaNueva();
     }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
@@ -508,7 +508,7 @@ function cambioContrato(contratoId) {
 function nuevaLinea() {
     limpiaDataLinea();
     lineaEnEdicion = false;
-    llamadaAjax("GET", "/api/prefacturas/nextlinea/" + vm.facproveId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/nextlinea/" + vm.facproveId(), null, function (err, data) {
         vm.linea(data);
         vm.total(0);
         vm.totalCuota(0);
@@ -1114,11 +1114,11 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
-    var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+    var url = myconfig.apiUrl + "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
    
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.facproveId(), null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
         });
@@ -1140,8 +1140,8 @@ var mostrarMensajeFacturaGenerada = function () {
     mensNormal(mens);
 }
 
-var mostrarMensajePrefacturaNueva = function () {
-    var mens = "Introduzca las líneas de la nueva prefactura en el apartado correspondiente";
+var mostrarMensajeFacturaNueva = function () {
+    var mens = "Introduzca las líneas de la nueva factura en el apartado correspondiente";
     mensNormal(mens);
 }
 
