@@ -25,7 +25,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
-    $('#btnPrint').click(imprimirPrefactura);
+    $('#btnPrint').click(imprimirFactura);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -167,7 +167,7 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
             }
@@ -329,8 +329,8 @@ function printPrefactura(id) {
     });
 }
 
-function printPrefactura2(id) {
-    var url = "InfPrefacturas.html?facproveId=" + id;
+function printFactura2(id) {
+    var url = "InfFacturasProveedores.html?facproveId=" + id;
     window.open(url, "_new");
 }
 
@@ -400,7 +400,7 @@ function cargarPrefacturas2All() {
 }
 
 
-imprimirPrefactura = function () {
-    var url = "InfPrefacturas.html";
+imprimirFactura = function () {
+    var url = "InfFacturasProveedores.html";
     window.open(url, '_blank');
 }
