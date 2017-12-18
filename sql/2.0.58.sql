@@ -113,3 +113,7 @@ ALTER TABLE `proasistencia`.`facprove`
   ALTER TABLE `proasistencia`.`facprove`   
   DROP COLUMN `generada`;
 
+
+ALTER TABLE `proasistencia`.`facprove`   
+  ADD COLUMN `numeroFacturaProveedor` VARCHAR(255) NULL AFTER `importeRetencion`;
+
