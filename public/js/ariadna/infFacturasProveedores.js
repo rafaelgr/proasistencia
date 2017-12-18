@@ -113,10 +113,10 @@ function initForm() {
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
-    if (gup('facturaId') != "") {
-        vm.facturaId(gup('facturaId'));
+    if (gup('facproveId') != "") {
+        vm.facproveId(gup('facproveId'));
         verb = "GET";
-        var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
+        var url = myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
             obtainReport();
@@ -127,7 +127,7 @@ function initForm() {
 
 function admData() {
     var self = this;
-    self.facturaId = ko.observable();
+    self.facproveId = ko.observable();
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     //
@@ -146,14 +146,13 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/factura_general.mrt";
+    var file = "../reports/facturaProveedor_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     verb = "GET";
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     llamadaAjax(verb, url, null, function (err, data) {
-        var infFacturas = data.infFacturas;
-        file = "../reports/" + infFacturas + ".mrt";
+        
         var rpt = gup("report");
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
@@ -163,11 +162,11 @@ var obtainReport = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         // obtener el indice de los sql que contiene el informe que trata 
-        // la cabecera ('pf.facturaId')
+        // la cabecera ('pf.facproveId')
         var pos = 0;
         for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
-            if (str.indexOf("pf.facturaId") > -1) pos = i;
+            if (str.indexOf("pf.facproveId") > -1) pos = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
         var sql2 = rptFacturaParametros(sql);
@@ -204,11 +203,11 @@ var obtainReportPdf = function () {
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
         // obtener el indice de los sql que contiene el informe que trata 
-        // la cabecera ('pf.facturaId')
+        // la cabecera ('pf.facproveId')
         var pos = 0;
         for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
-            if (str.indexOf("pf.facturaId") > -1) pos = i;
+            if (str.indexOf("pf.facproveId") > -1) pos = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
         report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
@@ -297,14 +296,14 @@ var initAutoCliente = function () {
 };
 
 var rptFacturaParametros = function (sql) {
-    var facturaId = vm.facturaId();
+    var facproveId = vm.facproveId();
     var clienteId = vm.sclienteId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     sql += " WHERE TRUE"
-    if (facturaId) {
-        sql += " AND pf.facturaId IN (" + facturaId + ")";
+    if (facproveId) {
+        sql += " AND pf.facproveId IN (" + facproveId + ")";
     } else {
         if (clienteId) {
             sql += " AND pf.clienteId IN (" + clienteId + ")";

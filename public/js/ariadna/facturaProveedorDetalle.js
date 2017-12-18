@@ -384,6 +384,8 @@ var aceptarFactura = function () {
 }
 
 var generarFacturaDb = function () {
+    
+    
     var data = {
         facprove: {
             "facproveId": vm.facproveId(),
@@ -451,7 +453,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sproveedorId();
+    var url = "/api/contratos/buscar/contrato/empresa/"+ vm.sempresaId();
     if (contratoId) url = "/api/contratos/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
