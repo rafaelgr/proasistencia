@@ -1101,6 +1101,7 @@ var guardarPorcentajes = function(){
             porcentajeAgente: vm.porcentajeAgente()
         }
     }
+    if(vm.facproveId() === 0) return;
 
     llamadaAjax("PUT", "/api/facturasProveedores/"+vm.facproveId(), data, function (err, data) {
         if (err) return;
@@ -1143,16 +1144,20 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
-    if (vm.totalLinea() === undefined) return;
-    var url = myconfig.apiUrl + "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
-   
-    llamadaAjax("PUT", url, null, function (err, data) {
-        if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
-            loadLineasFactura(data.facproveId);
-            loadBasesFacprove(data.facproveId);
-        });
-    });
+    if (vm.totalLinea() === undefined || vm.facproveId() === 0) { 
+        return;
+    }else {
+        var url = myconfig.apiUrl + "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+        
+         llamadaAjax("PUT", url, null, function (err, data) {
+             if (err) return;
+             llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
+                 loadLineasFactura(data.facproveId);
+                 loadBasesFacprove(data.facproveId);
+             });
+         });
+    }
+    
 };
 
 var ocultarCamposPrefacturasGeneradas = function () {
