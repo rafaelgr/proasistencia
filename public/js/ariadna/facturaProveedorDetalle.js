@@ -494,8 +494,8 @@ function cambioEmpresa(empresaId) {
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
     obrenerTipoClienteID(contratoId);
-    if (vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);
-    if(vm.porcentajeAgente(0)) vm.porcentajeBeneficio(0);
+    vm.porcentajeBeneficio(0);
+    vm.porcentajeAgente(0);
     if (!vm.coste()) vm.coste(0);
 }
 
@@ -1143,6 +1143,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
+    if (vm.totalLinea() === undefined) return;
     var url = myconfig.apiUrl + "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
    
     llamadaAjax("PUT", url, null, function (err, data) {

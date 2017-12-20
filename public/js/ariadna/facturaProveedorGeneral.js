@@ -138,13 +138,11 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
-            data: "referencia"
+            data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
-            data: "vNum"
         }, {
             data: "fecha",
             render: function (data, type, row) {
@@ -154,14 +152,8 @@ function initTablaFacturas() {
             data: "total"
         }, {
             data: "totalConIva"
-        }, {
-            data: "vFac"
-        }, {
+        },  {
             data: "vFPago"
-        }, {
-            data: "observaciones"
-        }, {
-            data: "dirTrabajo"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
@@ -182,9 +174,7 @@ function initTablaFacturas() {
             .draw();
     });
 
-    // Hide some columns by default
-    tablaFacturas.columns(8).visible(false);
-    tablaFacturas.columns(10).visible(false);
+    
 }
 
 function datosOK() {
