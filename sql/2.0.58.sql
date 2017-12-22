@@ -1,3 +1,6 @@
+DROP TABLE facprove_bases;
+DROP TABLE facprove_lineas;
+DROP TABLE facprove;
 
 CREATE TABLE `facprove` (
   `facproveId` INT(11) NOT NULL AUTO_INCREMENT,
