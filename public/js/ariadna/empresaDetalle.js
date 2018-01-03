@@ -75,6 +75,11 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.observaciones = ko.observable();
+    self.hostCorreo = ko.observable();
+    self.portCorreo = ko.observable();
+    self.secureCorreo = ko.observable();
+    self.usuCorreo = ko.observable();
+    self.passCorreo = ko.observable();
     self.asunto = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
@@ -114,6 +119,11 @@ function loadData(data) {
     vm.fax(data.fax);
     vm.email(data.email);
     vm.observaciones(data.observaciones);
+    vm.hostCorreo(data.hostCorreo);
+    vm.portCorreo(data.portCorreo);
+    vm.secureCorreo(data.secureCorreo);
+    vm.usuCorreo(data.usuCorreo);
+    vm.passCorreo(data.passCorreo);
     vm.asunto(data.asuntoCorreo);
     vm.poblacion(data.poblacion);
     vm.dniFirmante(data.dniFirmante);
@@ -240,7 +250,12 @@ function aceptar() {
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
                 "plantillaCorreoFacturas": vm.plantillaCorreoFacturas(),
-                "asuntoCorreo": vm.asunto()
+                "asuntoCorreo": vm.asunto(),
+                "hostCorreo": vm.hostCorreo(),
+                "portCorreo": vm.portCorreo(),
+                "secureCorreo": vm.secureCorreo(),
+                "usuCorreo": vm.usuCorreo(),
+                "passCorreo": vm.passCorreo()
             }
         };
         if (empId == 0) {

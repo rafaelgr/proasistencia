@@ -27899,3 +27899,125 @@ Error: Connection lost: The server closed the connection.
  VERSION: 2.0.57
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/12/02017 09:41:58
+-------------------------------------------
+ VERSION: 2.0.58
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/12/02017 17:42:41
+-------------------------------------------
+ VERSION: 2.0.58
+ PORT: 8080
+-------------------------------------------
+Deprecation warning: moment construction falls back to js Date. This is discouraged and will be removed in upcoming major release. Please refer to https://github.com/moment/moment/issues/1407 for more info.
+Arguments: [object Object]
+Error
+    at Function.createFromInputFallback (C:\Ariadna\proasistencia\node_modules\moment\moment.js:271:105)
+    at configFromString (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1169:32)
+    at configFromInput (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1675:13)
+    at prepareConfig (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1658:13)
+    at createFromConfig (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1625:44)
+    at createLocalOrUTC (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1707:16)
+    at local__createLocal (C:\Ariadna\proasistencia\node_modules\moment\moment.js:1711:16)
+    at utils_hooks__hooks (C:\Ariadna\proasistencia\node_modules\moment\moment.js:16:29)
+    at Query._callback (C:\Ariadna\proasistencia\lib\facturas_proveedores\facturasProveedores_db_mysql.js:673:19)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/12/02017 16:52:09
+-------------------------------------------
+ VERSION: 2.0.58
+ PORT: 8080
+-------------------------------------------
+Error: request entity too large
+    at readStream (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:196:17)
+    at getRawBody (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:106:12)
+    at read (C:\Ariadna\proasistencia\node_modules\body-parser\lib\read.js:76:3)
+    at jsonParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\json.js:121:5)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:312:13)
+    at C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:280:7
+    at Function.process_params (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:330:12)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:271:10)
+    at urlencodedParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\urlencoded.js:95:37)
+Error: request entity too large
+    at readStream (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:196:17)
+    at getRawBody (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:106:12)
+    at read (C:\Ariadna\proasistencia\node_modules\body-parser\lib\read.js:76:3)
+    at jsonParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\json.js:121:5)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:312:13)
+    at C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:280:7
+    at Function.process_params (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:330:12)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:271:10)
+    at urlencodedParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\urlencoded.js:95:37)
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/12/02017 17:36:56
+-------------------------------------------
+ VERSION: 2.0.58
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/01/02018 00:30:56
+-------------------------------------------
+ VERSION: 2.0.58
+ PORT: 8080
+-------------------------------------------

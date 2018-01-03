@@ -619,7 +619,49 @@
                                                                                     <label class="label">Observaciones</label>
                                                                                     <label class="textarea textarea-resizable">
                                                                                         <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                                                    </label>                                                                                </section>
+                                                                            </div>
+                                                                        </fieldset>
+
+                                                                        <fieldset>
+                                                                            <header>
+                                                                                Datos correo
+                                                                            </header>
+                                                                            <div class="row" style="padding-top:10px;">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Host</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtHost" name="txtHost" data-bind="value: hostCorreo" />
                                                                                     </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Usuario</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtUsu" name="txtUsu" data-bind="value: usuCorreo" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Password</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtPass" name="txtPass" data-bind="value: passCorreo" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-1">
+                                                                                    <label class="label">Puerto</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtPort" name="txtport" data-bind="value: portCorreo" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2" style="padding-top:25px;">
+                                                                                    <label class="checkbox">
+                                                                                        <input id="chkSecure" type="checkbox" name="chkSecure" data-bind="checked: secureCorreo">
+                                                                                        <i></i>Correo seguro
+                                                                                    </label>
+                                                                                </section>
+                                                                                
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
                                                                                     <label class="label">Asunto Correo</label>
                                                                                     <label class="textarea textarea-resizable">
                                                                                         <textarea id="txtAsunto" rows="3" class="custom-scroll" data-bind="value:asunto"></textarea>
