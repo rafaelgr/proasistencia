@@ -24,6 +24,8 @@ function initForm() {
 
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
 
     proId = gup('ProveedorId');
     if (proId != 0) {
@@ -64,6 +66,15 @@ function admData() {
     self.provincia = ko.observable();
     self.telefono = ko.observable();
     self.correo = ko.observable();
+    self.telefono2 = ko.observable();
+    self.movil = ko.observable();
+    self.movil2 = ko.observable();
+    self.correo2 = ko.observable();
+    self.contacto = ko.observable();
+    self.fechaAlta = ko.observable();
+    self.fechaBaja = ko.observable();
+    self.motivoBaja = ko.observable();
+    self.cuentaContable = ko.observable();
 
     //
     self.tipoViaId = ko.observable();
@@ -71,6 +82,12 @@ function admData() {
     //
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -84,8 +101,18 @@ function loadData(data) {
     vm.telefono(data.telefono);
     vm.correo(data.correo);
     vm.poblacion(data.poblacion);
+    vm.telefono2(data.telefono2);
+    vm.movil(data.movil);
+    vm.movil2(data.movil2);
+    vm.correo2(data.correo2);
+    vm.contacto(data.persona_contacto);
+    vm.fechaAlta(data.fechaAlta);
+    vm.fechaBaja(data.fechaBaja);
+    vm.motivoBaja(data.motivo_Baja);
+    vm.cuentaContable(data.cuentaContable);
 
     loadTiposVia(data.tipoViaId);
+    loadFormasPasgo(data.formaPagoId)
 }
 
 function datosOK() {
@@ -137,7 +164,18 @@ function aceptar() {
                 "codPostal": vm.codPostal(),
                 "telefono": vm.telefono(),
                 "correo": vm.correo(),
-                "tipoViaId": vm.stipoViaId()
+                "tipoViaId": vm.stipoViaId(),
+                "telefono2": vm.telefeno2(),
+                "movil": vm.movil(),
+                "movil2": vm.movil2(),
+                "correo2": vm.correo2(),
+                "persona_contacto": vm.contacto(),
+                "fechaAlta": vm.fechaAlta(),
+                "fechaBaja": vm.fechaBaja(),
+                "motivo_Baja": motivoBaja(),
+                "cuentaContable": cuentaContable(),
+                "formaPagoId": formaPagoId()
+
             }
         };
         if (proId == 0) {
@@ -206,6 +244,15 @@ function loadTiposVia(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+function loadFormasPago(formaPagoId) {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
 }
 

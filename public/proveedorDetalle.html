@@ -504,14 +504,80 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Teléfono 2</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Móvil</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtMovil" name="txtMovil" data-bind="value: movil" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Móvil 2</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtMovil2" name="txtMovil2" data-bind="value: movil2" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
                                                                                 <section class="col col-md-3">
                                                                                     <label class="label">Correo electrónico</label>
                                                                                     <label class="input">
                                                                                         <input id="txtCorreo" name="txtCorreo" data-bind="value: correo" />
                                                                                     </label>
                                                                                 </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Correo electrónico 2</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCorreo2" name="txtCorreo2" data-bind="value: correo2" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
+                                                                                    <label class="label">Persona de contacto</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtContacto" name="txtContacto" data-bind="value: contacto" />
+                                                                                    </label>
+                                                                                </section>
                                                                             </div>
-                                                                            
+                                                                            <div class="row">
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Fecha alta</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Fecha baja</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaAlta" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-8">
+                                                                                    <label class="label">Motivo baja</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtMotivoBaja" name="txtMotivoBaja" data-bind="value: motivoBaja" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Cuenta contable</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Forma de pago</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select>
+                                                                                        <i></i>
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
