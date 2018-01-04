@@ -122,13 +122,21 @@ function loadData(data) {
     vm.movil2(data.movil2);
     vm.correo2(data.correo2);
     vm.contacto(data.persona_contacto);
-    vm.fechaAlta(moment(data.fechaAlta).format('DD-MM-YYYY'));
-    
-    //si la fecha de baja no está establecida ponemos el campo vacio
-    if (data.fechaBaja == '0000-00-00'){
-        vm.fechaBaja('');
+
+    //si la fecha de alta no es valida ponemos el campo vacio
+    if(moment(data.fechaAlta).isValid()){
+        vm.fechaAlta(moment(data.fechaAlta).format('DD-MM-YYYY'));
     }else{
+        vm.fechaAlta('');
+    }
+    
+    
+    //si la fecha de baja no es valida ponemos el campo vacio
+    if(moment(data.fechaBaja).isValid()){
         vm.fechaBaja(moment(data.fechaBaja).format('DD-MM-YYYY'));
+       
+    }else{
+        vm.fechaBaja('');
     }
    
     vm.motivoBaja(data.motivo_baja);
@@ -155,10 +163,10 @@ function datosOK() {
                 email: true
             },
             txtFechaAlta: {
-                required: true
+                required: true,
             },
             txtFechaBaja: {
-                greaterThan: "#txtFechaAlta"
+                greaterThan: "#txtFechaAlta",
             },
         },
         // Messages for form validation
@@ -173,10 +181,10 @@ function datosOK() {
                 email: 'Debe usar un correo válido'
             },
             txtFechaAlta: {
-                required: "Debe seleccionar una fecha"
+                required: "Debe seleccionar una fecha",
             },
             txtFechaBaja: {
-                required: "Debe seleccionar una fecha"
+                required: "Debe seleccionar una fecha",
             }
         },
         // Do not change code below
