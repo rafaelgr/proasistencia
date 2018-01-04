@@ -4,6 +4,7 @@ Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
 
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -26,6 +27,20 @@ function initForm() {
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
+
+    //
+    $.validator.addMethod("greaterThan",
+    function (value, element, params) {
+        var fv = moment(value, "DD-MM-YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD-MM-YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha de alta debe ser menor que la fecha de baja.');
+//
 
     proId = gup('ProveedorId');
     if (proId != 0) {
@@ -75,6 +90,7 @@ function admData() {
     self.fechaBaja = ko.observable();
     self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
+    self.iban = ko.observable();
 
     //
     self.tipoViaId = ko.observable();
@@ -106,13 +122,21 @@ function loadData(data) {
     vm.movil2(data.movil2);
     vm.correo2(data.correo2);
     vm.contacto(data.persona_contacto);
-    vm.fechaAlta(data.fechaAlta);
-    vm.fechaBaja(data.fechaBaja);
-    vm.motivoBaja(data.motivo_Baja);
+    vm.fechaAlta(moment(data.fechaAlta).format('DD-MM-YYYY'));
+    
+    //si la fecha de baja no está establecida ponemos el campo vacio
+    if (data.fechaBaja == '0000-00-00'){
+        vm.fechaBaja('');
+    }else{
+        vm.fechaBaja(moment(data.fechaBaja).format('DD-MM-YYYY'));
+    }
+   
+    vm.motivoBaja(data.motivo_baja);
     vm.cuentaContable(data.cuentaContable);
+    vm.iban(data.IBAN);
 
     loadTiposVia(data.tipoViaId);
-    loadFormasPasgo(data.formaPagoId)
+    loadFormasPago(data.formaPagoId)
 }
 
 function datosOK() {
@@ -126,7 +150,16 @@ function datosOK() {
             },
             txtCorreo: {
                 email: true
-            }
+            },
+            txtCorreo2: {
+                email: true
+            },
+            txtFechaAlta: {
+                required: true
+            },
+            txtFechaBaja: {
+                greaterThan: "#txtFechaAlta"
+            },
         },
         // Messages for form validation
         messages: {
@@ -138,6 +171,12 @@ function datosOK() {
             },
             txtCorreo: {
                 email: 'Debe usar un correo válido'
+            },
+            txtFechaAlta: {
+                required: "Debe seleccionar una fecha"
+            },
+            txtFechaBaja: {
+                required: "Debe seleccionar una fecha"
             }
         },
         // Do not change code below
@@ -165,16 +204,17 @@ function aceptar() {
                 "telefono": vm.telefono(),
                 "correo": vm.correo(),
                 "tipoViaId": vm.stipoViaId(),
-                "telefono2": vm.telefeno2(),
+                "telefono2": vm.telefono2(),
                 "movil": vm.movil(),
                 "movil2": vm.movil2(),
                 "correo2": vm.correo2(),
                 "persona_contacto": vm.contacto(),
-                "fechaAlta": vm.fechaAlta(),
-                "fechaBaja": vm.fechaBaja(),
-                "motivo_Baja": motivoBaja(),
-                "cuentaContable": cuentaContable(),
-                "formaPagoId": formaPagoId()
+                "fechaAlta": moment(vm.fechaAlta(), "DD-MM-YYYY").format('YYYY-MM-DD'),
+                "fechaBaja": moment(vm.fechaBaja(), "DD-MM-YYYY").format('YYYY-MM-DD'),
+                "motivo_Baja": vm.motivoBaja(),
+                "cuentaContable": vm.cuentaContable(),
+                "formaPagoId": vm.sformaPagoId(),
+                "IBAN": vm.iban()
 
             }
         };
