@@ -564,19 +564,54 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <section class="col col-md-4">
+                                                                                <section class="col col-md-6">
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">IBAN:</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban1" name="txtIban1" type="text" data-bind="value: iban1" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">-</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban2" name="txtIban2" type="text" data-bind="value: iban2" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">-</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban3" name="txtIban3" type="text" data-bind="value: iban3" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">-</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban4" name="txtIban4" type="text" data-bind="value: iban4" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">-</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban5" name="txtIban5" type="text" data-bind="value: iban5" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">-</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtIban6" name="txtIban6" type="text" data-bind="value: iban6" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
                                                                                     <label class="label">Cuenta contable</label>
                                                                                     <label class="input">
                                                                                         <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" />
                                                                                     </label>
                                                                                 </section>
+                                                                                
                                                                                 <section class="col col-md-3">
-                                                                                    <label class="label">IBAN</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtIban" name="txtIban" data-bind="value: iban" />
-                                                                                    </label>
-                                                                                </section>
-                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%;">
                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select>
@@ -657,6 +692,7 @@
     </script>
     <!-- IMPORTANT: APP CONFIG -->
     <script src="js/app.config.js"></script>
+    <script src="js/iban.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->

@@ -247,6 +247,7 @@ function datosImportOK() {
 
 function aceptar() {
     var mf = function () {
+        comprobarVacios();
         if (!datosOK()) return;
         vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
         var data = {
@@ -387,5 +388,20 @@ function loadTiposVia(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function comprobarVacios(){
+        if(/^\s+|\s+$/.test(vm.passCorreo()) || vm.passCorreo() == "") {
+            vm.passCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.hostCorreo()) || vm.hostCorreo() == "") {
+            vm.hostCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.usuCorreo()) || vm.usuCorreo() == "") {
+            vm.usuCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.portCorreo()) || vm.portCorreo() == "") {
+            vm.portCorreo(null);
+        }
 }
 

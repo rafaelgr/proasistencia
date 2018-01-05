@@ -31,8 +31,8 @@ function initForm() {
     //
     $.validator.addMethod("greaterThan",
     function (value, element, params) {
-        var fv = moment(value, "DD-MM-YYYY").format("YYYY-MM-DD");
-        var fp = moment($(params).val(), "DD-MM-YYYY").format("YYYY-MM-DD");
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
         if (!/Invalid|NaN/.test(new Date(fv))) {
             return new Date(fv) >= new Date(fp);
         } else {
@@ -91,7 +91,12 @@ function admData() {
     self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
     self.iban = ko.observable();
-
+    self.iban1 = ko.observable();
+    self.iban2 = ko.observable();
+    self.iban3 = ko.observable();
+    self.iban4 = ko.observable();
+    self.iban5 = ko.observable();
+    self.iban6 = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -122,26 +127,21 @@ function loadData(data) {
     vm.movil2(data.movil2);
     vm.correo2(data.correo2);
     vm.contacto(data.persona_contacto);
-
-    //si la fecha de alta no es valida ponemos el campo vacio
-    if(moment(data.fechaAlta).isValid()){
-        vm.fechaAlta(moment(data.fechaAlta).format('DD-MM-YYYY'));
-    }else{
-        vm.fechaAlta('');
-    }
-    
-    
-    //si la fecha de baja no es valida ponemos el campo vacio
-    if(moment(data.fechaBaja).isValid()){
-        vm.fechaBaja(moment(data.fechaBaja).format('DD-MM-YYYY'));
-       
-    }else{
-        vm.fechaBaja('');
-    }
-   
+    vm.fechaAlta(spanishDate(data.fechaAlta));
+    vm.fechaBaja(spanishDate(data.fechaBaja));
     vm.motivoBaja(data.motivo_baja);
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
+
+    // split iban
+    if (vm.iban()) {
+        var ibanl = vm.iban().match(/.{4}/g);
+        var i = 0;
+        ibanl.forEach(function (ibn) {
+            i++;
+            vm['iban' + i](ibn);
+        });
+    }
 
     loadTiposVia(data.tipoViaId);
     loadFormasPago(data.formaPagoId)
@@ -165,7 +165,7 @@ function datosOK() {
             txtFechaAlta: {
                 required: true,
             },
-            txtFechaBaja: {
+            txtfechaBaja: {
                 greaterThan: "#txtFechaAlta",
             },
         },
@@ -182,9 +182,6 @@ function datosOK() {
             },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha",
-            },
-            txtFechaBaja: {
-                required: "Debe seleccionar una fecha",
             }
         },
         // Do not change code below
@@ -193,6 +190,17 @@ function datosOK() {
         }
     });
     var opciones = $("#frmProveedor").validate().settings;
+
+    // iban
+    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    var opciones = $("#frmProveedor").validate().settings;
+    if (vm.iban() && vm.iban() != "") {
+        if (!IBAN.isValid(vm.iban())) {
+            mensError("IBAN incorrecto");
+            return false;
+        }
+    }
+
     return $('#frmProveedor').valid();
 }
 
@@ -217,8 +225,8 @@ function aceptar() {
                 "movil2": vm.movil2(),
                 "correo2": vm.correo2(),
                 "persona_contacto": vm.contacto(),
-                "fechaAlta": moment(vm.fechaAlta(), "DD-MM-YYYY").format('YYYY-MM-DD'),
-                "fechaBaja": moment(vm.fechaBaja(), "DD-MM-YYYY").format('YYYY-MM-DD'),
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
                 "motivo_Baja": vm.motivoBaja(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
