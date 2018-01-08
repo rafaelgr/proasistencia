@@ -162,6 +162,9 @@ function datosOK() {
             txtCorreo2: {
                 email: true
             },
+            cmbFormasPago: {
+                required: true
+            },
             txtFechaAlta: {
                 required: true,
             },
@@ -179,6 +182,9 @@ function datosOK() {
             },
             txtCorreo: {
                 email: 'Debe usar un correo válido'
+            },
+            cmbFormasPago: {
+                required: "Debe elegir una forma de pago"
             },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha",
