@@ -11,6 +11,10 @@ var facproveId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
+var articuloId = 72 // Articulo por defecto para las lineas
+var grupoArticuloId = 39 //grupo articulo por defecto para las lineas
+
+
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -79,11 +83,8 @@ function initForm() {
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
-    loadGrupoArticulos();
-    $("#cmbGrupoArticulos").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioGrupoArticulo(e.added.id);
-    });
+    loadGrupoArticulos(grupoArticuloId);
+    
 
 
     $("#cmbUnidades").select2(select2Spanish());
@@ -92,10 +93,7 @@ function initForm() {
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
-    $("#cmbArticulos").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioArticulo(e.added.id);
-    });
+    
 
     // select2 things
     $("#cmbTiposIva").select2(select2Spanish());
@@ -534,11 +532,11 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadGrupoArticulos();
+    loadGrupoArticulos(grupoArticuloId);
     // loadArticulos();
     loadTiposIva();
     //
-    loadArticulos();
+    loadArticulos(articuloId);
     loadUnidades();
 }
 
@@ -795,9 +793,9 @@ function loadLineasFactura(id) {
 }
 
 function loadArticulos(id) {
-    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos/" + id, null, function (err, data) {
         if (err) return;
-        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        var articulos = data;
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
@@ -808,11 +806,13 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
-        var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
+    llamadaAjax("GET", "/api/grupo_articulo/" + id, null, function (err, data) {
+        var grupos = data;
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
             $("#cmbGrupoArticulos").val([id]).trigger('change');
+            cambioArticulo(articuloId);
+            cambioGrupoArticulo(grupoArticuloId);
         } else {
             $("#cmbGrupoArticulos").val([0]).trigger('change');
         }
@@ -870,7 +870,8 @@ function cambioGrupoArticulo(grupoArticuloId) {
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
     if (!vm.capituloLinea()) {
-        var numeroCapitulo = Math.floor(vm.linea());
+        
+        var numeroCapitulo = 1;
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
         llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
