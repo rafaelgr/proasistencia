@@ -222,7 +222,7 @@ function  loadArtManGas(id) {
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var artDefect = [{ articuloId: 0, nombre: "" }].concat(data);
+            var artDefect = [{ articuloId: null, nombre: "" }].concat(data);
             vm.posiblesDefect(artDefect);
             $("#cmbDefect").val([id]).trigger('change');
         },
