@@ -11,8 +11,8 @@ var facproveId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
-var articuloId = 72 // Articulo por defecto para las lineas
-var grupoArticuloId = 39 //grupo articulo por defecto para las lineas
+var articuloId;// Articulo por defecto para las lineas
+var grupoArticuloId//grupo articulo por defecto para las lineas
 
 
 
@@ -29,12 +29,16 @@ var breakpointDefinition = {
 
 datePickerSpanish(); // see comun.js
 
+
+
 function initForm() {
     comprobarLogin();
     // de smart admin
     pageSetUp();
     // 
     getVersionFooter();
+
+    
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -83,7 +87,8 @@ function initForm() {
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
-    loadGrupoArticulos(grupoArticuloId);
+    recuperaParametrosPorDefecto();
+   
     
 
 
@@ -1251,4 +1256,15 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+var recuperaParametrosPorDefecto = function (){
+    llamadaAjax("GET", "/api/parametros/parametro/grupo", null, function (err, data) {
+        if (err) return;
+        articuloId = data.mantenimiento;
+        grupoArticuloId = data.grupo;
+        loadGrupoArticulos(grupoArticuloId);
+    });
+}
+
+
 
