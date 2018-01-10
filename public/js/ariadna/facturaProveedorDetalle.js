@@ -11,10 +11,6 @@ var facproveId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
-var articuloId;// Articulo por defecto para las lineas
-var grupoArticuloId//grupo articulo por defecto para las lineas
-
-
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -29,16 +25,12 @@ var breakpointDefinition = {
 
 datePickerSpanish(); // see comun.js
 
-
-
 function initForm() {
     comprobarLogin();
     // de smart admin
     pageSetUp();
     // 
     getVersionFooter();
-
-    
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -49,6 +41,7 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
+
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
@@ -65,6 +58,11 @@ function initForm() {
     $("#linea-form").submit(function () {
         return false;
     });
+
+    //evento de foco en el modal
+    $('#modalLinea').on('shown.bs.modal', function () {
+        $('#txtDescripcion').focus();
+    })
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
@@ -92,9 +90,6 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
-    recuperaParametrosPorDefecto();
-   
-    
 
 
     $("#cmbUnidades").select2(select2Spanish());
@@ -107,7 +102,6 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioArticulo(e.added.id);
     });
-    
 
     // select2 things
     $("#cmbTiposIva").select2(select2Spanish());
@@ -528,9 +522,8 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     llamadaAjax("GET", "/api/facturasProveedores/nextlinea/" + vm.facproveId(), null, function (err, data) {
         vm.linea(data);
-        vm.total(0);
-        vm.totalCuota(0);
-        vm.totalConIva(0);
+        
+        recuperaParametrosPorDefecto();
     });
 }
 
@@ -546,11 +539,11 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    loadGrupoArticulos(grupoArticuloId);
+    loadGrupoArticulos();
     // loadArticulos();
     loadTiposIva();
     //
-    loadArticulos(articuloId);
+    loadArticulos();
     loadUnidades();
 }
 
@@ -762,6 +755,8 @@ function initTablaFacturasLineas() {
 }
 
 function loadDataLinea(data) {
+    $('#txtDescripcion').focus();
+    //
     vm.facproveLineaId(data.facproveLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
@@ -779,6 +774,27 @@ function loadDataLinea(data) {
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
     //
+}
+
+function loadDataLineaDefecto(data) {
+    vm.facproveLineaId(0);
+    vm.articuloId(data.articuloId);
+    vm.porcentaje(data.porcentaje);
+    vm.descripcion(data.descripcion);
+    vm.cantidad(1);
+    vm.importe(0);
+    vm.porcentaje(0);
+   
+    
+    //
+    loadGrupoArticulos(data.grupoArticuloId);
+    loadArticulos(data.articuloId);
+    loadTiposIva(data.tipoIvaId);
+    loadUnidades(data.unidadId);
+    //
+    cambioGrupoArticulo(data.grupoArticuloId)
+    cambioTiposIva(data.tipoIvaId)
+   
 }
 
 
@@ -807,13 +823,12 @@ function loadLineasFactura(id) {
 }
 
 function loadArticulos(id) {
-    llamadaAjax("GET", "/api/articulos/", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
         if (err) return;
-        var articulos = data;
+        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
-            cambioArticulo(id);
         } else {
             $("#cmbArticulos").val([0]).trigger('change');
         }
@@ -821,12 +836,11 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax("GET", "/api/grupo_articulo/", null, function (err, data) {
-        var grupos = data;
+    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+        var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
             $("#cmbGrupoArticulos").val([id]).trigger('change');
-            cambioGrupoArticulo(id);
         } else {
             $("#cmbGrupoArticulos").val([0]).trigger('change');
         }
@@ -862,9 +876,9 @@ function loadUnidades(id) {
 }
 
 
-function cambioArticulo(id) {
-    if (!id) return;
-    llamadaAjax("GET", "/api/articulos/" + id, null, function (err, data) {
+function cambioArticulo(articuloId) {
+    if (!articuloId) return;
+    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
         if (data.descripcion == null) {
             vm.descripcion(data.nombre);
         } else {
@@ -884,8 +898,7 @@ function cambioGrupoArticulo(grupoArticuloId) {
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
     if (!vm.capituloLinea()) {
-        
-        var numeroCapitulo = 1;
+        var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
         llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
@@ -906,6 +919,7 @@ function cambioTiposIva(tipoIvaId) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+       
     });
 }
 
@@ -1266,11 +1280,11 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
+
 var recuperaParametrosPorDefecto = function (){
     llamadaAjax("GET", "/api/parametros/parametro/grupo", null, function (err, data) {
         if (err) return;
-        articuloId = data.mantenimiento;
-        grupoArticuloId = data.grupo;
+        loadDataLineaDefecto(data);
     });
 }
 
