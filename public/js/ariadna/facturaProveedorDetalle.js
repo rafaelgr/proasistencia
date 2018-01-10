@@ -599,6 +599,11 @@ function aceptarLinea() {
 }
 
 function datosOKLineas() {
+
+    jQuery.validator.addMethod("noCero", function(value,  element) {
+        return this.optional(element) || $('#txtPrecio').val() != 0;
+        }, "El precio no pude se 0");
+        
     $('#linea-form').validate({
         rules: {
             txtCapitulo: {
@@ -617,7 +622,8 @@ function datosOKLineas() {
                 required: true
             },
             txtPrecio: {
-                required: true
+                required: true,
+                noCero: true
             },
             txtCantidad: {
                 required: true
