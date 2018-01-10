@@ -87,6 +87,11 @@ function initForm() {
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
+    loadGrupoArticulos();
+    $("#cmbGrupoArticulos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioGrupoArticulo(e.added.id);
+    });
     recuperaParametrosPorDefecto();
    
     
@@ -98,6 +103,10 @@ function initForm() {
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
+    $("#cmbArticulos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioArticulo(e.added.id);
+    });
     
 
     // select2 things
@@ -798,12 +807,13 @@ function loadLineasFactura(id) {
 }
 
 function loadArticulos(id) {
-    llamadaAjax("GET", "/api/articulos/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos/", null, function (err, data) {
         if (err) return;
         var articulos = data;
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
+            cambioArticulo(id);
         } else {
             $("#cmbArticulos").val([0]).trigger('change');
         }
@@ -811,13 +821,12 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax("GET", "/api/grupo_articulo/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/grupo_articulo/", null, function (err, data) {
         var grupos = data;
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
             $("#cmbGrupoArticulos").val([id]).trigger('change');
-            cambioArticulo(articuloId);
-            cambioGrupoArticulo(grupoArticuloId);
+            cambioGrupoArticulo(id);
         } else {
             $("#cmbGrupoArticulos").val([0]).trigger('change');
         }
@@ -853,9 +862,9 @@ function loadUnidades(id) {
 }
 
 
-function cambioArticulo(articuloId) {
-    if (!articuloId) return;
-    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+function cambioArticulo(id) {
+    if (!id) return;
+    llamadaAjax("GET", "/api/articulos/" + id, null, function (err, data) {
         if (data.descripcion == null) {
             vm.descripcion(data.nombre);
         } else {
@@ -1262,7 +1271,6 @@ var recuperaParametrosPorDefecto = function (){
         if (err) return;
         articuloId = data.mantenimiento;
         grupoArticuloId = data.grupo;
-        loadGrupoArticulos(grupoArticuloId);
     });
 }
 
