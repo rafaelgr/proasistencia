@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "6aec490857ee410cb04d7f79f8d556d2",
+  "ReportGuid": "53927e841ee54e48bbb7c6c74b6225c9",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1515657882504+0100)/",
+  "ReportChanged": "/Date(1515664956533+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1269,7 +1269,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,21.4,19,0.8",
+          "ClientRectangle": "0,21.4,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1338,7 +1338,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,23,19,0.8",
+          "ClientRectangle": "0,22.6,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1351,7 +1351,7 @@
               "Guid": "d5bafb80bb1bfa3665e7bd7ec54351d9",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5.4,0,2.2,0.6",
+              "ClientRectangle": "5.4,0,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1379,7 +1379,7 @@
               "Guid": "824c8bc2ae77eb098cb0fe6def43a92f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0,2.2,0.6",
+              "ClientRectangle": "0.2,0,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1406,7 +1406,7 @@
               "Name": "Text24",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2.8,0,2.2,0.6",
+              "ClientRectangle": "2.8,0,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1433,7 +1433,7 @@
         "10": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,24.6,19,2.8",
+          "ClientRectangle": "0,24,19,2.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
