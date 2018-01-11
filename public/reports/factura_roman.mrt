@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "ac84869d91c74e56a681d965c4ec0c8d",
+  "ReportGuid": "0e3a7e58c36b40959fb23ce3f4164a31",
   "ReportName": "FacturaRoman",
   "ReportAlias": "FacturaRoman",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
-  "ReportChanged": "/Date(1515658601022+0100)/",
+  "ReportChanged": "/Date(1515667346773+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProyecta : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProyecta()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -918,7 +918,7 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,9,19,1.6",
+          "ClientRectangle": "0,9,19,1",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -984,7 +984,7 @@
         "5": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,11.4,19,0.8",
+          "ClientRectangle": "0,10.8,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1044,7 +1044,7 @@
         "6": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand2",
-          "ClientRectangle": "0,13,19,0.8",
+          "ClientRectangle": "0,12.4,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1104,7 +1104,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,14.6,19,0.8",
+          "ClientRectangle": "0,14,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1165,7 +1165,7 @@
         "8": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,16.2,19,2.8",
+          "ClientRectangle": "0,15.6,19,2.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
