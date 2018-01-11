@@ -148,10 +148,12 @@ function loadTablaProveedores(data) {
     }
 }
 
-function buscarProveedores() {
+function buscarProveedores(exito) {
     var mf = function () {
         if (!datosOK()) {
-            return;
+            if (!exito) return;
+            var url = "ProveedoresGeneral.html";
+            window.open(url, '_self');
         }
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
@@ -184,6 +186,7 @@ function crearProveedor() {
 
 function deleteProveedor(id) {
     // mensaje de confirmación
+    var exito = true;
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
@@ -201,7 +204,7 @@ function deleteProveedor(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarProveedores();
+                    var fn = buscarProveedores(exito);
                     fn();
                 },
                                 error: function (err) {

@@ -4,6 +4,7 @@ Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
 
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -24,6 +25,22 @@ function initForm() {
 
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
+
+    //
+    $.validator.addMethod("greaterThan",
+    function (value, element, params) {
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha de alta debe ser menor que la fecha de baja.');
+//
 
     proId = gup('ProveedorId');
     if (proId != 0) {
@@ -64,13 +81,34 @@ function admData() {
     self.provincia = ko.observable();
     self.telefono = ko.observable();
     self.correo = ko.observable();
-
+    self.telefono2 = ko.observable();
+    self.movil = ko.observable();
+    self.movil2 = ko.observable();
+    self.correo2 = ko.observable();
+    self.contacto = ko.observable();
+    self.fechaAlta = ko.observable();
+    self.fechaBaja = ko.observable();
+    self.motivoBaja = ko.observable();
+    self.cuentaContable = ko.observable();
+    self.iban = ko.observable();
+    self.iban1 = ko.observable();
+    self.iban2 = ko.observable();
+    self.iban3 = ko.observable();
+    self.iban4 = ko.observable();
+    self.iban5 = ko.observable();
+    self.iban6 = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
     //
     self.posiblesTiposVia = ko.observableArray([]);
     self.elegidosTiposVia = ko.observableArray([]);
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -84,8 +122,29 @@ function loadData(data) {
     vm.telefono(data.telefono);
     vm.correo(data.correo);
     vm.poblacion(data.poblacion);
+    vm.telefono2(data.telefono2);
+    vm.movil(data.movil);
+    vm.movil2(data.movil2);
+    vm.correo2(data.correo2);
+    vm.contacto(data.persona_contacto);
+    vm.fechaAlta(spanishDate(data.fechaAlta));
+    vm.fechaBaja(spanishDate(data.fechaBaja));
+    vm.motivoBaja(data.motivo_baja);
+    vm.cuentaContable(data.cuentaContable);
+    vm.iban(data.IBAN);
+
+    // split iban
+    if (vm.iban()) {
+        var ibanl = vm.iban().match(/.{4}/g);
+        var i = 0;
+        ibanl.forEach(function (ibn) {
+            i++;
+            vm['iban' + i](ibn);
+        });
+    }
 
     loadTiposVia(data.tipoViaId);
+    loadFormasPago(data.formaPagoId)
 }
 
 function datosOK() {
@@ -99,7 +158,19 @@ function datosOK() {
             },
             txtCorreo: {
                 email: true
-            }
+            },
+            txtCorreo2: {
+                email: true
+            },
+            cmbFormasPago: {
+                required: true
+            },
+            txtFechaAlta: {
+                required: true,
+            },
+            txtfechaBaja: {
+                greaterThan: "#txtFechaAlta",
+            },
         },
         // Messages for form validation
         messages: {
@@ -111,6 +182,12 @@ function datosOK() {
             },
             txtCorreo: {
                 email: 'Debe usar un correo válido'
+            },
+            cmbFormasPago: {
+                required: "Debe elegir una forma de pago"
+            },
+            txtFechaAlta: {
+                required: "Debe seleccionar una fecha",
             }
         },
         // Do not change code below
@@ -119,6 +196,17 @@ function datosOK() {
         }
     });
     var opciones = $("#frmProveedor").validate().settings;
+
+    // iban
+    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    var opciones = $("#frmProveedor").validate().settings;
+    if (vm.iban() && vm.iban() != "") {
+        if (!IBAN.isValid(vm.iban())) {
+            mensError("IBAN incorrecto");
+            return false;
+        }
+    }
+
     return $('#frmProveedor').valid();
 }
 
@@ -137,7 +225,19 @@ function aceptar() {
                 "codPostal": vm.codPostal(),
                 "telefono": vm.telefono(),
                 "correo": vm.correo(),
-                "tipoViaId": vm.stipoViaId()
+                "tipoViaId": vm.stipoViaId(),
+                "telefono2": vm.telefono2(),
+                "movil": vm.movil(),
+                "movil2": vm.movil2(),
+                "correo2": vm.correo2(),
+                "persona_contacto": vm.contacto(),
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "motivo_Baja": vm.motivoBaja(),
+                "cuentaContable": vm.cuentaContable(),
+                "formaPagoId": vm.sformaPagoId(),
+                "IBAN": vm.iban()
+
             }
         };
         if (proId == 0) {
@@ -206,6 +306,15 @@ function loadTiposVia(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+function loadFormasPago(formaPagoId) {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
 }
 

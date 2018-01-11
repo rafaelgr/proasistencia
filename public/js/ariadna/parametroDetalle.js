@@ -16,56 +16,89 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmParametro").submit(function() {
+    $("#frmParametro").submit(function () {
         return false;
     });
 
     $("#cmbArtMan").select2({
         allowClear: true,
         language: {
-            errorLoading: function() {
+            errorLoading: function () {
                 return "La carga falló";
             },
-            inputTooLong: function(e) {
+            inputTooLong: function (e) {
                 var t = e.input.length - e.maximum,
                     n = "Por favor, elimine " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            inputTooShort: function(e) {
+            inputTooShort: function (e) {
                 var t = e.minimum - e.input.length,
                     n = "Por favor, introduzca " + t + " car";
                 return t == 1 ? n += "ácter" : n += "acteres", n;
             },
-            loadingMore: function() {
+            loadingMore: function () {
                 return "Cargando más resultados…";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 var t = "Sólo puede seleccionar " + e.maximum + " elemento";
                 return e.maximum != 1 && (t += "s"), t;
             },
-            noResults: function() {
+            noResults: function () {
                 return "No se encontraron resultados";
             },
-            searching: function() {
+            searching: function () {
+                return "Buscando…";
+            }
+        }
+    });
+
+    $("#cmbDefect").select2({
+        allowClear: true,
+        language: {
+            errorLoading: function () {
+                return "La carga falló";
+            },
+            inputTooLong: function (e) {
+                var t = e.input.length - e.maximum,
+                    n = "Por favor, elimine " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            inputTooShort: function (e) {
+                var t = e.minimum - e.input.length,
+                    n = "Por favor, introduzca " + t + " car";
+                return t == 1 ? n += "ácter" : n += "acteres", n;
+            },
+            loadingMore: function () {
+                return "Cargando más resultados…";
+            },
+            maximumSelected: function (e) {
+                var t = "Sólo puede seleccionar " + e.maximum + " elemento";
+                return e.maximum != 1 && (t += "s"), t;
+            },
+            noResults: function () {
+                return "No se encontraron resultados";
+            },
+            searching: function () {
                 return "Buscando…";
             }
         }
     });
     loadArtMan();
+    loadArtManGas();
 
     $.ajax({
         type: "GET",
         url: myconfig.apiUrl + "/api/parametros/0",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             // hay que mostrarlo en la zona de datos
             loadData(data);
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -76,16 +109,22 @@ function admData() {
     self.margenMantenimiento = ko.observable();
     //
     self.sartManId = ko.observable();
+    self.sdefectId = ko.observable();
     //
     self.posiblesArtMan = ko.observableArray([]);
     self.elegidosArtMan = ko.observableArray([]);
+    //
+    self.posiblesDefect = ko.observableArray([]);
+    self.elegidosDefect = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.parametroId(data.parametroId);
     vm.articuloMantenimiento(data.articuloMantenimiento);
     vm.margenMantenimiento(data.margenMantenimiento);
+
     loadArtMan(data.articuloMantenimiento);
+    loadArtManGas(data.articuloMantenimientoParaGastos);
 }
 
 function datosOK() {
@@ -94,16 +133,20 @@ function datosOK() {
         rules: {
             cmbArtMan: {
                 required: true
+            }, cmbDefect: {
+                required: true
             }
         },
         // Messages for form validation
         messages: {
             cmbArtMan: {
                 required: 'Elija un artículo de mantenimiento'
+            }, cmbDefect: {
+                required: 'Elija un articulo por defecto'
             }
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -112,14 +155,15 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
             parametro: {
                 "parametroId": 0,
                 "articuloMantenimiento": vm.sartManId(),
-                "margenMantenimiento": vm.margenMantenimiento()
+                "margenMantenimiento": vm.margenMantenimiento(),
+                "articuloMantenimientoParaGastos": vm.sdefectId()
             }
         };
 
@@ -129,24 +173,24 @@ function aceptar() {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 // Nos volvemos al general
                 var url = "Index.html";
                 window.open(url, '_self');
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "Index.html";
         window.open(url, '_self');
     }
@@ -159,14 +203,32 @@ function loadArtMan(id) {
         url: "/api/articulos",
         dataType: "json",
         contentType: "application/json",
-        success: function(data, status) {
+        success: function (data, status) {
             var artMan = [{ articuloId: 0, nombre: "" }].concat(data);
             vm.posiblesArtMan(artMan);
             $("#cmbArtMan").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadArtManGas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/articulos",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var artDefect = [{ articuloId: null, nombre: "" }].concat(data);
+            vm.posiblesDefect(artDefect);
+            $("#cmbDefect").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }

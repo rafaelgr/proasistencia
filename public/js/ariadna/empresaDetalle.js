@@ -22,6 +22,36 @@ function initForm() {
     $("#frmEmpresa").submit(function () {
         return false;
     });
+
+
+    //comprobamos si el puerto 465 está configurado con correo seguro
+    //o si el correo no seguro está configurado con el puerto 465
+    $('#chkSecure').click(function() {
+        if(!$(this).is(':checked') && vm.portCorreo() == 465) {
+          var mens = 'No se permite correo no seguro por el puerto 465';
+          mensNormal(mens);
+          vm.portCorreo(25);
+        }
+        if($(this).is(':checked') && vm.portCorreo() != 465) {
+            var mens = 'No se permite correo seguro por un puerto diferente al 465';
+            mensNormal(mens);
+            vm.portCorreo(465);
+        }
+      });
+
+      $('#txtPort').blur(function(){
+        if(!$('#chkSecure').is(':checked') && vm.portCorreo() == 465) {
+            var mens = 'No se permite correo no seguro por el puerto 465';
+            mensNormal(mens);
+            vm.portCorreo(25);
+          }
+          if($('#chkSecure').is(':checked') && vm.portCorreo() != 465) {
+            var mens = 'No se permite correo seguro por un puerto diferente al 465';
+            mensNormal(mens);
+            vm.portCorreo(465);
+        }
+      });
+
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
@@ -217,6 +247,7 @@ function datosImportOK() {
 
 function aceptar() {
     var mf = function () {
+        comprobarVacios();
         if (!datosOK()) return;
         vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
         var data = {
@@ -357,5 +388,20 @@ function loadTiposVia(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function comprobarVacios(){
+        if(/^\s+|\s+$/.test(vm.passCorreo()) || vm.passCorreo() == "") {
+            vm.passCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.hostCorreo()) || vm.hostCorreo() == "") {
+            vm.hostCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.usuCorreo()) || vm.usuCorreo() == "") {
+            vm.usuCorreo(null);
+        }
+        if(/^\s+|\s+$/.test(vm.portCorreo()) || vm.portCorreo() == "") {
+            vm.portCorreo(null);
+        }
 }
 

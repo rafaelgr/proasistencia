@@ -42,6 +42,7 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
 
+
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
@@ -57,6 +58,11 @@ function initForm() {
     $("#linea-form").submit(function () {
         return false;
     });
+
+    //evento de foco en el modal
+    $('#modalLinea').on('shown.bs.modal', function () {
+        $('#txtDescripcion').focus();
+    })
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
@@ -516,9 +522,8 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     llamadaAjax("GET", "/api/facturasProveedores/nextlinea/" + vm.facproveId(), null, function (err, data) {
         vm.linea(data);
-        vm.total(0);
-        vm.totalCuota(0);
-        vm.totalConIva(0);
+        
+        recuperaParametrosPorDefecto();
     });
 }
 
@@ -612,7 +617,9 @@ function datosOKLineas() {
                 required: true
             },
             txtPrecio: {
-                required: true
+                required: true,
+                number: true,
+                min: 1
             },
             txtCantidad: {
                 required: true
@@ -642,7 +649,8 @@ function datosOKLineas() {
                 required: 'Necesita una cantidad'
             },
             txtPrecio: {
-                required: 'Necesita un precio'
+                required: 'Necesita un precio',
+                min: "El precio no puede ser cero"
             }
         },
         // Do not change code below
@@ -714,6 +722,7 @@ function initTablaFacturasLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
+                if (!data) return "";
                 return data.replace('\n', '<br/>');
             }
         }, {
@@ -750,6 +759,8 @@ function initTablaFacturasLineas() {
 }
 
 function loadDataLinea(data) {
+    $('#txtDescripcion').focus();
+    //
     vm.facproveLineaId(data.facproveLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
@@ -767,6 +778,27 @@ function loadDataLinea(data) {
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
     //
+}
+
+function loadDataLineaDefecto(data) {
+    vm.facproveLineaId(0);
+    vm.articuloId(data.articuloId);
+    vm.porcentaje(data.porcentaje);
+    vm.descripcion(data.descripcion);
+    vm.cantidad(1);
+    vm.importe(0);
+    vm.porcentaje(0);
+   
+    
+    //
+    loadGrupoArticulos(data.grupoArticuloId);
+    loadArticulos(data.articuloId);
+    loadTiposIva(data.tipoIvaId);
+    loadUnidades(data.unidadId);
+    //
+    cambioGrupoArticulo(data.grupoArticuloId)
+    cambioTiposIva(data.tipoIvaId)
+   
 }
 
 
@@ -891,6 +923,7 @@ function cambioTiposIva(tipoIvaId) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+       
     });
 }
 
@@ -1250,4 +1283,14 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+
+var recuperaParametrosPorDefecto = function (){
+    llamadaAjax("GET", "/api/parametros/parametro/grupo", null, function (err, data) {
+        if (err) return;
+        loadDataLineaDefecto(data);
+    });
+}
+
+
 
