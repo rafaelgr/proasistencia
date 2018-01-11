@@ -599,11 +599,6 @@ function aceptarLinea() {
 }
 
 function datosOKLineas() {
-
-    jQuery.validator.addMethod("noCero", function(value,  element) {
-        return this.optional(element) || $('#txtPrecio').val() != 0;
-        }, "El precio no pude se 0");
-        
     $('#linea-form').validate({
         rules: {
             txtCapitulo: {
@@ -623,7 +618,8 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: true,
-                noCero: true
+                number: true,
+                min: 1
             },
             txtCantidad: {
                 required: true
@@ -653,7 +649,8 @@ function datosOKLineas() {
                 required: 'Necesita una cantidad'
             },
             txtPrecio: {
-                required: 'Necesita un precio'
+                required: 'Necesita un precio',
+                min: "El precio no puede ser cero"
             }
         },
         // Do not change code below
@@ -725,6 +722,7 @@ function initTablaFacturasLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
+                if (!data) return "";
                 return data.replace('\n', '<br/>');
             }
         }, {
