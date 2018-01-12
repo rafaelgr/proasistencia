@@ -4,6 +4,8 @@ Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
 
+var numDigitos = 0; // número de digitos de cuenta contable
+
 
 datePickerSpanish(); // see comun.js
 
@@ -42,6 +44,22 @@ function initForm() {
     }, 'La fecha de alta debe ser menor que la fecha de baja.');
 //
 
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            numDigitos = data.numDigitos
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+
     proId = gup('ProveedorId');
     if (proId != 0) {
         var data = {
@@ -66,6 +84,23 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.proveedorId(0);
+         // contador de código
+         $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/proveedores/nuevaId/proveedor",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                vm.proveedorId(data.proveedorId);
+                cambioCodigoProveedor();
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     }
 }
 
@@ -316,5 +351,10 @@ function loadFormasPago(formaPagoId) {
         vm.posiblesFormasPago(formasPago);
         $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
+}
+
+function cambioCodigoProveedor(data) {
+    var codmacta = montarCuentaContable('40', vm.proveedorId(), numDigitos); // (comun.js)
+    vm.cuentaContable(codmacta);
 }
 
