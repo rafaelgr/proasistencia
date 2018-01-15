@@ -41,6 +41,7 @@ var grupo_articulos_router = require('./lib/grupos-articulos/grupo_articulo_cont
 var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
+var tipos_proveedor_router = require('./lib/tipos_proveedor/tipos_proveedor_controller')
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
 var facturas_router = require('./lib/facturas/facturas_controller');
 var facturasProveedores_router = require('./lib/facturas_proveedores/facturasProveedores_controller');
@@ -123,6 +124,7 @@ app.use('/api/grupo_articulo', grupo_articulos_router);
 app.use('/api/contabilidad', contabilidad_router);
 app.use('/api/unidades', unidades_router);
 app.use('/api/tipos_via', tipos_via_router);
+app.use('/api/tipos/tipos_Proveedor', tipos_proveedor_router);
 app.use('/api/motivos_baja', motivos_baja_router);
 app.use('/api/cuentas', cuentas_router);
 app.use('/api/facturas', facturas_router);
