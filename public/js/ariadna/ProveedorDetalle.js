@@ -30,6 +30,11 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
 
+    $("#txtCodigo").blur(function () {
+        cambioCodigoProveedor();
+    });
+
+
     //
     $.validator.addMethod("greaterThan",
     function (value, element, params) {
@@ -87,13 +92,13 @@ function initForm() {
          // contador de código
          $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/nuevaId/proveedor",
+            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                vm.proveedorId(data.proveedorId);
+                vm.codigo(data.codigo);
                 cambioCodigoProveedor();
             },
             error: function (err) {
@@ -107,6 +112,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.proveedorId = ko.observable();
+    self.codigo = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -148,6 +154,7 @@ function admData() {
 
 function loadData(data) {
     vm.proveedorId(data.proveedorId);
+    vm.codigo(data.codigo);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -206,6 +213,9 @@ function datosOK() {
             txtfechaBaja: {
                 greaterThan: "#txtFechaAlta",
             },
+            txtCodigo: {
+                required: true
+            }
         },
         // Messages for form validation
         messages: {
@@ -222,7 +232,10 @@ function datosOK() {
                 required: "Debe elegir una forma de pago"
             },
             txtFechaAlta: {
-                required: "Debe seleccionar una fecha",
+                required: "Debe seleccionar una fecha"
+            },
+            txtCodigo: {
+                required: "Debe introducir un código para la contabilidad"
             }
         },
         // Do not change code below
@@ -251,6 +264,7 @@ function aceptar() {
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
+                "codigo": vm.codigo(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -354,7 +368,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 function cambioCodigoProveedor(data) {
-    var codmacta = montarCuentaContable('40', vm.proveedorId(), numDigitos); // (comun.js)
+    var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
     vm.cuentaContable(codmacta);
 }
 
