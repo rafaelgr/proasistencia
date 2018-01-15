@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-tipoProfesionalProveedorGeneral.js
-Funciones js par la página TipoProfesionalProveedorGeneral.html
+tipoProveedorGeneral.js
+Funciones js par la página TipoProveedorGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -24,7 +24,7 @@ function initForm() {
     getVersionFooter();
     //
     $('#btnBuscar').click(buscarTiposProveedor());
-    $('#btnAlta').click(creartipoProveedor());
+    $('#btnAlta').click(crearTipoProveedor());
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -103,8 +103,8 @@ function initTablaTiposProveedor() {
         }, {
             data: "tipoProveedorId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deletetipoProveedor(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='edittipoProveedor(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoProveedor(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editTipoProveedor(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -171,15 +171,15 @@ function buscarTiposProveedor() {
     return mf;
 }
 
-function creartipoProveedor() {
+function crearTipoProveedor() {
     var mf = function () {
-        var url = "tipoProfesionalProveedorDetalle.html?tipoProveedorId=0";
+        var url = "TipoProveedorDetalle.html?tipoProveedorId=0";
         window.open(url, '_self');
     };
     return mf;
 }
 
-function deletetipoProveedor(id) {
+function deleteTipoProveedor(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -217,7 +217,7 @@ function deletetipoProveedor(id) {
 function editTipoProveedor(id) {
     // hay que abrir la página de detalle de tipoProveedor
     // pasando en la url ese ID
-    var url = "TipoProfesionalProveedorDetalle.html?tipoProveedorId=" + id;
+    var url = "TipoProveedorDetalle.html?tipoProveedorId=" + id;
     window.open(url, '_self');
 }
 

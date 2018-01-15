@@ -124,7 +124,7 @@ app.use('/api/grupo_articulo', grupo_articulos_router);
 app.use('/api/contabilidad', contabilidad_router);
 app.use('/api/unidades', unidades_router);
 app.use('/api/tipos_via', tipos_via_router);
-app.use('/api/tipos/tipos_Proveedor', tipos_proveedor_router);
+app.use('/api/tipos_Proveedor', tipos_proveedor_router);
 app.use('/api/motivos_baja', motivos_baja_router);
 app.use('/api/cuentas', cuentas_router);
 app.use('/api/facturas', facturas_router);
