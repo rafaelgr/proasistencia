@@ -417,7 +417,14 @@ function loadFormasPago(formaPagoId) {
 }
 
 function cambioCodigoProveedor(data) {
-    var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
-    vm.cuentaContable(codmacta);
+    llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
+        if (err) return;
+        if(data) {
+            mostrarMensajeSmart('La cuenta contable ya existe');
+        }else{
+            var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
+            vm.cuentaContable(codmacta);
+        }
+    });
 }
 
