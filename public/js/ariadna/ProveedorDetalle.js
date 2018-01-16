@@ -25,10 +25,13 @@ function initForm() {
         return false;
     });
 
+    //carga de combos
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
+    $("#cmbTiposProveedor").select2(select2Spanish());
+    loadTiposProveedor();
 
     $("#txtCodigo").blur(function () {
         cambioCodigoProveedor();
@@ -131,6 +134,8 @@ function admData() {
     self.fechaBaja = ko.observable();
     self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
+    self.fianza = ko.observable();
+    self.codigoProfesional = ko.observable();
     self.iban = ko.observable();
     self.iban1 = ko.observable();
     self.iban2 = ko.observable();
@@ -150,6 +155,12 @@ function admData() {
     //
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
+    //
+    self.tipoProveedorId = ko.observable();
+    self.stipoProveedorId = ko.observable();
+    //
+    self.posiblesTiposProveedor = ko.observableArray([]);
+    self.elegidosTiposProveedor = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -174,6 +185,8 @@ function loadData(data) {
     vm.motivoBaja(data.motivo_baja);
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
+    vm.fianza(numeral(data.fianza).format('0,0.00'));
+    vm.codigoProfesional(data.codigoProfesional);
 
     // split iban
     if (vm.iban()) {
@@ -186,7 +199,8 @@ function loadData(data) {
     }
 
     loadTiposVia(data.tipoViaId);
-    loadFormasPago(data.formaPagoId)
+    loadFormasPago(data.formaPagoId);
+    loadTiposProveedor(data.tipoProveedor);
 }
 
 function datosOK() {
@@ -207,13 +221,19 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
+            cmbTiposProveedor: {
+                required: true
+            },
             txtFechaAlta: {
-                required: true,
+                required: true
             },
             txtfechaBaja: {
                 greaterThan: "#txtFechaAlta",
             },
             txtCodigo: {
+                required: true
+            },
+            txtCodigoProfesional: {
                 required: true
             }
         },
@@ -231,11 +251,17 @@ function datosOK() {
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
             },
+            cmbTiposProveedor: {
+                required: "Debe elegir un tipo de proveedor"
+            },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha"
             },
             txtCodigo: {
                 required: "Debe introducir un código para la contabilidad"
+            },
+            txtCodigoProfesional: {
+                required: "Debe introducir un código profesional de proveedor"
             }
         },
         // Do not change code below
@@ -275,6 +301,7 @@ function aceptar() {
                 "telefono": vm.telefono(),
                 "correo": vm.correo(),
                 "tipoViaId": vm.stipoViaId(),
+                "tipoProveedor": vm.stipoProveedorId(),
                 "telefono2": vm.telefono2(),
                 "movil": vm.movil(),
                 "movil2": vm.movil2(),
@@ -285,7 +312,9 @@ function aceptar() {
                 "motivo_Baja": vm.motivoBaja(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
-                "IBAN": vm.iban()
+                "IBAN": vm.iban(),
+                "codigoProfesional": vm.codigoProfesional(),
+                "fianza": numeroDbf(vm.fianza())
 
             }
         };
@@ -350,6 +379,24 @@ function loadTiposVia(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposProveedor(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_proveedor",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProveedor = [{ tipoProveedorId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposProveedor(tiposProveedor);
+            $("#cmbTiposProveedor").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
