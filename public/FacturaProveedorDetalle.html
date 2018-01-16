@@ -406,7 +406,7 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-2">
-                                                    <label class="label">Num. fact. proveedor</label>
+                                                    <label class="label">Nro. fact. proveedor</label>
                                                     <label class="input">
                                                         <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
                                                     </label>
@@ -444,7 +444,13 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-6"></section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Nro. Interno</label>
+                                                    <label class="input">
+                                                        <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveId" disabled/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-4"></section>
                                                 <section class="col col-md-2">
                                                     <label class="label">% Retención</label>
                                                     <label class="input">
@@ -598,7 +604,7 @@
                                                         <section class="col col-md-12">
                                                             <label class="label">CONTRATO ASOCIADO</label>
                                                             <label style="width:100%;">
-                                                                <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                                                <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
                                                             </label>
                                                         </section>
                                                     </div>

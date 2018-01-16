@@ -73,6 +73,7 @@ function initForm() {
         var data = {
             proveedorId: proId
         }
+        $('#txtCodigo').attr('disabled', true)
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -134,7 +135,7 @@ function admData() {
     self.fechaBaja = ko.observable();
     self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
-    self.fianza = ko.observable();
+    self.fianza = ko.observable('0,00');
     self.codigoProfesional = ko.observable();
     self.iban = ko.observable();
     self.iban1 = ko.observable();
@@ -287,6 +288,7 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
+        if(!vm.fianza() || vm.fianza() == '') vm.fianza('0,00'); 
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),

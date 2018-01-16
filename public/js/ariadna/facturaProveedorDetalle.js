@@ -463,7 +463,7 @@ var loadContratos = function (contratoId) {
 }
 
 var cargarContratos = function (data) {
-    var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
+    var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
     vm.posiblesContratos(contratos);
     $("#cmbContratos").val([data.contratoId]).trigger('change');
 }
