@@ -6,6 +6,8 @@ var proId = 0;
 
 var numDigitos = 0; // número de digitos de cuenta contable
 
+var intentos = 0;
+
 
 datePickerSpanish(); // see comun.js
 
@@ -417,14 +419,22 @@ function loadFormasPago(formaPagoId) {
 }
 
 function cambioCodigoProveedor(data) {
-    llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
-        if (err) return;
-        if(data) {
-            mostrarMensajeSmart('La cuenta contable ya existe');
-        }else{
+    if (intentos == 0){
+        var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
+        vm.cuentaContable(codmacta);
+        intentos = 1;
+    }else{
+        llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
+            if (!data) {
+                mostrarMensajeSmart('La cuenta contable esta disponible');
+            };
+            if(data) {
+                mostrarMensajeSmart('La cuenta contable ya existe');
+            }
             var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
             vm.cuentaContable(codmacta);
-        }
-    });
+        });
+    }
+    
 }
 
