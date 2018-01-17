@@ -574,9 +574,9 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-4">
-                                                                                    <label class="label">Motivo baja</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtMotivoBaja" name="txtMotivoBaja" data-bind="value: motivoBaja" />
+                                                                                    <label class="label">Motivo de baja</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-4">

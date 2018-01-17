@@ -16,3 +16,11 @@ ALTER TABLE `proveedores`
 
 ALTER TABLE `proveedores`   
   ADD  UNIQUE INDEX `unica_codigo` (`codigo`);
+
+
+ALTER TABLE `proveedores`   
+  CHANGE `motivo_baja` `motivoBajaId` INT(11) NULL;
+
+ALTER TABLE `proveedores`  
+  ADD CONSTRAINT `proveedores_motivosBaja` FOREIGN KEY (`motivoBajaId`) REFERENCES `motivos_baja`(`motivoBajaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+

@@ -34,6 +34,8 @@ function initForm() {
     loadFormasPago();
     $("#cmbTiposProveedor").select2(select2Spanish());
     loadTiposProveedor();
+    $("#cmbMotivosBaja").select2(select2Spanish());
+    loadMotivosBaja();
 
     $("#txtCodigo").blur(function () {
         cambioCodigoProveedor();
@@ -135,7 +137,6 @@ function admData() {
     self.contacto = ko.observable();
     self.fechaAlta = ko.observable();
     self.fechaBaja = ko.observable();
-    self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
     self.fianza = ko.observable('0,00');
     self.codigoProfesional = ko.observable();
@@ -164,6 +165,12 @@ function admData() {
     //
     self.posiblesTiposProveedor = ko.observableArray([]);
     self.elegidosTiposProveedor = ko.observableArray([]);
+    //
+    self.motivoBajaId = ko.observable();
+    self.smotivoBajaId = ko.observable();
+    //
+    self.posiblesMotivosBaja = ko.observableArray([]);
+    self.elegidosMotivosBaja = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -185,7 +192,6 @@ function loadData(data) {
     vm.contacto(data.persona_contacto);
     vm.fechaAlta(spanishDate(data.fechaAlta));
     vm.fechaBaja(spanishDate(data.fechaBaja));
-    vm.motivoBaja(data.motivo_baja);
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
@@ -204,6 +210,7 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
+    loadMotivosBaja(data.motivoBajaId);
 }
 
 function datosOK() {
@@ -313,7 +320,7 @@ function aceptar() {
                 "persona_contacto": vm.contacto(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                "motivo_Baja": vm.motivoBaja(),
+                "motivoBajaId": vm.smotivoBajaId(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
                 "IBAN": vm.iban(),
@@ -418,23 +425,26 @@ function loadFormasPago(formaPagoId) {
     });
 }
 
+function loadMotivosBaja(id) {
+    llamadaAjax("GET", '/api/motivos_baja', null, function (err, data) {
+        if (err) return;
+        var motivoBaja = [{ motivoBajaId: 0, nombre: "" }].concat(data);
+        vm.posiblesMotivosBaja(motivoBaja);
+        $("#cmbMotivosBaja").val([id]).trigger('change');
+    });
+}
+
+
 function cambioCodigoProveedor(data) {
-    if (intentos == 0){
-        var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
-        vm.cuentaContable(codmacta);
-        intentos = 1;
-    }else{
         llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
             if (!data) {
-                mostrarMensajeSmart('La cuenta contable esta disponible');
-            };
+                
+            }
             if(data) {
                 mostrarMensajeSmart('La cuenta contable ya existe');
             }
             var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
             vm.cuentaContable(codmacta);
         });
-    }
-    
 }
 
