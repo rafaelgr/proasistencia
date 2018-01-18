@@ -102,7 +102,7 @@ CREATE TABLE `facprove_lineas` (
   CONSTRAINT `Xrefl_unidades` FOREIGN KEY (`unidadId`) REFERENCES `unidades` (`unidadId`)
 ) ENGINE=INNODB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-ALTER TABLE `proasistencia`.`facprove`   
+ALTER TABLE `facprove`   
   DROP COLUMN `contratoClienteMantenimientoId`, 
   DROP COLUMN `facturaId`, 
   DROP INDEX `pref_contratos`,
@@ -110,13 +110,13 @@ ALTER TABLE `proasistencia`.`facprove`
   DROP FOREIGN KEY `RX_contratos`,
   DROP FOREIGN KEY `RX_facturas`;
 
-  ALTER TABLE `proasistencia`.`facprove`   
+  ALTER TABLE `facprove`   
   DROP COLUMN `mantenedorDesactivado`;
 
-  ALTER TABLE `proasistencia`.`facprove`   
+  ALTER TABLE `facprove`   
   DROP COLUMN `generada`;
 
 
-ALTER TABLE `proasistencia`.`facprove`   
+ALTER TABLE `facprove`   
   ADD COLUMN `numeroFacturaProveedor` VARCHAR(255) NULL AFTER `importeRetencion`;
 

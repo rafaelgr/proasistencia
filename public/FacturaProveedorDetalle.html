@@ -190,6 +190,11 @@
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
                         </li>
+                        <li id="tiposProveedor">
+                            <a href="TipoProveedorGeneral.html">
+                                <i class="fa fa-address-card"></i> Tipos de proveedores
+                            </a>
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -401,7 +406,7 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-2">
-                                                    <label class="label">Num. fact. proveedor</label>
+                                                    <label class="label">Nro. fact. proveedor</label>
                                                     <label class="input">
                                                         <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
                                                     </label>
@@ -439,7 +444,13 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-6"></section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Nro. Interno</label>
+                                                    <label class="input">
+                                                        <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveId" disabled/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-4"></section>
                                                 <section class="col col-md-2">
                                                     <label class="label">% Retención</label>
                                                     <label class="input">
@@ -593,7 +604,7 @@
                                                         <section class="col col-md-12">
                                                             <label class="label">CONTRATO ASOCIADO</label>
                                                             <label style="width:100%;">
-                                                                <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                                                <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
                                                             </label>
                                                         </section>
                                                     </div>
@@ -689,9 +700,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <!--<button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
+                                                <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
-                                                </button>-->
+                                                </button>
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>

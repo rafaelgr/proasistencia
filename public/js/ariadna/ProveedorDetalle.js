@@ -4,6 +4,10 @@ Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
 
+var numDigitos = 0; // número de digitos de cuenta contable
+
+var intentos = 0;
+
 
 datePickerSpanish(); // see comun.js
 
@@ -23,10 +27,20 @@ function initForm() {
         return false;
     });
 
+    //carga de combos
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
+    $("#cmbTiposProveedor").select2(select2Spanish());
+    loadTiposProveedor();
+    $("#cmbMotivosBaja").select2(select2Spanish());
+    loadMotivosBaja();
+
+    $("#txtCodigo").blur(function () {
+        cambioCodigoProveedor();
+    });
+
 
     //
     $.validator.addMethod("greaterThan",
@@ -42,11 +56,28 @@ function initForm() {
     }, 'La fecha de alta debe ser menor que la fecha de baja.');
 //
 
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            numDigitos = data.numDigitos
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+
     proId = gup('ProveedorId');
     if (proId != 0) {
         var data = {
             proveedorId: proId
         }
+        $('#txtCodigo').attr('disabled', true)
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -66,12 +97,31 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.proveedorId(0);
+         // contador de código
+         $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                vm.codigo(data.codigo);
+                
+                setTimeout(cambioCodigoProveedor, 1000);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     }
 }
 
 function admData() {
     var self = this;
     self.proveedorId = ko.observable();
+    self.codigo = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -88,8 +138,9 @@ function admData() {
     self.contacto = ko.observable();
     self.fechaAlta = ko.observable();
     self.fechaBaja = ko.observable();
-    self.motivoBaja = ko.observable();
     self.cuentaContable = ko.observable();
+    self.fianza = ko.observable('0,00');
+    self.codigoProfesional = ko.observable();
     self.iban = ko.observable();
     self.iban1 = ko.observable();
     self.iban2 = ko.observable();
@@ -109,10 +160,23 @@ function admData() {
     //
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
+    //
+    self.tipoProveedorId = ko.observable();
+    self.stipoProveedorId = ko.observable();
+    //
+    self.posiblesTiposProveedor = ko.observableArray([]);
+    self.elegidosTiposProveedor = ko.observableArray([]);
+    //
+    self.motivoBajaId = ko.observable();
+    self.smotivoBajaId = ko.observable();
+    //
+    self.posiblesMotivosBaja = ko.observableArray([]);
+    self.elegidosMotivosBaja = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.proveedorId(data.proveedorId);
+    vm.codigo(data.codigo);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -129,9 +193,10 @@ function loadData(data) {
     vm.contacto(data.persona_contacto);
     vm.fechaAlta(spanishDate(data.fechaAlta));
     vm.fechaBaja(spanishDate(data.fechaBaja));
-    vm.motivoBaja(data.motivo_baja);
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
+    vm.fianza(numeral(data.fianza).format('0,0.00'));
+    vm.codigoProfesional(data.codigoProfesional);
 
     // split iban
     if (vm.iban()) {
@@ -144,7 +209,9 @@ function loadData(data) {
     }
 
     loadTiposVia(data.tipoViaId);
-    loadFormasPago(data.formaPagoId)
+    loadFormasPago(data.formaPagoId);
+    loadTiposProveedor(data.tipoProveedor);
+    loadMotivosBaja(data.motivoBajaId);
 }
 
 function datosOK() {
@@ -165,12 +232,22 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
+            cmbTiposProveedor: {
+                required: true
+            },
             txtFechaAlta: {
-                required: true,
+                required: true
             },
             txtfechaBaja: {
                 greaterThan: "#txtFechaAlta",
             },
+            txtCodigo: {
+                required: true,
+                digits: true
+            },
+            txtCodigoProfesional: {
+                required: true
+            }
         },
         // Messages for form validation
         messages: {
@@ -186,8 +263,18 @@ function datosOK() {
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
             },
+            cmbTiposProveedor: {
+                required: "Debe elegir un tipo de proveedor"
+            },
             txtFechaAlta: {
-                required: "Debe seleccionar una fecha",
+                required: "Debe seleccionar una fecha"
+            },
+            txtCodigo: {
+                required: "Debe introducir un código para la contabilidad",
+                digits: "Debe introducir un número"
+            },
+            txtCodigoProfesional: {
+                required: "Debe introducir un código profesional de proveedor"
             }
         },
         // Do not change code below
@@ -213,9 +300,11 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
+        if(!vm.fianza() || vm.fianza() == '') vm.fianza('0,00'); 
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
+                "codigo": vm.codigo(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
@@ -226,6 +315,7 @@ function aceptar() {
                 "telefono": vm.telefono(),
                 "correo": vm.correo(),
                 "tipoViaId": vm.stipoViaId(),
+                "tipoProveedor": vm.stipoProveedorId(),
                 "telefono2": vm.telefono2(),
                 "movil": vm.movil(),
                 "movil2": vm.movil2(),
@@ -233,10 +323,12 @@ function aceptar() {
                 "persona_contacto": vm.contacto(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                "motivo_Baja": vm.motivoBaja(),
+                "motivoBajaId": vm.smotivoBajaId(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
-                "IBAN": vm.iban()
+                "IBAN": vm.iban(),
+                "codigoProfesional": vm.codigoProfesional(),
+                "fianza": numeroDbf(vm.fianza())
 
             }
         };
@@ -309,6 +401,24 @@ function loadTiposVia(id) {
     });
 }
 
+function loadTiposProveedor(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_proveedor",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProveedor = [{ tipoProveedorId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposProveedor(tiposProveedor);
+            $("#cmbTiposProveedor").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 function loadFormasPago(formaPagoId) {
     llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
         if (err) return;
@@ -316,5 +426,31 @@ function loadFormasPago(formaPagoId) {
         vm.posiblesFormasPago(formasPago);
         $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
+}
+
+function loadMotivosBaja(id) {
+    llamadaAjax("GET", '/api/motivos_baja', null, function (err, data) {
+        if (err) return;
+        var motivoBaja = [{ motivoBajaId: 0, nombre: "" }].concat(data);
+        vm.posiblesMotivosBaja(motivoBaja);
+        $("#cmbMotivosBaja").val([id]).trigger('change');
+    });
+}
+
+
+function cambioCodigoProveedor(data) {
+    if(vm.codigo()){
+        llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
+            if (!data) {
+                
+            }
+            if(data) {
+                mostrarMensajeSmart('La cuenta contable ya existe');
+            }
+            var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
+            vm.cuentaContable(codmacta);
+        });
+    }
+        
 }
 

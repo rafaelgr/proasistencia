@@ -192,6 +192,11 @@
                                 <i class="fa fa-map-marker"></i> Tipos de via
                             </a>
                         </li>
+                        <li id="tiposProveedor">
+                            <a href="TipoProveedorGeneral.html">
+                                <i class="fa fa-address-card"></i> Tipos de proveedores
+                            </a>
+                        </li>
                         <li id="formaspago">
                             <a href="FormaPagoGeneral.html">
                                 <i class="fa fa-money"></i> Formas de pago
@@ -443,7 +448,19 @@
                                                                                         <input id="txtProveedorId" name="txtProveedorId" type="text" data-bind="value: proveedorId" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-10">
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Codigo contable:</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCodigo" name="txtCodigo" type="text" maxlength="4" data-bind="value: codigo" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Codigo profesional:</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCodigoProfesional" name="txtCodigoProfesional" type="text" data-bind="value: codigoProfesional" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
                                                                                 </section>                                          
                                                                             </div>
                                                                             <div class="row">
@@ -556,10 +573,17 @@
                                                                                         <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-8">
-                                                                                    <label class="label">Motivo baja</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtMotivoBaja" name="txtMotivoBaja" data-bind="value: motivoBaja" />
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Motivo de baja</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Tipo profesional</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbTiposProveedor" name="cmbTiposProveedor" data-bind="options: posiblesTiposProveedor, optionsText: 'nombre', optionsValue: 'tipoProveedorId', value: stipoProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposProveedor, selected2:{}"></select>
+                                                                                        <i></i>
                                                                                     </label>
                                                                                 </section>
                                                                             </div>
@@ -607,10 +631,19 @@
                                                                                 <section class="col col-md-3">
                                                                                     <label class="label">Cuenta contable</label>
                                                                                     <label class="input">
-                                                                                        <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" />
+                                                                                        <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" disabled />
                                                                                     </label>
                                                                                 </section>
                                                                                 
+                                                                                <section class="col col-md-3"></section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-2">
+                                                                                        <label class="label">Fianza</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtFianza" name="txtFianza" data-bind="value: fianza" />
+                                                                                        </label>
+                                                                                        </section>
                                                                                 <section class="col col-md-3">
                                                                                     <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%;">
@@ -618,6 +651,7 @@
                                                                                         <i></i>
                                                                                     </label>
                                                                                 </section>
+                                                                                <section class="col col-md-7"></section>
                                                                             </div>
                                                                         </fieldset>
                                                                         <fieldset>
