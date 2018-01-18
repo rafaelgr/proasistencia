@@ -46,7 +46,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
-    //$("#btnImprimir").click(imprimir);
+    $("#btnImprimir").click(imprimir);
     $("#frmFactura").submit(function () {
         return false;
     });
@@ -137,7 +137,7 @@ function initForm() {
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
-        //$("#btnImprimir").hide();
+        $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
@@ -1237,7 +1237,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 }
 
 var imprimir = function () {
-    printPrefactura2(vm.facproveId());
+    printfacprove2(vm.facproveId());
 }
 
 function printPrefactura(id) {
@@ -1247,8 +1247,8 @@ function printPrefactura(id) {
     });
 }
 
-function printPrefactura2(id) {
-    var url = "InfPrefacturas.html?facproveId=" + id;
+function printfacprove2(id) {
+    var url = "InfFacturasProveedores.html?facproveId=" + id;
     window.open(url, "_new");
 }
 

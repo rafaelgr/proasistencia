@@ -110,7 +110,7 @@ function initForm() {
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
-    initAutoCliente();
+    initAutoProveedor();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
     if (gup('facproveId') != "") {
@@ -137,11 +137,11 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     //
-    self.clienteId = ko.observable();
-    self.sclienteId = ko.observable();
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
     //
-    self.posiblesClientes = ko.observableArray([]);
-    self.elegidosClientes = ko.observableArray([]);
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
 };
 
 var obtainReport = function () {
@@ -268,20 +268,20 @@ function loadEmpresas(empresaId) {
     });
 }
 
-// initAutoCliente
-// inicializa el control del cliente como un autocomplete
-var initAutoCliente = function () {
+// initAutoProveedor
+// inicializa el control del proveedor como un autocomplete
+var initAutoProveedor = function () {
     // incialización propiamente dicha
-    $("#txtCliente").autocomplete({
+    $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("GET", "/api/proveedores/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
                         value: d.nombre,
-                        id: d.clienteId
+                        id: d.proveedorId
                     };
                     r.push(v);
                 });
@@ -290,14 +290,14 @@ var initAutoCliente = function () {
         },
         minLength: 2,
         select: function (event, ui) {
-            vm.sclienteId(ui.item.id);
+            vm.sproveedorId(ui.item.id);
         }
     });
 };
 
 var rptFacturaParametros = function (sql) {
     var facproveId = vm.facproveId();
-    var clienteId = vm.sclienteId();
+    var proveedorId = vm.sproveedorId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -305,8 +305,8 @@ var rptFacturaParametros = function (sql) {
     if (facproveId) {
         sql += " AND pf.facproveId IN (" + facproveId + ")";
     } else {
-        if (clienteId) {
-            sql += " AND pf.clienteId IN (" + clienteId + ")";
+        if (proveedorId) {
+            sql += " AND pf.proveedorId IN (" + proveedorId + ")";
         }
         if (empresaId) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
@@ -325,20 +325,20 @@ var rptFacturaParametros = function (sql) {
 var exportarPDF = function () {
     $("#mensajeExportacion").hide();
     $("#mensajeEspera").show();
-    var clienteId = vm.sclienteId();
+    var proveedorId = vm.sproveedorId();
     var empresaId = vm.sempresaId();
 
     if (!empresaId) empresaId = 0;
-    if (!clienteId) clienteId = 0;
+    if (!proveedorId) proveedorId = 0;
 
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
 
     // (1) Obtener una lista de las facturas implicadas.
     // la lista debe devolver también el fichero de informe asociado
-    var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
+    var url = "/api/facturasProveedores/facpdf/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
-    url += "/" + clienteId;
+    url += "/" + proveedorId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) {
             // hay que informar de error durante la exportación

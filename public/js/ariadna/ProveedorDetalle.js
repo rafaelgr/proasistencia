@@ -107,7 +107,8 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
-                cambioCodigoProveedor();
+                
+                setTimeout(cambioCodigoProveedor, 1000);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -241,7 +242,8 @@ function datosOK() {
                 greaterThan: "#txtFechaAlta",
             },
             txtCodigo: {
-                required: true
+                required: true,
+                digits: true
             },
             txtCodigoProfesional: {
                 required: true
@@ -268,7 +270,8 @@ function datosOK() {
                 required: "Debe seleccionar una fecha"
             },
             txtCodigo: {
-                required: "Debe introducir un código para la contabilidad"
+                required: "Debe introducir un código para la contabilidad",
+                digits: "Debe introducir un número"
             },
             txtCodigoProfesional: {
                 required: "Debe introducir un código profesional de proveedor"
@@ -436,6 +439,7 @@ function loadMotivosBaja(id) {
 
 
 function cambioCodigoProveedor(data) {
+    if(vm.codigo()){
         llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
             if (!data) {
                 
@@ -446,5 +450,7 @@ function cambioCodigoProveedor(data) {
             var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
             vm.cuentaContable(codmacta);
         });
+    }
+        
 }
 
