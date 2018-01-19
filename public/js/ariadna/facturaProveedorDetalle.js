@@ -293,9 +293,11 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
+    setTimeout(function() {
+        loadContratos(data.contratoId);
+    }, 1000);
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
-    loadContratos(data.contratoId);
     vm.observaciones(data.observaciones);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
@@ -455,18 +457,22 @@ function loadFormasPago(formaPagoId) {
 
 var loadContratos = function (contratoId) {
     var url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
-    if (contratoId) url = "/api/contratos/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
-        cargarContratos(data);
+        cargarContratos(data, contratoId);
     });
 }
 
-var cargarContratos = function (data) {
+var cargarContratos = function (data, contratoId) {
     var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
     vm.posiblesContratos(contratos);
-    $("#cmbContratos").val([data.contratoId]).trigger('change');
+    if(contratoId){
+        $("#cmbContratos").val([contratoId]).trigger('change');
+    }else{
+        $("#cmbContratos").val(0).trigger('change');
+    }
 }
+    
 
 
 function cambioProveedor(proveedorId) {
