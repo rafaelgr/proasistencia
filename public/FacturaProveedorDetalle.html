@@ -382,7 +382,7 @@
             <!-- widget grid CABECERA-->
             <section id="widget-grid" class="">
                 <div class="row" id="principal">
-                    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                    <div class="jarviswidget" id="wid-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                         <header>
                                 <span class="widget-icon">
                                     <i class="fa fa-edit"></i>
@@ -410,7 +410,7 @@
                                         <!-- NEW WIDGET START -->
                                         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <!-- Widget ID (each widget will need unique ID)-->
-                                            <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                            <div class="jarviswidget" id="wid-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                 <header>
                                                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                     <h2>CABECERA</h2>
@@ -752,7 +752,7 @@
                                     <!-- NEW WIDGET START -->
                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <!-- Widget ID (each widget will need unique ID)-->
-                                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                        <div class="jarviswidget" id="wid-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                             <header>
                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                 <h2>LINEAS DE factura</h2>
@@ -829,7 +829,7 @@
                                     <!-- NEW WIDGET START -->
                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <!-- Widget ID (each widget will need unique ID)-->
-                                        <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                        <div class="jarviswidget" id="wid-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                             <!-- widget options:
                                                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
                                                     
@@ -897,7 +897,7 @@
                                             <div class="row">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2 data-i18n="docDetail.title">Mantenimiento</h2>
@@ -908,12 +908,12 @@
                                                                     <div class="row">
                                                                         <!-- DOCUMENT -->
                                                                         <section class="col col-md-8">
-                                                                            <div id="P1Title" class="row" style="display:none">
+                                                                            <div id="P1Title" class="row">
                                                                                 <section class="col col-md-12">
-                                                                                    <h3 data-i18n="docDetail.step1">P1</h3>
+                                                                                    <h3>Escoja el documento a subir</h3>
                                                                                 </section>
                                                                             </div>
-                                                                            <div id="P1Loader" class="row" style="display:none">
+                                                                            <div id="P1Loader" class="row">
                                                                                 <section class="col col-md-6">
                                                                                     <div class="progress">
                                                                                         <div class="progress-bar" role="progressbar"></div>
@@ -961,22 +961,7 @@
                                                                                     </label>
                                                                                 </section>
                                                                             </div>
-                                                                            <div class="row">
-                                                                                <section class="col col-md-12">
-                                                                                    <label class="label" data-18n="docDetail.docType">Tipo documento:</label>
-                                                                                    <label style="width:100%;">
-                                                                                        <select style="width:100%" id="cmbDts" name="cmbDts" data-bind="options: optionsDts, optionsText: 'name', optionsValue: 'id', value: sDt, valueAllowUnset: true, selectedOptions: selectedDts, selected2:{}"></select><i></i>
-                                                                                    </label>
-                                                                                </section>
-                                                                            </div>												
-                                                                            <div id="pwDiv" class="row">
-                                                                                <section class="col col-md-12">
-                                                                                    <label class="label" data-18n="docDetail.pwName">Propuesta:</label>
-                                                                                    <label style="width:100%;">
-                                                                                        <select style="width:100%" id="cmbPws" name="cmbPws" data-bind="options: optionsPws, optionsText: 'name', optionsValue: 'id', value: sPw, valueAllowUnset: true, selectedOptions: selectedPws, selected2:{}"></select><i></i>
-                                                                                    </label>
-                                                                                </section>
-                                                                            </div>
+
                                                                             <div class="row">
                                                                                 <section class="col col-md-12">
                                                                                     <label class="label" data-i18n="docDetail.comments">Onservaciones:</label>

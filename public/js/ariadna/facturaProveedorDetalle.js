@@ -260,7 +260,12 @@ function admData() {
     self.porcentajeRetencion = ko.observable();
     self.importeRetencion = ko.observable();
 
-    
+    //valores para carga de archivos
+    self.docId = ko.observable();
+    self.name = ko.observable();
+    self.docDate = ko.observable();
+    self.comments = ko.observable();
+    self.file = ko.observable();
 }
 
 function loadData(data) {
