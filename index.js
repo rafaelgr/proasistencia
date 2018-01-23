@@ -55,6 +55,8 @@ var tipos_proyectos_router = require('./lib/tipos_proyectos/tipos_proyectos_cont
 var textos_predeterminados_router = require('./lib/textos_predeterminados/textos_predeterminados_controller');
 var correoElectronico = require('./lib/correoElectronico/correoElectronico.controller');
 var plantillas_correo = require('./lib/plantillas_correo/plantillas_correo_controller');
+var upload = require('./lib/upload/upload');
+var doc = require('./lib/doc/doc_controller');
 
 
 
@@ -137,6 +139,8 @@ app.use('/api/textos_predeterminados', textos_predeterminados_router);
 app.use('/api/streport', require('./report-controller/reportdb'));
 app.use('/api/correoElectronico', correoElectronico);
 app.use('/api/plantillas_correo_facturas', plantillas_correo);
+app.use('/api/upload', upload);
+app.use('/api/doc', doc);
 
 // -- start server
 var server = require('http').createServer(app); 

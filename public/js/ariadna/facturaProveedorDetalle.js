@@ -11,6 +11,7 @@ var facproveId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
+var refWoId = 0;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -26,7 +27,7 @@ var breakpointDefinition = {
 datePickerSpanish(); // see comun.js
 
 function initForm() {
-    comprobarLogin();
+    var user = comprobarLogin();
     // de smart admin
     pageSetUp();
     // 
@@ -63,6 +64,9 @@ function initForm() {
     $('#modalLinea').on('shown.bs.modal', function () {
         $('#txtDescripcion').focus();
     })
+
+    //evento del boton ok de pestaña pdf
+    $('#btnOk').click(btnOk());
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
@@ -123,8 +127,67 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
+
+    //evento asociado a la carga de un archivo
+    $('#upload-input').on('change', function () {
+        var files = $(this).get(0).files;
+        // control file extension whether refWoId has a value
+         if (files.length > 0) {
+            // create a FormData object which will be sent as the data payload in the
+            // AJAX request
+            var formData = new FormData();
+            // loop through all the selected files and add them to the formData object
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if (refWoId){
+                    var ext = file.name.split('.').pop().toLowerCase();
+                    if (allowedImageExtensions.indexOf(ext) == -1) {
+                        aswNotif.generalMessage(i18n.t('docDetail.onlyImages'));
+                        return;
+                    } 
+                }
+                // add the files to formData object for the data payload
+                formData.append('uploads[]', file, user + "@" + file.name);
+            }
+            $.ajax({
+                url: '/api/upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.file(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        }
+    });
+
     if (facproveId != 0) {
         // caso edicion
+        //getDoc(id);//se carga el pdf en la pesteña de facturas
+
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
@@ -133,6 +196,14 @@ function initForm() {
         })
     } else {
         // caso alta
+
+        //opciones pestalla pdf
+        $("#P1Title").show();
+        $("#P2Title").show();
+        $("#P1Loader").show();
+        $("#P2Title").show();
+        $('#btnDownload').hide();
+
         vm.facproveId(0);
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
@@ -266,6 +337,7 @@ function admData() {
     self.docDate = ko.observable();
     self.comments = ko.observable();
     self.file = ko.observable();
+    self.nombreFacprobePdf = ko.observable();
 }
 
 function loadData(data) {
@@ -295,6 +367,8 @@ function loadData(data) {
     vm.emisorPoblacion(data.emisorPoblacion);
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
+
+    vm.nombreFacprobePdf(data.nombreFacprobePdf);
 
     //
     loadEmpresas(data.empresaId);
@@ -1301,6 +1375,95 @@ var recuperaParametrosPorDefecto = function (){
         if (err) return;
         loadDataLineaDefecto(data);
     });
+}
+
+//funciones de laa pestaña de facturas en PDF
+function getDoc (id) {
+    var url = sprintf("%s/doc/%s?api_key=%s", myconfig.apiUrl, id, api_key);
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        success: function (data, status) {
+            docDetailAPI.loadData(data[0]);
+        },
+        error: function (err) {
+            errorAjax(err);
+            if (err.status == 401) {
+                window.open('index.html', '_self');
+            }
+        }
+    });
+}
+
+function btnOk() {
+    var mf = function (e) {
+        // avoid default accion
+        e.preventDefault();
+        // validate form
+        if (!datosOK()) return;
+        // dat for post or put
+        var data = {
+            docId: vm.facproveId(),
+            name: vm.name(),
+            comments: vm.comments(),
+            file: vm.file(),
+            ext: ''
+        };
+        
+        
+        var url = "", type = "";
+        if (vm.nombreFacprobePdf() == '' || !vm.nombreFacprobePdf()) {
+            // creating new record
+            type = "POST";
+            url = '/api/doc';
+        } else {
+            // updating record
+            type = "PUT";
+            url = '/api/doc/' +vm.docId();
+        }
+        $.ajax({
+            type: type,
+            url: url,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                /*if (refPwId) {
+                    window.open('pwDetail.html?id=' + refPwId + "&doc=true", '_self');
+                } else if (refWoId) {
+                    window.open('woDetail.html?id=' + refWoId + "&doc=true", '_self');
+                } else {
+                    window.open('docGeneral.html', '_self');
+                }*/
+            },
+            error: function (err) {
+                errorAjax(err);
+                if (err.status == 401) {
+                    window.open('index.html', '_self');
+                }
+            }
+        });
+    }
+    return mf;
+}
+
+ function checkVisibility(filename) {
+    var ext = filename.split('.').pop().toLowerCase();
+    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+        // see it in container
+        var url = "/ficheros/uploads/" + filename;
+        if (ext == "pdf") {
+            // <iframe src="" width="100%" height="600px"></iframe>
+            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+        } else {
+            // .html("<img src=' + this.href + '>");
+            $("#docContainer").html('<img src="' + url + '" width="100%">');;
+        }
+        $("#msgContainer").html('');
+    } else {
+        $("#msgContainer").html(i18n.t('docDetail.noVisible'));
+        $("#docContainer").html('');
+    }
 }
 
 
