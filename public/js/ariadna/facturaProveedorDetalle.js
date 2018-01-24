@@ -455,7 +455,7 @@ function loadFormasPago(formaPagoId) {
 
 var loadContratos = function (contratoId) {
     var url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
-    if (contratoId) url = "/api/contratos/" + contratoId;
+    if (contratoId) url = "/api/contratos/concat/referencia/direccion/tipo/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
