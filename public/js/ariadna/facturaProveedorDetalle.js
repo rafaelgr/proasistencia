@@ -183,13 +183,14 @@ function initForm() {
 
     if (facproveId != 0) {
         // caso edicion
-        //getDoc(id);//se carga el pdf en la pesteña de facturas
+        
 
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
+            
         })
     } else {
         // caso alta
@@ -384,6 +385,10 @@ function loadData(data) {
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
     }
+    //se carga el pdf de la factura si existe
+    if(vm.nombreFacprovePdf()) {
+        loadDoc(vm.nombreFacprovePdf());
+    }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
 }
@@ -448,43 +453,11 @@ var aceptarFactura = function () {
     }
 
     if(vm.file()){
-        var ext = vm.file().split('.').pop().toLowerCase();
-        
-        var dataPdf = {
-            docId: vm.facproveIdOfrecida(),
-            file: vm.file(),
-            ext: ext
-        };
-    
-    
-        var url = "", type = "";
-        if (vm.nombreFacprovePdf() == '' || !vm.nombreFacprovePdf()) {
-            // creating new record
-            type = "POST";
-            url = '/api/doc';
-        } else {
-            // updating record
-            type = "PUT";
-            url = '/api/doc/' +vm.docId();
-        }
-        $.ajax({
-            type: type,
-            url: url,
-            contentType: "application/json",
-            data: JSON.stringify(dataPdf),
-            success: function (data, status) {
-                vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
-            },
-            error: function (err) {
-                errorAjax(err);
-                if (err.status == 401) {
-                    window.open('index.html', '_self');
-                }
-            }
-        });
+        var ext = saveDoc();
+        vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
     }
     
-
+    
     var data = generarFacturaDb();
     // caso alta
     var verb = "POST";
@@ -1419,22 +1392,24 @@ var recuperaParametrosPorDefecto = function (){
 }
 
 //funciones de la pestaña de facturas en PDF
-function getDoc (id) {
-    var url = sprintf("%s/doc/%s?api_key=%s", myconfig.apiUrl, id, api_key);
-    $.ajax({
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        success: function (data, status) {
-            docDetailAPI.loadData(data[0]);
-        },
-        error: function (err) {
-            errorAjax(err);
-            if (err.status == 401) {
-                window.open('index.html', '_self');
-            }
+
+function loadDoc(filename) {
+    var ext = filename.split('.').pop().toLowerCase();
+    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+        // see it in container
+        var url = "/../../../ficheros/facturas_proveedores/" + filename;
+        if (ext == "pdf") {
+            // <iframe src="" width="100%" height="600px"></iframe>
+            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="140%" height="600px"></iframe>');
+        } else {
+            // .html("<img src=' + this.href + '>");
+            $("#docContainer").html('<img src="' + url + '" width="100%">');;
         }
-    });
+        $("#msgContainer").html('');
+    } else {
+        $("#msgContainer").html('Vista previa no dispònible');
+        $("#docContainer").html('');
+    }
 }
 
 
@@ -1455,6 +1430,43 @@ function getDoc (id) {
         $("#msgContainer").html(i18n.t('docDetail.noVisible'));
         $("#docContainer").html('');
     }
+}
+
+function saveDoc() {
+    var ext = vm.file().split('.').pop().toLowerCase();
+        
+        var dataPdf = {
+            docId: vm.facproveIdOfrecida(),
+            file: vm.file(),
+            ext: ext
+        };
+
+    var url = "", type = "";
+        //if (vm.nombreFacprovePdf() == '' || !vm.nombreFacprovePdf()) {
+            // creating new record
+            type = "POST";
+            url = '/api/doc';
+        //} else {
+            // updating record
+            //type = "PUT";
+            //url = '/api/doc/' +vm.nombreFacprovePdf();
+        //}
+        $.ajax({
+            type: type,
+            url: url,
+            contentType: "application/json",
+            data: JSON.stringify(dataPdf),
+            success: function (data, status) {
+                
+            },
+            error: function (err) {
+                errorAjax(err);
+                if (err.status == 401) {
+                    window.open('index.html', '_self');
+                }
+            }
+        });
+    return ext;
 }
 
 
