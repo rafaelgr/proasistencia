@@ -471,7 +471,7 @@
                                                                     <section class="col col-md-2">
                                                                         <label class="label">Nro. Interno</label>
                                                                         <label class="input">
-                                                                            <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveId" disabled/>
+                                                                            <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveIdOfrecida" disabled/>
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-4"></section>
@@ -936,55 +936,14 @@
                                                                             </div>
                                                                         </section>
                                                                         <!-- END DOCUMENT -->
-                                                                        <!-- DATA -->
-                                                                        <section class="col col-md-4">
-                                                                            <div id="P2Title" class="row" style="display:none">
-                                                                                <section class="col col-md-12">
-                                                                                    <h3 data-i18n="docDetail.step2">P1</h3>
-                                                                                </section>
-                                                                            </div>
-                                                                            <!--
-                                                                            <div class="row">
-                                                                                <section class="col col-md-12">
-                                                                                    <label class="label" data-i18n="docDetail.name">Nombre:</label>
-                                                                                    <label class="input">
-                                                                                                <input id="txtName" name="txtName" data-bind="value: name">
-                                                                                            </label>
-                                                                                </section>
-                                                                            </div>
-                                                                            -->
-                                                                            <div class="row">
-                                                                                <section class="col col-md-6">
-                                                                                    <label class="label" data-i18n="docDetail.docDate">Fecha:</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txDocDate" name="txtDocDate" data-bind="value: docDate" class="datepicker" data-dateformat="dd/mm/yy">
-                                                                                    </label>
-                                                                                </section>
-                                                                            </div>
-
-                                                                            <div class="row">
-                                                                                <section class="col col-md-12">
-                                                                                    <label class="label" data-i18n="docDetail.comments">Onservaciones:</label>
-                                                                                    <label class="textarea textarea-resizable">
-                                                                                        <textarea id="txtComments" rows="5" class="custom-scroll" data-bind="value:comments"></textarea>
-                                                                                    </label>
-                                                                                </section>
-                                                                            </div>
-                                                                        </section>
-                                                                        <!-- END DATA -->
+                                                                        
                                                                     </div>
                                                                 </fieldset>
                                                                 <fieldset>
                                                                     <div class="pull-right">
-                                                                        <button id="btnExit" data-i18n="[title]docDetail.cancel" class="btn btn-warning btn-circle btn-lg">
-                                                                            <i class="fa fa-lg fa-sign-out"></i>
-                                                                        </button>
                                                                         <button id="btnDownload" data-i18n="[title]docDetail.download" class="btn btn-primary btn-circle btn-lg">
                                                                             <i class="fa fa-lg fa-download"></i>
                                                                         </button>											
-                                                                        <button id="btnOk" data-i18n="[title]docDetail.ok" class="btn btn-success btn-circle btn-lg">
-                                                                            <i class="fa fa-lg fa-check"></i>
-                                                                        </button>
                                                                     </div>
                                                                 </fieldset>
                                                             </form>

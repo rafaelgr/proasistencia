@@ -65,9 +65,6 @@ function initForm() {
         $('#txtDescripcion').focus();
     })
 
-    //evento del boton ok de pestaña pdf
-    $('#btnOk').click(btnOk());
-
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -188,7 +185,7 @@ function initForm() {
         // caso edicion
         //getDoc(id);//se carga el pdf en la pesteña de facturas
 
-        llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + facproveId, null, function (err, data) {
+        llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
             loadLineasFactura(data.facproveId);
@@ -204,7 +201,7 @@ function initForm() {
         $("#P2Title").show();
         $('#btnDownload').hide();
 
-        vm.facproveId(0);
+        ofreceNumeroInterno();//se efrece la última id disponible por defecto
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -230,7 +227,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.facproveId = ko.observable();
-    
+    self.facproveIdOfrecida = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
@@ -332,16 +329,14 @@ function admData() {
     self.importeRetencion = ko.observable();
 
     //valores para carga de archivos
-    self.docId = ko.observable();
-    self.name = ko.observable();
-    self.docDate = ko.observable();
-    self.comments = ko.observable();
+    
     self.file = ko.observable();
-    self.nombreFacprobePdf = ko.observable();
+    self.nombreFacprovePdf = ko.observable();
 }
 
 function loadData(data) {
     vm.facproveId(data.facproveId);
+    vm.facproveIdOfrecida(data.facproveId);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
@@ -368,7 +363,7 @@ function loadData(data) {
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
 
-    vm.nombreFacprobePdf(data.nombreFacprobePdf);
+    vm.nombreFacprovePdf(data.nombreFacprovePdf);
 
     //
     loadEmpresas(data.empresaId);
@@ -451,15 +446,54 @@ var aceptarFactura = function () {
         vm.totalCuota('0');
         vm.totalConIva('0');
     }
+
+    if(vm.file()){
+        var ext = vm.file().split('.').pop().toLowerCase();
+        
+        var dataPdf = {
+            docId: vm.facproveIdOfrecida(),
+            file: vm.file(),
+            ext: ext
+        };
+    
+    
+        var url = "", type = "";
+        if (vm.nombreFacprovePdf() == '' || !vm.nombreFacprovePdf()) {
+            // creating new record
+            type = "POST";
+            url = '/api/doc';
+        } else {
+            // updating record
+            type = "PUT";
+            url = '/api/doc/' +vm.docId();
+        }
+        $.ajax({
+            type: type,
+            url: url,
+            contentType: "application/json",
+            data: JSON.stringify(dataPdf),
+            success: function (data, status) {
+                vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
+            },
+            error: function (err) {
+                errorAjax(err);
+                if (err.status == 401) {
+                    window.open('index.html', '_self');
+                }
+            }
+        });
+    }
+    
+
     var data = generarFacturaDb();
     // caso alta
     var verb = "POST";
-    var url = myconfig.apiUrl + "/api/facturasProveedores";
+    var url =  "/api/facturasProveedores";
     var returnUrl = "FacturaProveedorDetalle.html?cmd=nueva&facproveId=";
     // caso modificación
     if (facproveId != 0) {
         verb = "PUT";
-        url = myconfig.apiUrl + "/api/facturasProveedores/" + facproveId;
+        url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
     }
 
@@ -473,7 +507,7 @@ var aceptarFactura = function () {
 var generarFacturaDb = function () {
     var data = {
         facprove: {
-            "facproveId": vm.facproveId(),
+            "facproveId": vm.facproveIdOfrecida(),
             "numeroFacturaProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
@@ -501,7 +535,8 @@ var generarFacturaDb = function () {
             "totalAlCliente": vm.importeAlCliente(),
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
-            "importeRetencion": vm.importeRetencion()
+            "importeRetencion": vm.importeRetencion(),
+            "nombreFacprovePdf": vm.nombreFacprovePdf()
         }
     };
     return data;
@@ -596,6 +631,12 @@ function obrenerTipoClienteID(contratoId) {
     });
 }
 
+function ofreceNumeroInterno(){
+    llamadaAjax("GET", "/api/facturasProveedores/nuevo/Cod/proveedor/factura/ultimo/id", null, function (err, data) {
+        if (err) return;
+        vm.facproveIdOfrecida(data.facproveId);
+    });
+}
 
 
 /*------------------------------------------------------------------
@@ -633,7 +674,7 @@ function limpiaDataLinea(data) {
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET",  "/api/contratos/" + contratoId, null, function (err, data) {
         if (err) return;
         vm.porcentajeBeneficio(data.porcentajeBeneficio);
         vm.porcentajeAgente(data.porcentajeAgente);
@@ -666,15 +707,15 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url = myconfig.apiUrl + "/api/facturasProveedores/lineas";
+    var url =  "/api/facturasProveedores/lineas";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url = myconfig.apiUrl + "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
+        url =  "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + data.facproveId, null, function (err, data) {
+        llamadaAjax("GET",  "/api/facturasProveedores/" + data.facproveId, null, function (err, data) {
             cmd = "";
             loadData(data);
             loadLineasFactura(data.facproveId);
@@ -1035,9 +1076,9 @@ function deleteFacturaLinea(facproveLineaId) {
                 facproveId: vm.facproveId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturasProveedores/lineas/" + facproveLineaId, data, function (err, data) {
+        llamadaAjax("DELETE",  "/api/facturasProveedores/lineas/" + facproveLineaId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
+            llamadaAjax("GET",  "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasFactura(data.facproveId);
@@ -1265,11 +1306,11 @@ var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
     if (vm.totalLinea() === undefined || vm.facproveId() === 0) { 
         return;
     }else {
-        var url = myconfig.apiUrl + "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+        var url =  "/api/facturasProveedores/recalculo/" + vm.facproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
         
          llamadaAjax("PUT", url, null, function (err, data) {
              if (err) return;
-             llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
+             llamadaAjax("GET",  "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
                  loadLineasFactura(data.facproveId);
                  loadBasesFacprove(data.facproveId);
              });
@@ -1377,7 +1418,7 @@ var recuperaParametrosPorDefecto = function (){
     });
 }
 
-//funciones de laa pestaña de facturas en PDF
+//funciones de la pestaña de facturas en PDF
 function getDoc (id) {
     var url = sprintf("%s/doc/%s?api_key=%s", myconfig.apiUrl, id, api_key);
     $.ajax({
@@ -1396,56 +1437,6 @@ function getDoc (id) {
     });
 }
 
-function btnOk() {
-    var mf = function (e) {
-        // avoid default accion
-        e.preventDefault();
-        // validate form
-        if (!datosOK()) return;
-        // dat for post or put
-        var data = {
-            docId: vm.facproveId(),
-            name: vm.name(),
-            comments: vm.comments(),
-            file: vm.file(),
-            ext: ''
-        };
-        
-        
-        var url = "", type = "";
-        if (vm.nombreFacprobePdf() == '' || !vm.nombreFacprobePdf()) {
-            // creating new record
-            type = "POST";
-            url = '/api/doc';
-        } else {
-            // updating record
-            type = "PUT";
-            url = '/api/doc/' +vm.docId();
-        }
-        $.ajax({
-            type: type,
-            url: url,
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                /*if (refPwId) {
-                    window.open('pwDetail.html?id=' + refPwId + "&doc=true", '_self');
-                } else if (refWoId) {
-                    window.open('woDetail.html?id=' + refWoId + "&doc=true", '_self');
-                } else {
-                    window.open('docGeneral.html', '_self');
-                }*/
-            },
-            error: function (err) {
-                errorAjax(err);
-                if (err.status == 401) {
-                    window.open('index.html', '_self');
-                }
-            }
-        });
-    }
-    return mf;
-}
 
  function checkVisibility(filename) {
     var ext = filename.split('.').pop().toLowerCase();
