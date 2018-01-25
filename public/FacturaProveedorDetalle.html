@@ -192,7 +192,7 @@
                         </li>
                         <li id="tiposProveedor">
                             <a href="TipoProveedorGeneral.html">
-                                <i class="fa fa-address-card"></i> Tipos de proveedores
+                                <i class="fa fa-address-card"></i> Tipos profesionales
                             </a>
                         </li>
                         <li id="formaspago">
@@ -282,6 +282,9 @@
                                     <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                                 <li>
+                                    <a href="FacturaProveedorGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas Proveedores</a>
+                                </li>
+                                <li>
                                     <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
                                 </li>
                                 <li>
@@ -345,7 +348,7 @@
             <!-- row -->
             <div class="row">
                 <!-- col -->
-                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-5" style="padding-left: 2.2%">
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
@@ -381,491 +384,580 @@
                 -->
             <!-- widget grid CABECERA-->
             <section id="widget-grid" class="">
-                <!-- row -->
-                <div class="row">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>CABECERA</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="principal">
+                    <div class="jarviswidget" id="wid-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                        <header>
+                                <span class="widget-icon">
+                                    <i class="fa fa-edit"></i>
+                                </span>
+                                <h2>Información de la factura</h2>
+                                <ul class="nav nav-tabs pull-right in">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#s1">
+                                            <i class="fa  fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">Datos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s2">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">PDF factura</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                        </header>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade active in padding-10 no-padding-bottom" id="s1">
+                                <!-- row -->
+                                <div class="row">
+                                        <!-- NEW WIDGET START -->
+                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <!-- Widget ID (each widget will need unique ID)-->
+                                            <div class="jarviswidget" id="wid-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                <header>
+                                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                    <h2>CABECERA</h2>
+                                                </header>
+                                                <!-- widget div-->
+                                                <div>
+                                                    <!-- widget edit box -->
+                                                    <div class="jarviswidget-editbox">
+                                                        <!-- This area used as dropdown edit box -->
+                                                        <input class="form-control" type="text">
+                                                    </div>
+                                                    <!-- end widget edit box -->
+                                                    <!-- widget content -->
+                                                    <div class="widget-body">
+                                                        <!-- this is what the user will see -->
+                                                        <form id="frmFactura" class="smart-form">
+                                                            <fieldset>
+                                                                <div class="row">
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Nro. fact. proveedor</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Fecha </label>
+                                                                        <label class="input">
+                                                                            <input id="txtFecha" name="txtFecha" data-bind="value: fecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">PERIODO</label>
+                                                                        <label class="input">
+                                                                            <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo"/>
+                                                                        </label>
+                                                                    </section>
+                                                                   
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Coste</label>
+                                                                        <label class="input">
+                                                                            <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Total Bases</label>
+                                                                        <label class="input">
+                                                                            <input id="txtTotal" name="txtTotal" type="text" data-bind="value: total" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Total IVA</label>
+                                                                        <label class="input">
+                                                                            <input id="txtTotal" name="txtTotal" type="text" data-bind="value: totalCuota" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Nro. Interno</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveIdOfrecida" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">PDF</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNombreFacprovePdf" name="txtNombreFacprovePdf" type="text" data-bind="value: nombreFacprovePdf" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2"></section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">% Retención</label>
+                                                                        <label class="input">
+                                                                            <input id="txtPorcentajeRetencion" name="txtPorcentajeRetencion" type="text" data-bind="value: porcentajeRetencion"/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Importe retención</label>
+                                                                        <label class="input">
+                                                                            <input id="txtImporteRetencion" name="txtImporteRetencion" type="text" data-bind="value: importeRetencion" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Total a cobrar</label>
+                                                                        <label class="input">
+                                                                            <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <section class="col col-md-6">
+                                                                        <div class="row">
+                                                                            <header>
+                                                                                RECEPTOR
+                                                                            </header>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col col-md-12">
+                                                                                <label class="label">Empresa</label>
+                                                                                <label style="width:100%; height:50px;">
+                                                                                    <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Nif</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorNif" name="txtReceptorNif" type="text" data-bind="value: receptorNif" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Nombre</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorNombre" name="txtReceptorNombre" type="text" data-bind="value: receptorNombre" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Dirección</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorDireccion" name="txtReceptorDireccion" type="text" data-bind="value: receptorDireccion" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">C.Postal</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorCodPostal" name="txtReceptorCodPostal" type="text" data-bind="value: receptorCodPostal" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-9">
+                                                                                <label class="label">Población</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorPoblacion" name="txtReceptorPoblacion" type="text" data-bind="value: receptorPoblacion" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Provincia</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtReceptorProvincia" name="txtReceptorProvincia" type="text" data-bind="value: receptorProvincia" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Forma de pago</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                                                    </label>
+                                                                            </section>
+                                                                        </div>
+                                                                    </section>
+                                                                    <section class="col col-md-6">
+                                                                        <div class="row">
+                                                                            <header>
+                                                                                EMISOR
+                                                                            </header>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Proveedor</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtProveedor" name="txtProveedor" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Nif</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorNif" name="txtEmisorNif" type="text" data-bind="value: emisorNif" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Nombre</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorNombre" name="txtEmisorNombre" type="text" data-bind="value: emisorNombre" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Dirección</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorDireccion" name="txtEmisorDireccion" type="text" data-bind="value: emisorDireccion" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">C.Postal</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorCodPostal" name="txtEmisorCodPostal" type="text" data-bind="value: emisorCodPostal" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-9">
+                                                                                <label class="label">Población</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorPoblacion" name="txtEmisorPoblacion" type="text" data-bind="value: emisorPoblacion" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Provincia</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmisorProvincia" name="txtEmisorProvincia" type="text" data-bind="value: emisorProvincia" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">CONTRATO ASOCIADO</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row">
+                                                                </div>
+                                                                <div class="row">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <section class="col col-md-12">
+                                                                        <label class="label">Observaciones</label>
+                                                                        <label class="textarea textarea-resizable">
+                                                                            <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <!-- Calculadoras de importes -->
+                                                                <!--
+                                                                <header>(Calculadora importes)</header>
+                                                                <div class="row">
+                                                                    <section class="col col-md-12">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="text-align:center;">COSTE</th>
+                                                                                        <th colspan="2" style="text-align:center;">BENEFICIO</th>
+                                                                                        <th style="text-align:center;">VENTA NETA</th>
+                                                                                        <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                                                        <th style="text-align:center;">IMPORTE FACTURA</th>
+                                                                                        <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                        <td style="text-align:center;">%</td>
+                                                                                        <td style="text-align:center;">IMPORTE</td>
+                                                                                        <td></td>
+                                                                                        <td style="text-align:center;">%</td>
+                                                                                        <td style="text-align:center;">IMPORTE</td>
+                                                                                        <td></td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="text-align:center;">
+                                                                                            <label class="input">
+                                                                                                <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
+                                                                                            </label>
+                                                                                        </td>
+                                                                                        <td style="text-align:center;">
+                                                                                            <label class="input">
+                                                                                                <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
+                                                                                            </label>
+                                                                                        </td>
+                                                                                        <td style="text-align:center;">
+                                                                                            <label class="input">
+                                                                                                <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
+                                                                                            </label </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtTotalFactura" name="txtTotalFactura" data-bind="value:total" disabled/>
+                                                                                                </label>
+                                                                                            </td>                                                                        
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>
+                                                                                                </label>
+                                                                                            </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+                                                            -->
+                                                            </fieldset>
+                                                            <fieldset>
+                                                                <div class="pull-right">
+                                                                    <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
+                                                                        <i class="fa fa-lg fa-print"></i>
+                                                                    </button>
+                                                                    <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                                        <i class="fa fa-lg fa-sign-out"></i>
+                                                                    </button>
+                                                                    <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                                        <i class="fa fa-lg fa-check"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </fieldset>
+                                                        </form>
+                                                        <hr/>
+                                                    </div>
+                                                    <!-- end widget content -->
+                                                </div>
+                                                <!-- end widget div -->
+                                            </div>
+                                            <!-- end widget -->
+                                        </article>
+                                        <!-- WIDGET END -->
                                 </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmFactura" class="smart-form">
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    <label class="label">Nro. fact. proveedor</label>
-                                                    <label class="input">
-                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Fecha </label>
-                                                    <label class="input">
-                                                        <input id="txtFecha" name="txtFecha" data-bind="value: fecha" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">PERIODO</label>
-                                                    <label class="input">
-                                                        <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo"/>
-                                                    </label>
-                                                </section>
-                                               
-                                                <section class="col col-md-2">
-                                                    <label class="label bloqueado">Coste</label>
-                                                    <label class="input">
-                                                        <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label bloqueado">Total Bases</label>
-                                                    <label class="input">
-                                                        <input id="txtTotal" name="txtTotal" type="text" data-bind="value: total" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label bloqueado">Total IVA</label>
-                                                    <label class="input">
-                                                        <input id="txtTotal" name="txtTotal" type="text" data-bind="value: totalCuota" disabled/>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    <label class="label">Nro. Interno</label>
-                                                    <label class="input">
-                                                        <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveId" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4"></section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">% Retención</label>
-                                                    <label class="input">
-                                                        <input id="txtPorcentajeRetencion" name="txtPorcentajeRetencion" type="text" data-bind="value: porcentajeRetencion"/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label bloqueado">Importe retención</label>
-                                                    <label class="input">
-                                                        <input id="txtImporteRetencion" name="txtImporteRetencion" type="text" data-bind="value: importeRetencion" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label bloqueado">Total a cobrar</label>
-                                                    <label class="input">
-                                                        <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <div class="row">
-                                                        <header>
-                                                            RECEPTOR
-                                                        </header>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col col-md-12">
-                                                            <label class="label">Empresa</label>
-                                                            <label style="width:100%; height:50px;">
-                                                                <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Nif</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorNif" name="txtReceptorNif" type="text" data-bind="value: receptorNif" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Nombre</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorNombre" name="txtReceptorNombre" type="text" data-bind="value: receptorNombre" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Dirección</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorDireccion" name="txtReceptorDireccion" type="text" data-bind="value: receptorDireccion" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-3">
-                                                            <label class="label">C.Postal</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorCodPostal" name="txtReceptorCodPostal" type="text" data-bind="value: receptorCodPostal" />
-                                                            </label>
-                                                        </section>
-                                                        <section class="col col-md-9">
-                                                            <label class="label">Población</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorPoblacion" name="txtReceptorPoblacion" type="text" data-bind="value: receptorPoblacion" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Provincia</label>
-                                                            <label class="input">
-                                                                <input id="txtReceptorProvincia" name="txtReceptorProvincia" type="text" data-bind="value: receptorProvincia" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Forma de pago</label>
-                                                                <label style="width:100%;">
-                                                                    <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
-                                                                </label>
-                                                        </section>
-                                                    </div>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <div class="row">
-                                                        <header>
-                                                            EMISOR
-                                                        </header>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Proveedor</label>
-                                                            <label class="input">
-                                                                <input id="txtProveedor" name="txtProveedor" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Nif</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorNif" name="txtEmisorNif" type="text" data-bind="value: emisorNif" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Nombre</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorNombre" name="txtEmisorNombre" type="text" data-bind="value: emisorNombre" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Dirección</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorDireccion" name="txtEmisorDireccion" type="text" data-bind="value: emisorDireccion" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-3">
-                                                            <label class="label">C.Postal</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorCodPostal" name="txtEmisorCodPostal" type="text" data-bind="value: emisorCodPostal" />
-                                                            </label>
-                                                        </section>
-                                                        <section class="col col-md-9">
-                                                            <label class="label">Población</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorPoblacion" name="txtEmisorPoblacion" type="text" data-bind="value: emisorPoblacion" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">Provincia</label>
-                                                            <label class="input">
-                                                                <input id="txtEmisorProvincia" name="txtEmisorProvincia" type="text" data-bind="value: emisorProvincia" />
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-md-12">
-                                                            <label class="label">CONTRATO ASOCIADO</label>
-                                                            <label style="width:100%;">
-                                                                <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
-                                                            </label>
-                                                        </section>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                            </div>
-                                            <div class="row">
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Observaciones</label>
-                                                    <label class="textarea textarea-resizable">
-                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <!-- Calculadoras de importes -->
-                                            <!--
-                                            <header>(Calculadora importes)</header>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered">
+                                <!-- end row -->
+                                <!-- row -->
+                                <div class="row" id="lineasfactura">
+                                    <!-- NEW WIDGET START -->
+                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <!-- Widget ID (each widget will need unique ID)-->
+                                        <div class="jarviswidget" id="wid-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                <h2>LINEAS DE factura</h2>
+                                            </header>
+                                            <!-- widget div-->
+                                            <div>
+                                                <!-- widget edit box -->
+                                                <div class="jarviswidget-editbox">
+                                                    <!-- This area used as dropdown edit box -->
+                                                    <input class="form-control" type="text">
+                                                </div>
+                                                <!-- end widget edit box -->
+                                                <!-- widget content -->
+                                                <div class="widget-body">
+                                                    <!-- this is what the user will see -->
+                                                    <form id="frmLinea">
+                                                        <fieldset>
+                                                            <div class="pull-left">
+                                                                <strong>Total: </strong><span data-bind="text: total"></span>
+                                                                <br/>
+                                                                <strong> Total a cobrar: </strong><span data-bind="text: totalConIva"></span>
+                                                            </div>
+                                                            <div class="pull-right">
+                                                                <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                                    <i class="fa fa-lg fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                    <hr/>
+                                                    <div id="tbLineas">
+                                                        <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="text-align:center;">COSTE</th>
-                                                                    <th colspan="2" style="text-align:center;">BENEFICIO</th>
-                                                                    <th style="text-align:center;">VENTA NETA</th>
-                                                                    <th colspan="2" style="text-align:center;">AGENTE</th>
-                                                                    <th style="text-align:center;">IMPORTE FACTURA</th>
-                                                                    <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                                    <th data-class="expand">
+                                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Linea
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        UD.
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        CONCEPTO
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        IMPORTE/UD.
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        CANTIDAD
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        TOTAL
+                                                                    </th>
+                                                                    <th>
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td style="text-align:center;">%</td>
-                                                                    <td style="text-align:center;">IMPORTE</td>
-                                                                    <td></td>
-                                                                    <td style="text-align:center;">%</td>
-                                                                    <td style="text-align:center;">IMPORTE</td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
-                                                                        </label </td>
-                                                                        <td style="text-align:center;">
-                                                                            <label class="input">
-                                                                                <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
-                                                                            </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
-                                                                            <label class="input">
-                                                                                <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
-                                                                            </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
-                                                                            <label class="input">
-                                                                                <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
-                                                                            </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
-                                                                            <label class="input">
-                                                                                <input id="txtTotalFactura" name="txtTotalFactura" data-bind="value:total" disabled/>
-                                                                            </label>
-                                                                        </td>                                                                        
-                                                                        <td style="text-align:center;">
-                                                                            <label class="input">
-                                                                                <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeAlCliente" disabled/>
-                                                                            </label>
-                                                                        </td>
-                                                                </tr>
-                                                            </tbody>
                                                         </table>
                                                     </div>
-                                                </section>
+                                                    <hr/>
+                                                </div>
+                                                <!-- end widget content -->
                                             </div>
-                                        -->
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-print"></i>
-                                                </button>
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
-                                                </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <hr/>
+                                            <!-- end widget div -->
+                                        </div>
+                                        <!-- end widget -->
+                                    </article>
+                                    <!-- WIDGET END -->
                                 </div>
-                                <!-- end widget content -->
+                                <!-- end row -->
+                                <!-- row -->
+                                <div class="row" id="basesycuotas">
+                                    <!-- NEW WIDGET START -->
+                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <!-- Widget ID (each widget will need unique ID)-->
+                                        <div class="jarviswidget" id="wid-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                            <!-- widget options:
+                                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                                                    
+                                                data-widget-colorbutton="false" 
+                                                data-widget-editbutton="false"
+                                                data-widget-togglebutton="false"
+                                                data-widget-deletebutton="false"
+                                                data-widget-fullscreenbutton="false"
+                                                data-widget-custombutton="false"
+                                                data-widget-collapsed="true" 
+                                                data-widget-sortable="false"
+                                                    
+                                                -->
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                <h2>BASES Y CUOTAS</h2>
+                                            </header>
+                                            <!-- widget div-->
+                                            <div>
+                                                <!-- widget edit box -->
+                                                <div class="jarviswidget-editbox">
+                                                    <!-- This area used as dropdown edit box -->
+                                                    <input class="form-control" type="text">
+                                                </div>
+                                                <!-- end widget edit box -->
+                                                <!-- widget content -->
+                                                <div class="widget-body">
+                                                    <!-- this is what the user will see -->
+                                                    <h2>
+                                                        Bases y Cuotas
+                                                    </h2>
+                                                    <hr/>
+                                                    <div id="tbBases">
+                                                        <table id="dt_bases" class="table table-striped table-bordered table-hover" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th data-class="expand">
+                                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Tipo
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        Porcentaje
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        Base
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        Cuota
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!-- end widget content -->
+                                            </div>
+                                            <!-- end widget div -->
+                                        </div>
+                                        <!-- end widget -->
+                                    </article>
+                                    <!-- WIDGET END -->
+                                </div>
                             </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div>
-                <!-- end row -->
-                <!-- row -->
-                <div class="row" id="lineasfactura">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS DE factura</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmLinea">
-                                        <fieldset>
-                                            <div class="pull-left">
-                                                <strong>Total: </strong><span data-bind="text: total"></span>
-                                                <br/>
-                                                <strong> Total a cobrar: </strong><span data-bind="text: totalConIva"></span>
+                            <div class="tab-pane fade" id="s2">
+                                    <section id="widget-grid" class="">
+                                            <div class="row">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                    <div class="jarviswidget" id="wid-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                            <h2>Factura PDF</h2>
+                                                        </header>
+                                                        <div class="widget-body">
+                                                            <form id="docDetail-form" class="smart-form">
+                                                                <fieldset>
+                                                                    <div class="row">
+                                                                        <!-- DOCUMENT -->
+                                                                        <section class="col col-md-12">
+                                                                            <div id="P1Title" class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <h3>Escoja el documento a subir</h3>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div id="P1Loader" class="row">
+                                                                                <section class="col col-md-6">
+                                                                                    <div class="progress">
+                                                                                        <div class="progress-bar" role="progressbar"></div>
+                                                                                    </div>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
+                                                                                    <input id="upload-input" type="file" name="uploads[]"></br>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <div id="msgContainer" style="color:blue">
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <div id="docContainer"></div>
+                                                                                </section>
+                                                                            </div>
+                                                                        </section>
+                                                                        <!-- END DOCUMENT -->
+                                                                        
+                                                                    </div>
+                                                                </fieldset>
+                                                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </article>
                                             </div>
-                                            <div class="pull-right">
-                                                <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <hr/>
-                                    <div id="tbLineas">
-                                        <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Linea
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        UD.
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        CONCEPTO
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        IMPORTE/UD.
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        CANTIDAD
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        TOTAL
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                    <hr/>
-                                </div>
-                                <!-- end widget content -->
+                                    </section>
                             </div>
-                            <!-- end widget div -->
                         </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div>
-                <!-- end row -->
-                <!-- row -->
-                <div class="row" id="basesycuotas">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-                                    
-                                data-widget-colorbutton="false" 
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true" 
-                                data-widget-sortable="false"
-                                    
-                                -->
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>BASES Y CUOTAS</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <h2>
-                                        Bases y Cuotas
-                                    </h2>
-                                    <hr/>
-                                    <div id="tbBases">
-                                        <table id="dt_bases" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Tipo
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Porcentaje
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        Base
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        Cuota
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- end widget content -->
-                            </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
+                    </div>
                 </div>
                 <!-- end row -->
             </section>
