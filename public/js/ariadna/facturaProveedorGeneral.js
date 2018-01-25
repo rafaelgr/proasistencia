@@ -230,6 +230,35 @@ function deleteFactura(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                   if(data.nombreFacprovePdf){
+                    $.ajax({
+                        type: "DELETE",
+                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function (data, status) {
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
+                   }
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+           
             var data = {
                 facproveId: id
             };
