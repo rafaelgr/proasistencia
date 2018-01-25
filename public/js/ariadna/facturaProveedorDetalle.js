@@ -47,7 +47,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
-    $("#btnImprimir").click(imprimir);
+    //$("#btnImprimir").click(imprimir);
     $("#frmFactura").submit(function () {
         return false;
     });
@@ -189,7 +189,7 @@ function initForm() {
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
-        $("#btnImprimir").hide();
+        //$("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
@@ -534,7 +534,7 @@ var loadContratos = function (contratoId) {
 }
 
 var cargarContratos = function (data, contratoId) {
-    var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
+    var contratos = [{ contratoId: null, contasoc: "" }].concat(data);
     vm.posiblesContratos(contratos);
     if(contratoId){
         $("#cmbContratos").val([contratoId]).trigger('change');
