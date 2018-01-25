@@ -20,6 +20,7 @@ function comprobarLogin() {
         // cargar el nombre en la zona correspondiente
         $('#userName').text(user.nombre);
     }
+    return user.nombre;
 }
 
 function nivelesUsuario(nivel) {
