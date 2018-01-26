@@ -410,7 +410,7 @@
                                 <span class="widget-icon">
                                     <i class="fa fa-edit"></i>
                                 </span>
-                                <h2>Información de la factura</h2>
+                                <h2>Información del proveedor</h2>
                                 <ul class="nav nav-tabs pull-right in">
                                     <li class="active">
                                         <a data-toggle="tab" href="#s1">
@@ -421,7 +421,7 @@
                                     <li>
                                         <a data-toggle="tab" href="#s2">
                                             <i class="fa fa-file-text-o"></i>
-                                            <span class="hidden-mobile hidden-tablet">PDF factura</span>
+                                            <span class="hidden-mobile hidden-tablet">Factura</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -730,90 +730,70 @@
                                                             <div class="widget-body">
                                                                 <!-- this is what the user will see -->
                                                                 <header>
-                                                                    Facturas emitidas contra este contrato
+                                                                    Facturas emitidas por este proveedor
                                                                 </header>
                                                                 <hr/>
                                                                 <div id="tbFactura">
-                                                                    <table id="dt_factura" class="table table-striped table-bordered table-hover" width="100%">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>
-                                                                                    <i class="fa fa-fw fa-search"></i>
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th class="hasinput">
-                                                                                    <input type="text" class="form-control" placeholder="" />
-                                                                                </th>
-                                                                                <th style="width:10%">
-                                                                                </th>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>
-                                                                                    <i class="fa fa-fw fa-clipboard">
-                                                                                </th>
-                                                                                <th data-class="phone">
-                                                                                    Referencia
-                                                                                </th>
-                                                                                <th data-hide="expand">
-                                                                                    <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Receptor
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Numero
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Fecha
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Base
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Total
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Factura asociada
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Forma de pago
-                                                                                </th>
-                                                                                <th data-hide="phone">
-                                                                                    Observaciones
-                                                                                </th>
-                                                                                <th style="width:10%; text-align: center;">
-                                                                                    <i class="fa fa-fw fa-gears">
-                                                                                </th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                    </table>
-                                                                </div>
+                                                                        <table id="dt_factura" class="table table-striped table-bordered table-hover" width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        <i class="fa fa-fw fa-search"></i>
+                                                                                    </th>
+                                                                                    
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
+                                                                                                                                    
+                                                                                    <th style="width:10%">
+                                                                                    </th>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        <i class="fa fa-fw fa-clipboard">
+                                                                                    </th>
+                                                                                    <th data-class="phone">
+                                                                                        Numero
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        Receptor
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        fecha
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        base
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        total
+                                                                                    </th>
+                                                                                    
+                                                                                    <th data-hide="phone">
+                                                                                        Forma pago
+                                                                                    </th>
+                                                                                                                                     
+                                                                                    <th style="width:10%; text-align: center;">
+                                                                                        <i class="fa fa-fw fa-gears">
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                        </table>
+                                                                    </div>
                                                             </div>
                                                             <!-- end widget content -->
                                                         </div>
