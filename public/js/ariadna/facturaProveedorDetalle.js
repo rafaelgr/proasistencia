@@ -42,6 +42,7 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
+    
 
 
     // asignación de eventos al clic
@@ -185,7 +186,7 @@ function initForm() {
         })
     } else {
         // caso alta
-        ofreceNumeroInterno();//se efrece la última id disponible por defecto
+        //ofreceNumeroInterno();//se efrece la última id disponible por defecto
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -320,7 +321,7 @@ function admData() {
 
 function loadData(data) {
     vm.facproveId(data.facproveId);
-    vm.facproveIdOfrecida(data.facproveId);
+    vm.facproveIdOfrecida(data.ref);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
@@ -436,6 +437,11 @@ var aceptarFactura = function () {
     }
 
     if(vm.file()){
+        var facprove = {
+            fecha: vm.fecha()
+        }
+
+        ofreceNumeroInterno(facprove);
         var ext = saveDoc();
         vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
     }
@@ -463,7 +469,7 @@ var aceptarFactura = function () {
 var generarFacturaDb = function () {
     var data = {
         facprove: {
-            "facproveId": vm.facproveIdOfrecida(),
+            "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
@@ -587,10 +593,10 @@ function obrenerTipoClienteID(contratoId) {
     });
 }
 
-function ofreceNumeroInterno(){
-    llamadaAjax("GET", "/api/facturasProveedores/nuevo/Cod/proveedor/factura/ultimo/id", null, function (err, data) {
+function ofreceNumeroInterno(data){
+    llamadaAjax("GET", "/api/facturasProveedores/nuevo/Cod/proveedor/factura/ultima/ref/"+ data.fecha, null, function (err, data) {
         if (err) return;
-        vm.facproveIdOfrecida(data.facproveId);
+        vm.facproveIdOfrecida(data.ref);
     });
 }
 
@@ -1416,6 +1422,7 @@ function loadDoc(filename) {
 }
 
 function saveDoc() {
+    recuperaRef();
     var ext = vm.file().split('.').pop().toLowerCase();
         
         var dataPdf = {
@@ -1444,6 +1451,8 @@ function saveDoc() {
         });
     return ext;
 }
+
+
 
 
 
