@@ -12,6 +12,7 @@ var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
 var refWoId = 0;
+var url;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -535,7 +536,6 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data, contratoId);
@@ -578,7 +578,18 @@ function cambioEmpresa(empresaId) {
         vm.receptorCodPostal(data.codPostal);
         vm.receptorPoblacion(data.poblacion);
         vm.receptorProvincia(data.provincia);
+
+        $('#chkCerrados').prop("checked", false);
+        url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
         loadContratos();
+
+        $('#chkCerrados').change(function () {
+            url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            if (this.checked) {
+                url =  myconfig.apiUrl + "/api/contratos";
+            }
+            loadContratos(); 
+        });
     });
 }
 
