@@ -28,6 +28,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
+    var idUsuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -139,7 +140,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, user + "@" + file.name);
+        formData.append('uploads[]', file, idUsuario + "@" + file.name);
             
             $.ajax({
                 url: '/api/upload',
