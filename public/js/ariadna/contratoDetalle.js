@@ -2373,6 +2373,8 @@ function loadTablaPrefacturas(data) {
     dt.fnDraw();
 }
 
+
+
 printPrefactura = function(id){
     var url = "InfPrefacturas.html?prefacturaId=" + id;
     window.open(url, '_blank');
@@ -2543,6 +2545,44 @@ function loadTablaFacturas(data) {
     dt.fnDraw();
 }
 
+function deleteFactura(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                facturaId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/facturas/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadFacturasDelContrato(vm.contratoId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function editFactura(id) {
+    var url = "facturaDetalle.html?FacturaId=" + id;
+    window.open(url, '_new');
+}
+
 printFactura = function(id){
     var url = "InfFacturas.html?facturaId=" + id;
     window.open(url, '_blank');
@@ -2635,6 +2675,8 @@ function initTablaFacproves() {
                 return html;
             }
         }, {
+            data: "ref"
+        },{
             data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
