@@ -139,6 +139,8 @@ function initTablaFacturas() {
             }
         }, {
             data: "numeroFacturaProveedor"
+        },{
+            data: "ref"
         }, {
             data: "emisorNombre"
         }, {
@@ -240,7 +242,7 @@ function deleteFactura(id) {
                    if(data.nombreFacprovePdf){
                     $.ajax({
                         type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                        url: myconfig.apiUrl + "/api/facturasProveedores/archivo/" + data.nombreFacprovePdf,
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify(data),

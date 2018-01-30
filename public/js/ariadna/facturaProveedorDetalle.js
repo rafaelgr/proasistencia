@@ -186,7 +186,6 @@ function initForm() {
         })
     } else {
         // caso alta
-        //ofreceNumeroInterno();//se efrece la última id disponible por defecto
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -212,7 +211,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.facproveId = ko.observable();
-    self.facproveIdOfrecida = ko.observable();    
+    self.ref = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
@@ -321,7 +320,7 @@ function admData() {
 
 function loadData(data) {
     vm.facproveId(data.facproveId);
-    vm.facproveIdOfrecida(data.ref);
+    vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
@@ -436,30 +435,32 @@ var aceptarFactura = function () {
         vm.totalConIva('0');
     }
 
-    if(vm.file()){
-        var facprove = {
-            fecha: vm.fecha()
-        }
-
-        ofreceNumeroInterno(facprove);
-        var ext = saveDoc();
-        vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
-    }
-    
-    
     var data = generarFacturaDb();
+    var ext;
     // caso alta
+    var dataPdf;
+    if(vm.file()){
+        ext = vm.file().split('.').pop().toLowerCase();
+        var dataPdf = {
+            doc: {
+                file: vm.file(),
+                ext: ext
+            }
+        };
+    };
     var verb = "POST";
     var url =  "/api/facturasProveedores";
     var returnUrl = "FacturaProveedorDetalle.html?cmd=nueva&facproveId=";
+    
     // caso modificación
     if (facproveId != 0) {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
     }
-
-    llamadaAjax(verb, url, data, function (err, data) {
+    var datosArray = [];
+    datosArray.push(data, dataPdf)
+    llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         window.open(returnUrl, '_self');
@@ -498,7 +499,8 @@ var generarFacturaDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "nombreFacprovePdf": vm.nombreFacprovePdf()
+            "nombreFacprovePdf": vm.nombreFacprovePdf(),
+            "ref": vm.ref()
         }
     };
     return data;
@@ -590,13 +592,6 @@ function cambioContrato(contratoId) {
 function obrenerTipoClienteID(contratoId) {
     llamadaAjax("GET", "/api/facturasProveedores/contrato/tipo/cliente/" + contratoId, null, function (err, data) {
         vm.tipoClienteId(data[0].tipoCliente);
-    });
-}
-
-function ofreceNumeroInterno(data){
-    llamadaAjax("GET", "/api/facturasProveedores/nuevo/Cod/proveedor/factura/ultima/ref/"+ data.fecha, null, function (err, data) {
-        if (err) return;
-        vm.facproveIdOfrecida(data.ref);
     });
 }
 
@@ -1420,38 +1415,6 @@ function loadDoc(filename) {
         $("#docContainer").html('');
     }
 }
-
-function saveDoc() {
-    recuperaRef();
-    var ext = vm.file().split('.').pop().toLowerCase();
-        
-        var dataPdf = {
-            docId: vm.facproveIdOfrecida(),
-            file: vm.file(),
-            ext: ext
-        };
-    var url = "", type = "";
-        
-            type = "POST";
-            url = '/api/doc';
-        $.ajax({
-            type: type,
-            url: url,
-            contentType: "application/json",
-            data: JSON.stringify(dataPdf),
-            success: function (data, status) {
-                
-            },
-            error: function (err) {
-                errorAjax(err);
-                if (err.status == 401) {
-                    window.open('index.html', '_self');
-                }
-            }
-        });
-    return ext;
-}
-
 
 
 
