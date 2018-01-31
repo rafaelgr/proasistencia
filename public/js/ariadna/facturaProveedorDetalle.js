@@ -194,6 +194,8 @@ function initForm() {
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
+        vm.sempresaId(EmpresaId);
+        vm.scontratoId(ContratoId);
         //$("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -600,7 +602,12 @@ function cambioEmpresa(empresaId) {
         vm.receptorCodPostal(data.codPostal);
         vm.receptorPoblacion(data.poblacion);
         vm.receptorProvincia(data.provincia);
-        loadContratos();
+        if(ContratoId != 0){
+            loadContratos(ContratoId);
+        }else{
+            loadContratos();
+        }
+        
        
         if(facproveId == 0){
              //Evento asociado al checkbox
@@ -618,14 +625,14 @@ function cambioEmpresa(empresaId) {
 
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
-    obrenerTipoClienteID(contratoId);
+    //obrenerTipoClienteID(contratoId);
     vm.porcentajeBeneficio(0);
     vm.porcentajeAgente(0);
     if (!vm.coste()) vm.coste(0);
 }
 
 function obrenerTipoClienteID(contratoId) {
-    llamadaAjax("GET", "/api/facturasProveedores/contrato/tipo/cliente/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/contrato/tipo/cliente/" + ContratoId, null, function (err, data) {
         vm.tipoClienteId(data[0].tipoCliente);
     });
 }

@@ -1121,9 +1121,20 @@
                                                                 <!-- widget content -->
                                                                 <div class="widget-body">
                                                                     <!-- this is what the user will see -->
-                                                                    <header>
-                                                                        Facturas de gastos emitidas contra este contrato
-                                                                    </header>
+                                                                    <form id="frmFacprove" class="smart-form">
+                                                                            <header>
+                                                                                Prefacturas emitidas contra este contrato
+                                                                            </header>
+                                                                            <fieldset>
+                                                                                <div class="pull-right">
+                                                                                    <button id="btnAltaFacprove" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
+                                                                                        <i class="fa fa-lg fa-plus"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </fieldset>
+                                                                    </form>                                                                
+                                                                    <!-- this is what the user will see -->
+    
                                                                     <hr/>
                                                                     <div id="tbFacprove">
                                                                             <table id="dt_facprove" class="table table-striped table-bordered table-hover" width="100%">

@@ -50,6 +50,9 @@ function initForm() {
     $("#frmPrefacturas").submit(function () {
         return false;
     });
+    $('#frmFacprove').submit(function () {
+        return false;
+    })
     $("#frmRenovarContratos").submit(function () {
         return false;
     });
@@ -159,6 +162,8 @@ function initForm() {
     });
 
     $("#btnAltaPrefactura").click(nuevaPrefactura);
+
+    $('#btnAltaFacprove').click(nuevaFacprove);
 
     reglasDeValidacionAdicionales();
 
@@ -2736,6 +2741,13 @@ function editFacprove(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    window.open(url, '_new');
+}
+
+var nuevaFacprove = function () {
+    var url = "FacturaProveedorDetalle.html?facproveId=0";
+    url += "&EmpresaId=" + vm.sempresaId();
+    url += "&ContratoId=" + vm.contratoId();
     window.open(url, '_new');
 }
 
