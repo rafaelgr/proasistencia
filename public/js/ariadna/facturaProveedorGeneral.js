@@ -138,9 +138,9 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
-            data: "numeroFacturaProveedor"
-        },{
             data: "ref"
+        },{
+            data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
         }, {
