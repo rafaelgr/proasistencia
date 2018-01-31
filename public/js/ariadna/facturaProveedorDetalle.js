@@ -76,6 +76,9 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
+    //checkbox carga marcao por defecto
+    $('#chkCerrados').prop("checked", true);
+
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
 
@@ -119,6 +122,7 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
 
+    
     initTablaFacturasLineas();
     initTablaBases();
 
@@ -183,8 +187,7 @@ function initForm() {
             if (err) return;
             loadData(data);
             loadLineasFactura(data.facproveId);
-            loadBasesFacprove(data.facproveId);
-            
+            loadBasesFacprove(data.facproveId);       
         })
     } else {
         // caso alta
@@ -207,7 +210,12 @@ function initForm() {
             loadContratos(ContratoId);
             cambioContrato(ContratoId);
         }
+
+       
     }
+
+    
+
 }
 
 function admData() {
@@ -354,6 +362,17 @@ function loadData(data) {
     //
     loadEmpresas(data.empresaId);
     setTimeout(function() {
+
+        //Evento asociado al checkbox
+        url = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        $('#chkCerrados').change(function () {
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            if (this.checked) {
+                url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+            }
+            loadContratos(data.contratoId);
+        });
+        //
         loadContratos(data.contratoId);
     }, 1000);
     cargaProveedor(data.proveedorId);
@@ -536,6 +555,9 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
+    if(!url){
+        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+    }
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data, contratoId);
@@ -578,18 +600,19 @@ function cambioEmpresa(empresaId) {
         vm.receptorCodPostal(data.codPostal);
         vm.receptorPoblacion(data.poblacion);
         vm.receptorProvincia(data.provincia);
-
-        $('#chkCerrados').prop("checked", false);
-        url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
         loadContratos();
-
-        $('#chkCerrados').change(function () {
-            url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
-            if (this.checked) {
-                url =  myconfig.apiUrl + "/api/contratos";
-            }
-            loadContratos(); 
-        });
+       
+        if(facproveId == 0){
+             //Evento asociado al checkbox
+             url = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+            $('#chkCerrados').change(function () {
+                url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
+                if (this.checked) {
+                    url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+                }
+                loadContratos();
+            });
+        }
     });
 }
 
