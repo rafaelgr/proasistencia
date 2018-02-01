@@ -171,6 +171,8 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
+   
+
 
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
@@ -196,6 +198,12 @@ function initForm() {
         //
         document.title = "NUEVO CONTRATO";
     }
+
+
+     //abrir en pestaña de facturas de proveedores
+     if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s5"]').tab('show');
+    } 
 }
 
 var mostrarMensajeEnFuncionDeCmd = function (cmd) {

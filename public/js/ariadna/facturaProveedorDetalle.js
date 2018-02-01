@@ -216,8 +216,23 @@ function initForm() {
        
     }
 
-    
+    //Evento asociado al checkbox
+    $('#chkCerrados').change(contratosCerrados);
 
+}
+
+function contratosCerrados(){
+    if(vm.scontratoId()){
+        ContratoId = vm.scontratoId();
+    }
+    if(vm.sempresaId()){
+        url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+        if ($('#chkCerrados').prop('checked')) {
+            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        }
+        loadContratos(ContratoId);
+    }
+    
 }
 
 function admData() {
@@ -364,17 +379,6 @@ function loadData(data) {
     //
     loadEmpresas(data.empresaId);
     setTimeout(function() {
-
-        //Evento asociado al checkbox
-        url = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
-        $('#chkCerrados').change(function () {
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
-            if (this.checked) {
-                url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
-            }
-            loadContratos(data.contratoId);
-        });
-        //
         loadContratos(data.contratoId);
     }, 1000);
     cargaProveedor(data.proveedorId);
@@ -474,19 +478,26 @@ var aceptarFactura = function () {
     var verb = "POST";
     var url =  "/api/facturasProveedores";
     var returnUrl = "FacturaProveedorDetalle.html?cmd=nueva&facproveId=";
+    var cmd = true;
     
     // caso modificación
     if (facproveId != 0) {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+        cmd = false;
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)
     llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
-        window.open(returnUrl, '_self');
+        if(EmpresaId == "" && !cmd){
+            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self')
+        }else{
+            window.open(returnUrl, '_self');
+        }
+       
     });
 }
 
@@ -541,7 +552,7 @@ function salir() {
 function loadEmpresas(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
@@ -589,36 +600,23 @@ function cambioProveedor(proveedorId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
-        loadContratos();
+        loadContratos(ContratoId);
     });
 }
 
 function cambioEmpresa(empresaId) {
     if (!empresaId) return;
+    
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
-        vm.receptorNif(data.nif);
-        vm.receptorNombre(data.nombre);
-        vm.receptorDireccion(data.direccion);
-        vm.receptorCodPostal(data.codPostal);
-        vm.receptorPoblacion(data.poblacion);
-        vm.receptorProvincia(data.provincia);
-        if(ContratoId != 0){
-            loadContratos(ContratoId);
-        }else{
-            loadContratos();
-        }
-        
-       
-        if(facproveId == 0){
-             //Evento asociado al checkbox
-             url = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
-            $('#chkCerrados').change(function () {
-                url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
-                if (this.checked) {
-                    url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
-                }
-                loadContratos();
-            });
+        if(err) return;
+        if(data){
+            vm.receptorNif(data.nif);
+            vm.receptorNombre(data.nombre);
+            vm.receptorDireccion(data.direccion);
+            vm.receptorCodPostal(data.codPostal);
+            vm.receptorPoblacion(data.poblacion);
+            vm.receptorProvincia(data.provincia);
+            contratosCerrados();
         }
     });
 }
