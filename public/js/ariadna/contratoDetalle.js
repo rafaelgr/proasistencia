@@ -2749,9 +2749,10 @@ function loadTablaFacproves(data) {
 }
 
 function editFacprove(id) {
-    // hay que abrir la página de detalle de prefactura
+    // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
 
