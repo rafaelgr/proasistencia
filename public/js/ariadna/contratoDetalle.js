@@ -195,6 +195,9 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        $('#btnAltaFacprove').hide();
+        $('#btnAltaPrefactura').hide();
+        
         //
         document.title = "NUEVO CONTRATO";
     }
