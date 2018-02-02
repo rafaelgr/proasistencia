@@ -13,8 +13,9 @@ var EmpresaId = 0;
 var ProveedorId = 0;
 var refWoId = 0;
 var url;
+var doc;
 
-var contratoDetalle = false;
+
 var lineaEnEdicion = false;
 
 var dataFacproveLineas;
@@ -131,11 +132,9 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
+    doc = gup("doc");
 
-    //si el valor de empresaId es diferente de "" es que se ha abierto la ventana desde contratosDetalla.js
-    if(EmpresaId != ""){
-        contratoDetalle = true;
-    }
+    
 
     //evento asociado a la carga de un archivo
     $('#upload-input').on('change', function () {
@@ -482,7 +481,7 @@ var aceptarFactura = function () {
     };
     var verb = "POST";
     var url =  "/api/facturasProveedores";
-    var returnUrl = "FacturaProveedorDetalle.html?cmd=nueva&facproveId=";
+    var returnUrl = "FacturaProveedorDetalle.html?ContratoId="+ ContratoId+"&cmd=nueva&facproveId=";
     
     
     // caso modificación
@@ -497,9 +496,13 @@ var aceptarFactura = function () {
     llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
-        if(contratoDetalle){
+        if(ContratoId != "" && cmd == "nueva" && facproveId != 0){
             window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
-        }else{
+        }
+        else if (EmpresaId != "" && facproveId == 0 && doc == true){
+            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+        }
+        else{
             window.open(returnUrl, '_self');
         }
        
@@ -547,7 +550,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        if(contratoDetalle){
+        if(EmpresaId != ""){
             window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
         }else{
             var url = "FacturaProveedorGeneral.html";
