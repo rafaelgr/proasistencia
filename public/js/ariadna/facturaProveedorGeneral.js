@@ -138,6 +138,8 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
+            data: "ref"
+        },{
             data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
@@ -159,8 +161,8 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
             }
         }]
@@ -240,7 +242,7 @@ function deleteFactura(id) {
                    if(data.nombreFacprovePdf){
                     $.ajax({
                         type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                        url: myconfig.apiUrl + "/api/facturasProveedores/archivo/" + data.nombreFacprovePdf,
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify(data),

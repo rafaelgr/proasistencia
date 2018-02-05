@@ -12,8 +12,10 @@ var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
 var refWoId = 0;
+var url;
+var desdeContrato;
 
-var cmd = "";
+
 var lineaEnEdicion = false;
 
 var dataFacproveLineas;
@@ -28,6 +30,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
+    var idUsuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -42,12 +45,13 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
+    
 
 
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
-    $("#btnImprimir").click(imprimir);
+    //$("#btnImprimir").click(imprimir);
     $("#frmFactura").submit(function () {
         return false;
     });
@@ -72,6 +76,8 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
+
+    
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
@@ -116,6 +122,7 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
 
+    
     initTablaFacturasLineas();
     initTablaBases();
 
@@ -124,6 +131,9 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
+    desdeContrato = gup("desdeContrato");
+
+    
 
     //evento asociado a la carga de un archivo
     $('#upload-input').on('change', function () {
@@ -138,7 +148,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, user + "@" + file.name);
+        formData.append('uploads[]', file, idUsuario + "@" + file.name);
             
             $.ajax({
                 url: '/api/upload',
@@ -178,18 +188,20 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
+            $('#chkCerrados').prop("checked", true);
             loadData(data);
             loadLineasFactura(data.facproveId);
-            loadBasesFacprove(data.facproveId);
-            
+            loadBasesFacprove(data.facproveId);       
         })
     } else {
         // caso alta
-        ofreceNumeroInterno();//se efrece la última id disponible por defecto
+        $('#chkCerrados').prop("checked", false);
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
-        $("#btnImprimir").hide();
+        vm.sempresaId(EmpresaId);
+        vm.scontratoId(ContratoId);
+        //$("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
@@ -205,13 +217,42 @@ function initForm() {
             loadContratos(ContratoId);
             cambioContrato(ContratoId);
         }
+
+       
     }
+
+    //Evento asociado al checkbox
+    $('#chkCerrados').change(contratosCerrados);
+
+}
+
+function contratosCerrados(){
+    if(vm.scontratoId()){
+        ContratoId = vm.scontratoId();
+    }
+    if(vm.sempresaId()){
+        if(facproveId == 0){
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+        }
+        
+        if ($('#chkCerrados').prop('checked')) {
+            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        }else{
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+        }
+        if (ContratoId != 0 && $('#chkCerrados').prop('checked')) {
+            loadContratos(ContratoId);
+        }else{
+            loadContratos(vm.scontratoId());
+        }
+    }
+    
 }
 
 function admData() {
     var self = this;
     self.facproveId = ko.observable();
-    self.facproveIdOfrecida = ko.observable();    
+    self.ref = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
@@ -320,7 +361,7 @@ function admData() {
 
 function loadData(data) {
     vm.facproveId(data.facproveId);
-    vm.facproveIdOfrecida(data.facproveId);
+    vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
@@ -435,35 +476,50 @@ var aceptarFactura = function () {
         vm.totalConIva('0');
     }
 
-    if(vm.file()){
-        var ext = saveDoc();
-        vm.nombreFacprovePdf(vm.facproveIdOfrecida()+ '.' +ext);
-    }
-    
-    
     var data = generarFacturaDb();
+    var ext;
     // caso alta
+    var dataPdf;
+    if(vm.file()){
+        ext = vm.file().split('.').pop().toLowerCase();
+        var dataPdf = {
+            doc: {
+                file: vm.file(),
+                ext: ext
+            }
+        };
+    };
     var verb = "POST";
     var url =  "/api/facturasProveedores";
-    var returnUrl = "FacturaProveedorDetalle.html?cmd=nueva&facproveId=";
+    var returnUrl = "FacturaProveedorDetalle.html?desdeContrato="+ desdeContrato+"&cmd=nueva&facproveId=";
+    
+    
     // caso modificación
     if (facproveId != 0) {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+        
     }
-
-    llamadaAjax(verb, url, data, function (err, data) {
+    var datosArray = [];
+    datosArray.push(data, dataPdf)
+    llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
-        window.open(returnUrl, '_self');
+        if(desdeContrato == "true" && facproveId != 0){
+            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+        }
+        else{
+            window.open(returnUrl, '_self');
+        }
+       
     });
 }
 
 var generarFacturaDb = function () {
     var data = {
         facprove: {
-            "facproveId": vm.facproveIdOfrecida(),
+            "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
@@ -492,7 +548,8 @@ var generarFacturaDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "nombreFacprovePdf": vm.nombreFacprovePdf()
+            "nombreFacprovePdf": vm.nombreFacprovePdf(),
+            "ref": vm.ref()
         }
     };
     return data;
@@ -500,8 +557,12 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaProveedorGeneral.html";
-        window.open(url, '_self');
+        if(EmpresaId != "" || desdeContrato == "true"){
+            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+        }else{
+            var url = "FacturaProveedorGeneral.html";
+            window.open(url, '_self');
+        }
     }
     return mf;
 }
@@ -510,7 +571,7 @@ function salir() {
 function loadEmpresas(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
@@ -526,7 +587,9 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa/cliente/" + vm.sempresaId();
+    if(!url){
+        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+    }
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data, contratoId);
@@ -534,7 +597,7 @@ var loadContratos = function (contratoId) {
 }
 
 var cargarContratos = function (data, contratoId) {
-    var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
+    var contratos = [{ contratoId: null, contasoc: "" }].concat(data);
     vm.posiblesContratos(contratos);
     if(contratoId){
         $("#cmbContratos").val([contratoId]).trigger('change');
@@ -556,41 +619,38 @@ function cambioProveedor(proveedorId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
-        loadContratos();
+        loadContratos(ContratoId);
     });
 }
 
 function cambioEmpresa(empresaId) {
     if (!empresaId) return;
+    
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
-        vm.receptorNif(data.nif);
-        vm.receptorNombre(data.nombre);
-        vm.receptorDireccion(data.direccion);
-        vm.receptorCodPostal(data.codPostal);
-        vm.receptorPoblacion(data.poblacion);
-        vm.receptorProvincia(data.provincia);
-        loadContratos();
+        if(err) return;
+        if(data){
+            vm.receptorNif(data.nif);
+            vm.receptorNombre(data.nombre);
+            vm.receptorDireccion(data.direccion);
+            vm.receptorCodPostal(data.codPostal);
+            vm.receptorPoblacion(data.poblacion);
+            vm.receptorProvincia(data.provincia);
+            contratosCerrados();
+        }
     });
 }
 
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
-    obrenerTipoClienteID(contratoId);
+    //obrenerTipoClienteID(contratoId);
     vm.porcentajeBeneficio(0);
     vm.porcentajeAgente(0);
     if (!vm.coste()) vm.coste(0);
 }
 
 function obrenerTipoClienteID(contratoId) {
-    llamadaAjax("GET", "/api/facturasProveedores/contrato/tipo/cliente/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/contrato/tipo/cliente/" + ContratoId, null, function (err, data) {
         vm.tipoClienteId(data[0].tipoCliente);
-    });
-}
-
-function ofreceNumeroInterno(){
-    llamadaAjax("GET", "/api/facturasProveedores/nuevo/Cod/proveedor/factura/ultimo/id", null, function (err, data) {
-        if (err) return;
-        vm.facproveIdOfrecida(data.facproveId);
     });
 }
 
@@ -1415,35 +1475,6 @@ function loadDoc(filename) {
     }
 }
 
-function saveDoc() {
-    var ext = vm.file().split('.').pop().toLowerCase();
-        
-        var dataPdf = {
-            docId: vm.facproveIdOfrecida(),
-            file: vm.file(),
-            ext: ext
-        };
-    var url = "", type = "";
-        
-            type = "POST";
-            url = '/api/doc';
-        $.ajax({
-            type: type,
-            url: url,
-            contentType: "application/json",
-            data: JSON.stringify(dataPdf),
-            success: function (data, status) {
-                
-            },
-            error: function (err) {
-                errorAjax(err);
-                if (err.status == 401) {
-                    window.open('index.html', '_self');
-                }
-            }
-        });
-    return ext;
-}
 
 
 

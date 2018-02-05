@@ -23,6 +23,17 @@ function comprobarLogin() {
     return user.nombre;
 }
 
+function recuperarIdUsuario(){
+    // buscar el cookie
+    try {
+        var user = JSON.parse(getCookie("usuario"));
+    } catch (e) {
+        // volver al login
+        window.open('login.html', '_self');
+    }
+    return user.usuarioId;
+}
+
 function nivelesUsuario(nivel) {
     // ahora hay que hacer las comprobaciones de proasistencia
 }

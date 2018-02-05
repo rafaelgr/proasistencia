@@ -472,13 +472,13 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <section class="col col-md-2">
-                                                                        <label class="label">Nro. Interno</label>
+                                                                        <label class="label bloqueado">Referencia</label>
                                                                         <label class="input">
-                                                                            <input id="txtNumeroInterno" name="txtNumeroInterno" type="text" data-bind="value: facproveIdOfrecida" disabled/>
+                                                                            <input id="txtRef" name="txtRef" type="text" data-bind="value: ref" disabled/>
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
-                                                                        <label class="label">PDF</label>
+                                                                        <label class="label bloqueado">Fichero</label>
                                                                         <label class="input">
                                                                             <input id="txtNombreFacprovePdf" name="txtNombreFacprovePdf" type="text" data-bind="value: nombreFacprovePdf" disabled/>
                                                                         </label>
@@ -565,12 +565,20 @@
                                                                             </section>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <section class="col col-md-12">
+                                                                            <section class="col col-md-6">
                                                                                 <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%;">
                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                             </section>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-6" style="padding-top: 4%">
+                                                                                    <label class="checkbox">
+                                                                                        <input id="chkCerrados" type="checkbox" name="chkCerrados">
+                                                                                        <i></i>Ver también contratos cerrados
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
                                                                         </div>
                                                                     </section>
                                                                     <section class="col col-md-6">
@@ -733,9 +741,9 @@
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div class="pull-right">
-                                                                    <button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
+                                                                    <!--<button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
                                                                         <i class="fa fa-lg fa-print"></i>
-                                                                    </button>
+                                                                    </button>-->
                                                                     <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                                         <i class="fa fa-lg fa-sign-out"></i>
                                                                     </button>
