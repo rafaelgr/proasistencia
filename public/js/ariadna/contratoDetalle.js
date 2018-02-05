@@ -17,6 +17,7 @@ var dataGenerarPrefacturas;
 var dataPrefacturas;
 var dataFacturas;
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -2751,13 +2752,13 @@ function loadTablaFacproves(data) {
 function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
 
 var nuevaFacprove = function () {
-    var url = "FacturaProveedorDetalle.html?facproveId=0";
+    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=0";
     url += "&EmpresaId=" + vm.sempresaId();
     url += "&ContratoId=" + vm.contratoId();
     window.open(url, '_new');

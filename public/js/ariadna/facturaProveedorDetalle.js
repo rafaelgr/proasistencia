@@ -13,7 +13,7 @@ var EmpresaId = 0;
 var ProveedorId = 0;
 var refWoId = 0;
 var url;
-var doc;
+var desdeContrato;
 
 
 var lineaEnEdicion = false;
@@ -77,8 +77,7 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
-    //checkbox carga marcao por defecto
-    $('#chkCerrados').prop("checked", true);
+    
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
@@ -132,7 +131,7 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
-    doc = gup("doc");
+    desdeContrato = gup("desdeContrato");
 
     
 
@@ -189,12 +188,14 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
+            $('#chkCerrados').prop("checked", true);
             loadData(data);
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);       
         })
     } else {
         // caso alta
+        $('#chkCerrados').prop("checked", false);
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -230,11 +231,20 @@ function contratosCerrados(){
         ContratoId = vm.scontratoId();
     }
     if(vm.sempresaId()){
-        url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+        if(facproveId == 0){
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+        }
+        
         if ($('#chkCerrados').prop('checked')) {
             url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        }else{
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
         }
-        loadContratos(ContratoId);
+        if (ContratoId != 0 && $('#chkCerrados').prop('checked')) {
+            loadContratos(ContratoId);
+        }else{
+            loadContratos(vm.scontratoId());
+        }
     }
     
 }
@@ -481,7 +491,7 @@ var aceptarFactura = function () {
     };
     var verb = "POST";
     var url =  "/api/facturasProveedores";
-    var returnUrl = "FacturaProveedorDetalle.html?ContratoId="+ ContratoId+"&cmd=nueva&facproveId=";
+    var returnUrl = "FacturaProveedorDetalle.html?desdeContrato="+ desdeContrato+"&cmd=nueva&facproveId=";
     
     
     // caso modificación
@@ -496,10 +506,7 @@ var aceptarFactura = function () {
     llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
-        if(ContratoId != "" && cmd == "nueva" && facproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
-        }
-        else if (EmpresaId != "" && facproveId == 0 && doc == true){
+        if(desdeContrato == "true" && facproveId != 0){
             window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
         }
         else{
@@ -550,7 +557,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        if(EmpresaId != ""){
+        if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
         }else{
             var url = "FacturaProveedorGeneral.html";
