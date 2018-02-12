@@ -38,6 +38,7 @@ var contratos_cliente_mantenimiento_router = require('./lib/contratos-cliente-ma
 var clientes_comisionistas_router = require('./lib/clientes-comisionistas/clientes_comisionistas_controller');
 var contrato_mantenimiento_comisionistas_router = require('./lib/contrato-mantenimiento-comisionistas/contrato_mantenimiento_comisionistas_controller');
 var grupo_articulos_router = require('./lib/grupos-articulos/grupo_articulo_controller');
+var grupo_tarifas_router = require('./lib/grupos-tarifas/grupo_tarifa_controller');
 var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
@@ -123,6 +124,7 @@ app.use('/api/contratos_cliente_mantenimiento', contratos_cliente_mantenimiento_
 app.use('/api/clientes_comisionistas', clientes_comisionistas_router);
 app.use('/api/contrato_mantenimiento_comisionistas', contrato_mantenimiento_comisionistas_router);
 app.use('/api/grupo_articulo', grupo_articulos_router);
+app.use('/api/grupo_tarifa', grupo_tarifas_router);
 app.use('/api/contabilidad', contabilidad_router);
 app.use('/api/unidades', unidades_router);
 app.use('/api/tipos_via', tipos_via_router);
