@@ -7,15 +7,16 @@ CREATE TABLE `grupo_tarifa`(
 CREATE TABLE `tarifas`(  
   `tarifaId` INT(11) NOT NULL AUTO_INCREMENT,
   `grupoTarifaId` INT(11),
+  `nombre` VARCHAR(255),
   PRIMARY KEY (`tarifaId`),
   CONSTRAINT `tarifaGrupoTarifaFK` FOREIGN KEY (`grupoTarifaId`) REFERENCES `grupo_tarifa`(`grupoTarifaId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `tarifa_lineas`(  
+CREATE TABLE `tarifas_lineas`(  
   `tarifaLineaId` INT(11) NOT NULL AUTO_INCREMENT,
   `tarifaId` INT(11),
   `articuloId` INT(11),
-  `precio` DECIMAL(10,2),
+  `precioUnitario` DECIMAL(10,2),
   PRIMARY KEY (`tarifaLineaId`),
   CONSTRAINT `tarifaLineasTarifasFK` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `tarifaLineasArticulosFK` FOREIGN KEY (`articuloId`) REFERENCES `articulos`(`articuloId`) ON UPDATE CASCADE ON DELETE CASCADE
