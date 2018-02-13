@@ -53,7 +53,7 @@ function initForm() {
 }
 
 function initTablaTarifas() {
-    tablaTarifas = $('#dt_Tarifa').DataTable({
+    tablaTarifas = $('#dt_tarifa').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -138,15 +138,15 @@ function initTablaTarifas() {
                 return html;
             }
         }, {
-            data: "referencia"
+            data: "nombre"
         }, {
-            data: "emisorNombre"
+            data: "grupoNombre"
         },  {
             data: "tarifaId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteTarifa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editTarifa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +"</div>";
                 return html;
             }
         }]
@@ -159,10 +159,6 @@ function initTablaTarifas() {
             .search(this.value)
             .draw();
     });
-
-    // Hide some columns by default
-    tablaTarifas.columns(8).visible(false);
-    tablaTarifas.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -216,11 +212,10 @@ function deleteTarifa(id) {
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Cancelar][Descontabilizar tarifa][Borrar tarifa]'
+        buttons: '[Cancelar][Borrar]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Borrar tarifa") {
-            var data = { tarifaId: id };
-            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/" + id, data, function (err) {
+        if (ButtonPressed === "Borrar") {
+            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/" + id, null, function (err) {
                 if (err) return;
                 mostrarMensajeTarifaBorrada();
                 buscarTarifas()();
@@ -285,26 +280,4 @@ function cargarTarifas() {
     return mf;
 }
 
-
-
-var f_open_post = function (verb, url, data, target) {
-    var form = document.createElement("form");
-    form.action = url;
-    form.method = verb;
-    form.target = target || "_blank";
-
-    var input = document.createElement("textarea");
-    input.name = "template[shortid]";
-    input.value = data.template.shortid;
-    form.appendChild(input);
-
-    input = document.createElement("textarea");
-    input.name = "data";
-    input.value = JSON.stringify(data.data);
-    form.appendChild(input);
-
-    form.style.display = 'none';
-    document.body.appendChild(form);
-    form.submit();
-};
 

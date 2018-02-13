@@ -19,8 +19,6 @@ CREATE TABLE `tarifas_lineas`(
   `precioUnitario` DECIMAL(10,2),
   PRIMARY KEY (`tarifaLineaId`),
   CONSTRAINT `tarifaLineasTarifasFK` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `tarifaLineasArticulosFK` FOREIGN KEY (`articuloId`) REFERENCES `articulos`(`articuloId`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `tarifaLineasArticulosFK` FOREIGN KEY (`articuloId`) REFERENCES `articulos`(`articuloId`) ON UPDATE CASCADE ON DELETE CASCADE,
+  UNIQUE INDEX `artIdUni` (`articuloId`)
 );
-
-ALTER TABLE `tarifa_lineas`   
-  ADD  UNIQUE INDEX `artIdUni` (`articuloId`);
