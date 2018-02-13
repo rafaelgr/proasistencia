@@ -240,20 +240,9 @@ function aceptarLinea() {
     var data = {
         tarifaLinea: {
             tarifaLineaId: vm.tarifaLineaId(),
-            linea: vm.linea(),
             tarifaId: vm.tarifaId(),
-            unidadId: vm.sunidadId(),
             articuloId: vm.sarticuloId(),
-            tipoIvaId: vm.tipoIvaId(),
-            porcentaje: vm.porcentaje(),
-            descripcion: vm.descripcion(),
-            cantidad: vm.cantidad(),
-            importe: vm.importe(),
-            totalLinea: vm.totalLinea(),
-            coste: vm.costeLinea(),
-            porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente(),
-            capituloLinea: vm.capituloLinea(),
+            precioUnitario:  numeroDbf(vm.precio())
         }
     }
     var verbo = "POST";
@@ -275,20 +264,20 @@ function aceptarLinea() {
 function datosOKLineas() {
     $('#linea-form').validate({
         rules: {
-            txtNombre: {
+            cmbArticulos: {
                 required: true
             },
-            cmbGrupo: {
+            txtPrecio: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            txtNombre: {
-                required: "Debe dar un nombre a la tarifa"
-            },
             cmbArticulos: {
-                required: "Debe elegir un grupo asociado a la tarifa"
+                required: "Debe dar una unidad constructiva asociada a la linea de tarifa"
+            },
+            txtPrecio: {
+                required: "Debe proporcionar un precio unitario"
             }
         },
         // Do not change code below
@@ -318,14 +307,7 @@ function initTablaTarifasLineas() {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
-            api.column(1, { page: 'current' }).data().each(function (group, i) {
-                if (last !== group) {
-                    $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
-                    );
-                    last = group;
-                }
-            });
+            
         },
         language: {
             processing: "Procesando...",
@@ -348,14 +330,9 @@ function initTablaTarifasLineas() {
             }
         },
         data: dataTarifasLineas,
-        columns: [{
-            data: "tarifaLineaId"
-        }, {
+        columns: [ {
             data: "unidadConstructiva",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
+            className: "text-right"
         }, {
             data: "precioUnitario",
             className: "text-right",
@@ -368,8 +345,6 @@ function initTablaTarifasLineas() {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTarifaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editTarifaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                // if (!vm.generada())
-                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -380,6 +355,7 @@ function initTablaTarifasLineas() {
 function loadDataLinea(data) {
     vm.tarifaLineaId(data.tarifaLineaId);
     vm.articuloId(data.articuloId);
+    vm.precioUnitario(numeral(data.precioUnitario).format('0,0.00'))
     //
     loadArticulos(data.articuloId);
 }
@@ -439,7 +415,7 @@ function editTarifaLinea(id) {
     });
 }
 
-function deletetarifaLinea(tarifaId) {
+function deleteTarifaLinea(tarifaId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
