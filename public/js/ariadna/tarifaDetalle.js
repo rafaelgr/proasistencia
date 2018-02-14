@@ -71,6 +71,7 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaId(0);
+        vm.total(0);
         $("#lineastarifa").hide();
         document.title = "NUEVA TARIFA";
     }
@@ -80,6 +81,7 @@ function admData() {
     var self = this;
     self.tarifaId = ko.observable();
     self.nombre = ko.observable();
+    self.total = ko.observable();
     //
     self.grupoTarifaId = ko.observable();
     //
@@ -93,7 +95,7 @@ function admData() {
 
     // -- Valores para las líneas
     self.tarifaLineaId = ko.observable();
-    self.precio = ko.observable();
+    self.precioUnitario = ko.observable();
     self.articuloId = ko.observable();
     //
     self.sarticuloId = ko.observable();
@@ -106,6 +108,7 @@ function admData() {
 function loadData(data) {
     vm.tarifaId(data.tarifaId);
     vm.nombre(data.nombre);
+    vm.total(numeral(data.precio).format('0,0.00'));
     loadGrupoTarifa(data.grupoTarifaId);
 
 
@@ -120,38 +123,20 @@ function loadData(data) {
 function datosOK() {
     $('#frmTarifa').validate({
         rules: {
-            cmbEmpresas: {
+            cmbGrupo: {
                 required: true
             },
-            cmbClientes: {
-                required: true
-            },
-            txtFecha: {
-                required: true
-            },
-            cmbFormasPago: {
-                required: true
-            },
-            cmbContratos: {
+            txtNombre: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            cmbEmpresas: {
-                required: "Debe elegir un emisor"
+            cmbGrupo: {
+                required: "Debe elegir un grupo"
             },
-            cmbClientes: {
-                required: 'Debe elegir un receptor'
-            },
-            txtFecha: {
-                required: 'Debe elegir una fecha'
-            },
-            cmbFormasPago: {
-                required: "Debe elegir una forma de pago"
-            },
-            cmbContratos: {
-                required: "Debe elegir un contrato asociado"
+            txtNombre: {
+                required: 'Debe elegir un nombre'
             }
         },
         // Do not change code below
@@ -165,6 +150,11 @@ function datosOK() {
 
 var aceptarTarifa = function () {
     if (!datosOK()) return;
+
+    if (!vm.total()) {
+        vm.total('0');
+    }
+
     var data = generarTarifaDb();
     // caso alta
     var verb = "POST";
@@ -189,7 +179,8 @@ var generarTarifaDb = function () {
         tarifa: {
             "tarifaId": vm.tarifaId(),
             "grupoTarifaId": vm.sgrupoTarifaId(),
-            "nombre": vm.nombre()
+            "nombre": vm.nombre(),
+            "precio": numeroDbf(vm.total())
         }
     };
     return data;
@@ -210,24 +201,11 @@ function salir() {
 function nuevaLinea() {
     limpiaDataLinea();
     lineaEnEdicion = false;
-    llamadaAjax("GET", "/api/tarifas/nextlinea/" + vm.tarifaId(), null, function (err, data) {
-        vm.linea(data);
-        vm.total(0);
-        vm.totalConIva(0);
-    });
 }
 
 function limpiaDataLinea(data) {
     vm.tarifaLineaId(0);
-    vm.linea(null);
-    vm.articuloId(null);
-    vm.tipoIvaId(null);
-    vm.porcentaje(null);
-    vm.descripcion(null);
-    vm.cantidad(null);
-    vm.importe(null);
-    vm.costeLinea(null);
-    vm.totalLinea(null);
+    vm.precioUnitario(null);
     
     loadArticulos();
 }
@@ -242,22 +220,33 @@ function aceptarLinea() {
             tarifaLineaId: vm.tarifaLineaId(),
             tarifaId: vm.tarifaId(),
             articuloId: vm.sarticuloId(),
-            precioUnitario:  numeroDbf(vm.precio())
+            precioUnitario:  numeroDbf(vm.precioUnitario())
         }
     }
-    var verbo = "POST";
-    var url = myconfig.apiUrl + "/api/tarifas/lineas";
-    if (lineaEnEdicion) {
-        verbo = "PUT";
-        url = myconfig.apiUrl + "/api/tarifas/lineas/" + vm.tarifaLineaId();
-    }
-    llamadaAjax(verbo, url, data, function (err, data) {
+    //compruebaArticuloRepetido en misma tarifa
+    llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/articulo/" + vm.sarticuloId() + " / " + vm.tarifaId(), null, function (err, datos) {
         if (err) return;
-        $('#modalLinea').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
-            loadData(data);
-            loadLineasTarifa(data.tarifaId);
-        });
+        if (datos.length > 0) {
+            mostrarMensajeArticuloRepetido();
+        }else{
+            
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/tarifas/lineas";
+                if (lineaEnEdicion) {
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/tarifas/lineas/" + vm.tarifaLineaId();
+                }
+                llamadaAjax(verbo, url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalLinea').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
+                        loadData(data);
+                        loadLineasTarifa(data.tarifaId);
+                       
+                    });
+                });
+            
+        }
     });
 }
 
@@ -267,7 +256,7 @@ function datosOKLineas() {
             cmbArticulos: {
                 required: true
             },
-            txtPrecio: {
+            txtPrecioUnitario: {
                 required: true
             }
         },
@@ -276,7 +265,7 @@ function datosOKLineas() {
             cmbArticulos: {
                 required: "Debe dar una unidad constructiva asociada a la linea de tarifa"
             },
-            txtPrecio: {
+            txtPrecioUnitario: {
                 required: "Debe proporcionar un precio unitario"
             }
         },
@@ -288,6 +277,7 @@ function datosOKLineas() {
     var opciones = $("#linea-form").validate().settings;
     return $('#linea-form').valid();
 }
+
 
 
 function initTablaTarifasLineas() {
@@ -332,10 +322,10 @@ function initTablaTarifasLineas() {
         data: dataTarifasLineas,
         columns: [ {
             data: "unidadConstructiva",
-            className: "text-right"
+            className: "text-left"
         }, {
             data: "precioUnitario",
-            className: "text-right",
+            className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -376,6 +366,11 @@ function loadTablaTarifaLineas(data) {
 function loadLineasTarifa(id) {
     llamadaAjax("GET", "/api/tarifas/lineas/" + id, null, function (err, data) {
         if (err) return;
+        var total = 0;
+        data.forEach(function (linea) {
+            total += (linea.precioUnitario);
+            vm.total(numeral(total).format('0,0.00'));
+        })
         loadTablaTarifaLineas(data);
     });
 }
@@ -383,7 +378,7 @@ function loadLineasTarifa(id) {
 function loadArticulos(id) {
     llamadaAjax("GET", "/api/articulos", null, function (err, data) {
         if (err) return;
-        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        var articulos = [{ articuloId: null, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
@@ -396,7 +391,7 @@ function loadArticulos(id) {
 function loadGrupoTarifa(id){
     llamadaAjax("GET", "/api/grupo_tarifa", null, function (err, data) {
         if (err) return;
-        var grupos = [{ grupoTarifaId: 0, nombre: "" }].concat(data);
+        var grupos = [{ grupoTarifaId: null, nombre: "" }].concat(data);
         vm.posiblesGrupos(grupos);
         if (id) {
             $("#cmbGrupo").val([id]).trigger('change');
@@ -437,17 +432,13 @@ function deleteTarifaLinea(tarifaId) {
     });
 }
 
-var ocultarCamposTarifasGeneradas = function () {
-    $('#btnAceptar').hide();
-    $('#btnNuevaLinea').hide();
-    // los de input para evitar que se lance 'onblur'
-    $('#txtCoste').prop('disabled', true);
-    $('#txtPorcentajeBeneficio').prop('disabled', true);
-    $('#txtImporteBeneficio').prop('disabled', true);
-    $('#txtPorcentajeAgente').prop('disabled', true);
-}
-
 var mostrarMensajeTarifaNueva = function () {
     var mens = "Introduzca las líneas de la nueva tarifa en el apartado correspondiente";
     mensNormal(mens);
+}
+
+var mostrarMensajeArticuloRepetido = function () {
+    var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en una tarifa";
+    mensNormal(mens);
+    loadArticulos();
 }

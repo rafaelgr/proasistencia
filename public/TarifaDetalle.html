@@ -436,6 +436,10 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmLinea">
                                         <fieldset>
+                                            <div class="pull-left">
+                                                <strong>Precio</strong>: </strong>
+                                                <span data-bind="text: total"></span>
+                                            </div>
                                             <div class="pull-right">
                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
@@ -448,10 +452,10 @@
                                         <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th data-hide="phone" class="text-right">
+                                                    <th data-hide="phone" class="text-left">
                                                         UNIDAD CONSTRUCTIVA ASOCIADA
                                                     </th>
-                                                    <th data-hide="phone" class="text-right">
+                                                    <th data-hide="phone" class="text-left">
                                                         PRECIO UNITARIO
                                                     </th>
                                                     <th>
@@ -502,7 +506,7 @@
                                     <section class="col col-md-4">
                                         <label class="label">Precio unitario</label>
                                         <label class="input">
-                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" />
+                                            <input id="txtPrecioUnitario" name="txtPrecioUnitario" type="text" data-bind="value: precioUnitario" />
                                         </label>
                                     </section>
                                 </div>

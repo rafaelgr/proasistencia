@@ -8,6 +8,7 @@ CREATE TABLE `tarifas`(
   `tarifaId` INT(11) NOT NULL AUTO_INCREMENT,
   `grupoTarifaId` INT(11),
   `nombre` VARCHAR(255),
+  `precio` DECIMAL(10,2),
   PRIMARY KEY (`tarifaId`),
   CONSTRAINT `tarifaGrupoTarifaFK` FOREIGN KEY (`grupoTarifaId`) REFERENCES `grupo_tarifa`(`grupoTarifaId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -20,5 +21,5 @@ CREATE TABLE `tarifas_lineas`(
   PRIMARY KEY (`tarifaLineaId`),
   CONSTRAINT `tarifaLineasTarifasFK` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `tarifaLineasArticulosFK` FOREIGN KEY (`articuloId`) REFERENCES `articulos`(`articuloId`) ON UPDATE CASCADE ON DELETE CASCADE,
-  UNIQUE INDEX `artIdUni` (`articuloId`)
+  UNIQUE INDEX `artIdUni` (`articuloId`, `tarifaId`)
 );
