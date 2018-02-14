@@ -10,7 +10,8 @@ var responsiveHelper_datatable_tabletools = undefined;
 var tarifaId = 0;
 var cmd = "";
 var lineaEnEdicion = false;
-
+var GrupoId;
+var desdeGrupo;
 var dataTarifasLineas;
 var dataBases;
 
@@ -61,6 +62,9 @@ function initForm() {
 
     tarifaId = gup('TarifaId');
     cmd = gup("cmd");
+    GrupoId = gup("GrupoId");
+    desdeGrupo = gup("desdeGrupo");
+
     if (tarifaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + tarifaId, null, function (err, data) {
@@ -74,6 +78,9 @@ function initForm() {
         vm.total(0);
         $("#lineastarifa").hide();
         document.title = "NUEVA TARIFA";
+        if(GrupoId){
+            loadGrupoTarifa(GrupoId);
+        }
     }
 }
 
@@ -159,7 +166,7 @@ var aceptarTarifa = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/tarifas";
-    var returnUrl = "TarifaDetalle.html?cmd=nueva&TarifaId=";
+    var returnUrl = "TarifaDetalle.html?desdeGrupo="+ desdeGrupo +"&cmd=nueva&TarifaId=";
     // caso modificación
     if (tarifaId != 0) {
         verb = "PUT";
@@ -170,7 +177,12 @@ var aceptarTarifa = function () {
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.tarifaId();
-        window.open(returnUrl, '_self');
+        if(desdeGrupo == "true" && tarifaId != 0){
+            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId() +'&doc=true', '_self');
+        }
+        else{
+            window.open(returnUrl, '_self');
+        }
     });
 }
 
@@ -189,7 +201,11 @@ var generarTarifaDb = function () {
 function salir() {
     var mf = function () {
         var url = "TarifaGeneral.html";
-        window.open(url, '_self');
+        if(cmd != "nueva" || desdeContrato == "true"){
+            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId() +'&doc=true', '_self');
+        }else{
+            window.open(url, '_self');
+        }
     }
     return mf;
 }
