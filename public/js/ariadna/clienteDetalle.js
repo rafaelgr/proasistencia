@@ -97,6 +97,10 @@ function initForm() {
         cambioComercial(e.added);
     });
 
+    // select2 things
+    $("#cmbTarifas").select2(select2Spanish());
+    loadTarifas();
+
     // autosalto en IBAN
     $(function () {
         $(".ibans").keyup(function () {
@@ -256,6 +260,14 @@ function admData() {
     //
     self.posiblesTiposVia3 = ko.observableArray([]);
     self.elegidosTiposVia3 = ko.observableArray([]);
+    //
+    //
+    self.tarifaId= ko.observable();
+    self.starifaId = ko.observable();
+    //
+    self.posiblesTarifas = ko.observableArray([]);
+    self.elegidasTarifas = ko.observableArray([]);
+
     //-- Valores para form de comisionistas
     //
     self.scomercialId = ko.observable();
@@ -325,6 +337,7 @@ function loadData(data) {
     loadMotivosBaja(data.motivoBajaId);
     loadTiposVia(data.tipoViaId);
     loadAgentes(data.comercialId);
+    loadTarifas(data.tarifaId);
     var data = { id: data.comercialId };
     cambioAgente(data);
     //
@@ -491,7 +504,8 @@ function aceptar() {
                 "poblacion3": vm.poblacion3(),
                 "provincia3": vm.provincia3(),
                 "codPostal3": vm.codPostal3(),
-                "tipoViaId3": vm.stipoViaId3()
+                "tipoViaId3": vm.stipoViaId3(),
+                "tarifaId": vm.starifaId()
             }
         };
         if (empId == 0) {
@@ -698,6 +712,24 @@ function loadTiposVia3(id) {
             var tiposVia3 = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia3(tiposVia3);
             $("#cmbTiposVia3").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTarifas(id){
+    $.ajax({
+        type: "GET",
+        url: "/api/tarifas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tarifas = [{ tarifaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTarifas(tarifas);
+            $("#cmbTarifas").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);

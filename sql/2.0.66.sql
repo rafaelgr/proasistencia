@@ -23,3 +23,8 @@ CREATE TABLE `tarifas_lineas`(
   CONSTRAINT `tarifaLineasArticulosFK` FOREIGN KEY (`articuloId`) REFERENCES `articulos`(`articuloId`) ON UPDATE CASCADE ON DELETE CASCADE,
   UNIQUE INDEX `artIdUni` (`articuloId`, `tarifaId`)
 );
+
+ALTER TABLE `clientes`   
+  ADD COLUMN `tarifaId` INT(11) NULL AFTER `tipoViaId3`,
+  ADD CONSTRAINT `fkey_tarifa_cliente` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
