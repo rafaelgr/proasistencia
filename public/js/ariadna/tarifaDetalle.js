@@ -178,7 +178,7 @@ var aceptarTarifa = function () {
         loadData(data);
         returnUrl = returnUrl + vm.tarifaId();
         if(desdeGrupo == "true" && tarifaId != 0){
-            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId() +'&doc=true', '_self');
+            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId(), '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -201,8 +201,8 @@ var generarTarifaDb = function () {
 function salir() {
     var mf = function () {
         var url = "TarifaGeneral.html";
-        if(cmd != "nueva" || desdeContrato == "true"){
-            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId() +'&doc=true', '_self');
+        if(cmd != "nueva" && desdeGrupo == "true"){
+            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId(), '_self');
         }else{
             window.open(url, '_self');
         }
