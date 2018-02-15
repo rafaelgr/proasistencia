@@ -31,3 +31,6 @@ ALTER TABLE `clientes`
 ALTER TABLE `proveedores`   
   ADD COLUMN `tarifaId` INT(11) NULL AFTER `fianza`,
   ADD CONSTRAINT `proveedores_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE `proasistencia`.`facprove`   
+  ADD COLUMN `fecha_recepcion` DATE NULL AFTER `ref`;
