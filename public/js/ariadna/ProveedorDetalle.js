@@ -50,6 +50,8 @@ function initForm() {
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
+    $("#cmbTarifas").select2(select2Spanish());
+    loadTarifas();
 
     $("#txtCodigo").blur(function () {
         cambioCodigoProveedor();
@@ -192,6 +194,7 @@ function admData() {
     //
     self.posiblesMotivosBaja = ko.observableArray([]);
     self.elegidosMotivosBaja = ko.observableArray([]);
+    
 }
 
 function loadData(data) {
@@ -232,6 +235,7 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
     loadMotivosBaja(data.motivoBajaId);
+    loadTarifas(data.tarifaId);
 }
 
 function datosOK() {
@@ -348,7 +352,8 @@ function aceptar() {
                 "formaPagoId": vm.sformaPagoId(),
                 "IBAN": vm.iban(),
                 "codigoProfesional": vm.codigoProfesional(),
-                "fianza": numeroDbf(vm.fianza())
+                "fianza": numeroDbf(vm.fianza()),
+                "tarifaId": vm.starifaId()
 
             }
         };
@@ -456,6 +461,25 @@ function loadMotivosBaja(id) {
         $("#cmbMotivosBaja").val([id]).trigger('change');
     });
 }
+
+function loadTarifas(id){
+    $.ajax({
+        type: "GET",
+        url: "/api/tarifas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tarifas = [{ tarifaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTarifas(tarifas);
+            $("#cmbTarifas").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 
 function cambioCodigoProveedor(data) {

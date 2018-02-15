@@ -28,3 +28,6 @@ ALTER TABLE `clientes`
   ADD COLUMN `tarifaId` INT(11) NULL AFTER `tipoViaId3`,
   ADD CONSTRAINT `fkey_tarifa_cliente` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE `proveedores`   
+  ADD COLUMN `tarifaId` INT(11) NULL AFTER `fianza`,
+  ADD CONSTRAINT `proveedores_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
