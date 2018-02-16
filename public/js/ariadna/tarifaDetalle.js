@@ -75,7 +75,6 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaId(0);
-        vm.total(0);
         $("#lineastarifa").hide();
         document.title = "NUEVA TARIFA";
         if(GrupoId){
@@ -88,7 +87,6 @@ function admData() {
     var self = this;
     self.tarifaId = ko.observable();
     self.nombre = ko.observable();
-    self.total = ko.observable();
     //
     self.grupoTarifaId = ko.observable();
     //
@@ -115,7 +113,6 @@ function admData() {
 function loadData(data) {
     vm.tarifaId(data.tarifaId);
     vm.nombre(data.nombre);
-    vm.total(numeral(data.precio).format('0,0.00'));
     loadGrupoTarifa(data.grupoTarifaId);
 
 
@@ -158,10 +155,7 @@ function datosOK() {
 var aceptarTarifa = function () {
     if (!datosOK()) return;
 
-    if (!vm.total()) {
-        vm.total('0');
-    }
-
+   
     var data = generarTarifaDb();
     // caso alta
     var verb = "POST";
@@ -191,8 +185,7 @@ var generarTarifaDb = function () {
         tarifa: {
             "tarifaId": vm.tarifaId(),
             "grupoTarifaId": vm.sgrupoTarifaId(),
-            "nombre": vm.nombre(),
-            "precio": numeroDbf(vm.total())
+            "nombre": vm.nombre()
         }
     };
     return data;
@@ -381,35 +374,12 @@ function loadTablaTarifaLineas(data) {
 function loadLineasTarifa(id) {
     llamadaAjax("GET", "/api/tarifas/lineas/" + id, null, function (err, data) {
         if (err) return;
-        var total = 0;
-        data.forEach(function (linea) {
-            total += (linea.precioUnitario);
-            vm.total(numeral(total).format('0,0.00'));
-        })
-        if(data.length == 0){
-            total = 0;
-            vm.total(numeral(total).format('0,0.00'));
-        }
-        guardarTotalTarifa();
         loadTablaTarifaLineas(data);
     });
 }
 
-function guardarTotalTarifa() {
-    var data = generarTarifaDb();
-    if (tarifaId != 0) {
-        verb = "PUT";
-        url = myconfig.apiUrl + "/api/tarifas/" + tarifaId;
-        llamadaAjax(verb, url, data, function (err, data) {
-            if (err) return
-        });
-       
-    }
-
-}
-
 function loadArticulos(id) {
-    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos/concat/articulo/capitulo", null, function (err, data) {
         if (err) return;
         var articulos = [{ articuloId: null, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
@@ -471,7 +441,7 @@ var mostrarMensajeTarifaNueva = function () {
 }
 
 var mostrarMensajeArticuloRepetido = function () {
-    var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en una tarifa";
+    var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en esta tarifa";
     mensNormal(mens);
     loadArticulos();
 }

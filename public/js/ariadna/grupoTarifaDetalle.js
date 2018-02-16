@@ -230,12 +230,6 @@ function initTablaTarifasLineas() {
             data: "nombre",
             className: "text-left"
         }, {
-            data: "precio",
-            className: "text-left",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
             data: "tarifaId",
             render: function (data, type, row) {
                 var html = "";

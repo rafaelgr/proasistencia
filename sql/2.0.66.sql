@@ -8,7 +8,6 @@ CREATE TABLE `tarifas`(
   `tarifaId` INT(11) NOT NULL AUTO_INCREMENT,
   `grupoTarifaId` INT(11),
   `nombre` VARCHAR(255),
-  `precio` DECIMAL(10,2),
   PRIMARY KEY (`tarifaId`),
   CONSTRAINT `tarifaGrupoTarifaFK` FOREIGN KEY (`grupoTarifaId`) REFERENCES `grupo_tarifa`(`grupoTarifaId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
