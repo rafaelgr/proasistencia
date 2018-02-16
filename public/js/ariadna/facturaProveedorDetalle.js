@@ -83,6 +83,8 @@ function initForm() {
     initAutoProveedor();
 
     // select2 things
+    $("#cmbEmpresaServiciadas").select2(select2Spanish());
+    loadEmpresaServiciadas();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbContratos").select2(select2Spanish());
@@ -255,6 +257,7 @@ function admData() {
     self.ref = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
+    self.fechaRecepcion = ko.observable();
     self.empresaId = ko.observable();
     self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
@@ -282,6 +285,11 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.sempresaServiciadaId = ko.observable();
+    //
+    self.posiblesEmpresaServiciadas = ko.observableArray([]);
+    self.elegidasEmpresaServiciadas = ko.observableArray([]);
     //
     self.proveedorId = ko.observable();
     self.sproveedorId = ko.observable();
@@ -364,6 +372,7 @@ function loadData(data) {
     vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
+    vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
@@ -392,6 +401,7 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
+    loadEmpresaServiciadas(data.empresaId2);
     setTimeout(function() {
         loadContratos(data.contratoId);
     }, 1000);
@@ -522,7 +532,9 @@ var generarFacturaDb = function () {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
+            "fecha_recepcion": spanishDbDate(vm.fechaRecepcion()),
             "empresaId": vm.sempresaId(),
+            "empresaId2": vm.sempresaServiciadaId(),
             "proveedorId": vm.sproveedorId(),
             "contratoId": vm.scontratoId(),
             "emisorNif": vm.emisorNif(),
@@ -574,6 +586,15 @@ function loadEmpresas(empresaId) {
         var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
+    });
+}
+
+function loadEmpresaServiciadas(empresaId2){
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresaServiciada = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresaServiciadas(empresaServiciada);
+        $("#cmbEmpresaServiciadas").val([empresaId2]).trigger('change');
     });
 }
 

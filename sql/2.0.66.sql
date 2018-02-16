@@ -26,11 +26,16 @@ CREATE TABLE `tarifas_lineas`(
 
 ALTER TABLE `clientes`   
   ADD COLUMN `tarifaId` INT(11) NULL AFTER `tipoViaId3`,
-  ADD CONSTRAINT `fkey_tarifa_cliente` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `fkey_tarifa_cliente` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE `proveedores`   
   ADD COLUMN `tarifaId` INT(11) NULL AFTER `fianza`,
-  ADD CONSTRAINT `proveedores_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `proveedores_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE `proasistencia`.`facprove`   
+ALTER TABLE `facprove`   
   ADD COLUMN `fecha_recepcion` DATE NULL AFTER `ref`;
+
+  ALTER TABLE `facprove`   
+  ADD COLUMN `empresaId2` INT(11) NULL AFTER `empresaId`,
+  ADD CONSTRAINT `RX_empresas2` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`);
+

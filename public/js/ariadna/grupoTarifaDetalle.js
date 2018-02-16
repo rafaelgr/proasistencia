@@ -182,7 +182,7 @@ function salir() {
 
 function nuevaTarifa(){
     var url = 'TarifaDetalle.html?desdeGrupo=true&GrupoId='+ GrupoTarifaId;
-    window.open(url, '_new');
+    window.open(url, '_self');
 }
 
 
@@ -273,7 +273,7 @@ function loadLineasTarifa(id) {
 
 function editTarifaLinea(id) {
     var url = 'TarifaDetalle.html?desdeGrupo=true&TarifaId='+id;
-    window.open(url, '_new');
+    window.open(url, '_self');
 }
 
 function deleteTarifaLinea(tarifaId) {

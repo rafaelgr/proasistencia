@@ -245,7 +245,6 @@ function aceptarLinea() {
         if (datos.length > 0) {
             mostrarMensajeArticuloRepetido();
         }else{
-            
                 var verbo = "POST";
                 var url = myconfig.apiUrl + "/api/tarifas/lineas";
                 if (lineaEnEdicion) {
@@ -387,8 +386,26 @@ function loadLineasTarifa(id) {
             total += (linea.precioUnitario);
             vm.total(numeral(total).format('0,0.00'));
         })
+        if(data.length == 0){
+            total = 0;
+            vm.total(numeral(total).format('0,0.00'));
+        }
+        guardarTotalTarifa();
         loadTablaTarifaLineas(data);
     });
+}
+
+function guardarTotalTarifa() {
+    var data = generarTarifaDb();
+    if (tarifaId != 0) {
+        verb = "PUT";
+        url = myconfig.apiUrl + "/api/tarifas/" + tarifaId;
+        llamadaAjax(verb, url, data, function (err, data) {
+            if (err) return
+        });
+       
+    }
+
 }
 
 function loadArticulos(id) {
