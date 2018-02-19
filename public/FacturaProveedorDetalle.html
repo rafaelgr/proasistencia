@@ -235,6 +235,16 @@
                                 <i class="fa fa-square-o"></i> Unidades obra
                             </a>
                         </li>
+                        <li id="grupoTarifas">
+                            <a href="GrupoTarifaGeneral.html">
+                                <i class="fa fa-object-group"></i> Grupo tarifa
+                            </a>
+                        </li>
+                        <li id="tarifas">
+                            <a href="TarifaGeneral.html">
+                                <i class="fa fa-object-ungroup"></i> Tarifas
+                            </a>
+                        </li>
                         <li id="motivosbaja">
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
@@ -478,12 +488,17 @@
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
+                                                                        <label class="label">Fecha recepcion</label>
+                                                                        <label class="input">
+                                                                            <input id="txtFechaRecepcion" name="txtFechaRecepcion" data-bind="value: fechaRecepcion" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
                                                                         <label class="label bloqueado">Fichero</label>
                                                                         <label class="input">
                                                                             <input id="txtNombreFacprovePdf" name="txtNombreFacprovePdf" type="text" data-bind="value: nombreFacprovePdf" disabled/>
                                                                         </label>
                                                                     </section>
-                                                                    <section class="col col-md-2"></section>
                                                                     <section class="col col-md-2">
                                                                         <label class="label">% Retención</label>
                                                                         <label class="input">
@@ -511,10 +526,16 @@
                                                                             </header>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col col-md-12">
+                                                                            <div class="col col-md-6">
                                                                                 <label class="label">Empresa</label>
                                                                                 <label style="width:100%; height:50px;">
                                                                                     <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col col-md-6">
+                                                                                <label class="label">Empresa serviciada</label>
+                                                                                <label style="width:100%; height:50px;">
+                                                                                    <select style="width:100%" id="cmbEmpresaServiciadas" name="cmbEmpresaServiciadas" data-bind="options: posiblesEmpresaServiciadas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaServiciadaId, valueAllowUnset: true, selectedOptions: elegidasEmpresaServiciadas, selected2:{}"></select><i></i>
                                                                                 </label>
                                                                             </div>
                                                                         </div>

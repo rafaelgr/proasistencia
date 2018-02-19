@@ -223,6 +223,16 @@
                                 <i class="fa fa-square-o"></i> Unidades obra
                             </a>
                         </li>
+                        <li id="grupoTarifas">
+                            <a href="GrupoTarifaGeneral.html">
+                                <i class="fa fa-object-group"></i> Grupo tarifa
+                            </a>
+                        </li>
+                        <li id="tarifas">
+                            <a href="TarifaGeneral.html">
+                                <i class="fa fa-object-ungroup"></i> Tarifas
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li id="gestion">
@@ -494,11 +504,17 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-9">
                                                     <label class="label">Nombre comercial</label>
                                                     <label class="input">
                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                     </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                        <label class="label">Tarifa asociada</label>
+                                                        <label style="width:100%;">
+                                                            <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaId', value: starifaId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select><i></i>
+                                                        </label>
                                                 </section>
                                             </div>
                                             <div class="row">

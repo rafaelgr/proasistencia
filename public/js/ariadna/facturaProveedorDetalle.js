@@ -83,6 +83,16 @@ function initForm() {
     initAutoProveedor();
 
     // select2 things
+    $("#cmbEmpresaServiciadas").select2(select2Spanish());
+    loadEmpresaServiciadas();
+    $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioEmpresaServiciada(e.added.id);
+    });
+
+
+
+
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbContratos").select2(select2Spanish());
@@ -201,7 +211,7 @@ function initForm() {
         vm.importeRetencion(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
-        //$("#btnImprimir").hide();
+        vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
@@ -230,15 +240,15 @@ function contratosCerrados(){
     if(vm.scontratoId()){
         ContratoId = vm.scontratoId();
     }
-    if(vm.sempresaId()){
+    if(vm.sempresaServiciadaId()){
         if(facproveId == 0){
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
         }
         
         if ($('#chkCerrados').prop('checked')) {
-            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
         }else{
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
         }
         if (ContratoId != 0 && $('#chkCerrados').prop('checked')) {
             loadContratos(ContratoId);
@@ -255,6 +265,7 @@ function admData() {
     self.ref = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
+    self.fechaRecepcion = ko.observable();
     self.empresaId = ko.observable();
     self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
@@ -282,6 +293,11 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.sempresaServiciadaId = ko.observable();
+    //
+    self.posiblesEmpresaServiciadas = ko.observableArray([]);
+    self.elegidasEmpresaServiciadas = ko.observableArray([]);
     //
     self.proveedorId = ko.observable();
     self.sproveedorId = ko.observable();
@@ -364,6 +380,7 @@ function loadData(data) {
     vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
     vm.fecha(spanishDate(data.fecha));
+    vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
@@ -392,6 +409,7 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
+    loadEmpresaServiciadas(data.empresaId2);
     setTimeout(function() {
         loadContratos(data.contratoId);
     }, 1000);
@@ -522,7 +540,9 @@ var generarFacturaDb = function () {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
+            "fecha_recepcion": spanishDbDate(vm.fechaRecepcion()),
             "empresaId": vm.sempresaId(),
+            "empresaId2": vm.sempresaServiciadaId(),
             "proveedorId": vm.sproveedorId(),
             "contratoId": vm.scontratoId(),
             "emisorNif": vm.emisorNif(),
@@ -577,6 +597,16 @@ function loadEmpresas(empresaId) {
     });
 }
 
+function loadEmpresaServiciadas(empresaId2){
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresaServiciada = [{ empresaId: null, nombre: "" }].concat(data);
+        vm.posiblesEmpresaServiciadas(empresaServiciada);
+        $("#cmbEmpresaServiciadas").val([empresaId2]).trigger('change');
+        if(vm.sempresaId() == vm.sempresaServiciadaId()) contratosCerrados();
+    });
+}
+
 function loadFormasPago(formaPagoId) {
     llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
         if (err) return;
@@ -588,7 +618,7 @@ function loadFormasPago(formaPagoId) {
 
 var loadContratos = function (contratoId) {
     if(!url){
-        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
     }
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -635,6 +665,17 @@ function cambioEmpresa(empresaId) {
             vm.receptorCodPostal(data.codPostal);
             vm.receptorPoblacion(data.poblacion);
             vm.receptorProvincia(data.provincia);
+            loadEmpresaServiciadas(data.empresaId);
+        }
+    });
+}
+
+function cambioEmpresaServiciada(empresaId) {
+    if (!empresaId) return;
+    
+    llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
+        if(err) return;
+        if(data){
             contratosCerrados();
         }
     });
@@ -642,7 +683,6 @@ function cambioEmpresa(empresaId) {
 
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
-    //obrenerTipoClienteID(contratoId);
     vm.porcentajeBeneficio(0);
     vm.porcentajeAgente(0);
     if (!vm.coste()) vm.coste(0);

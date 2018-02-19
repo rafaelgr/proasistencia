@@ -2,7 +2,19 @@
 articuloDetalle.js
 Funciones js par la página ArticuloDetalle.html
 ---------------------------------------------------------------------------*/
+
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
 var empId = 0;
+var dataTarifas;
 
 datePickerSpanish(); // see comun.js
 
@@ -29,6 +41,8 @@ function initForm() {
 
     $("#cmbUnidades").select2(select2Spanish());
     loadUnidades();
+
+    initTablaTarifas()
     
     empId = gup('ArticuloId');
     if (empId != 0) {
@@ -45,6 +59,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                loadTarifas(data.articuloId);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -263,5 +278,76 @@ function loadUnidades(id) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+    });
+}
+
+/*----------------------------------------------------------
+    Funciones relacionadas con las lines de tarifas
+ -----------------------------------------------------------*/
+
+function initTablaTarifas() {
+    tablaCarro = $('#dt_tarifas').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_tarifas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataTarifas,
+        columns: [{
+            data: "nombre"
+        }, {
+            data: "nombreGrupo",
+        }, {
+            data: "precio",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }]
+    });
+}
+
+function loadTablaTarifas(data) {
+    var dt = $('#dt_tarifas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadTarifas(id) {
+    llamadaAjax('GET', "/api/tarifas/articulo/asociado/tarifa/informacion/" + id, null, function (err, data) {
+        if (err) return;
+        loadTablaTarifas(data);
     });
 }
