@@ -203,7 +203,7 @@ function initForm() {
         vm.importeRetencion(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
-        //$("#btnImprimir").hide();
+        vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
@@ -592,7 +592,7 @@ function loadEmpresas(empresaId) {
 function loadEmpresaServiciadas(empresaId2){
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresaServiciada = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresaServiciada = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresaServiciadas(empresaServiciada);
         $("#cmbEmpresaServiciadas").val([empresaId2]).trigger('change');
     });
@@ -657,6 +657,7 @@ function cambioEmpresa(empresaId) {
             vm.receptorPoblacion(data.poblacion);
             vm.receptorProvincia(data.provincia);
             contratosCerrados();
+            loadEmpresaServiciadas(data.empresaId);
         }
     });
 }

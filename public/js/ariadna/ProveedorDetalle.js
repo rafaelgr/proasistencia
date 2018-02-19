@@ -194,6 +194,12 @@ function admData() {
     //
     self.posiblesMotivosBaja = ko.observableArray([]);
     self.elegidosMotivosBaja = ko.observableArray([]);
+    //
+    self.tarifaId = ko.observable();
+    self.starifaId = ko.observable();
+    //
+    self.posiblesTarifas = ko.observableArray([]);
+    self.elegidasTarifas = ko.observableArray([]);
     
 }
 
