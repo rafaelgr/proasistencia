@@ -85,6 +85,14 @@ function initForm() {
     // select2 things
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
     loadEmpresaServiciadas();
+    $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioEmpresaServiciada(e.added.id);
+    });
+
+
+
+
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbContratos").select2(select2Spanish());
@@ -232,15 +240,15 @@ function contratosCerrados(){
     if(vm.scontratoId()){
         ContratoId = vm.scontratoId();
     }
-    if(vm.sempresaId()){
+    if(vm.sempresaServiciadaId()){
         if(facproveId == 0){
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
         }
         
         if ($('#chkCerrados').prop('checked')) {
-            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
         }else{
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaId();
+            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
         }
         if (ContratoId != 0 && $('#chkCerrados').prop('checked')) {
             loadContratos(ContratoId);
@@ -595,6 +603,7 @@ function loadEmpresaServiciadas(empresaId2){
         var empresaServiciada = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresaServiciadas(empresaServiciada);
         $("#cmbEmpresaServiciadas").val([empresaId2]).trigger('change');
+        if(vm.sempresaId() == vm.sempresaServiciadaId()) contratosCerrados();
     });
 }
 
@@ -609,7 +618,7 @@ function loadFormasPago(formaPagoId) {
 
 var loadContratos = function (contratoId) {
     if(!url){
-        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaId();
+        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
     }
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -656,15 +665,24 @@ function cambioEmpresa(empresaId) {
             vm.receptorCodPostal(data.codPostal);
             vm.receptorPoblacion(data.poblacion);
             vm.receptorProvincia(data.provincia);
-            contratosCerrados();
             loadEmpresaServiciadas(data.empresaId);
+        }
+    });
+}
+
+function cambioEmpresaServiciada(empresaId) {
+    if (!empresaId) return;
+    
+    llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
+        if(err) return;
+        if(data){
+            contratosCerrados();
         }
     });
 }
 
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
-    //obrenerTipoClienteID(contratoId);
     vm.porcentajeBeneficio(0);
     vm.porcentajeAgente(0);
     if (!vm.coste()) vm.coste(0);
