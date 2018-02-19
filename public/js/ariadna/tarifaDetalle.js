@@ -51,6 +51,9 @@ function initForm() {
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     loadArticulos();
+    $("#cmbArticulos").select2().on('change', function (e) {
+        if (e.added) cambioArticulo(e.added.id);
+    });
 
     // select2 things
     $("#cmbGrupo").select2(select2Spanish());
@@ -401,6 +404,13 @@ function loadGrupoTarifa(id){
         } else {
             $("#cmbGrupo").val([0]).trigger('change');
         }
+    });
+}
+
+function cambioArticulo(articuloId) {
+    if (!articuloId) return;
+    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+        vm.precioUnitario(numeral(data.precioUnitario).format('0,0.00'));
     });
 }
 
