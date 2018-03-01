@@ -9,3 +9,6 @@ CREATE TABLE `facprove_serviciados`(
   CONSTRAINT `serviciados_empresaFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `serviciados_contratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+ALTER TABLE `facprove_serviciados`   
+  ADD  UNIQUE INDEX `unico_contrato_empresa` (`empresaId`, `contratoId`);

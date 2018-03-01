@@ -15,6 +15,8 @@ var refWoId = 0;
 var url;
 var desdeContrato;
 
+var dataServiciadas;
+
 
 var lineaEnEdicion = false;
 
@@ -35,6 +37,8 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
+
+    initTablaServiciadas();
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -204,14 +208,13 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
-            $('#chkCerrados').prop("checked", true);
             loadData(data);
             loadLineasFactura(data.facproveId);
-            loadBasesFacprove(data.facproveId);       
+            loadBasesFacprove(data.facproveId);
+            loadServiciadasFacprove(facproveId);
         })
     } else {
         // caso alta
-        $('#chkCerrados').prop("checked", false);
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
@@ -220,6 +223,7 @@ function initForm() {
         vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        $('#frmServiciadas').hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
@@ -419,10 +423,8 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
-    loadEmpresaServiciadas(data.empresaId2);
-    setTimeout(function() {
-        loadContratos(data.contratoId);
-    }, 1000);
+   
+    
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
     vm.observaciones(data.observaciones);
@@ -675,7 +677,6 @@ function cambioEmpresa(empresaId) {
             vm.receptorCodPostal(data.codPostal);
             vm.receptorPoblacion(data.poblacion);
             vm.receptorProvincia(data.provincia);
-            loadEmpresaServiciadas(data.empresaId);
         }
     });
 }
@@ -1526,8 +1527,8 @@ function loadDoc(filename) {
 }
 
 //---- SOLAPA EMPRESAS SERVICIADAS
-function initTablaFacproves() {
-    tablaFacproves = $('#dt_facprove').DataTable({
+function initTablaServiciadas() {
+    tablaFacproves = $('#dt_serviciada').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -1572,7 +1573,7 @@ function initTablaFacproves() {
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facprove'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_serviciada'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -1601,9 +1602,9 @@ function initTablaFacproves() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataServiciadas,
         columns: [{
-            data: "facproveId",
+            data: "facproveServiciadoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -1612,27 +1613,16 @@ function initTablaFacproves() {
                 return html;
             }
         }, {
-            data: "ref"
-        },{
-            data: "numeroFacturaProveedor"
+            data: "empresa"
         }, {
-            data: "emisorNombre"
+            data: "referencia"
         }, {
-            data: "fecha",
+            data: "importe",
+        }, {
+            data: "facproveServiciadoId",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "total"
-        }, {
-            data: "totalConIva"
-        },  {
-            data: "vFPago"
-        }, {
-            data: "facproveId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteServiciada(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editServiciada(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
@@ -1641,7 +1631,7 @@ function initTablaFacproves() {
     });
 
     // Apply the filter
-    $("#dt_facprove thead th input[type=text]").on('keyup change', function () {
+    $("#dt_serviciada thead th input[type=text]").on('keyup change', function () {
         tablaFacproves
             .column($(this).parent().index() + ':visible')
             .search(this.value)
@@ -1652,15 +1642,15 @@ function initTablaFacproves() {
 }
 
 
-function loadFacproveDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/contrato/" + contratoId, null, function (err, data) {
+function loadServiciadasFacprove(facproveId) {
+    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
-        loadTablaFacproves(data);
+        loadTablaServiciadas(data);
     });
 }
 
-function loadTablaFacproves(data) {
-    var dt = $('#dt_facprove').dataTable();
+function loadTablaServiciadas(data) {
+    var dt = $('#dt_serviciada').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -1669,18 +1659,39 @@ function loadTablaFacproves(data) {
     dt.fnDraw();
 }
 
-function editFacprove(id) {
-    // hay que abrir la página de detalle de factura
-    // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id;
-    url += "&EmpresaId=" + vm.sempresaId();
-    window.open(url, '_new');
+function editServiciada(id) {
+    llamadaAjax("GET", "/api/facturasProveedores/servicidas/facturas/proveedor/una/para/editar/"+ id, null, function (err, data) {
+        if (err) return;
+        loadDataServiciadas(data)
+    });
+   
+}
+
+function loadDataServiciadas(data) {
+    url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + data.empresaId;
+    $('#chkCerrados').prop("checked", true);
+    vm.facproveServiciadoId(data.facproveServiciadoId);
+    vm.importeServiciada(numeral(data.importe).format('0,0.00'));
+
+    loadEmpresaServiciadas(data.empresaId);
+    loadContratos(data.contratoId);
+
 }
 
 function nuevaServiciada() {
-    if(!datosOKServiciada() && !vm.facproveId()){
-        mostrarMensajeFacturaNoCreada();
+    if(!datosOKServiciada()){
+        vm.importeServiciada(0,00);
         return;
+    }
+    var verb = "POST";
+    var url =  '/api/facturasProveedores/nueva/serviciada';
+    
+    // caso modificación
+    if (vm.facproveServiciadoId() != 0) {
+        verb = "PUT";
+        url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
+        returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+        
     }
     var data = {
         facproveServiciada: {
@@ -1690,13 +1701,16 @@ function nuevaServiciada() {
             importe: vm.importeServiciada()
         }
     }
-    llamadaAjax('POST', '/api/facturasProveedores/nueva/serviciada', data, function (err, data) {
+    llamadaAjax(verb, url, data, function (err, data) {
         if (err) return;
+        mostrarMensajeServiciadaCreada();
+        reiniciaValores();
     });
     
 }
 
 function datosOKServiciada() {
+    vm.importeServiciada(numeroDbf(vm.importeServiciada()));
     $('#frmServiciadas').validate({
         rules: {
             txtImporteServiciada: {
@@ -1721,7 +1735,14 @@ function datosOKServiciada() {
     return $('#frmServiciadas').valid();
 }
 
-function deleteFacprove(id) {
+function reiniciaValores() {
+    vm.sempresaServiciadaId(0)
+    vm.importeServiciada(0,00);
+    loadEmpresaServiciadas();
+    loadContratos();
+}
+
+function deleteServiciada(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -1730,46 +1751,17 @@ function deleteFacprove(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                   if(data.nombreFacprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-           
             var data = {
                 facproveId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                url: myconfig.apiUrl + "/api/facturasProveedores/serviciada/factura/proveedor/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacprocves();
+                    var fn = buscarServiciadas();
                     fn();
                 },
                 error: function (err) {
@@ -1784,15 +1776,15 @@ function deleteFacprove(id) {
     });
 }
 
-function buscarFacprocves() {
+function buscarServiciadas() {
     var mf = function () {
-        loadFacproveDelContrato(contratoId);
+        loadServiciadasFacprove(facproveId);
     };
     return mf;
 }
 
-var mostrarMensajeFacturaNoCreada = function () {
-    var mens = "Se tiene que crear antes una factura para poder asociar empresas serviciadas";
+var mostrarMensajeServiciadaCreada = function () {
+    var mens = "Registro creado correctamente";
     mensNormal(mens);
 }
 
