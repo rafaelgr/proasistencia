@@ -12,8 +12,9 @@ var ContratoId = 0;
 var EmpresaId = 0;
 var ProveedorId = 0;
 var refWoId = 0;
-var url;
+var ruta;
 var desdeContrato;
+var acumulado = 0;
 
 var dataServiciadas;
 
@@ -55,7 +56,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
-    $('#btnAltaServiciada').click(nuevaServiciada);
+    
     //$("#btnImprimir").click(imprimir);
     $("#frmFactura").submit(function () {
         return false;
@@ -247,24 +248,14 @@ function initForm() {
 }
 
 function contratosCerrados(){
-    if(vm.scontratoId()){
-        ContratoId = vm.scontratoId();
-    }
+    
     if(vm.sempresaServiciadaId()){
-        if(facproveId == 0){
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
-        }
-        
         if ($('#chkCerrados').prop('checked')) {
-            url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
+            ruta =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();//todos los contratos
         }else{
-            url = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();
+            ruta = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();//contratos activos
         }
-        if (ContratoId != 0 && $('#chkCerrados').prop('checked')) {
-            loadContratos(ContratoId);
-        }else{
-            loadContratos(vm.scontratoId());
-        }
+        loadContratos(vm.scontratoId());
     }
     
 }
@@ -418,7 +409,8 @@ function loadData(data) {
     vm.emisorPoblacion(data.emisorPoblacion);
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
-
+    vm.facproveServiciadoId(0);
+    vm.importeServiciada(0);
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
 
     //
@@ -629,10 +621,10 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    if(!url){
-        url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
+    if(!ruta){
+        ruta = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
     }
-    llamadaAjax("GET", url, null, function (err, data) {
+    llamadaAjax("GET", ruta, null, function (err, data) {
         if (err) return;
         cargarContratos(data, contratoId);
     });
@@ -1618,11 +1610,14 @@ function initTablaServiciadas() {
             data: "referencia"
         }, {
             data: "importe",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "facproveServiciadoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteServiciada(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editServiciada(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalServiciado' onclick='editServiciada(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
@@ -1645,6 +1640,10 @@ function initTablaServiciadas() {
 function loadServiciadasFacprove(facproveId) {
     llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
+        for(var i = 0; i < data.length; i++){
+            acumulado += parseFloat(data[i].importe);
+        }
+        
         loadTablaServiciadas(data);
     });
 }
@@ -1668,18 +1667,24 @@ function editServiciada(id) {
 }
 
 function loadDataServiciadas(data) {
-    url =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + data.empresaId;
     $('#chkCerrados').prop("checked", true);
     vm.facproveServiciadoId(data.facproveServiciadoId);
     vm.importeServiciada(numeral(data.importe).format('0,0.00'));
 
     loadEmpresaServiciadas(data.empresaId);
-    loadContratos(data.contratoId);
+    vm.scontratoId(data.contratoId);
+    contratosCerrados();
 
 }
 
 function nuevaServiciada() {
-    if(!datosOKServiciada()){
+    var imp = acumulado + parseFloat(vm.importeServiciada());
+    var tot = parseFloat(vm.total());
+    if( imp > tot){
+        mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la factura');
+        return;
+    }
+    else if(!datosOKServiciada()){
         vm.importeServiciada(0,00);
         return;
     }
@@ -1716,14 +1721,27 @@ function datosOKServiciada() {
             txtImporteServiciada: {
                 required: true,
                 number: true,
-                min: 1
+                min: 1,
+            },
+            cmbEmpresaServiciadas: {
+               required: true
+            },
+            cmbContratos: {
+                required:true
             }
+        
         },
         // Messages for form validation
         messages: {
             txtImporteServiciada: {
                 required: "Debe introducir un importe",
                 min: "El importe no puede ser cero"
+            },
+            cmbEmpresaServiciadas: {
+                required: 'Se tiene que elegir una empresa serviciada'
+            },
+            cmbContratos: {
+                required: 'Se tiene que elegir un contrato'
             }
         },
         // Do not change code below
@@ -1736,10 +1754,13 @@ function datosOKServiciada() {
 }
 
 function reiniciaValores() {
-    vm.sempresaServiciadaId(0)
+    acumulado = 0;
+    vm.sempresaServiciadaId(null);
     vm.importeServiciada(0,00);
+    vm.facproveServiciadoId(0);
     loadEmpresaServiciadas();
-    loadContratos();
+    loadServiciadasFacprove(facproveId);
+    
 }
 
 function deleteServiciada(id) {
@@ -1763,6 +1784,7 @@ function deleteServiciada(id) {
                 success: function (data, status) {
                     var fn = buscarServiciadas();
                     fn();
+                    reiniciaValores();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
