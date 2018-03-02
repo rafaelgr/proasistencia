@@ -36,6 +36,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarTarifa);
     $("#btnSalir").click(salir());
+    $('#btnActualizar').click(actualizaLineas);
     $("#frmTarifa").submit(function () {
         return false;
     });
@@ -45,6 +46,10 @@ function initForm() {
     });
 
     $("#linea-form").submit(function () {
+        return false;
+    });
+
+    $('#frmLineasGrupos').submit(function(){
         return false;
     });
 
@@ -58,6 +63,10 @@ function initForm() {
     // select2 things
     $("#cmbGrupo").select2(select2Spanish());
     loadGrupoTarifa();
+
+    // select2 things
+    $("#cmbCapitulos").select2(select2Spanish());
+    loadCapitulos();
 
     
     initTablaTarifasLineas();
@@ -79,6 +88,7 @@ function initForm() {
         // caso alta
         vm.tarifaId(0);
         $("#lineastarifa").hide();
+        $('#lineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
         if(GrupoId){
             loadGrupoTarifa(GrupoId);
@@ -98,7 +108,14 @@ function admData() {
     self.posiblesGrupos = ko.observableArray([]);
     self.elegidosGruposTarifa = ko.observableArray([]);
 
-    
+    //valores para el formulario de capitulos
+    self.porcentaje = ko.observable();
+    //
+    self.grupoArticuloId = ko.observable();
+    self.sgrupoArticuloId = ko.observable();
+    //
+    self.posiblesCapitulos = ko.observableArray([]);
+    self.elegidosCapitulos = ko.observableArray([]);
     
 
     // -- Valores para las líneas
@@ -407,6 +424,19 @@ function loadGrupoTarifa(id){
     });
 }
 
+function loadCapitulos(id){
+    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+        if (err) return;
+        var capitulos = [{ grupoArticuloId: null, nombre: "" }].concat(data);
+        vm.posiblesCapitulos(capitulos);
+        if (id) {
+            $("#cmbCapitulos").val([id]).trigger('change');
+        } else {
+            $("#cmbCapitulos").val([0]).trigger('change');
+        }
+    });
+}
+
 function cambioArticulo(articuloId) {
     if (!articuloId) return;
     llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
@@ -443,6 +473,36 @@ function deleteTarifaLinea(tarifaId) {
     }, function () {
         // cancelar no hace nada
     });
+}
+
+//funciones de tarifas generadas automaticamente
+
+function actualizaLineas(){
+    var data = creaObjeto();
+    llamadaAjax("POST", myconfig.apiUrl + "/api/tarifas/lineas/multiples/" , data, function (err, data) {
+        loadData(data);
+        loadLineasTarifa(data.tarifaId);
+       
+    });
+}
+
+function creaObjeto(){
+    var porcent = parseFloat(numeroDbf(vm.porcentaje()));
+    
+    if(porcent > 0){
+        porcent = (100 + porcent) / 100
+    } else {
+        porcent = (100 + porcent) / 100
+    }
+    var data = {
+        tarifaLinea: {
+            capitulo: vm.sgrupoArticuloId(),
+            porcentaje: porcent,
+            tarifaId: vm.tarifaId()
+        }
+    }
+
+    return data
 }
 
 var mostrarMensajeTarifaNueva = function () {

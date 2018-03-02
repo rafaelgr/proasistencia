@@ -357,7 +357,7 @@
                     <!-- NEW WIDGET START -->
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                        <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon">
                                     <i class="fa fa-edit"></i>
@@ -407,15 +407,76 @@
                                     </form>
                                     <hr/>
                                 </div>
+                                 
                                 <!-- end widget content -->
                             </div>
                             <!-- end widget div -->
                         </div>
                         <!-- end widget -->
-                    </article>
+                        
                     <!-- WIDGET END -->
                 </div>
                 <!-- end row -->
+                
+            </article>
+            <div class="row" id="lineasCapitulos">
+                    <!-- NEW WIDGET START -->
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                    <header>
+                                        <span class="widget-icon">
+                                            <i class="fa fa-edit"></i>
+                                        </span>
+                                        <h2>GENERAR LINEAS AUTOMÁTICAMENTE</h2>
+                                    </header>
+                                    <!-- widget div-->
+                                    <div>
+                                        <!-- widget edit box -->
+                                        <div class="jarviswidget-editbox">
+                                            <!-- This area used as dropdown edit box -->
+                                            <input class="form-control" type="text">
+                                        </div>
+                                        <!-- end widget edit box -->
+                                        <!-- widget content -->
+                                        <div class="widget-body">
+                                            <!-- this is what the user will see -->
+                                            <div class="widget-body">
+                                                    <form id="frmLineasGrupos" class="smart-form">
+                                                            <fieldset>
+                                                                    <div class="row">
+                                                                            
+                                                                            <section class="col col-md-6">
+                                                                                <label class="label">Capitulos</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbCapitulos" name="cmbCapitulos" data-bind="options: posiblesCapitulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosCapitulos, selected2:{}"></select>
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-5">
+                                                                                    <label class="label">Porcentaje</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtPorcentaje" name="txtPorcentaje" type="text" data-bind="value: porcentaje"/>
+                                                                                    </label>
+                                                                            </section>
+                                                                            <section class="col col-md-1"  style="padding-top: 2%">
+                                                                                    <button id="btnActualizar" title="actualizar lineas" class="btn btn-primary btn-circle btn-lg pull-right">
+                                                                                        <i class="fa fa-lg fa-repeat"></i>
+                                                                                    </button>
+                                                                            </section>
+                                                                            
+                                                                    </div>
+                                                            </fieldset>
+                                                    </form>
+                                                     <hr/>
+                                            </div>
+                                        </div>
+                                         
+                                        <!-- end widget content -->
+                                    </div>
+                                    <!-- end widget div -->
+                            </div>
+                    </article>
+            </div>
                 <!-- row -->
                 <div class="row" id="lineastarifa">
                     <!-- NEW WIDGET START -->
