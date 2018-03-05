@@ -15,6 +15,7 @@ var refWoId = 0;
 var ruta;
 var desdeContrato;
 var acumulado = 0;
+var numServiciadas = 0;
 
 var dataServiciadas;
 
@@ -440,6 +441,9 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", true);
     } else {
         $('#chkNoContabilizar').prop("checked", false);
+    }
+    if(numServiciadas == 0) {
+        mostrarMensajeCrearServiciadas();
     }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
@@ -1654,6 +1658,7 @@ function loadServiciadasFacprove(facproveId) {
         for(var i = 0; i < data.length; i++){
             acumulado += parseFloat(data[i].importe);
         }
+        numServiciadas = data.length;
         
         loadTablaServiciadas(data);
     });
@@ -1720,7 +1725,6 @@ function nuevaServiciada() {
     }
     llamadaAjax(verb, url, data, function (err, data) {
         if (err) return;
-        mostrarMensajeServiciadaCreada();
         reiniciaValores();
         $('#modalServiciado').modal('hide');
     });
@@ -1819,10 +1823,12 @@ function buscarServiciadas() {
     return mf;
 }
 
-var mostrarMensajeServiciadaCreada = function () {
-    var mens = "Registro creado correctamente";
+
+var mostrarMensajeCrearServiciadas = function () {
+    var mens = "Es necesario crear empresas serviciadas para esta factura en la pestaña correspondinte";
     mensNormal(mens);
 }
+
 
 
 
