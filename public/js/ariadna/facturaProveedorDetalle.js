@@ -270,6 +270,7 @@ function admData() {
     self.empresaId = ko.observable();
     self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
+    self.noContabilizar = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -435,6 +436,11 @@ function loadData(data) {
     if(vm.nombreFacprovePdf()) {
         loadDoc(vm.nombreFacprovePdf());
     }
+    if(data.noContabilizar == 1){
+        $('#chkNoContabilizar').prop("checked", true);
+    } else {
+        $('#chkNoContabilizar').prop("checked", false);
+    }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
 }
@@ -539,6 +545,11 @@ var aceptarFactura = function () {
 }
 
 var generarFacturaDb = function () {
+    if($('#chkNoContabilizar').prop("checked")) {
+        vm.noContabilizar(true);
+    } else {
+        vm.noContabilizar(false);
+    }
     var data = {
         facprove: {
             "facproveId": vm.facproveId(),
@@ -548,7 +559,6 @@ var generarFacturaDb = function () {
             "empresaId": vm.sempresaId(),
             "empresaId2": vm.sempresaServiciadaId(),
             "proveedorId": vm.sproveedorId(),
-            "contratoId": vm.scontratoId(),
             "emisorNif": vm.emisorNif(),
             "emisorNombre": vm.emisorNombre(),
             "emisorDireccion": vm.emisorDireccion(),
@@ -573,7 +583,9 @@ var generarFacturaDb = function () {
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
             "nombreFacprovePdf": vm.nombreFacprovePdf(),
-            "ref": vm.ref()
+            "ref": vm.ref(),
+            "noContabilizar": vm.noContabilizar()
+
         }
     };
     return data;
@@ -653,7 +665,6 @@ function cambioProveedor(proveedorId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
-        loadContratos(ContratoId);
     });
 }
 
@@ -1678,8 +1689,9 @@ function loadDataServiciadas(data) {
 }
 
 function nuevaServiciada() {
+
     var imp = acumulado + parseFloat(vm.importeServiciada());
-    var tot = parseFloat(vm.total());
+    var tot = parseFloat(numeroDbf(vm.total()));
     if( imp > tot){
         mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la factura');
         return;
@@ -1710,11 +1722,13 @@ function nuevaServiciada() {
         if (err) return;
         mostrarMensajeServiciadaCreada();
         reiniciaValores();
+        $('#modalServiciado').modal('hide');
     });
     
 }
 
 function datosOKServiciada() {
+    if (vm.importeServiciada() != 0 || vm.importeServiciada() != "")
     vm.importeServiciada(numeroDbf(vm.importeServiciada()));
     $('#frmServiciadas').validate({
         rules: {

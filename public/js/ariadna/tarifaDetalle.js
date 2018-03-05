@@ -79,6 +79,7 @@ function initForm() {
 
     if (tarifaId != 0) {
         // caso edicion
+        vm.porcentaje(0)
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + tarifaId, null, function (err, data) {
             if (err) return;
             loadData(data);
@@ -87,6 +88,7 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaId(0);
+        vm.porcentaje(0)
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
@@ -133,6 +135,7 @@ function admData() {
 function loadData(data) {
     vm.tarifaId(data.tarifaId);
     vm.nombre(data.nombre);
+    vm.porcentaje(0);
     loadGrupoTarifa(data.grupoTarifaId);
 
 
@@ -253,11 +256,6 @@ function aceptarLinea() {
         }
     }
     //compruebaArticuloRepetido en misma tarifa
-    llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/articulo/" + vm.sarticuloId() + " / " + vm.tarifaId(), null, function (err, datos) {
-        if (err) return;
-        if (datos.length > 0) {
-            mostrarMensajeArticuloRepetido();
-        }else{
                 var verbo = "POST";
                 var url = myconfig.apiUrl + "/api/tarifas/lineas";
                 if (lineaEnEdicion) {
@@ -273,9 +271,6 @@ function aceptarLinea() {
                        
                     });
                 });
-            
-        }
-    });
 }
 
 function datosOKLineas() {
@@ -427,7 +422,7 @@ function loadGrupoTarifa(id){
 function loadCapitulos(id){
     llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
         if (err) return;
-        var capitulos = [{ grupoArticuloId: null, nombre: "" }].concat(data);
+        var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
         vm.posiblesCapitulos(capitulos);
         if (id) {
             $("#cmbCapitulos").val([id]).trigger('change');
@@ -478,16 +473,56 @@ function deleteTarifaLinea(tarifaId) {
 //funciones de tarifas generadas automaticamente
 
 function actualizaLineas(){
+    var por = vm.porcentaje();
+    if(!datosOkLineasGrupos()) {
+        vm.porcentaje(por);
+        return;
+    }
+
     var data = creaObjeto();
-    llamadaAjax("POST", myconfig.apiUrl + "/api/tarifas/lineas/multiples/" , data, function (err, data) {
+    var url = "/api/tarifas/lineas/multiples/";
+    if (vm.sgrupoArticuloId() == 0) {
+        url = "/api/tarifas/lineas/multiples/todos";
+    }
+    llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
         loadData(data);
         loadLineasTarifa(data.tarifaId);
        
     });
 }
 
+function datosOkLineasGrupos() {
+    if(vm.porcentaje() != 0 ||vm.porcentaje() != 0) {
+        vm.porcentaje(numeroDbf(vm.porcentaje()));
+    }
+    
+    $('#frmLineasGrupos').validate({
+        rules: {
+            txtPorcentaje: {
+                required: true,
+                number: true,
+                min: 1
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtPorcentaje: {
+                required: "Debe proporcionar un porcentaje",
+                min: "El porcentaje no puede ser cero"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmLineasGrupos").validate().settings;
+    return $('#frmLineasGrupos').valid();
+}
+
+
 function creaObjeto(){
-    var porcent = parseFloat(numeroDbf(vm.porcentaje()));
+    var porcent = parseFloat(vm.porcentaje());
     
     if(porcent > 0){
         porcent = (100 + porcent) / 100
