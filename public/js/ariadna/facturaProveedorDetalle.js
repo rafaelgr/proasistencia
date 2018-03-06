@@ -16,6 +16,7 @@ var ruta;
 var desdeContrato;
 var acumulado = 0;
 var numServiciadas = 0;
+var importeModificar = 0;
 
 var dataServiciadas;
 
@@ -1677,6 +1678,7 @@ function loadTablaServiciadas(data) {
 function editServiciada(id) {
     llamadaAjax("GET", "/api/facturasProveedores/servicidas/facturas/proveedor/una/para/editar/"+ id, null, function (err, data) {
         if (err) return;
+        importeModificar = data.importe;
         loadDataServiciadas(data)
     });
    
@@ -1685,7 +1687,7 @@ function editServiciada(id) {
 function loadDataServiciadas(data) {
     $('#chkCerrados').prop("checked", true);
     vm.facproveServiciadoId(data.facproveServiciadoId);
-    vm.importeServiciada(numeral(data.importe).format('0,0.00'));
+    vm.importeServiciada(data.importe);
 
     loadEmpresaServiciadas(data.empresaId);
     vm.scontratoId(data.contratoId);
@@ -1694,9 +1696,16 @@ function loadDataServiciadas(data) {
 }
 
 function nuevaServiciada() {
+    var imp;
+    var tot;
+    if(vm.facproveServiciadoId() != 0) {
+        imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+        tot = parseFloat(numeroDbf(vm.total()));
+    } else {
+        imp = acumulado + parseFloat(vm.importeServiciada());
+        tot = parseFloat(numeroDbf(vm.total()));
+    }
 
-    var imp = acumulado + parseFloat(vm.importeServiciada());
-    var tot = parseFloat(numeroDbf(vm.total()));
     if( imp > tot){
         mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la factura');
         return;
@@ -1710,6 +1719,8 @@ function nuevaServiciada() {
     
     // caso modificación
     if (vm.facproveServiciadoId() != 0) {
+       
+
         verb = "PUT";
         url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
@@ -1773,6 +1784,7 @@ function datosOKServiciada() {
 
 function reiniciaValores() {
     acumulado = 0;
+    importeModificar = 0;
     vm.sempresaServiciadaId(null);
     vm.importeServiciada(0,00);
     vm.facproveServiciadoId(0);

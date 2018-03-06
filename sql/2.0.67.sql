@@ -16,3 +16,11 @@ ALTER TABLE `facprove_serviciados`
   ALTER TABLE `facprove`   
   ADD COLUMN `noContabilizar` BOOLEAN NULL AFTER `fecha_recepcion`;
 
+  INSERT INTO grupo_articulo (nombre) VALUES ('ALBAÑILERIA'), ('CERRAJERIA'), ('CRISTALERIA'), 
+  ('ELECTRICIDAD'), ('FONTANERIA'), ('PINTORES'), ('POCERIA');
+
+
+  INSERT INTO grupo_tarifa VALUES(10, 'GRUPO GENERAL');
+
+INSERT INTO tarifas VALUES(1, 10, 'Prof. tarifa 1'), (2, 10, 'Prof. tarifa 2'), (3, 10, 'Prof. tarifa 4'), (4, 10, 'Prof. tarifa 5'), 
+(5, 10, 'Prof. tarifa 6');
