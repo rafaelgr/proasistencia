@@ -36,7 +36,6 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarTarifa);
     $("#btnSalir").click(salir());
-    $('#btnActualizar').click(actualizaLineas);
     $("#frmTarifa").submit(function () {
         return false;
     });
