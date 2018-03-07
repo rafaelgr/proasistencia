@@ -79,7 +79,7 @@ function initForm() {
 
     if (tarifaId != 0) {
         // caso edicion
-        vm.porcentaje(0)
+        vm.porcentaje('0')
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + tarifaId, null, function (err, data) {
             if (err) return;
             loadData(data);
@@ -88,7 +88,7 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaId(0);
-        vm.porcentaje(0)
+        vm.porcentaje('0')
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
@@ -135,7 +135,7 @@ function admData() {
 function loadData(data) {
     vm.tarifaId(data.tarifaId);
     vm.nombre(data.nombre);
-    vm.porcentaje(0);
+    vm.porcentaje('0');
     loadGrupoTarifa(data.grupoTarifaId);
 
 
@@ -485,30 +485,34 @@ function actualizaLineas(){
         url = "/api/tarifas/lineas/multiples/todos";
     }
     llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
-        loadData(data);
-        loadLineasTarifa(data.tarifaId);
-       
+        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
+            loadData(data);
+            loadLineasTarifa(data.tarifaId);
+        });
     });
 }
 
 function datosOkLineasGrupos() {
-    if(vm.porcentaje() != 0 ||vm.porcentaje() != 0) {
-        vm.porcentaje(numeroDbf(vm.porcentaje()));
-    }
+   if(vm.porcentaje() == "") {
+    vm.porcentaje(null);
+   } else {
+    vm.porcentaje(numeroDbf(vm.porcentaje()));
+   }
+    
+    
     
     $('#frmLineasGrupos').validate({
         rules: {
             txtPorcentaje: {
                 required: true,
                 number: true,
-                min: 1
             }
         },
         // Messages for form validation
         messages: {
             txtPorcentaje: {
                 required: "Debe proporcionar un porcentaje",
-                min: "El porcentaje no puede ser cero"
+                number: "Deve introducir un numero válido"
             }
         },
         // Do not change code below

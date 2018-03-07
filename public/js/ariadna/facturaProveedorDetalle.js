@@ -220,6 +220,7 @@ function initForm() {
         // caso alta
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
+        vm.importeServiciada('0');
         vm.importeRetencion(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
@@ -1687,7 +1688,7 @@ function editServiciada(id) {
 function loadDataServiciadas(data) {
     $('#chkCerrados').prop("checked", true);
     vm.facproveServiciadoId(data.facproveServiciadoId);
-    vm.importeServiciada(data.importe);
+    vm.importeServiciada(numeral(data.importe).format('0,0.00'));
 
     loadEmpresaServiciadas(data.empresaId);
     vm.scontratoId(data.contratoId);
@@ -1743,15 +1744,17 @@ function nuevaServiciada() {
 }
 
 function datosOKServiciada() {
-    vm.importeServiciada(numeroDbf(vm.importeServiciada()));
-    /*if (vm.importeServiciada() != 0 || vm.importeServiciada() != "")
-    vm.importeServiciada(numeroDbf(vm.importeServiciada()));*/
+    if(vm.importeServiciada() == "") {
+        vm.porcentaje(null);
+       } else {
+        vm.importeServiciada(numeroDbf(vm.importeServiciada()));
+       }
+    
     $('#frmServiciadas').validate({
         rules: {
             txtImporteServiciada: {
                 required: true,
-                number: true,
-                min: 1,
+                number: true
             },
             cmbEmpresaServiciadas: {
                required: true

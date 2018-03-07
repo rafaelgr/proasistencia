@@ -217,7 +217,6 @@ function deleteTarifa(id) {
         if (ButtonPressed === "Borrar") {
             llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/" + id, null, function (err) {
                 if (err) return;
-                mostrarMensajeTarifaBorrada();
                 buscarTarifas()();
             });
         }
@@ -225,11 +224,6 @@ function deleteTarifa(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
-}
-
-var mostrarMensajeTarifaBorrada = function () {
-    var mens = "La tarifa se ha borrado correctamente.";
-    mensNormal(mens);
 }
 
 function editTarifa(id) {

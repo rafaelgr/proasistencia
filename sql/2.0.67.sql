@@ -24,3 +24,10 @@ ALTER TABLE `facprove_serviciados`
 
 INSERT INTO tarifas VALUES(1, 10, 'Prof. tarifa 1'), (2, 10, 'Prof. tarifa 2'), (3, 10, 'Prof. tarifa 4'), (4, 10, 'Prof. tarifa 5'), 
 (5, 10, 'Prof. tarifa 6');
+
+INSERT INTO facprove_serviciados (facproveId, empresaId, contratoId, importe) (SELECT facproveId, empresaId, contratoId, total AS importe FROM facprove);
+
+ALTER TABLE `proasistencia`.`tarifas_lineas` DROP FOREIGN KEY `tarifaLineasTarifasFK`;
+
+ALTER TABLE `proasistencia`.`tarifas_lineas` ADD CONSTRAINT `tarifaLineasTarifasFK` FOREIGN KEY (`tarifaId`) REFERENCES `proasistencia`.`tarifas`(`tarifaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
