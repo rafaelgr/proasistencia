@@ -97,7 +97,7 @@ function initForm() {
 
     // select2 things
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
-    loadEmpresaServiciadas();
+    loadEmpresaServiciadas(2);
     $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresaServiciada(e.added.id);
@@ -226,7 +226,7 @@ function initForm() {
         vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
-        $('#frmServiciadas').hide();
+        $('#btnAltaServiciada').hide();
         document.title = "NUEVA FACTURA PROVEEDOR";
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
@@ -413,7 +413,7 @@ function loadData(data) {
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
     vm.facproveServiciadoId(0);
-    vm.importeServiciada(0);
+    vm.importeServiciada('0');
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
 
     //
@@ -1711,7 +1711,7 @@ function nuevaServiciada() {
         return;
     }
     else if(!datosOKServiciada()){
-        vm.importeServiciada(0,00);
+        vm.importeServiciada('0');
         return;
     }
     var verb = "POST";
@@ -1743,8 +1743,9 @@ function nuevaServiciada() {
 }
 
 function datosOKServiciada() {
-    if (vm.importeServiciada() != 0 || vm.importeServiciada() != "")
     vm.importeServiciada(numeroDbf(vm.importeServiciada()));
+    /*if (vm.importeServiciada() != 0 || vm.importeServiciada() != "")
+    vm.importeServiciada(numeroDbf(vm.importeServiciada()));*/
     $('#frmServiciadas').validate({
         rules: {
             txtImporteServiciada: {
@@ -1785,10 +1786,10 @@ function datosOKServiciada() {
 function reiniciaValores() {
     acumulado = 0;
     importeModificar = 0;
-    vm.sempresaServiciadaId(null);
-    vm.importeServiciada(0,00);
+    vm.importeServiciada('0');
     vm.facproveServiciadoId(0);
-    loadEmpresaServiciadas();
+    loadEmpresaServiciadas(2);
+    contratosCerrados();
     loadServiciadasFacprove(facproveId);
     
 }
