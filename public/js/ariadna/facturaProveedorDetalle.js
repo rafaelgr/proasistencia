@@ -1768,6 +1768,7 @@ function datosOKServiciada() {
         messages: {
             txtImporteServiciada: {
                 required: "Debe introducir un importe",
+                number: "Debe introducir un numero válido",
                 min: "El importe no puede ser cero"
             },
             cmbEmpresaServiciadas: {
