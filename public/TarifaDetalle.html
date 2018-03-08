@@ -396,6 +396,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnLineasCapitulos" title="crear lineas por capitulos" data-toggle="modal" data-target="#modalTarifasGrupos"  class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-repeat"></i>
+                                                </button>
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
@@ -419,64 +422,6 @@
                 <!-- end row -->
                 
             </article>
-            <div class="row" id="lineasCapitulos">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                                    <header>
-                                        <span class="widget-icon">
-                                            <i class="fa fa-edit"></i>
-                                        </span>
-                                        <h2>GENERAR LINEAS POR CAPITULOS</h2>
-                                    </header>
-                                    <!-- widget div-->
-                                    <div>
-                                        <!-- widget edit box -->
-                                        <div class="jarviswidget-editbox">
-                                            <!-- This area used as dropdown edit box -->
-                                            <input class="form-control" type="text">
-                                        </div>
-                                        <!-- end widget edit box -->
-                                        <!-- widget content -->
-                                        <div class="widget-body">
-                                            <!-- this is what the user will see -->
-                                            <div class="widget-body">
-                                                    <form id="frmLineasGrupos" class="smart-form">
-                                                            <fieldset>
-                                                                    <div class="row">
-                                                                            
-                                                                            <section class="col col-md-6">
-                                                                                <label class="label">Capitulos</label>
-                                                                                <label style="width:100%;">
-                                                                                    <select style="width:100%" id="cmbCapitulos" name="cmbCapitulos" data-bind="options: posiblesCapitulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosCapitulos, selected2:{}"></select>
-                                                                                    <i></i>
-                                                                                </label>
-                                                                            </section>
-                                                                            <section class="col col-md-5">
-                                                                                    <label class="label">Porcentaje</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtPorcentaje" name="txtPorcentaje" type="text" data-bind="value: porcentaje"/>
-                                                                                    </label>
-                                                                            </section>
-                                                                            <section class="col col-md-1"  style="padding-top: 2%">
-                                                                                    <button id="btnActualizar" title="actualizar lineas" class="btn btn-primary btn-circle btn-lg pull-right">
-                                                                                        <i class="fa fa-lg fa-repeat"></i>
-                                                                                    </button>
-                                                                            </section>
-                                                                            
-                                                                    </div>
-                                                            </fieldset>
-                                                    </form>
-                                                     <hr/>
-                                            </div>
-                                        </div>
-                                         
-                                        <!-- end widget content -->
-                                    </div>
-                                    <!-- end widget div -->
-                            </div>
-                    </article>
-            </div>
                 <!-- row -->
                 <div class="row" id="lineastarifa">
                     <!-- NEW WIDGET START -->
@@ -487,7 +432,7 @@
                                 <span class="widget-icon">
                                     <i class="fa fa-edit"></i>
                                 </span>
-                                <h2>GENERAR LINEAS DE TARIFA POR UNIDADES CONSTRUCTIVAS</h2>
+                                <h2>LINEAS DE TARIFA</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -582,6 +527,53 @@
                             </button>
                         </footer>
                     </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalTarifasGrupos" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LINEAS POR CAPITULOS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    
+                        <form id="frmLineasGrupos" class="smart-form">
+                                <fieldset>
+                                        <div class="row">
+                                                
+                                                <section class="col col-md-6">
+                                                    <label class="label">Capitulos</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbCapitulos" name="cmbCapitulos" data-bind="options: posiblesCapitulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosCapitulos, selected2:{}"></select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-5">
+                                                        <label class="label">Porcentaje</label>
+                                                        <label class="input">
+                                                            <input id="txtPorcentaje" name="txtPorcentaje" type="text" data-bind="value: porcentaje"/>
+                                                        </label>
+                                                </section>
+                                        </div>
+                                </fieldset>
+                                <footer>
+                                    <button id="btnAceptarLinea" class="btn btn-primary" onclick="actualizaLineas()">
+                                        Aceptar
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </footer>
+                        </form>
+                         <hr/>
+                
                 </div>
             </div>
             <!-- /.modal-content -->

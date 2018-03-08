@@ -15,7 +15,7 @@ var refWoId = 0;
 var ruta;
 var desdeContrato;
 var acumulado = 0;
-var numServiciadas = 0;
+var numServiciadas;
 var importeModificar = 0;
 
 var dataServiciadas;
@@ -220,7 +220,7 @@ function initForm() {
         // caso alta
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
-        vm.importeServiciada('0');
+        vm.importeServiciada(0);
         vm.importeRetencion(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
@@ -414,7 +414,7 @@ function loadData(data) {
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
     vm.facproveServiciadoId(0);
-    vm.importeServiciada('0');
+    vm.importeServiciada(0);
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
 
     //
@@ -443,9 +443,6 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", true);
     } else {
         $('#chkNoContabilizar').prop("checked", false);
-    }
-    if(numServiciadas == 0) {
-        mostrarMensajeCrearServiciadas();
     }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
@@ -686,6 +683,8 @@ function cambioEmpresa(empresaId) {
             vm.receptorCodPostal(data.codPostal);
             vm.receptorPoblacion(data.poblacion);
             vm.receptorProvincia(data.provincia);
+            $('#chkCerrados').prop('checked', false);
+            loadEmpresaServiciadas(data.empresaId);
         }
     });
 }
@@ -1661,6 +1660,9 @@ function loadServiciadasFacprove(facproveId) {
             acumulado += parseFloat(data[i].importe);
         }
         numServiciadas = data.length;
+        if(numServiciadas == 0) {
+            mostrarMensajeCrearServiciadas();
+        }
         
         loadTablaServiciadas(data);
     });
@@ -1688,7 +1690,7 @@ function editServiciada(id) {
 function loadDataServiciadas(data) {
     $('#chkCerrados').prop("checked", true);
     vm.facproveServiciadoId(data.facproveServiciadoId);
-    vm.importeServiciada(numeral(data.importe).format('0,0.00'));
+    vm.importeServiciada(data.importe);
 
     loadEmpresaServiciadas(data.empresaId);
     vm.scontratoId(data.contratoId);
@@ -1712,7 +1714,7 @@ function nuevaServiciada() {
         return;
     }
     else if(!datosOKServiciada()){
-        vm.importeServiciada('0');
+        vm.importeServiciada(0);
         return;
     }
     var verb = "POST";
@@ -1746,15 +1748,14 @@ function nuevaServiciada() {
 function datosOKServiciada() {
     if(vm.importeServiciada() == "") {
         vm.porcentaje(null);
-       } else {
-        vm.importeServiciada(numeroDbf(vm.importeServiciada()));
        }
     
     $('#frmServiciadas').validate({
         rules: {
             txtImporteServiciada: {
                 required: true,
-                number: true
+                number: true,
+                min: 1
             },
             cmbEmpresaServiciadas: {
                required: true
@@ -1790,13 +1791,12 @@ function datosOKServiciada() {
 function reiniciaValores() {
     acumulado = 0;
     importeModificar = 0;
-    vm.importeServiciada('0');
+    vm.importeServiciada(0);
     vm.facproveServiciadoId(0);
-    loadEmpresaServiciadas(2);
-    contratosCerrados();
     loadServiciadasFacprove(facproveId);
     
 }
+
 
 function deleteServiciada(id) {
     // mensaje de confirmación
@@ -1817,8 +1817,7 @@ function deleteServiciada(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarServiciadas();
-                    fn();
+                    buscarServiciadas();
                     reiniciaValores();
                 },
                 error: function (err) {

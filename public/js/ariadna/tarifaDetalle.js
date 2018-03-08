@@ -36,7 +36,6 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarTarifa);
     $("#btnSalir").click(salir());
-    $('#btnActualizar').click(actualizaLineas);
     $("#frmTarifa").submit(function () {
         return false;
     });
@@ -79,7 +78,7 @@ function initForm() {
 
     if (tarifaId != 0) {
         // caso edicion
-        vm.porcentaje('0')
+        vm.porcentaje(0)
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + tarifaId, null, function (err, data) {
             if (err) return;
             loadData(data);
@@ -88,9 +87,10 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaId(0);
-        vm.porcentaje('0')
+        vm.porcentaje(0)
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
+        $('#btnLineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
         if(GrupoId){
             loadGrupoTarifa(GrupoId);
@@ -135,7 +135,7 @@ function admData() {
 function loadData(data) {
     vm.tarifaId(data.tarifaId);
     vm.nombre(data.nombre);
-    vm.porcentaje('0');
+    vm.porcentaje(0);
     loadGrupoTarifa(data.grupoTarifaId);
 
 
@@ -252,7 +252,7 @@ function aceptarLinea() {
             tarifaLineaId: vm.tarifaLineaId(),
             tarifaId: vm.tarifaId(),
             articuloId: vm.sarticuloId(),
-            precioUnitario:  numeroDbf(vm.precioUnitario())
+            precioUnitario:  vm.precioUnitario()
         }
     }
     //compruebaArticuloRepetido en misma tarifa
@@ -274,13 +274,15 @@ function aceptarLinea() {
 }
 
 function datosOKLineas() {
+    if(vm.precioUnitario() === "") vm.precioUnitario(null);
     $('#linea-form').validate({
         rules: {
             cmbArticulos: {
                 required: true
             },
             txtPrecioUnitario: {
-                required: true
+                required: true,
+                number:true,
             }
         },
         // Messages for form validation
@@ -289,7 +291,8 @@ function datosOKLineas() {
                 required: "Debe dar una unidad constructiva asociada a la linea de tarifa"
             },
             txtPrecioUnitario: {
-                required: "Debe proporcionar un precio unitario"
+                required: "Debe proporcionar un precio unitario",
+                number: "Se tiene que introducir un numero válido"
             }
         },
         // Do not change code below
@@ -368,7 +371,7 @@ function initTablaTarifasLineas() {
 function loadDataLinea(data) {
     vm.tarifaLineaId(data.tarifaLineaId);
     vm.articuloId(data.articuloId);
-    vm.precioUnitario(numeral(data.precioUnitario).format('0,0.00'))
+    vm.precioUnitario(data.precioUnitario);
     //
     loadArticulos(data.articuloId);
 }
@@ -435,7 +438,7 @@ function loadCapitulos(id){
 function cambioArticulo(articuloId) {
     if (!articuloId) return;
     llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
-        vm.precioUnitario(numeral(data.precioUnitario).format('0,0.00'));
+        vm.precioUnitario(data.precioUnitario);
     });
 }
 
@@ -473,9 +476,7 @@ function deleteTarifaLinea(tarifaId) {
 //funciones de tarifas generadas automaticamente
 
 function actualizaLineas(){
-    var por = vm.porcentaje();
     if(!datosOkLineasGrupos()) {
-        vm.porcentaje(por);
         return;
     }
 
@@ -486,6 +487,8 @@ function actualizaLineas(){
     }
     llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
+            if(err) return;
+            $('#modalTarifasGrupos').modal('hide');
             loadData(data);
             loadLineasTarifa(data.tarifaId);
         });
@@ -493,14 +496,9 @@ function actualizaLineas(){
 }
 
 function datosOkLineasGrupos() {
-   if(vm.porcentaje() == "") {
+   if(vm.porcentaje() === "") {
     vm.porcentaje(null);
-   } else {
-    vm.porcentaje(numeroDbf(vm.porcentaje()));
-   }
-    
-    
-    
+   } 
     $('#frmLineasGrupos').validate({
         rules: {
             txtPorcentaje: {
