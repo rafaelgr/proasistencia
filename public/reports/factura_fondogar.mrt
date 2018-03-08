@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "87df6ca807bf4284a7543848127e3adb",
+  "ReportGuid": "825cbe07e6ea4a42ba1af8bec4de61a9",
   "ReportName": "FacturaFondogar",
   "ReportAlias": "FacturaFondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(10800000+0100)/",
-  "ReportChanged": "/Date(1515665385685+0100)/",
+  "ReportChanged": "/Date(1520336783423+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",

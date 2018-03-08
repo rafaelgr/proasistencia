@@ -364,6 +364,10 @@ var mensErrorAjax = function (err) {
             var a2 = a[1].substring(2);
             ms = "No se puede eliminar, hay registros que dependen de este en la tabla: " + a2;
         }
+        var str = err.responseText.match(/ER_DUP_ENTRY/gi);
+            if (str != null){
+                ms = 'No se pueden crear dos registros iguales';
+            }
     }
     // Building html response
     var html = ms + "<hr/>"

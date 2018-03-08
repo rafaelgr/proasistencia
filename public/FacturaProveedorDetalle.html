@@ -414,6 +414,12 @@
                                             <span class="hidden-mobile hidden-tablet">PDF factura</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s3">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">Empresas serviciadas</span>
+                                        </a>
+                                    </li>
                                 </ul>
                         </header>
                         <div id="myTabContent" class="tab-content">
@@ -519,6 +525,14 @@
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
+                                                                    <section class="col col-sm-12" style="padding-top: 2%">
+                                                                        <label class="checkbox">
+                                                                            <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar">
+                                                                            <i></i>No contabilizar
+                                                                        </label>
+                                                                </section>
+                                                                </div>
+                                                                <div class="row">
                                                                     <section class="col col-md-6">
                                                                         <div class="row">
                                                                             <header>
@@ -526,18 +540,13 @@
                                                                             </header>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col col-md-6">
+                                                                            <div class="col col-md-12">
                                                                                 <label class="label">Empresa</label>
                                                                                 <label style="width:100%; height:50px;">
                                                                                     <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                                                 </label>
                                                                             </div>
-                                                                            <div class="col col-md-6">
-                                                                                <label class="label">Empresa serviciada</label>
-                                                                                <label style="width:100%; height:50px;">
-                                                                                    <select style="width:100%" id="cmbEmpresaServiciadas" name="cmbEmpresaServiciadas" data-bind="options: posiblesEmpresaServiciadas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaServiciadaId, valueAllowUnset: true, selectedOptions: elegidasEmpresaServiciadas, selected2:{}"></select><i></i>
-                                                                                </label>
-                                                                            </div>
+                                                                            
                                                                         </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-12">
@@ -586,20 +595,12 @@
                                                                             </section>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <section class="col col-md-6">
+                                                                            <section class="col col-md-12">
                                                                                 <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%;">
                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                             </section>
-                                                                            <div class="row">
-                                                                                <section class="col col-md-6" style="padding-top: 4%">
-                                                                                    <label class="checkbox">
-                                                                                        <input id="chkCerrados" type="checkbox" name="chkCerrados">
-                                                                                        <i></i>Ver también contratos cerrados
-                                                                                    </label>
-                                                                                </section>
-                                                                            </div>
                                                                         </div>
                                                                     </section>
                                                                     <section class="col col-md-6">
@@ -662,14 +663,7 @@
                                                                                 </label>
                                                                             </section>
                                                                         </div>
-                                                                        <div class="row">
-                                                                            <section class="col col-md-12">
-                                                                                <label class="label">CONTRATO ASOCIADO</label>
-                                                                                <label style="width:100%;">
-                                                                                    <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
-                                                                                </label>
-                                                                            </section>
-                                                                        </div>
+                                                                        
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
@@ -985,6 +979,90 @@
                                             </div>
                                     </section>
                             </div>
+                            <div class="tab-pane fade" id="s3">
+                                <!-- TERCER TAB (serviciadas) -->
+                                <div class="row" id="serviciadas">
+                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <!-- Widget ID (each widget will need unique ID)-->
+                                        <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                <h2>SERVICIADAS</h2>
+                                            </header>
+                                            <!-- widget div-->
+                                            <div>
+                                                <!-- widget edit box -->
+                                                <div class="jarviswidget-editbox">
+                                                    <!-- This area used as dropdown edit box -->
+                                                    <input class="form-control" type="text">
+                                                </div>
+                                                <!-- end widget edit box -->
+                                                <!-- widget content -->
+                                                <div class="widget-body">
+                                                    <header>
+                                                        <h5>Añadir nueva empresa serviciada</h5>
+                                                    </header>
+                                                                                                          
+                                                    <!-- this is what the user will see -->
+                                                    <div class="row">
+                                                        <section class="col col-md-10"></section>
+                                                        <section class="col col-md-2">
+                                                                <button id="btnAltaServiciada" title="Nueva empresa serviciada" data-toggle="modal" data-target="#modalServiciado"   class="btn btn-success btn-circle btn-lg pull-right">
+                                                                    <i class="fa fa-lg fa-plus"></i>
+                                                                </button>
+                                                        </section>
+                                                    </div>
+                                                    <hr/>
+                                                    <div id="tbServiciada">
+                                                        <table id="dt_serviciada" class="table table-striped table-bordered table-hover" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <i class="fa fa-fw fa-search"></i>
+                                                                    </th>
+                                                                    <th class="hasinput">
+                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                    </th>
+                                                                    <th class="hasinput">
+                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                    </th>
+                                                                    <th class="hasinput">
+                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                    </th>
+                                                                    <th style="width:10%">
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        <i class="fa fa-fw fa-clipboard">
+                                                                    </th>
+                                                                    <th data-class="phone">
+                                                                        Empresan serviciada
+                                                                    </th>
+                                                                    <th data-hide="expand">
+                                                                        Contrato asociado
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        Importe
+                                                                    </th>
+                                                                    
+                                                                    <th style="width:10%; text-align: center;">
+                                                                        <i class="fa fa-fw fa-gears">
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!-- end widget content -->
+                                            </div>
+                                            <!-- end widget div -->
+                                        </div>
+                                        <!-- end widget -->
+                                    </article>
+                                    <!-- WIDGET END -->
+                                </div>                                        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1095,6 +1173,63 @@
                             </button>
                         </footer>
                     </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modalServiciado" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> Empresas serviciadas</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmServiciadas" class="smart-form">
+                        <header>
+                            Emprasas serviciadas de esta factura
+                        </header>
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-sm-4">
+                                    <label class="label">Empresa serviciada</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbEmpresaServiciadas" name="cmbEmpresaServiciadas" data-bind="options: posiblesEmpresaServiciadas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaServiciadaId, valueAllowUnset: true, selectedOptions: elegidasEmpresaServiciadas, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-4">
+                                    <label class="label">CONTRATO ASOCIADO</label>
+                                    <label style="width:100%;">
+                                        <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-2" style="padding-top: 2%">
+                                        <label class="checkbox">
+                                            <input id="chkCerrados" type="checkbox" name="chkCerrados">
+                                            <i></i>Ver también contratos cerrados
+                                        </label>
+                                </section>
+                                <section class="col col-sm-2">                                            
+                                    <label class="label">Importe</label>
+                                    <label class="input">
+                                        <input id="txtImporteServiciada" name="txtImporteServiciada" type="text" data-bind="value: importeServiciada" />
+                                   </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarServiciada" class="btn btn-primary"  onclick="nuevaServiciada()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>      
                 </div>
             </div>
             <!-- /.modal-content -->
