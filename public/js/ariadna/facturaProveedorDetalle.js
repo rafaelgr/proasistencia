@@ -97,7 +97,7 @@ function initForm() {
 
     // select2 things
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
-    loadEmpresaServiciadas(2);
+    loadEmpresaServiciadas();
     $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresaServiciada(e.added.id);
