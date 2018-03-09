@@ -14,6 +14,9 @@ var breakpointDefinition = {
 
 var empId = 0;
 var lineaEnEdicion = false;
+var cambAgente;
+var datosCambioAgente;
+
 
 var numDigitos = 0; // número de digitos de cuenta contable
 
@@ -36,6 +39,9 @@ function initForm() {
     $("#btnTrabajoFiscal").click(copiarDireccionTrabajoEnFiscal);
     $("#btnFiscalPostal").click(copiarDireccionFiscalEnPostal);
     $("#frmCliente").submit(function () {
+        return false;
+    });
+    $('#frmCambioAgente').submit(function() {
         return false;
     });
 
@@ -183,6 +189,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.clienteId = ko.observable();
+    self.comercialId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nombreComercial = ko.observable();
@@ -289,10 +296,19 @@ function admData() {
     self.porComer = ko.observable();
     //
     self.empresaId = ko.observable(null);
+    //--Valores del modal de cambio de agente
+    self.antiguoAgente = ko.observable();
+    self.nuevoAgente = ko.observable();
+    self.fechaCambio = ko.observable();
+    self.nombreAgente = ko.observable();
+    self.AgenteId = ko.observable();
 }
 
 function loadData(data) {
     vm.clienteId(data.clienteId);
+    vm.comercialId(data.comercialId);
+    vm.AgenteId(data.comercialId);
+    vm.nombreAgente(data.nombreAgente);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nombreComercial(data.nombreComercial);
@@ -649,6 +665,7 @@ function loadMotivosBaja(id) {
 }
 
 function loadAgentes(id) {
+    if (id == -1) id = vm.AgenteId();
     $.ajax({
         type: "GET",
         url: "/api/comerciales/agentes/activos",
@@ -1054,26 +1071,24 @@ function cambioAgente(data) {
     if (!data) {
         return;
     }
+    //guardamos la id del nuevo agente.
+    cambAgente = data.id;
+
     $.ajax({
         type: "GET",
         url: "/api/comerciales/" + data.id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // le damos valor al código
-            vm.codComercial(data.proId);
-            if (data) {
-                $.ajax({
-                    type: "GET",
-                    url: "/api/comerciales/" + data.ascComercialId,
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (data, status) {
-                        if (data) {
-                            vm.colaborador(data.nombre);
-                        }
-                    }
+            datosCambioAgente = data;
+            //comparamos la id del nuevo agente con la id del agente del cliente para ver si hay cambio
+             if (cambAgente != vm.AgenteId()) {
+                $('#modalCambioAgente').modal({ 
+                    show: 'true'
                 });
+                loadModal(data)
+            } else {
+                realizarCambioAgente(data);
             }
         },
         error: function (err) {
@@ -1083,7 +1098,34 @@ function cambioAgente(data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
 
+function realizarCambioAgente(data) {
+    if (!data){
+        data = datosCambioAgente;
+    }
+    // le damos valor al código
+    vm.codComercial(data.proId);
+        if (data) {
+            $.ajax({
+                type: "GET",
+                url: "/api/comerciales/" + data.ascComercialId,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    if (data) {
+                        vm.colaborador(data.nombre);
+                        $('#modalCambioAgente').modal('hide');
+                    }
+                }
+            });
+        }
+}
+
+function loadModal(data) {
+    vm.nuevoAgente(data.nombre);
+    vm.antiguoAgente(vm.nombreAgente());
+    vm.fechaCambio(spanishDate(new Date()));
 }
 
 function cambioCodigo(data) {

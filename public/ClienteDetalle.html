@@ -925,6 +925,54 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!--MODAL-->
+    <div class="modal fade" id="modalCambioAgente" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> Empresas serviciadas</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmCambioAgente" class="smart-form">
+                        <fieldset>
+                               <section class="col col-sm-5">                                            
+                                    <label class="label">Antiguo agente</label>
+                                    <label class="input">
+                                        <input id="txtAntiguoAgente" name="txtAntiguoAgente" type="text" data-bind="value: antiguoAgente" />
+                                   </label>
+                                </section>
+                                <section class="col col-sm-5">                                            
+                                    <label class="label">Nuevo agente</label>
+                                    <label class="input">
+                                        <input id="txtNuevoAgente" name="txtNuevoAgente" type="text" data-bind="value: nuevoAgente" />
+                                   </label>
+                                </section>
+                                <section class="col col-sm-2">                                            
+                                    <label class="label">Fecha cambio</label>
+                                    <label class="input">
+                                        <input id="txtImporteServiciada" name="txtImporteServiciada" type="text" data-bind="value: fechaCambio" />
+                                   </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarCambioAgente" class="btn btn-primary"  onclick="realizarCambioAgente()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadAgentes(-1)">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>      
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

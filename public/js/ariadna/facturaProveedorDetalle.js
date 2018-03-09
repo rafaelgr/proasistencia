@@ -215,6 +215,7 @@ function initForm() {
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
             loadServiciadasFacprove(facproveId);
+            $('#btnAltaServiciada').click(reiniciaValores);
         })
     } else {
         // caso alta
@@ -1739,7 +1740,7 @@ function nuevaServiciada() {
     }
     llamadaAjax(verb, url, data, function (err, data) {
         if (err) return;
-        reiniciaValores();
+        loadServiciadasFacprove(facproveId);
         $('#modalServiciado').modal('hide');
     });
     
@@ -1793,6 +1794,8 @@ function reiniciaValores() {
     importeModificar = 0;
     vm.importeServiciada(0);
     vm.facproveServiciadoId(0);
+    vm.scontratoId(null);
+    loadEmpresaServiciadas(vm.empresaId());
     loadServiciadasFacprove(facproveId);
     
 }
