@@ -665,7 +665,9 @@ function loadMotivosBaja(id) {
 }
 
 function loadAgentes(id) {
-    if (id == -1) id = vm.AgenteId();
+    if (id == -1) {
+        id = vm.AgenteId();
+    }
     $.ajax({
         type: "GET",
         url: "/api/comerciales/agentes/activos",
@@ -1103,6 +1105,7 @@ function cambioAgente(data) {
 function realizarCambioAgente(data) {
     if (!data){
         data = datosCambioAgente;
+        guardaClienteAgente();
     }
     // le damos valor al código
     vm.codComercial(data.proId);
@@ -1121,6 +1124,123 @@ function realizarCambioAgente(data) {
             });
         }
 }
+
+function guardaClienteAgente() {
+    //se actualiza el cliente con los nuevos valores
+
+    if (!datosOkClienteAgente())
+            return;
+
+    if (!datosOK())
+            return;
+
+
+        var dataClienteAgente = {
+                clienteAgente: {
+                    clienteId: vm.clienteId(),
+                    comercialId: vm.AgenteId(),
+                    fechaCambio: spanishDbDate(vm.fechaCambio())
+            }
+        }
+        var data = {
+            cliente: {
+                "clienteId": vm.clienteId(),
+                "proId": vm.proId(),
+                "nombre": vm.nombre(),
+                "nombreComercial": vm.nombreComercial(),
+                "nif": vm.nif(),
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "activa": vm.activa(),
+                "contacto1": vm.contacto1(),
+                "contacto2": vm.contacto2(),
+                "direccion": vm.direccion(),
+                "poblacion": vm.poblacion(),
+                "provincia": vm.provincia(),
+                "codPostal": vm.codPostal(),
+                "telefono1": vm.telefono1(),
+                "telefono2": vm.telefono2(),
+                "fax": vm.fax(),
+                "email": vm.email(),
+                "email2": vm.email2(),
+                "observaciones": vm.observaciones(),
+                "tipoClienteId": vm.stipoClienteId(),
+                "formaPagoId": vm.sformaPagoId(),
+                "motivoBajaId": vm.smotivoBajaId(),
+                "cuentaContable": vm.cuentaContable(),
+                "iban": vm.iban(),
+                "comercialId": vm.sagenteId(),
+                "codigo": vm.codigo(),
+                "tipoViaId": vm.stipoViaId(),
+                "direccion2": vm.direccion2(),
+                "poblacion2": vm.poblacion2(),
+                "provincia2": vm.provincia2(),
+                "codPostal2": vm.codPostal2(),
+                "tipoViaId2": vm.stipoViaId2(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante(),
+                "direccion3": vm.direccion3(),
+                "poblacion3": vm.poblacion3(),
+                "provincia3": vm.provincia3(),
+                "codPostal3": vm.codPostal3(),
+                "tipoViaId3": vm.stipoViaId3(),
+                "tarifaId": vm.starifaId()
+            }
+        }
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/clientes/" + empId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
+                $.ajax({
+                    type: "POST",
+                    url: myconfig.apiUrl + "/api/clientes/agente",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataClienteAgente),
+                    success: function (data, status) {
+                        
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+function datosOkClienteAgente() {
+    $('#frmCambioAgente').validate({
+        rules: {
+            txtNuevaFecha: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNuevaFecha: {
+                required: "Debe introducir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmCambioAgente").validate().settings;
+    return $('#frmCambioAgente').valid();
+}
+
+
+
 
 function loadModal(data) {
     vm.nuevoAgente(data.nombre);

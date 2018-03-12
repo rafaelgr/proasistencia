@@ -393,6 +393,14 @@
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                 <h2>Mantenimiento clientes</h2>
+                                <ul class="nav nav-tabs pull-right in" id="myTab">
+                                    <li class="active">
+                                            <a data-toggle="tab" href="#s1"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Datos del cliente</span></a>
+                                    </li>
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#s2"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Historial de agentes</span></a>
+                                    </li>                                        
+                                </ul>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -953,10 +961,9 @@
                                 <section class="col col-sm-2">                                            
                                     <label class="label">Fecha cambio</label>
                                     <label class="input">
-                                        <input id="txtImporteServiciada" name="txtImporteServiciada" type="text" data-bind="value: fechaCambio" />
+                                        <input id="txtNuevaFecha" name="txtNuevaFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: fechaCambio" />
                                    </label>
                                 </section>
-                            </div>
                         </fieldset>
                         <footer>
                             <button id="btnAceptarCambioAgente" class="btn btn-primary"  onclick="realizarCambioAgente()">
