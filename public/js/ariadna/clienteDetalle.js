@@ -16,6 +16,7 @@ var empId = 0;
 var lineaEnEdicion = false;
 var cambAgente;
 var datosCambioAgente;
+var ClienteId;
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
@@ -23,6 +24,7 @@ var numDigitos = 0; // número de digitos de cuenta contable
 datePickerSpanish(); // see comun.js
 
 var dataComisionistas;
+var dataClientesAgentes;
 
 function initForm() {
     comprobarLogin();
@@ -121,6 +123,8 @@ function initForm() {
     });
 
     initTablaComisionistas();
+    initTablaClientesAgentes();
+    
 
     // obtener el número de digitos de la contabilidad
     // para controlar la cuenta contable.
@@ -139,6 +143,12 @@ function initForm() {
     });
 
     empId = gup('ClienteId');
+    ClienteId = gup('ClienteId');
+
+    if(ClienteId != 0){
+        loadClientesAgentes();
+    }
+
     if (empId != 0) {
         var data = {
             clienteId: empId
@@ -1304,4 +1314,84 @@ var copiarDireccionFiscalEnPostal = function () {
     vm.poblacion3(vm.poblacion());
     loadTiposVia3(vm.stipoViaId());
 
+}
+
+/* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE AGENTES */
+
+function initTablaClientesAgentes() {
+    tablaCarro = $('#dt_clientesAgentes').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_clientesAgentes'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataComisionistas,
+        columnDefs: [{
+            "width": "20%",
+            "targets": 2
+        }],
+        columns: [{
+            data: "colaborador"
+        }, {
+            data: "porcentajeComision",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "contratoComisionistaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function loadTablaClientesAgentes(data) {
+    var dt = $('#dt_clientesAgentes').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadClientesAgentes(id) {
+    llamadaAjax('GET', "/api/clientes/historial/agentes/" + ClienteId, null, function (err, data) {
+        if (err) return;
+        loadTablaClientesAgentes(data)
+    });
 }
