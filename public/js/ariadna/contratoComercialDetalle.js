@@ -116,6 +116,18 @@ function admData() {
     self.finComercial = ko.observable();
     self.finComision = ko.observable();    
     //
+    self.arqComisAgente = ko.observable();
+    self.arqPorImpCliente = ko.observable();
+    self.arqPorImpClienteAgente = ko.observable();
+    self.arqPorCostes = ko.observable();
+    self.arqCostes = ko.observable();
+    self.arqJefeObra = ko.observable();
+    self.arqOficinaTecnica = ko.observable();
+    self.arqAsesorTecnico = ko.observable();
+    self.arqComercial = ko.observable();
+    self.arqComision = ko.observable();    
+    //
+    //
     self.sempresaId = ko.observable();
     //
     self.posiblesEmpresas = ko.observableArray([]);
@@ -181,7 +193,18 @@ function loadData(data) {
     vm.finAsesorTecnico(data.finAsesorTecnico);
     vm.finComercial(data.finComercial);
     vm.finComision(data.finComision);
-
+    //
+    vm.arqComisAgente(data.arqComisAgente);
+    vm.arqPorImpCliente(data.arqPorImpCliente);
+    vm.arqPorImpClienteAgente(data.arqPorImpClienteAgente);
+    vm.arqPorCostes(data.arqPorCostes);
+    vm.arqCostes(data.arqCostes);
+    vm.arqJefeObra(data.arqJefeObra);
+    vm.arqOficinaTecnica(data.arqOficinaTecnica);
+    vm.arqAsesorTecnico(data.arqAsesorTecnico);
+    vm.arqComercial(data.arqComercial);
+    vm.arqComision(data.arqComision);
+    //
 
     vm.comision(data.comision);
 
