@@ -1,0 +1,1 @@
+INSERT INTO tipos_mantenimiento (tipoMantenimientoId, nombre) VALUES (5, 'ARQUITECTURA');
