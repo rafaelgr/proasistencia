@@ -143,16 +143,13 @@ function initForm() {
     });
 
     empId = gup('ClienteId');
-    ClienteId = gup('ClienteId');
-
-    if(ClienteId != 0){
-        loadClientesAgentes();
-    }
+    
 
     if (empId != 0) {
         var data = {
             clienteId: empId
         }
+        loadClientesAgentes();
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -1094,7 +1091,7 @@ function cambioAgente(data) {
         success: function (data, status) {
             datosCambioAgente = data;
             //comparamos la id del nuevo agente con la id del agente del cliente para ver si hay cambio
-             if (cambAgente != vm.AgenteId()) {
+             if (cambAgente != vm.AgenteId() && empId != 0) {
                 $('#modalCambioAgente').modal({ 
                     show: 'true'
                 });
@@ -1212,6 +1209,7 @@ function guardaClienteAgente() {
                     contentType: "application/json",
                     data: JSON.stringify(dataClienteAgente),
                     success: function (data, status) {
+                        loadClientesAgentes();
                         
                     },
                     error: function (err) {
@@ -1353,26 +1351,18 @@ function initTablaClientesAgentes() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataComisionistas,
+        data: dataClientesAgentes,
         columnDefs: [{
             "width": "20%",
-            "targets": 2
+            "targets": 1
         }],
         columns: [{
-            data: "colaborador"
+            data: "nombre"
         }, {
-            data: "porcentajeComision",
+            data: "fechaCambio",
             className: "text-right",
             render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "contratoComisionistaId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                return html;
+                return spanishDate(data);
             }
         }]
     });
@@ -1390,7 +1380,7 @@ function loadTablaClientesAgentes(data) {
 }
 
 function loadClientesAgentes(id) {
-    llamadaAjax('GET', "/api/clientes/historial/agentes/" + ClienteId, null, function (err, data) {
+    llamadaAjax('GET', "/api/clientes/historial/agentes/" + empId, null, function (err, data) {
         if (err) return;
         loadTablaClientesAgentes(data)
     });
