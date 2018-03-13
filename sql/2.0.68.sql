@@ -4,6 +4,6 @@ CREATE TABLE `clientes_agentes`(
   `comercialId` INT(11),
   `fechaCambio` DATE,
   PRIMARY KEY (`clienteAgenteId`),
-  CONSTRAINT `clienteAgente_clienteFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes`(`clienteId`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `clienteAgente_comercialFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `clienteAgente_clienteFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes`(`clienteId`) ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT `clienteAgente_comercialFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`) ON UPDATE CASCADE ON DELETE NO ACTION
 );

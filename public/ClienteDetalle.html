@@ -929,10 +929,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Agente
+                                                                <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Hata fecha
                                                             </th>
                                                             <th data-hide="phone">
-                                                                Hata fecha
+                                                               Agente
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -1012,7 +1012,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> Empresas serviciadas</h4>
+                    <h4 class="modal-title"> Cambio Agente</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="frmCambioAgente" class="smart-form">
@@ -1020,13 +1020,13 @@
                                <section class="col col-sm-5">                                            
                                     <label class="label">Antiguo agente</label>
                                     <label class="input">
-                                        <input id="txtAntiguoAgente" name="txtAntiguoAgente" type="text" data-bind="value: antiguoAgente" />
+                                        <input id="txtAntiguoAgente" name="txtAntiguoAgente" type="text" disabled  data-bind="value: antiguoAgente" />
                                    </label>
                                 </section>
                                 <section class="col col-sm-5">                                            
                                     <label class="label">Nuevo agente</label>
                                     <label class="input">
-                                        <input id="txtNuevoAgente" name="txtNuevoAgente" type="text" data-bind="value: nuevoAgente" />
+                                        <input id="txtNuevoAgente" name="txtNuevoAgente" type="text" disabled data-bind="value: nuevoAgente" />
                                    </label>
                                 </section>
                                 <section class="col col-sm-2">                                            
@@ -1037,6 +1037,7 @@
                                 </section>
                         </fieldset>
                         <footer>
+                            <label class="label">Click en aceptar para confirmar cambio</label>
                             <button id="btnAceptarCambioAgente" class="btn btn-primary"  onclick="realizarCambioAgente()">
                                 Aceptar
                             </button>

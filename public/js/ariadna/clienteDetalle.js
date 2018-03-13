@@ -1318,6 +1318,7 @@ var copiarDireccionFiscalEnPostal = function () {
 
 function initTablaClientesAgentes() {
     tablaCarro = $('#dt_clientesAgentes').dataTable({
+        sort: false,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1354,16 +1355,16 @@ function initTablaClientesAgentes() {
         data: dataClientesAgentes,
         columnDefs: [{
             "width": "20%",
-            "targets": 1
+            "targets": 0
         }],
         columns: [{
-            data: "nombre"
-        }, {
             data: "fechaCambio",
-            className: "text-right",
             render: function (data, type, row) {
                 return spanishDate(data);
             }
+        }, {
+            data: "nombre",
+            className: "text-right",
         }]
     });
 }
