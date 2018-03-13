@@ -14,12 +14,17 @@ var breakpointDefinition = {
 
 var empId = 0;
 var lineaEnEdicion = false;
+var cambAgente;
+var datosCambioAgente;
+var ClienteId;
+
 
 var numDigitos = 0; // número de digitos de cuenta contable
 
 datePickerSpanish(); // see comun.js
 
 var dataComisionistas;
+var dataClientesAgentes;
 
 function initForm() {
     comprobarLogin();
@@ -36,6 +41,9 @@ function initForm() {
     $("#btnTrabajoFiscal").click(copiarDireccionTrabajoEnFiscal);
     $("#btnFiscalPostal").click(copiarDireccionFiscalEnPostal);
     $("#frmCliente").submit(function () {
+        return false;
+    });
+    $('#frmCambioAgente').submit(function() {
         return false;
     });
 
@@ -115,6 +123,8 @@ function initForm() {
     });
 
     initTablaComisionistas();
+    initTablaClientesAgentes();
+    
 
     // obtener el número de digitos de la contabilidad
     // para controlar la cuenta contable.
@@ -133,10 +143,13 @@ function initForm() {
     });
 
     empId = gup('ClienteId');
+    
+
     if (empId != 0) {
         var data = {
             clienteId: empId
         }
+        loadClientesAgentes();
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -183,6 +196,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.clienteId = ko.observable();
+    self.comercialId = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nombreComercial = ko.observable();
@@ -289,10 +303,19 @@ function admData() {
     self.porComer = ko.observable();
     //
     self.empresaId = ko.observable(null);
+    //--Valores del modal de cambio de agente
+    self.antiguoAgente = ko.observable();
+    self.nuevoAgente = ko.observable();
+    self.fechaCambio = ko.observable();
+    self.nombreAgente = ko.observable();
+    self.AgenteId = ko.observable();
 }
 
 function loadData(data) {
     vm.clienteId(data.clienteId);
+    vm.comercialId(data.comercialId);
+    vm.AgenteId(data.comercialId);
+    vm.nombreAgente(data.nombreAgente);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nombreComercial(data.nombreComercial);
@@ -649,6 +672,9 @@ function loadMotivosBaja(id) {
 }
 
 function loadAgentes(id) {
+    if (id == -1) {
+        id = vm.AgenteId();
+    }
     $.ajax({
         type: "GET",
         url: "/api/comerciales/agentes/activos",
@@ -1054,26 +1080,24 @@ function cambioAgente(data) {
     if (!data) {
         return;
     }
+    //guardamos la id del nuevo agente.
+    cambAgente = data.id;
+
     $.ajax({
         type: "GET",
         url: "/api/comerciales/" + data.id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // le damos valor al código
-            vm.codComercial(data.proId);
-            if (data) {
-                $.ajax({
-                    type: "GET",
-                    url: "/api/comerciales/" + data.ascComercialId,
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (data, status) {
-                        if (data) {
-                            vm.colaborador(data.nombre);
-                        }
-                    }
+            datosCambioAgente = data;
+            //comparamos la id del nuevo agente con la id del agente del cliente para ver si hay cambio
+             if (cambAgente != vm.AgenteId() && empId != 0) {
+                $('#modalCambioAgente').modal({ 
+                    show: 'true'
                 });
+                loadModal(data)
+            } else {
+                realizarCambioAgente(data);
             }
         },
         error: function (err) {
@@ -1083,7 +1107,153 @@ function cambioAgente(data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
 
+function realizarCambioAgente(data) {
+    if (!data){
+        data = datosCambioAgente;
+        guardaClienteAgente();
+    }
+    // le damos valor al código
+    vm.codComercial(data.proId);
+        if (data) {
+            $.ajax({
+                type: "GET",
+                url: "/api/comerciales/" + data.ascComercialId,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    if (data) {
+                        vm.colaborador(data.nombre);
+                        $('#modalCambioAgente').modal('hide');
+                    }
+                }
+            });
+        }
+}
+
+function guardaClienteAgente() {
+    //se actualiza el cliente con los nuevos valores
+
+    if (!datosOkClienteAgente())
+            return;
+
+    if (!datosOK())
+            return;
+
+
+        var dataClienteAgente = {
+                clienteAgente: {
+                    clienteId: vm.clienteId(),
+                    comercialId: vm.AgenteId(),
+                    fechaCambio: spanishDbDate(vm.fechaCambio())
+            }
+        }
+        var data = {
+            cliente: {
+                "clienteId": vm.clienteId(),
+                "proId": vm.proId(),
+                "nombre": vm.nombre(),
+                "nombreComercial": vm.nombreComercial(),
+                "nif": vm.nif(),
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "activa": vm.activa(),
+                "contacto1": vm.contacto1(),
+                "contacto2": vm.contacto2(),
+                "direccion": vm.direccion(),
+                "poblacion": vm.poblacion(),
+                "provincia": vm.provincia(),
+                "codPostal": vm.codPostal(),
+                "telefono1": vm.telefono1(),
+                "telefono2": vm.telefono2(),
+                "fax": vm.fax(),
+                "email": vm.email(),
+                "email2": vm.email2(),
+                "observaciones": vm.observaciones(),
+                "tipoClienteId": vm.stipoClienteId(),
+                "formaPagoId": vm.sformaPagoId(),
+                "motivoBajaId": vm.smotivoBajaId(),
+                "cuentaContable": vm.cuentaContable(),
+                "iban": vm.iban(),
+                "comercialId": vm.sagenteId(),
+                "codigo": vm.codigo(),
+                "tipoViaId": vm.stipoViaId(),
+                "direccion2": vm.direccion2(),
+                "poblacion2": vm.poblacion2(),
+                "provincia2": vm.provincia2(),
+                "codPostal2": vm.codPostal2(),
+                "tipoViaId2": vm.stipoViaId2(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante(),
+                "direccion3": vm.direccion3(),
+                "poblacion3": vm.poblacion3(),
+                "provincia3": vm.provincia3(),
+                "codPostal3": vm.codPostal3(),
+                "tipoViaId3": vm.stipoViaId3(),
+                "tarifaId": vm.starifaId()
+            }
+        }
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/clientes/" + empId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
+                $.ajax({
+                    type: "POST",
+                    url: myconfig.apiUrl + "/api/clientes/agente",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataClienteAgente),
+                    success: function (data, status) {
+                        loadClientesAgentes();
+                        
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+function datosOkClienteAgente() {
+    $('#frmCambioAgente').validate({
+        rules: {
+            txtNuevaFecha: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNuevaFecha: {
+                required: "Debe introducir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmCambioAgente").validate().settings;
+    return $('#frmCambioAgente').valid();
+}
+
+
+
+
+function loadModal(data) {
+    vm.nuevoAgente(data.nombre);
+    vm.antiguoAgente(vm.nombreAgente());
+    vm.fechaCambio(spanishDate(new Date()));
 }
 
 function cambioCodigo(data) {
@@ -1142,4 +1312,77 @@ var copiarDireccionFiscalEnPostal = function () {
     vm.poblacion3(vm.poblacion());
     loadTiposVia3(vm.stipoViaId());
 
+}
+
+/* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE AGENTES */
+
+function initTablaClientesAgentes() {
+    tablaCarro = $('#dt_clientesAgentes').dataTable({
+        sort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_clientesAgentes'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataClientesAgentes,
+        columnDefs: [{
+            "width": "20%",
+            "targets": 0
+        }],
+        columns: [{
+            data: "fechaCambio",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        }, {
+            data: "nombre",
+            className: "text-right",
+        }]
+    });
+}
+
+
+function loadTablaClientesAgentes(data) {
+    var dt = $('#dt_clientesAgentes').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadClientesAgentes(id) {
+    llamadaAjax('GET', "/api/clientes/historial/agentes/" + empId, null, function (err, data) {
+        if (err) return;
+        loadTablaClientesAgentes(data)
+    });
 }
