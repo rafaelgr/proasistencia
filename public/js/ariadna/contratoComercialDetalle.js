@@ -219,6 +219,10 @@ function loadData(data) {
     if (data.finPorImpCliente > 0) $('#chkFinPorImpCliente').attr('checked', 'true');
     if (data.finPorImpClienteAgente > 0) $('#chkFinPorImpClienteAgente').attr('checked', 'true');
     if (data.finPorCostes > 0) $('#chkFinPorCostes').attr('checked', 'true');    
+    //
+    if (data.arqPorImpCliente > 0) $('#chkArqPorImpCliente').attr('checked', 'true');
+    if (data.arqPorImpClienteAgente > 0) $('#chkArqPorImpClienteAgente').attr('checked', 'true');
+    if (data.arqPorCostes > 0) $('#chkArqPorCostes').attr('checked', 'true');    
     //    
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
@@ -235,7 +239,7 @@ function datosOK() {
                 required: true
             },
             txtManPorImpCliente: { number: true },
-            txtManPorImpClienteAgfente: { number: true },
+            txtManPorImpClienteAgente: { number: true },
             txtManPorCostes: { number: true },
             txtComision: {
                 required: true,
@@ -328,7 +332,18 @@ function aceptar() {
                 "finOficinaTecnica": vm.finOficinaTecnica(),
                 "finAsesorTecnico": vm.finAsesorTecnico(),
                 "finComercial": vm.finComercial(),
-                "finComision": vm.finComision()
+                "finComision": vm.finComision(),
+
+                "arqComisAgente": vm.arqComisAgente(),
+                "arqPorImpCliente": vm.arqPorImpCliente(),
+                "arqPorImpClienteAgente": vm.arqPorImpClienteAgente(),
+                "arqPorCostes": vm.arqPorCostes(),
+                "arqCostes": vm.arqCostes(),
+                "arqJefeObra": vm.arqJefeObra(),
+                "arqOficinaTecnica": vm.arqOficinaTecnica(),
+                "arqAsesorTecnico": vm.arqAsesorTecnico(),
+                "arqComercial": vm.arqComercial(),
+                "arqComision": vm.arqComision()
             }
         };
         var url = "";
