@@ -149,7 +149,7 @@ function initForm() {
         var data = {
             clienteId: empId
         }
-        loadClientesAgentes();
+        loadClientesAgentes(empId);
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -1209,7 +1209,7 @@ function guardaClienteAgente() {
                     contentType: "application/json",
                     data: JSON.stringify(dataClienteAgente),
                     success: function (data, status) {
-                        loadClientesAgentes();
+                        loadClientesAgentes(empId);
                         
                     },
                     error: function (err) {
@@ -1356,7 +1356,11 @@ function initTablaClientesAgentes() {
         columnDefs: [{
             "width": "20%",
             "targets": 0
-        }],
+        },{
+            "width": "5%",
+            "targets": 2
+        }
+    ],
         columns: [{
             data: "fechaCambio",
             render: function (data, type, row) {
@@ -1365,6 +1369,13 @@ function initTablaClientesAgentes() {
         }, {
             data: "nombre",
             className: "text-right",
+        }, {
+            data: "clienteAgenteId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteClienteAgente(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var html = "<div>" + bt1 +  "</div>";
+                return html;
+            }
         }]
     });
 }
@@ -1381,8 +1392,22 @@ function loadTablaClientesAgentes(data) {
 }
 
 function loadClientesAgentes(id) {
-    llamadaAjax('GET', "/api/clientes/historial/agentes/" + empId, null, function (err, data) {
+    llamadaAjax('GET', "/api/clientes/historial/agentes/" + id, null, function (err, data) {
         if (err) return;
         loadTablaClientesAgentes(data)
+    });
+}
+
+function deleteClienteAgente(clienteAgenteId) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente borrado como agente del cliente";
+    mensajeAceptarCancelar(mensaje, function () {
+        
+        llamadaAjax("DELETE",  "/api/clientes/clienteAgente/" + clienteAgenteId, null, function (err, data) {
+            if (err) return;
+            loadClientesAgentes(empId);
+        });
+    }, function () {
+        // cancelar no hace nada
     });
 }
