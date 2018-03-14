@@ -1664,7 +1664,8 @@ function loadServiciadasFacprove(facproveId) {
         if(numServiciadas == 0) {
             mostrarMensajeCrearServiciadas();
         }
-        
+        var tot = parseFloat(numeroDbf(vm.total()));
+        vm.importeServiciada(tot-acumulado);
         loadTablaServiciadas(data);
     });
 }
