@@ -892,6 +892,141 @@
                                                         </div>
                                                     </section>
                                                 </div>
+                                                <div class="row">
+                                                        <section class="col col-md-4">
+                                                            <header>
+                                                                Condiciones generales arquitectura
+                                                            </header>
+                                                            <div class="row">
+                                                                <section class="col col-md-8"></section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="label">COMISION</label>
+                                                                    <label class="input">
+                                                                        <input id="txtArqComision" name="txtArqComision" data-bind="value: arqComision" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-8">
+                                                                    DEDUCCIONES IMPORTE AL CLIENTE
+                                                                    <hr/>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    PORCENTAJES
+                                                                    <hr/>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Comisión del agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqComisAgente" type="checkbox" name="chkArqComisAgente" data-bind="checked: arqComisAgente">
+                                                                        <i></i> Importe comisión del agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqPorImpCliente" type="checkbox" name="chkArqPorImpCliente">
+                                                                        <i></i>% Sobre importe al cliente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtArqPorImpCliente" name="txtArqPorImpCliente" data-bind="value: arqPorImpCliente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente - comis agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqPorImpClienteAgente" type="checkbox" name="chkArqPorImpClienteAgente">
+                                                                        <i></i>% Sobre importe al cliente menos comisión agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtArqPorImpClienteAgente" name="txtArqPorImpClienteAgente" data-bind="value: arqPorImpClienteAgente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Porcentaje sobre costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqPorCostes" type="checkbox" name="chkArqPorCostes">
+                                                                        <i></i>% Sobre los costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtArqPorCostes" name="txtArqPorCostes" data-bind="value: arqPorCostes" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqCostes" type="checkbox" name="chkArqCostes" data-bind="checked: arqCostes">
+                                                                        <i></i> Importe costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- jefe de obra -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqJefeObra" type="checkbox" name="chkArqJefeObra" data-bind="checked: arqJefeObra">
+                                                                        <i></i> Importe Jefe Obra
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- oficina técnica -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqOficinaTecnica" type="checkbox" name="chkArqOficinaTecnica" data-bind="checked: arqOficinaTecnica">
+                                                                        <i></i> Importe Oficina Técnica
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- asesor técnico -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqAsesorTecnico" type="checkbox" name="chkArqAsesorTecnico" data-bind="checked: arqAsesorTecnico">
+                                                                        <i></i> Importe Asesor Técnico
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- comercial -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkArqComercial" type="checkbox" name="chkArqComercial" data-bind="checked: arqComercial">
+                                                                        <i></i> Importe Comercial
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-md-4"></section>
+                                                        <section class="col col-md-4"></section>
                                             </fieldset>
                                             <fieldset>
                                                 <header>

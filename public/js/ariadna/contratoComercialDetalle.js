@@ -116,6 +116,18 @@ function admData() {
     self.finComercial = ko.observable();
     self.finComision = ko.observable();    
     //
+    self.arqComisAgente = ko.observable();
+    self.arqPorImpCliente = ko.observable();
+    self.arqPorImpClienteAgente = ko.observable();
+    self.arqPorCostes = ko.observable();
+    self.arqCostes = ko.observable();
+    self.arqJefeObra = ko.observable();
+    self.arqOficinaTecnica = ko.observable();
+    self.arqAsesorTecnico = ko.observable();
+    self.arqComercial = ko.observable();
+    self.arqComision = ko.observable();    
+    //
+    //
     self.sempresaId = ko.observable();
     //
     self.posiblesEmpresas = ko.observableArray([]);
@@ -181,7 +193,18 @@ function loadData(data) {
     vm.finAsesorTecnico(data.finAsesorTecnico);
     vm.finComercial(data.finComercial);
     vm.finComision(data.finComision);
-
+    //
+    vm.arqComisAgente(data.arqComisAgente);
+    vm.arqPorImpCliente(data.arqPorImpCliente);
+    vm.arqPorImpClienteAgente(data.arqPorImpClienteAgente);
+    vm.arqPorCostes(data.arqPorCostes);
+    vm.arqCostes(data.arqCostes);
+    vm.arqJefeObra(data.arqJefeObra);
+    vm.arqOficinaTecnica(data.arqOficinaTecnica);
+    vm.arqAsesorTecnico(data.arqAsesorTecnico);
+    vm.arqComercial(data.arqComercial);
+    vm.arqComision(data.arqComision);
+    //
 
     vm.comision(data.comision);
 
@@ -196,6 +219,10 @@ function loadData(data) {
     if (data.finPorImpCliente > 0) $('#chkFinPorImpCliente').attr('checked', 'true');
     if (data.finPorImpClienteAgente > 0) $('#chkFinPorImpClienteAgente').attr('checked', 'true');
     if (data.finPorCostes > 0) $('#chkFinPorCostes').attr('checked', 'true');    
+    //
+    if (data.arqPorImpCliente > 0) $('#chkArqPorImpCliente').attr('checked', 'true');
+    if (data.arqPorImpClienteAgente > 0) $('#chkArqPorImpClienteAgente').attr('checked', 'true');
+    if (data.arqPorCostes > 0) $('#chkArqPorCostes').attr('checked', 'true');    
     //    
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
@@ -212,7 +239,7 @@ function datosOK() {
                 required: true
             },
             txtManPorImpCliente: { number: true },
-            txtManPorImpClienteAgfente: { number: true },
+            txtManPorImpClienteAgente: { number: true },
             txtManPorCostes: { number: true },
             txtComision: {
                 required: true,
@@ -305,7 +332,18 @@ function aceptar() {
                 "finOficinaTecnica": vm.finOficinaTecnica(),
                 "finAsesorTecnico": vm.finAsesorTecnico(),
                 "finComercial": vm.finComercial(),
-                "finComision": vm.finComision()
+                "finComision": vm.finComision(),
+
+                "arqComisAgente": vm.arqComisAgente(),
+                "arqPorImpCliente": vm.arqPorImpCliente(),
+                "arqPorImpClienteAgente": vm.arqPorImpClienteAgente(),
+                "arqPorCostes": vm.arqPorCostes(),
+                "arqCostes": vm.arqCostes(),
+                "arqJefeObra": vm.arqJefeObra(),
+                "arqOficinaTecnica": vm.arqOficinaTecnica(),
+                "arqAsesorTecnico": vm.arqAsesorTecnico(),
+                "arqComercial": vm.arqComercial(),
+                "arqComision": vm.arqComision()
             }
         };
         var url = "";
