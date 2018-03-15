@@ -17,6 +17,7 @@ var lineaEnEdicion = false;
 var cambAgente;
 var datosCambioAgente;
 var ClienteId;
+var del;
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
@@ -191,6 +192,13 @@ function initForm() {
             }
         });
     }
+
+    del = gup('delete');
+
+     //abrir en pestaña de facturas de proveedores
+     /*if (del == "true") {
+        $('.nav-tabs a[href="#s2"]').tab('show');
+    } */
 }
 
 function admData() {
@@ -316,6 +324,7 @@ function loadData(data) {
     vm.comercialId(data.comercialId);
     vm.AgenteId(data.comercialId);
     vm.nombreAgente(data.nombreAgente);
+    vm.antiguoAgente(data.nombreAgente);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nombreComercial(data.nombreComercial);
@@ -1126,10 +1135,31 @@ function realizarCambioAgente(data) {
                     if (data) {
                         vm.colaborador(data.nombre);
                         $('#modalCambioAgente').modal('hide');
+                        limpiaModalClientesAgentes();
                     }
                 }
             });
         }
+}
+
+function limpiaModalClientesAgentes() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/" + empId,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            vm.nuevoAgente(null);
+            vm.antiguoAgente(data.nombreAgente);
+            vm.AgenteId(data.comercialId)
+            vm.fechaCambio(null);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function guardaClienteAgente() {
@@ -1252,7 +1282,7 @@ function datosOkClienteAgente() {
 
 function loadModal(data) {
     vm.nuevoAgente(data.nombre);
-    vm.antiguoAgente(vm.nombreAgente());
+    vm.antiguoAgente();
     vm.fechaCambio(spanishDate(new Date()));
 }
 
@@ -1398,6 +1428,7 @@ function loadClientesAgentes(id) {
     });
 }
 
+
 function deleteClienteAgente(clienteAgenteId) {
     // mensaje de confirmación
     var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente borrado como agente del cliente";
@@ -1405,7 +1436,31 @@ function deleteClienteAgente(clienteAgenteId) {
         
         llamadaAjax("DELETE",  "/api/clientes/clienteAgente/" + clienteAgenteId, null, function (err, data) {
             if (err) return;
-            loadClientesAgentes(empId);
+            var data = {
+                cliente: {
+                    "clienteId": vm.clienteId(),
+                    "proId": vm.proId(),
+                    "nombre": vm.nombre(),
+                    "nombreComercial": vm.nombreComercial(),
+                    "nif": vm.nif(),
+                    "comercialId": data[0].comercialId
+                }
+            }
+           
+            $.ajax({
+                type: "PUT",
+                url: myconfig.apiUrl + "/api/clientes/" + empId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    window.open('ClienteDetalle.html?ClienteId='+empId+'&delete=true', '_self')
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
         });
     }, function () {
         // cancelar no hace nada
