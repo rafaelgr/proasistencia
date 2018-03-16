@@ -18,6 +18,7 @@ var cambAgente;
 var datosCambioAgente;
 var ClienteId;
 var del;
+var fechaTope;
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
@@ -41,6 +42,7 @@ function initForm() {
     $("#btnImportar").click(importar());
     $("#btnTrabajoFiscal").click(copiarDireccionTrabajoEnFiscal);
     $("#btnFiscalPostal").click(copiarDireccionFiscalEnPostal);
+
     $("#frmCliente").submit(function () {
         return false;
     });
@@ -312,19 +314,19 @@ function admData() {
     //
     self.empresaId = ko.observable(null);
     //--Valores del modal de cambio de agente
-    self.antiguoAgente = ko.observable();
-    self.nuevoAgente = ko.observable();
+    self.antiguoAgenteNombre = ko.observable();
+    self.nuevoAgenteNombre = ko.observable();
     self.fechaCambio = ko.observable();
     self.nombreAgente = ko.observable();
-    self.AgenteId = ko.observable();
+    self.antiguoAgenteId = ko.observable();
 }
 
 function loadData(data) {
     vm.clienteId(data.clienteId);
     vm.comercialId(data.comercialId);
-    vm.AgenteId(data.comercialId);
+    vm.antiguoAgenteId(data.comercialId);
     vm.nombreAgente(data.nombreAgente);
-    vm.antiguoAgente(data.nombreAgente);
+    vm.antiguoAgenteNombre(data.nombreAgente);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nombreComercial(data.nombreComercial);
@@ -370,6 +372,9 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     loadAgentes(data.comercialId);
     loadTarifas(data.tarifaId);
+
+    loadClientesAgentes(empId);
+
     var data = { id: data.comercialId };
     cambioAgente(data);
     //
@@ -682,7 +687,7 @@ function loadMotivosBaja(id) {
 
 function loadAgentes(id) {
     if (id == -1) {
-        id = vm.AgenteId();
+        id = vm.antiguoAgenteId();
     }
     $.ajax({
         type: "GET",
@@ -1100,7 +1105,7 @@ function cambioAgente(data) {
         success: function (data, status) {
             datosCambioAgente = data;
             //comparamos la id del nuevo agente con la id del agente del cliente para ver si hay cambio
-             if (cambAgente != vm.AgenteId() && empId != 0) {
+             if (cambAgente != vm.antiguoAgenteId() && empId != 0 && vm.antiguoAgenteId() != null) {
                 $('#modalCambioAgente').modal({ 
                     show: 'true'
                 });
@@ -1134,8 +1139,6 @@ function realizarCambioAgente(data) {
                 success: function (data, status) {
                     if (data) {
                         vm.colaborador(data.nombre);
-                        $('#modalCambioAgente').modal('hide');
-                        limpiaModalClientesAgentes();
                     }
                 }
             });
@@ -1148,12 +1151,11 @@ function limpiaModalClientesAgentes() {
         url: myconfig.apiUrl + "/api/clientes/" + empId,
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify(data),
         success: function (data, status) {
-            vm.nuevoAgente(null);
-            vm.antiguoAgente(data.nombreAgente);
-            vm.AgenteId(data.comercialId)
+            vm.nuevoAgenteNombre(null);
             vm.fechaCambio(null);
+            loadData(data);
+            $('#modalCambioAgente').modal('hide');
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -1165,17 +1167,23 @@ function limpiaModalClientesAgentes() {
 function guardaClienteAgente() {
     //se actualiza el cliente con los nuevos valores
 
-    if (!datosOkClienteAgente())
+    if (!datosOkClienteAgente()){
+        return;
+    } else {
+        var fecha = spanishDbDate(vm.fechaCambio());
+        if( fecha < fechaTope){
+            mensError("La fecha de cambio no puede ser inferior a la fecha máxima existente");
+            limpiaModalClientesAgentes();
             return;
-
-    if (!datosOK())
+        } else {
+            if (!datosOK())
             return;
 
 
         var dataClienteAgente = {
                 clienteAgente: {
                     clienteId: vm.clienteId(),
-                    comercialId: vm.AgenteId(),
+                    comercialId: vm.antiguoAgenteId(),
                     fechaCambio: spanishDbDate(vm.fechaCambio())
             }
         }
@@ -1239,7 +1247,8 @@ function guardaClienteAgente() {
                     contentType: "application/json",
                     data: JSON.stringify(dataClienteAgente),
                     success: function (data, status) {
-                        loadClientesAgentes(empId);
+                        limpiaModalClientesAgentes();
+                       
                         
                     },
                     error: function (err) {
@@ -1253,9 +1262,13 @@ function guardaClienteAgente() {
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
+        }
+    }
+    
 }
 
 function datosOkClienteAgente() {
+
     $('#frmCambioAgente').validate({
         rules: {
             txtNuevaFecha: {
@@ -1281,8 +1294,8 @@ function datosOkClienteAgente() {
 
 
 function loadModal(data) {
-    vm.nuevoAgente(data.nombre);
-    vm.antiguoAgente();
+    vm.nuevoAgenteNombre(data.nombre);
+    vm.antiguoAgenteNombre();
     vm.fechaCambio(spanishDate(new Date()));
 }
 
@@ -1424,7 +1437,13 @@ function loadTablaClientesAgentes(data) {
 function loadClientesAgentes(id) {
     llamadaAjax('GET', "/api/clientes/historial/agentes/" + id, null, function (err, data) {
         if (err) return;
-        loadTablaClientesAgentes(data)
+        if (data.length > 0){
+            fechaTope = spanishDate(data[0].fechaCambio);
+            fechaTope = spanishDbDate(fechaTope);
+        } else {
+            fechaTope = null;
+        }
+        loadTablaClientesAgentes(data);
     });
 }
 
@@ -1454,7 +1473,7 @@ function deleteClienteAgente(clienteAgenteId) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    window.open('ClienteDetalle.html?ClienteId='+empId+'&delete=true', '_self')
+                    limpiaModalClientesAgentes()
                 },
                 error: function (err) {
                     mensErrorAjax(err);
