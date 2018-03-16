@@ -17,7 +17,6 @@ var lineaEnEdicion = false;
 var cambAgente;
 var datosCambioAgente;
 var ClienteId;
-var del;
 var fechaTope;
 
 
@@ -195,7 +194,6 @@ function initForm() {
         });
     }
 
-    del = gup('delete');
 
      //abrir en pestaña de facturas de proveedores
      /*if (del == "true") {
