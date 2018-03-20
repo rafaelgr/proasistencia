@@ -15,6 +15,7 @@ var refWoId = 0;
 var ruta;
 var desdeContrato;
 var acumulado = 0;
+var tot;
 var numServiciadas;
 var importeModificar = 0;
 
@@ -1664,8 +1665,11 @@ function loadServiciadasFacprove(facproveId) {
         if(numServiciadas == 0) {
             mostrarMensajeCrearServiciadas();
         }
-        
-        loadTablaServiciadas(data);
+        setTimeout(function() {
+            tot = parseFloat(numeroDbf(vm.total()));
+            vm.importeServiciada((tot-acumulado).toFixed(2));
+            loadTablaServiciadas(data);
+        }, 1000);
     });
 }
 
