@@ -1447,39 +1447,22 @@ function loadClientesAgentes(id) {
 
 
 function deleteClienteAgente(clienteAgenteId) {
-    // mensaje de confirmación
-    var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente borrado como agente del cliente";
-    mensajeAceptarCancelar(mensaje, function () {
+    //se recuperan los datos del clienteagente a borrar
+    llamadaAjax('GET', "/api/clientes/cliente-agente/unico/registro/" + clienteAgenteId, null, function (err, data) {
+        if (err) return;
+        // mensaje de confirmación
+        var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente " + data.nombre + " como agente del cliente";
+        mensajeAceptarCancelar(mensaje, function () {
         
-        llamadaAjax("DELETE",  "/api/clientes/clienteAgente/" + clienteAgenteId, null, function (err, data) {
-            if (err) return;
-            var data = {
-                cliente: {
-                    "clienteId": vm.clienteId(),
-                    "proId": vm.proId(),
-                    "nombre": vm.nombre(),
-                    "nombreComercial": vm.nombreComercial(),
-                    "nif": vm.nif(),
-                    "comercialId": data[0].comercialId
-                }
-            }
-           
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/clientes/" + empId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    limpiaModalClientesAgentes()
-                },
-                error: function (err) {
+            llamadaAjax("DELETE",  "/api/clientes/clienteAgente/elimina/actualiza", data, function (err, data) {
+                if (err) {
                     mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                    return;
                 }
+                limpiaModalClientesAgentes();
             });
+        }, function () {
+            // cancelar no hace nada
         });
-    }, function () {
-        // cancelar no hace nada
     });
 }
