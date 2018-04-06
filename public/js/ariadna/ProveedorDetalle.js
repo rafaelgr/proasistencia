@@ -46,7 +46,11 @@ function initForm() {
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
-    $("#cmbTiposProveedor").select2(select2Spanish());
+   
+    $("#cmbTiposProveedor").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioTipoProveedor(e.added);
+    });
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
@@ -58,6 +62,8 @@ function initForm() {
     });
 
     initTablaFacturas();
+
+    
 
 
     //
@@ -450,6 +456,8 @@ function loadTiposProveedor(id) {
     });
 }
 
+
+
 function loadFormasPago(formaPagoId) {
     llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
         if (err) return;
@@ -488,20 +496,40 @@ function loadTarifas(id){
 
 
 
-function cambioCodigoProveedor(data) {
-    if(vm.codigo()){
-        llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
-            if (!data) {
-                
+function cambioCodigoProveedor() {
+    if(vm.stipoProveedorId()){
+        if(vm.codigo()){
+            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
+                if (!data) {
+                    
+                }
+                if(data) {
+                    mostrarMensajeSmart('La cuenta contable ya existe');
+                }
+                var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
+                vm.cuentaContable(codmacta);
+            });
+        }
+    }    
+}
+
+function cambioTipoProveedor(data) {
+    if(data){
+        $.ajax({
+            type: "GET",
+            url: "/api/tipos_proveedor/" + data.id,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                var codmacta = montarCuentaContable(data.inicioCuenta, vm.codigo(), numDigitos); // (comun.js)
+                vm.cuentaContable(codmacta);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
             }
-            if(data) {
-                mostrarMensajeSmart('La cuenta contable ya existe');
-            }
-            var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
-            vm.cuentaContable(codmacta);
-        });
+        });    
     }
-        
 }
 
 //---- Solapa facturas

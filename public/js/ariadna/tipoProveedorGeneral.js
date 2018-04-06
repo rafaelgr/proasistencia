@@ -64,6 +64,10 @@ function initForm() {
 
 function initTablaTiposProveedor() {
     tablaCarro = $('#dt_tipoProveedor').dataTable({
+        "columnDefs": [
+            { "width": "60%", "targets": 0 },
+            { "width": "20%", "targets": 1 }
+          ],
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -101,6 +105,8 @@ function initTablaTiposProveedor() {
         columns: [{
             data: "nombre"
         }, {
+            data: "inicioCuenta"
+        },{
             data: "tipoProveedorId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoProveedor(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";

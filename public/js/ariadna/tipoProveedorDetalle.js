@@ -52,11 +52,13 @@ function admData() {
     var self = this;
     self.tipoProveedorId = ko.observable();
     self.nombre = ko.observable();
+    self.inicioCuenta = ko.observable();
 }
 
 function loadData(data) {
     vm.tipoProveedorId(data.tipoProveedorId);
     vm.nombre(data.nombre);
+    vm.inicioCuenta(data.inicioCuenta);
 }
 
 function datosOK() {
@@ -89,7 +91,8 @@ function aceptar() {
         var data = {
             tipoProveedor: {
                 "tipoProveedorId": vm.tipoProveedorId(),
-                "nombre": vm.nombre()
+                "nombre": vm.nombre(),
+                "inicioCuenta": vm.inicioCuenta()
             }
         };
         if (empId == 0) {
