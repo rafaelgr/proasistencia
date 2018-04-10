@@ -133,8 +133,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
-                
-                setTimeout(cambioCodigoProveedor, 1000);
+            
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -176,6 +175,7 @@ function admData() {
     self.iban4 = ko.observable();
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
+    self.inicioCuenta = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -445,7 +445,7 @@ function loadTiposProveedor(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposProveedor = [{ tipoProveedorId: 0, nombre: "" }].concat(data);
+            var tiposProveedor = [{ tipoProveedorId: null, nombre: "" }].concat(data);
             vm.posiblesTiposProveedor(tiposProveedor);
             $("#cmbTiposProveedor").val([id]).trigger('change');
         },
@@ -499,15 +499,16 @@ function loadTarifas(id){
 function cambioCodigoProveedor() {
     if(vm.stipoProveedorId()){
         if(vm.codigo()){
-            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
+            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
+            vm.cuentaContable(codmacta);
+            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
                 if (!data) {
                     
                 }
                 if(data) {
                     mostrarMensajeSmart('La cuenta contable ya existe');
+                    vm.cuentaContable(null);
                 }
-                var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
-                vm.cuentaContable(codmacta);
             });
         }
     }    
@@ -521,8 +522,10 @@ function cambioTipoProveedor(data) {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                var codmacta = montarCuentaContable(data.inicioCuenta, vm.codigo(), numDigitos); // (comun.js)
+                vm.inicioCuenta(data.inicioCuenta);
+                var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
                 vm.cuentaContable(codmacta);
+                cambioCodigoProveedor();
             },
             error: function (err) {
                 mensErrorAjax(err);
