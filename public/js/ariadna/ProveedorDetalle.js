@@ -9,6 +9,7 @@ var numDigitos = 0; // número de digitos de cuenta contable
 var intentos = 0;
 var dataFacturas;
 var facproveId;
+var codigoSugerido;
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -46,6 +47,8 @@ function initForm() {
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesional();
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -58,7 +61,7 @@ function initForm() {
     loadTarifas();
 
     $("#txtCodigo").blur(function () {
-        cambioCodigoProveedor();
+        compruebaCodigoProveedor();
     });
 
     initTablaFacturas();
@@ -133,6 +136,9 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
+                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
+                                            //el codigo y rtesulta que ya está asignado
+
             
             },
             error: function (err) {
@@ -195,6 +201,12 @@ function admData() {
     self.posiblesTiposProveedor = ko.observableArray([]);
     self.elegidosTiposProveedor = ko.observableArray([]);
     //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
+    //
     self.motivoBajaId = ko.observable();
     self.smotivoBajaId = ko.observable();
     //
@@ -246,6 +258,7 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
+    loadTiposProfesional(data.tipoProfesionalId);
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
 }
@@ -269,6 +282,9 @@ function datosOK() {
                 required: true
             },
             cmbTiposProveedor: {
+                required: true
+            },
+            cmbTiposProfesional: {
                 required: true
             },
             txtFechaAlta: {
@@ -301,6 +317,9 @@ function datosOK() {
             },
             cmbTiposProveedor: {
                 required: "Debe elegir un tipo de proveedor"
+            },
+            cmbTiposProfesional: {
+                required: "Debe elegir un tipo de profesional"
             },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha"
@@ -352,6 +371,7 @@ function aceptar() {
                 "correo": vm.correo(),
                 "tipoViaId": vm.stipoViaId(),
                 "tipoProveedor": vm.stipoProveedorId(),
+                "tipoProfesionalId": vm.stipoProfesionalId(),
                 "telefono2": vm.telefono2(),
                 "movil": vm.movil(),
                 "movil2": vm.movil2(),
@@ -456,6 +476,24 @@ function loadTiposProveedor(id) {
     });
 }
 
+function loadTiposProfesional(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
+            vm.posiblesTiposProfesional(tiposProfesional);
+            $("#cmbTiposProfesional").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 
 function loadFormasPago(formaPagoId) {
@@ -496,18 +534,21 @@ function loadTarifas(id){
 
 
 
-function cambioCodigoProveedor() {
+function compruebaCodigoProveedor() {
+    var codmacta;
     if(vm.stipoProveedorId()){
         if(vm.codigo()){
-            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
+            codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
             vm.cuentaContable(codmacta);
-            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
+            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
                 if (!data) {
                     
                 }
                 if(data) {
-                    mostrarMensajeSmart('La cuenta contable ya existe');
-                    vm.cuentaContable(null);
+                    mostrarMensajeSmart('El codigo contable ya existe');
+                    vm.codigo(codigoSugerido);
+                    codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
+                    vm.cuentaContable(codmacta);
                 }
             });
         }
@@ -525,7 +566,10 @@ function cambioTipoProveedor(data) {
                 vm.inicioCuenta(data.inicioCuenta);
                 var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); // (comun.js)
                 vm.cuentaContable(codmacta);
-                cambioCodigoProveedor();
+                if(proId == 0){
+                    compruebaCodigoProveedor();
+                }
+                
             },
             error: function (err) {
                 mensErrorAjax(err);

@@ -540,7 +540,7 @@ var aceptarFactura = function () {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -599,7 +599,7 @@ var generarFacturaDb = function () {
 function salir() {
     var mf = function () {
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
             var url = "FacturaProveedorGeneral.html";
             window.open(url, '_self');
