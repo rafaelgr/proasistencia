@@ -16,6 +16,7 @@ var dataComisionistas;
 var dataGenerarPrefacturas;
 var dataPrefacturas;
 var dataFacturas;
+var ContratoId = 0;
 
 
 var breakpointDefinition = {
@@ -169,6 +170,7 @@ function initForm() {
     reglasDeValidacionAdicionales();
 
     var cmd = gup('CMD');
+    ContratoId = gup('ContratoId');
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
@@ -2752,7 +2754,7 @@ function loadTablaFacproves(data) {
 function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id + "&ContratoId=" +ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }

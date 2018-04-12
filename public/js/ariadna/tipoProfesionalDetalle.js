@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-tipoProveedorDetalle.js
-Funciones js par la página TipoProveedorDetalle.html
+tipoProfesionalDetalle.js
+Funciones js par la página TipoProfesionalDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
 
@@ -17,19 +17,19 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmTipoProveedor").submit(function() {
+    $("#frmTipoProfesional").submit(function() {
         return false;
     });
 
-    empId = gup('tipoProveedorId');
+    empId = gup('tipoProfesionalId');
     if (empId != 0) {
         var data = {
-                tipoProveedorId: empId
+                tipoProfesionalId: empId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_proveedor/" + empId,
+            url: myconfig.apiUrl + "/api/tipos_profesional/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -44,25 +44,23 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.tipoProveedorId(0);
+        vm.tipoProfesionalId(0);
     }
 }
 
 function admData() {
     var self = this;
-    self.tipoProveedorId = ko.observable();
+    self.tipoProfesionalId = ko.observable();
     self.nombre = ko.observable();
-    self.inicioCuenta = ko.observable();
 }
 
 function loadData(data) {
-    vm.tipoProveedorId(data.tipoProveedorId);
+    vm.tipoProfesionalId(data.tipoProfesionalId);
     vm.nombre(data.nombre);
-    vm.inicioCuenta(data.inicioCuenta);
 }
 
 function datosOK() {
-    $('#frmTipoProveedor').validate({
+    $('#frmTipoProfesional').validate({
         rules: {
             txtNombre: {
                 required: true
@@ -79,8 +77,8 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmTipoProveedor").validate().settings;
-    return $('#frmTipoProveedor').valid();
+    var opciones = $("#frmTipoProfesional").validate().settings;
+    return $('#frmTipoProfesional').valid();
 }
 
 
@@ -89,16 +87,15 @@ function aceptar() {
         if (!datosOK())
             return;
         var data = {
-            tipoProveedor: {
-                "tipoProveedorId": vm.tipoProveedorId(),
-                "nombre": vm.nombre(),
-                "inicioCuenta": vm.inicioCuenta()
+            tipoProfesional: {
+                "tipoProfesionalId": vm.tipoProfesionalId(),
+                "nombre": vm.nombre()
             }
         };
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/tipos_proveedor",
+                url: myconfig.apiUrl + "/api/tipos_profesional",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -106,7 +103,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "TipoProveedorGeneral.html?TipoProveedorId=" + vm.tipoProveedorId();
+                    var url = "TipoProfesionalGeneral.html?TipoProfesionalId=" + vm.tipoProfesionalId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -117,7 +114,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/tipos_proveedor/" + empId,
+                url: myconfig.apiUrl + "/api/tipos_profesional/" + empId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -125,7 +122,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "TipoProveedorGeneral.html?TipoProveedorId=" + vm.tipoProveedorId();
+                    var url = "TipoProfesionalGeneral.html?TipoProfesionalId=" + vm.tipoProfesionalId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -141,7 +138,7 @@ function aceptar() {
 
 function salir() {
     var mf = function() {
-        var url = "TipoProveedorGeneral.html";
+        var url = "TipoProfesionalGeneral.html";
         window.open(url, '_self');
     }
     return mf;

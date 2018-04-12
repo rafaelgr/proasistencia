@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-tipoProveedorGeneral.js
-Funciones js par la página TipoProveedorGeneral.html
+tipoProfesionalGeneral.js
+Funciones js par la página TipoProfesionalGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,8 +8,8 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataTiposProveedor;
-var tipoProveedorId;
+var dataTiposProfesional;
+var tipoProfesionalId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -23,34 +23,34 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    $('#btnBuscar').click(buscarTiposProveedor());
-    $('#btnAlta').click(crearTipoProveedor());
+    $('#btnBuscar').click(buscarTiposProfesional());
+    $('#btnAlta').click(crearTipoProfesional());
     $('#frmBuscar').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
-    //        buscarTiposProveedor();
+    //        buscarTiposProfesional();
     //});
     //
-    initTablaTiposProveedor();
+    initTablaTiposProfesional();
     // comprobamos parámetros
-    tipoProveedorId = gup('tipoProveedorId');
-    if (tipoProveedorId !== '') {
+    tipoProfesionalId = gup('tipoProfesionalId');
+    if (tipoProfesionalId !== '') {
         // cargar la tabla con un único valor que es el que corresponde.
         var data = {
-            id: tipoProveedorId
+            id: tipoProfesionalId
         }
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_Proveedor/" + tipoProveedorId,
+            url: myconfig.apiUrl + "/api/tipos_Profesional/" + tipoProfesionalId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaTiposProveedor(data);
+                loadTablaTiposProfesional(data);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -62,17 +62,13 @@ function initForm() {
     }
 }
 
-function initTablaTiposProveedor() {
-    tablaCarro = $('#dt_tipoProveedor').dataTable({
-        "columnDefs": [
-            { "width": "60%", "targets": 0 },
-            { "width": "20%", "targets": 1 }
-          ],
+function initTablaTiposProfesional() {
+    tablaCarro = $('#dt_tipoProfesional').dataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_tipoProveedor'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_tipoProfesional'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -101,16 +97,14 @@ function initTablaTiposProveedor() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataTiposProveedor,
+        data: dataTiposProfesional,
         columns: [{
             data: "nombre"
         }, {
-            data: "inicioCuenta"
-        },{
-            data: "tipoProveedorId",
+            data: "tipoProfesionalId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoProveedor(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editTipoProveedor(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoProfesional(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editTipoProfesional(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -138,35 +132,35 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaTiposProveedor(data) {
-    var dt = $('#dt_tipoProveedor').dataTable();
+function loadTablaTiposProfesional(data) {
+    var dt = $('#dt_tipoProfesional').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbTipoProveedor").hide();
+        $("#tbTipoProfesional").hide();
     } else {
         dt.fnClearTable();
         dt.fnAddData(data);
         dt.fnDraw();
-        $("#tbTipoProveedor").show();
+        $("#tbTipoProfesional").show();
     }
 }
 
-function buscarTiposProveedor() {
+function buscarTiposProfesional() {
     var mf = function () {
         if (!datosOK()) {
             return;
         }
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
-        // enProveedorr la consulta por la red (AJAX)
+        // enProfesionalr la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_Proveedor/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/tipos_Profesional/?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaTiposProveedor(data);
+                loadTablaTiposProfesional(data);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -177,15 +171,15 @@ function buscarTiposProveedor() {
     return mf;
 }
 
-function crearTipoProveedor() {
+function crearTipoProfesional() {
     var mf = function () {
-        var url = "TipoProveedorDetalle.html?tipoProveedorId=0";
+        var url = "TipoProfesionalDetalle.html?tipoProfesionalId=0";
         window.open(url, '_self');
     };
     return mf;
 }
 
-function deleteTipoProveedor(id) {
+function deleteTipoProfesional(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -195,17 +189,17 @@ function deleteTipoProveedor(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                tipoProveedorId: id
+                tipoProfesionalId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/tipos_Proveedor/" + id,
+                url: myconfig.apiUrl + "/api/tipos_Profesional/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     $('#txtBuscar').val('*');
-                    var fn = buscarTiposProveedor();
+                    var fn = buscarTiposProfesional();
                     fn();
                 },
                                 error: function (err) {
@@ -220,18 +214,18 @@ function deleteTipoProveedor(id) {
     });
 }
 
-function editTipoProveedor(id) {
-    // hay que abrir la página de detalle de tipoProveedor
+function editTipoProfesional(id) {
+    // hay que abrir la página de detalle de tipoProfesional
     // pasando en la url ese ID
-    var url = "TipoProveedorDetalle.html?tipoProveedorId=" + id;
+    var url = "TipoProfesionalDetalle.html?tipoProfesionalId=" + id;
     window.open(url, '_self');
 }
 
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/tipos_Proveedor/?nombre=*";
+    var url = myconfig.apiUrl + "/api/tipos_Profesional/?nombre=*";
     llamadaAjax("GET", url, null, function(err,data){
         if (err) return;
-        loadTablaTiposProveedor(data);
+        loadTablaTiposProfesional(data);
     })
 }

@@ -239,12 +239,11 @@ function initForm() {
             cargaProveedor(ProveedorId);
             cambioProveedor(ProveedorId);
         }
-        if (ContratoId != 0) {
+        /*if (ContratoId != 0) {
             loadContratos(ContratoId);
             cambioContrato(ContratoId);
-        }
+        }*/
 
-       
     }
 
     //Evento asociado al checkbox
@@ -252,7 +251,7 @@ function initForm() {
 
 }
 
-function contratosCerrados(){
+function contratosCerrados(id){
     
     if(vm.sempresaServiciadaId()){
         if ($('#chkCerrados').prop('checked')) {
@@ -260,7 +259,12 @@ function contratosCerrados(){
         }else{
             ruta = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();//contratos activos
         }
-        loadContratos(vm.scontratoId());
+        if(id){
+
+        } else{
+            loadContratos(vm.scontratoId());
+        }
+        
     }
     
 }
@@ -524,7 +528,7 @@ var aceptarFactura = function () {
     };
     var verb = "POST";
     var url =  "/api/facturasProveedores";
-    var returnUrl = "FacturaProveedorDetalle.html?desdeContrato="+ desdeContrato+"&cmd=nueva&facproveId=";
+    var returnUrl = "FacturaProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&facproveId=";
     
     
     // caso modificación
@@ -540,7 +544,7 @@ var aceptarFactura = function () {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -599,7 +603,7 @@ var generarFacturaDb = function () {
 function salir() {
     var mf = function () {
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ vm.scontratoId() +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
             var url = "FacturaProveedorGeneral.html";
             window.open(url, '_self');
@@ -697,7 +701,7 @@ function cambioEmpresaServiciada(empresaId) {
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
         if(err) return;
         if(data){
-            contratosCerrados();
+            contratosCerrados(data.contratoId);
         }
     });
 }
@@ -1706,48 +1710,57 @@ function loadDataServiciadas(data) {
 function nuevaServiciada() {
     var imp;
     var tot;
-    if(vm.facproveServiciadoId() != 0) {
-        imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-        tot = parseFloat(numeroDbf(vm.total()));
-    } else {
-        imp = acumulado + parseFloat(vm.importeServiciada());
-        tot = parseFloat(numeroDbf(vm.total()));
-    }
+    acumulado = 0;
 
-    if( imp > tot){
-        mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la factura');
-        return;
-    }
-    else if(!datosOKServiciada()){
-        vm.importeServiciada(0);
-        return;
-    }
-    var verb = "POST";
-    var url =  '/api/facturasProveedores/nueva/serviciada';
-    
-    // caso modificación
-    if (vm.facproveServiciadoId() != 0) {
-       
-
-        verb = "PUT";
-        url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
-        returnUrl = "FacturaProveedorGeneral.html?facproveId=";
-        
-    }
-    var data = {
-        facproveServiciada: {
-            facproveId: vm.facproveId(),
-            empresaId: vm.sempresaServiciadaId(),
-            contratoId: vm.scontratoId(),
-            importe: vm.importeServiciada()
-        }
-    }
-    llamadaAjax(verb, url, data, function (err, data) {
+    //recalculamos el acumulado de todas las empresas serviciadas de la factura
+    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
-        loadServiciadasFacprove(facproveId);
-        $('#modalServiciado').modal('hide');
-    });
+        for(var i = 0; i < data.length; i++){
+            acumulado += parseFloat(data[i].importe);
+        }
+        if(vm.facproveServiciadoId() != 0) {
+            imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+            tot = parseFloat(numeroDbf(vm.total()));
+        } else {
+            imp = acumulado + parseFloat(vm.importeServiciada());
+            tot = parseFloat(numeroDbf(vm.total()));
+        }
     
+        if( imp > tot){
+            mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la factura');
+            return;
+        }
+        else if(!datosOKServiciada()){
+            vm.importeServiciada(0);
+            return;
+        }
+        var verb = "POST";
+        var url =  '/api/facturasProveedores/nueva/serviciada';
+        
+        // caso modificación
+        if (vm.facproveServiciadoId() != 0) {
+           
+    
+            verb = "PUT";
+            url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
+            returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+            
+        }
+        var data = {
+            facproveServiciada: {
+                facproveId: vm.facproveId(),
+                empresaId: vm.sempresaServiciadaId(),
+                contratoId: vm.scontratoId(),
+                importe: vm.importeServiciada()
+            }
+        }
+        llamadaAjax(verb, url, data, function (err, data) {
+            if (err) return;
+            loadServiciadasFacprove(facproveId);
+            $('#modalServiciado').modal('hide');
+        });
+        
+    });
 }
 
 function datosOKServiciada() {
@@ -1801,6 +1814,12 @@ function reiniciaValores() {
     vm.scontratoId(null);
     loadEmpresaServiciadas(vm.empresaId());
     loadServiciadasFacprove(facproveId);
+    if(ContratoId != 0) {
+        $('#chkCerrados').prop('checked', true);
+        vm.scontratoId(ContratoId);
+        loadContratos(vm.scontratoId());
+        cambioContrato(ContratoId);
+    }
     
 }
 

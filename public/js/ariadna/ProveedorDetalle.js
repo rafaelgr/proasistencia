@@ -9,6 +9,8 @@ var numDigitos = 0; // número de digitos de cuenta contable
 var intentos = 0;
 var dataFacturas;
 var facproveId;
+var codigoSugerido;
+
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -46,7 +48,13 @@ function initForm() {
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
-    $("#cmbTiposProveedor").select2(select2Spanish());
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesional();
+   
+    $("#cmbTiposProveedor").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioTipoProveedor(e.added);
+    });
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
@@ -54,10 +62,12 @@ function initForm() {
     loadTarifas();
 
     $("#txtCodigo").blur(function () {
-        cambioCodigoProveedor();
+        compruebaCodigoProveedor();
     });
 
     initTablaFacturas();
+
+    
 
 
     //
@@ -113,6 +123,26 @@ function initForm() {
             }
         });
 
+        // contador de código
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                
+                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
+                                            //el codigo y resulta que ya está asignado
+
+            
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+
         loadFacturasDelProveedor(proId)
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -127,8 +157,10 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
-                
-                setTimeout(cambioCodigoProveedor, 1000);
+                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
+                                            //el codigo y rtesulta que ya está asignado
+
+            
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -170,6 +202,9 @@ function admData() {
     self.iban4 = ko.observable();
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
+    self.inicioCuenta = ko.observable();
+    self.tipoProOriginalId = ko.observable();
+    self.codigoOriginal = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -189,6 +224,12 @@ function admData() {
     self.posiblesTiposProveedor = ko.observableArray([]);
     self.elegidosTiposProveedor = ko.observableArray([]);
     //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
+    //
     self.motivoBajaId = ko.observable();
     self.smotivoBajaId = ko.observable();
     //
@@ -206,6 +247,7 @@ function admData() {
 function loadData(data) {
     vm.proveedorId(data.proveedorId);
     vm.codigo(data.codigo);
+    vm.codigoOriginal(data.codigo);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
@@ -240,6 +282,7 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
+    loadTiposProfesional(data.tipoProfesionalId);
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
 }
@@ -263,6 +306,9 @@ function datosOK() {
                 required: true
             },
             cmbTiposProveedor: {
+                required: true
+            },
+            cmbTiposProfesional: {
                 required: true
             },
             txtFechaAlta: {
@@ -295,6 +341,9 @@ function datosOK() {
             },
             cmbTiposProveedor: {
                 required: "Debe elegir un tipo de proveedor"
+            },
+            cmbTiposProfesional: {
+                required: "Debe elegir un tipo de profesional"
             },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha"
@@ -346,6 +395,7 @@ function aceptar() {
                 "correo": vm.correo(),
                 "tipoViaId": vm.stipoViaId(),
                 "tipoProveedor": vm.stipoProveedorId(),
+                "tipoProfesionalId": vm.stipoProfesionalId(),
                 "telefono2": vm.telefono2(),
                 "movil": vm.movil(),
                 "movil2": vm.movil2(),
@@ -439,9 +489,10 @@ function loadTiposProveedor(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposProveedor = [{ tipoProveedorId: 0, nombre: "" }].concat(data);
+            var tiposProveedor = [{ tipoProveedorId: null, nombre: "" }].concat(data);
             vm.posiblesTiposProveedor(tiposProveedor);
             $("#cmbTiposProveedor").val([id]).trigger('change');
+            vm.tipoProOriginalId(vm.stipoProveedorId());
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -449,6 +500,26 @@ function loadTiposProveedor(id) {
         }
     });
 }
+
+function loadTiposProfesional(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
+            vm.posiblesTiposProfesional(tiposProfesional);
+            $("#cmbTiposProfesional").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 
 function loadFormasPago(formaPagoId) {
     llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
@@ -488,20 +559,54 @@ function loadTarifas(id){
 
 
 
-function cambioCodigoProveedor(data) {
-    if(vm.codigo()){
-        llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.codigo(), null, function (err, data) {
-            if (!data) {
-                
-            }
-            if(data) {
-                mostrarMensajeSmart('La cuenta contable ya existe');
-            }
-            var codmacta = montarCuentaContable('40', vm.codigo(), numDigitos); // (comun.js)
+function compruebaCodigoProveedor() {
+    var codmacta;
+    if(vm.stipoProveedorId()){
+        if(vm.codigo()){
+            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
             vm.cuentaContable(codmacta);
-        });
+            llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
+                if (!data) {
+                    if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
+                        vm.codigo(vm.codigoOriginal());
+                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                        vm.cuentaContable(codmacta);
+                    } 
+                }
+                if(data) {
+                    if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
+                        vm.codigo(vm.codigoOriginal());
+                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                        vm.cuentaContable(codmacta);
+                    } else {
+                        mostrarMensajeSmart('La cuenta contable ya existe');
+                        vm.codigo(codigoSugerido);
+                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
+                        vm.cuentaContable(codmacta);
+                    }
+                }
+            });
+        }
+    }    
+}
+
+function cambioTipoProveedor(data) {
+    if(data){
+        $.ajax({
+            type: "GET",
+            url: "/api/tipos_proveedor/" + data.id,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                vm.inicioCuenta(data.inicioCuenta);
+                    compruebaCodigoProveedor();
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });    
     }
-        
 }
 
 //---- Solapa facturas

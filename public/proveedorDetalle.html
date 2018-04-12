@@ -194,7 +194,12 @@
                         </li>
                         <li id="tiposProveedor">
                             <a href="TipoProveedorGeneral.html">
-                                <i class="fa fa-address-card"></i> Tipos profesionales
+                                <i class="fa fa-address-card"></i> Tipos proveedores
+                            </a>
+                        </li>
+                        <li id="tiposProfesional">
+                            <a href="TipoProfesionalGeneral.html">
+                                <i class="fa fa-wrench"></i> Tipos profesionales
                             </a>
                         </li>
                         <li id="formaspago">
@@ -495,7 +500,14 @@
                                                                                                                         <input id="txtCodigoProfesional" name="txtCodigoProfesional" type="text" data-bind="value: codigoProfesional" />
                                                                                                                     </label>
                                                                                                                 </section>
-                                                                                                                <section class="col col-md-6">
+                                                                                                                <section class="col col-md-2">
+                                                                                                                    <label class="label">Tipo profesional</label>
+                                                                                                                    <label style="width:100%;">
+                                                                                                                        <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
+                                                                                                                        <i></i>
+                                                                                                                    </label>
+                                                                                                                </section>
+                                                                                                                <section class="col col-md-4">
                                                                                                                 </section>                                          
                                                                                                             </div>
                                                                                                             <div class="row">
@@ -615,7 +627,7 @@
                                                                                                                     </label>
                                                                                                                 </section>
                                                                                                                 <section class="col col-md-4">
-                                                                                                                    <label class="label">Tipo profesional</label>
+                                                                                                                    <label class="label">Tipo proveedor</label>
                                                                                                                     <label style="width:100%;">
                                                                                                                         <select style="width:100%" id="cmbTiposProveedor" name="cmbTiposProveedor" data-bind="options: posiblesTiposProveedor, optionsText: 'nombre', optionsValue: 'tipoProveedorId', value: stipoProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposProveedor, selected2:{}"></select>
                                                                                                                         <i></i>
