@@ -563,25 +563,23 @@ function compruebaCodigoProveedor() {
     var codmacta;
     if(vm.stipoProveedorId()){
         if(vm.codigo()){
+            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+            vm.cuentaContable(codmacta);
             llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
                 if (!data) {
                     if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
                         vm.codigo(vm.codigoOriginal());
                         codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
                         vm.cuentaContable(codmacta);
-                    } else {
-                        var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
-                        vm.cuentaContable(codmacta);
-                    }
+                    } 
                 }
                 if(data) {
-                    mostrarMensajeSmart('La cuenta contable ya existe');
-                   
                     if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
                         vm.codigo(vm.codigoOriginal());
                         codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
                         vm.cuentaContable(codmacta);
                     } else {
+                        mostrarMensajeSmart('La cuenta contable ya existe');
                         vm.codigo(codigoSugerido);
                         codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
                         vm.cuentaContable(codmacta);
