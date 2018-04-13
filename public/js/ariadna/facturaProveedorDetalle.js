@@ -260,7 +260,7 @@ function contratosCerrados(id){
             ruta = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();//contratos activos
         }
         if(id){
-
+            loadContratos(id);
         } else{
             loadContratos(vm.scontratoId());
         }
