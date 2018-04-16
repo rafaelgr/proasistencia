@@ -21,8 +21,9 @@ ALTER TABLE `proasistencia`.`proveedores`
   DROP INDEX `unica_codigo`,
   ADD  UNIQUE INDEX `unica_codigo` (`codigo`, `tipoProveedor`);
 
-  /*correcciones*/
+  /*LAS CORRECCIONES DE LAS CUENTAS CONTABLES Y LOS PROVEEDORES EMPIEZAN AQUÍ*/
 
+/*BORRAMOS CONTAS*/
   delete from ariconta11.cuentas  where codmacta >= '400001182' and codmacta <= '400001309';
   delete from ariconta12.cuentas  where codmacta >= '400001182' and codmacta <= '400001309';
   delete from ariconta13.cuentas  where codmacta >= '400001182' and codmacta <= '400001309';
@@ -33,14 +34,14 @@ ALTER TABLE `proasistencia`.`proveedores`
   delete from ariconta18.cuentas  where codmacta >= '400001182' and codmacta <= '400001309';
   delete from ariconta19.cuentas  where codmacta >= '400001182' and codmacta <= '400001309';
 
-  
+  /*BORRAMOS INDICE PARA QUE NO DE ERROR AL ACTUALIZAR LA TABLA PROVEEDORES*/
  ALTER TABLE `proasistencia`.`proveedores`   
   DROP INDEX `unica_codigo`;
 
   
 
 
-/*CREAR TABLA BORRAR_PROVEEDORES CON EL SCRIPT BORRAR_PROVEEDORES_TABLA ANTES DE EJECUTAR LO SIGUIENTE*/
+/*CREAR TABLA BORRAR_PROVEEDORES EN BASE DE DATOS DE PROASISTENCIA CON EL SCRIPT BORRAR_PROVEEDORES_TABLA ANTES DE EJECUTAR LO SIGUIENTE*/
 
 
 CREATE TABLE borrar_proveedores(
@@ -181,7 +182,7 @@ INSERT INTO borrar_proveedores(proveedorId,cuentaContable,nombre,nif,direccion,p
 INSERT INTO borrar_proveedores(proveedorId,cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES (2177,400001308,'GENERALI ESPAnA S.A.','A28007268',NULL,NULL,'MADRID',NULL,1308);
 INSERT INTO borrar_proveedores(proveedorId,cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES (2178,400001309,'SERVISOFT SOLUCIONES INFORMATICAS','B83664748',NULL,NULL,'MADRID',NULL,1309);
 
-/*ACTUALIZA PROVEEDORES*/
+/*ACTUALIZA PROVEEDORES DESDE TABLA BORRAR_PROVEEDORES*/
 
 update proveedores, `borrar_proveedores` set 
   proveedores.nombre= borrar_proveedores.nombre
@@ -195,13 +196,14 @@ update proveedores, `borrar_proveedores` set
    where proveedores.proveedorId = borrar_proveedores.`proveedorId` and 
    proveedores.cuentaContable >= '400001182' AND proveedores.cuentaContable <= '400001309';
 
+/*BORRAMOS PROVEEDOR REPETIDO*/
    DELETE FROM proveedores WHERE nombre = 'CLAUDIA ALONSO GOMEZ'
 
-
+/*CREAMOS DE NUEVO EL INDICE BORRADO*/
    ALTER TABLE `proasistencia`.`proveedores`
    ADD  UNIQUE INDEX `unica_codigo` (`codigo`, `tipoProveedor`);
 
-   /*ESCRIPT PROVEEDORES NUEVOS Y CREAR CONTAS NUEVAS*/
+   /*SCRIPT PROVEEDORES NUEVOS Y CREAR CONTAS NUEVAS*/
 
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001183','JORBIT VERTICALES SL','B87787263','GRAN CANAL 8 GALERIA COMERCIAL','ALCALA DE HENARES','MADRID','28804','1183');
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001186','EURO MOQUETAS S.L.','B82970989','MIGUEL HERNANDEZ 120','MADRID','MADRID','28038','1186');
