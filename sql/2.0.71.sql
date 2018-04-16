@@ -197,7 +197,7 @@ update proveedores, `borrar_proveedores` set
    proveedores.cuentaContable >= '400001182' AND proveedores.cuentaContable <= '400001309';
 
 /*BORRAMOS PROVEEDOR REPETIDO*/
-   DELETE FROM proveedores WHERE nombre = 'CLAUDIA ALONSO GOMEZ'
+   DELETE FROM proveedores WHERE nombre = 'CLAUDIA ALONSO GOMEZ';
 
 /*CREAMOS DE NUEVO EL INDICE BORRADO*/
    ALTER TABLE `proasistencia`.`proveedores`
@@ -205,17 +205,17 @@ update proveedores, `borrar_proveedores` set
 
    /*SCRIPT PROVEEDORES NUEVOS Y CREAR CONTAS NUEVAS*/
 
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001183','JORBIT VERTICALES SL','B87787263','GRAN CANAL 8 GALERIA COMERCIAL','ALCALA DE HENARES','MADRID','28804','1183');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001186','EURO MOQUETAS S.L.','B82970989','MIGUEL HERNANDEZ 120','MADRID','MADRID','28038','1186');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001310','LAURA LANA GARCIA','50866610V',NULL,NULL,'MADRID',NULL,'1310');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001311','ARIADANA SOFTWARE SL','B96470190','PASAJE VENTURA FELIU 13','VALENCIA','VALENCIA','46007','1311');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001312','CLAUDIA ALONSO GOMEZ','05458958T','RAMON Y CAJAL 31','CERCEDILLA','MADRID','28470','1312');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001313','ANTONIO VALENZUELA LINARES','80026616W','CAnADA REAL DE MERINAS, 187','MADRID','MADRID','28052','1313');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001314','CRISTIAN RUSIN','X4914686T','HERNAN CORTES, 2 - 4A','COSLADA','MADRID','28821','1314');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001315','REPARACIONES ALBEDA, S.L.','B87746673','SAN BERNARDO, 20 - 1','MADRID','MADRID','28015','1315');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001316','HRISTO TOMOV HINKOV','X4141448E','OSLO, 10','LOECHES','MADRID','28890','1316');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001317','MANUEL SILVA DA SILVA','02237103P','ZULOAGA, 67','VALDEMORO','MADRID','28342','1317');
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo) VALUES ('400001318','PROWALL PROYECTOS Y MANTENIMIENTOS, S.L.U.','B86931896','CORUnA, 1','LEGANES','MADRID','28914','1318');
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001183','JORBIT VERTICALES SL','B87787263','GRAN CANAL 8 GALERIA COMERCIAL','ALCALA DE HENARES','MADRID','28804','1183',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001186','EURO MOQUETAS S.L.','B82970989','MIGUEL HERNANDEZ 120','MADRID','MADRID','28038','1186',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001310','LAURA LANA GARCIA','50866610V',NULL,NULL,'MADRID',NULL,'1310');
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001311','ARIADANA SOFTWARE SL','B96470190','PASAJE VENTURA FELIU 13','VALENCIA','VALENCIA','46007','1311',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001312','CLAUDIA ALONSO GOMEZ','05458958T','RAMON Y CAJAL 31','CERCEDILLA','MADRID','28470','1312',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001313','ANTONIO VALENZUELA LINARES','80026616W','CAnADA REAL DE MERINAS, 187','MADRID','MADRID','28052','1313',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001314','CRISTIAN RUSIN','X4914686T','HERNAN CORTES, 2 - 4A','COSLADA','MADRID','28821','1314',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001315','REPARACIONES ALBEDA, S.L.','B87746673','SAN BERNARDO, 20 - 1','MADRID','MADRID','28015','1315',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001316','HRISTO TOMOV HINKOV','X4141448E','OSLO, 10','LOECHES','MADRID','28890','1316',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001317','MANUEL SILVA DA SILVA','02237103P','ZULOAGA, 67','VALDEMORO','MADRID','28342','1317',1);
+INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001318','PROWALL PROYECTOS Y MANTENIMIENTOS, S.L.U.','B86931896','CORUnA, 1','LEGANES','MADRID','28914','1318',1);
 
 INSERT IGNORE INTO ariconta11.cuentas 
 (codmacta,nommacta,apudirec,model347,razosoci,dirdatos,codposta,despobla,desprovi,nifdatos,maidatos,iban,forpa) 
