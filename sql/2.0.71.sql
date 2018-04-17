@@ -184,20 +184,16 @@ INSERT INTO borrar_proveedores(proveedorId,cuentaContable,nombre,nif,direccion,p
 
 /*ACTUALIZA PROVEEDORES DESDE TABLA BORRAR_PROVEEDORES*/
 
-update proveedores, `borrar_proveedores` set 
+UPDATE proveedores, `borrar_proveedores` SET 
   proveedores.nombre= borrar_proveedores.nombre
  ,proveedores.`nif`=borrar_proveedores.`nif`
  ,proveedores.`direccion`=borrar_proveedores.`direccion`
  ,proveedores.`poblacion`= borrar_proveedores.`poblacion`
  ,proveedores.`provincia`= borrar_proveedores.`provincia`
  ,proveedores.`codPostal`= borrar_proveedores.`codPostal`
- ,proveedores.`cuentaContable`= borrar_proveedores.`cuentaContable`
  ,proveedores.`codigo`= borrar_proveedores.`codigo`
-   where proveedores.proveedorId = borrar_proveedores.`proveedorId` and 
-   proveedores.cuentaContable >= '400001182' AND proveedores.cuentaContable <= '400001309';
-
-/*BORRAMOS PROVEEDOR REPETIDO*/
-   DELETE FROM proveedores WHERE nombre = 'CLAUDIA ALONSO GOMEZ';
+   WHERE proveedores.cuentaContable = borrar_proveedores.`cuentaContable` AND proveedores.cuentaContable >= '400001182' AND proveedores.cuentaContable <= '400001309'
+ 
 
 /*CREAMOS DE NUEVO EL INDICE BORRADO*/
    ALTER TABLE `proasistencia`.`proveedores`
@@ -206,7 +202,6 @@ update proveedores, `borrar_proveedores` set
    /*SCRIPT PROVEEDORES NUEVOS Y CREAR CONTAS NUEVAS*/
 
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001183','JORBIT VERTICALES SL','B87787263','GRAN CANAL 8 GALERIA COMERCIAL','ALCALA DE HENARES','MADRID','28804','1183',1);
-INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001186','EURO MOQUETAS S.L.','B82970989','MIGUEL HERNANDEZ 120','MADRID','MADRID','28038','1186',1);
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001310','LAURA LANA GARCIA','50866610V',NULL,NULL,'MADRID',NULL,'1310');
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001311','ARIADANA SOFTWARE SL','B96470190','PASAJE VENTURA FELIU 13','VALENCIA','VALENCIA','46007','1311',1);
 INSERT INTO proveedores(cuentaContable,nombre,nif,direccion,poblacion,provincia,codPostal,codigo,tipoProveedor) VALUES ('400001312','CLAUDIA ALONSO GOMEZ','05458958T','RAMON Y CAJAL 31','CERCEDILLA','MADRID','28470','1312',1);
