@@ -13,6 +13,7 @@ var lineaEnEdicion = false;
 
 var dataFacturasLineas;
 var dataBases;
+var dataCobros;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -107,6 +108,7 @@ function initForm() {
 
     initTablaFacturasLineas();
     initTablaBases();
+    initTablaCobros();
 
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
@@ -117,6 +119,7 @@ function initForm() {
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
+            loadCobrosFactura(data.facturaId);
         })
     } else {
         // caso alta
@@ -569,6 +572,7 @@ function aceptarLinea() {
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
+            loadCobrosFactura(data.facturaId);
         });
     });
 }
@@ -904,6 +908,7 @@ function deleteFacturaLinea(facturaId) {
                 loadData(data);
                 loadLineasFactura(data.facturaId);
                 loadBasesFactura(data.facturaId);
+                loadCobrosFactura(data.facturaId);
             });
         });
     }, function () {
@@ -1007,6 +1012,96 @@ function loadBasesFactura(facturaId) {
         loadTablaBases(data);
     });
 }
+
+/*
+    Funciones relacionadas con la gestión de cobros
+    y cuotas
+*/
+
+function initTablaCobros() {
+    tablaCarro = $('#dt_cobros').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_cobros'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow, aData) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            if ( !aData.seguro )
+            {
+                $('td', nRow).css('background-color', 'Orange');
+            }
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataCobros,
+        columns: [{
+            data: "numorden"
+        }, {
+            data: "fecvenci",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYYY');
+            }
+        }, {
+            data: "fecultco",
+            render: function (data, type, row) {
+                if (!data) return "";
+                return moment(data).format('DD/MM/YYYYY');
+            }
+        }, {
+            data: "impcobro",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "nomforpa",
+        }]
+    });
+}
+
+
+function loadTablaCobros(data) {
+    var dt = $('#dt_cobros').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function loadCobrosFactura(facturaId) {
+    llamadaAjax("GET", "/api/cobros/factura/" + facturaId, null, function (err, data) {
+        if (err) return;
+        loadTablaCobros(data);
+    });
+}
+
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
@@ -1113,6 +1208,7 @@ var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
+            loadCobrosFactura(data.facturaId);
         });
     });
 };
