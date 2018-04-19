@@ -16,6 +16,7 @@ var dataComisionistas;
 var dataGenerarPrefacturas;
 var dataPrefacturas;
 var dataFacturas;
+var dataContratosCobros;
 var ContratoId = 0;
 
 
@@ -155,6 +156,7 @@ function initForm() {
     initTablaPrefacturas();
     initTablaFacturas();
     initTablaFacproves();
+    initTablaContratosCobros();
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -188,6 +190,7 @@ function initForm() {
             loadPrefacturasDelContrato(data.contratoId);
             loadFacturasDelContrato(data.contratoId);
             loadFacproveDelContrato(data.contratoId);
+            loadContratosCobros(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -3073,4 +3076,104 @@ var calcularNumPagos = function () {
     if (divisor != 0) numpagos = parseInt(numMeses / divisor);
     if (numpagos == 0) numpagos = 1; // por lo menos uno
     return numpagos;
+}
+
+/* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
+
+function initTablaContratosCobros() {
+    tablaCarro = $('#dt_contratosCobros').dataTable({
+        sort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contratosCobros'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow, aData) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            if ( !aData.seguro )
+            {
+                $('td', nRow).css('background-color', 'Orange');
+            }
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataContratosCobros,
+        columns: [{
+            data: "numorden"
+        }, {
+            data: "numserie"
+        }, {
+            data: "numfactu"
+        }, {
+            data: "fecfactu",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        }, {
+            data: "fecvenci",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        }, {
+            data: "impvenci",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "fecultco",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        }, {
+            data: "impcobro",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "nomforpa"
+        }]
+    });
+}
+
+
+function loadTablaContratosCobros(data) {
+    var dt = $('#dt_contratosCobros').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadContratosCobros(id) {
+    llamadaAjax('GET', "/api/cobros/contrato/" + id, null, function (err, data) {
+        if (err) return;
+        loadTablaContratosCobros(data);
+    });
 }
