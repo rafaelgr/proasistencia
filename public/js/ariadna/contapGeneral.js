@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
-var facturaId;
+var facproveId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -54,7 +54,7 @@ function initForm() {
 
     initTablaFacturas();
     // comprobamos parámetros
-    facturaId = gup('FacturaId');
+    facproveId = gup('FacturaId');
 }
 
 // tratamiento knockout
@@ -103,7 +103,7 @@ function initTablaFacturas() {
         },
         data: dataFacturas,
         columns: [{
-            data: "facturaId",
+            data: "facproveId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -134,7 +134,7 @@ function initTablaFacturas() {
         }, {
             data: "observaciones"
         }, {
-            data: "facturaId",
+            data: "facproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -186,33 +186,35 @@ function loadTablaFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
+        var field = "#chk" + v.facproveId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                factura: {
-                    facturaId: v.facturaId,
+                facprove: {
+                    facproveId: v.facproveId,
                     empresaId: v.empresaId,
-                    clienteId: v.clienteId,
+                    proveedorId: v.proveedorId,
                     fecha: moment(v.fecha).format('YYYY-MM-DD'),
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.factura.sel = 1;
+                data.facprove.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facturaId);
+            var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
+            var data2 = [];
+            data2.push(data);
             $.ajax({
                 type: type,
                 url: url,
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(data2),
                 success: function (data, status) {
 
                 },
@@ -229,7 +231,7 @@ function buscarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturasProveedores/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -290,7 +292,7 @@ function deleteFactura(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facturaId: id
+                facproveId: id
             };
             $.ajax({
                 type: "DELETE",
@@ -317,7 +319,7 @@ function deleteFactura(id) {
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
     window.open(url, '_new');
 }
 
@@ -325,12 +327,12 @@ function cargarFacturas() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: facproveId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + facturaId,
+                url: myconfig.apiUrl + "/api/facturasProveedores/" + facproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
