@@ -298,7 +298,10 @@
                                     <a href="FacturaProveedorGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas Proveedores</a>
                                 </li>
                                 <li>
-                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
+                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de clientes</a>
+                                </li>
+                                <li>
+                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de proveedores</a>
                                 </li>
                                 <li>
                                     <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
@@ -462,7 +465,12 @@
                                                         <select style="width:100%" id="cmbDefect" name="cmbDefect" data-bind="options: posiblesDefect, optionsText: 'nombre', optionsValue: 'articuloId', value: sdefectId, valueAllowUnset: true, selectedOptions: elegidosDefect, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
-                                        
+                                                <section class="col col-md-4">
+                                                    <label class="label">Cuenta retencion facturas proveedores</label>
+                                                    <label class="input">
+                                                        <input id="txtCuentaRetencion" name="txtCuentaRetencion" data-bind="value: cuentaretencion" />
+                                                    </label>
+                                                </section>                              
                                             </div>
                                         </fieldset>
                                         <fieldset>

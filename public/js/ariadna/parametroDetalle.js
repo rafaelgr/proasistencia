@@ -116,6 +116,8 @@ function admData() {
     //
     self.posiblesDefect = ko.observableArray([]);
     self.elegidosDefect = ko.observableArray([]);
+    //
+    self.cuentaretencion = ko.observable();
 }
 
 function loadData(data) {
@@ -125,6 +127,8 @@ function loadData(data) {
 
     loadArtMan(data.articuloMantenimiento);
     loadArtManGas(data.articuloMantenimientoParaGastos);
+
+    vm.cuentaretencion(data.cuentaretencion);
 }
 
 function datosOK() {
@@ -163,7 +167,8 @@ function aceptar() {
                 "parametroId": 0,
                 "articuloMantenimiento": vm.sartManId(),
                 "margenMantenimiento": vm.margenMantenimiento(),
-                "articuloMantenimientoParaGastos": vm.sdefectId()
+                "articuloMantenimientoParaGastos": vm.sdefectId(),
+                "cuentaretencion": vm.cuentaretencion()
             }
         };
 

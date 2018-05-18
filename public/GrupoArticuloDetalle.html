@@ -298,7 +298,10 @@
                                     <a href="FacturaProveedorGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas Proveedores</a>
                                 </li>
                                 <li>
-                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar</a>
+                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de clientes</a>
+                                </li>
+                                <li>
+                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de proveedores</a>
                                 </li>
                                 <li>
                                     <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
@@ -437,10 +440,22 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Cuenta de ventas</label>
+                                                    <label class="input">
+                                                        <input id="txtCuentaVentas" name="txtCuentaVentas" data-bind="value: cuentaventas" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Cuenta de compras</label>
+                                                    <label class="input">
+                                                        <input id="txtCuentaCompras" name="txtCuentaCompras" data-bind="value: cuentacompras" />
                                                     </label>
                                                 </section>
                                             </div>
