@@ -420,6 +420,8 @@ function loadData(data) {
     vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
+    vm.contratoCerrado(data.contratoCerrado);
+    vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
     vm.direccion(data.direccion);
@@ -555,7 +557,9 @@ var guardarContrato = function (done) {
             "codPostal": vm.codPostal(),
             "poblacion": vm.poblacion(),
             "provincia": vm.provincia(),
-            "porcentajeRetencion": vm.porcentajeRetencion()
+            "porcentajeRetencion": vm.porcentajeRetencion(),
+            "contratoCerrado": vm.contratoCerrado(),
+            "liquidarBasePrefactura": vm.liquidarBase()
         }
     };
     if (contratoId == 0) {
