@@ -261,6 +261,8 @@ function admData() {
     self.fechaSiguientesFacturas = ko.observable();
     self.fechaOriginal = ko.observable();
     self.facturaParcial = ko.observable();
+    self.liquidarBase = ko.observable();
+    self.contratoCerrado = ko.observable();
     self.preaviso = ko.observable();
     //
     self.formaPagoId = ko.observable();
