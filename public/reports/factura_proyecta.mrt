@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "29c2f513f7bd4a1d8cb6e020bdad4f60",
+  "ReportGuid": "a20825af7ae2416589d3537838016f91",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1528371196013+0200)/",
+  "ReportChanged": "/Date(1528449689254+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -919,7 +919,7 @@
               "Name": "Text26",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "6.6,2.8,2.8,0.6",
+              "ClientRectangle": "7,2.8,2.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -979,7 +979,7 @@
               "Guid": "7c1c994bc345f2e0930c017b5ffe8e64",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5,2.8,1.6,0.6",
+              "ClientRectangle": "5.4,2.8,1.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
