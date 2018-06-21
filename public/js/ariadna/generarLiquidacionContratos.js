@@ -142,8 +142,6 @@ function initTablaFacturas() {
         }, {
             data:  "referencia"
         }, {
-            data: "nombreEmpresa"
-        },  {
             data: "tipoProyectoNombre"
         }, {
             data: "fechaInicio",
@@ -151,11 +149,11 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "nombreEmpresa"
+        }, {
+            data: "nombreCliente"
+        },  {
             data: "total"
-        }, {
-            data: "totalConIva"
-        }, {
-            data: "formaPago"
         }, {
             data: "observaciones"
         }, {
