@@ -239,6 +239,7 @@ function admData() {
     self.importeRetencion = ko.observable();
     //
     self.mantenedorDesactivado = ko.observable();
+    self.devuelta = ko.observable();
     // 
     self.enviadaCorreo = ko.observable();
 }
@@ -283,6 +284,7 @@ function loadData(data) {
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
+    vm.devuelta(data.devuelta);
     //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
@@ -407,6 +409,7 @@ var generarFacturaDb = function () {
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
+            "devuelta": vm.devuelta(),
             "enviadaCorreo": vm.enviadaCorreo()
         }
     };
