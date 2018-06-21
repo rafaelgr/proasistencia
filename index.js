@@ -62,6 +62,7 @@ var correoElectronico = require('./lib/correoElectronico/correoElectronico.contr
 var plantillas_correo = require('./lib/plantillas_correo/plantillas_correo_controller');
 var upload = require('./lib/upload/upload');
 var cobros = require('./lib/cobros/cobros_controller');
+var bi_router = require('./lib/bi/bi_controller');
 
 
 
@@ -105,6 +106,7 @@ router.get('/', function(req, res) {
 });
 
 // -- registering routes
+app.use('/bi', bi_router);
 app.use('/api', router);
 app.use('/api/informes', informes_router);
 app.use('/api/usuarios', usuarios_router);
