@@ -517,7 +517,7 @@ function loadEmpresas(id) {
 function loadComerciales(id) {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/solo/beneficio",
+        url: "/api/comerciales/colaboradores/activos",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
