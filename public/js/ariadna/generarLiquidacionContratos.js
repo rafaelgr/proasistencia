@@ -335,7 +335,7 @@ function generaLiquidaciones2() {
     if (vm.sempresaId()) empresaId = vm.sempresaId();
     var comercialId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
-    var url = myconfig.apiUrl + "/api/liquidaciones/Contratos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+    var url = myconfig.apiUrl + "/api/liquidaciones/contratos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
     url += "/" + tipoContratoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
