@@ -1,6 +1,6 @@
-﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+/*-------------------------------------------------------------------------- 
+contratoGeneral.js
+Funciones js par la página ContratoGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,8 +8,8 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facturaId;
+var dataContratos;
+var contratoId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -43,7 +43,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $('#btnBuscar').click(buscarFacturas());
+    $('#btnBuscar').click(buscarContratos());
     $('#btnAlta').click(generarLiquidaciones());
     $('#frmBuscar').submit(function () {
         return false
@@ -61,9 +61,9 @@ function initForm() {
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
-    initTablaFacturas();
+    initTablaContratos();
     // comprobamos parámetros
-    facturaId = gup('FacturaId');
+    contratoId = gup('contratoId');
 }
 
 // tratamiento knockout
@@ -92,14 +92,14 @@ function admData() {
     self.elegidosComerciales = ko.observableArray([]);
 }
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaContratos() {
+    tablaCarro = $('#dt_contrato').dataTable({
         autoWidth: true,
         paging: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contrato'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -128,9 +128,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataContratos,
         columns: [{
-            data: "facturaId",
+            data: "contratoId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -140,31 +140,27 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
-            data: "emisorNombre"
+            data:  "referencia"
         }, {
-            data: "receptorNombre"
+            data: "tipoProyectoNombre"
         }, {
-            data: "dirTrabajo"
-        }, {
-            data: "vNum"
-        }, {
-            data: "fecha",
+            data: "fechaInicio",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "nombreEmpresa"
+        }, {
+            data: "nombreCliente"
+        },  {
             data: "total"
-        }, {
-            data: "totalConIva"
-        }, {
-            data: "formaPago"
         }, {
             data: "observaciones"
         }, {
-            data: "facturaId",
+            data: "contratoId",
             render: function (data, type, row) {
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success btn-lg' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
@@ -203,8 +199,8 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaContratos(data) {
+    var dt = $('#dt_contrato').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -212,28 +208,28 @@ function loadTablaFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
+        var field = "#chk" + v.contratoId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                factura: {
-                    facturaId: v.facturaId,
+                contrato: {
+                    contratoId: v.contratoId,
                     empresaId: v.empresaId,
                     clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    fechaInicio: moment(v.fechaInicio).format('YYYY-MM-DD'),
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.factura.sel = 1;
+                data.contrato.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+            var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, v.contratoId);
             $.ajax({
                 type: type,
                 url: url,
@@ -250,7 +246,7 @@ function loadTablaFacturas(data) {
     });
 }
 
-function buscarFacturas() {
+function buscarContratos() {
     var mf = function () {
         if (!datosOK()) return;
         var tipoContratoId = 0;
@@ -259,7 +255,7 @@ function buscarFacturas() {
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
-        var url = myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/contratos/contratos/beneficio/comercial/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         url += "/" + tipoContratoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
@@ -269,7 +265,7 @@ function buscarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacturas(data);
+                loadTablaContratos(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
             },
@@ -293,7 +289,7 @@ function generarLiquidaciones() {
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
-        var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/liquidaciones/checkContratos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
         url += "/" + tipoContratoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
@@ -305,7 +301,7 @@ function generarLiquidaciones() {
             contentType: "application/json",
             success: function (data) {
                 if (data.length > 0) {
-                    var mens = "Ya hay liquidaciones generadas de estas facturas. ¿Desea borrarlas y generarlas de nuevo?";
+                    var mens = "Ya hay liquidaciones generadas de estas Contratos. ¿Desea borrarlas y generarlas de nuevo?";
                     $.SmartMessageBox({
                         title: "<i class='fa fa-info'></i> Mensaje",
                         content: mens,
@@ -339,7 +335,7 @@ function generaLiquidaciones2() {
     if (vm.sempresaId()) empresaId = vm.sempresaId();
     var comercialId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
-    var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+    var url = myconfig.apiUrl + "/api/liquidaciones/Contratos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
     url += "/" + tipoContratoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
@@ -354,7 +350,7 @@ function generaLiquidaciones2() {
             mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
             vm.desdeFecha(null);
             vm.hastaFecha(null);
-            loadTablaFacturas(null);
+            loadTablaContratos(null);
             loadComerciales(0);
         },
         error: function (err) {
@@ -364,7 +360,7 @@ function generaLiquidaciones2() {
     });
 }
 
-function deleteFactura(id) {
+function deleteContrato(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -374,16 +370,16 @@ function deleteFactura(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facturaId: id
+                contratoId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
+                url: myconfig.apiUrl + "/api/Contratos/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacturas();
+                    var fn = buscarContratos();
                     fn();
                 },
                 error: function (err) {
@@ -398,28 +394,28 @@ function deleteFactura(id) {
     });
 }
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de factura
+function editContrato(id) {
+    // hay que abrir la página de detalle del contrato
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    var url = "ContratoDetalle.html?ContratoId=" + id;
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
+function cargarContratos() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: contratoId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                url: myconfig.apiUrl + "/api/Contratos/" + contratoId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaContratos(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -429,12 +425,12 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas",
+                url: myconfig.apiUrl + "/api/Contratos",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaContratos(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -446,10 +442,10 @@ function cargarFacturas() {
     return mf;
 }
 
-function printFactura(id) {
+function printContrato(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/Contratos/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -521,7 +517,7 @@ function loadEmpresas(id) {
 function loadComerciales(id) {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/agentes",
+        url: "/api/comerciales/colaboradores/activos",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
