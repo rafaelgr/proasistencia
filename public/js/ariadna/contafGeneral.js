@@ -266,7 +266,7 @@ function contabilizarFacturas() {
             success: function (data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('El fichero ' + data + ' para contabilización ya está preparado');
+                mensNormal('Las facturas han sido pasadas a contabilidad');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
