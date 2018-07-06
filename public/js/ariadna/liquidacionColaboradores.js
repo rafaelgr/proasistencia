@@ -48,11 +48,11 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    $("#cmbTiposComerciales").select2(select2Spanish());
-    $("#cmbDirecciones").select2(select2Spanish());
+    $("#cmbComerciales").select2(select2Spanish());
+    $("#cmbContratos").select2(select2Spanish());
 
-    loadTiposComerciales();
-    loadDirecciones();    
+    loadComerciales();
+    loadContratos();    
 
     initTablaLiquidaciones();
     // comprobamos parámetros
@@ -63,20 +63,20 @@ function initForm() {
 
 function admData() {
     var self = this;
-    self.desdeFecha = ko.observable();
-    self.hastaFecha = ko.observable();
-    //
-    self.tipoComercialId = ko.observable();
-    self.stipoComercialId = ko.observable();
-    //
-    self.posiblesTiposComerciales = ko.observableArray([]);
-    self.elegidosTiposComerciales = ko.observableArray([]);
+
+     //
+     self.comercialId = ko.observable();
+     self.scomercialId = ko.observable();
+     //
+     self.posiblesComerciales = ko.observableArray([]);
+     self.elegidosComerciales = ko.observableArray([]);
+    
     //
     self.contratoId = ko.observable();
-    self.sContratoId = ko.observable();
+    self.scontratoId = ko.observable();
     //
-    self.posiblesDirecciones = ko.observableArray([]);
-    self.elegidasDirecciones = ko.observableArray([]);
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
 }
 
 function initTablaLiquidaciones() {
@@ -137,7 +137,7 @@ function initTablaLiquidaciones() {
     });
 }
 
-function datosOK() {
+/*function datosOK() {
     // Segun se incorporen criterios de filtrado
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
@@ -166,7 +166,7 @@ function datosOK() {
         }
     });
     return $('#frmBuscar').valid();
-}
+}*/
 
 function loadTablaLiquidaciones(data) {
     var dt = $('#dt_liquidacion').dataTable();
@@ -180,14 +180,13 @@ function loadTablaLiquidaciones(data) {
 
 function buscarLiquidacionesAcumuladas() {
     var mf = function () {
-        if (!datosOK()) return;
-        var tipoComercialId = 0;
+        var comercialId = 0;
         var contratoId = 0;
-        if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
-        if (vm.sContratoId()) contratoId = vm.sContratoId();
+        if (vm.scomercialId()) comercialId = vm.scomercialId();
+        if (vm.scontratoId()) contratoId = vm.scontratoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId,
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/comerciales/"  + comercialId + "/" + contratoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -211,13 +210,16 @@ function buscarLiquidacionesAcumuladas() {
 function editLiquidacion(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "LiquidacionDetalle.html?comercialId=" + id + "&dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha());
+    
+    var url = "LiquidacionComercialDetalle.html?comercialId=" + id + "&contratoId=" + vm.scontratoId();
     window.open(url, '_new');
 }
 
 
 function printLiquidacion(id) {
-    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id;
+    var contratoId = vm.scontratoId();
+    if (contratoId == "undefined") contratoId = 0
+    var url = "infLiquidacionesColaboradorDetalle.html?comercialId=" + id + "&contratoId=" + vm.scontratoId();
     window.open(url, '_new');
 }
 
@@ -254,28 +256,28 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 var printGeneral = function () {
-    if (!datosOK()) return;
-    var tipoComercialId = 0;
+    
+    var comercialId = 0;
     var contratoId = 0;
-    if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
-    if (vm.sContratoId()) contratoId = vm.sContratoId();
-    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId;
+    if (vm.scomercialId()) comercialId = vm.scomercialId();
+    if (vm.scontratoId()) contratoId = vm.scontratoId();
+    var url = "infLiquidacionesColaboradorGeneral.html"
     window.open(url, '_new');
 }
 
-function loadTiposComerciales(id) {
+function loadComerciales(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_comerciales",
+        url: "/api/comerciales/colaboradores/activos",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposComerciales = [{ tipoComercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposComerciales(tiposComerciales);
+            var tiposComerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(tiposComerciales);
             //if (id){
-            //    vm.stipoComercialId(id);
+            //    vm.scomercialId(id);
             //}
-            $("#cmbTiposComerciales").val([id]).trigger('change');
+            $("#cmbComerciales").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -284,19 +286,19 @@ function loadTiposComerciales(id) {
     });
 }
 
-function loadDirecciones(id) {
+function loadContratos(id) {
     $.ajax({
         type: "GET",
-        url: "/api/contratos/buscar/direcciones",
+        url: "/api/contratos/contratos/beneficio/comercial/cerrados",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var direcciones = [{ contratoId: 0, direccion: "" }].concat(data);
-            vm.posiblesDirecciones(direcciones);
+            var contratos = [{ contratoId: 0, direccion: "" }].concat(data);
+            vm.posiblesContratos(contratos);
             //if (id){
-            //    vm.sContratoId(id);
+            //    vm.scontratoId(id);
             //}
-            $("#cmbDirecciones").val([id]).trigger('change');
+            $("#cmbContratos").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);

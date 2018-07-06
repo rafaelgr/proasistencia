@@ -440,33 +440,21 @@
                                             Seleccione las fechas entre las que quiere consultar liquidación acumulada por colaborador
                                         </header>
                                         <fieldset>
+
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Desde fecha</label>
-                                                    <label class="input">
-                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Hasta fecha</label>
-                                                    <label class="input">
-                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Dirección</label>
+                                                    <label class="label">Contratos</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbDirecciones" name="cmbDirecciones" data-bind="options: posiblesDirecciones, optionsText: 'direccion', optionsValue: 'contratoId', value: sContratoId, valueAllowUnset: true, selectedOptions: elegidasDirecciones, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Tipo actividad</label>
+                                                    <label class="label">Comercial</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
                                                     </label>
-                                                </section>                                                
+                                                </section>   
+                                                                                           
                                             </div>
                                         </fieldset>
                                         <fieldset>
@@ -602,7 +590,7 @@
         <script src="..."></script>-->
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/liquidacionGeneral.js"></script>
+    <script src="js/ariadna/liquidacionColaboradores.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
