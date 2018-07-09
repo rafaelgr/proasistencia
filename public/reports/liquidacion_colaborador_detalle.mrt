@@ -69,7 +69,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
           <Components isList="true" count="1">
             <Text3 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.6,0.2,13.8,1</ClientRectangle>
+              <ClientRectangle>7.4,0.2,20,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,20,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -77,7 +77,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <Name>Text3</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>Informe de liquidaciones (Detalle)</Text>
+              <Text>Informe de liquidaciones colaboradores (Detalle)</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -90,12 +90,12 @@ WHERE lf.facturaId IS NULL</SqlCommand>
         </PageHeaderBand1>
         <GroupHeaderBand1 Ref="7" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,3.6,27.7,3.2</ClientRectangle>
+          <ClientRectangle>0,3.6,27.7,2.8</ClientRectangle>
           <Components isList="true" count="16">
             <Headerliqdet_CA Ref="8" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.4,1.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -112,7 +112,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_PC Ref="9" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7,1.8,1.2,0.8</ClientRectangle>
+              <ClientRectangle>8.6,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -129,7 +129,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_PCA Ref="10" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.4,1.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>10,1.6,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -146,7 +146,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_PCO Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,1.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>12,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -163,7 +163,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_ICO Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,1.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>13.6,1.6,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -180,7 +180,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_IJO Ref="13" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.8,1.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>15.4,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -197,7 +197,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_IOT Ref="14" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17,1.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18.6,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -214,7 +214,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_IAT Ref="15" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.4,1.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>17,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -231,7 +231,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_IC Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>18.6,1.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>20.2,1.6,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -248,7 +248,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_base_ Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>20.6,1.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>22.2,1.6,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -265,7 +265,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_comision Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.6,1.8,2,0.8</ClientRectangle>
+              <ClientRectangle>25.2,1.6,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -282,7 +282,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_contrato Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,1.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>1.2,1.6,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -298,7 +298,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_impCliente Ref="20" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,1.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>4.8,1.6,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -306,7 +306,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <Name>Headerliqdet_impCliente</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
-              <Text>Imp. Cont.</Text>
+              <Text>Facturado</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -315,7 +315,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Headerliqdet_porComer Ref="21" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,1.8,0.8,0.8</ClientRectangle>
+              <ClientRectangle>24.2,1.6,0.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -332,7 +332,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Text4 Ref="22" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>1.6,0.2,9.2,0.8</ClientRectangle>
+              <ClientRectangle>1.2,0.2,9.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>107476a31ca749ad813fd227c84c1831</Guid>
@@ -349,7 +349,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Text5 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11,0.2,6.2,0.8</ClientRectangle>
+              <ClientRectangle>10.6,0.2,6.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>22e7fe16f6d243878cd023b90149233a</Guid>
@@ -373,12 +373,12 @@ WHERE lf.facturaId IS NULL</SqlCommand>
         <Dataliqdet Ref="24" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,7.6,27.7,1.4</ClientRectangle>
+          <ClientRectangle>0,7.2,27.7,1.4</ClientRectangle>
           <Components isList="true" count="14">
             <Dataliqdet_impCliente Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>4.8,0.2,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -401,7 +401,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_CA Ref="27" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.6,0.2,1.2,0.8</ClientRectangle>
+              <ClientRectangle>7.2,0.2,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -424,7 +424,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_PC Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>7,0.2,1.2,0.8</ClientRectangle>
+              <ClientRectangle>8.6,0.2,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -440,7 +440,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_PCA Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>8.4,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>10,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -456,7 +456,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_PCO Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>10.4,0.2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>12,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -472,7 +472,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_ICO Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>12,0.2,1.6,0.8</ClientRectangle>
+              <ClientRectangle>13.6,0.2,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -495,7 +495,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_IJO Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>13.8,0.2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>15.4,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -518,7 +518,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_IOT Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>17,0.2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18.6,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -541,7 +541,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_IAT Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.4,0.2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>17,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -564,7 +564,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_IC Ref="40" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>18.6,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>20.2,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -587,7 +587,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_base_ Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>20.6,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>22.2,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -611,7 +611,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_comision Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>23.6,0.2,2,0.8</ClientRectangle>
+              <ClientRectangle>25.2,0.2,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -634,7 +634,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_contrato Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>1.6,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>1.2,0.2,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
@@ -649,7 +649,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Dataliqdet_porComer Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>22.6,0.2,0.8,0.8</ClientRectangle>
+              <ClientRectangle>24.2,0.2,0.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -677,11 +677,11 @@ WHERE lf.facturaId IS NULL</SqlCommand>
         </Dataliqdet>
         <GroupFooterBand1 Ref="48" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,9.8,27.7,0.8</ClientRectangle>
+          <ClientRectangle>0,9.4,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
             <Text1 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,7.8,0.6</ClientRectangle>
+              <ClientRectangle>17.2,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -697,7 +697,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <Text2 Ref="50" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.6,0,2,0.6</ClientRectangle>
+              <ClientRectangle>25.2,0,2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <HorAlignment>Right</HorAlignment>
@@ -752,14 +752,14 @@ WHERE lf.facturaId IS NULL</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/9/2018 8:29:49 AM</ReportChanged>
+  <ReportChanged>7/9/2018 10:39:43 AM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_colaborador_detalle.mrt</ReportFile>
-  <ReportGuid>32921a691e3e4882a818b251fe5c8a68</ReportGuid>
+  <ReportFile>C:\PROYECTOS\proasistencia\public\reports\liquidacion_colaborador_detalle.mrt</ReportFile>
+  <ReportGuid>f600ba9c31a34e57b4bbafce4b02fb31</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.2.3.0</ReportVersion>
+  <ReportVersion>2017.1.10.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;
