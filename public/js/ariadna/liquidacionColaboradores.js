@@ -261,7 +261,7 @@ var printGeneral = function () {
     var contratoId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
     if (vm.scontratoId()) contratoId = vm.scontratoId();
-    var url = "infLiquidacionesColaboradorGeneral.html"
+    var url = "infLiquidacionesColaboradorGeneral.html?comercialId=" + comercialId + "&contratoId=" + contratoId;
     window.open(url, '_new');
 }
 

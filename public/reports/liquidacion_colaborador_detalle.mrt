@@ -44,7 +44,6 @@
         <Parameters isList="true" count="0" />
         <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, lf.base AS base2, ccm.referencia AS contrato 
 FROM liquidacion_comercial AS lf 
-LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
 LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
 LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId 
 LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId 
@@ -63,7 +62,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
     <Page1 Ref="4" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="5">
+      <Components isList="true" count="4">
         <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,27.7,2.4</ClientRectangle>
@@ -91,16 +90,254 @@ WHERE lf.facturaId IS NULL</SqlCommand>
         </PageHeaderBand1>
         <GroupHeaderBand1 Ref="7" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,3.6,27.7,1.4</ClientRectangle>
-          <Components isList="true" count="2">
-            <Dataliqdet_nombre Ref="8" type="Text" isKey="true">
+          <ClientRectangle>0,3.6,27.7,3.2</ClientRectangle>
+          <Components isList="true" count="16">
+            <Headerliqdet_CA Ref="8" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.4,1.8,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_CA</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Agente</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_CA>
+            <Headerliqdet_PC Ref="9" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7,1.8,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_PC</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>% Ventas</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_PC>
+            <Headerliqdet_PCA Ref="10" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8.4,1.8,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_PCA</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>% Comercial</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_PCA>
+            <Headerliqdet_PCO Ref="11" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>10.4,1.8,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_PCO</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>% Costes</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_PCO>
+            <Headerliqdet_ICO Ref="12" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12,1.8,1.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_ICO</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Costes</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_ICO>
+            <Headerliqdet_IJO Ref="13" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>13.8,1.8,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_IJO</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Jefe Obras</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_IJO>
+            <Headerliqdet_IOT Ref="14" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17,1.8,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_IOT</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Asesor Técnico</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_IOT>
+            <Headerliqdet_IAT Ref="15" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.4,1.8,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_IAT</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Oficina Técnica</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_IAT>
+            <Headerliqdet_IC Ref="16" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>18.6,1.8,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_IC</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Comercial</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_IC>
+            <Headerliqdet_base_ Ref="17" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>20.6,1.8,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_base_</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Base Calculo</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_base_>
+            <Headerliqdet_comision Ref="18" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>23.6,1.8,2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_comision</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Comisión</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_comision>
+            <Headerliqdet_contrato Ref="19" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.6,1.8,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_contrato</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Contrato</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_contrato>
+            <Headerliqdet_impCliente Ref="20" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,1.8,1.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_impCliente</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>Imp. Cont.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_impCliente>
+            <Headerliqdet_porComer Ref="21" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>22.6,1.8,0.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_porComer</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>%</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_porComer>
+            <Text4 Ref="22" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0.2,9.2,0.8</ClientRectangle>
+              <ClientRectangle>1.6,0.2,9.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
+              <Guid>107476a31ca749ad813fd227c84c1831</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_nombre</Name>
+              <Name>Text4</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
               <Text>COLABORADOR: {liqdet.nombre}</Text>
@@ -108,15 +345,16 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_nombre>
-            <Dataliqdet_tipo Ref="9" type="Text" isKey="true">
+            </Text4>
+            <Text5 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>9.4,0.2,6.2,0.8</ClientRectangle>
+              <ClientRectangle>11,0.2,6.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10</Font>
+              <Guid>22e7fe16f6d243878cd023b90149233a</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_tipo</Name>
+              <Name>Text5</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
               <Text>TIPO: {liqdet.tipo}</Text>
@@ -124,7 +362,7 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_tipo>
+            </Text5>
           </Components>
           <Condition>{liqdet.nombre}</Condition>
           <Conditions isList="true" count="0" />
@@ -132,286 +370,46 @@ WHERE lf.facturaId IS NULL</SqlCommand>
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupHeaderBand1>
-        <Headerliqdet Ref="10" type="HeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,5.8,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="15">
-            <Headerliqdet_CA Ref="11" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>7.6,0,1.2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_CA</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Agente</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_CA>
-            <Headerliqdet_PC Ref="12" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>9,0,1.2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PC</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Ventas</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PC>
-            <Headerliqdet_PCA Ref="13" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCA</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Comercial</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCA>
-            <Headerliqdet_PCO Ref="14" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Costes</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCO>
-            <Headerliqdet_ICO Ref="15" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_ICO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Costes</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_ICO>
-            <Headerliqdet_IJO Ref="16" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IJO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Jefe Obras</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IJO>
-            <Headerliqdet_IOT Ref="17" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>19,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IOT</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Asesor Técnico</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IOT>
-            <Headerliqdet_IAT Ref="18" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>17.4,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IAT</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Oficina Técnica</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IAT>
-            <Headerliqdet_IC Ref="19" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>20.6,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IC</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Comercial</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IC>
-            <Headerliqdet_base_ Ref="20" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_base_</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Base Calculo</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_base_>
-            <Headerliqdet_comision Ref="21" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_comision</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Comisión</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_comision>
-            <Headerliqdet_fechaFactura Ref="22" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_fechaFactura</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Fecha</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_fechaFactura>
-            <Headerliqdet_contrato Ref="23" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_contrato</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Contrato</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_contrato>
-            <Headerliqdet_impCliente Ref="24" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_impCliente</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Imp. Fact.</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_impCliente>
-            <Headerliqdet_porComer Ref="25" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>24.6,0,0.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_porComer</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>%</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_porComer>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Name>Headerliqdet</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </Headerliqdet>
-        <Dataliqdet Ref="26" type="DataBand" isKey="true">
+        <Dataliqdet Ref="24" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,7.4,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="15">
-            <Dataliqdet_impCliente Ref="27" type="Text" isKey="true">
+          <ClientRectangle>0,7.6,27.7,1.4</ClientRectangle>
+          <Components isList="true" count="14">
+            <Dataliqdet_impCliente Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_impCliente</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
+              <Parent isRef="24" />
               <Text>{liqdet.impCliente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="26" type="CurrencyFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </Dataliqdet_impCliente>
+            <Dataliqdet_CA Ref="27" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>5.6,0.2,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Dataliqdet_CA</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{liqdet.CA}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="28" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -422,21 +420,69 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_impCliente>
-            <Dataliqdet_CA Ref="29" type="Text" isKey="true">
+            </Dataliqdet_CA>
+            <Dataliqdet_PC Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>7.6,0,1.2,0.8</ClientRectangle>
+              <ClientRectangle>7,0.2,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_CA</Name>
+              <Name>Dataliqdet_PC</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.CA}</Text>
+              <Parent isRef="24" />
+              <Text>{liqdet.PC}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </Dataliqdet_PC>
+            <Dataliqdet_PCA Ref="30" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>8.4,0.2,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Dataliqdet_PCA</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{liqdet.PCA}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </Dataliqdet_PCA>
+            <Dataliqdet_PCO Ref="31" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>10.4,0.2,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Dataliqdet_PCO</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{liqdet.PCO}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </Dataliqdet_PCO>
+            <Dataliqdet_ICO Ref="32" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>12,0.2,1.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Dataliqdet_ICO</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{liqdet.ICO}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -445,67 +491,19 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_CA>
-            <Dataliqdet_PC Ref="31" type="Text" isKey="true">
+            </Dataliqdet_ICO>
+            <Dataliqdet_IJO Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>9,0,1.2,0.8</ClientRectangle>
+              <ClientRectangle>13.8,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PC</Name>
+              <Name>Dataliqdet_IJO</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.PC}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PC>
-            <Dataliqdet_PCA Ref="32" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>10.4,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PCA</Name>
-              <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.PCA}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PCA>
-            <Dataliqdet_PCO Ref="33" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>12.4,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PCO</Name>
-              <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.PCO}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PCO>
-            <Dataliqdet_ICO Ref="34" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>14,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_ICO</Name>
-              <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.ICO}</Text>
+              <Parent isRef="24" />
+              <Text>{liqdet.IJO}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="35" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -516,19 +514,19 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_ICO>
-            <Dataliqdet_IJO Ref="36" type="Text" isKey="true">
+            </Dataliqdet_IJO>
+            <Dataliqdet_IOT Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.8,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>17,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IJO</Name>
+              <Name>Dataliqdet_IOT</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.IJO}</Text>
+              <Parent isRef="24" />
+              <Text>{liqdet.IOT}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="37" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -539,19 +537,19 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IJO>
-            <Dataliqdet_IOT Ref="38" type="Text" isKey="true">
+            </Dataliqdet_IOT>
+            <Dataliqdet_IAT Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>19,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>15.4,0.2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IOT</Name>
+              <Name>Dataliqdet_IAT</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.IOT}</Text>
+              <Parent isRef="24" />
+              <Text>{liqdet.IAT}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="39" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -562,19 +560,19 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IOT>
-            <Dataliqdet_IAT Ref="40" type="Text" isKey="true">
+            </Dataliqdet_IAT>
+            <Dataliqdet_IC Ref="40" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>17.4,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18.6,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IAT</Name>
+              <Name>Dataliqdet_IC</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.IAT}</Text>
+              <Parent isRef="24" />
+              <Text>{liqdet.IC}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -585,44 +583,21 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IAT>
-            <Dataliqdet_IC Ref="42" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>20.6,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IC</Name>
-              <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.IC}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IC>
-            <Dataliqdet_base_ Ref="44" type="Text" isKey="true">
+            <Dataliqdet_base_ Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>22.6,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>20.6,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_base_</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
+              <Parent isRef="24" />
               <Text>{liqdet.base2}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -633,20 +608,20 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_base_>
-            <Dataliqdet_comision Ref="46" type="Text" isKey="true">
+            <Dataliqdet_comision Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>25.6,0,2,0.8</ClientRectangle>
+              <ClientRectangle>23.6,0.2,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_comision</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
+              <Parent isRef="24" />
               <Text>{liqdet.comision}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -656,48 +631,32 @@ WHERE lf.facturaId IS NULL</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_comision>
-            <Dataliqdet_fechaFactura Ref="48" type="Text" isKey="true">
+            <Dataliqdet_contrato Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_fechaFactura</Name>
-              <Page isRef="4" />
-              <Parent isRef="26" />
-              <Text>{liqdet.fechaFactura}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="DateFormat" isKey="true" />
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_fechaFactura>
-            <Dataliqdet_contrato Ref="50" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>1.6,0.2,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_contrato</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
+              <Parent isRef="24" />
               <Text>{liqdet.contrato}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_contrato>
-            <Dataliqdet_porComer Ref="51" type="Text" isKey="true">
+            <Dataliqdet_porComer Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>24.6,0,0.8,0.8</ClientRectangle>
+              <ClientRectangle>22.6,0.2,0.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_porComer</Name>
               <Page isRef="4" />
-              <Parent isRef="26" />
+              <Parent isRef="24" />
               <Text>{liqdet.porComer}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -716,39 +675,39 @@ WHERE lf.facturaId IS NULL</SqlCommand>
             <value>fechaFactura</value>
           </Sort>
         </Dataliqdet>
-        <GroupFooterBand1 Ref="52" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand1 Ref="48" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,9,27.7,0.8</ClientRectangle>
+          <ClientRectangle>0,9.8,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text1 Ref="53" type="Text" isKey="true">
+            <Text1 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
+              <ClientRectangle>15.6,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="4" />
-              <Parent isRef="52" />
+              <Parent isRef="48" />
               <Text>TOTAL COMISIONES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="54" type="Text" isKey="true">
+            <Text2 Ref="50" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25.6,0,2,0.6</ClientRectangle>
+              <ClientRectangle>23.6,0,2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="4" />
-              <Parent isRef="52" />
+              <Parent isRef="48" />
               <Text>{Sum(GroupHeaderBand1,liqdet.comision)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="51" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -774,13 +733,13 @@ WHERE lf.facturaId IS NULL</SqlCommand>
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="56" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="52" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="57" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="53" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -793,10 +752,10 @@ WHERE lf.facturaId IS NULL</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/6/2018 11:36:08 AM</ReportChanged>
+  <ReportChanged>7/9/2018 8:29:49 AM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_colaborador_detalle.mrt</ReportFile>
-  <ReportGuid>11f3d475987c48ad94ab1d8e1878ddc1</ReportGuid>
+  <ReportGuid>32921a691e3e4882a818b251fe5c8a68</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

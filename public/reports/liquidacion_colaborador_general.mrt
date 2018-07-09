@@ -345,10 +345,10 @@ GROUP BY lf.comercialId</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/6/2018 12:35:38 PM</ReportChanged>
+  <ReportChanged>7/6/2018 12:40:13 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_colaborador_general.mrt</ReportFile>
-  <ReportGuid>c0cb2139aa9d4992a3e112585940245d</ReportGuid>
+  <ReportGuid>03ee63f15ddc4a04842a3e682aea6c76</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

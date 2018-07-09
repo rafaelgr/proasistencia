@@ -96,13 +96,7 @@ function initTablaliquidaciones() {
             }
         },
         data: dataFacturas,
-        columns: [{
-            data: "fechaFactura",
-            render: function (data, type, row) {
-                var html = moment(data).format('DD/MM/YYYY');
-                return html;
-            }
-        }, {
+        columns: [ {
             data: "contrato"
         }, {
             data: "impCliente"
@@ -146,10 +140,12 @@ function loadTablaLiquidaciones(data) {
 }
 
 function buscarLiquidacionesDetalladas() {
+    var contratoId = vm.contratoId();
+    if(contratoId = "undefined") contratoId = 0
     var mf = function () {
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/detalle/liquidacion/comercial/" + vm.comercialId() + "/" + vm.contratoId(),
+            url: myconfig.apiUrl + "/api/liquidaciones/detalle/liquidacion/comercial/" + vm.comercialId() + "/" + contratoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -230,6 +226,9 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 var printGeneral = function () {
-    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + vm.comercialId();
+    var comercialId = vm.comercialId();
+    var contratoId = vm.contratoId();
+    if(contratoId == "undefined") contratoId = 0;
+    var url = "infLiquidacionesColaboradorDetalle.html?comercialId=" + comercialId + "&contratoId=" + contratoId;    
     window.open(url, '_new');
 }
