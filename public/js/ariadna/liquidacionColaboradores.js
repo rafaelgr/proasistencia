@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var registros = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -190,6 +191,7 @@ function buscarLiquidacionesAcumuladas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                registros = data.length;
                 loadTablaLiquidaciones(data);
                 // mostramos el botén de alta
             },
@@ -256,7 +258,7 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 var printGeneral = function () {
-    
+    if(registros == 0) return
     var comercialId = 0;
     var contratoId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
