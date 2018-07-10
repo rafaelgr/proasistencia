@@ -137,11 +137,16 @@ function initTablaContratos() {
         }, {
             data: "tipo"
         }, {
-            data: "fechaContrato",
+            data: "fechaInicio",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "fechaFinal",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
             data: "empresa"
         }, {
             data: "cliente"
