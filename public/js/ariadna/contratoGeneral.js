@@ -45,6 +45,27 @@ function initForm() {
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
+            data.forEach(function(d) {
+                d.plazo = sumarDias(d.fechaFinal, d.preaviso);
+                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                console.log(d.plazo);
+            }, this);
+            loadTablaContratos(data);
+        });
+    });
+
+    $('#chkPreaviso').change(function () {
+        var url = myconfig.apiUrl + "/api/contratos/activos";
+        if (this.checked) {
+            url =  myconfig.apiUrl + "/api/contratos";
+        } 
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            data.forEach(function(d) {
+                d.plazo = sumarDias(d.fechaFinal, d.preaviso);
+                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                console.log(d.plazo);
+            }, this);
             loadTablaContratos(data);
         });
     })
@@ -52,6 +73,14 @@ function initForm() {
 
 function initTablaContratos() {
     tablaContratos = $('#dt_contrato').DataTable({
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            var fechaActual = new Date();
+            fechaActual = moment(fechaActual).format('YYYY-MM-DD');
+            if(fechaActual >= aData.plazo) {
+                $(nRow).attr('style', 'background: #FFA96C'); 
+            }
+        },
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -281,6 +310,11 @@ function cargarContratos() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
+                   
+                        data.plazo = sumarDias(data.fechaFinal, data.preaviso);
+                        data.plazo = moment(data.plazo).format('YYYY-MM-DD');
+                        
+                   
                     loadTablaContratos(data);
                 },
                 error: function (err) {
@@ -296,6 +330,12 @@ function cargarContratos() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
+                    data.forEach(function(d) {
+                        d.plazo = sumarDias(d.fechaFinal, d.preaviso);
+                        d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                        
+                    }, this);
+                    
                     loadTablaContratos(data);
                 },
                 error: function (err) {
@@ -307,6 +347,17 @@ function cargarContratos() {
     };
     return mf;
 }
+
+function sumarDias(fecha, dias){
+
+    var registro = new Date(fecha);
+    registro.setDate(registro.getDate() - dias);
+    return registro;
+
+    /*
+    var reg = registro.getDate() + dias;
+    return fecha;*/
+  }
 
 function printContrato(id) {
     $.ajax({
