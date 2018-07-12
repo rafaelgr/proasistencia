@@ -56,7 +56,6 @@ function initForm() {
                 }
                 d.plazo = restarDias(d.fechaFinal, d.preaviso);
                 d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-                console.log(d.plazo);
             }, this);
             loadTablaContratos(data);
         });
@@ -79,7 +78,6 @@ function initForm() {
                 }
                 d.plazo = restarDias(d.fechaFinal, d.preaviso);
                 d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-                console.log(d.plazo);
             }, this);
             loadTablaContratos(data);
         });
@@ -330,8 +328,6 @@ function cargarContratos() {
                     }
                         data.plazo = restarDias(data.fechaFinal, data.preaviso);
                         data.plazo = moment(data.plazo).format('YYYY-MM-DD');
-                        
-                   
                     loadTablaContratos(data);
                 },
                 error: function (err) {
@@ -353,7 +349,6 @@ function cargarContratos() {
                         }
                         d.plazo = restarDias(d.fechaFinal, d.preaviso);
                         d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-                        
                     }, this);
                     
                     loadTablaContratos(data);
@@ -373,10 +368,6 @@ function restarDias(fecha, dias){
     var registro = new Date(fecha);
     registro.setDate(registro.getDate() - dias);
     return registro;
-
-    /*
-    var reg = registro.getDate() + dias;
-    return fecha;*/
   }
 
 function printContrato(id) {
