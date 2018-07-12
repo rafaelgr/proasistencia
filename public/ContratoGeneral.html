@@ -444,10 +444,16 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkCerrados" type="checkbox" name="chkCerrados">
                                                         <i></i>Ver también contratos cerrados
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="checkbox">
+                                                        <input id="chkPreaviso" type="checkbox" name="chkPreaviso">
+                                                        <i></i>Ver solo contratos en preaviso.
                                                     </label>
                                                 </section>
                                             </div>
@@ -497,6 +503,9 @@
                                                     <th class="hasinput">
                                                         <input type="text" class="form-control" placeholder="" />
                                                     </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
                                                     <th style="width:10%">
                                                     </th>
                                                 </tr>
@@ -511,7 +520,10 @@
                                                         Tipo
                                                     </th>
                                                     <th data-hide="phone">
-                                                        Fecha
+                                                        Fecha inicio
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Fecha fin
                                                     </th>
                                                     <th data-hide="phone">
                                                         Empresa

@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataContratos;
 var contratoId;
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -39,12 +40,45 @@ function initForm() {
     }
 
     $('#chkCerrados').change(function () {
+        if($('#chkPreaviso').is(':checked')) {
+            $('#chkPreaviso').prop("checked", false);
+        }
         var url = myconfig.apiUrl + "/api/contratos/activos";
+        checkCerrados =  this;
         if (this.checked) {
             url =  myconfig.apiUrl + "/api/contratos";
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
+            data.forEach(function(d) {
+                if(d.preaviso == null) {
+                    d.preaviso = 0;
+                }
+                d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+            }, this);
+            loadTablaContratos(data);
+        });
+    });
+
+    $('#chkPreaviso').change(function () {
+        
+        if($('#chkCerrados').is(':checked')) {
+            $('#chkCerrados').prop("checked", false);
+        }
+        var url = myconfig.apiUrl + "/api/contratos/activos";
+        if (this.checked) {
+            url =  myconfig.apiUrl + "/api/contratos/contratos/clientes/checkbox/preaviso/todos";
+        } 
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            data.forEach(function(d) {
+                if(d.preaviso == null) {
+                    d.preaviso = 0;
+                }
+                d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+            }, this);
             loadTablaContratos(data);
         });
     })
@@ -52,6 +86,14 @@ function initForm() {
 
 function initTablaContratos() {
     tablaContratos = $('#dt_contrato').DataTable({
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            var fechaActual = new Date();
+            fechaActual = moment(fechaActual).format('YYYY-MM-DD');
+            if(fechaActual >= aData.plazo) {
+                $(nRow).attr('style', 'background: #FFA96C'); 
+            }
+        },
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -137,11 +179,16 @@ function initTablaContratos() {
         }, {
             data: "tipo"
         }, {
-            data: "fechaContrato",
+            data: "fechaInicio",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "fechaFinal",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
             data: "empresa"
         }, {
             data: "cliente"
@@ -276,6 +323,11 @@ function cargarContratos() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
+                    if(data.preaviso == null) {
+                        data.preaviso = 0;
+                    }
+                        data.plazo = restarDias(data.fechaFinal, data.preaviso);
+                        data.plazo = moment(data.plazo).format('YYYY-MM-DD');
                     loadTablaContratos(data);
                 },
                 error: function (err) {
@@ -291,6 +343,14 @@ function cargarContratos() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
+                    data.forEach(function(d) {
+                        if(d.preaviso == null) {
+                            d.preaviso = 0;
+                        }
+                        d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                        d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                    }, this);
+                    
                     loadTablaContratos(data);
                 },
                 error: function (err) {
@@ -302,6 +362,13 @@ function cargarContratos() {
     };
     return mf;
 }
+
+function restarDias(fecha, dias){
+
+    var registro = new Date(fecha);
+    registro.setDate(registro.getDate() - dias);
+    return registro;
+  }
 
 function printContrato(id) {
     $.ajax({

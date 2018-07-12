@@ -252,15 +252,35 @@ function deleteFactura(id) {
         buttons: '[Cancelar][Descontabilizar factura][Borrar factura]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Borrar factura") {
-            var data = { facturaId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
-                if (err) return;
-                llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/" + id, data, function (err) {
-                    if (err) return;
-                    mostrarMensajeFacturaBorrada();
-                    buscarFacturas()();
-                });
+            mens = "<ul>"
+            mens += "<li><strong>¡¡ Atención !! Se borrá tambien la liquidación asociada a la factura</strong></li>";
+            mens += "<li>¿Desea continuar?</li>";
+            mens += "</ul>"
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Cancelar][Borrar]'
+            },function (ButtonPressed2) {
+                if (ButtonPressed2 === "Borrar") {
+                    var data = { facturaId: id };
+                    
+                    llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
+                        if (err) return;
+                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
+                            if (err) return;
+                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/" + id, data, function (err) {
+                                if (err) return;
+                                mostrarMensajeFacturaBorrada();
+                                buscarFacturas()();
+                            });
+                        });
+                    });
+                }
+                if (ButtonPressed2 === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
+                }
             });
+            
         }
         if (ButtonPressed === "Descontabilizar factura") {
             var data = { facturaId: id };
