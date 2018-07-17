@@ -140,7 +140,7 @@ function initTablaFacturas() {
             data: "facturaId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
-                if (row.contafich) {
+                if (row.contafich || row.contabilizada) {
                     html = "<i class='fa fa-file'></i>";
                 }
                 return html;
