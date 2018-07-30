@@ -28,7 +28,6 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 node_modules
-public/ficheros/facturas
-public/ficheros/contabilidad
+public/ficheros
 
 
