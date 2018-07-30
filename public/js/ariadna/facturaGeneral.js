@@ -286,6 +286,7 @@ function deleteFactura(id) {
             var data = { facturaId: id };
             llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err) {
                 if (err) return;
+                $('#chkTodos').prop('checked',false);
                 mostrarMensajeFacturaDescontabilizada();
                 buscarFacturas()();
             });
