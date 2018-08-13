@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "d3af687b45f045f8a292f9b064284e97",
+  "ReportGuid": "cb9c9515f1a04ae8a48e4de47d3765be",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1532949248404+0200)/",
+  "ReportChanged": "/Date(1534151028202+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -868,7 +868,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.receptorDireccion}"
+                "Value": "{cabecera.postalTipoVia} {cabecera.postalDireccion}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -887,7 +887,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}"
+                "Value": "({cabecera.postalCodPostal}) {cabecera.postalPoblacion}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -906,7 +906,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.receptorProvincia}"
+                "Value": "{cabecera.postalProvincia}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",

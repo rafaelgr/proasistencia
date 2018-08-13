@@ -5,7 +5,7 @@
         "secure": true,
         "auth": {
             "user": "vicent@myariadna.com",
-            "pass": "**********"
+            "pass": "pitu123@"
         }
     },
     "fakeEmail": "vicent@myariadna.com"
