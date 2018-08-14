@@ -4,8 +4,13 @@
         "port": 465,
         "secure": true,
         "auth": {
+<<<<<<< HEAD
             "user": "correoparaenviofacturas@gmail.com",
             "pass": "patrici@2017"
+=======
+            "user": "vicent@myariadna.com",
+            "pass": "********"
+>>>>>>> 9ff5fdf1083de9219a6aec92edc792a31833f577
         }
     },
     "fakeEmail": ""

@@ -32876,3 +32876,3470 @@ Error: Connection lost: The server closed the connection.
  VERSION: 2.0.81
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/06/02018 09:15:56
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/06/02018 18:36:51
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/06/02018 00:17:21
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/06/02018 17:15:11
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  15/06/02018 05:00:49
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  15/06/02018 18:39:41
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  18/06/02018 01:29:40
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  19/06/02018 02:39:58
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  19/06/02018 17:05:27
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/06/02018 02:39:29
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/06/02018 17:39:44
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/06/02018 02:49:52
+-------------------------------------------
+ VERSION: 2.0.82
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/06/02018 16:43:36
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/06/02018 17:37:05
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/06/02018 01:37:21
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/06/02018 17:53:42
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  23/06/02018 02:29:58
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/06/02018 18:24:41
+-------------------------------------------
+ VERSION: 2.1.0
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/06/02018 12:37:38
+-------------------------------------------
+ VERSION: 2.1.1
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/06/02018 20:38:10
+-------------------------------------------
+ VERSION: 2.1.1
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/06/02018 10:02:57
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/06/02018 20:27:16
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/06/02018 17:20:22
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/06/02018 01:40:06
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/06/02018 18:09:34
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/06/02018 04:09:21
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/06/02018 16:19:14
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/07/02018 04:13:48
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/07/02018 16:17:51
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/07/02018 01:46:30
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/07/02018 16:17:15
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/07/02018 04:10:23
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/07/02018 16:19:54
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/07/02018 03:07:08
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/07/02018 16:16:40
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/07/02018 04:07:50
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/07/02018 16:13:51
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/07/02018 00:49:18
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/07/02018 16:14:19
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/07/02018 04:10:03
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/07/02018 16:13:22
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/07/02018 04:13:46
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/07/02018 16:20:38
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/07/02018 04:14:45
+-------------------------------------------
+ VERSION: 2.1.2
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/07/02018 10:47:14
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/07/02018 18:47:31
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/07/02018 04:09:26
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/07/02018 16:12:00
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/07/02018 02:26:17
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/07/02018 16:11:46
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/07/02018 00:24:48
+-------------------------------------------
+ VERSION: 2.1.3
+ PORT: 8080
+-------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/07/02018 11:08:58
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/07/02018 19:09:11
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/07/02018 03:24:16
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/07/02018 16:16:40
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/07/02018 04:15:25
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/07/02018 16:15:24
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  15/07/02018 04:11:57
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  15/07/02018 16:13:27
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/07/02018 01:29:28
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  16/07/02018 16:16:44
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  17/07/02018 00:29:53
+-------------------------------------------
+ VERSION: 2.1.4
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+-------------------------------------------
+ PROASISTENCIA RUNNING  17/07/02018 11:47:04
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  17/07/02018 19:47:26
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  18/07/02018 04:16:18
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:137:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:121:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+-------------------------------------------
+ PROASISTENCIA RUNNING  18/07/02018 13:59:36
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: grupoArticulosDb.putArticulo is not a function
+    at C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_controller.js:74:34
+    at Query._callback (C:\Ariadna\proasistencia\lib\grupos-articulos\grupo_articulo_db_mysql.js:114:9)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:137:8)
+    at Query.EofPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:121:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+-------------------------------------------
+ PROASISTENCIA RUNNING  18/07/02018 13:59:39
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  19/07/02018 00:16:57
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  19/07/02018 16:11:56
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/07/02018 04:16:13
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  20/07/02018 16:11:58
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/07/02018 04:12:15
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/07/02018 16:17:04
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/07/02018 01:52:35
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  22/07/02018 16:15:15
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  23/07/02018 02:10:48
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+-------------------------------------------
+ PROASISTENCIA RUNNING  23/07/02018 16:16:22
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  24/07/02018 00:20:07
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  24/07/02018 16:12:45
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 00:25:53
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 16:14:59
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at Object.module.exports.getConnection (C:\Ariadna\proasistencia\lib\comun\comun.js:21:16)
+    at Object.actualizarComoContabilizadaCli (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:690:25)
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:787:41
+    at nextTask (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:5070:14)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:5064:13
+    at apply (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:21:25)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:56:12
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:03:09
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:03:14
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:03:18
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:03:30
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:05:21
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:07:02
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:07:34
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:08:10
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:08:14
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:20:44
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:21:18
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:22:45
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: Callback was already called.
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:837:32
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:747:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:584:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:862:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:579:26)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:88:8)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+-------------------------------------------
+ PROASISTENCIA RUNNING  25/07/02018 18:34:25
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/07/02018 02:36:36
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  26/07/02018 16:12:25
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/07/02018 00:46:15
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  27/07/02018 16:16:57
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/07/02018 04:12:47
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  28/07/02018 16:11:50
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/07/02018 04:15:24
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  29/07/02018 16:13:08
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/07/02018 04:11:26
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  30/07/02018 16:16:27
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  31/07/02018 04:10:51
+-------------------------------------------
+ VERSION: 2.1.5
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+-------------------------------------------
+ PROASISTENCIA RUNNING  31/07/02018 13:43:09
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+Error: request entity too large
+    at readStream (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:196:17)
+    at getRawBody (C:\Ariadna\proasistencia\node_modules\body-parser\node_modules\raw-body\index.js:106:12)
+    at read (C:\Ariadna\proasistencia\node_modules\body-parser\lib\read.js:76:3)
+    at jsonParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\json.js:121:5)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:312:13)
+    at C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:280:7
+    at Function.process_params (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:330:12)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\index.js:271:10)
+    at urlencodedParser (C:\Ariadna\proasistencia\node_modules\body-parser\lib\types\urlencoded.js:95:37)
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/08/02018 01:39:04
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  01/08/02018 16:13:48
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02018 04:10:49
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  02/08/02018 16:20:27
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/08/02018 00:48:12
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  03/08/02018 16:16:30
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/08/02018 04:11:14
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  04/08/02018 16:17:58
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/08/02018 04:14:05
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  05/08/02018 16:16:30
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/08/02018 04:14:07
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/08/02018 16:11:29
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    at TCP.onread (net.js:547:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at Object.module.exports.getConnection (C:\Ariadna\proasistencia\lib\comun\comun.js:21:16)
+    at Object.module.exports.getContratoBases (C:\Ariadna\proasistencia\lib\contratos\contratos_db_mysql.js:950:25)
+    at C:\Ariadna\proasistencia\lib\contratos\contratos_controller.js:337:17
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (C:\Ariadna\proasistencia\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Ariadna\proasistencia\node_modules\express\lib\router\layer.js:95:5)
+-------------------------------------------
+ PROASISTENCIA RUNNING  06/08/02018 21:39:31
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/08/02018 05:41:08
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/08/02018 16:17:57
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_CON_COUNT_ERROR: Too many connections
+    at Handshake.Sequence._packetToError (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:52:14)
+    at Handshake.ErrorPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Handshake.js:103:18)
+    at Protocol._parsePacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:280:23)
+    at Parser.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:75:12)
+    at Protocol.write (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    at TCP.onread (net.js:547:20)
+    --------------------
+    at Protocol._enqueue (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:141:48)
+    at Protocol.handshake (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:52:41)
+    at Connection.connect (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:130:18)
+    at getConnection (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:21:16)
+    at buscarComisionBase (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:404:16)
+    at base (C:\Ariadna\proasistencia\lib\comerciales\comerciales_db_mysql.js:386:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:3686:9
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:882:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:886:9
+    at eachOfLimit (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:913:22)
+-------------------------------------------
+ PROASISTENCIA RUNNING  07/08/02018 19:20:40
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/08/02018 03:21:56
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  08/08/02018 16:17:13
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/08/02018 01:08:54
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+POST : {}
+POST : {}
+POST : {}
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  09/08/02018 16:13:52
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02018 00:20:57
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  10/08/02018 16:16:45
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/08/02018 04:11:13
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  11/08/02018 16:16:55
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02018 04:11:54
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  12/08/02018 16:14:21
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/08/02018 04:11:51
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  13/08/02018 16:16:28
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  14/08/02018 02:40:52
+-------------------------------------------
+ VERSION: 2.1.6
+ PORT: 8080
+-------------------------------------------
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
