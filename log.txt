@@ -36343,3 +36343,108 @@ SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JS
     at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
     at Module._compile (module.js:570:32)
     at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+module.js:590
+    throw err;
+    ^
+
+SyntaxError: C:\Ariadna\proasistencia\configEmail.json: Unexpected token < in JSON at position 125
+    at Object.parse (native)
+    at Object.Module._extensions..json (module.js:587:27)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (C:\Ariadna\proasistencia\lib\correoElectronico\correoElectronico.js:2:11)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
