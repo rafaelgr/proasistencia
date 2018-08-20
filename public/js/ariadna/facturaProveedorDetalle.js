@@ -1671,7 +1671,7 @@ function loadServiciadasFacprove(facproveId) {
         }
         setTimeout(function() {
             tot = parseFloat(numeroDbf(vm.total()));
-            vm.importeServiciada((tot-acumulado).toFixed(2));
+            vm.importeServiciada(roundToTwo(tot-acumulado).toFixed(2));
             loadTablaServiciadas(data);
         }, 1000);
     });
@@ -1718,6 +1718,7 @@ function nuevaServiciada() {
         for(var i = 0; i < data.length; i++){
             acumulado += parseFloat(data[i].importe);
         }
+        acumulado = roundToTwo(acumulado);
         if(vm.facproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
             tot = parseFloat(numeroDbf(vm.total()));
