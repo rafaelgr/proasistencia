@@ -96,11 +96,11 @@ function initTablaContratos() {
                 $(nRow).attr('style', 'background: #FFA96C'); 
             }
             //contratos cerrados
-            else if(aData.contratoCerrado == 1) {
+            if(aData.contratoCerrado == 1) {
                 $(nRow).attr('style', 'background: #FBB0B9'); 
             }
             //contratos vencidos
-            else if(fechaFinal <= fechaActual) {
+            if(fechaFinal <= fechaActual && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #99DACF'); 
             }
         },
