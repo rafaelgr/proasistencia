@@ -90,8 +90,18 @@ function initTablaContratos() {
         function (nRow, aData, iDataIndex) {
             var fechaActual = new Date();
             fechaActual = moment(fechaActual).format('YYYY-MM-DD');
-            if(fechaActual >= aData.plazo) {
+            var fechaFinal = moment(aData.fechaFinal).format('YYYY-MM-DD');
+            //contratos en preaviso
+            if(fechaActual >= aData.plazo && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #FFA96C'); 
+            }
+            //contratos cerrados
+            else if(aData.contratoCerrado == 1) {
+                $(nRow).attr('style', 'background: #FBB0B9'); 
+            }
+            //contratos vencidos
+            else if(fechaFinal <= fechaActual) {
+                $(nRow).attr('style', 'background: #99DACF'); 
             }
         },
         bSort: false,
