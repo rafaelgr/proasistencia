@@ -443,6 +443,9 @@ function datosOK() {
             cmbEmpresas: {
                 required: true
             },
+            cmbTipoProyecto: {
+                required: true,
+            },
             txtFechaContrato: {
                 required: true
             },
@@ -476,6 +479,9 @@ function datosOK() {
             },
             txtFechaContrato: {
                 required: 'Debe elegir una fecha'
+            },
+            cmbTipoProyecto: {
+                required: "Debe elegir un tipo de proyecto"
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
@@ -733,7 +739,7 @@ function cambioTipoContrato(data) {
             nombre: ""
         }].concat(data);
         vm.posiblesTipoProyecto(tipos);
-        $("#cmbTipoProyecto").val([id]).trigger('change');
+        $("#cmbTipoProyecto").val([0]).trigger('change');
     });
 }
 
