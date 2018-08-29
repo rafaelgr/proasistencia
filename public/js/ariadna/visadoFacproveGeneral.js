@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var dataContrato;
 var facproveId;
+var init = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -68,6 +69,7 @@ function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
         paging: false,
+        "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -133,7 +135,7 @@ function initTablaFacturas() {
         }, {
             data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='setTimeout(initTablaContratos(" + data + "), 10000);' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
@@ -143,7 +145,20 @@ function initTablaFacturas() {
     });
 }
 
+function initModal(facproveId) {
+    init++
 
+    $('#modalContrato').on('hidden.bs.modal', function () {
+        $('#modalContrato').off('show.bs.modal');
+    });
+    if(init == 1){
+        $('#modalContrato').on('show.bs.modal', function (e) {
+            initTablaContratos(facproveId);
+        })
+    }else {
+        cargarContratos()(facproveId);
+    }
+}
 
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
@@ -219,10 +234,11 @@ function buscarFacturas() {
 
 
 
-function initTablaContratos(id) {
+function initTablaContratos(facproveId) {
     tablaCarro = $('#dt_contrato').dataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
+        "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -257,7 +273,7 @@ function initTablaContratos(id) {
         },
         data: dataContrato,
         columns: [{
-            data: "referencia",
+            data: "referencia"
         }, {
             data: "empresa"
         }, {
@@ -281,35 +297,26 @@ function initTablaContratos(id) {
         }, {
             data: "INR"
         }, {
-            data: "BT"
-        }, {
             data: "CR"
         }, {
             data: "BR"
         },{
             data: "pBR"
-        }, {
-            data: "contratoId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initTablaContrato(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
-                return html;
-            }
         }]
     });
-    cargarContratos()(id);
+    if(init == 1){
+        cargarContratos()(facproveId);
+    }
 }
 
 function cargarContratos() {
-    var mf = function (id) {
-        if (id) {
+    var mf = function (facproveId) {
+        if (facproveId) {
             var data = null;
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/asociado/facprove/resultado/" + id,
+                url: myconfig.apiUrl + "/api/contratos/asociado/facprove/resultado/" + facproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
