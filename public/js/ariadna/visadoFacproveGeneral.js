@@ -31,8 +31,10 @@ function initForm() {
     getVersionFooter();
     //
     
-    vm = new admData();
+    
     ko.applyBindings(vm);
+
+    $('#btnPrint').click(printGeneral);
    
     $('#frmBuscar').submit(function () {
         return false
@@ -57,13 +59,6 @@ function initForm() {
     facproveId = gup('FacturaId');
 }
 
-// tratamiento knockout
-
-function admData() {
-    var self = this;
-    self.desdeFecha = ko.observable();
-    self.hastaFecha = ko.observable();
-}
 
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
@@ -268,7 +263,12 @@ function initTablaContratos(facproveId) {
         }, {
             data: "empresa"
         }, {
-            data: "estado"
+            data: "estado",
+            render: function (data, type, row) {
+                if(data == 0) data = "Abierto";
+                if (data == 1) data = "Cerrado";
+                return data
+            }
         }, {
             data: "ITC",
             width: "5%",
@@ -384,23 +384,7 @@ function loadTablaContratos(data) {
 }
 
 
-function resultadosContrato(id) {
-    /*$.ajax({
-        type: "DELETE",
-        url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data, status) {
-            var fn = buscarFacturas();
-            fn();
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });*/
-}
+
 
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
@@ -409,46 +393,7 @@ function editFactura(id) {
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: facproveId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + facproveId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
+
 
 function printFactura(id) {
     $.ajax({
@@ -497,3 +442,12 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+var printGeneral = function () {
+    var vis = 0;
+   if($("#chkVisadas").prop( "checked" )) {
+     vis = 1
+   }
+    var url = "InfVisadosGeneral.html?visadas=" + vis;
+    window.open(url, '_new');
+}
