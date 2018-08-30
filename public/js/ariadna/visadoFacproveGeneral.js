@@ -68,7 +68,7 @@ function admData() {
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
-        paging: false,
+        paging: true,
         "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -151,6 +151,7 @@ function initModal(facproveId) {
     $('#modalContrato').on('hidden.bs.modal', function () {
         $('#modalContrato').off('show.bs.modal');
     });
+    
     if(init == 1){
         $('#modalContrato').on('show.bs.modal', function (e) {
             initTablaContratos(facproveId);
@@ -236,21 +237,11 @@ function buscarFacturas() {
 
 function initTablaContratos(facproveId) {
     tablaCarro = $('#dt_contrato').dataTable({
-        autoWidth: false,
-        paging: false,
+        
+        autoWidth: true,
+        paging: true,
+        responsive: true,
         "bDestroy": true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contrato'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -279,29 +270,78 @@ function initTablaContratos(facproveId) {
         }, {
             data: "estado"
         }, {
-            data: "ITC"
+            data: "ITC",
+            width: "5%",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "pAgente"
+            data: "pAgente",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "IA"
+            data: "IA",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "INT"
+            data: "INT",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "CT"
+            data: "CT",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "BT"
+            data: "BT",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "pBT"
+            data: "pBT",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "IF"
+            data: "IF",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "INR"
+            data: "INR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "CR"
+            data: "CR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }, {
-            data: "BR"
+            data: "BR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         },{
-            data: "pBR"
+            data: "pBR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
         }]
     });
     if(init == 1){

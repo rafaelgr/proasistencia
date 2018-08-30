@@ -11,6 +11,7 @@
     <!-- Basic Styles -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/modal-style.css">
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production-plugins.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
@@ -525,8 +526,8 @@
                     <h4 class="modal-title"> Resultados del contrato</h4>
                 </div>
                 <div class="modal-body no-padding">
-                    <div id="tbContrato">
-                        <table id="dt_contrato" class="table table-striped table-bordered table-hover" width="100%">
+                    <div id="tbContrato" class="table-responsive">
+                        <table id="dt_contrato" class="table table-striped table-bordered table-hover responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th data-class="expand">
@@ -539,16 +540,16 @@
                                         Estado
                                     </th>
                                     <th data-hide="phone">
-                                        Imp.Tot.contrato
+                                        Imp.tot.contrato
                                     </th>
                                     <th data-hide="phone">
                                         % Agente
                                     </th>
                                     <th data-hide="phone">
-                                        Imp. Agente
+                                        Imp.<br>Agente
                                     </th>
                                     <th data-hide="phone">
-                                        Imp.Neto teórico
+                                        Imp.<br>Neto<br>teórico
                                     </th>
                                     <th data-hide="phone">
                                         Coste teórico 
@@ -557,7 +558,7 @@
                                         Beneficio Teórico
                                     </th>
                                     <th data-hide="phone">
-                                        % Beneficio teórico 
+                                        % BT 
                                     </th>
                                     <th data-hide="phone">
                                         Importe Facturado 
