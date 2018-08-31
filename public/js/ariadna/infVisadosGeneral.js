@@ -174,28 +174,16 @@ var initAutoCliente = function () {
 };
 
 var rptLiquidacionGeneralParametros = function () {
-   /* var comercialId = vm.scomercialId();
-    var tipoComercialId = vm.tipoComercialId();
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
-    var contratoId = vm.contratoId();
-    sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
-    sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha";
-    sql += " FROM liquidacion_comercial AS lf";
-    sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
-    sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
-    sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
-    sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
-    if (comercialId) {
-        sql += " AND lf.comercialId IN (" + comercialId + ")";
-    }    
-    if (tipoComercialId){
-        sql += " AND lf.comercialId IN (SELECT comercialId from comerciales where tipoComercialId = " + tipoComercialId + ")";
-    }
-    if (contratoId){
-       sql += " AND lf.contratoId = "+contratoId;
-    }
-    sql += " GROUP BY lf.comercialId";
-    return sql;*/
+    sql = "SELECT emp.nombre, f.*, f.numeroFacturaProveedor AS vNum , fp.nombre AS formaPago, cnt.direccion AS dirTrabajo,";
+    sql += " ser.*, ser.contratoId, SUM(ser.importe) AS CR, SUM(f.total) AS IMF, DATE_FORMAT(f.fecha, '%d%/%m/%y') AS fechaR";
+    sql += " FROM facprove AS f";
+    sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
+    sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
+    sql += " LEFT JOIN facprove_serviciados AS ser ON ser.facproveId = f.facproveId";
+    sql += " LEFT JOIN empresas AS emp ON emp.empresaId = ser.empresaId";
+    sql += " WHERE visada = " + visadas;
+    sql += " GROUP BY ser.contratoId";
+    sql += " ORDER BY ser.contratoId, ser.facproveId";
+    return sql;
 }
 
