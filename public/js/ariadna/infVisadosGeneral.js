@@ -174,6 +174,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
     sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
     sql += " WHERE visada = " + visadas;
+    sql += " order by f.fecha DESC";
     return sql;
 }
 

@@ -12,7 +12,7 @@
     <DataSources isList="true" count="2">
       <facproves_visado Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>facproves_visado</Alias>
-        <Columns isList="true" count="45">
+        <Columns isList="true" count="46">
           <value>facproveId,System.Int32</value>
           <value>ano,System.Int32</value>
           <value>numero,System.Int32</value>
@@ -58,16 +58,18 @@
           <value>vNum,System.String</value>
           <value>formaPago,System.String</value>
           <value>dirTrabajo,System.String</value>
+          <value>fec,System.Byte[]</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
         <Name>facproves_visado</Name>
         <NameInSource>MySQL</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT f.*, f.numeroFacturaProveedor AS vNum , fp.nombre AS formaPago, cnt.direccion AS dirTrabajo  
+        <SqlCommand>SELECT f.*, f.numeroFacturaProveedor AS vNum , fp.nombre AS formaPago, cnt.direccion AS dirTrabajo, DATE_FORMAT(f.fecha, '%y-%m-%d') as fec 
 FROM facprove AS f 
 LEFT JOIN formas_pago AS fp ON fp.formaPagoId = f.formaPagoId 
-LEFT JOIN contratos AS cnt ON cnt.contratoId = f.contratoId</SqlCommand>
+LEFT JOIN contratos AS cnt ON cnt.contratoId = f.contratoId 
+</SqlCommand>
       </facproves_visado>
       <contratos_serviciado Ref="4" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>contratos_serviciado</Alias>
@@ -108,7 +110,7 @@ LEFT JOIN contratos AS con ON con.contratoId = ser.contratoId
 LEFT JOIN empresas AS emp ON emp.empresaId = ser.empresaId 
 LEFT JOIN facprove AS fac ON ser.facproveId = fac.facproveId
 GROUP BY ser.facproveId, ser.contratoId 
-ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
+ORDER BY fac.fecha, ser.facproveId, ser.contratoId</SqlCommand>
       </contratos_serviciado>
     </DataSources>
     <Relations isList="true" count="1">
@@ -191,12 +193,12 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
         </PageFooterBand1>
         <GroupHeaderBand1 Ref="11" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,3,27.7,1.4</ClientRectangle>
+          <ClientRectangle>0,3,27.7,1.2</ClientRectangle>
           <Components isList="true" count="8">
             <Headerliqdet_CA Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>8.6,0.2,5.4,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>9.8,0.2,5.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>bfb8d6960f3c49bb95abbfb53bd39b41</Guid>
@@ -211,46 +213,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_CA>
-            <Headerliqdet_PCA Ref="13" type="Text" isKey="true">
+            <Headerliqdet_ICO Ref="13" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14,0.2,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Guid>6d0dfc5e1c404dfeb03afdbc63689d19</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCA</Name>
-              <Page isRef="6" />
-              <Parent isRef="11" />
-              <Text>Numero</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCA>
-            <Headerliqdet_PCO Ref="14" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0.2,2.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Guid>1aacdead681f43a5908bc21b6248f284</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCO</Name>
-              <Page isRef="6" />
-              <Parent isRef="11" />
-              <Text>Fecha</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCO>
-            <Headerliqdet_ICO Ref="15" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>18.2,0.2,2.8,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>15.2,0.2,2.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>5d8c44bc820e44f0885807beced015ee</Guid>
@@ -265,10 +231,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_ICO>
-            <Headerliqdet_IJO Ref="16" type="Text" isKey="true">
+            <Headerliqdet_IJO Ref="14" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>21,0.2,2.6,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>18,0.2,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>9ce93da5c6024e98ac79402ec937c9ff</Guid>
@@ -283,10 +249,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_IJO>
-            <Headerliqdet_IAT Ref="17" type="Text" isKey="true">
+            <Headerliqdet_IAT Ref="15" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>23.6,0.2,2.4,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>20.6,0.2,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>fa772c0c7c9b41bd9c8752c26cf5d75d</Guid>
@@ -301,10 +267,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_IAT>
-            <Headerliqdet_contrato Ref="18" type="Text" isKey="true">
+            <Headerliqdet_contrato Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.6,0.2,2.8,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>23,0.2,2.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>c179a11e14bf45e4851168d37d4ce7a6</Guid>
@@ -319,10 +285,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_contrato>
-            <Headerliqdet_impCliente Ref="19" type="Text" isKey="true">
+            <Headerliqdet_impCliente Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.4,0.2,5.2,0.8</ClientRectangle>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>4.6,0.2,5.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>fb484255d1c840dd826445abfec71843</Guid>
@@ -337,6 +303,42 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_impCliente>
+            <Headerliqdet_PCA Ref="18" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>2.8,0.2,1.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>6d0dfc5e1c404dfeb03afdbc63689d19</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_PCA</Name>
+              <Page isRef="6" />
+              <Parent isRef="11" />
+              <Text>Numero</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_PCA>
+            <Headerliqdet_PCO Ref="19" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>LightGray</Brush>
+              <ClientRectangle>0.4,0.2,2.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>1aacdead681f43a5908bc21b6248f284</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Headerliqdet_PCO</Name>
+              <Page isRef="6" />
+              <Parent isRef="11" />
+              <Text>Fecha</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Headerliqdet_PCO>
           </Components>
           <Condition>{facproves_visado.facproveId}</Condition>
           <Conditions isList="true" count="0" />
@@ -346,13 +348,12 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
         </GroupHeaderBand1>
         <DataFact Ref="20" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,5.2,27.7,2</ClientRectangle>
+          <ClientRectangle>0,5,27.7,2</ClientRectangle>
           <Components isList="true" count="8">
             <Dataliqdet_impCliente Ref="21" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.8,0.2,4.8,0.8</ClientRectangle>
+              <ClientRectangle>4.8,0.2,5,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>1f58d8188be34dae873cdb61ff6c0fe8</Guid>
@@ -377,7 +378,7 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
             <Dataliqdet_PCA Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>14,0.2,1.8,0.8</ClientRectangle>
+              <ClientRectangle>2.6,0.2,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>07744b6b4dfc421f9b99cb185d680edf</Guid>
@@ -395,7 +396,7 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
             <Dataliqdet_PCO Ref="24" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.8,0.2,2.4,0.8</ClientRectangle>
+              <ClientRectangle>0.4,0.2,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>4d95628c9a0d4a67891dd279b823f117</Guid>
@@ -406,14 +407,15 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Parent isRef="20" />
               <Text>{facproves_visado.fecha}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="25" type="DateFormat" isKey="true" />
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_PCO>
-            <Dataliqdet_ICO Ref="25" type="Text" isKey="true">
+            <Dataliqdet_ICO Ref="26" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>18.2,0.2,2.8,0.8</ClientRectangle>
+              <ClientRectangle>15.2,0.2,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>fdfcff5dd8924ef4b80acb478feae079</Guid>
@@ -424,7 +426,7 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Parent isRef="20" />
               <Text>{facproves_visado.total}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="26" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="27" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -435,10 +437,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_ICO>
-            <Dataliqdet_IJO Ref="27" type="Text" isKey="true">
+            <Dataliqdet_IJO Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>21,0.2,2.4,0.8</ClientRectangle>
+              <ClientRectangle>18.2,0.2,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>2ecfec65420649a799b1660cb5651e44</Guid>
@@ -449,7 +451,7 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Parent isRef="20" />
               <Text>{facproves_visado.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="28" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="29" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -460,10 +462,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IJO>
-            <Dataliqdet_IAT Ref="29" type="Text" isKey="true">
+            <Dataliqdet_IAT Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>23.4,0.2,2.6,0.8</ClientRectangle>
+              <ClientRectangle>20.4,0.2,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>28e8717bdeee4d75b1aae867ec538f27</Guid>
@@ -474,7 +476,7 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Parent isRef="20" />
               <Text>{facproves_visado.formaPago}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="31" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -485,10 +487,10 @@ ORDER BY ser.facproveId, ser.contratoId</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IAT>
-            <Dataliqdet_contrato Ref="31" type="Text" isKey="true">
+            <Dataliqdet_contrato Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0.8,0.2,2.6,0.8</ClientRectangle>
+              <ClientRectangle>23,0.2,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>a925f87f30d94fb3b2c84ca17c753161</Guid>
@@ -505,10 +507,10 @@ facproves_visado.visada == 1, "SI")}</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_contrato>
-            <Text30 Ref="32" type="Text" isKey="true">
+            <Text30 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>8.6,0.2,5.4,0.8</ClientRectangle>
+              <ClientRectangle>9.8,0.2,5.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7e70660a25c640cbbb4e492583893986</Guid>
@@ -519,7 +521,7 @@ facproves_visado.visada == 1, "SI")}</Text>
               <Parent isRef="20" />
               <Text>{facproves_visado.receptorNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -540,17 +542,17 @@ facproves_visado.visada == 1, "SI")}</Text>
           <Page isRef="6" />
           <Parent isRef="6" />
           <Sort isList="true" count="2">
-            <value>ASC</value>
-            <value>fechaFactura</value>
+            <value>DESC</value>
+            <value>fecha</value>
           </Sort>
         </DataFact>
-        <Headercon Ref="34" type="HeaderBand" isKey="true">
+        <Headercon Ref="35" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,8,27.7,1.6</ClientRectangle>
+          <ClientRectangle>0,7.8,27.7,1.6</ClientRectangle>
           <Components isList="true" count="13">
-            <Text1 Ref="35" type="Text" isKey="true">
+            <Text1 Ref="36" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>8.8,0.2,2.2,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -559,16 +561,16 @@ facproves_visado.visada == 1, "SI")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Estado</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="36" type="Text" isKey="true">
+            <Text2 Ref="37" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>11,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -577,7 +579,7 @@ facproves_visado.visada == 1, "SI")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Importe
 Total
 contrato</Text>
@@ -586,9 +588,9 @@ contrato</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text2>
-            <Text4 Ref="37" type="Text" isKey="true">
+            <Text4 Ref="38" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>12.8,0.2,1.4,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -597,7 +599,7 @@ contrato</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>% 
 Agente</Text>
               <TextBrush>Black</TextBrush>
@@ -605,9 +607,9 @@ Agente</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text4>
-            <Text5 Ref="38" type="Text" isKey="true">
+            <Text5 Ref="39" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>14.2,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -616,7 +618,7 @@ Agente</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Imp.
 Agente</Text>
               <TextBrush>Black</TextBrush>
@@ -624,9 +626,9 @@ Agente</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text5>
-            <Text6 Ref="39" type="Text" isKey="true">
+            <Text6 Ref="40" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>16,0.2,2,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -635,7 +637,7 @@ Agente</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Imp.
 Neto
 Teorico</Text>
@@ -644,9 +646,9 @@ Teorico</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text6>
-            <Text7 Ref="40" type="Text" isKey="true">
+            <Text7 Ref="41" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>18,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -655,7 +657,7 @@ Teorico</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Beneficio
 Teorico</Text>
               <TextBrush>Black</TextBrush>
@@ -663,9 +665,9 @@ Teorico</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text7>
-            <Text8 Ref="41" type="Text" isKey="true">
+            <Text8 Ref="42" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>19.8,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -674,7 +676,7 @@ Teorico</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Importe
 Facturado</Text>
               <TextBrush>Black</TextBrush>
@@ -682,9 +684,9 @@ Facturado</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text8>
-            <Text9 Ref="42" type="Text" isKey="true">
+            <Text9 Ref="43" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>3.2,0.2,2.6,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -692,16 +694,16 @@ Facturado</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Referencia</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text9>
-            <Text10 Ref="43" type="Text" isKey="true">
+            <Text10 Ref="44" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>5.8,0.2,3,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -710,16 +712,16 @@ Facturado</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Empresa</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text20 Ref="44" type="Text" isKey="true">
+            <Text20 Ref="45" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>21.6,0.2,1.2,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -728,7 +730,7 @@ Facturado</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Imp.
 Neto
 Real</Text>
@@ -737,9 +739,9 @@ Real</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text21 Ref="45" type="Text" isKey="true">
+            <Text21 Ref="46" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>22.8,0.2,1.2,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -748,16 +750,16 @@ Real</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
-              <Text>coste real</Text>
+              <Parent isRef="35" />
+              <Text>Coste Real</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text21>
-            <Text22 Ref="46" type="Text" isKey="true">
+            <Text22 Ref="47" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>24,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -766,16 +768,16 @@ Real</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>Beneficio Real</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
-            <Text23 Ref="47" type="Text" isKey="true">
+            <Text23 Ref="48" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
+              <Brush>WhiteSmoke</Brush>
               <ClientRectangle>25.8,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -784,7 +786,7 @@ Real</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
               <Page isRef="6" />
-              <Parent isRef="34" />
+              <Parent isRef="35" />
               <Text>%
 Beneficio Real</Text>
               <TextBrush>Black</TextBrush>
@@ -798,12 +800,12 @@ Beneficio Real</Text>
           <Page isRef="6" />
           <Parent isRef="6" />
         </Headercon>
-        <Datacon Ref="48" type="DataBand" isKey="true">
+        <Datacon Ref="49" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,10.4,27.7,1.2</ClientRectangle>
+          <ClientRectangle>0,10.2,27.7,1.2</ClientRectangle>
           <Components isList="true" count="13">
-            <Text11 Ref="49" type="Text" isKey="true">
+            <Text11 Ref="50" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>3.2,0.2,2.6,0.6</ClientRectangle>
@@ -812,13 +814,13 @@ Beneficio Real</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.referencia}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text11>
-            <Text12 Ref="50" type="Text" isKey="true">
+            <Text12 Ref="51" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -830,7 +832,7 @@ Beneficio Real</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{Switch(
 contratos_serviciado.estado == 0, "ABIERTO",
 contratos_serviciado.estado == 1, "CERRADO")}</Text>
@@ -839,7 +841,7 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text12>
-            <Text13 Ref="51" type="Text" isKey="true">
+            <Text13 Ref="52" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -851,14 +853,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.ITC}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="53" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text13>
-            <Text14 Ref="52" type="Text" isKey="true">
+            <Text14 Ref="54" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -870,14 +877,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.pAgente}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="55" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text14>
-            <Text15 Ref="53" type="Text" isKey="true">
+            <Text15 Ref="56" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -889,14 +901,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.IA}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="57" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text15>
-            <Text16 Ref="54" type="Text" isKey="true">
+            <Text16 Ref="58" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -908,14 +925,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.ent}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="59" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text16>
-            <Text17 Ref="55" type="Text" isKey="true">
+            <Text17 Ref="60" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -927,14 +949,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.BT}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="61" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text17>
-            <Text18 Ref="56" type="Text" isKey="true">
+            <Text18 Ref="62" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -946,14 +973,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.IMF}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="63" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text18>
-            <Text19 Ref="57" type="Text" isKey="true">
+            <Text19 Ref="64" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -965,14 +997,14 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.empresa}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text19>
-            <Text24 Ref="58" type="Text" isKey="true">
+            <Text24 Ref="65" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -984,14 +1016,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text24</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.INR}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="66" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text24>
-            <Text25 Ref="59" type="Text" isKey="true">
+            <Text25 Ref="67" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -1003,14 +1040,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.CR}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="68" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Text25>
-            <Text26 Ref="60" type="Text" isKey="true">
+            <Text26 Ref="69" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -1022,14 +1064,19 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.BR}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="70" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text26>
-            <Text27 Ref="61" type="Text" isKey="true">
+            <Text27 Ref="71" type="Text" isKey="true">
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -1041,9 +1088,14 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="6" />
-              <Parent isRef="48" />
+              <Parent isRef="49" />
               <Text>{contratos_serviciado.pBR}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="72" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -1068,13 +1120,13 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="62" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="73" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="63" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="74" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -1086,10 +1138,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/3/2018 10:50:51 AM</ReportChanged>
+  <ReportChanged>9/3/2018 12:57:41 PM</ReportChanged>
   <ReportCreated>8/31/2018 9:54:06 AM</ReportCreated>
-  <ReportFile />
-  <ReportGuid>e9e7fdfdac054555af2f1c8ee218ce73</ReportGuid>
+  <ReportFile>C:\proyectos\proasistencia\public\reports\visados.mrt</ReportFile>
+  <ReportGuid>2f07cb1365e0481287c4ae7d33b243a4</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

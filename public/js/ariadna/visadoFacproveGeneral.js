@@ -12,6 +12,7 @@ var dataFacturas;
 var dataContrato;
 var facproveId;
 var init = 0;
+var visadas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -21,7 +22,7 @@ var breakpointDefinition = {
 
 
 datePickerSpanish(); // see comun.js
-
+var url;
 var vm = null;
 
 function initForm() {
@@ -34,11 +35,20 @@ function initForm() {
     
     ko.applyBindings(vm);
 
+    visadas = gup('visadas');
+
+    if(visadas == 1) {
+        $("#chkVisadas").prop( "checked", true );
+      }else {
+        $("#chkVisadas").prop( "checked", false );
+      }
     $('#btnPrint').click(printGeneral);
    
     $('#frmBuscar').submit(function () {
         return false
     });
+
+
 
     $('#chkVisadas').change(function () {
         var visada = 0;
@@ -159,6 +169,7 @@ function loadTablaFacturas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+    
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -193,7 +204,13 @@ function loadTablaFacturas(data) {
                 contentType: "application/json",
                 data: JSON.stringify(data2),
                 success: function (data, status) {
-
+                    if($("#chkVisadas").prop( "checked" )) {
+                        vis = 1;
+                      }else {
+                          vis = 0;
+                      }
+                    var url = "VisadoFacproveGeneral.html?visadas="+ vis;
+                    window.open(url, '_self');
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -205,10 +222,16 @@ function loadTablaFacturas(data) {
 
 function buscarFacturas() {
     var mf = function () {
-        
+        var url;
+        if($("#chkVisadas").prop( "checked" )) {
+            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/" + 1;
+          }
+          else {
+              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/"  + 0;
+          }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/" + 0,
+            url: myconfig.apiUrl + url,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
