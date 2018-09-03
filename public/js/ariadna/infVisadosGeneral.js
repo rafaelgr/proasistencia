@@ -48,13 +48,13 @@ function initForm() {
     
     visadas = gup('visadas');
 
-    obtainJSON();
+    obtainReport();
 }
 
 
 
 var obtainReport = function () {
-    var file = "../reports/liquidacion_general.mrt";
+    var file = "../reports/visados.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     report.loadFile(file);
@@ -72,13 +72,7 @@ var obtainReport = function () {
     viewer.report = report;
 }
 
-var obtainJSON = function() {
-    var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/informe/detalle" + visadas;
-    llamadaAjax("GET", url, null, function(err, data){
-        if (err) return;
-        obtainReport();
-    });
-}
+
 
 var obtainReportPdf = function () {
     var file = "../reports/factura_general.mrt";
@@ -174,16 +168,12 @@ var initAutoCliente = function () {
 };
 
 var rptLiquidacionGeneralParametros = function () {
-    sql = "SELECT emp.nombre, f.*, f.numeroFacturaProveedor AS vNum , fp.nombre AS formaPago, cnt.direccion AS dirTrabajo,";
-    sql += " ser.*, ser.contratoId, SUM(ser.importe) AS CR, SUM(f.total) AS IMF, DATE_FORMAT(f.fecha, '%d%/%m/%y') AS fechaR";
-    sql += " FROM facprove AS f";
+    sql = "SELECT f.*, f.numeroFacturaProveedor AS vNum";
+    sql += " , fp.nombre as formaPago, cnt.direccion as dirTrabajo";
+    sql += "  FROM facprove AS f";
     sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
     sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
-    sql += " LEFT JOIN facprove_serviciados AS ser ON ser.facproveId = f.facproveId";
-    sql += " LEFT JOIN empresas AS emp ON emp.empresaId = ser.empresaId";
     sql += " WHERE visada = " + visadas;
-    sql += " GROUP BY ser.contratoId";
-    sql += " ORDER BY ser.contratoId, ser.facproveId";
     return sql;
 }
 
