@@ -169,12 +169,12 @@ var initAutoCliente = function () {
 
 var rptLiquidacionGeneralParametros = function () {
     sql = "SELECT f.*, f.numeroFacturaProveedor AS vNum";
-    sql += " , fp.nombre as formaPago, cnt.direccion as dirTrabajo";
+    sql += " , fp.nombre as formaPago, cnt.direccion as dirTrabajo, DATE_FORMAT(f.fecha, '%d/%m/%y') AS fechabis";
     sql += "  FROM facprove AS f";
     sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
     sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
     sql += " WHERE visada = " + visadas;
-    sql += " order by f.fecha DESC";
     return sql;
 }
+
 
