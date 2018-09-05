@@ -18,6 +18,7 @@ var dataPrefacturas;
 var dataFacturas;
 var dataContratosCobros;
 var ContratoId = 0;
+var cmd;
 
 
 var breakpointDefinition = {
@@ -171,7 +172,7 @@ function initForm() {
 
     reglasDeValidacionAdicionales();
 
-    var cmd = gup('CMD');
+    cmd = gup('CMD');
     ContratoId = gup('ContratoId');
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
@@ -1842,7 +1843,7 @@ function buscaComisionistas(id) {
                         }
                     }
                 
-                if(!encontrado){
+                if(!encontrado && cmd == "NEW"){
                     var data = {
                         contratoComisionista: {
                             contratoId: vm.contratoId(),

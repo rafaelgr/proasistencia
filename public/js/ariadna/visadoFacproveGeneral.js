@@ -13,6 +13,7 @@ var dataContrato;
 var facproveId;
 var init = 0;
 var visadas;
+var registros;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -59,6 +60,7 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/" + visada;
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
+            registros = data.length;
             loadTablaFacturas(data);
         });
     });
@@ -235,6 +237,7 @@ function buscarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                registros = data.length;
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
@@ -310,7 +313,7 @@ function initTablaContratos(facproveId) {
                 return data
             }
         }, {
-            data: "INT",
+            data: "ent",
             render: function (data, type, row) {
                 data = roundToTwo(data);
                 return data
@@ -334,7 +337,7 @@ function initTablaContratos(facproveId) {
                 return data
             }
         }, {
-            data: "IF",
+            data: "IMF",
             render: function (data, type, row) {
                 data = roundToTwo(data);
                 return data
@@ -465,10 +468,23 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 var printGeneral = function () {
-    var vis = 0;
-   if($("#chkVisadas").prop( "checked" )) {
-     vis = 1
-   }
-    var url = "InfVisadosGeneral.html?visadas=" + vis;
-    window.open(url, '_new');
+    if(registros == 0){
+        var mens = "No hay registros que mostrar";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                // no hacemos nada (no quiere borrar)
+            }
+        });
+    } else {
+        var vis = 0;
+        if($("#chkVisadas").prop( "checked" )) {
+          vis = 1
+        }
+         var url = "InfVisadosGeneral.html?visadas=" + vis;
+         window.open(url, '_new');
+    }
 }
