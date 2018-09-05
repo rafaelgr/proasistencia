@@ -1113,6 +1113,11 @@ function cambioAgente(data) {
                 });
                 loadModal(data)
             } else {
+                vm.direccion3(data.direccion);
+                vm.poblacion3(data.poblacion);
+                vm.codPostal3(data.codPostal);
+                vm.provincia3(data.provincia);
+                loadTiposVia3(data.tipoViaId);
                 realizarCambioAgente(data);
             }
         },

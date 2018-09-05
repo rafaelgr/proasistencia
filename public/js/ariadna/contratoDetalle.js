@@ -18,6 +18,7 @@ var dataPrefacturas;
 var dataFacturas;
 var dataContratosCobros;
 var ContratoId = 0;
+var cmd;
 
 
 var breakpointDefinition = {
@@ -171,7 +172,7 @@ function initForm() {
 
     reglasDeValidacionAdicionales();
 
-    var cmd = gup('CMD');
+    cmd = gup('CMD');
     ContratoId = gup('ContratoId');
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
@@ -183,10 +184,13 @@ function initForm() {
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
             if (err) return;
+            
+
             loadData(data);
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
-            loadComisionistas(data.contratoId);
+            buscaComisionistas(data.contratoId);
+            //loadComisionistas(data.contratoId);
             loadPrefacturasDelContrato(data.contratoId);
             loadFacturasDelContrato(data.contratoId);
             loadFacproveDelContrato(data.contratoId);
@@ -1823,6 +1827,38 @@ function loadComisionistas(id) {
     llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
         loadTablaComisionistas(data);
+    });
+}
+
+function buscaComisionistas(id) {
+    var encontrado = false;
+    llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data1) {
+        if (err) return;
+            llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId(), null, function (err, data2) {
+                if (err) return;
+            
+                    for(var i = 0; i< data1.length; i++){
+                        if(data1[i].comercialId == data2[0].ascComercialId){
+                            encontrado = true;
+                        }
+                    }
+                
+                if(!encontrado && cmd == "NEW"){
+                    var data = {
+                        contratoComisionista: {
+                            contratoId: vm.contratoId(),
+                            comercialId: data2[0].ascComercialId,
+                            porcentajeComision: data2[0].porcomer,
+                        }
+                    }
+                    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista" , data, function (err, data) {
+                        if (err) return;
+                        loadComisionistas(vm.contratoId());
+                    });
+                }else {
+                    loadComisionistas(vm.contratoId());
+                }
+            });
     });
 }
 
