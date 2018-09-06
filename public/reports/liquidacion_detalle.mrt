@@ -13,33 +13,33 @@
       <liqdet Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>liqdet</Alias>
         <Columns isList="true" count="27">
-          <value>base,System.Decimal</value>
-          <value>CA,System.Decimal</value>
-          <value>comercialId,System.Int32</value>
-          <value>comision,System.Decimal</value>
-          <value>contrato,System.String</value>
-          <value>contratoClienteMantenimientoId,System.Int32</value>
-          <value>contratoId,System.Int32</value>
-          <value>coste,System.Decimal</value>
-          <value>dFecha,System.String</value>
-          <value>facNum,System.String</value>
-          <value>facturaId,System.Int32</value>
-          <value>fechaFactura,System.String</value>
-          <value>hFecha,System.String</value>
-          <value>IAT,System.Decimal</value>
-          <value>IC,System.Decimal</value>
-          <value>ICO,System.Decimal</value>
-          <value>IJO,System.Decimal</value>
-          <value>impCliente,System.Decimal</value>
-          <value>IOT,System.Decimal</value>
-          <value>liquidacionComercialId,System.Int32</value>
           <value>nombre,System.String</value>
+          <value>tipo,System.String</value>
+          <value>liquidacionComercialId,System.Int32</value>
+          <value>facturaId,System.Int32</value>
+          <value>comercialId,System.Int32</value>
+          <value>contratoClienteMantenimientoId,System.Int32</value>
+          <value>impCliente,System.Decimal</value>
+          <value>coste,System.Decimal</value>
+          <value>CA,System.Decimal</value>
           <value>PC,System.Decimal</value>
           <value>PCA,System.Decimal</value>
           <value>PCO,System.Decimal</value>
+          <value>ICO,System.Decimal</value>
+          <value>IJO,System.Decimal</value>
+          <value>IOT,System.Decimal</value>
+          <value>IAT,System.Decimal</value>
+          <value>IC,System.Decimal</value>
           <value>porComer,System.Decimal</value>
-          <value>tipo,System.String</value>
+          <value>base,System.Decimal</value>
+          <value>comision,System.Decimal</value>
+          <value>contratoId,System.Int32</value>
+          <value>facNum,System.String</value>
           <value>base2,System.Decimal</value>
+          <value>fechaFactura,System.Byte[]</value>
+          <value>dFecha,System.String</value>
+          <value>hFecha,System.String</value>
+          <value>contrato,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
@@ -47,7 +47,7 @@
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
         <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,
-f.fecha AS fechaFactura,'01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato 
+DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato 
 FROM liquidacion_comercial AS lf 
 LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
 LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
@@ -720,10 +720,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Parent isRef="28" />
               <Text>{liqdet.fechaFactura}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="52" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_fechaFactura>
-            <Dataliqdet_contrato Ref="52" type="Text" isKey="true">
+            <Dataliqdet_contrato Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
@@ -738,7 +741,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_contrato>
-            <Dataliqdet_porComer Ref="53" type="Text" isKey="true">
+            <Dataliqdet_porComer Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>24.6,0,0.8,0.8</ClientRectangle>
@@ -767,11 +770,11 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
             <value>fechaFactura</value>
           </Sort>
         </Dataliqdet>
-        <GroupFooterBand1 Ref="54" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand1 Ref="55" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,9,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text1 Ref="55" type="Text" isKey="true">
+            <Text1 Ref="56" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -780,13 +783,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="4" />
-              <Parent isRef="54" />
+              <Parent isRef="55" />
               <Text>TOTAL COMISIONES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="56" type="Text" isKey="true">
+            <Text2 Ref="57" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.6,0,2,0.6</ClientRectangle>
@@ -796,10 +799,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="4" />
-              <Parent isRef="54" />
+              <Parent isRef="55" />
               <Text>{Sum(GroupHeaderBand1,liqdet.comision)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="57" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -825,13 +828,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="58" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="59" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="59" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="60" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -844,10 +847,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>8/23/2018 9:28:20 AM</ReportChanged>
+  <ReportChanged>9/6/2018 1:13:29 PM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_detalle.mrt</ReportFile>
-  <ReportGuid>8fef02cc9080414f886c4aa86bdf0178</ReportGuid>
+  <ReportGuid>af1100059cbf49a8896c8266115fcf47</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
