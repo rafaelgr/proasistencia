@@ -1291,7 +1291,7 @@ function guardaClienteAgente() {
                         data: JSON.stringify(dataClienteAgente),
                         success: function (data, status) {
                             limpiaModalClientesAgentes();
-                            actualizaContratosActivos(data);
+                            actualizaContratosActivos(dataClienteAgente);
 
 
                         },
