@@ -547,6 +547,7 @@ function aceptar() {
                 "tarifaId": vm.starifaId()
             }
         };
+        
         if (empId == 0) {
             $.ajax({
                 type: "POST",
@@ -557,6 +558,7 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
+                    actualizaContratosActivos(data);
                     // Nos volvemos al general
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
@@ -576,6 +578,7 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
+                    actualizaContratosActivos(data);
                     // Nos volvemos al general
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
@@ -1171,6 +1174,43 @@ function limpiaModalClientesAgentes() {
     });
 }
 
+function actualizaContratosActivos(datos) {
+    
+    //buscamos el porcentage del agente
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/" + datos.comercialId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result, status) {
+           var data =  {
+               contrato: {
+                agenteId: datos.comercialId,
+                porcentajeAgente: result.porComer
+               }
+           }
+           $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/contratos/cliente/actualizado/" + datos.clienteId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                
+               
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+            }
+            });
+            
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+        }
+    });
+}
+
 function guardaClienteAgente() {
     //se actualiza el cliente con los nuevos valores
 
@@ -1462,7 +1502,7 @@ function deleteClienteAgente(clienteAgenteId) {
 
         llamadaAjax("DELETE", "/api/clientes/clienteAgente/" + clienteAgenteId, null, function (err, data) {
             if (err) return;
-            var data = {
+            var datos = {
                 cliente: {
                     "clienteId": vm.clienteId(),
                     "proId": vm.proId(),
@@ -1478,9 +1518,10 @@ function deleteClienteAgente(clienteAgenteId) {
                 url: myconfig.apiUrl + "/api/clientes/" + empId,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    limpiaModalClientesAgentes()
+                data: JSON.stringify(datos),
+                success: function (dataBis, status) {
+                    limpiaModalClientesAgentes();
+                    actualizaContratosActivos(data[0])
                 },
                 error: function (err) {
                     mensErrorAjax(err);
