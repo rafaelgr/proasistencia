@@ -547,6 +547,7 @@ function aceptar() {
                 "tarifaId": vm.starifaId()
             }
         };
+        
         if (empId == 0) {
             $.ajax({
                 type: "POST",
@@ -557,6 +558,7 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
+                    actualizaContratosActivos(data);
                     // Nos volvemos al general
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
@@ -576,6 +578,7 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
+                    actualizaContratosActivos(data);
                     // Nos volvemos al general
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
@@ -1172,6 +1175,7 @@ function limpiaModalClientesAgentes() {
 }
 
 function actualizaContratosActivos(datos) {
+    
     //buscamos el porcentage del agente
     $.ajax({
         type: "GET",
@@ -1291,7 +1295,6 @@ function guardaClienteAgente() {
                         data: JSON.stringify(dataClienteAgente),
                         success: function (data, status) {
                             limpiaModalClientesAgentes();
-                            actualizaContratosActivos(dataClienteAgente);
 
 
                         },
