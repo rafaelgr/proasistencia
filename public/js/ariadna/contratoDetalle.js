@@ -1843,7 +1843,7 @@ function buscaComisionistas(id) {
                         }
                     }
                 
-                if(!encontrado && cmd == "NEW"){
+                if(!encontrado && cmd == "NEW" && data2[0].ascComercialId){
                     var data = {
                         contratoComisionista: {
                             contratoId: vm.contratoId(),

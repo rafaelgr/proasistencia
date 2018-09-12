@@ -1176,39 +1176,25 @@ function limpiaModalClientesAgentes() {
 
 function actualizaContratosActivos(datos) {
     
-    //buscamos el porcentage del agente
-    $.ajax({
-        type: "GET",
-        url: "/api/comerciales/" + datos.comercialId,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result, status) {
-           var data =  {
-               contrato: {
-                agenteId: datos.comercialId,
-                porcentajeAgente: result.porComer
-               }
-           }
-           $.ajax({
-            type: "PUT",
-            url: myconfig.apiUrl + "/api/contratos/cliente/actualizado/" + datos.clienteId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                
-               
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-            }
-            });
-            
-        },
-        error: function (err) {
-            mensErrorAjax(err);
+    var data =  {
+        contrato: {
+         agenteId: datos.comercialId,
         }
-    });
+    }
+    $.ajax({
+     type: "PUT",
+     url: myconfig.apiUrl + "/api/contratos/cliente/actualizado/" + vm.clienteId(),
+     dataType: "json",
+     contentType: "application/json",
+     data: JSON.stringify(data),
+     success: function (data, status) {
+         
+        
+     },
+     error: function (err) {
+         mensErrorAjax(err);
+     }
+     });
 }
 
 function guardaClienteAgente() {
@@ -1295,6 +1281,10 @@ function guardaClienteAgente() {
                         data: JSON.stringify(dataClienteAgente),
                         success: function (data, status) {
                             limpiaModalClientesAgentes();
+                            var datos = {
+                                comercialId: vm.sagenteId()
+                            }
+                            actualizaContratosActivos(datos);
 
 
                         },
