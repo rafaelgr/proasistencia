@@ -1183,7 +1183,7 @@ function actualizaContratosActivos(datos) {
     }
     $.ajax({
      type: "PUT",
-     url: myconfig.apiUrl + "/api/contratos/cliente/actualizado/" + datos.clienteId,
+     url: myconfig.apiUrl + "/api/contratos/cliente/actualizado/" + vm.clienteId(),
      dataType: "json",
      contentType: "application/json",
      data: JSON.stringify(data),
@@ -1281,6 +1281,10 @@ function guardaClienteAgente() {
                         data: JSON.stringify(dataClienteAgente),
                         success: function (data, status) {
                             limpiaModalClientesAgentes();
+                            var datos = {
+                                comercialId: vm.sagenteId()
+                            }
+                            actualizaContratosActivos(datos);
 
 
                         },
