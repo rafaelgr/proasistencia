@@ -1203,12 +1203,6 @@ function guardaClienteAgente() {
     if (!datosOkClienteAgente()) {
         return;
     } else {
-        var fecha = spanishDbDate(vm.fechaCambio());
-        if (fecha < fechaTope) {
-            mensError("La fecha de cambio no puede ser inferior a la fecha máxima existente");
-            limpiaModalClientesAgentes();
-            return;
-        } else {
             if (!datosOK())
                 return;
 
@@ -1299,7 +1293,7 @@ function guardaClienteAgente() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-        }
+        
     }
 
 }
