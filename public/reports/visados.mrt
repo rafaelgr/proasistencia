@@ -101,9 +101,9 @@ group by f.fecha
         <Name>contratos_serviciado</Name>
         <NameInSource>MySQL</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT ser.*, COALESCE(SUM(ser.importe), 0) AS CR, COALESCE(SUM(fac.total), 0 ) AS IMF, con.referencia, con.contratoCerrado  AS estado, COALESCE(con.totalConIva, 0) AS ITC, con.porcentajeAgente AS pAgente, 
-         con.importeAgente AS IA, con.coste AS CT, emp.nombre AS empresa, COALESCE(con.totalConIva, 0)-con.importeAgente  AS ent, ROUND((COALESCE(con.totalConIva, 0)-con.importeAgente)-con.coste, 2) AS BT,
-         COALESCE(ROUND(((COALESCE(con.totalConIva, 0)-con.importeAgente)-con.coste)/(COALESCE(con.totalConIva, 0)-con.importeAgente)*100, 2),0) AS pBT, 
+        <SqlCommand>SELECT ser.*, COALESCE(SUM(ser.importe), 0) AS CR, COALESCE(SUM(fac.total), 0 ) AS IMF, con.referencia, con.contratoCerrado  AS estado, COALESCE(con.total, 0) AS ITC, con.porcentajeAgente AS pAgente, 
+         con.importeAgente AS IA, con.coste AS CT, emp.nombre AS empresa, COALESCE(con.total, 0)-con.importeAgente  AS ent, ROUND((COALESCE(con.total, 0)-con.importeAgente)-con.coste, 2) AS BT,
+         COALESCE(ROUND(((COALESCE(con.total, 0)-con.importeAgente)-con.coste)/(COALESCE(con.coste, 0))*100, 2),0) AS pBT, 
          COALESCE(SUM(fac.total), 0 )-con.importeAgente  AS INR, ROUND((COALESCE(SUM(fac.total), 0 )-con.importeAgente)-SUM(ser.importe), 2) AS BR,
          COALESCE(ROUND((((COALESCE(SUM(fac.total), 0 )-con.importeAgente)-SUM(ser.importe))/(COALESCE(SUM(fac.total), 0 )-con.importeAgente))*100, 2),0) AS pBR
          FROM facprove_serviciados AS ser
@@ -378,7 +378,6 @@ group by f.fecha
         </GroupHeaderBand1>
         <DataFact Ref="23" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,5.4,27.7,2</ClientRectangle>
           <Components isList="true" count="8">
             <Dataliqdet_impCliente Ref="24" type="Text" isKey="true">
@@ -562,9 +561,11 @@ group by f.fecha
           <Name>DataFact</Name>
           <Page isRef="6" />
           <Parent isRef="6" />
-          <Sort isList="true" count="2">
+          <Sort isList="true" count="4">
             <value>DESC</value>
             <value>fecha</value>
+            <value>ASC</value>
+            <value>facproveId</value>
           </Sort>
         </DataFact>
         <Headercon Ref="37" type="HeaderBand" isKey="true">
@@ -1309,10 +1310,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/5/2018 11:32:57 AM</ReportChanged>
+  <ReportChanged>9/17/2018 11:01:38 AM</ReportChanged>
   <ReportCreated>8/31/2018 9:54:06 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\visados.mrt</ReportFile>
-  <ReportGuid>a13f720fdfc84e379ba7eda03d15a2b5</ReportGuid>
+  <ReportGuid>30119da6c5024e67b24349bd356f4e46</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
