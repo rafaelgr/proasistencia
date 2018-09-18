@@ -75,7 +75,7 @@ function initForm() {
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
-        paging: true,
+        paging: false,
         "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -355,6 +355,12 @@ function initTablaContratos(facproveId) {
                 return data
             }
         }, {
+            data: "IAR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
+        },{
             data: "BR",
             render: function (data, type, row) {
                 data = roundToTwo(data);
@@ -389,6 +395,7 @@ function cargarContratos() {
                 },
                 error: function (err) {
                     mensErrorAjax(err);
+                    $('#modalContrato').modal('hide');
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
