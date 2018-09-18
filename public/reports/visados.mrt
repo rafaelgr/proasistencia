@@ -69,21 +69,19 @@
 FROM facprove AS f 
 LEFT JOIN formas_pago AS fp ON fp.formaPagoId = f.formaPagoId 
 LEFT JOIN contratos AS cnt ON cnt.contratoId = f.contratoId 
-group by f.fecha
+
 </SqlCommand>
       </facproves_visado>
       <contratos_serviciado Ref="4" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>contratos_serviciado</Alias>
-        <Columns isList="true" count="20">
+        <Columns isList="true" count="18">
           <value>facproveServiciadoId,System.Int32</value>
           <value>facproveId,System.Int32</value>
-          <value>empresaId,System.Int32</value>
           <value>contratoId,System.Int32</value>
-          <value>importe,System.Decimal</value>
-          <value>CR,System.Decimal</value>
-          <value>IMF,System.Decimal</value>
           <value>referencia,System.String</value>
-          <value>estado,System.Int16</value>
+          <value>estado,System.SByte</value>
+          <value>IMF,System.Decimal</value>
+          <value>CR,System.Decimal</value>
           <value>ITC,System.Decimal</value>
           <value>pAgente,System.Decimal</value>
           <value>IA,System.Decimal</value>
@@ -101,16 +99,34 @@ group by f.fecha
         <Name>contratos_serviciado</Name>
         <NameInSource>MySQL</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT ser.*, COALESCE(SUM(ser.importe), 0) AS CR, COALESCE(SUM(fac.total), 0 ) AS IMF, con.referencia, con.contratoCerrado  AS estado, COALESCE(con.total, 0) AS ITC, con.porcentajeAgente AS pAgente, 
-         con.importeAgente AS IA, con.coste AS CT, emp.nombre AS empresa, COALESCE(con.total, 0)-con.importeAgente  AS ent, ROUND((COALESCE(con.total, 0)-con.importeAgente)-con.coste, 2) AS BT,
-         COALESCE(ROUND(((COALESCE(con.total, 0)-con.importeAgente)-con.coste)/(COALESCE(con.coste, 0))*100, 2),0) AS pBT, 
-         COALESCE(SUM(fac.total), 0 )-con.importeAgente  AS INR, ROUND((COALESCE(SUM(fac.total), 0 )-con.importeAgente)-SUM(ser.importe), 2) AS BR,
-         COALESCE(ROUND((((COALESCE(SUM(fac.total), 0 )-con.importeAgente)-SUM(ser.importe))/(COALESCE(SUM(fac.total), 0 )-con.importeAgente))*100, 2),0) AS pBR
-         FROM facprove_serviciados AS ser
-         LEFT JOIN contratos AS con ON con.contratoId = ser.contratoId
-         LEFT JOIN empresas AS emp ON emp.empresaId = ser.empresaId
-         LEFT JOIN facturas AS fac ON fac.contratoId = con.contratoId
-         GROUP BY ser.facproveId, ser.contratoId </SqlCommand>
+        <SqlCommand>SELECT
+	ser.facproveServiciadoId, ser.facproveId, con.contratoId, con.referencia, con.contratoCerrado  AS estado, 
+	COALESCE(v.total, 0) AS IMF, 
+	COALESCE(g.gasto,0) AS CR,
+	COALESCE(con.total, 0) AS ITC, 
+	con.porcentajeAgente AS pAgente,
+	con.importeAgente AS IA, 
+	con.coste AS CT, 
+	emp.nombre AS empresa,
+	COALESCE(con.total, 0)-con.importeAgente  AS ent,
+	ROUND((COALESCE(con.total, 0)-con.importeAgente)-con.coste, 2) AS BT,
+	COALESCE(ROUND(((COALESCE(con.total, 0)-con.importeAgente)-con.coste)/(COALESCE(con.total, 0)-con.importeAgente)*100, 2),0) AS pBT,
+	ROUND(COALESCE(v.total, 0 )-con.importeAgente, 2)  AS INR,
+	ROUND((COALESCE(v.total, 0 )-con.importeAgente)-g.gasto, 2) AS BR,
+	COALESCE(ROUND((((COALESCE(v.total, 0 )-con.importeAgente)-g.gasto)/(COALESCE(v.total, 0 )-con.importeAgente))*100, 2),0) AS pBR
+	FROM contratos AS con
+	LEFT JOIN facprove_serviciados AS ser ON ser.contratoId = con.contratoId
+LEFT JOIN empresas AS emp ON emp.empresaId = ser.empresaId 
+
+LEFT JOIN
+(SELECT 
+	contratoId, SUM(total) AS total
+	FROM facturas GROUP BY contratoId) AS v ON v.contratoId = con.contratoId
+LEFT JOIN
+(SELECT
+	contratoId, SUM(importe) AS gasto
+	FROM facprove_serviciados GROUP BY contratoId) AS g ON g.contratoId = con.contratoId
+GROUP BY ser.facproveId, ser.contratoId,  ser.facproveServiciadoId  </SqlCommand>
       </contratos_serviciado>
     </DataSources>
     <Relations isList="true" count="1">
@@ -378,6 +394,7 @@ group by f.fecha
         </GroupHeaderBand1>
         <DataFact Ref="23" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,5.4,27.7,2</ClientRectangle>
           <Components isList="true" count="8">
             <Dataliqdet_impCliente Ref="24" type="Text" isKey="true">
@@ -553,7 +570,9 @@ group by f.fecha
               <Type>Expression</Type>
             </Text33>
           </Components>
-          <Conditions isList="true" count="0" />
+          <Conditions isList="true" count="1">
+            <value>BreakIfTrue,facproves_visado.contratoId,IsNull,,,Numeric,WhiteSmoke,Transparent,Arial_x002C_8,False,False,,,None</value>
+          </Conditions>
           <DataRelationName isNull="true" />
           <DataSourceName>facproves_visado</DataSourceName>
           <Filters isList="true" count="0" />
@@ -1310,10 +1329,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/17/2018 11:01:38 AM</ReportChanged>
+  <ReportChanged>9/18/2018 10:16:16 AM</ReportChanged>
   <ReportCreated>8/31/2018 9:54:06 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\visados.mrt</ReportFile>
-  <ReportGuid>30119da6c5024e67b24349bd356f4e46</ReportGuid>
+  <ReportGuid>fbf78505c603445f981f03679b27f40b</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
