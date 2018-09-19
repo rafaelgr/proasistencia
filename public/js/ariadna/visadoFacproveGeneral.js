@@ -75,7 +75,7 @@ function initForm() {
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
-        paging: true,
+        paging: false,
         "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -343,6 +343,12 @@ function initTablaContratos(facproveId) {
                 return data
             }
         }, {
+            data: "IAR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
+        },{
             data: "INR",
             render: function (data, type, row) {
                 data = roundToTwo(data);
@@ -354,7 +360,7 @@ function initTablaContratos(facproveId) {
                 data = roundToTwo(data);
                 return data
             }
-        }, {
+        },{
             data: "BR",
             render: function (data, type, row) {
                 data = roundToTwo(data);
@@ -389,6 +395,7 @@ function cargarContratos() {
                 },
                 error: function (err) {
                     mensErrorAjax(err);
+                    $('#modalContrato').modal('hide');
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
@@ -422,11 +429,24 @@ function editFactura(id) {
 function printFactura(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturasProveedores/" + id,
+        url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            informePDF(data);
+            if(data.ref){
+                window.open("../../ficheros/facturas_proveedores/"+data.ref+".pdf","_blank");
+            }else{
+                var mens = "No hay registros que mostrar";
+                $.SmartMessageBox({
+                    title: "<i class='fa fa-info'></i> Mensaje",
+                    content: mens,
+                    buttons: '[Aceptar]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed === "Aceptar") {
+                        // no hacemos nada (no quiere borrar)
+                    }
+                });
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
