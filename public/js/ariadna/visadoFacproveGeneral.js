@@ -429,11 +429,24 @@ function editFactura(id) {
 function printFactura(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturasProveedores/" + id,
+        url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            informePDF(data);
+            if(data.ref){
+                window.open("../../ficheros/facturas_proveedores/"+data.ref+".pdf","_blank");
+            }else{
+                var mens = "No hay registros que mostrar";
+                $.SmartMessageBox({
+                    title: "<i class='fa fa-info'></i> Mensaje",
+                    content: mens,
+                    buttons: '[Aceptar]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed === "Aceptar") {
+                        // no hacemos nada (no quiere borrar)
+                    }
+                });
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
