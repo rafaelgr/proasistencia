@@ -110,7 +110,7 @@ LEFT JOIN contratos AS cnt ON cnt.contratoId = f.contratoId
 	COALESCE(con.total, 0)-con.importeAgente  AS ent, 
 	ROUND((COALESCE(con.total, 0)-con.importeAgente)-con.coste, 2) AS BT, 
 	COALESCE(ROUND(((COALESCE(con.total, 0)-con.importeAgente)-con.coste)/(COALESCE(con.total, 0)-con.importeAgente)*100, 2),0) AS pBT, 
-	COALESCE(ROUND(COALESCE(v.total, 0 )-con.importeAgente, 2), 0)  AS INR, 
+	COALESCE(ROUND(COALESCE(v.total, 0 )-r.IAR, 2), 0)  AS INR, 
 	COALESCE(ROUND((COALESCE(v.total, 0 )-r.IAR)-g.gasto, 2), 0) AS BR, 
 	COALESCE(ROUND((((COALESCE(v.total, 0 )-r.IAR)-g.gasto)/(COALESCE(v.total, 0 )-r.IAR))*100, 2),0) AS pBR 
 	FROM contratos AS con 
@@ -1377,10 +1377,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/19/2018 10:41:10 AM</ReportChanged>
+  <ReportChanged>9/19/2018 10:47:17 AM</ReportChanged>
   <ReportCreated>8/31/2018 9:54:06 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\visados.mrt</ReportFile>
-  <ReportGuid>db4c2fb309d041ce80e5aa47dc476529</ReportGuid>
+  <ReportGuid>57b779e1202145a3a9618f6522c92dd9</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
