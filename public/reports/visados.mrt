@@ -774,7 +774,7 @@ Facturado</Text>
             <Text20 Ref="52" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>WhiteSmoke</Brush>
-              <ClientRectangle>19,0.2,1.6,1.2</ClientRectangle>
+              <ClientRectangle>20.8,0.2,1.6,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Microsoft Sans Serif,8.25,Bold,Point,False,0</Font>
               <Guid>aa56215fa29642a1b3c6d83c989b00e8</Guid>
@@ -799,7 +799,7 @@ Real</Text>
             <Text21 Ref="54" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>WhiteSmoke</Brush>
-              <ClientRectangle>20.6,0.2,1.6,1.2</ClientRectangle>
+              <ClientRectangle>22.4,0.2,1.6,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Microsoft Sans Serif,8.25,Bold,Point,False,0</Font>
               <Guid>270444185b034d3c8c20d6393006379a</Guid>
@@ -936,10 +936,10 @@ Teorico</Text>
             <Text36 Ref="65" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>WhiteSmoke</Brush>
-              <ClientRectangle>22.2,0.2,1.8,1.2</ClientRectangle>
+              <ClientRectangle>19,0.2,1.8,1.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Microsoft Sans Serif,8.25,Bold,Point,False,0</Font>
-              <Guid>5fec14afebd84ed1b9a1101cd343f7d4</Guid>
+              <Guid>19645988eefa4fd8b7119ba2f4ac0010</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text36</Name>
@@ -966,6 +966,7 @@ Real</Text>
         </Headercon>
         <Datacon Ref="67" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,10.6,27.7,1.2</ClientRectangle>
           <Components isList="true" count="16">
             <Text11 Ref="68" type="Text" isKey="true">
@@ -1152,7 +1153,7 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>19,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>20.8,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9.75,Regular,Point,False,0</Font>
               <Guid>629e4a54a3274d83aeba70e07e65f97a</Guid>
@@ -1176,7 +1177,7 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>20.6,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>22.4,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9.75,Regular,Point,False,0</Font>
               <Guid>6987ad1f555443ff93ee4f74680954f3</Guid>
@@ -1315,10 +1316,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
               <Border>Bottom;Black;1;None;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>22.2,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>19,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9.75,Regular,Point,False,0</Font>
-              <Guid>824462bcac834c9b96fefc2a8faab2d8</Guid>
+              <Guid>808adb09fc5f4f03a247e4d70483b19b</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text39</Name>
@@ -1376,10 +1377,10 @@ contratos_serviciado.estado == 1, "CERRADO")}</Text>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/18/2018 1:39:01 PM</ReportChanged>
+  <ReportChanged>9/19/2018 10:41:10 AM</ReportChanged>
   <ReportCreated>8/31/2018 9:54:06 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\visados.mrt</ReportFile>
-  <ReportGuid>7609aabd9c654f2280c8cdab59b48fd3</ReportGuid>
+  <ReportGuid>db4c2fb309d041ce80e5aa47dc476529</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

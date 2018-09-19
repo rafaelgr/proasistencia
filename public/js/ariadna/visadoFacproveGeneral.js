@@ -343,6 +343,12 @@ function initTablaContratos(facproveId) {
                 return data
             }
         }, {
+            data: "IAR",
+            render: function (data, type, row) {
+                data = roundToTwo(data);
+                return data
+            }
+        },{
             data: "INR",
             render: function (data, type, row) {
                 data = roundToTwo(data);
@@ -350,12 +356,6 @@ function initTablaContratos(facproveId) {
             }
         }, {
             data: "CR",
-            render: function (data, type, row) {
-                data = roundToTwo(data);
-                return data
-            }
-        }, {
-            data: "IAR",
             render: function (data, type, row) {
                 data = roundToTwo(data);
                 return data
