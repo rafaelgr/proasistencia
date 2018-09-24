@@ -104,11 +104,15 @@ function initForm() {
 
     //
     $("#cmbColaboradores").select2(select2Spanish());
-    loadColaboradores();
+    
     $("#cmbDepartamentos").select2(select2Spanish());
     loadDepartamentos();
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
+
+    $('#cmbTiposComerciales').change(function(e) {
+        loadColaboradores(e.added);
+    });
 
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -225,10 +229,12 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptLiquidaciones').validate({
         rules: {
+            cmbTiposComerciales: {required : true}
 
         },
         // Messages for form validation
         messages: {
+            cmbTiposComerciales: {required : "Deve introducir un tipo de comercial"}
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -239,13 +245,26 @@ function datosOK() {
     return $('#frmRptLiquidaciones').valid();
 }
 
-function loadColaboradores(comercialId) {
-    llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
-        if (err) return;
-        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-        vm.posiblesColaboradores(colaboradores);
-        $("#cmbColaboradores").val([comercialId]).trigger('change');
-    });
+function loadColaboradores(e) {
+    if(e) {
+        var TipoComercialId = e.id;
+        if(TipoComercialId == 1) {
+            llamadaAjax("GET", "/api/comerciales/agentes/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        } else {
+            llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        }
+        
+    }
 }
 
 function loadDepartamentos(tipoMantenimientoId) {
@@ -260,7 +279,7 @@ function loadDepartamentos(tipoMantenimientoId) {
 function loadTiposComerciales(tipoComercialId) {
     llamadaAjax("GET", "/api/tipos_comerciales", null, function (err, data) {
         if (err) return;
-        var tipos = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+        var tipos = data;
         vm.posiblesTiposComerciales(tipos);
         $("#cmbTiposComerciales").val([tipoComercialId]).trigger('change');
     });
@@ -291,7 +310,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-    sql += " WHERE cnt.fechaContrato >= '" + dFecha + "' AND cnt.fechaContrato <= '" + hFecha + "'";
+    sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
     }
