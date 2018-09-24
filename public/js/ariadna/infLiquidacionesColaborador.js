@@ -291,7 +291,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-    sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+    sql += " WHERE cnt.fechaContrato >= '" + dFecha + "' AND cnt.fechaContrato <= '" + hFecha + "'";
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
     }
@@ -303,4 +303,5 @@ var rptLiquidacionGeneralParametros = function () {
     }
     return sql;
 }
+
 
