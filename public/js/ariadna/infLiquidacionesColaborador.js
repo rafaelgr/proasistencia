@@ -153,7 +153,14 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/liquidacion_colaborador.mrt";
+    var file;
+    var tipoColaborador = vm.stipoComercialId();
+    if(tipoColaborador != 1) {
+        file = "../reports/liquidacion_colaborador.mrt";
+    } else {
+        file = "../reports/liquidacion_agente.mrt";
+    }
+
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     report.loadFile(file);
@@ -301,7 +308,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
     sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%d/%m/%y') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
     sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
-    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador";
+    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%d/%m/%y') AS fechaInicio";
     sql += " FROM liquidacion_comercial AS liq";
     sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
@@ -310,10 +317,10 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-    if(tipoComercialId == 1) {
+    if(tipoComercialId != 1) {
         sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
     } else {
-        
+        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
     }
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
