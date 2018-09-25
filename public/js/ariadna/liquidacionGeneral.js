@@ -259,7 +259,7 @@ var printGeneral = function () {
     var contratoId = 0;
     if (vm.stipoComercialId()) tipoComercialId = vm.stipoComercialId();
     if (vm.sContratoId()) contratoId = vm.sContratoId();
-    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId;
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId + "&liqGeneral=true";
     window.open(url, '_new');
 }
 
