@@ -306,9 +306,9 @@ var rptLiquidacionGeneralParametros = function () {
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
     sql += " com.comercialId, com.nombre AS nomComercial, tpp.nombre AS tipoProyecto,";
     sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
-    sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%d/%m/%y') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
+    sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
     sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
-    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%d/%m/%y') AS fechaInicio";
+    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio";
     sql += " FROM liquidacion_comercial AS liq";
     sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";

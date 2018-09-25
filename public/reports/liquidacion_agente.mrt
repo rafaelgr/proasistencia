@@ -44,9 +44,9 @@
 '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, tpp.nombre AS tipoProyecto,
 com.comercialId, com.nombre AS nomComercial,
 cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,
-fac.facturaId,  DATE_FORMAT(fac.fecha, '%d/%m/%y') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero, 
+fac.facturaId,  DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero, 
 liq.impCliente, liq.base, liq.porComer, liq.comision,
-tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%d/%m/%y') AS fechaInicio
+tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio
 FROM liquidacion_comercial AS liq
 LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId
 LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId
@@ -426,7 +426,6 @@ FACTURA
         </GroupHeaderBand4>
         <DataLiqAgente Ref="29" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,10.2,19,0.6</ClientRectangle>
           <Components isList="true" count="9">
             <Text5 Ref="30" type="Text" isKey="true">
@@ -440,9 +439,12 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.fechaBis}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="31" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
               <Type>Expression</Type>
             </Text5>
-            <Text7 Ref="31" type="Text" isKey="true">
+            <Text7 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>2,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -454,7 +456,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.impCliente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -462,7 +464,7 @@ FACTURA
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text7>
-            <Text9 Ref="33" type="Text" isKey="true">
+            <Text9 Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>12.4,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -474,7 +476,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.base_}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="35" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -482,7 +484,7 @@ FACTURA
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text9>
-            <Text11 Ref="35" type="Text" isKey="true">
+            <Text11 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.4,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -494,13 +496,13 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="36" type="NumberFormat" isKey="true">
+              <TextFormat Ref="37" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
             </Text11>
-            <Text13 Ref="37" type="Text" isKey="true">
+            <Text13 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -512,7 +514,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.comision}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="39" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -520,7 +522,7 @@ FACTURA
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text13>
-            <Text25 Ref="39" type="Text" isKey="true">
+            <Text25 Ref="40" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>4.4,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -533,7 +535,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>{LiqAgente.impCliente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -541,7 +543,7 @@ FACTURA
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text25>
-            <Text27 Ref="41" type="Text" isKey="true">
+            <Text27 Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>6.2,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -554,7 +556,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>0,00 €</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -563,7 +565,7 @@ FACTURA
               </TextFormat>
               <Type>Expression</Type>
             </Text27>
-            <Text26 Ref="43" type="Text" isKey="true">
+            <Text26 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8.6,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -576,7 +578,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>0,00 €</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -585,7 +587,7 @@ FACTURA
               </TextFormat>
               <Type>Expression</Type>
             </Text26>
-            <Text28 Ref="45" type="Text" isKey="true">
+            <Text28 Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>10.4,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -598,7 +600,7 @@ FACTURA
               <Parent isRef="29" />
               <Text>0,00 €</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -622,11 +624,11 @@ FACTURA
             <value>fecha</value>
           </Sort>
         </DataLiqAgente>
-        <GroupFooterBand1 Ref="47" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand1 Ref="48" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,11.6,19,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text20 Ref="48" type="Text" isKey="true">
+            <Text20 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.2,0,4.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -635,13 +637,13 @@ FACTURA
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
               <Page isRef="4" />
-              <Parent isRef="47" />
+              <Parent isRef="48" />
               <Text>TOTAL</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text29 Ref="49" type="Text" isKey="true">
+            <Text29 Ref="50" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.6,0,3.2,0.6</ClientRectangle>
@@ -652,10 +654,10 @@ FACTURA
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
               <Page isRef="4" />
-              <Parent isRef="47" />
+              <Parent isRef="48" />
               <Text>{Sum(GroupHeaderBand4,LiqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="51" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -671,7 +673,7 @@ FACTURA
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand1>
-        <GroupFooterBand2 Ref="51" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand2 Ref="52" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,13.2,19,0.8</ClientRectangle>
           <Components isList="true" count="0" />
@@ -680,11 +682,11 @@ FACTURA
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand2>
-        <GroupFooterBand3 Ref="52" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand3 Ref="53" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,14.8,19,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text30 Ref="53" type="Text" isKey="true">
+            <Text30 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.2,0,4.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -694,13 +696,13 @@ FACTURA
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
               <Page isRef="4" />
-              <Parent isRef="52" />
+              <Parent isRef="53" />
               <Text>TOTAL {LiqAgente.departamento}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text30>
-            <Text31 Ref="54" type="Text" isKey="true">
+            <Text31 Ref="55" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.6,0,3.2,0.6</ClientRectangle>
@@ -711,10 +713,10 @@ FACTURA
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
               <Page isRef="4" />
-              <Parent isRef="52" />
+              <Parent isRef="53" />
               <Text>{Sum(GroupHeaderBand3,LiqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="56" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -732,7 +734,7 @@ FACTURA
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand3>
-        <GroupFooterBand4 Ref="56" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand4 Ref="57" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,16.4,19,0.8</ClientRectangle>
           <Components isList="true" count="0" />
@@ -750,13 +752,13 @@ FACTURA
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="57" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="58" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="58" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="59" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -769,10 +771,10 @@ FACTURA
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/24/2018 1:34:51 PM</ReportChanged>
+  <ReportChanged>9/25/2018 1:13:29 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
-  <ReportFile />
-  <ReportGuid>885b2080f6b044a2bfc2b50e623e1dea</ReportGuid>
+  <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_agente.mrt</ReportFile>
+  <ReportGuid>3bd2cc0ec40c418e8550a2449e7c15da</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
