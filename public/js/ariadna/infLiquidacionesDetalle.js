@@ -5,6 +5,7 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
  
+var liqGeneral;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -120,6 +121,7 @@ function initForm() {
     initAutoCliente();
 
     tipo = gup('tipoColaborador');
+    liqGeneral = gup('liqGeneral');
     vm.stipoComercialId(tipo);
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -157,7 +159,10 @@ function admData() {
 };
 
 var obtainReport = function () {
-    if (!datosOK()) return;
+    if(liqGeneral != 'true') {
+        if (!datosOK()) return;
+    }
+    
     var tipoColaborador = vm.stipoComercialId();
     var file;
     if(tipoColaborador != 1) {

@@ -286,7 +286,7 @@ FACTURAS
               <Name>Text1</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>REFERENCIA</Text>
+              <Text>CONTRATO</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -441,6 +441,7 @@ FACTURAS
         </GroupHeaderBand4>
         <DataLiqAgente Ref="30" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,10.2,19,0.6</ClientRectangle>
           <Components isList="true" count="10">
             <Text5 Ref="31" type="Text" isKey="true">
@@ -800,10 +801,10 @@ FACTURAS
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/25/2018 1:13:01 PM</ReportChanged>
+  <ReportChanged>9/26/2018 9:01:48 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
-  <ReportGuid>ddbffb432eaf4a15b9bbcb0e58e7d690</ReportGuid>
+  <ReportGuid>44a834ab59e441caaad5913483cdb3d6</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

@@ -213,7 +213,7 @@ function editLiquidacion(id) {
 
 
 function printLiquidacion(id) {
-    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id  +"&tipoColaborador=1";
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id  +"&tipoColaborador=1&liqGeneral=true";
     window.open(url, '_new');
 }
 
