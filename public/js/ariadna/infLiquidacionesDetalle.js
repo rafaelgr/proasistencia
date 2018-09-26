@@ -4,11 +4,15 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
+ 
+var liqGeneral;
 
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
+
+var tipo;
 // License Key
 
 // Create the report viewer with default options
@@ -102,10 +106,23 @@ function initForm() {
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
+     //
+     $("#cmbTiposComerciales").select2(select2Spanish());
+     loadTiposComerciales();
+ 
+     $('#cmbTiposComerciales').change(function(e) {
+         loadColaboradores(e.added);
+     });
+ 
+
     //
     $("#cmbColaboradores").select2(select2Spanish());
-    loadColaboradores();
+
     initAutoCliente();
+
+    tipo = gup('tipoColaborador');
+    liqGeneral = gup('liqGeneral');
+    vm.stipoComercialId(tipo);
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
     if (gup('dFecha') != "" && gup('hFecha') != "") {
@@ -122,9 +139,11 @@ function admData() {
     self.facturaId = ko.observable();
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
+    self.tipoComercialId = ko.observable();
     //
     self.comercialId = ko.observable();
     self.scomercialId = ko.observable();
+    self.stipoComercialId = ko.observable()
     //
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
@@ -134,11 +153,24 @@ function admData() {
     //
     self.posiblesClientes = ko.observableArray([]);
     self.elegidosClientes = ko.observableArray([]);
+    //
+    self.posiblesTiposComerciales = ko.observableArray([]);
+    self.elegidosTiposComerciales = ko.observableArray([]);
 };
 
 var obtainReport = function () {
-    if (!datosOK()) return;
-    var file = "../reports/liquidacion_detalle.mrt";
+    if(liqGeneral != 'true') {
+        if (!datosOK()) return;
+    }
+    
+    var tipoColaborador = vm.stipoComercialId();
+    var file;
+    if(tipoColaborador != 1) {
+        file = "../reports/liquidacion_detalle_colaborador.mrt";
+    } else {
+        file = "../reports/liquidacion_detalle.mrt";
+    }
+    
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     report.loadFile(file);
@@ -214,10 +246,11 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptLiquidaciones').validate({
         rules: {
-
+            cmbTiposComerciales: {required : true}
         },
         // Messages for form validation
         messages: {
+            cmbTiposComerciales: {required : "Deve introducir un tipo de comercial"}
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -228,14 +261,37 @@ function datosOK() {
     return $('#frmRptLiquidaciones').valid();
 }
 
-function loadColaboradores(comercialId) {
-    llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
+function loadTiposComerciales(tipoComercialId) {
+    llamadaAjax("GET", "/api/tipos_comerciales", null, function (err, data) {
         if (err) return;
-        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-        vm.posiblesColaboradores(colaboradores);
-        $("#cmbColaboradores").val([comercialId]).trigger('change');
+        var tipos = data;
+        vm.posiblesTiposComerciales(tipos);
+        $("#cmbTiposComerciales").val([tipoComercialId]).trigger('change');
     });
 }
+
+function loadColaboradores(e) {
+    if(e) {
+        var TipoComercialId = e.id;
+        if(TipoComercialId == 1) {
+            llamadaAjax("GET", "/api/comerciales/agentes/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        } else {
+            llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        }
+        
+    }
+}
+
 
 // initAutoCliente
 // inicializa el control del cliente como un autocomplete
@@ -266,18 +322,26 @@ var initAutoCliente = function () {
 
 var rptLiquidacionGeneralParametros = function () {
     var comercialId = vm.scomercialId();
+    var tipoComercialId = vm.stipoComercialId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     sql = "SELECT c.nombre, tc.nombre AS tipo, lf.*,  lf.base as base2,";
-    sql += " CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura,";
+    sql += " CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha,";
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha, 'OPERACIONES PERIODO ACTUAL' AS periodo,";
-    sql += " ccm.referencia AS contrato";
+    sql += " ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaInicio, '%Y-%m-%d') AS fechaInicioBis, ccm.fechaInicio";
     sql += " FROM liquidacion_comercial AS lf";
     sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += " LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId";
-    sql += " WHERE f.fecha >= '" + dFecha + "' AND f.fecha <= '" + hFecha + "'";
+    if(tipoComercialId == 1) {
+        sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
+    } else {
+        sql += " WHERE ccm.fechaInicio >= '" + dFecha + "' AND ccm.fechaInicio <= '" + hFecha + "'";
+    }
+    if (tipoComercialId){
+        sql += " AND lf.comercialId IN (SELECT comercialId from comerciales where tipoComercialId = " + tipoComercialId + ")";
+    }
     if (comercialId) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";
     }

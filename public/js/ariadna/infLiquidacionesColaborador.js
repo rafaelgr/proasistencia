@@ -104,11 +104,15 @@ function initForm() {
 
     //
     $("#cmbColaboradores").select2(select2Spanish());
-    loadColaboradores();
+    
     $("#cmbDepartamentos").select2(select2Spanish());
     loadDepartamentos();
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
+
+    $('#cmbTiposComerciales').change(function(e) {
+        loadColaboradores(e.added);
+    });
 
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -149,7 +153,14 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/liquidacion_colaborador.mrt";
+    var file;
+    var tipoColaborador = vm.stipoComercialId();
+    if(tipoColaborador != 1) {
+        file = "../reports/liquidacion_colaborador.mrt";
+    } else {
+        file = "../reports/liquidacion_agente.mrt";
+    }
+
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     report.loadFile(file);
@@ -225,10 +236,12 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptLiquidaciones').validate({
         rules: {
+            cmbTiposComerciales: {required : true}
 
         },
         // Messages for form validation
         messages: {
+            cmbTiposComerciales: {required : "Deve introducir un tipo de comercial"}
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -239,13 +252,26 @@ function datosOK() {
     return $('#frmRptLiquidaciones').valid();
 }
 
-function loadColaboradores(comercialId) {
-    llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
-        if (err) return;
-        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-        vm.posiblesColaboradores(colaboradores);
-        $("#cmbColaboradores").val([comercialId]).trigger('change');
-    });
+function loadColaboradores(e) {
+    if(e) {
+        var TipoComercialId = e.id;
+        if(TipoComercialId == 1) {
+            llamadaAjax("GET", "/api/comerciales/agentes/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        } else {
+            llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
+                if (err) return;
+                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesColaboradores(colaboradores);
+                $("#cmbColaboradores").val([0]).trigger('change');
+            });
+        }
+        
+    }
 }
 
 function loadDepartamentos(tipoMantenimientoId) {
@@ -260,7 +286,7 @@ function loadDepartamentos(tipoMantenimientoId) {
 function loadTiposComerciales(tipoComercialId) {
     llamadaAjax("GET", "/api/tipos_comerciales", null, function (err, data) {
         if (err) return;
-        var tipos = [{ tipoComercialId: 0, nombre: "" }].concat(data);
+        var tipos = data;
         vm.posiblesTiposComerciales(tipos);
         $("#cmbTiposComerciales").val([tipoComercialId]).trigger('change');
     });
@@ -280,9 +306,9 @@ var rptLiquidacionGeneralParametros = function () {
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
     sql += " com.comercialId, com.nombre AS nomComercial, tpp.nombre AS tipoProyecto,";
     sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
-    sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%d/%m/%y') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
+    sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
     sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
-    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador";
+    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio";
     sql += " FROM liquidacion_comercial AS liq";
     sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
@@ -291,7 +317,11 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-    sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+    if(tipoComercialId != 1) {
+        sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
+    } else {
+        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+    }
     if (comercialId) {
         sql += " AND liq.comercialId IN (" + comercialId + ")";
     }
@@ -303,4 +333,5 @@ var rptLiquidacionGeneralParametros = function () {
     }
     return sql;
 }
+
 

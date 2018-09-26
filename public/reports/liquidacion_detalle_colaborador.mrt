@@ -12,7 +12,7 @@
     <DataSources isList="true" count="1">
       <liqdet Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
         <Alias>liqdet</Alias>
-        <Columns isList="true" count="28">
+        <Columns isList="true" count="29">
           <value>nombre,System.String</value>
           <value>tipo,System.String</value>
           <value>liquidacionComercialId,System.Int32</value>
@@ -37,10 +37,11 @@
           <value>facNum,System.String</value>
           <value>base2,System.Decimal</value>
           <value>fechaFactura,System.Byte[]</value>
-          <value>fecha,System.DateTime</value>
           <value>dFecha,System.String</value>
           <value>hFecha,System.String</value>
           <value>contrato,System.String</value>
+          <value>fechaInicioBis,System.Byte[]</value>
+          <value>fechaInicio,System.DateTime</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
@@ -48,7 +49,7 @@
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
         <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,
-DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha, '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato 
+DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaInicio, '%Y-%m-%d') AS fechaInicioBis, ccm.fechaInicio 
 FROM liquidacion_comercial AS lf 
 LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
 LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
@@ -157,7 +158,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
         <Headerliqdet Ref="11" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,5.8,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="16">
+          <Components isList="true" count="15">
             <Headerliqdet_CA Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
@@ -377,23 +378,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_contrato>
-            <Headerliqdet_facNum Ref="25" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_facNum</Name>
-              <Page isRef="4" />
-              <Parent isRef="11" />
-              <Text>Factura</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_facNum>
-            <Headerliqdet_impCliente Ref="26" type="Text" isKey="true">
+            <Headerliqdet_impCliente Ref="25" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
@@ -410,7 +395,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqdet_impCliente>
-            <Headerliqdet_porComer Ref="27" type="Text" isKey="true">
+            <Headerliqdet_porComer Ref="26" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24.6,0,0.8,0.8</ClientRectangle>
@@ -433,11 +418,11 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
           <Page isRef="4" />
           <Parent isRef="4" />
         </Headerliqdet>
-        <Dataliqdet Ref="28" type="DataBand" isKey="true">
+        <Dataliqdet Ref="27" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,7.4,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="16">
-            <Dataliqdet_impCliente Ref="29" type="Text" isKey="true">
+          <Components isList="true" count="15">
+            <Dataliqdet_impCliente Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>5.6,0,1.8,0.8</ClientRectangle>
@@ -447,10 +432,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_impCliente</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.impCliente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="29" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -460,7 +445,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_impCliente>
-            <Dataliqdet_CA Ref="31" type="Text" isKey="true">
+            <Dataliqdet_CA Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>7.6,0,1.2,0.8</ClientRectangle>
@@ -470,10 +455,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_CA</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.CA}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="31" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -483,7 +468,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_CA>
-            <Dataliqdet_PC Ref="33" type="Text" isKey="true">
+            <Dataliqdet_PC Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>9,0,1.2,0.8</ClientRectangle>
@@ -493,13 +478,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_PC</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.PC}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_PC>
-            <Dataliqdet_PCA Ref="34" type="Text" isKey="true">
+            <Dataliqdet_PCA Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>10.4,0,1.8,0.8</ClientRectangle>
@@ -509,13 +494,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_PCA</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.PCA}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_PCA>
-            <Dataliqdet_PCO Ref="35" type="Text" isKey="true">
+            <Dataliqdet_PCO Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>12.4,0,1.4,0.8</ClientRectangle>
@@ -525,13 +510,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_PCO</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.PCO}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_PCO>
-            <Dataliqdet_ICO Ref="36" type="Text" isKey="true">
+            <Dataliqdet_ICO Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>14,0,1.6,0.8</ClientRectangle>
@@ -541,10 +526,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_ICO</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.ICO}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="37" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -554,7 +539,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_ICO>
-            <Dataliqdet_IJO Ref="38" type="Text" isKey="true">
+            <Dataliqdet_IJO Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>15.8,0,1.4,0.8</ClientRectangle>
@@ -564,10 +549,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_IJO</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.IJO}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="39" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -577,7 +562,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IJO>
-            <Dataliqdet_IOT Ref="40" type="Text" isKey="true">
+            <Dataliqdet_IOT Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>19,0,1.4,0.8</ClientRectangle>
@@ -587,10 +572,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_IOT</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.IOT}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -600,7 +585,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IOT>
-            <Dataliqdet_IAT Ref="42" type="Text" isKey="true">
+            <Dataliqdet_IAT Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>17.4,0,1.4,0.8</ClientRectangle>
@@ -610,10 +595,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_IAT</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.IAT}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -623,7 +608,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IAT>
-            <Dataliqdet_IC Ref="44" type="Text" isKey="true">
+            <Dataliqdet_IC Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>20.6,0,1.8,0.8</ClientRectangle>
@@ -633,10 +618,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_IC</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.IC}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -646,7 +631,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_IC>
-            <Dataliqdet_base_ Ref="46" type="Text" isKey="true">
+            <Dataliqdet_base_ Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>22.6,0,1.8,0.8</ClientRectangle>
@@ -656,10 +641,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_base_</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.base2}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -670,7 +655,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_base_>
-            <Dataliqdet_comision Ref="48" type="Text" isKey="true">
+            <Dataliqdet_comision Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>25.6,0,2,0.8</ClientRectangle>
@@ -680,10 +665,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_comision</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.comision}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -693,22 +678,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_comision>
-            <Dataliqdet_facNum Ref="50" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>1.8,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_facNum</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.facNum}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_facNum>
-            <Dataliqdet_fechaFactura Ref="51" type="Text" isKey="true">
+            <Dataliqdet_fechaFactura Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,1.6,0.8</ClientRectangle>
@@ -717,17 +687,17 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_fechaFactura</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.fechaFactura}</Text>
+              <Parent isRef="27" />
+              <Text>{liqdet.fechaInicioBis}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="52" type="DateFormat" isKey="true">
+              <TextFormat Ref="50" type="DateFormat" isKey="true">
                 <StringFormat>dd/MM/yyyy</StringFormat>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>DataColumn</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_fechaFactura>
-            <Dataliqdet_contrato Ref="53" type="Text" isKey="true">
+            <Dataliqdet_contrato Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
@@ -736,14 +706,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_contrato</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.contrato}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_contrato>
-            <Dataliqdet_porComer Ref="54" type="Text" isKey="true">
+            <Dataliqdet_porComer Ref="52" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>24.6,0,0.8,0.8</ClientRectangle>
@@ -753,7 +722,7 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqdet_porComer</Name>
               <Page isRef="4" />
-              <Parent isRef="28" />
+              <Parent isRef="27" />
               <Text>{liqdet.porComer}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -768,17 +737,17 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
           <Page isRef="4" />
           <Parent isRef="4" />
           <Sort isList="true" count="4">
-            <value>ASC</value>
-            <value>fecha</value>
+            <value>DESC</value>
+            <value>fechaInicio</value>
             <value>ASC</value>
             <value>contrato</value>
           </Sort>
         </Dataliqdet>
-        <GroupFooterBand1 Ref="55" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand1 Ref="53" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,9,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text1 Ref="56" type="Text" isKey="true">
+            <Text1 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -787,13 +756,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="4" />
-              <Parent isRef="55" />
+              <Parent isRef="53" />
               <Text>TOTAL COMISIONES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="57" type="Text" isKey="true">
+            <Text2 Ref="55" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.6,0,2,0.6</ClientRectangle>
@@ -803,10 +772,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="4" />
-              <Parent isRef="55" />
+              <Parent isRef="53" />
               <Text>{Sum(GroupHeaderBand1,liqdet.comision)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="56" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -832,13 +801,13 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="59" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="57" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="60" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="58" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -851,10 +820,10 @@ WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/25/2018 1:25:41 PM</ReportChanged>
+  <ReportChanged>9/25/2018 1:31:30 PM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_detalle.mrt</ReportFile>
-  <ReportGuid>5b491040cce4453d99174bf1d1e2cd66</ReportGuid>
+  <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_detalle_colaborador.mrt</ReportFile>
+  <ReportGuid>30c44aba32ec47608f19607372ff9e39</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
