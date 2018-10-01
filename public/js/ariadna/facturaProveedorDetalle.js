@@ -145,6 +145,7 @@ function initForm() {
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
+    $('#txtPorcentajeRetencionLinea').blur(cambioPrecioCantidad);
 
     
     initTablaFacturasLineas();
@@ -331,6 +332,9 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
+    self.importeRetencionLinea = ko.observable();
+    self.porcentajeRetencionLinea = ko.observable();
+
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -802,6 +806,55 @@ function aceptarLinea() {
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
         });
+        
+        //buscamos si existe el porcentaje de retencion de la factura
+        llamadaAjax("GET",  "/api/facturasProveedores/retenciones/" + vm.facproveId(), null, function (err, data) {
+            if (err) return;
+           
+            if(data.length == 0) {
+                verbo = "POST";
+                url =  "/api/facturasProveedores/retenciones";
+            } 
+            if(data.length > 0 && data.porcentajeRetencion == vm.porcentajeRetencionLinea()) {
+                for (var i = 0; i< data.length; i++) {
+                    if(data[i].porcentajeRetencion == vm.porcentajeRetencionLinea());
+                    verbo = "PUT";
+                    url =  "/api/facturasProveedores/retenciones";
+                    break;
+                }
+            }
+            if( data.length > 0 && data.porcentajeRetencion != vm.porcentajeRetencionLinea()) {
+                verbo = "POST";
+                url =  "/api/facturasProveedores/retenciones";
+            }
+            // si es update
+            if(verbo == "PUT") {
+                var resultado = data.importeRetencionLinea + vm.importeRetencionLinea()
+                var datos = {
+                    facproveReten: {
+                        facproveRetencionId: data.facproveRetencionId,
+                        facproveId: vm.facproveId(),
+                        baseRetencion: vm.totalLinea(),
+                        porcentajeRetencion: vm.porcentajeRetencionLinea(),
+                        importeRetencion: resultado
+                    }
+                }
+            } else {// si es creación
+                var datos = {
+                    facproveReten: {
+                        facproveRetencionId: 0,//forzaremos el uso del autoincrementio
+                        facproveId: vm.facproveId(),
+                        baseRetencion: vm.totalLinea(),
+                        porcentajeRetencion: vm.porcentajeRetencionLinea(),
+                        importeRetencion: vm.importeRetencionLinea()
+                    }
+                }
+            }
+            llamadaAjax(verbo, url, datos, function (err, resultado) {
+                if (err) return;
+               
+            });
+        });
     });
 }
 
@@ -995,6 +1048,8 @@ function loadDataLineaDefecto(data) {
     vm.cantidad(1);
     vm.importe(0);
     vm.porcentaje(0);
+    vm.porcentajeRetencionLinea(0);
+    vm.importeRetencionLinea(0);
    
     
     //
@@ -1138,6 +1193,11 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    //calculamos el importe de retencion
+    var porcentajeRetencionLinea = vm.porcentajeRetencionLinea();
+    if(porcentajeRetencionLinea != 0) {
+        vm.importeRetencionLinea((vm.porcentajeRetencionLinea() * vm.totalLinea())/100)
+    }
 }
 
 function editFacturaLinea(id) {
