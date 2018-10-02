@@ -805,13 +805,11 @@ function aceptarLinea() {
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET",  "/api/facturasProveedores/" + data.facproveId, null, function (err, data) {
-            cmd = "";
-            loadData(data);
-            loadLineasFactura(data.facproveId);
-            loadBasesFacprove(data.facproveId);
-        });
-        
+        cmd = "";
+        loadData(data);
+        loadLineasFactura(data.facproveId);
+        loadBasesFacprove(data.facproveId);
+       
         //buscamos si existe el porcentaje de retencion de la factura
         llamadaAjax("GET",  "/api/facturasProveedores/retenciones/" + vm.facproveId(), null, function (err, data) {
             if (err) return;
