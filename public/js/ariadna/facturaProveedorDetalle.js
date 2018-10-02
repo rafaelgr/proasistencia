@@ -20,6 +20,7 @@ var numServiciadas;
 var importeModificar = 0;
 
 var dataServiciadas;
+var dataLineas;
 
 
 var lineaEnEdicion = false;
@@ -150,6 +151,7 @@ function initForm() {
     
     initTablaFacturasLineas();
     initTablaBases();
+    initTablaRetenciones();
 
     facproveId = gup('facproveId');
     cmd = gup("cmd");
@@ -216,6 +218,7 @@ function initForm() {
             loadData(data);
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
+            loadRetencionesFacprove(data.facproveId);
             loadServiciadasFacprove(facproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
         })
@@ -789,6 +792,8 @@ function aceptarLinea() {
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             capituloLinea: vm.capituloLinea(),
+            porcentajeRetencion: vm.porcentajeRetencionLinea(),
+            importeRetencion: vm.importeRetencionLinea()
         }
     }
     var verbo = "POST";
@@ -810,33 +815,37 @@ function aceptarLinea() {
         //buscamos si existe el porcentaje de retencion de la factura
         llamadaAjax("GET",  "/api/facturasProveedores/retenciones/" + vm.facproveId(), null, function (err, data) {
             if (err) return;
-           
-            if(data.length == 0) {
-                verbo = "POST";
-                url =  "/api/facturasProveedores/retenciones";
-            } 
-            if(data.length > 0 && data.porcentajeRetencion == vm.porcentajeRetencionLinea()) {
+            var encontrado = false;
+            var acumuladoRetencion = 0;
+            var acumuladoBase = 0;
+            var id;
+            if(data.length > 0) {
+               
                 for (var i = 0; i< data.length; i++) {
-                    if(data[i].porcentajeRetencion == vm.porcentajeRetencionLinea());
-                    verbo = "PUT";
-                    url =  "/api/facturasProveedores/retenciones";
-                    break;
+                    if(data[i].porcentajeRetencion == vm.porcentajeRetencionLinea()) {
+                        verbo = "PUT";
+                        url =  "/api/facturasProveedores/retenciones/facprove/suma/importe";
+                        encontrado = true;
+                        acumuladoRetencion = data[i].importeRetencion;
+                        acumuladoBase = data[i].baseRetencion;
+                        id = data[i].facproveRetencionId
+                        break;
+                    }
                 }
             }
-            if( data.length > 0 && data.porcentajeRetencion != vm.porcentajeRetencionLinea()) {
+            if(!encontrado) {
                 verbo = "POST";
                 url =  "/api/facturasProveedores/retenciones";
             }
             // si es update
             if(verbo == "PUT") {
-                var resultado = data.importeRetencionLinea + vm.importeRetencionLinea()
                 var datos = {
                     facproveReten: {
-                        facproveRetencionId: data.facproveRetencionId,
+                        facproveRetencionId: id,
                         facproveId: vm.facproveId(),
-                        baseRetencion: vm.totalLinea(),
+                        baseRetencion: acumuladoBase + vm.totalLinea(),
                         porcentajeRetencion: vm.porcentajeRetencionLinea(),
-                        importeRetencion: resultado
+                        importeRetencion: acumuladoRetencion + vm.importeRetencionLinea()
                     }
                 }
             } else {// si es creación
@@ -852,7 +861,7 @@ function aceptarLinea() {
             }
             llamadaAjax(verbo, url, datos, function (err, resultado) {
                 if (err) return;
-               
+                loadRetencionesFacprove(data.facproveId);
             });
         });
     });
@@ -1080,6 +1089,7 @@ function loadLineasFactura(id) {
     llamadaAjax("GET", "/api/facturasProveedores/lineas/" + id, null, function (err, data) {
         if (err) return;
         var totalCoste = 0;
+        dataLineas = data;
         data.forEach(function (linea) {
             totalCoste += (linea.coste * linea.cantidad);
             vm.totalCoste(numeral(totalCoste).format('0,0.00'));
@@ -1224,6 +1234,7 @@ function deleteFacturaLinea(facproveLineaId) {
                 loadData(data);
                 loadLineasFactura(data.facproveId);
                 loadBasesFacprove(data.facproveId);
+                loadRetencionesFacprove(data.facproveId);
             });
         });
     }, function () {
@@ -1327,6 +1338,96 @@ function loadBasesFacprove(facproveId) {
         loadTablaBases(data);
     });
 }
+
+
+/*
+    Funciones relacionadas con la gestión de las retenciones
+*/
+
+function initTablaRetenciones() {
+    tablaCarro = $('#dt_retenciones').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_retenciones'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataBases,
+        columns: [{
+            data: "porcentajeRetencion",
+            render: function (data, type, row) {
+
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "porcentajeRetencion",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "baseRetencion",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "importeRetencion",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }]
+    });
+}
+
+
+function loadTablaRetenciones(data) {
+    var dt = $('#dt_retenciones').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function loadRetencionesFacprove(facproveId) {
+    llamadaAjax("GET", "/api/facturasProveedores/retenciones/" + facproveId, null, function (err, data) {
+        if (err) return;
+        
+        loadTablaRetenciones(data);
+    });
+}
+
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
@@ -1454,6 +1555,7 @@ var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
              llamadaAjax("GET",  "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
                  loadLineasFactura(data.facproveId);
                  loadBasesFacprove(data.facproveId);
+                 loadRetencionesFacprove(data.facproveId);
              });
          });
     }
