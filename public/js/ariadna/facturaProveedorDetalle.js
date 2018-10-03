@@ -844,7 +844,9 @@ function datosOKLineas() {
                 required: true
             },
             txtPorcentajeRetencionLinea: {
-                required: true
+                required: true,
+                number: true,
+                min: 1
             }
         },
         // Messages for form validation
