@@ -53,7 +53,6 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
     
 
 
@@ -805,62 +804,12 @@ function aceptarLinea() {
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        cmd = "";
-        loadData(data);
-        loadLineasFactura(data.facproveId);
-        loadBasesFacprove(data.facproveId);
-       
-        //buscamos si existe el porcentaje de retencion de la factura
-        llamadaAjax("GET",  "/api/facturasProveedores/retenciones/" + vm.facproveId(), null, function (err, data) {
-            if (err) return;
-            var encontrado = false;
-            var acumuladoRetencion = 0;
-            var acumuladoBase = 0;
-            var id;
-            if(data.length > 0) {
-               
-                for (var i = 0; i< data.length; i++) {
-                    if(data[i].porcentajeRetencion == vm.porcentajeRetencionLinea()) {
-                        verbo = "PUT";
-                        url =  "/api/facturasProveedores/retenciones/facprove/suma/importe";
-                        encontrado = true;
-                        acumuladoRetencion = data[i].importeRetencion;
-                        acumuladoBase = data[i].baseRetencion;
-                        id = data[i].facproveRetencionId
-                        break;
-                    }
-                }
-            }
-            if(!encontrado) {
-                verbo = "POST";
-                url =  "/api/facturasProveedores/retenciones";
-            }
-            // si es update
-            if(verbo == "PUT") {
-                var datos = {
-                    facproveReten: {
-                        facproveRetencionId: id,
-                        facproveId: vm.facproveId(),
-                        baseRetencion: acumuladoBase + vm.totalLinea(),
-                        porcentajeRetencion: vm.porcentajeRetencionLinea(),
-                        importeRetencion: acumuladoRetencion + vm.importeRetencionLinea()
-                    }
-                }
-            } else {// si es creación
-                var datos = {
-                    facproveReten: {
-                        facproveRetencionId: 0,//forzaremos el uso del autoincrementio
-                        facproveId: vm.facproveId(),
-                        baseRetencion: vm.totalLinea(),
-                        porcentajeRetencion: vm.porcentajeRetencionLinea(),
-                        importeRetencion: vm.importeRetencionLinea()
-                    }
-                }
-            }
-            llamadaAjax(verbo, url, datos, function (err, resultado) {
-                if (err) return;
-                loadRetencionesFacprove(data.facproveId);
-            });
+        llamadaAjax("GET",  "/api/facturasProveedores/" + data.facproveId, null, function (err, data) {
+            cmd = "";
+            loadData(data);
+            loadLineasFactura(data.facproveId);
+            loadBasesFacprove(data.facproveId);
+            loadRetencionesFacprove(data.facproveId);
         });
     });
 }
@@ -1039,6 +988,8 @@ function loadDataLinea(data) {
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
+    vm.importeRetencionLinea(data.importeRetencion);
+    vm.porcentajeRetencionLinea(data.porcentajeRetencion);
     //
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
@@ -1204,7 +1155,7 @@ var cambioPrecioCantidad = function () {
     //calculamos el importe de retencion
     var porcentajeRetencionLinea = vm.porcentajeRetencionLinea();
     if(porcentajeRetencionLinea != 0) {
-        vm.importeRetencionLinea((vm.porcentajeRetencionLinea() * vm.totalLinea())/100)
+        vm.importeRetencionLinea(roundToTwo((vm.porcentajeRetencionLinea() * vm.totalLinea())/100))
     }
 }
 
@@ -1329,11 +1280,17 @@ function loadBasesFacprove(facproveId) {
             t3 += data[i].cuota;
             t2 += data[i].base + data[i].cuota;
         }
-        vm.total(numeral(t1).format('0,0.00'));
-        vm.totalCuota(numeral(t3).format('0,0.00'))
-        vm.totalConIva(numeral(t2).format('0,0.00'));
-        if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
-        loadTablaBases(data);
+        llamadaAjax("GET", "/api/facturasProveedores/retenciones/" + facproveId, null, function (err, dataBis) {
+            if (err) return;
+            for(var j = 0; j < dataBis.length; j++) {
+                t2 = t2 - dataBis[j].importeRetencion;
+            }
+            vm.total(numeral(t1).format('0,0.00'));
+            vm.totalCuota(numeral(t3).format('0,0.00'))
+            vm.totalConIva(numeral(t2).format('0,0.00'));
+           
+            loadTablaBases(data);
+        });
     });
 }
 
@@ -1345,6 +1302,9 @@ function loadBasesFacprove(facproveId) {
 function initTablaRetenciones() {
     tablaCarro = $('#dt_retenciones').dataTable({
         autoWidth: true,
+        "columnDefs": [
+            { "width": "20%", "targets": 0 }
+          ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -1380,13 +1340,7 @@ function initTablaRetenciones() {
         data: dataBases,
         columns: [{
             data: "porcentajeRetencion",
-            render: function (data, type, row) {
-
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "porcentajeRetencion",
-            className: "text-right",
+            className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -1473,15 +1427,7 @@ var initAutoProveedor = function () {
     }, "Debe seleccionar un Proveedor válido");
 };
 
-var cambioPorcentajeRetencion = function () {
-    if (vm.porcentajeRetencion()) {
-        var total = numeroDbf(vm.total()) * 1.0;
-        var totalCuota = numeroDbf(vm.totalCuota()) * 1.0;
-        vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
-        var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
-        vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-    }
-}
+
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();

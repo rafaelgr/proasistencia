@@ -1,7 +1,7 @@
 CREATE TABLE `facprove_retenciones`(  
   `facproveRetencionId` INT(11) NOT NULL AUTO_INCREMENT,
   `facproveId` INT(11) NOT NULL,
-  `baseRetencion` DECIMAL(12,0),
+  `baseRetencion` DECIMAL(12,2),
   `porcentajeRetencion` DECIMAL(4,2),
   `importeRetencion` DECIMAL(12,2),
    KEY(`facproveRetencionId`),
