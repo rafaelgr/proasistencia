@@ -842,6 +842,9 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
+            },
+            txtPorcentajeRetencionLinea: {
+                required: true
             }
         },
         // Messages for form validation
@@ -867,6 +870,9 @@ function datosOKLineas() {
             txtPrecio: {
                 required: 'Necesita un precio',
                 min: "El precio no puede ser cero"
+            },
+            txtPorcentajeRetencionLinea: {
+                required: "Debe introducir un porcentaje"
             }
         },
         // Do not change code below
