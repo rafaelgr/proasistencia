@@ -1240,6 +1240,12 @@
                                     </section>
                                 </div>
                                 <div class="row">
+                                    <section class="col col-md-3">
+                                            <label class="label">Tipo Retención</label>
+                                            <label style="width:100%;">
+                                                <select style="width:100%" id="cmbTiposRetencion" name="cmbTiposRetencion" data-bind="options: posiblesTiposRetencion, optionsText: 'descripcion', optionsValue: 'codigo', value: scodigo, valueAllowUnset: true, selectedOptions: elegidosCodigos, selected2:{}"></select><i></i>
+                                            </label>
+                                    </section>
                                     <section class="col col-md-2">
                                         <label class="label">% Retencion</label>
                                         <label class="input">
@@ -1252,7 +1258,7 @@
                                             <input id="txtImporteRetencionLinea" name="txtImporteRetencionlinea" type="text" data-bind="value: importeRetencionLinea" disabled/>
                                         </label>
                                     </section>
-                                    <section class="col col-md-6"></section>
+                                    <section class="col col-md-3"></section>
                                 </div>
 
                             </section>

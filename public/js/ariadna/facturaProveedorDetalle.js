@@ -142,6 +142,13 @@ function initForm() {
         if (e.added) cambioTiposIva(e.added.id);
     });
 
+    $("#cmbTiposRetencion").select2(select2Spanish());
+    loadTiposRetencion();
+    $("#cmbTiposRetencion").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioTiposRetencion(e.added.id);
+    });
+
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
@@ -327,6 +334,7 @@ function admData() {
     self.linea = ko.observable();
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
+    self.codigo = ko.observable();
     self.porcentaje = ko.observable();
     self.descripcion = ko.observable();
     self.cantidad = ko.observable();
@@ -358,6 +366,14 @@ function admData() {
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
     //
+    self.scodigo = ko.observable();
+    //
+    self.posiblesTiposRetencion = ko.observableArray([]);
+    self.elegidosCodigos = ko.observableArray([]);
+    
+
+
+
     // Para calculadora de costes
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -1094,6 +1110,19 @@ function loadTiposIva(id) {
     });
 }
 
+function loadTiposRetencion(id) {
+    llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove", null, function (err, data) {
+        if (err) return;
+        var tiposReten = [{ codigo: 0, descripcion: "" }].concat(data);
+        vm.posiblesTiposRetencion(tiposReten);
+        if (id) {
+            $("#cmbTiposRetencion").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposRetencion").val([0]).trigger('change');
+        }
+    });
+}
+
 
 function loadUnidades(id) {
     llamadaAjax('GET', "/api/unidades", null, function (err, data) {
@@ -1148,10 +1177,21 @@ function cambioGrupoArticulo(grupoArticuloId) {
 
 function cambioTiposIva(tipoIvaId) {
     if (!tipoIvaId) return;
-    llamadaAjax("GET", "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
+    llamadaAjax("GET", "/api/tipo/" + tipoIvaId, null, function (err, data) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+       
+    });
+}
+
+
+function cambioTiposRetencion(codigo) {
+    if (!codigo) return;
+    llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
+        if (err) return;
+        vm.codigo(data.codigo);
+        vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
        
     });
 }
