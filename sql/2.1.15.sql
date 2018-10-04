@@ -18,6 +18,15 @@ ALTER TABLE `facprove_lineas`
   ADD COLUMN `codigoRetencion` SMALLINT(11) NULL AFTER `importeRetencion`,
   ADD COLUMN `cuentaRetencion` VARCHAR(10) NULL AFTER `codigoRetencion`;
 
+alter table `usuarios`.`wtiporeten` add column `porcentajePorDefecto` decimal (5,3)   
+NULL  after `tipo`, add column `cuentaPorDefecto` varchar (10)   NULL  after `porcentajePorDefecto`;
+
+
+
+
+UPDATE usuarios.wtiporeten SET porcentajePorDefecto = 15, cuentaPorDefecto = '475100003' WHERE codigo = 1;
+UPDATE usuarios.wtiporeten SET porcentajePorDefecto = 19, cuentaPorDefecto = '475100002' WHERE codigo = 3;
+
   
 
 

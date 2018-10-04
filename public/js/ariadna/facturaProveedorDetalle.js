@@ -344,6 +344,7 @@ function admData() {
     self.capituloLinea = ko.observable();
     self.importeRetencionLinea = ko.observable();
     self.porcentajeRetencionLinea = ko.observable();
+    self.cuentaRetencion = ko.observable();
 
     //
     self.sgrupoArticuloId = ko.observable();
@@ -810,7 +811,9 @@ function aceptarLinea() {
             porcentajeAgente: vm.porcentajeAgente(),
             capituloLinea: vm.capituloLinea(),
             porcentajeRetencion: vm.porcentajeRetencionLinea(),
-            importeRetencion: vm.importeRetencionLinea()
+            importeRetencion: vm.importeRetencionLinea(),
+            codigoRetencion: vm.codigo(),
+            cuentaRetencion: vm.cuentaRetencion()
         }
     }
     var verbo = "POST";
@@ -1020,6 +1023,7 @@ function loadDataLinea(data) {
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
+    loadTiposRetencion(data.codigoRetencion);
     loadUnidades(data.unidadId);
     //
 }
@@ -1034,6 +1038,7 @@ function loadDataLineaDefecto(data) {
     vm.porcentaje(0);
     vm.porcentajeRetencionLinea(0);
     vm.importeRetencionLinea(0);
+    vm.codigo(0);
    
     
     //
@@ -1115,8 +1120,7 @@ function loadTiposIva(id) {
 function loadTiposRetencion(id) {
     llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove", null, function (err, data) {
         if (err) return;
-        var tiposReten = [{ codigo: 0, descripcion: "" }].concat(data);
-        vm.posiblesTiposRetencion(tiposReten);
+        vm.posiblesTiposRetencion(data);
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
         } else {
@@ -1193,7 +1197,13 @@ function cambioTiposRetencion(codigo) {
     llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
         if (err) return;
         vm.codigo(data.codigo);
-        vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
+        if(vm.codigo() != 0) {
+            vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
+            vm.cuentaRetencion(data.cuentaRetencion);
+        } else {
+            vm.importeRetencionLinea(0);
+            vm.porcentajeRetencionLinea(0);
+        }
         cambioPrecioCantidad();
     });
 }
@@ -1206,6 +1216,9 @@ var cambioPrecioCantidad = function () {
     var porcentajeRetencionLinea = vm.porcentajeRetencionLinea();
     if(porcentajeRetencionLinea != 0) {
         vm.importeRetencionLinea(roundToTwo((vm.porcentajeRetencionLinea() * vm.totalLinea())/100))
+    } else {
+        vm.importeRetencionLinea(0);
+        vm.porcentajeRetencionLinea(0);
     }
 }
 
@@ -1352,9 +1365,7 @@ function loadBasesFacprove(facproveId) {
 function initTablaRetenciones() {
     tablaCarro = $('#dt_retenciones').dataTable({
         autoWidth: true,
-        "columnDefs": [
-            { "width": "20%", "targets": 0 }
-          ],
+        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -1389,6 +1400,8 @@ function initTablaRetenciones() {
         },
         data: dataBases,
         columns: [{
+            data: "descripcion",
+        },{
             data: "porcentajeRetencion",
             className: "text-left",
             render: function (data, type, row) {
