@@ -771,6 +771,8 @@ function limpiaDataLinea(data) {
     loadGrupoArticulos();
     // loadArticulos();
     loadTiposIva();
+
+    loadTiposRetencion(0);
     //
     loadArticulos();
     loadUnidades();
@@ -1177,7 +1179,7 @@ function cambioGrupoArticulo(grupoArticuloId) {
 
 function cambioTiposIva(tipoIvaId) {
     if (!tipoIvaId) return;
-    llamadaAjax("GET", "/api/tipo/" + tipoIvaId, null, function (err, data) {
+    llamadaAjax("GET", "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
@@ -1192,7 +1194,7 @@ function cambioTiposRetencion(codigo) {
         if (err) return;
         vm.codigo(data.codigo);
         vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
-       
+        cambioPrecioCantidad();
     });
 }
 
