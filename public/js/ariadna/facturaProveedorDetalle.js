@@ -1199,10 +1199,11 @@ function cambioTiposRetencion(codigo) {
         vm.codigo(data.codigo);
         if(vm.codigo() != 0) {
             vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
-            vm.cuentaRetencion(data.cuentaRetencion);
+            vm.cuentaRetencion(data.cuentaPorDefecto);
         } else {
             vm.importeRetencionLinea(0);
             vm.porcentajeRetencionLinea(0);
+            vm.cuentaRetencion('');
         }
         cambioPrecioCantidad();
     });
