@@ -335,6 +335,7 @@ function admData() {
     self.articuloId = ko.observable();
     self.tipoIvaId = ko.observable();
     self.codigo = ko.observable();
+    self.antCodigo = ko.observable();
     self.porcentaje = ko.observable();
     self.descripcion = ko.observable();
     self.cantidad = ko.observable();
@@ -793,6 +794,9 @@ function aceptarLinea() {
     if (!datosOKLineas()) {
         return;
     }
+
+    
+
     var data = {
         facproveLinea: {
             facproveLineaId: vm.facproveLineaId(),
@@ -863,11 +867,6 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
-            },
-            txtPorcentajeRetencionLinea: {
-                required: true,
-                number: true,
-                min: 1
             }
         },
         // Messages for form validation
@@ -893,9 +892,6 @@ function datosOKLineas() {
             txtPrecio: {
                 required: 'Necesita un precio',
                 min: "El precio no puede ser cero"
-            },
-            txtPorcentajeRetencionLinea: {
-                required: "Debe introducir un porcentaje"
             }
         },
         // Do not change code below
@@ -1123,9 +1119,12 @@ function loadTiposRetencion(id) {
         vm.posiblesTiposRetencion(data);
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
+            vm.antCodigo(id);
         } else {
             $("#cmbTiposRetencion").val([0]).trigger('change');
+            vm.antCodigo(0);
         }
+        vm.antCodigo()
     });
 }
 
@@ -1194,18 +1193,45 @@ function cambioTiposIva(tipoIvaId) {
 
 function cambioTiposRetencion(codigo) {
     if (!codigo) return;
-    llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
+    //comprobamos los tipos de retencion de la factura
+    var acumulado = 0;
+    var retSelec;
+    llamadaAjax("GET","/api/facturasProveedores/retenciones/" + vm.facproveId(), null, function (err, datos) {
         if (err) return;
-        vm.codigo(data.codigo);
-        if(vm.codigo() != 0) {
-            vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
-            vm.cuentaRetencion(data.cuentaPorDefecto);
-        } else {
-            vm.importeRetencionLinea(0);
-            vm.porcentajeRetencionLinea(0);
-            vm.cuentaRetencion('');
+        if(datos.length == 2) {// si hay dos tipos de retncion diferentes
+            retSelec = vm.scodigo();
+            //comprobamos que lA nueva retencion introducida no sea diferente de las dos que existen
+            for(var i = 0; i < datos.length; i++) {
+                if( vm.scodigo() != datos[i].codigoRetencion) {
+                    acumulado++;
+                }
+            }
         }
-        cambioPrecioCantidad();
+        if(acumulado == 2) {
+            mostratMnesajeTipoNoPermitido();
+            loadTiposRetencion(vm.antCodigo());
+            return;
+        }
+        if(datos.length == 1 &&  vm.scodigo() != 0) {
+            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo()) {
+                mostratMnesajeTipoNoPermitido();
+                loadTiposRetencion(vm.antCodigo());
+                return;
+            }
+        }
+        llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
+            if (err) return;
+            vm.codigo(data.codigo);
+            if(vm.codigo() != 0) {
+                vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
+                vm.cuentaRetencion(data.cuentaPorDefecto);
+            } else {
+                vm.importeRetencionLinea(0);
+                vm.porcentajeRetencionLinea(0);
+                vm.cuentaRetencion('');
+            }
+            cambioPrecioCantidad();
+        });
     });
 }
 
@@ -1587,6 +1613,11 @@ var mostrarMensajeFacturaGenerada = function () {
 
 var mostrarMensajeFacturaNueva = function () {
     var mens = "Introduzca las líneas de la nueva factura en el apartado correspondiente";
+    mensNormal(mens);
+}
+
+var mostratMnesajeTipoNoPermitido = function() {
+    var mens = "Solo se permiten tipos de retencion exentos y otro tipo en una misma factura";
     mensNormal(mens);
 }
 
