@@ -7,7 +7,7 @@ CREATE TABLE `facprove_retenciones`(
   `codigoRetencion` SMALLINT(11),
    `cuentaRetencion` VARCHAR(10),
    KEY(`facproveRetencionId`),
-  CONSTRAINT `fecproveRetencion_facproveFK` FOREIGN KEY (`facproveId`) REFERENCES `facprove`(`facproveId`) ON UPDATE CASCADE ON DELETE NO ACTION
+  CONSTRAINT `fecproveRetencion_facproveFK` FOREIGN KEY (`facproveId`) REFERENCES `facprove`(`facproveId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 

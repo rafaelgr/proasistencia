@@ -1220,6 +1220,7 @@ function cambioTiposRetencion(codigo) {
                 return;
             }
         }
+        
         llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
             if (err) return;
             vm.codigo(data.codigo);
