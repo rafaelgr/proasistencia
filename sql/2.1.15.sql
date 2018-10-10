@@ -15,7 +15,7 @@ CREATE TABLE `facprove_retenciones`(
 ALTER TABLE `facprove_lineas`   
   ADD COLUMN `porcentajeRetencion` DECIMAL(4,2) DEFAULT 0  AFTER `capituloLinea`,
   ADD COLUMN `importeRetencion` DECIMAL(12,2) DEFAULT 0 AFTER `porcentajeRetencion`,
-  ADD COLUMN `codigoRetencion` SMALLINT(11) NULL AFTER `importeRetencion`,
+  ADD COLUMN `codigoRetencion` SMALLINT(11) DEFAULT 0 AFTER `importeRetencion`,
   ADD COLUMN `cuentaRetencion` VARCHAR(10) NULL AFTER `codigoRetencion`;
 
 alter table `usuarios`.`wtiporeten` add column `porcentajePorDefecto` decimal (5,3)   

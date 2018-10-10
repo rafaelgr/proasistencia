@@ -306,6 +306,7 @@ function admData() {
     self.receptorProvincia = ko.observable();
     //
     self.total = ko.observable();
+    self.antTotal = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
     //
@@ -1235,7 +1236,16 @@ function cambioTiposRetencion(codigo) {
     });
 }
 
+function establecerTotal() {
+    if(vm.antTotal()) {
+        vm.total(vm.antTotal());
+    }
+}
+
 var cambioPrecioCantidad = function () {
+    
+        vm.antTotal(vm.total()); //guardamos el total
+    
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
