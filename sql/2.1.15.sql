@@ -27,6 +27,11 @@ NULL  after `tipo`, add column `cuentaPorDefecto` varchar (10)   NULL  after `po
 UPDATE usuarios.wtiporeten SET porcentajePorDefecto = 15, cuentaPorDefecto = '475100003' WHERE codigo = 1;
 UPDATE usuarios.wtiporeten SET porcentajePorDefecto = 19, cuentaPorDefecto = '475100002' WHERE codigo = 3;
 
-  
-
-
+UPDATE  facprove f, facprove_lineas AS li  
+SET li.porcentajeRetencion = f.porcentajeRetencion, li.importeRetencion = f.importeRetencion, li.codigoRetencion = 1, li.cuentaRetencion = 475100003
+   WHERE f.facproveId = li.facproveId AND f.contabilizada = 0 AND f.porcentajeRetencion = 15 AND f.facproveId != 69 
+   
+UPDATE  facprove f, facprove_lineas AS li  
+SET li.porcentajeRetencion = f.porcentajeRetencion, li.importeRetencion = f.importeRetencion, li.codigoRetencion = 3, li.cuentaRetencion = 475100002
+   WHERE f.facproveId = li.facproveId AND f.contabilizada = 0 AND f.porcentajeRetencion = 15 AND f.facproveId != 69 OR f.facproveId = li.facproveId AND 
+   f.contabilizada = 0 AND f.porcentajeRetencion = 0 AND f.facproveId != 69
