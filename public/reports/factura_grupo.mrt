@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "20db6665a2c142fabd3f5223e66f4a55",
+  "ReportGuid": "166f983d25ef44e9a5d9c5e9e883bc81",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1534149186348+0200)/",
+  "ReportChanged": "/Date(1539673521502+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -631,7 +631,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "GRUPO INMOBILIARIO METROPOLITANO S.A. CIF: A79088159 -AVDA DE AMERICA, 16 - 28028 MADRID. TEL. 913 686 943"
+                "Value": "GRUPO INMOBILIARIO METROPOLITANO S.A. CIF: A79088159 -AVDA DE AMERICA, 16 - 28028 MADRID. TEL. 913 683 943"
               },
               "HorAlignment": "Center",
               "Font": ";7;;",
@@ -1269,7 +1269,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,20.8,19,0.4",
+          "ClientRectangle": "0,20.8,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1338,7 +1338,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,22,19,0.6",
+          "ClientRectangle": "0,22.2,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1433,7 +1433,7 @@
         "10": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,23.4,19,2.8",
+          "ClientRectangle": "0,23.6,19,2.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },

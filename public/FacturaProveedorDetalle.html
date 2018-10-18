@@ -523,10 +523,7 @@
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
-                                                                        <label class="label">% Retención</label>
-                                                                        <label class="input">
-                                                                            <input id="txtPorcentajeRetencion" name="txtPorcentajeRetencion" type="text" data-bind="value: porcentajeRetencion"/>
-                                                                        </label>
+                                                                        
                                                                     </section>
                                                                     <section class="col col-md-2">
                                                                         <label class="label bloqueado">Importe retención</label>
@@ -940,6 +937,72 @@
                                     </article>
                                     <!-- WIDGET END -->
                                 </div>
+                                <div class="row" id="retenciones">
+                                    <!-- NEW WIDGET START -->
+                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <!-- Widget ID (each widget will need unique ID)-->
+                                        <div class="jarviswidget" id="wid-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                            <!-- widget options:
+                                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                                                    
+                                                data-widget-colorbutton="false" 
+                                                data-widget-editbutton="false"
+                                                data-widget-togglebutton="false"
+                                                data-widget-deletebutton="false"
+                                                data-widget-fullscreenbutton="false"
+                                                data-widget-custombutton="false"
+                                                data-widget-collapsed="true" 
+                                                data-widget-sortable="false"
+                                                    
+                                                -->
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                <h2>RETENCIONES</h2>
+                                            </header>
+                                            <!-- widget div-->
+                                            <div>
+                                                <!-- widget edit box -->
+                                                <div class="jarviswidget-editbox">
+                                                    <!-- This area used as dropdown edit box -->
+                                                    <input class="form-control" type="text">
+                                                </div>
+                                                <!-- end widget edit box -->
+                                                <!-- widget content -->
+                                                <div class="widget-body">
+                                                    <!-- this is what the user will see -->
+                                                    <h2>
+                                                        Retenciones
+                                                    </h2>
+                                                    <hr/>
+                                                    <div id="tbRetenciones">
+                                                        <table id="dt_retenciones" class="table table-striped table-bordered table-hover" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th data-hide="phone">
+                                                                        Tipo
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        Porcentaje
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        Base
+                                                                    </th>
+                                                                    <th data-hide="phone" class="text-right">
+                                                                        Cuota
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!-- end widget content -->
+                                            </div>
+                                            <!-- end widget div -->
+                                        </div>
+                                        <!-- end widget -->
+                                    </article>
+                                    <!-- WIDGET END -->
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="s2">
                                     <section id="widget-grid" class="">
@@ -1179,13 +1242,35 @@
                                         </label>
                                     </section>
                                 </div>
+                                <div class="row">
+                                    <section class="col col-md-3">
+                                            <label class="label">Tipo Retención</label>
+                                            <label style="width:100%;">
+                                                <select style="width:100%" id="cmbTiposRetencion" name="cmbTiposRetencion" data-bind="options: posiblesTiposRetencion, optionsText: 'descripcion', optionsValue: 'codigo', value: scodigo, valueAllowUnset: true, selectedOptions: elegidosCodigos, selected2:{}"></select><i></i>
+                                            </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">% Retencion</label>
+                                        <label class="input">
+                                            <input id="txtPorcentajeRetencionLinea" name="txtPorcentajeRetencionlinea" type="text" data-bind="value: porcentajeRetencionLinea" disabled/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="label">Importe Retencion</label>
+                                        <label class="input">
+                                            <input id="txtImporteRetencionLinea" name="txtImporteRetencionlinea" type="text" data-bind="value: importeRetencionLinea" disabled/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3"></section>
+                                </div>
+
                             </section>
                         </fieldset>
                         <footer>
                             <button id="btnAceptarLinea" class="btn btn-primary" onclick="aceptarLinea()">
                                 Aceptar
                             </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="establecerTotal()">
                                 Cancelar
                             </button>
                         </footer>
