@@ -1121,6 +1121,8 @@ function loadTiposRetencion(id) {
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
             vm.antCodigo(id);
+            vm.scodigo(id);
+        
         } else {
             $("#cmbTiposRetencion").val([0]).trigger('change');
             vm.antCodigo(0);
