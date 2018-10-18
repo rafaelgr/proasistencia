@@ -31,7 +31,7 @@ UPDATE  facprove f, facprove_lineas AS li
 SET li.porcentajeRetencion = f.porcentajeRetencion, li.importeRetencion = f.importeRetencion, li.codigoRetencion = 1, li.cuentaRetencion = 475100003
    WHERE f.facproveId = li.facproveId AND f.contabilizada = 0 AND f.porcentajeRetencion = 15 AND f.facproveId != 69 
    
-UPDATE  facprove f, facprove_lineas AS li  
-SET li.porcentajeRetencion = f.porcentajeRetencion, li.importeRetencion = f.importeRetencion, li.codigoRetencion = 3, li.cuentaRetencion = 475100002
-   WHERE f.facproveId = li.facproveId AND f.contabilizada = 0 AND f.porcentajeRetencion = 15 AND f.facproveId != 69 OR f.facproveId = li.facproveId AND 
-   f.contabilizada = 0 AND f.porcentajeRetencion = 0 AND f.facproveId != 69
+INSERT INTO facprove_retenciones (facproveId,baseRetencion,porcentajeRetencion,importeRetencion,codigoRetencion,cuentaretencion)
+   (SELECT li.facproveId, li.totalLinea, li.porcentajeRetencion, li.importeRetencion, li.codigoRetencion, li.cuentaRetencion FROM facprove_lineas AS li 
+LEFT JOIN facprove AS f ON f.facproveId = li.facproveId 
+WHERE  f.contabilizada = 0 AND f.facproveId != 69 AND f.porcentajeRetencion = 0 OR f.contabilizada = 0 AND f.facproveId != 69)
