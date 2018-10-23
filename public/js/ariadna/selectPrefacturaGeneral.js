@@ -295,6 +295,7 @@ function crearFactura() {
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0";
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0";
         if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0";
+        if(vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0";      
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) return;
             $("#btnAlta").hide();
