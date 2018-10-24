@@ -48,6 +48,7 @@ var tipos_profesional_router = require('./lib/tipos_profesional/tipos_profesiona
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
 var facturas_router = require('./lib/facturas/facturas_controller');
 var facturasProveedores_router = require('./lib/facturas_proveedores/facturasProveedores_controller');
+var servicios_router = require('./lib/servicios/servicios_controller');
 
 
 
@@ -152,6 +153,7 @@ app.use('/api/correoElectronico', correoElectronico);
 app.use('/api/plantillas_correo_facturas', plantillas_correo);
 app.use('/api/upload', upload);
 app.use('/api/cobros', cobros);
+app.use('/api/servicios', servicios_router);
 
 
 // -- start server
