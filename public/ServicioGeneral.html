@@ -360,8 +360,8 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administración</li>
-                <li>Usuarios</li>
+                <li>Servicios</li>
+                <li>Servicios</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -386,7 +386,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-mortar-board"></i>
-                            Usuarios <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Servicioss <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -439,7 +439,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento usuarios </h2>
+                                <h2>Mantenimiento servicios </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -454,7 +454,7 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Buscar usuarios por nombre.
+                                            Buscar servicios por nombre.
                                         </header>
                                         <fieldset>
                                             <div class="row">
@@ -477,18 +477,30 @@
                                             </div>
                                         </fieldset>
                                     </form>
-                                    <div id="tbUsuario" style="display:none;">
-                                        <table id="dt_usuario" class="table table-striped table-bordered table-hover" width="100%">
+                                    <div id="tbServicio" style="display:none;">
+                                        <table id="dt_servicio" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Usuario
                                                     </th>
                                                     <th data-hide="phone">
-                                                        Login
+                                                        Cliente
                                                     </th>
                                                     <th data-hide="phone">
-                                                        <i class="fa fa-fw fa-mail text-muted hidden-md hidden-sm hidden-xs"></i>Correo electrónico
+                                                        Agente
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Tipo De Profesional
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Dirección
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Descripción
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Autorización
                                                     </th>
                                                     <th>
                                                     </th>
@@ -589,7 +601,7 @@
         <script src="..."></script>-->
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/usuarioGeneral.js"></script>
+    <script src="js/ariadna/servicioGeneral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
