@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,6 +145,7 @@
             </a>
             </span>
         </div>
+        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -362,6 +363,7 @@
                 <li>Inicio</li>
                 <li>Servicios</li>
                 <li>Servicios</li>
+                <li>Detalle servicio</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -386,7 +388,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-mortar-board"></i>
-                            Servicioss <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Detalle servicio <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -451,65 +453,69 @@
                                 <!-- end widget edit box -->
                                 <!-- widget content -->
                                 <div class="widget-body">
-                                        <section class="col col-md-12"></section>
-                                        <section class="col col-md-12"></section>
                                     <!-- this is what the user will see -->
-                                    <!--<form id="frmBuscar" class="smart-form">
+                                    <form id="frmServicio" class="smart-form">
                                         <header>
-                                            Buscar servicios por nombre.
+                                            Direccion de trabajo.
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
+                                                <section class="col col-md-5">
+                                                    <label class="label">Calle</label>
                                                     <label class="input">
-                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
+                                                        <input id="txtNombre" name="txtNombre" type="text" data-bind="value: nombre" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-1">
+                                                    <label class="label">Nº</label>
+                                                    <label class="input">
+                                                        <input id="txtLogin" name="txtLogin" type="text" data-bind="value: login" />
+                                                    </label>
+                                                </section>
+                                            
+                                                <section class="col col-md-3">
+                                                    <label class="label">Poblacion</label>
+                                                    <label class="input">
+                                                        <input id="txtPassword1" name="txtPassword1" type="password" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3">
+                                                    <label class="label">Local Afectado</label>
+                                                    <label class="input">
+                                                        <input id="txtPassword2" name="txtPassword2" type="password" />
+                                                    </label>
+                                                </section>
+                                            </div>
+
+                                            <header>
+                                                    Persona de contacto.
+                                            </header>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Nombre</label>
+                                                    <label class="input">
+                                                        <input id="txtEmail" name="txtEmail" type="email" data-bind="value: email" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Cargo</label>
+                                                    <label class="select">
+                                                        <select id="cmbNivel" name="cmbNivel" ></select><i></i>
                                                     </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-search"></i>
+                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
-                                                <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
+                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-check"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
-                                    </form>-->
-                                    <div id="tbServicio" style="display:none;">
-                                        <table id="dt_servicio" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Usuario
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Cliente
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Agente
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Tipo De Profesional
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Dirección
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Descripción
-                                                    </th>
-                                                    <th data-hide="phone" >
-                                                        Autorización
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                    </form>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -530,7 +536,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -599,11 +605,13 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
+    <!--- KNOCKOUT JS -->
+    <script src="js/knockout-3.1.0.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/servicioGeneral.js"></script>
+    <script src="js/ariadna/servicioDetalle.js"></script>
+    <script src="js/ariadna/comun.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

@@ -23,11 +23,11 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    $('#btnBuscar').click(buscarServicios());
+    //$('#btnBuscar').click(buscarServicios());
     $('#btnAlta').click(crearServicio());
-    $('#frmBuscar').submit(function () {
+    /*$('#frmBuscar').submit(function () {
         return false
-    });
+    });*/
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarServicios();
@@ -66,6 +66,7 @@ function initForm() {
 function initTablaServicios() {
     tablaCarro = $('#dt_servicio').dataTable({
         autoWidth: true,
+        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -123,9 +124,10 @@ function initTablaServicios() {
             }
         }]
     });
+   
 }
 
-function datosOK() {
+/*function datosOK() {
     
     $('#frmBuscar').validate({
         rules: {
@@ -143,7 +145,7 @@ function datosOK() {
         }
     });
     return $('#frmBuscar').valid();
-}
+}*/
 
 function loadTablaServicios(data) {
     var dt = $('#dt_servicio').dataTable();
@@ -160,15 +162,15 @@ function loadTablaServicios(data) {
 
 function buscarServicios() {
     var mf = function () {
-        if (!datosOK()) {
+        /*if (!datosOK()) {
             return;
-        }
+        }*/
         // obtener el n.serie del certificado para la firma.
-        var aBuscar = $('#txtBuscar').val();
+       // var aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/servicios/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/servicios",
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -234,7 +236,7 @@ function editServicio(id) {
 }
 
 
-function buscarServicios() {
+/*function buscarServicios() {
     var mf = function () {
         if (!datosOK()) {
             return;
@@ -258,7 +260,7 @@ function buscarServicios() {
         });
     };
     return mf;
-}
+}*/
 
 buscarTodos = function(){
     var url = myconfig.apiUrl + "/api/servicios/";
