@@ -27,3 +27,7 @@ CONSTRAINT `refserv_cliente` FOREIGN KEY (`clienteId`) REFERENCES `proasistencia
 CONSTRAINT `refserv_agente` FOREIGN KEY (`agenteId`) REFERENCES `proasistencia`.`comerciales`(`comercialId`),
 CONSTRAINT `refserv_tipo_profesional` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `proasistencia`.`tipos_profesionales`(`tipoProfesionalId`)
 );
+
+ALTER TABLE `comerciales` 
+ADD COLUMN `loginWeb` VARCHAR(255) NULL AFTER `motivoBajaId`,
+ADD COLUMN `passWeb` VARCHAR(255) NULL AFTER `loginWeb`;

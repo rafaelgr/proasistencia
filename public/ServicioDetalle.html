@@ -455,54 +455,155 @@
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
                                     <form id="frmServicio" class="smart-form">
-                                        <header>
-                                            Direccion de trabajo.
+                                        <header style="border-bottom: 1px solid black">
+                                            <strong>Reparación de Averías 24H.</strong>
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-5">
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Usuario</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbUsuarios" name="cmbUsuarios" data-bind="options: posiblesUsuarios, optionsText: 'nombre', optionsValue: 'usuarioId', value: susuarioId, valueAllowUnset: true, selectedOptions: elegidosUsuarios, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                            
+                                           
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Agente</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                          
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Cliente</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbClientes" name="cmbClientes" data-bind="options: posiblesClientes, optionsText: 'nombre', optionsValue: 'clienteId', value: sclienteId, valueAllowUnset: true, selectedOptions: elegidosClientes, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Dirección de trabajo</legend>
+                                            <div class="row">
+                                                <section class="col col-md-4">
                                                     <label class="label">Calle</label>
                                                     <label class="input">
-                                                        <input id="txtNombre" name="txtNombre" type="text" data-bind="value: nombre" />
+                                                        <input id="txtCalle" name="txtCalle" type="text" data-bind="value: calle" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-1">
+                                                <section class="col col-md-2">
                                                     <label class="label">Nº</label>
                                                     <label class="input">
-                                                        <input id="txtLogin" name="txtLogin" type="text" data-bind="value: login" />
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
                                                     </label>
                                                 </section>
                                             
                                                 <section class="col col-md-3">
                                                     <label class="label">Poblacion</label>
                                                     <label class="input">
-                                                        <input id="txtPassword1" name="txtPassword1" type="password" />
+                                                        <input id="txtPoblacion" name="txtPoblacion" type="text" data-bind="value: poblacion" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
                                                     <label class="label">Local Afectado</label>
                                                     <label class="input">
-                                                        <input id="txtPassword2" name="txtPassword2" type="password" />
+                                                        <input id="txtLocalAfectado" name="txtLocalAfectado" type="text" data-bind="value: localAfectado" />
                                                     </label>
                                                 </section>
                                             </div>
-
-                                            <header>
-                                                    Persona de contacto.
-                                            </header>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Persona de contacto</legend>
                                             <div class="row">
                                                 <section class="col col-md-6">
                                                     <label class="label">Nombre</label>
                                                     <label class="input">
-                                                        <input id="txtEmail" name="txtEmail" type="email" data-bind="value: email" />
+                                                        <input id="txtPersonaContacto" name="txtPersonaContacto" type="text" data-bind="value: personaContacto" />
                                                     </label>
                                                 </section>
+                                                
                                                 <section class="col col-md-6">
-                                                    <label class="label">Cargo</label>
-                                                    <label class="select">
-                                                        <select id="cmbNivel" name="cmbNivel" ></select><i></i>
-                                                    </label>
+                                                        <label class="label">cargo</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbTipoProfesional" name="cmbTipoProfesional" data-bind="options: posiblesTiposProfesionales, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesionales, selected2:{}"></select>
+                                                            <i></i>
+                                                        </label>
                                                 </section>
+                                           </div>
+                                           <div class="row">
+                                               <section class="col col-md-4">
+                                                    <label class="label">Teléfono 1</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono1" name="txtTelefono1" type="text" data-bind="value: telefono1" />
+                                                    </label>
+                                               </section>
+                                               <section class="col col-md-4">
+                                                    <label class="label">Teléfono 2</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono2" name="txtTelefono2" type="text" data-bind="value: telefono2" />
+                                                    </label>
+                                               </section>
+                                               <section class="col col-md-4">
+                                                    <label class="label">Correo Electronico</label>
+                                                    <label class="input">
+                                                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" data-bind="value: correoElectronico" />
+                                                    </label>
+                                               </section>
+                                           </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend style="font-size: 1em">
+                                                Horario de atención
+                                            </legend>
+                                            <div class="row">
+                                                    <section class="col col-md-3">
+                                                         <label class="label">De</label>
+                                                         <label class="input">
+                                                             <input id="txtDeHoraAtencion" name="txtDeHoraAtencion" type="text" placeholder="00:00"  data-bind="value: deHoraAtencion" />
+                                                         </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                         <label class="label">a</label>
+                                                         <label class="input">
+                                                             <input id="txtAHoraAtencion" name="txtAHoraAtencion" type="text" placeholder="00:00" data-bind="value: aHoraAtencion" />
+                                                         </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                         <label class="label">De</label>
+                                                         <label class="input">
+                                                             <input id="txtDeDiaSemana" name="txtDeDiaSemana" type="text" placeholder="lunes" data-bind="value: deDiaSemana" />
+                                                         </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                            <label class="label">a</label>
+                                                            <label class="input">
+                                                                <input id="txtADiaSemana" name="txtADiaSemana"  type="text" placeholder="lunes" data-bind="value: aDiaSemana" />
+                                                            </label>
+                                                    </section>
+                                                </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Breve descripción de la avería</legend>
+                                            <div class="row">
+                                                    <section class="col col-md-12">
+                                                        <label class="textarea textarea-resizable">
+                                                            <textarea id="txtDescripcion" rows="3" class="custom-scroll" data-bind="value: descripcion"></textarea>
+                                                        </label>
+                                                    </section>
+                                            </div>
+                                            <div class="row">
+                                                    <section class="col col-md-12">
+                                                            <label class="checkbox">
+                                                                <input id="chkAutorizacion" type="checkbox" name="chkAutorizacion" data-bind="checked: autorizacion">
+                                                                <i></i>Autoriza la reparación de la avería, ajustando los precios a tarifas, el importe no superará 400€ +IVA, 
+                                                                de lo contrario se realizará la mínima intervención para evitar daños mayores, no se realizará ningún trabajo 
+                                                                que supere este importe sin la aceptación previa del presupuesto.
+                                                            </label>
+                                                        </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>

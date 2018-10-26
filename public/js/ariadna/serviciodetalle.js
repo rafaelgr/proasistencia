@@ -15,30 +15,53 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmServicio").submit(function() {
+    $("#frmServicio").submit(function () {
         return false;
     });
+
+    $("#cmbTipoProfesional").select2(select2Spanish());
+    loadTiposProfesionales();
+    //
+    $("#cmbUsuarios").select2(select2Spanish());
+    loadUsuarios();
+    //
+    $("#cmbAgentes").select2(select2Spanish());
+    loadAgentes();
+    $("#cmbAgentes").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioAgente(e.added.id);
+    });
+
+    //
+    $("#cmbClientes").select2(select2Spanish());
+    $("#cmbClientes").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioCliente(e.added.id);
+    });
+    
+
+
 
     adminId = gup('ServicioId');
     if (adminId != 0) {
         var data = {
-                servicioId: adminId
-            }
-            // hay que buscar ese elemento en concreto
+            servicioId: adminId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/servicios/" + adminId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -65,91 +88,113 @@ function admData() {
     self.aDiaSemana = ko.observable();
     self.descripcion = ko.observable();
     self.autorizacion = ko.observable();
+    //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesionales = ko.observableArray([]);
+    self.elegidosTiposProfesionales = ko.observableArray([]);
+
+    //
+    self.usuarioId = ko.observable();
+    self.susuarioId = ko.observable();
+    //
+    self.posiblesUsuarios = ko.observableArray([]);
+    self.elegidosUsuarios = ko.observableArray([]);
+
+    //
+    self.comercialId = ko.observable();
+    self.scomercialId = ko.observable();
+    //
+    self.posiblesComerciales = ko.observableArray([]);
+    self.elegidosComerciales = ko.observableArray([]);
+
+     //
+     self.clienteId = ko.observable();
+     self.sclienteId = ko.observable();
+     //
+     self.posiblesClientes = ko.observableArray([]);
+     self.elegidosClientes = ko.observableArray([]);
 }
-   
+
 
 function loadData(data) {
     vm.servicioId(data.servicioId);
-    vm.nombre(data.nombre);
-    vm.login(data.login);
-    vm.password(data.password);
-    vm.email(data.email);
-    
+    vm.usuarioId(data.usuarioId);
+    vm.comercialId(data.agenteId);
+    vm.clienteId(data.clienteId);
+    vm.tipoProfesionalId(data.tipoProfesionalId);
+    vm.calle(data.calle);
+    vm.numero(data.numero);
+    vm.poblacion(data.poblacion);
+    vm.codPostal(data.codPostal);
+    vm.provincia(data.provincia);
+    vm.localAfectado(data.localAfectado);
+    vm.personaContacto(data.personaContacto);
+    vm.telefono1(data.telefono1);
+    vm.telefono2(data.telefono2);
+    vm.correoElectronico(data.correoElectronico);
+    vm.deHoraAtencion(data.deHoraAtencion);
+    vm.aHoraAtencion(data.aHoraAtencion);
+    vm.deDiaSemana(data.deDiaSemana);
+    vm.aDiaSemana(data.aDiaSemana);
+    vm.descripcion(data.descripcion);
+    vm.autorizacion(data.autorizacion);
+
+    //
+    loadTiposProfesionales(data.tipoProfesionalId);
+    loadUsuarios(data.usuarioId);
+    loadAgentes(data.agenteId);
+    loadClientes(data.clienteId, null);
 }
+    
+
 
 function datosOK() {
-    // antes de la validación de form hay que verificar las password
-    if ($('#txtPassword1').val() !== "") {
-        // si ha puesto algo, debe coincidir con el otro campo
-        if ($('#txtPassword1').val() !== $('#txtPassword2').val()) {
-            mostrarMensajeSmart('Las contraseñas no coinciden');
-            return false;
-        }
-        vm.password($("#txtPassword1").val());
-    }
-    // controlamos que si es un alta debe dar una contraseña.
-    if (vm.servicioId() === 0 && $('#txtPassword1').val() === "") {
-        mostrarMensajeSmart('Debe introducir una contraseña en el alta');
-        return false;
-    }
+    
     $('#frmServicio').validate({
         rules: {
-            cmbNivel: {
-                required: true
-            },
-            txtNombre: {
-                required: true
-            },
-            txtLogin: {
-                required: true
-            },
-            txtEmail: {
-                required: true,
-                email: true
-            }
+           
         },
         // Messages for form validation
         messages: {
-            cmbNivel: {
-                required: "Debe seleccionar un nivel"
-            },
-            txtNombre: {
-                required: 'Introduzca el nombre'
-            },
-            txtLogin: {
-                required: 'Introduzca el login'
-            },
-            txtEmail: {
-                required: 'Introduzca el correo',
-                email: 'Debe usar un correo válido'
-            }
+            
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmServicio").validate().settings;
-    if (vm.nivel()) {
-        opciones.rules.cmbNivel.required = false;
-    } else {
-        opciones.rules.cmbNivel.required = true;
-    }
     return $('#frmServicio').valid();
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
             servicio: {
-                "servicioId": vm.servicioId(),
-                "login": vm.login(),
-                "email": vm.email(),
-                "nombre": vm.nombre(),
-                "password": vm.password(),
-                "nivel": vm.nivel().id
+                "servicioId":  vm.servicioId(),
+                "usuarioId": vm.susuarioId(),
+                "agenteId": vm.scomercialId(),
+                "clienteId": vm.clienteId(),
+                "tipoProfesionalId": vm.tipoProfesionalId(),
+                "calle": vm.calle(),
+                "numero": vm.numero(),
+                "poblacion": vm.poblacion(),
+                "codpostal": vm.codPostal(),
+                "provincia": vm.provincia(),
+                "localAfectado": vm.localAfectado(),
+                "personaContacto": vm.personaContacto(),
+                "telefono1": vm.telefono1(),
+                "telefono2": vm.telefono2(),
+                "correoElectronico": vm.correoElectronico(),
+                "deHoraAtencion": vm.deHoraAtencion(),
+                "aHoraAtencion": vm.aHoraAtencion(),
+                "deDiaSemana": vm.deDiaSemana(),
+                "aDiaSemana": vm.aDiaSemana(),
+                "descripcion": vm.descripcion(),
+                "autorizacion": vm.autorizacion()
             }
         };
         if (adminId == 0) {
@@ -159,14 +204,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "ServiciosGeneral.html?ServicioId=" + vm.servicioId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -178,14 +223,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "ServiciosGeneral.html?ServicioId=" + vm.servicioId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -196,9 +241,74 @@ function aceptar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "ServiciosGeneral.html";
         window.open(url, '_self');
     }
     return mf;
+}
+
+function loadTiposProfesionales(tipoProfesionalId) {
+    llamadaAjax("GET", "/api/tipos_profesional", null, function (err, data) {
+        if (err) return;
+        var profesional = [{ tipoProfesionalId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposProfesionales(profesional);
+        $("#cmbTipoProfesional").val([tipoProfesionalId]).trigger('change');
+    });
+}
+
+function loadUsuarios(usuarioId) {
+    llamadaAjax("GET", "/api/usuarios", null, function (err, data) {
+        if (err) return;
+        var usuarios = [{ usuarioId: 0, nombre: "" }].concat(data);
+        vm.posiblesUsuarios(usuarios);
+        $("#cmbUsuarios").val([usuarioId]).trigger('change');
+    });
+}
+
+function loadAgentes(agenteId) {
+    llamadaAjax("GET", "/api/comerciales", null, function (err, data) {
+        if (err) return;
+        var agentes = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesComerciales(agentes);
+        $("#cmbAgentes").val([agenteId]).trigger('change');
+    });
+}
+
+function loadClientes(clienteId, agenteId) {
+    var url = "/api/clientes/agente/" + agenteId
+    if(!agenteId) {
+        url = "/api/clientes"
+    }
+    llamadaAjax("GET",  url, null, function (err, data) {
+        if (err) return;
+        var clientes = [{ clienteId: 0, nombre: "" }].concat(data);
+        vm.posiblesClientes(clientes);
+        $("#cmbClientes").val([clienteId]).trigger('change');
+    });
+}
+
+function cambioAgente(agenteId) {
+    if (!agenteId) return;
+
+        loadClientes(0, agenteId);
+}
+
+
+function cambioCliente(clienteId) {
+    if (!clienteId) return;
+
+    llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
+        if(err) return;
+        if(data) {
+            //seperamos el numero de la direccion
+            var cadenas = data.direccion2.split(',');
+
+            vm.calle(cadenas[0]);
+            vm.numero(cadenas[1]);
+            vm.poblacion(data.poblacion2);
+            vm.codPostal(data.codPostal2);
+            vm.provincia(data.provincia2);
+        }
+    });
 }
