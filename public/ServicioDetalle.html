@@ -501,13 +501,27 @@
                                                     </label>
                                                 </section>
                                             
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Poblacion</label>
                                                     <label class="input">
                                                         <input id="txtPoblacion" name="txtPoblacion" type="text" data-bind="value: poblacion" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
+                                                    <label class="label">Provincia</label>
+                                                    <label class="input">
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: provincia" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Código Postal</label>
+                                                    <label class="input">
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: codPostal" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-12">
                                                     <label class="label">Local Afectado</label>
                                                     <label class="input">
                                                         <input id="txtLocalAfectado" name="txtLocalAfectado" type="text" data-bind="value: localAfectado" />
@@ -573,14 +587,16 @@
                                                     </section>
                                                     <section class="col col-md-3">
                                                          <label class="label">De</label>
-                                                         <label class="input">
-                                                             <input id="txtDeDiaSemana" name="txtDeDiaSemana" type="text" placeholder="lunes" data-bind="value: deDiaSemana" />
-                                                         </label>
+                                                         <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbDeDia" name="cmbDeDia" data-bind="options: posiblesDeDias, optionsText: 'deDiaNombre', optionsValue: 'deDiaSemana', value: sdeDiaSemana, valueAllowUnset: true, selectedOptions: elegidosDeDias, selected2:{}"></select>
+                                                            <i></i>
+                                                        </label>
                                                     </section>
                                                     <section class="col col-md-3">
                                                             <label class="label">a</label>
-                                                            <label class="input">
-                                                                <input id="txtADiaSemana" name="txtADiaSemana"  type="text" placeholder="lunes" data-bind="value: aDiaSemana" />
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbADia" name="cmbAdia" data-bind="options: posiblesADias, optionsText: 'aDiaNombre', optionsValue: 'aDiaSemana', value: saDiaSemana, valueAllowUnset: true, selectedOptions: elegidosADias, selected2:{}"></select>
+                                                                <i></i>
                                                             </label>
                                                     </section>
                                                 </div>

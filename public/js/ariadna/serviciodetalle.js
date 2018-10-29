@@ -31,8 +31,10 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioAgente(e.added.id);
     });
-
-
+    $('#cmbDeDia').select2(select2Spanish());
+    
+    $('#cmbADia').select2(select2Spanish());
+    
     adminId = gup('ServicioId');
     if (adminId != 0) {
         var data = {
@@ -75,8 +77,6 @@ function admData() {
     self.correoElectronico = ko.observable();
     self.deHoraAtencion = ko.observable();
     self.aHoraAtencion = ko.observable();
-    self.deDiaSemana = ko.observable();
-    self.aDiaSemana = ko.observable();
     self.descripcion = ko.observable();
     self.autorizacion = ko.observable();
     //
@@ -106,6 +106,80 @@ function admData() {
      //
      self.posiblesClientes = ko.observableArray([]);
      self.elegidosClientes = ko.observableArray([]);
+
+     //
+     self.posiblesDeDias = ko.observableArray([
+        {
+            'deDiaNombre': 'Lunes',
+            'deDiaSemana': 'Lunes'
+        }, 
+        {
+            'deDiaNombre': 'Martes',
+            'deDiaSemana': 'Martes'
+        },
+        {
+            'deDiaNombre': 'Miercoles',
+            'deDiaSemana': 'Miercoles'
+        }, 
+        {
+            'deDiaNombre': 'Jueves',
+            'deDiaSemana': 'Jueves'
+        }, 
+        {
+            'deDiaNombre': 'Viernes',
+            'deDiaSemana': 'Viernes'
+        }, 
+        {
+            'deDiaNombre': 'Sabado',
+            'deDiaSemana': 'Sabado'
+        }, 
+        {
+            'deDiaNombre': 'Domingo',
+            'deDiaSemana': 'Domingo'
+        }
+    ]);
+    self.deDiaSemana = ko.observable();
+     self.sdeDiaSemana = ko.observable();
+     //
+     self.elegidosDeDias = ko.observableArray([]);
+
+     //
+
+     self.posiblesADias = ko.observableArray([
+        {
+            'aDiaNombre': 'Lunes',
+            'aDiaSemana': 'Lunes'
+        }, 
+        {
+            'aDiaNombre': 'Martes',
+            'aDiaSemana': 'Martes'
+        },
+        {
+            'aDiaNombre': 'Miercoles',
+            'aDiaSemana': 'Miercoles'
+        }, 
+        {
+            'aDiaNombre': 'Jueves',
+            'aDiaSemana': 'Jueves'
+        }, 
+        {
+            'aDiaNombre': 'Viernes',
+            'aDiaSemana': 'Viernes'
+        }, 
+        {
+            'aDiaNombre': 'Sabado',
+            'aDiaSemana': 'Sabado'
+        }, 
+        {
+            'aDiaNombre': 'Domingo',
+            'aDiaSemana': 'Domingo'
+        }
+    ]);
+    self.aDiaSemana = ko.observable();
+     self.saDiaSemana = ko.observable();
+     //
+     self.elegidosADias = ko.observableArray([]);
+    
 }
 
 
@@ -127,8 +201,7 @@ function loadData(data) {
     vm.correoElectronico(data.correoElectronico);
     vm.deHoraAtencion(data.deHoraAtencion);
     vm.aHoraAtencion(data.aHoraAtencion);
-    vm.deDiaSemana(data.deDiaSemana);
-    vm.aDiaSemana(data.aDiaSemana);
+   
     vm.descripcion(data.descripcion);
     vm.autorizacion(data.autorizacion);
 
@@ -136,6 +209,8 @@ function loadData(data) {
     loadTiposProfesionales(data.tipoProfesionalId);
     loadUsuarios(data.usuarioId);
     loadAgentes(data.agenteId);
+    loadComboDeDia(data);
+    loadComboADia(data);
     cargaCliente(data.clienteId);
 }
     
@@ -145,11 +220,33 @@ function datosOK() {
     
     $('#frmServicio').validate({
         rules: {
+            txtDescripcion: { 
+                required: true
+            },
+            cmbTipoProfesional: {
+                required: true
+            },
+            txtCalle: {required: true},
+            txtNumero: {required: true},
+            txtPoblacion: {required: true},
+            txtLocalAfectado: {required: true},
+            txtPersonaContacto: {required: true},
+            txtTelefono1: {required: true}
            
         },
         // Messages for form validation
         messages: {
-            
+            txtDescripcion: { required: 'Deve introducir una descripción'},
+            cmbTipoProfesional: {
+                required: 'Deve intriducir un cargo'
+            },
+            txtCalle: {required: 'Requerido'},
+            txtNumero: {required: 'Requerido'},
+            txtPoblacion: {required: 'Debe introducir una población'},
+            txtLocalAfectado: {required: 'Debe introducir un local'},
+            txtPersonaContacto: {required: 'Debe intoducir una persona  de contacto'},
+            txtTelefono1: {required: 'Necesita un telefono'}
+
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -182,8 +279,8 @@ function aceptar() {
                 "correoElectronico": vm.correoElectronico(),
                 "deHoraAtencion": vm.deHoraAtencion(),
                 "aHoraAtencion": vm.aHoraAtencion(),
-                "deDiaSemana": vm.deDiaSemana(),
-                "aDiaSemana": vm.aDiaSemana(),
+                "deDiaSemana": vm.sdeDiaSemana(),
+                "aDiaSemana": vm.saDiaSemana(),
                 "descripcion": vm.descripcion(),
                 "autorizacion": vm.autorizacion()
             }
@@ -279,6 +376,17 @@ function loadClientes(clienteId, agenteId) {
     });
 }
 
+function loadComboDeDia(deDia){
+    $("#cmbDeDia option[value="+ deDia.deDiaSemana+"]").attr("selected",true).trigger('change');    
+}
+
+
+
+function loadComboADia(aDia){
+    $("#cmbADia option[value="+ aDia.aDiaSemana+"]").attr("selected",true).trigger('change');    
+}
+
+
 function cambioAgente(agenteId) {
     if (!agenteId) return;
 
@@ -314,7 +422,6 @@ var cargaCliente = function (id) {
         if (err) return;
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
-        vm.tipoClienteId(data.tipoClienteId);
     });
 };
 

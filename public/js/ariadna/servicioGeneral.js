@@ -113,7 +113,16 @@ function initTablaServicios() {
         },{
             data: "descripcion"
         },{
-            data: "autorizacion"
+            data: "autorizacion",
+            render: function(data, type, row) {
+               
+                if(data == 1) {
+                    return "Si"
+                }
+                if(data == 0) {
+                    return "No"
+                }
+            }
         },{
             data: "servicioId",
             render: function (data, type, row) {
