@@ -59,6 +59,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.servicioId(0);
+        vm.provincia('Madrid')
     }
 }
 
@@ -229,6 +230,7 @@ function datosOK() {
             txtCalle: {required: true},
             txtNumero: {required: true},
             txtPoblacion: {required: true},
+            txtProvincia: {required: true},
             txtLocalAfectado: {required: true},
             txtPersonaContacto: {required: true},
             txtTelefono1: {required: true}
@@ -243,6 +245,7 @@ function datosOK() {
             txtCalle: {required: 'Requerido'},
             txtNumero: {required: 'Requerido'},
             txtPoblacion: {required: 'Debe introducir una población'},
+            txtProvincia: {required: 'Debe introducir una provincia'},
             txtLocalAfectado: {required: 'Debe introducir un local'},
             txtPersonaContacto: {required: 'Debe intoducir una persona  de contacto'},
             txtTelefono1: {required: 'Necesita un telefono'}
