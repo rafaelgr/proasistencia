@@ -32,15 +32,6 @@ function initForm() {
         if (e.added) cambioAgente(e.added.id);
     });
 
-    //
-    $("#cmbClientes").select2(select2Spanish());
-    $("#cmbClientes").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioCliente(e.added.id);
-    });
-    
-
-
 
     adminId = gup('ServicioId');
     if (adminId != 0) {
@@ -145,7 +136,7 @@ function loadData(data) {
     loadTiposProfesionales(data.tipoProfesionalId);
     loadUsuarios(data.usuarioId);
     loadAgentes(data.agenteId);
-    loadClientes(data.clienteId, null);
+    cargaCliente(data.clienteId);
 }
     
 
@@ -177,8 +168,8 @@ function aceptar() {
                 "servicioId":  vm.servicioId(),
                 "usuarioId": vm.susuarioId(),
                 "agenteId": vm.scomercialId(),
-                "clienteId": vm.clienteId(),
-                "tipoProfesionalId": vm.tipoProfesionalId(),
+                "clienteId": vm.sclienteId(),
+                "tipoProfesionalId": vm.stipoProfesionalId(),
                 "calle": vm.calle(),
                 "numero": vm.numero(),
                 "poblacion": vm.poblacion(),
@@ -208,7 +199,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ServiciosGeneral.html?ServicioId=" + vm.servicioId();
+                    var url = "ServicioGeneral.html?ServicioId=" + vm.servicioId();
                     window.open(url, '_self');
                 },
                 error: function (err) {
@@ -227,7 +218,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ServiciosGeneral.html?ServicioId=" + vm.servicioId();
+                    var url = "ServicioGeneral.html?ServicioId=" + vm.servicioId();
                     window.open(url, '_self');
                 },
                 error: function (err) {
@@ -242,7 +233,7 @@ function aceptar() {
 
 function salir() {
     var mf = function () {
-        var url = "ServiciosGeneral.html";
+        var url = "ServicioGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -291,7 +282,7 @@ function loadClientes(clienteId, agenteId) {
 function cambioAgente(agenteId) {
     if (!agenteId) return;
 
-        loadClientes(0, agenteId);
+    initAutoCliente(agenteId);
 }
 
 
@@ -312,3 +303,65 @@ function cambioCliente(clienteId) {
         }
     });
 }
+
+
+//autocomplete
+
+// cargaCliente
+// carga en el campo txtCliente el valor seleccionado
+var cargaCliente = function (id) {
+    llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
+        vm.tipoClienteId(data.tipoClienteId);
+    });
+};
+
+
+
+var initAutoCliente = function (id) {
+    var url = "/api/clientes/?nombre=";
+    llamadaAjax("GET",  '/api/clientes/agente/' + id, null, function (err, dataUno) {
+        if (err) return;
+        // incialización propiamente dicha
+        $("#txtCliente").autocomplete({
+            source: function (request, response) {
+                if(dataUno.length > 0) {
+                    url = "/api/clientes/agente/cliente/" + request.term + "/" + id;
+                } else {
+                    url = "/api/clientes/?nombre=" + request.term;
+                }
+                // call ajax
+                llamadaAjax("GET", url, null, function (err, data) {
+                    if (err) return;
+                    var r = []
+                    data.forEach(function (d) {
+                        var v = {
+                            value: d.nombre,
+                            id: d.clienteId
+                        };
+                        r.push(v);
+                    });
+                    response(r);
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                vm.sclienteId(ui.item.id);
+                cambioCliente(ui.item.id);
+            }
+        });
+        // regla de validación para el control inicializado
+        jQuery.validator.addMethod("clienteNecesario", function (value, element) {
+            var r = false;
+            if (vm.sclienteId()) r = true;
+            return r;
+        }, "Debe seleccionar un cliente válido");
+        
+    });
+    var url = "/api/clientes/?nombre=";
+    if(id) {
+        
+    }
+};

@@ -23,11 +23,11 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    //$('#btnBuscar').click(buscarServicios());
+    $('#btnBuscar').click(buscarServicios());
     $('#btnAlta').click(crearServicio());
-    /*$('#frmBuscar').submit(function () {
+    $('#frmBuscar').submit(function () {
         return false
-    });*/
+    });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarServicios();
