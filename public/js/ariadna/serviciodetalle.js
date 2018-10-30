@@ -6,6 +6,8 @@ var adminId = 0;
 
 function initForm() {
     comprobarLogin();
+    var user = JSON.parse(getCookie("usuario"));
+    
     // de smart admin
     pageSetUp();
     // 
@@ -34,6 +36,9 @@ function initForm() {
     $('#cmbDeDia').select2(select2Spanish());
     
     $('#cmbADia').select2(select2Spanish());
+
+    initAutoCliente();
+   
     
     adminId = gup('ServicioId');
     if (adminId != 0) {
@@ -59,7 +64,8 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.servicioId(0);
-        vm.provincia('Madrid')
+        vm.provincia('Madrid');
+        loadUsuarios(user.usuarioId);
     }
 }
 
@@ -80,6 +86,7 @@ function admData() {
     self.aHoraAtencion = ko.observable();
     self.descripcion = ko.observable();
     self.autorizacion = ko.observable();
+    self.cargo = ko.observable();
     //
     self.tipoProfesionalId = ko.observable();
     self.stipoProfesionalId = ko.observable();
@@ -202,6 +209,7 @@ function loadData(data) {
     vm.correoElectronico(data.correoElectronico);
     vm.deHoraAtencion(data.deHoraAtencion);
     vm.aHoraAtencion(data.aHoraAtencion);
+    vm.cargo(data.cargo);
    
     vm.descripcion(data.descripcion);
     vm.autorizacion(data.autorizacion);
@@ -213,6 +221,10 @@ function loadData(data) {
     loadComboDeDia(data);
     loadComboADia(data);
     cargaCliente(data.clienteId);
+    if(data.comercialId) {
+        initAutoCliente(data.comercialId)
+    }
+   
 }
     
 
@@ -261,8 +273,14 @@ function datosOK() {
 
 function aceptar() {
     var mf = function () {
-        if (!datosOK())
-            return;
+        if (!datosOK()) return;
+
+        if(vm.susuarioId() == "0") vm.susuarioId(null);
+        if(vm.scomercialId() == "0") vm.scomercialId(null);
+        if(vm.sclienteId() == "" || vm.sclienteId() == "   ") vm.clienteId(null);
+        if(vm.stipoProfesionalId() == "0") vm.stipoProfesionalId(null);
+
+
         var data = {
             servicio: {
                 "servicioId":  vm.servicioId(),
@@ -285,7 +303,8 @@ function aceptar() {
                 "deDiaSemana": vm.sdeDiaSemana(),
                 "aDiaSemana": vm.saDiaSemana(),
                 "descripcion": vm.descripcion(),
-                "autorizacion": vm.autorizacion()
+                "autorizacion": vm.autorizacion(),
+                "cargo": vm.cargo()
             }
         };
         if (adminId == 0) {
@@ -421,16 +440,23 @@ function cambioCliente(clienteId) {
 // cargaCliente
 // carga en el campo txtCliente el valor seleccionado
 var cargaCliente = function (id) {
-    llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
-        if (err) return;
-        $('#txtCliente').val(data.nombre);
-        vm.sclienteId(data.clienteId);
-    });
+    if(!id) {
+        vm.clienteId("");
+    } else {
+        llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+            if (err) return;
+            $('#txtCliente').val(data.nombre);
+            vm.clienteId(data.clienteId);
+        });
+    }
 };
 
 
 
 var initAutoCliente = function (id) {
+    if(!id) {
+        id = 1;
+    }
     var url = "/api/clientes/?nombre=";
     llamadaAjax("GET",  '/api/clientes/agente/' + id, null, function (err, dataUno) {
         if (err) return;
@@ -470,8 +496,5 @@ var initAutoCliente = function (id) {
         }, "Debe seleccionar un cliente válido");
         
     });
-    var url = "/api/clientes/?nombre=";
-    if(id) {
-        
-    }
+    
 };

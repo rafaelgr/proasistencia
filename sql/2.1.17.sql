@@ -4,6 +4,7 @@ CREATE TABLE `servicios` (
 `clienteId` INT(11),
 `agenteId` INT(11),
 `tipoProfesionalId` INT(11),
+`cargo` VARCHAR(255),
 `fechaCreacion` DATETIME,
 `calle` VARCHAR(255),
 `numero` VARCHAR(255),

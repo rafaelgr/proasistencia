@@ -460,7 +460,7 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                    <section class="col col-md-4">
+                                                    <section class="col col-md-3">
                                                             <label class="label">Usuario</label>
                                                             <label style="width:100%; height:50px;">
                                                                 <select style="width:100%" id="cmbUsuarios" name="cmbUsuarios" data-bind="options: posiblesUsuarios, optionsText: 'nombre', optionsValue: 'usuarioId', value: susuarioId, valueAllowUnset: true, selectedOptions: elegidosUsuarios, selected2:{}"></select>
@@ -469,15 +469,22 @@
                                                     </section>
                                             
                                            
-                                                    <section class="col col-md-4">
+                                                    <section class="col col-md-3">
                                                             <label class="label">Agente</label>
                                                             <label style="width:100%; height:50px;">
                                                                 <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
                                                                 <i></i>
                                                             </label>
                                                     </section>
+                                                    <section class="col col-md-3">
+                                                        <label class="label">Tipo profesional</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbTipoProfesional" name="cmbTipoProfesional" data-bind="options: posiblesTiposProfesionales, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesionales, selected2:{}"></select>
+                                                            <i></i>
+                                                        </label>
+                                                    </section>
                                           
-                                                    <section class="col col-md-4">
+                                                    <section class="col col-md-3">
                                                         <label class="label">Cliente</label>
                                                         <label class="input">
                                                             <input id="txtCliente" name="txtCliente" />
@@ -540,10 +547,9 @@
                                                 </section>
                                                 
                                                 <section class="col col-md-6">
-                                                        <label class="label">cargo</label>
-                                                        <label style="width:100%; height:50px;">
-                                                            <select style="width:100%" id="cmbTipoProfesional" name="cmbTipoProfesional" data-bind="options: posiblesTiposProfesionales, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesionales, selected2:{}"></select>
-                                                            <i></i>
+                                                        <label class="label">Cargo</label>
+                                                        <label class="input">
+                                                            <input id="txtCargo" name="txtCargo" type="text" data-bind="value: cargo" />
                                                         </label>
                                                 </section>
                                            </div>
@@ -585,19 +591,25 @@
                                                              <input id="txtAHoraAtencion" name="txtAHoraAtencion" type="text" placeholder="00:00" data-bind="value: aHoraAtencion" />
                                                          </label>
                                                     </section>
-                                                    <section class="col col-md-3">
+                                                    <section class="col col-md-2">
                                                          <label class="label">De</label>
                                                          <label style="width:100%; height:50px;">
                                                             <select style="width:100%" id="cmbDeDia" name="cmbDeDia" data-bind="options: posiblesDeDias, optionsText: 'deDiaNombre', optionsValue: 'deDiaSemana', value: sdeDiaSemana, valueAllowUnset: true, selectedOptions: elegidosDeDias, selected2:{}"></select>
                                                             <i></i>
                                                         </label>
                                                     </section>
-                                                    <section class="col col-md-3">
+                                                    <section class="col col-md-2">
                                                             <label class="label">a</label>
                                                             <label style="width:100%; height:50px;">
                                                                 <select style="width:100%" id="cmbADia" name="cmbAdia" data-bind="options: posiblesADias, optionsText: 'aDiaNombre', optionsValue: 'aDiaSemana', value: saDiaSemana, valueAllowUnset: true, selectedOptions: elegidosADias, selected2:{}"></select>
                                                                 <i></i>
                                                             </label>
+                                                    </section>
+                                                    <section class="col col-md-2">
+                                                        <label class="label">Fecha </label>
+                                                        <label class="input">
+                                                            <input id="txtFecha" name="txtFecha" data-bind="value: fecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                        </label>
                                                     </section>
                                                 </div>
                                         </fieldset>
@@ -606,7 +618,7 @@
                                             <div class="row">
                                                     <section class="col col-md-12">
                                                         <label class="textarea textarea-resizable">
-                                                            <textarea id="txtDescripcion" rows="3" class="custom-scroll" data-bind="value: descripcion"></textarea>
+                                                            <textarea id="txtDescripcion" name="txtDescripcion"rows="3" class="custom-scroll" data-bind="value: descripcion"></textarea>
                                                         </label>
                                                     </section>
                                             </div>
