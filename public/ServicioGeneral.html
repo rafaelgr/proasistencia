@@ -360,8 +360,8 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administración</li>
-                <li>Tipos de via</li>
+                <li>Servicios</li>
+                <li>Servicios</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -385,8 +385,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-map-marker"></i>
-                            Tipos de via <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-mortar-board"></i>
+                            Servicios <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -439,7 +439,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento de tipos de via </h2>
+                                <h2>Mantenimiento servicios </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -451,10 +451,12 @@
                                 <!-- end widget edit box -->
                                 <!-- widget content -->
                                 <div class="widget-body">
+                                        <section class="col col-md-12"></section>
+                                        <section class="col col-md-12"></section>
                                     <!-- this is what the user will see -->
                                     <form id="frmBuscar" class="smart-form">
-                                        <header>
-                                            Buscar tipos de via por nombre.
+                                        <!--<header>
+                                            Buscar servicios por nombre.
                                         </header>
                                         <fieldset>
                                             <div class="row">
@@ -465,24 +467,42 @@
                                                     </label>
                                                 </section>
                                             </div>
-                                        </fieldset>
+                                        </fieldset>-->
                                         <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-search"></i>
-                                                </button>
-                                                <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
+                                                <div class="pull-right">
+                                                    <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-search"></i>
+                                                    </button>
+                                                    <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-plus"></i>
+                                                    </button>
                                             </div>
                                         </fieldset>
                                     </form>
-                                    <div id="tbTipoVia" style="display:none;">
-                                        <table id="dt_tipoVia" class="table table-striped table-bordered table-hover" width="100%">
+                                    <div id="tbServicio" style="display:none;">
+                                        <table id="dt_servicio" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Usuario
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Cliente
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Agente
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Tipo De Profesional
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Dirección
+                                                    </th>
+                                                    <th data-hide="tablet,phone">
+                                                        Descripción
+                                                    </th>
+                                                    <th data-hide="tablet,phone" >
+                                                        Autorización
                                                     </th>
                                                     <th>
                                                     </th>
@@ -583,7 +603,7 @@
         <script src="..."></script>-->
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/tipoViaGeneral.js"></script>
+    <script src="js/ariadna/servicioGeneral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

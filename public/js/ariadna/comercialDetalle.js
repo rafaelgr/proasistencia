@@ -144,6 +144,8 @@ function admData() {
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
     self.porComer = ko.observable();
+    self.loginWeb = ko.observable();
+    self.passWeb = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -198,6 +200,8 @@ function loadData(data) {
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.poblacion(data.poblacion);
+    vm.loginWeb(data.loginWeb);
+    vm.passWeb(data.passWeb);
     loadTiposComerciales(data.tipoComercialId);
     loadAscComerciales(data.ascComercialId);
     vm.iban(data.iban);
@@ -344,7 +348,9 @@ function aceptar() {
                 "iban": vm.iban(),
                 "porComer": vm.porComer(),
                 "tipoViaId": vm.stipoViaId(),
-                "motivoBajaId": vm.smotivoBajaId()
+                "motivoBajaId": vm.smotivoBajaId(),
+                "loginWeb": vm.loginWeb(),
+                "passWeb": vm.passWeb()
             }
         };
         if (empId == 0) {

@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,6 +145,7 @@
             </a>
             </span>
         </div>
+        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -360,8 +361,9 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administración</li>
-                <li>Tipos de via</li>
+                <li>Servicios</li>
+                <li>Servicios</li>
+                <li>Detalle servicio</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -385,8 +387,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-map-marker"></i>
-                            Tipos de via <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-mortar-board"></i>
+                            Detalle servicio <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -439,7 +441,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento de tipos de via </h2>
+                                <h2>Mantenimiento servicios </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -452,44 +454,201 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmBuscar" class="smart-form">
-                                        <header>
-                                            Buscar tipos de via por nombre.
+                                    <form id="frmServicio" class="smart-form">
+                                        <header style="border-bottom: 1px solid black">
+                                            <strong>Reparación de Averías 24H.</strong>
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Introduzca el texto a buscar (* = Ver todos)</label>
+                                                    <section class="col col-md-3">
+                                                            <label class="label">Fecha de creación</label>
+                                                            <label class="input">
+                                                                <input id="txtFechaCreacion" name="txtFechaCreacion" data-bind="value: fechaCreacion" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                            </label>
+                                                        </section>
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Usuario</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbUsuarios" name="cmbUsuarios" data-bind="options: posiblesUsuarios, optionsText: 'nombre', optionsValue: 'usuarioId', value: susuarioId, valueAllowUnset: true, selectedOptions: elegidosUsuarios, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                            
+                                           
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Agente</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbAgentes" name="cmbAgentes" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                                    <section class="col col-md-1"></section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-md-4">
+                                                        <label class="label">Tipo profesional</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbTipoProfesional" name="cmbTipoProfesional" data-bind="options: posiblesTiposProfesionales, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesionales, selected2:{}"></select>
+                                                            <i></i>
+                                                        </label>
+                                                    </section>
+                                          
+                                                    <section class="col col-md-5">
+                                                        <label class="label">Cliente</label>
+                                                        <label class="input">
+                                                            <input id="txtCliente" name="txtCliente" />
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-md-3"></section>
+                                                </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Dirección de trabajo</legend>
+                                            <div class="row">
+                                                <section class="col col-md-4">
+                                                    <label class="label">Calle</label>
                                                     <label class="input">
-                                                        <input id="txtBuscar" name="txtBuscar" type="text" />
+                                                        <input id="txtCalle" name="txtCalle" type="text" data-bind="value: calle" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Nº</label>
+                                                    <label class="input">
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
+                                                    </label>
+                                                </section>
+                                            
+                                                <section class="col col-md-2">
+                                                    <label class="label">Poblacion</label>
+                                                    <label class="input">
+                                                        <input id="txtPoblacion" name="txtPoblacion" type="text" data-bind="value: poblacion" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Provincia</label>
+                                                    <label class="input">
+                                                        <input id="txtProvincia" name="txtProvincia" type="text"  data-bind="value: provincia" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Código Postal</label>
+                                                    <label class="input">
+                                                        <input id="txtNumero" name="txtNumero" type="text" data-bind="value: codPostal" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Local Afectado</label>
+                                                    <label class="input">
+                                                        <input id="txtLocalAfectado" name="txtLocalAfectado" type="text" data-bind="value: localAfectado" />
                                                     </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>
+                                            <legend>Persona de contacto</legend>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Nombre</label>
+                                                    <label class="input">
+                                                        <input id="txtPersonaContacto" name="txtPersonaContacto" type="text" data-bind="value: personaContacto" />
+                                                    </label>
+                                                </section>
+                                                
+                                                <section class="col col-md-6">
+                                                        <label class="label">Cargo</label>
+                                                        <label class="input">
+                                                            <input id="txtCargo" name="txtCargo" type="text" data-bind="value: cargo" />
+                                                        </label>
+                                                </section>
+                                           </div>
+                                           <div class="row">
+                                               <section class="col col-md-4">
+                                                    <label class="label">Teléfono 1</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono1" name="txtTelefono1" type="text" data-bind="value: telefono1" />
+                                                    </label>
+                                               </section>
+                                               <section class="col col-md-4">
+                                                    <label class="label">Teléfono 2</label>
+                                                    <label class="input">
+                                                        <input id="txtTelefono2" name="txtTelefono2" type="text" data-bind="value: telefono2" />
+                                                    </label>
+                                               </section>
+                                               <section class="col col-md-4">
+                                                    <label class="label">Correo Electronico</label>
+                                                    <label class="input">
+                                                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" data-bind="value: correoElectronico" />
+                                                    </label>
+                                               </section>
+                                           </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend style="font-size: 1em">
+                                                Horario de atención
+                                            </legend>
+                                            <div class="row">
+                                                    <section class="col col-md-3">
+                                                         <label class="label">De</label>
+                                                         <label class="input">
+                                                             <input id="txtDeHoraAtencion" name="txtDeHoraAtencion" type="text" placeholder="00:00"  data-bind="value: deHoraAtencion" />
+                                                         </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                         <label class="label">a</label>
+                                                         <label class="input">
+                                                             <input id="txtAHoraAtencion" name="txtAHoraAtencion" type="text" placeholder="00:00" data-bind="value: aHoraAtencion" />
+                                                         </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                         <label class="label">De</label>
+                                                         <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbDeDia" name="cmbDeDia" data-bind="options: posiblesDeDias, optionsText: 'deDiaNombre', optionsValue: 'deDiaSemana', value: sdeDiaSemana, valueAllowUnset: true, selectedOptions: elegidosDeDias, selected2:{}"></select>
+                                                            <i></i>
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-md-3">
+                                                            <label class="label">a</label>
+                                                            <label style="width:100%; height:50px;">
+                                                                <select style="width:100%" id="cmbADia" name="cmbAdia" data-bind="options: posiblesADias, optionsText: 'aDiaNombre', optionsValue: 'aDiaSemana', value: saDiaSemana, valueAllowUnset: true, selectedOptions: elegidosADias, selected2:{}"></select>
+                                                                <i></i>
+                                                            </label>
+                                                    </section>
+                                                    
+                                                </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Breve descripción de la avería</legend>
+                                            <div class="row">
+                                                    <section class="col col-md-12">
+                                                        <label class="textarea textarea-resizable">
+                                                            <textarea id="txtDescripcion" name="txtDescripcion"rows="3" class="custom-scroll" data-bind="value: descripcion"></textarea>
+                                                        </label>
+                                                    </section>
+                                            </div>
+                                            <div class="row">
+                                                    <section class="col col-md-12">
+                                                            <label class="checkbox">
+                                                                <input id="chkAutorizacion" type="checkbox" name="chkAutorizacion" data-bind="checked: autorizacion">
+                                                                <i></i>Autoriza la reparación de la avería, ajustando los precios a tarifas, el importe no superará 400€ +IVA, 
+                                                                de lo contrario se realizará la mínima intervención para evitar daños mayores, no se realizará ningún trabajo 
+                                                                que supere este importe sin la aceptación previa del presupuesto.
+                                                            </label>
+                                                        </section>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-search"></i>
+                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
-                                                <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
+                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-check"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
                                     </form>
-                                    <div id="tbTipoVia" style="display:none;">
-                                        <table id="dt_tipoVia" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -510,7 +669,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -544,6 +703,8 @@
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
+     <!-- MOMENT -->
+     <script src="js/moment.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
@@ -579,11 +740,13 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
+    <!--- KNOCKOUT JS -->
+    <script src="js/knockout-3.1.0.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/tipoViaGeneral.js"></script>
+    <script src="js/ariadna/servicioDetalle.js"></script>
+    <script src="js/ariadna/comun.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
