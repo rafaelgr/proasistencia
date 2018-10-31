@@ -12,7 +12,7 @@ var dataServicios;
 var servicioId;
 
 var breakpointDefinition = {
-    tablet: 1024,
+    tablet: 724,
     phone: 480
 };
 
