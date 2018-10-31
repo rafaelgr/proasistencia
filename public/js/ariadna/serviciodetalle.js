@@ -38,6 +38,8 @@ function initForm() {
     $('#cmbADia').select2(select2Spanish());
 
     initAutoCliente();
+
+    datePickerSpanish(); // see comun.js
    
     
     adminId = gup('ServicioId');
@@ -66,6 +68,7 @@ function initForm() {
         vm.servicioId(0);
         vm.provincia('Madrid');
         loadUsuarios(user.usuarioId);
+        vm.fechaCreacion(moment(new Date()).format('DD/MM/YYYY'));
     }
 }
 
@@ -87,6 +90,7 @@ function admData() {
     self.descripcion = ko.observable();
     self.autorizacion = ko.observable();
     self.cargo = ko.observable();
+    self.fechaCreacion = ko.observable();
     //
     self.tipoProfesionalId = ko.observable();
     self.stipoProfesionalId = ko.observable();
@@ -196,6 +200,7 @@ function loadData(data) {
     vm.usuarioId(data.usuarioId);
     vm.comercialId(data.agenteId);
     vm.clienteId(data.clienteId);
+    vm.sclienteId(data.clienteId);
     vm.tipoProfesionalId(data.tipoProfesionalId);
     vm.calle(data.calle);
     vm.numero(data.numero);
@@ -210,6 +215,7 @@ function loadData(data) {
     vm.deHoraAtencion(data.deHoraAtencion);
     vm.aHoraAtencion(data.aHoraAtencion);
     vm.cargo(data.cargo);
+    vm.fechaCreacion(spanishDate(data.fechaCreacion));
    
     vm.descripcion(data.descripcion);
     vm.autorizacion(data.autorizacion);
@@ -236,31 +242,27 @@ function datosOK() {
             txtDescripcion: { 
                 required: true
             },
-            cmbTipoProfesional: {
-                required: true
-            },
             txtCalle: {required: true},
             txtNumero: {required: true},
             txtPoblacion: {required: true},
             txtProvincia: {required: true},
             txtLocalAfectado: {required: true},
             txtPersonaContacto: {required: true},
-            txtTelefono1: {required: true}
+            txtTelefono1: {required: true},
+            txtFechaCreacion: {required: true}
            
         },
         // Messages for form validation
         messages: {
             txtDescripcion: { required: 'Deve introducir una descripción'},
-            cmbTipoProfesional: {
-                required: 'Deve intriducir un cargo'
-            },
             txtCalle: {required: 'Requerido'},
             txtNumero: {required: 'Requerido'},
             txtPoblacion: {required: 'Debe introducir una población'},
             txtProvincia: {required: 'Debe introducir una provincia'},
             txtLocalAfectado: {required: 'Debe introducir un local'},
             txtPersonaContacto: {required: 'Debe intoducir una persona  de contacto'},
-            txtTelefono1: {required: 'Necesita un telefono'}
+            txtTelefono1: {required: 'Necesita un telefono'},
+            txtFechaCreacion: {required: 'Deve introducir una fecha de creación'}
 
         },
         // Do not change code below
@@ -274,10 +276,12 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
+        var cli = $('#txtCliente').val();
+        if(cli == '')  vm.sclienteId(null);
 
         if(vm.susuarioId() == "0") vm.susuarioId(null);
         if(vm.scomercialId() == "0") vm.scomercialId(null);
-        if(vm.sclienteId() == "" || vm.sclienteId() == "   ") vm.clienteId(null);
+        if(vm.sclienteId() == undefined || vm.sclienteId() == "   ") vm.sclienteId(null);
         if(vm.stipoProfesionalId() == "0") vm.stipoProfesionalId(null);
 
 
@@ -304,7 +308,8 @@ function aceptar() {
                 "aDiaSemana": vm.saDiaSemana(),
                 "descripcion": vm.descripcion(),
                 "autorizacion": vm.autorizacion(),
-                "cargo": vm.cargo()
+                "cargo": vm.cargo(),
+                "fechaCreacion": spanishDbDate(vm.fechaCreacion()),
             }
         };
         if (adminId == 0) {
@@ -385,18 +390,6 @@ function loadAgentes(agenteId) {
     });
 }
 
-function loadClientes(clienteId, agenteId) {
-    var url = "/api/clientes/agente/" + agenteId
-    if(!agenteId) {
-        url = "/api/clientes"
-    }
-    llamadaAjax("GET",  url, null, function (err, data) {
-        if (err) return;
-        var clientes = [{ clienteId: 0, nombre: "" }].concat(data);
-        vm.posiblesClientes(clientes);
-        $("#cmbClientes").val([clienteId]).trigger('change');
-    });
-}
 
 function loadComboDeDia(deDia){
     $("#cmbDeDia option[value="+ deDia.deDiaSemana+"]").attr("selected",true).trigger('change');    
@@ -413,6 +406,13 @@ function cambioAgente(agenteId) {
     if (!agenteId) return;
 
     initAutoCliente(agenteId);
+    //limpiamos los campos relacioneados con el agente cambiado
+    $('#txtCliente').val('');
+    vm.calle('');
+    vm.numero('');
+    vm.poblacion('');
+    vm.codPostal('');
+    vm.provincia('');
 }
 
 
@@ -455,7 +455,7 @@ var cargaCliente = function (id) {
 
 var initAutoCliente = function (id) {
     if(!id) {
-        id = 1;
+        id = 0;
     }
     var url = "/api/clientes/?nombre=";
     llamadaAjax("GET",  '/api/clientes/agente/' + id, null, function (err, dataUno) {
@@ -463,7 +463,7 @@ var initAutoCliente = function (id) {
         // incialización propiamente dicha
         $("#txtCliente").autocomplete({
             source: function (request, response) {
-                if(dataUno.length > 0) {
+                if(dataUno.length > 0 && id != 0) {
                     url = "/api/clientes/agente/cliente/" + request.term + "/" + id;
                 } else {
                     url = "/api/clientes/?nombre=" + request.term;
