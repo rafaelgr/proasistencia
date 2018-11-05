@@ -542,7 +542,7 @@ function loadMotivosBaja(id) {
 function loadTarifas(id){
     $.ajax({
         type: "GET",
-        url: "/api/tarifas",
+        url: "/api/tarifas_proveedor",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

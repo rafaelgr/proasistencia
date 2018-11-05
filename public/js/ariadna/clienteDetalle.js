@@ -768,7 +768,7 @@ function loadTiposVia3(id) {
 function loadTarifas(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tarifas",
+        url: "/api/tarifas_cliente",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
