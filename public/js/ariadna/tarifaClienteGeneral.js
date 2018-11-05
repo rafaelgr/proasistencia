@@ -46,7 +46,7 @@ function initForm() {
     } else {
 
         // Por defecto ahora a la entrada se van a cargar todas 
-        // las tarifas que tengamos en el sistema. En un futuro este
+        // las tarifas_cliente que tengamos en el sistema. En un futuro este
         // criterio puede cambiar y habrá que adaptarlo.
         cargarTarifas()();
     }
@@ -129,7 +129,7 @@ function initTablaTarifas() {
         },
         data: dataTarifas,
         columns: [{
-            data: "tarifaId",
+            data: "tarifaClienteId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (row.contafich) {
@@ -140,9 +140,11 @@ function initTablaTarifas() {
         }, {
             data: "nombre"
         }, {
-            data: "grupoNombre"
-        },  {
-            data: "tarifaId",
+            data: "nombreArticulo"
+        },{
+            data: "precioUnitario"
+        },    {
+            data: "tarifaClienteId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteTarifa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editTarifa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -215,7 +217,7 @@ function deleteTarifa(id) {
         buttons: '[Cancelar][Borrar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Borrar") {
-            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/" + id, null, function (err) {
+            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_cliente/" + id, null, function (err) {
                 if (err) return;
                 buscarTarifas()();
             });
@@ -242,7 +244,7 @@ function cargarTarifas() {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/tarifas/" + tarifaId,
+                url: myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -257,7 +259,7 @@ function cargarTarifas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/tarifas",
+                url: myconfig.apiUrl + "/api/tarifas_cliente",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
