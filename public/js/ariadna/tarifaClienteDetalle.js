@@ -447,9 +447,16 @@ function deleteTarifaClienteLinea(tarifaClienteId) {
 //funciones de tarifas generadas automaticamente
 
 function actualizaLineas(){
-    
+    if(!datosOkLineasGrupos()) {
+        return;
+    }
+
     var data = creaObjeto();
     var url = "/api/tarifas_cliente/lineas/multiples/";
+
+    if (vm.sgrupoArticuloId() == 0) {
+        url = "/api/tarifas/lineas/multiples/todos";
+    }
     
     llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + data.tarifaClienteId, null, function (err, data) {
@@ -459,6 +466,33 @@ function actualizaLineas(){
         });
     });
 }
+
+function datosOkLineasGrupos() {
+    if(vm.porcentaje() === "") {
+     vm.porcentaje(null);
+    } 
+     $('#frmLineasGrupos').validate({
+         rules: {
+             txtPorcentaje: {
+                 required: true,
+                 number: true,
+             }
+         },
+         // Messages for form validation
+         messages: {
+             txtPorcentaje: {
+                 required: "Debe proporcionar un porcentaje",
+                 number: "Deve introducir un numero válido"
+             }
+         },
+         // Do not change code below
+         errorPlacement: function (error, element) {
+             error.insertAfter(element.parent());
+         }
+     });
+     var opciones = $("#frmLineasGrupos").validate().settings;
+     return $('#frmLineasGrupos').valid();
+ }
 
 
 
@@ -473,7 +507,7 @@ function creaObjeto(){
     }
     var data = {
         tarifaClienteLinea: {
-            
+            grupoArticuloId: sgrupoArticuloId(),
             porcentaje: porcent,
             tarifaClienteId: vm.tarifaClienteId()
         }
