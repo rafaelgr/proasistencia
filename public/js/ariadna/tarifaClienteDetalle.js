@@ -47,6 +47,11 @@ function initForm() {
         return false;
     });
 
+    // select2 things
+    $("#cmbCapitulos").select2(select2Spanish());
+    loadCapitulos();
+
+
    
 
     // select2 things
@@ -98,7 +103,9 @@ function admData() {
   
     //valores para el formulario de capitulos
     self.porcentaje = ko.observable();
-   
+    //
+    self.grupoArticuloId = ko.observable();
+    self.sgrupoArticuloId = ko.observable();
     //
     self.posiblesCapitulos = ko.observableArray([]);
     self.elegidosCapitulos = ko.observableArray([]);
