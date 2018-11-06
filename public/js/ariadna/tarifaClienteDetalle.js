@@ -47,11 +47,13 @@ function initForm() {
         return false;
     });
 
+    $('#frmLineasGrupos').submit(function(){
+        return false;
+    });
+
     // select2 things
     $("#cmbCapitulos").select2(select2Spanish());
     loadCapitulos();
-
-
    
 
     // select2 things
@@ -507,7 +509,7 @@ function creaObjeto(){
     }
     var data = {
         tarifaClienteLinea: {
-            grupoArticuloId: sgrupoArticuloId(),
+            grupoArticuloId: vm.sgrupoArticuloId(),
             porcentaje: porcent,
             tarifaClienteId: vm.tarifaClienteId()
         }
