@@ -91,7 +91,7 @@ function initForm() {
         vm.porcentaje(0)
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
-        $('#btnLineasCapitulos').hide();
+        //$('#btnLineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
        
     }
@@ -457,12 +457,13 @@ function actualizaLineas(){
     var url = "/api/tarifas_cliente/lineas/multiples/";
 
     if (vm.sgrupoArticuloId() == 0) {
-        url = "/api/tarifas/lineas/multiples/todos";
+        url = "/api/tarifas_cliente/lineas/multiples/todos";
     }
     
     llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + data.tarifaClienteId, null, function (err, data) {
             if(err) return;
+            $('#modalTarifasGrupos').modal('hide');
             loadData(data);
             loadLineasTarifaCliente(data.tarifaClienteId);
         });
