@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataTarifas;
-var tarifaId;
+var tarifaClienteId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -36,12 +36,12 @@ function initForm() {
     //
     initTablaTarifas();
     // comprobamos parámetros
-    tarifaId = gup('TarifaId');
-    if (tarifaId !== '') {
+    tarifaClienteId = gup('tarifaClienteId');
+    if (tarifaClienteId !== '') {
 
         // Si nos pasan una prefafctura determinada esa es
         // la que mostramos en el grid
-        cargarTarifas()(tarifaId);
+        cargarTarifas()(tarifaClienteId);
 
     } else {
 
@@ -197,7 +197,7 @@ function buscarTarifas() {
 
 function crearTarifa() {
     var mf = function () {
-        var url = "TarifaDetalle.html?TarifaId=0";
+        var url = "TarifaClienteDetalle.html?tarifaClienteId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -227,7 +227,7 @@ function deleteTarifa(id) {
 function editTarifa(id) {
     // hay que abrir la página de detalle de tarifa
     // pasando en la url ese ID
-    var url = "TarifaDetalle.html?TarifaId=" + id;
+    var url = "TarifaClienteDetalle.html?tarifaClienteId=" + id;
     window.open(url, '_new');
 }
 
@@ -235,12 +235,12 @@ function cargarTarifas() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: tarifaId
+                id: tarifaClienteId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaId,
+                url: myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaClienteId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
