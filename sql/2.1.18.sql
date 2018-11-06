@@ -1,11 +1,11 @@
-CREATE TABLE `proasistencia`.`tarifas_cliente` ( 
-`tarifaClienteId` INT(11) NOT NULL,
+CREATE TABLE `tarifas_cliente` ( 
+`tarifaClienteId` INT(11) NOT NULL AUTO_INCREMENT,
 `nombre` VARCHAR(255),
 PRIMARY KEY (`tarifaClienteId`)
 );
 
-CREATE TABLE `proasistencia`.`tarifas_cliente_lineas` ( 
-`tarifaClienteLineaId` INT(11) NOT NULL,
+CREATE TABLE `tarifas_cliente_lineas` ( 
+`tarifaClienteLineaId` INT(11) NOT NULL AUTO_INCREMENT,
 `tarifaClienteId` INT(11),
 `articuloId` INT(11),
 `precioUnitario` DECIMAL(12,2),
@@ -14,14 +14,14 @@ CONSTRAINT `ref_tarifa_cliente` FOREIGN KEY (`tarifaClienteId`) REFERENCES `proa
 CONSTRAINT `ref_tarifa_cliente_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`)
 );
 
-CREATE TABLE `proasistencia`.`tarifas_proveedor` ( 
-`tarifaProveedorId` INT(11) NOT NULL,
+CREATE TABLE `tarifas_proveedor` ( 
+`tarifaProveedorId` INT(11) NOT NULL AUTO_INCREMENT,
 `nombre` VARCHAR(255),
 PRIMARY KEY (`tarifaProveedorId`)
 );
 
-CREATE TABLE `proasistencia`.`tarifas_proveedor_lineas` ( 
-`tarifaProveedorLineaId` INT(11) NOT NULL,
+CREATE TABLE `tarifas_proveedor_lineas` ( 
+`tarifaProveedorLineaId` INT(11) NOT NULL AUTO_INCREMENT,
 `tarifaProveedorId` INT(11),
 `articuloId` INT(11),
 `precioUnitario` DECIMAL(12,2),
@@ -30,9 +30,9 @@ CONSTRAINT `ref_tarifa_proveedor` FOREIGN KEY (`tarifaProveedorId`) REFERENCES `
 CONSTRAINT `ref_tarifa_proveedor_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`)
 );
 
-UPDATE clientes SET tarifaId = NULL 
+UPDATE clientes SET tarifaId = NULL;
 
-UPDATE proveedores SET tarifaId = NULL 
+UPDATE proveedores SET tarifaId = NULL;
 
 ALTER TABLE `clientes` DROP FOREIGN KEY `fkey_tarifa_cliente`;
 
