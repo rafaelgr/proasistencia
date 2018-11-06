@@ -560,9 +560,13 @@
                                 <fieldset>
                                         <div class="row">
                                                 
-                                                <section class="col col-md-6">
-                                                    
-                                                </section>
+                                            <section class="col col-md-6">
+                                                <label class="label">Capitulos</label>
+                                                <label style="width:100%;">
+                                                    <select style="width:100%" id="cmbCapitulos" name="cmbCapitulos" data-bind="options: posiblesCapitulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosCapitulos, selected2:{}"></select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
                                                 <section class="col col-md-5">
                                                         <label class="label">Porcentaje</label>
                                                         <label class="input">
