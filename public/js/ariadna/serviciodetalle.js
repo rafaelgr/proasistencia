@@ -88,6 +88,7 @@ function admData() {
     self.deHoraAtencion = ko.observable();
     self.aHoraAtencion = ko.observable();
     self.descripcion = ko.observable();
+    self.notasPrivadas = ko.observable();
     self.autorizacion = ko.observable();
     self.cargo = ko.observable();
     self.fechaCreacion = ko.observable();
@@ -218,6 +219,7 @@ function loadData(data) {
     vm.fechaCreacion(spanishDate(data.fechaCreacion));
    
     vm.descripcion(data.descripcion);
+    vm.notasPrivadas(data.notasPrivadas);
     vm.autorizacion(data.autorizacion);
 
     //
@@ -307,6 +309,7 @@ function aceptar() {
                 "deDiaSemana": vm.sdeDiaSemana(),
                 "aDiaSemana": vm.saDiaSemana(),
                 "descripcion": vm.descripcion(),
+                "notasPrivadas": vm.notasPrivadas(),
                 "autorizacion": vm.autorizacion(),
                 "cargo": vm.cargo(),
                 "fechaCreacion": spanishDbDate(vm.fechaCreacion()),

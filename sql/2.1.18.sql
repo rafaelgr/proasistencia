@@ -42,3 +42,24 @@ ALTER TABLE `proveedores` DROP FOREIGN KEY `proveedores_tarifa`;
 
 ALTER TABLE `proveedores` ADD CONSTRAINT `proveedores_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas_proveedor`(`tarifaProveedorId`) ON UPDATE CASCADE ON DELETE NO ACTION;
 
+ALTER TABLE  `servicios`   
+  ADD COLUMN `notasPrivadas` TEXT NULL AFTER `descripcion`;
+
+  ALTER TABLE `articulos`   
+  ADD COLUMN `codigoReparacion` VARCHAR(255) NULL AFTER `descripcion`;
+
+
+
+DROP TABLE tarifas_lineas;
+
+DROP TABLE tarifas;
+
+DROP TABLE grupo_tarifa;
+
+/*ARTICULOS*/
+INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');
+
+INSERT INTO articulos (codigoReparacion, nombre, grupoArticuloId) 
+SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 69 AS grupoArticuloId  
+FROM temp_articulos
+

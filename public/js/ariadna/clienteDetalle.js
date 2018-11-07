@@ -287,8 +287,8 @@ function admData() {
     self.elegidosTiposVia3 = ko.observableArray([]);
     //
     //
-    self.tarifaId = ko.observable();
-    self.starifaId = ko.observable();
+    self.tarifaClienteId = ko.observable();
+    self.starifaClienteId = ko.observable();
     //
     self.posiblesTarifas = ko.observableArray([]);
     self.elegidasTarifas = ko.observableArray([]);
@@ -502,6 +502,8 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
+            
+        if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
         var data = {
             cliente: {
                 "clienteId": vm.clienteId(),
@@ -544,7 +546,7 @@ function aceptar() {
                 "provincia3": vm.provincia3(),
                 "codPostal3": vm.codPostal3(),
                 "tipoViaId3": vm.stipoViaId3(),
-                "tarifaId": vm.starifaId()
+                "tarifaId": vm.starifaClienteId()
             }
         };
         
@@ -772,7 +774,7 @@ function loadTarifas(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tarifas = [{ tarifaId: 0, nombre: "" }].concat(data);
+            var tarifas = [{ tarifaClienteId: 0, nombre: "" }].concat(data);
             vm.posiblesTarifas(tarifas);
             $("#cmbTarifas").val([id]).trigger('change');
         },
@@ -1206,6 +1208,8 @@ function guardaClienteAgente() {
             if (!datosOK())
                 return;
 
+            if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
+
 
             var dataClienteAgente = {
                 clienteAgente: {
@@ -1256,7 +1260,7 @@ function guardaClienteAgente() {
                     "provincia3": vm.provincia3(),
                     "codPostal3": vm.codPostal3(),
                     "tipoViaId3": vm.stipoViaId3(),
-                    "tarifaId": vm.starifaId()
+                    "tarifaId": vm.starifaClienteId()
                 }
             }
             $.ajax({

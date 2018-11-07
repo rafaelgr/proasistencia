@@ -59,7 +59,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
-                loadTarifas(data.articuloId);
+                //loadTarifas(data.articuloId);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -78,6 +78,7 @@ function admData() {
     self.nombre = ko.observable();
     self.precioUnitario = ko.observable();
     self.codigoBarras = ko.observable();
+    self.codigoReparacion = ko.observable();
     self.descripcion = ko.observable();
     //
     self.stipoIvaId = ko.observable();
@@ -103,6 +104,7 @@ function loadData(data) {
     vm.nombre(data.nombre);
     vm.precioUnitario(data.precioUnitario);
     vm.codigoBarras(data.codigoBarras);
+    vm.codigoReparacion(data.codigoReparacion);
     vm.descripcion(data.descripcion);
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
@@ -167,6 +169,7 @@ function aceptar() {
                 "nombre": vm.nombre(),
                 "precioUnitario": vm.precioUnitario(),
                 "codigoBarras": vm.codigoBarras(),
+                "codigoReparacion" : vm.codigoReparacion(),
                 "descripcion": vm.descripcion(),
                 "grupoArticuloId": vm.sgrupoArticuloId(),
                 "unidadId": vm.sunidadId()
@@ -346,7 +349,7 @@ function loadTablaTarifas(data) {
 }
 
 function loadTarifas(id) {
-    llamadaAjax('GET', "/api/tarifas/articulo/asociado/tarifa/informacion/" + id, null, function (err, data) {
+    llamadaAjax('GET', "/api/articulos/articulo/asociado/tarifa/informacion/" + id, null, function (err, data) {
         if (err) return;
         loadTablaTarifas(data);
     });

@@ -340,6 +340,9 @@ function initTablaTarifasProveedorLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },{
+            data: "codigoReparacion",
+            className: "text-left"
         }, {
             data: "tarifaProveedorLineaId",
             render: function (data, type, row) {

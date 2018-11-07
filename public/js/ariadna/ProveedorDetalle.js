@@ -236,8 +236,8 @@ function admData() {
     self.posiblesMotivosBaja = ko.observableArray([]);
     self.elegidosMotivosBaja = ko.observableArray([]);
     //
-    self.tarifaId = ko.observable();
-    self.starifaId = ko.observable();
+    self.tarifaProveedorId = ko.observable();
+    self.starifaProveedorId = ko.observable();
     //
     self.posiblesTarifas = ko.observableArray([]);
     self.elegidasTarifas = ko.observableArray([]);
@@ -380,6 +380,7 @@ function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
         if(!vm.fianza() || vm.fianza() == '') vm.fianza('0,00'); 
+        if(vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
@@ -409,7 +410,7 @@ function aceptar() {
                 "IBAN": vm.iban(),
                 "codigoProfesional": vm.codigoProfesional(),
                 "fianza": numeroDbf(vm.fianza()),
-                "tarifaId": vm.starifaId()
+                "tarifaId": vm.starifaProveedorId()
 
             }
         };
@@ -546,7 +547,7 @@ function loadTarifas(id){
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tarifas = [{ tarifaId: 0, nombre: "" }].concat(data);
+            var tarifas = [{ tarifaProveedorId: 0, nombre: "" }].concat(data);
             vm.posiblesTarifas(tarifas);
             $("#cmbTarifas").val([id]).trigger('change');
         },
