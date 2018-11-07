@@ -59,7 +59,17 @@ DROP TABLE grupo_tarifa;
 /*ARTICULOS*/
 INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');
 
+/*En este punto hay que ejecutar tmp_articulos_cli.sql y tmp_articulos_pro.sql*/
+
 INSERT INTO articulos (codigoReparacion, nombre, grupoArticuloId) 
 SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 69 AS grupoArticuloId  
 FROM temp_articulos
 
+/*TARIFAS*/
+INSERT INTO tarifas_cliente (tarifaClienteId, nombre) VALUES(1, 'Cliente tarifa 1');
+INSERT INTO tarifas_Proveedor (tarifaProveedorId, nombre) VALUES(1, 'Profesional tarifa 6');
+
+INSERT INTO tarifas_cliente_lineas (`tarifaClienteId`,`articuloId`,`precioUnitario`) 
+SELECT 1 AS tarifaClienteId,ar.articuloId AS articuliId, tem.cliente_tarifa_1 AS precioUnitario FROM articulos AS ar
+LEFT JOIN temp_articulos AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
+WHERE tem.codReparacion IS NOT NULL
