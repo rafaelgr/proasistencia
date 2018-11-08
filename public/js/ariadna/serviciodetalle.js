@@ -2,6 +2,20 @@
 usuarioDetalle.js
 Funciones js par la página UsuarioDetalle.html
 ---------------------------------------------------------------------------*/
+
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
+var dataLocales;
+var servicioId;
+
+var breakpointDefinition = {
+    tablet: 724,
+    phone: 480
+};
+
 var adminId = 0;
 
 function initForm() {
@@ -20,6 +34,11 @@ function initForm() {
     $("#frmServicio").submit(function () {
         return false;
     });
+
+    $("#frmLocales").submit(function () {
+        return false;
+    });
+
 
     $("#cmbTipoProfesional").select2(select2Spanish());
     loadTiposProfesionales();
@@ -41,6 +60,7 @@ function initForm() {
 
     datePickerSpanish(); // see comun.js
    
+    initTablaLocalesAfectados();
     
     adminId = gup('ServicioId');
     if (adminId != 0) {
@@ -57,6 +77,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                buscarTodosLocalesAfectados();
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -501,3 +522,127 @@ var initAutoCliente = function (id) {
     });
     
 };
+
+//funciones relacionadas con los locales afectados
+
+function initTablaLocalesAfectados() {
+    tablaCarro = $('#dt_locales').DataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_locales'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            api.column(1, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
+                    );
+                    last = group;
+                }
+            });
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataLocales,
+        columns: [{
+            data: "local"
+        }, {
+            data: "personaContacto"
+        }, {
+            data: "cargo"
+        }, {
+            data: "telefono1"
+        }, {
+            data: "correoElectronico",
+            className: "text-right"
+        }, {
+            data: "comentarios",
+            className: "text-right",
+        }, {
+            data: "localAfectadoId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                // if (!vm.generada())
+                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+
+function loadTablaLocalesAfectados(data) {
+    var dt = $('#dt_locales').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function buscarLocalesAfectados() {
+    var mf = function () {
+        /*if (!datosOK()) {
+            return;
+        }*/
+        // obtener el n.serie del certificado para la firma.
+       // var aBuscar = $('#txtBuscar').val();
+        // enviar la consulta por la red (AJAX)
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/locales_afectados",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaLocalesAfectados(data);
+            },
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+        });
+    };
+    return mf;
+}
+
+ function buscarTodosLocalesAfectados(){
+    var url = myconfig.apiUrl + "/api/locales_afectados/";
+    llamadaAjax("GET",url, null, function(err, data){
+        loadTablaLocalesAfectados(data);
+    });
+}
