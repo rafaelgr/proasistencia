@@ -73,3 +73,8 @@ INSERT INTO tarifas_cliente_lineas (`tarifaClienteId`,`articuloId`,`precioUnitar
 SELECT 1 AS tarifaClienteId,ar.articuloId AS articuliId, tem.cliente_tarifa_1 AS precioUnitario FROM articulos AS ar
 LEFT JOIN temp_articulos AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
 WHERE tem.codReparacion IS NOT NULL
+
+INSERT INTO tarifas_proveedor_lineas (`tarifaProveedorId`,`articuloId`,`precioUnitario`) 
+SELECT 1 AS tarifaProveedorId,ar.articuloId AS articuloId, tem.ProfTarifa_6 AS precioUnitario FROM articulos AS ar
+LEFT JOIN tmp_articulos_prof AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
+WHERE tem.codReparacion IS NOT NULL
