@@ -56,17 +56,43 @@ DROP TABLE tarifas;
 
 DROP TABLE grupo_tarifa;
 
+CREATE TABLE `locales_afectados` ( 
+`localAfectadoId` INT(11) NOT NULL AUTO_INCREMENT,
+`servicioId` INT(11),
+`local` VARCHAR(255),
+`personaContacto` VARCHAR(255),
+`telefono1` VARCHAR(255),
+`telefono2` VARCHAR(255),
+`correoElectronico` VARCHAR(255),
+`deHoraAtencion` VARCHAR(255),
+`aHoraAtencion` VARCHAR(255),
+`deHoraAtencion2` VARCHAR(255),
+`aHoraAtencion2` VARCHAR(255),
+`deDiaSemana` VARCHAR(255),
+`aDiaSemana` VARCHAR(255),
+`comentarios` TEXT,
+PRIMARY KEY (`localAfectadoId`),
+CONSTRAINT `ref_locales_servicios` FOREIGN KEY (`servicioId`) REFERENCES `proasistencia`.`servicios`(`servicioId`) ON DELETE CASCADE
+);
+
+ALTER TABLE `locales_afectados` 
+ADD COLUMN `cargo` VARCHAR(255) NULL AFTER `comentarios`;
+
+
+
+/*-------------------------------IMPORTACIONES DE TARIFAS Y ARTICULOS NUEVOS-----------------------------------------*/
+
 /*ARTICULOS*/
-INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');
+/*INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');*/
 
 /*En este punto hay que ejecutar tmp_articulos_cli.sql y tmp_articulos_pro.sql*/
 
-INSERT INTO articulos (codigoReparacion, nombre, precioUnitario,grupoArticuloId, unidadId) 
+/*INSERT INTO articulos (codigoReparacion, nombre, precioUnitario,grupoArticuloId, unidadId) 
 SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 0.00 AS precioUnitario,69 AS grupoArticuloId, 9 AS unidadId
-FROM temp_articulos;
+FROM temp_articulos;*/
 
 /*TARIFAS*/
-INSERT INTO tarifas_cliente (tarifaClienteId, nombre) VALUES(1, 'Cliente tarifa 1');
+/*INSERT INTO tarifas_cliente (tarifaClienteId, nombre) VALUES(1, 'Cliente tarifa 1');
 INSERT INTO tarifas_Proveedor (tarifaProveedorId, nombre) VALUES(1, 'Profesional tarifa 6');
 
 INSERT INTO tarifas_cliente_lineas (`tarifaClienteId`,`articuloId`,`precioUnitario`) 
@@ -77,4 +103,4 @@ WHERE tem.codReparacion IS NOT NULL;
 INSERT INTO tarifas_proveedor_lineas (`tarifaProveedorId`,`articuloId`,`precioUnitario`) 
 SELECT 1 AS tarifaProveedorId,ar.articuloId AS articuloId, tem.ProfTarifa_6 AS precioUnitario FROM articulos AS ar
 LEFT JOIN tmp_articulos_prof AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
-WHERE tem.codReparacion IS NOT NULL;
+WHERE tem.codReparacion IS NOT NULL;*/
