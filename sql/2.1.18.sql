@@ -61,8 +61,8 @@ INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');
 
 /*En este punto hay que ejecutar tmp_articulos_cli.sql y tmp_articulos_pro.sql*/
 
-INSERT INTO articulos (codigoReparacion, nombre, grupoArticuloId) 
-SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 69 AS grupoArticuloId  
+INSERT INTO articulos (codigoReparacion, nombre, precioUnitario,grupoArticuloId, unidadId) 
+SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 0.00 AS precioUnitario,69 AS grupoArticuloId, 9 AS unidadId
 FROM temp_articulos;
 
 /*TARIFAS*/
