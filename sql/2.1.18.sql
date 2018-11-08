@@ -49,13 +49,6 @@ ALTER TABLE  `servicios`
   ADD COLUMN `codigoReparacion` VARCHAR(255) NULL AFTER `descripcion`;
 
 
-
-DROP TABLE tarifas_lineas;
-
-DROP TABLE tarifas;
-
-DROP TABLE grupo_tarifa;
-
 CREATE TABLE `locales_afectados` ( 
 `localAfectadoId` INT(11) NOT NULL AUTO_INCREMENT,
 `servicioId` INT(11),
@@ -81,6 +74,13 @@ ADD COLUMN `cargo` VARCHAR(255) NULL AFTER `comentarios`;
 
 
 /*-------------------------------IMPORTACIONES DE TARIFAS Y ARTICULOS NUEVOS-----------------------------------------*/
+
+/*DROP TABLE tarifas_lineas;*/
+
+/*DROP TABLE tarifas;*/
+
+/*DROP TABLE grupo_tarifa;*/
+
 
 /*ARTICULOS*/
 /*INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');*/
