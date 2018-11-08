@@ -63,7 +63,7 @@ INSERT INTO grupo_articulo (grupoArticuloId, nombre) VALUES(69, 'REPARACIONES');
 
 INSERT INTO articulos (codigoReparacion, nombre, grupoArticuloId) 
 SELECT CONCAT('0',codReparacion) AS codigoReparacion, descripcion AS nombre, 69 AS grupoArticuloId  
-FROM temp_articulos
+FROM temp_articulos;
 
 /*TARIFAS*/
 INSERT INTO tarifas_cliente (tarifaClienteId, nombre) VALUES(1, 'Cliente tarifa 1');
@@ -72,9 +72,9 @@ INSERT INTO tarifas_Proveedor (tarifaProveedorId, nombre) VALUES(1, 'Profesional
 INSERT INTO tarifas_cliente_lineas (`tarifaClienteId`,`articuloId`,`precioUnitario`) 
 SELECT 1 AS tarifaClienteId,ar.articuloId AS articuliId, tem.cliente_tarifa_1 AS precioUnitario FROM articulos AS ar
 LEFT JOIN temp_articulos AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
-WHERE tem.codReparacion IS NOT NULL
+WHERE tem.codReparacion IS NOT NULL;
 
 INSERT INTO tarifas_proveedor_lineas (`tarifaProveedorId`,`articuloId`,`precioUnitario`) 
 SELECT 1 AS tarifaProveedorId,ar.articuloId AS articuloId, tem.ProfTarifa_6 AS precioUnitario FROM articulos AS ar
 LEFT JOIN tmp_articulos_prof AS tem ON (SELECT CONCAT('0',tem.codReparacion)) = ar.codigoReparacion 
-WHERE tem.codReparacion IS NOT NULL
+WHERE tem.codReparacion IS NOT NULL;
