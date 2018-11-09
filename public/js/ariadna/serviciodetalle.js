@@ -163,7 +163,7 @@ function admData() {
      self.posiblesDeDias = ko.observableArray([
         {
             'deDiaNombre': '',
-            'deDiaSemana': ''
+            'deDiaSemana': ' '
         },
         {
             'deDiaNombre': 'Lunes',
@@ -204,8 +204,9 @@ function admData() {
      self.posiblesADias = ko.observableArray([
         {
             'aDiaNombre': '',
-            'aDiaSemana': ''
+            'aDiaSemana': ' '
         },
+       
         {
             'aDiaNombre': 'Lunes',
             'aDiaSemana': 'Lunes'
