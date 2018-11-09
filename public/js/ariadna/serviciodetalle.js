@@ -611,7 +611,7 @@ function initTablaLocalesAfectados() {
             data: "localAfectadoId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteLocalAfectado(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLocalAfectado' onclick='editLocalAfectado(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -675,6 +675,25 @@ function editLocalAfectado(id) {
         if (data)  loadDataLocalAfectado(data);
     });
 }
+
+function deleteLocalAfectado(localAfectadoId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+        var data = {
+            localAfectado: {
+                localAfectadoId: localAfectadoId
+            }
+        };
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/locales_afectados/" + localAfectadoId, data, function (err, data) {
+            if (err) return;
+            buscarTodosLocalesAfectados(servicioId);
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
 function loadDataLocalAfectado(data) {
     vm.localAfectadoId(data.localAfectadoId);
     vm.localAfectado(data.local);
