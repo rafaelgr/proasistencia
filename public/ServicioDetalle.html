@@ -537,86 +537,6 @@
                                                     </label>
                                                 </section>
                                             </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Local Afectado</label>
-                                                    <label class="input">
-                                                        <input id="txtLocalAfectado" name="txtLocalAfectado" type="text" data-bind="value: localAfectado" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Persona de contacto</legend>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Nombre</label>
-                                                    <label class="input">
-                                                        <input id="txtPersonaContacto" name="txtPersonaContacto" type="text" data-bind="value: personaContacto" />
-                                                    </label>
-                                                </section>
-                                                
-                                                <section class="col col-md-6">
-                                                        <label class="label">Cargo</label>
-                                                        <label class="input">
-                                                            <input id="txtCargo" name="txtCargo" type="text" data-bind="value: cargo" />
-                                                        </label>
-                                                </section>
-                                           </div>
-                                           <div class="row">
-                                               <section class="col col-md-4">
-                                                    <label class="label">Teléfono 1</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono1" name="txtTelefono1" type="text" data-bind="value: telefono1" />
-                                                    </label>
-                                               </section>
-                                               <section class="col col-md-4">
-                                                    <label class="label">Teléfono 2</label>
-                                                    <label class="input">
-                                                        <input id="txtTelefono2" name="txtTelefono2" type="text" data-bind="value: telefono2" />
-                                                    </label>
-                                               </section>
-                                               <section class="col col-md-4">
-                                                    <label class="label">Correo Electronico</label>
-                                                    <label class="input">
-                                                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" data-bind="value: correoElectronico" />
-                                                    </label>
-                                               </section>
-                                           </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend style="font-size: 1em">
-                                                Horario de atención
-                                            </legend>
-                                            <div class="row">
-                                                    <section class="col col-md-3">
-                                                         <label class="label">De</label>
-                                                         <label class="input">
-                                                             <input id="txtDeHoraAtencion" name="txtDeHoraAtencion" type="text" placeholder="00:00"  data-bind="value: deHoraAtencion" />
-                                                         </label>
-                                                    </section>
-                                                    <section class="col col-md-3">
-                                                         <label class="label">a</label>
-                                                         <label class="input">
-                                                             <input id="txtAHoraAtencion" name="txtAHoraAtencion" type="text" placeholder="00:00" data-bind="value: aHoraAtencion" />
-                                                         </label>
-                                                    </section>
-                                                    <section class="col col-md-3">
-                                                         <label class="label">De</label>
-                                                         <label style="width:100%; height:50px;">
-                                                            <select style="width:100%" id="cmbDeDia" name="cmbDeDia" data-bind="options: posiblesDeDias, optionsText: 'deDiaNombre', optionsValue: 'deDiaSemana', value: sdeDiaSemana, valueAllowUnset: true, selectedOptions: elegidosDeDias, selected2:{}"></select>
-                                                            <i></i>
-                                                        </label>
-                                                    </section>
-                                                    <section class="col col-md-3">
-                                                            <label class="label">a</label>
-                                                            <label style="width:100%; height:50px;">
-                                                                <select style="width:100%" id="cmbADia" name="cmbAdia" data-bind="options: posiblesADias, optionsText: 'aDiaNombre', optionsValue: 'aDiaSemana', value: saDiaSemana, valueAllowUnset: true, selectedOptions: elegidosADias, selected2:{}"></select>
-                                                                <i></i>
-                                                            </label>
-                                                    </section>
-                                                    
-                                                </div>
                                         </fieldset>
                                         <fieldset>
                                             <legend>Breve descripción de la avería</legend>
@@ -670,7 +590,7 @@
                     <!-- WIDGET END -->
                 </div>
                 <!-- end row -->
-                <div class="row" id="lineasfactura">
+                <div class="row" id="LocalesAfectados">
                     <!-- NEW WIDGET START -->
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <!-- Widget ID (each widget will need unique ID)-->
@@ -695,7 +615,7 @@
                                     <form id="frmLocales">
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                <button id="btnNuevoLocalAfectado" title="Nueva línea" data-toggle="modal" data-target="#modalLocalAfectado" onclick="nuevoLocalAfectado()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
                                             </div>
@@ -718,10 +638,10 @@
                                                     <th data-hide="phone" class="text-right">
                                                         TELEFONO 1
                                                     </th>
-                                                    <th data-hide="phone" class="text-right">
+                                                    <th data-hide="phone,tablet" class="text-right">
                                                         CORREO ELECTRÓNICO
                                                     </th>
-                                                    <th data-hide="phone" class="text-right">
+                                                    <th data-hide="phone,tablet" class="text-right">
                                                         DESCRIPCION AVERÍA
                                                     </th>
                                                     <th>
@@ -746,6 +666,144 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalLocalAfectado" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LOCAL AFECTADO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="localAfectado-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Ubicación</label>
+                                        <label class="input">
+                                            <input id="txtLocalAfectado" name="txtLocalAfectado" type="text" data-bind="value: localAfectado" />
+                                        </label>
+                                    </section>
+                                </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend style="padding-top: 0;">Persona de contacto</legend>
+                            <div class="row">
+                                <section class="col col-md-6">
+                                    <label class="label">Nombre</label>
+                                    <label class="input">
+                                        <input id="txtPersonaContacto" name="txtPersonaContacto" type="text" data-bind="value: personaContacto" />
+                                    </label>
+                                </section>
+                                
+                                <section class="col col-md-6">
+                                        <label class="label">Cargo</label>
+                                        <label class="input">
+                                            <input id="txtCargo" name="txtCargo" type="text" data-bind="value: cargo" />
+                                        </label>
+                                </section>
+                           </div>
+                           <div class="row">
+                               <section class="col col-md-4">
+                                    <label class="label">Teléfono 1</label>
+                                    <label class="input">
+                                        <input id="txtTelefono1" name="txtTelefono1" type="text" data-bind="value: telefono1" />
+                                    </label>
+                               </section>
+                               <section class="col col-md-4">
+                                    <label class="label">Teléfono 2</label>
+                                    <label class="input">
+                                        <input id="txtTelefono2" name="txtTelefono2" type="text" data-bind="value: telefono2" />
+                                    </label>
+                               </section>
+                               <section class="col col-md-4">
+                                    <label class="label">Correo Electronico</label>
+                                    <label class="input">
+                                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" data-bind="value: correoElectronico" />
+                                    </label>
+                               </section>
+                           </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend style="padding-top: 0;">
+                                Horario de atención
+                            </legend>
+                            <div class="row">
+                                
+                                    <section class="col col-md-3">
+                                         <label class="label">Mañanas de</label>
+                                         <label class="input">
+                                             <input id="txtDeHoraAtencion" name="txtDeHoraAtencion" type="text" placeholder="00:00"  data-bind="value: deHoraAtencion" />
+                                         </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                         <label class="label">a</label>
+                                         <label class="input">
+                                             <input id="txtAHoraAtencion" name="txtAHoraAtencion" type="text" placeholder="00:00" data-bind="value: aHoraAtencion" />
+                                         </label>
+                                    </section>
+                                
+                                    <section class="col col-md-3">
+                                        <label class="label">Tardes de</label>
+                                        <label class="input">
+                                            <input id="txtDeHoraAtencion2" name="txtDeHoraAtencion2" type="text" placeholder="00:00"  data-bind="value: deHoraAtencion2" />
+                                        </label>
+                                    </section>
+                                   <section class="col col-md-3">
+                                        <label class="label">a</label>
+                                        <label class="input">
+                                            <input id="txtAHoraAtencion2" name="txtAHoraAtencion2" type="text" placeholder="00:00" data-bind="value: aHoraAtencion2" />
+                                        </label>
+                                   </section>
+                                </div>
+                                <div class="row">
+                                        <section class="col col-md-4">
+                                                <label class="label">De</label>
+                                                <label style="width:100%; height:50px;">
+                                                   <select style="width:100%" id="cmbDeDia" name="cmbDeDia" data-bind="options: posiblesDeDias, optionsText: 'deDiaNombre', optionsValue: 'deDiaSemana', value: sdeDiaSemana, valueAllowUnset: true, selectedOptions: elegidosDeDias, selected2:{}"></select>
+                                                   <i></i>
+                                               </label>
+                                           </section>
+                                           <section class="col col-md-4">
+                                                   <label class="label">a</label>
+                                                   <label style="width:100%; height:50px;">
+                                                       <select style="width:100%" id="cmbADia" name="cmbAdia" data-bind="options: posiblesADias, optionsText: 'aDiaNombre', optionsValue: 'aDiaSemana', value: saDiaSemana, valueAllowUnset: true, selectedOptions: elegidosADias, selected2:{}"></select>
+                                                       <i></i>
+                                                   </label>
+                                           </section>
+                                           <section class="col col-md-4">
+                                            </section>
+                                </div>
+                        </fieldset>
+                        <fieldset>
+                                <legend style="padding-top: 0;">Comentarios</legend>
+                                <div class="row">
+                                        <section class="col col-md-12">
+                                            <label class="textarea textarea-resizable">
+                                                <textarea id="txtComentarios" name="txtComentarios"rows="3" class="custom-scroll" data-bind="value: comentarios"></textarea>
+                                            </label>
+                                        </section>
+                                </div>
+                               
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLocalAfectado" class="btn btn-primary" onclick="aceptarLocalAfectado()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

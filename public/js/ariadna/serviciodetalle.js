@@ -10,13 +10,15 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataLocales;
 var servicioId;
+var localEnEdicion = false;
+var cmd = "";
 
 var breakpointDefinition = {
     tablet: 724,
     phone: 480
 };
 
-var adminId = 0;
+var servicioId = 0;
 
 function initForm() {
     comprobarLogin();
@@ -36,6 +38,10 @@ function initForm() {
     });
 
     $("#frmLocales").submit(function () {
+        return false;
+    });
+
+    $("#localAfectado-form").submit(function () {
         return false;
     });
 
@@ -62,22 +68,24 @@ function initForm() {
    
     initTablaLocalesAfectados();
     
-    adminId = gup('ServicioId');
-    if (adminId != 0) {
+    servicioId = gup('ServicioId');
+    cmd = gup("cmd");
+
+    if (servicioId != 0) {
         var data = {
-            servicioId: adminId
+            servicioId: servicioId
         }
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/servicios/" + adminId,
+            url: myconfig.apiUrl + "/api/servicios/" + servicioId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
-                buscarTodosLocalesAfectados();
+                buscarTodosLocalesAfectados(servicioId);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -90,28 +98,24 @@ function initForm() {
         vm.provincia('Madrid');
         loadUsuarios(user.usuarioId);
         vm.fechaCreacion(moment(new Date()).format('DD/MM/YYYY'));
+        $('#LocalesAfectados').hide();
     }
 }
 
 function admData() {
     var self = this;
     self.servicioId = ko.observable();
+   
     self.calle = ko.observable();
     self.numero = ko.observable();
     self.poblacion = ko.observable();
     self.codPostal = ko.observable();
     self.provincia = ko.observable();
-    self.localAfectado = ko.observable();
-    self.personaContacto = ko.observable();
-    self.telefono1 = ko.observable();
-    self.telefono2 = ko.observable();
-    self.correoElectronico = ko.observable();
-    self.deHoraAtencion = ko.observable();
-    self.aHoraAtencion = ko.observable();
+    
     self.descripcion = ko.observable();
     self.notasPrivadas = ko.observable();
     self.autorizacion = ko.observable();
-    self.cargo = ko.observable();
+    
     self.fechaCreacion = ko.observable();
     //
     self.tipoProfesionalId = ko.observable();
@@ -141,8 +145,26 @@ function admData() {
      self.posiblesClientes = ko.observableArray([]);
      self.elegidosClientes = ko.observableArray([]);
 
+     //MODAL LOCALES AFECTADOS
+
+     self.localAfectadoId = ko.observable();
+     self.localAfectado = ko.observable();
+     self.personaContacto = ko.observable();
+     self.telefono1 = ko.observable();
+     self.telefono2 = ko.observable();
+     self.correoElectronico = ko.observable();
+     self.deHoraAtencion = ko.observable();
+     self.aHoraAtencion = ko.observable();
+     self.deHoraAtencion2 = ko.observable();
+     self.aHoraAtencion2 = ko.observable();
+     self.cargo = ko.observable();
+     self.comentarios = ko.observable();
      //
      self.posiblesDeDias = ko.observableArray([
+        {
+            'deDiaNombre': '',
+            'deDiaSemana': ''
+        },
         {
             'deDiaNombre': 'Lunes',
             'deDiaSemana': 'Lunes'
@@ -180,6 +202,10 @@ function admData() {
      //
 
      self.posiblesADias = ko.observableArray([
+        {
+            'aDiaNombre': '',
+            'aDiaSemana': ''
+        },
         {
             'aDiaNombre': 'Lunes',
             'aDiaSemana': 'Lunes'
@@ -229,14 +255,7 @@ function loadData(data) {
     vm.poblacion(data.poblacion);
     vm.codPostal(data.codPostal);
     vm.provincia(data.provincia);
-    vm.localAfectado(data.localAfectado);
-    vm.personaContacto(data.personaContacto);
-    vm.telefono1(data.telefono1);
-    vm.telefono2(data.telefono2);
-    vm.correoElectronico(data.correoElectronico);
-    vm.deHoraAtencion(data.deHoraAtencion);
-    vm.aHoraAtencion(data.aHoraAtencion);
-    vm.cargo(data.cargo);
+   
     vm.fechaCreacion(spanishDate(data.fechaCreacion));
    
     vm.descripcion(data.descripcion);
@@ -247,11 +266,16 @@ function loadData(data) {
     loadTiposProfesionales(data.tipoProfesionalId);
     loadUsuarios(data.usuarioId);
     loadAgentes(data.agenteId);
-    loadComboDeDia(data);
-    loadComboADia(data);
+    
+   
     cargaCliente(data.clienteId);
     if(data.comercialId) {
         initAutoCliente(data.comercialId)
+    }
+
+    if (cmd == "nueva") {
+        mostrarMensajeServicioNuevo();
+        cmd = "";
     }
    
 }
@@ -269,9 +293,6 @@ function datosOK() {
             txtNumero: {required: true},
             txtPoblacion: {required: true},
             txtProvincia: {required: true},
-            txtLocalAfectado: {required: true},
-            txtPersonaContacto: {required: true},
-            txtTelefono1: {required: true},
             txtFechaCreacion: {required: true}
            
         },
@@ -320,23 +341,15 @@ function aceptar() {
                 "poblacion": vm.poblacion(),
                 "codpostal": vm.codPostal(),
                 "provincia": vm.provincia(),
-                "localAfectado": vm.localAfectado(),
-                "personaContacto": vm.personaContacto(),
-                "telefono1": vm.telefono1(),
-                "telefono2": vm.telefono2(),
-                "correoElectronico": vm.correoElectronico(),
-                "deHoraAtencion": vm.deHoraAtencion(),
-                "aHoraAtencion": vm.aHoraAtencion(),
-                "deDiaSemana": vm.sdeDiaSemana(),
-                "aDiaSemana": vm.saDiaSemana(),
+                
                 "descripcion": vm.descripcion(),
                 "notasPrivadas": vm.notasPrivadas(),
                 "autorizacion": vm.autorizacion(),
-                "cargo": vm.cargo(),
+                
                 "fechaCreacion": spanishDbDate(vm.fechaCreacion()),
             }
         };
-        if (adminId == 0) {
+        if (servicioId == 0) {
             $.ajax({
                 type: "POST",
                 url: myconfig.apiUrl + "/api/servicios",
@@ -347,8 +360,8 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ServicioGeneral.html?ServicioId=" + vm.servicioId();
-                    window.open(url, '_self');
+                    var returnUrl = "ServicioDetalle.html?cmd=nueva&ServicioId=" +  vm.servicioId();
+                    window.open(returnUrl, '_self');
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -358,7 +371,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/servicios/" + adminId,
+                url: myconfig.apiUrl + "/api/servicios/" + servicioId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -366,8 +379,8 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "ServicioGeneral.html?ServicioId=" + vm.servicioId();
-                    window.open(url, '_self');
+                    var returnUrl = "ServicioGeneral.html?ServicioId=" + vm.servicioId();
+                    window.open(returnUrl, '_self');
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -416,13 +429,23 @@ function loadAgentes(agenteId) {
 
 
 function loadComboDeDia(deDia){
-    $("#cmbDeDia option[value="+ deDia.deDiaSemana+"]").attr("selected",true).trigger('change');    
+    if(!deDia) {
+        $("#cmbDeDia").val('').trigger('change');
+    } else {
+        $("#cmbDeDia").val([deDia.deDiaSemana]).trigger('change');
+    }
+    //$("#cmbDeDia option[value="+ deDia.deDiaSemana+"]").attr("selected",true).trigger('change');    
 }
 
 
 
 function loadComboADia(aDia){
-    $("#cmbADia option[value="+ aDia.aDiaSemana+"]").attr("selected",true).trigger('change');    
+    if(!aDia) {
+        $("#cmbADia").val('').trigger('change');
+    } else {
+        $("#cmbADia").val([aDia.aDiaSemana]).trigger('change');
+    }
+    //$("#cmbADia option[value="+ aDia.aDiaSemana+"]").attr("selected",true).trigger('change');    
 }
 
 
@@ -523,11 +546,22 @@ var initAutoCliente = function (id) {
     
 };
 
+var mostrarMensajeServicioNuevo = function () {
+    var mens = "Introduzca los locales afectados del nuevo servicio en el apartado correspondiente";
+    mensNormal(mens);
+}
+
 //funciones relacionadas con los locales afectados
 
 function initTablaLocalesAfectados() {
     tablaCarro = $('#dt_locales').DataTable({
         autoWidth: true,
+        "columnDefs": [
+            { "width": "20%", "targets": 0 },
+            { "width": "13%", "targets": 3 },
+            { "width": "8%", "targets": 6 },
+
+          ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -539,17 +573,6 @@ function initTablaLocalesAfectados() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
-            var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
-            api.column(1, { page: 'current' }).data().each(function (group, i) {
-                if (last !== group) {
-                    $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
-                    );
-                    last = group;
-                }
-            });
         },
         language: {
             processing: "Procesando...",
@@ -581,17 +604,15 @@ function initTablaLocalesAfectados() {
         }, {
             data: "telefono1"
         }, {
-            data: "correoElectronico",
-            className: "text-right"
+            data: "correoElectronico"
         }, {
-            data: "comentarios",
-            className: "text-right",
+            data: "comentarios"
         }, {
             data: "localAfectadoId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLocalAfectado' onclick='editLocalAfectado(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -640,9 +661,127 @@ function buscarLocalesAfectados() {
     return mf;
 }
 
- function buscarTodosLocalesAfectados(){
-    var url = myconfig.apiUrl + "/api/locales_afectados/";
+ function buscarTodosLocalesAfectados(id){
+    var url = myconfig.apiUrl + "/api/locales_afectados/servicio/" + id;
     llamadaAjax("GET",url, null, function(err, data){
         loadTablaLocalesAfectados(data);
     });
+}
+
+function editLocalAfectado(id) {
+    localEnEdicion = true;
+    llamadaAjax("GET", "/api/locales_afectados/" + id, null, function (err, data) {
+        if (err) return;
+        if (data)  loadDataLocalAfectado(data);
+    });
+}
+function loadDataLocalAfectado(data) {
+    vm.localAfectadoId(data.localAfectadoId);
+    vm.localAfectado(data.local);
+    vm.personaContacto(data.personaContacto);
+    vm.telefono1(data.telefono1);
+    vm.telefono2(data.telefono2);
+    vm.correoElectronico(data.correoElectronico);
+    vm.deHoraAtencion(data.deHoraAtencion);
+    vm.aHoraAtencion(data.aHoraAtencion);
+    vm.deHoraAtencion2(data.deHoraAtencion2);
+    vm.aHoraAtencion2(data.aHoraAtencion2);
+    vm.cargo(data.cargo);
+    vm.comentarios(data.comentarios);
+    //
+    loadComboDeDia(data);
+    loadComboADia(data);
+
+}
+function limpiarLocalAfectado() {
+    vm.localAfectadoId(null);
+    vm.localAfectado(null);
+    vm.personaContacto(null);
+    vm.telefono1(null);
+    vm.telefono2(null);
+    vm.correoElectronico(null);
+    vm.deHoraAtencion(null);
+    vm.aHoraAtencion(null);
+    vm.deHoraAtencion2(null);
+    vm.aHoraAtencion2(null);
+    vm.cargo(null);
+    vm.comentarios(null);
+}
+
+function aceptarLocalAfectado() {
+    if (!datosOKLocalAfectado()) {
+        return;
+    }
+    var data = {
+        localAfectado: {
+            servicioId: vm.servicioId(),
+            localAfectadoId: vm.localAfectadoId(),
+            local: vm.localAfectado(),
+            personaContacto: vm.personaContacto(),
+            telefono1: vm.telefono1(),
+            telefono2: vm.telefono2(),
+            correoElectronico: vm.correoElectronico(),
+            deHoraAtencion: vm.deHoraAtencion(),
+            aHoraAtencion: vm.aHoraAtencion(),
+            deHoraAtencion2: vm.deHoraAtencion2(),
+            aHoraAtencion2: vm.aHoraAtencion2(),
+            deDiaSemana: vm.sdeDiaSemana(),
+            aDiaSemana: vm.saDiaSemana(),
+            cargo: vm.cargo(),
+            comentarios: vm.comentarios()
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/locales_afectados";
+    if (localEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/locales_afectados/" + vm.localAfectadoId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalLocalAfectado').modal('hide');
+        buscarTodosLocalesAfectados(servicioId);
+        limpiarLocalAfectado();
+    });
+}
+
+function datosOKLocalAfectado() {
+    $('#localAfectado-form').validate({
+        rules: {
+            txtLocalAfectado: {
+                required: true
+            },
+            txtPersonaContacto: {
+                required: true
+            },
+            txtTelefono1: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtLocalAfectado: {
+                required: "Debe introducir un local"
+            },
+            txtPersonaContacto: {
+                required: "Debe introducir una persona de contacto"
+            },
+            txtTelefono1: {
+                required: 'Se necesita un telefono'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#localAfectado-form").validate().settings;
+    return $('#localAfectado-form').valid();
+}
+
+function nuevoLocalAfectado() {
+    limpiarLocalAfectado();
+    loadComboDeDia(null);
+    loadComboADia(null);
+    localEnEdicion = false;
 }
