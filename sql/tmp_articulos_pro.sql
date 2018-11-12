@@ -1,0 +1,56 @@
+﻿CREATE TABLE tmp_articulos_prof(
+   codReparacion  VARCHAR(255) NOT NULL PRIMARY KEY
+  ,descripcion    VARCHAR(255) NOT NULL
+  ,ProfTarifa_6   NUMERIC(6,2) NOT NULL
+);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('101','Localización de avería incluso apertura.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('102','Desmontaje y montaje de aparato sanitario.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('103','Desmontaje y montaje de aparato sanitario con otra reparación.',13.07);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('104','Desmontaje de aparato sanitario con otra reparación.',6.63);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('105','Únicamente desmontaje de aparato sanitario.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('106','Únicamente montaje aparato sanitario.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('107','Únicamente sustitución de latiguillo.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('108','Sustitución de latiguillo con otra reparación.',7.85);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('109','Únicamente sustitución de válvula de desagüe.',24.14);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('110','Sustitución de válvula y rebosadero de bañera.',31.99);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('111','Sustitución de válvula de desagüe con otra reparación.',19.31);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('112','Sustitución de sifón.',22.32);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('113','Sustitución de llave de escuadra.',17.50);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('114','Sustitución de llave de corte.',24.75);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('115','Cambio de manguetón de plomo o P.V.C.',82.60);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('116','Reparación de manguetón.',28.38);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('117','Sustitución de bote sifónico normal.',73.41);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('118','Reparación de bote sifónico.',32.59);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('119','Tubería de distribución hasta 1" y hasta 1ml.',37.85);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('120','Tubería de distribución desde 1"1/4 hasta 2" y hasta 1ml.',101.71);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('121','Tubería de distribución hasta 1" y hasta 3ml.',64.60);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('122','Tubería de distribución desde 1"1/4 hasta 2" y hasta 3ml.',172.04);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('123','Reparación de tubería de distribución sin sustitución.',25.36);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('124','Sustitución hasta 1ml de desagüe de PVC de 40mm de Ø.',27.07);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('125','Sustitución hasta 3ml de desagüe de PVC de 40mm de Ø.',37.36);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('126','Sustitución hasta 1ml de desagüe de plomo.',30.82);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('127','Sustitución hasta 3ml de desagüe de plomo.',50.47);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('128','Sustitución hasta 1,5ml de desagüe de fregadero y lavadora.',44.52);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('129','Sustitución hasta 3ml de desagüe fregadero y lavadora.',88.14);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('130','Reparación de desagüe sin sustitución.',25.36);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('131','Sustitución de injerto sencillo, incluso 1ml bajante.',78.80);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('132','Sustitución de injerto sencillo, incluso 3ml bajante.',113.82);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('133','Sustitución de injerto doble, incluso 1ml de bajante.',87.55);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('134','Sustitución de injerto doble, incluso 3ml de bajante.',127.82);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('135','Sustitución de bajante de pluviales, hasata 1ml.',43.78);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('136','Sustitución de bajante de pluviales, tramo hasta 3 ml.',59.16);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('137','Sustitución de bajante de fecales o mixta, tramo hasta 1ml.',52.53);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('138','Sustitución de bajante de fecales o mixta, tramo hasta 3ml.',98.07);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('139','Reparación  de bajante sin sustitución.',28.38);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('140','Cambio de codo con banjante.',51.02);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('141','Reparación de unión en bajante.',42.26);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('142','Apertura de cala.',18.06);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('143','Reparación de tubería con de gebo tapaporos de 1/2".',27.69);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('144','Reparación de tubería con de gebo tapaporos de 3/4".',28.11);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('145','Reparación de tubería con de gebo tapaporos de 1" Y 1/4.',33.01);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('146','Reparación de tubería con gebo tapaporos de 1" Y 1/2.',34.48);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('147','Reparación de tubería con 2 gebos y tramo de tuberia de 1/2".',46.30);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('148','Reparación de tubería con 2 gebos y tramo de tuberia 3/4".',47.18);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('149','Cambio de llave de regulación de radiador.',22.38);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('150','Cambio de detentor.',22.38);
+INSERT INTO tmp_articulos_prof(codReparacion,descripcion,ProfTarifa_6) VALUES ('154','Mano de obra de fontanería.',25.00);

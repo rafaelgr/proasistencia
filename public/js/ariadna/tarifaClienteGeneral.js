@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataTarifas;
-var tarifaId;
+var tarifaClienteId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -36,17 +36,17 @@ function initForm() {
     //
     initTablaTarifas();
     // comprobamos parámetros
-    tarifaId = gup('TarifaId');
-    if (tarifaId !== '') {
+    tarifaClienteId = gup('tarifaClienteId');
+    if (tarifaClienteId !== '') {
 
         // Si nos pasan una prefafctura determinada esa es
         // la que mostramos en el grid
-        cargarTarifas()(tarifaId);
+        cargarTarifas()(tarifaClienteId);
 
     } else {
 
         // Por defecto ahora a la entrada se van a cargar todas 
-        // las tarifas que tengamos en el sistema. En un futuro este
+        // las tarifas_cliente que tengamos en el sistema. En un futuro este
         // criterio puede cambiar y habrá que adaptarlo.
         cargarTarifas()();
     }
@@ -129,7 +129,7 @@ function initTablaTarifas() {
         },
         data: dataTarifas,
         columns: [{
-            data: "tarifaId",
+            data: "tarifaClienteId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (row.contafich) {
@@ -140,9 +140,7 @@ function initTablaTarifas() {
         }, {
             data: "nombre"
         }, {
-            data: "grupoNombre"
-        },  {
-            data: "tarifaId",
+            data: "tarifaClienteId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteTarifa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editTarifa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -199,7 +197,7 @@ function buscarTarifas() {
 
 function crearTarifa() {
     var mf = function () {
-        var url = "TarifaDetalle.html?TarifaId=0";
+        var url = "TarifaClienteDetalle.html?tarifaClienteId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -215,7 +213,7 @@ function deleteTarifa(id) {
         buttons: '[Cancelar][Borrar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Borrar") {
-            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/" + id, null, function (err) {
+            llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_cliente/" + id, null, function (err) {
                 if (err) return;
                 buscarTarifas()();
             });
@@ -229,7 +227,7 @@ function deleteTarifa(id) {
 function editTarifa(id) {
     // hay que abrir la página de detalle de tarifa
     // pasando en la url ese ID
-    var url = "TarifaDetalle.html?TarifaId=" + id;
+    var url = "TarifaClienteDetalle.html?tarifaClienteId=" + id;
     window.open(url, '_new');
 }
 
@@ -237,12 +235,12 @@ function cargarTarifas() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: tarifaId
+                id: tarifaClienteId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/tarifas/" + tarifaId,
+                url: myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaClienteId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -257,7 +255,7 @@ function cargarTarifas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/tarifas",
+                url: myconfig.apiUrl + "/api/tarifas_cliente",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

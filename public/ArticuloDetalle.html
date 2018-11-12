@@ -238,14 +238,14 @@
                                 <i class="fa fa-square-o"></i> Unidades obra
                             </a>
                         </li>
-                        <li id="grupoTarifas">
-                            <a href="GrupoTarifaGeneral.html">
-                                <i class="fa fa-object-group"></i> Grupo tarifa
+                        <li id="tarifas_ciente">
+                            <a href="TarifaClienteGeneral.html">
+                                <i class="fa fa-object-ungroup"></i> Tarifas cliente
                             </a>
                         </li>
-                        <li id="tarifas">
-                            <a href="TarifaGeneral.html">
-                                <i class="fa fa-object-ungroup"></i> Tarifas
+                        <li id="tarifas_proveedor">
+                            <a href="TarifaProveedorGeneral.html">
+                                <i class="fa fa-object-group"></i> Tarifas proveedor
                             </a>
                         </li>
                         <li id="motivosbaja">
@@ -441,14 +441,14 @@
                                 <header>
                                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                     <h2>Mantenimiento unidades obra</h2>
-                                    <ul class="nav nav-tabs pull-right in" id="myTab">
+                                    <!--<ul class="nav nav-tabs pull-right in" id="myTab">
                                         <li class="active">
                                             <a data-toggle="tab" href="#s1"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Datos</span></a>
                                         </li>
                                         <li>
                                             <a data-toggle="tab" href="#s2"><i class="fa fa-user"></i> <span class="hidden-mobile hidden-tablet">Tarifas</span></a>
                                         </li>                                                    
-                                    </ul>
+                                    </ul>-->
                                 </header>
                                 <!-- widget div-->
                                 <div>
@@ -493,30 +493,40 @@
                                                                                                 </section>
                                                                                             </div>
                                                                                             <div class="row">
-                                                                                                <section class="col col-md-4">
+                                                                                                <section class="col col-md-5">
                                                                                                     <label class="label">Capitulo</label>
                                                                                                     <label style="width:100%;">
                                                                                                         <select style="width:100%" id="cmbGruposArticulo" name="cmbGruposArticulo" data-bind="options: posiblesGruposArticulo, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGruposArticulo, selected2:{}"></select><i></i>
                                                                                                     </label>
                                                                                                 </section>
-                                                                                                <section class="col col-md-4">
+                                                                                                <section class="col col-md-5">
                                                                                                     <label class="label">Unidades</label>
                                                                                                     <label style="width:100%;">
                                                                                                         <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'nombre', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
                                                                                                     </label>
                                                                                                 </section>
-                                                                                                <section class="col col-md-2">
-                                                                                                    <label class="label">Código Barras</label>
-                                                                                                    <label class="input">
-                                                                                                        <input id="txtCodigoBarras" name="txtCodigoBarras" data-bind="value: codigoBarras" />
-                                                                                                    </label>
-                                                                                                </section>
-                                                                                                <section class="col col-md-2">
-                                                                                                    <label class="label">Precio unitario</label>
-                                                                                                    <label class="input">
-                                                                                                        <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />
-                                                                                                    </label>
-                                                                                                </section>
+                                                                                                <section class="col col-md-2"></section>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Código Barras</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtCodigoBarras" name="txtCodigoBarras" data-bind="value: codigoBarras" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                                <label class="label">Código Reparación</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtCodigoReparacion" name="txtReparacion" data-bind="value: codigoReparacion" />
+                                                                                                                </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-2">
+                                                                                                            <label class="label">Precio unitario</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-6"></section>
                                                                                             </div>
                                                                                             <div class="row">
                                                                                                 <section class="col col-md-12">
@@ -544,31 +554,30 @@
                                                         </div>
                                                 </section>
                                             </div>
-                                            <div class="tab-pane fade" id="s2">
-                                                    <!-- SEGUNDO TAB (tarifas) -->
+                                            <!--<div class="tab-pane fade" id="s2">
+                                                    
                                                     <div class="row" id="tarifas">
                                                         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                            <!-- Widget ID (each widget will need unique ID)-->
+                                                           
                                                             <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                                 <header>
                                                                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                     <h2>TARIFAS</h2>
                                                                 </header>
-                                                                <!-- widget div-->
+                                                                
                                                                 <div>
-                                                                    <!-- widget edit box -->
+                                                                   
                                                                     <div class="jarviswidget-editbox">
-                                                                        <!-- This area used as dropdown edit box -->
+                                                                        
                                                                         <input class="form-control" type="text">
                                                                     </div>
-                                                                    <!-- end widget edit box -->
-                                                                    <!-- widget content -->
+                                                                    
                                                                     <div class="widget-body">
-                                                                        <!-- this is what the user will see -->
+                                                                        
                                                                         <header>
                                                                             Tarifas asociados al contrato
                                                                         </header>
-                                                                        <!--
+                                                                        
                                                                         <form id="frmComisionista">
                                                                             <fieldset>
                                                                                 <div class="pull-right">
@@ -579,7 +588,7 @@
                                                                             </fieldset>
                                                                         </form>
                                                                         <hr/>
-                                                                        -->
+                                                                        
                                                                         <div id="tbTarifas">
                                                                             <table id="dt_tarifas" class="table table-striped table-bordered table-hover" width="100%">
                                                                                 <thead>
@@ -598,15 +607,15 @@
                                                                             </table>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- end widget content -->
+                                                                   
                                                                 </div>
-                                                                <!-- end widget div -->
+                                                               
                                                             </div>
-                                                            <!-- end widget -->
+                                                            
                                                         </article>
-                                                        <!-- WIDGET END -->
+                                                        
                                                     </div>
-                                                </div>
+                                                </div>-->
                                         </div>
                                     </div>
                                     <!-- end widget content -->

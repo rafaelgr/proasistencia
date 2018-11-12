@@ -1,17 +1,16 @@
 /*-------------------------------------------------------------------------- 
-tarifaDetalle.js
-Funciones js par la página TarifaDetalle.html
+tarifaClienteDetalle.js
+Funciones js par la página tarifaClienteDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var tarifaId = 0;
+var tarifaClienteId = 0;
 var cmd = "";
 var lineaEnEdicion = false;
-var GrupoId;
-var desdeGrupo;
+
 var dataTarifasLineas;
 var dataBases;
 
@@ -53,63 +52,57 @@ function initForm() {
     });
 
     // select2 things
+    $("#cmbCapitulos").select2(select2Spanish());
+    loadCapitulos();
+   
+
+    // select2 things
     $("#cmbArticulos").select2(select2Spanish());
     loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
         if (e.added) cambioArticulo(e.added.id);
     });
 
-    // select2 things
-    $("#cmbGrupo").select2(select2Spanish());
-    loadGrupoTarifa();
+    
 
     // select2 things
     $("#cmbCapitulos").select2(select2Spanish());
     loadCapitulos();
 
     
-    initTablaTarifasLineas();
+    initTablaTarifasClienteLineas();
    
 
-    tarifaId = gup('TarifaId');
+    tarifaClienteId = gup('tarifaClienteId');
     cmd = gup("cmd");
-    GrupoId = gup("GrupoId");
-    desdeGrupo = gup("desdeGrupo");
+    
 
-    if (tarifaId != 0) {
+    if (tarifaClienteId != 0) {
         // caso edicion
         vm.porcentaje(0)
-        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + tarifaId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaClienteId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            loadLineasTarifa(data.tarifaId);
+            loadLineasTarifaCliente(data.tarifaClienteId);
         })
     } else {
         // caso alta
-        vm.tarifaId(0);
+        vm.tarifaClienteId(0);
         vm.porcentaje(0)
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
-        $('#btnLineasCapitulos').hide();
+        //$('#btnLineasCapitulos').hide();
         document.title = "NUEVA TARIFA";
-        if(GrupoId){
-            loadGrupoTarifa(GrupoId);
-        }
+       
     }
 }
 
 function admData() {
     var self = this;
-    self.tarifaId = ko.observable();
+    self.tarifaClienteId = ko.observable();
     self.nombre = ko.observable();
-    //
-    self.grupoTarifaId = ko.observable();
-    //
-    self.sgrupoTarifaId = ko.observable();
-    //
-    self.posiblesGrupos = ko.observableArray([]);
-    self.elegidosGruposTarifa = ko.observableArray([]);
-
+    
+  
     //valores para el formulario de capitulos
     self.porcentaje = ko.observable();
     //
@@ -121,7 +114,7 @@ function admData() {
     
 
     // -- Valores para las líneas
-    self.tarifaLineaId = ko.observable();
+    self.tarifaClienteLineaId = ko.observable();
     self.precioUnitario = ko.observable();
     self.articuloId = ko.observable();
     //
@@ -133,11 +126,10 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.tarifaId(data.tarifaId);
+    vm.tarifaClienteId(data.tarifaClienteId);
     vm.nombre(data.nombre);
     vm.porcentaje(0);
-    loadGrupoTarifa(data.grupoTarifaId);
-
+   
 
     if (cmd == "nueva") {
         mostrarMensajeTarifaNueva();
@@ -182,32 +174,28 @@ var aceptarTarifa = function () {
     var data = generarTarifaDb();
     // caso alta
     var verb = "POST";
-    var url = myconfig.apiUrl + "/api/tarifas";
-    var returnUrl = "TarifaDetalle.html?desdeGrupo="+ desdeGrupo +"&cmd=nueva&TarifaId=";
+    var url = myconfig.apiUrl + "/api/tarifas_cliente";
+    var returnUrl = "tarifaClienteDetalle.html?cmd=nueva&tarifaClienteId=";
     // caso modificación
-    if (tarifaId != 0) {
+    if (tarifaClienteId != 0) {
         verb = "PUT";
-        url = myconfig.apiUrl + "/api/tarifas/" + tarifaId;
-        returnUrl = "TarifaGeneral.html?TarifaId=";
+        url = myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaClienteId;
+        returnUrl = "TarifaClienteGeneral.html?tarifaClienteId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
-        returnUrl = returnUrl + vm.tarifaId();
-        if(desdeGrupo == "true" && tarifaId != 0){
-            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId(), '_self');
-        }
-        else{
+        returnUrl = returnUrl + vm.tarifaClienteId();
+        
             window.open(returnUrl, '_self');
-        }
+        
     });
 }
 
 var generarTarifaDb = function () {
     var data = {
-        tarifa: {
-            "tarifaId": vm.tarifaId(),
-            "grupoTarifaId": vm.sgrupoTarifaId(),
+        tarifaCliente: {
+            "tarifaClienteId": vm.tarifaClienteId(),
             "nombre": vm.nombre()
         }
     };
@@ -216,12 +204,9 @@ var generarTarifaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "TarifaGeneral.html";
-        if(cmd != "nueva" && desdeGrupo == "true"){
-            window.open('GrupoTarifaDetalle.html?GrupoTarifaId='+ vm.sgrupoTarifaId(), '_self');
-        }else{
-            window.open(url, '_self');
-        }
+        
+            window.open("TarifaClienteGeneral.html", '_self');
+        
     }
     return mf;
 }
@@ -236,7 +221,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.tarifaLineaId(0);
+    vm.tarifaClienteLineaId(0);
     vm.precioUnitario(null);
     
     loadArticulos();
@@ -248,26 +233,26 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        tarifaLinea: {
-            tarifaLineaId: vm.tarifaLineaId(),
-            tarifaId: vm.tarifaId(),
+        tarifaClienteLinea: {
+            tarifaClienteLineaId: vm.tarifaClienteLineaId(),
+            tarifaClienteId: vm.tarifaClienteId(),
             articuloId: vm.sarticuloId(),
             precioUnitario:  vm.precioUnitario()
         }
     }
-    //compruebaArticuloRepetido en misma tarifa
+    //compruebaArticuloRepetido en misma tarifaCliente
                 var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/tarifas/lineas";
+                var url = myconfig.apiUrl + "/api/tarifas_cliente/lineas";
                 if (lineaEnEdicion) {
                     verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/tarifas/lineas/" + vm.tarifaLineaId();
+                    url = myconfig.apiUrl + "/api/tarifas_cliente/lineas/" + vm.tarifaClienteLineaId();
                 }
                 llamadaAjax(verbo, url, data, function (err, data) {
                     if (err) return;
                     $('#modalLinea').modal('hide');
-                    llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + data.tarifaClienteId, null, function (err, data) {
                         loadData(data);
-                        loadLineasTarifa(data.tarifaId);
+                        loadLineasTarifaCliente(data.tarifaClienteId);
                        
                     });
                 });
@@ -288,7 +273,7 @@ function datosOKLineas() {
         // Messages for form validation
         messages: {
             cmbArticulos: {
-                required: "Debe dar una unidad constructiva asociada a la linea de tarifa"
+                required: "Debe dar una unidad constructiva asociada a la linea de tarifaCliente"
             },
             txtPrecioUnitario: {
                 required: "Debe proporcionar un precio unitario",
@@ -306,7 +291,7 @@ function datosOKLineas() {
 
 
 
-function initTablaTarifasLineas() {
+function initTablaTarifasClienteLineas() {
     tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
@@ -356,11 +341,14 @@ function initTablaTarifasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "tarifaLineaId",
+            data: "codigoReparacion",
+            className: "text-left"
+        }, {
+            data: "tarifaClienteLineaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTarifaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editTarifaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTarifaClienteLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editTarifaClienteLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -369,7 +357,7 @@ function initTablaTarifasLineas() {
 }
 
 function loadDataLinea(data) {
-    vm.tarifaLineaId(data.tarifaLineaId);
+    vm.tarifaClienteLineaId(data.tarifaClienteLineaId);
     vm.articuloId(data.articuloId);
     vm.precioUnitario(data.precioUnitario);
     //
@@ -378,7 +366,7 @@ function loadDataLinea(data) {
 
 
 
-function loadTablaTarifaLineas(data) {
+function loadTablatarifaClienteLineas(data) {
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -389,10 +377,10 @@ function loadTablaTarifaLineas(data) {
 }
 
 
-function loadLineasTarifa(id) {
-    llamadaAjax("GET", "/api/tarifas/lineas/" + id, null, function (err, data) {
+function  loadLineasTarifaCliente(id) {
+    llamadaAjax("GET", "/api/tarifas_cliente/lineas/" + id, null, function (err, data) {
         if (err) return;
-        loadTablaTarifaLineas(data);
+        loadTablatarifaClienteLineas(data);
     });
 }
 
@@ -409,18 +397,6 @@ function loadArticulos(id) {
     });
 }
 
-function loadGrupoTarifa(id){
-    llamadaAjax("GET", "/api/grupo_tarifa", null, function (err, data) {
-        if (err) return;
-        var grupos = [{ grupoTarifaId: null, nombre: "" }].concat(data);
-        vm.posiblesGrupos(grupos);
-        if (id) {
-            $("#cmbGrupo").val([id]).trigger('change');
-        } else {
-            $("#cmbGrupo").val([0]).trigger('change');
-        }
-    });
-}
 
 function loadCapitulos(id){
     llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
@@ -443,29 +419,29 @@ function cambioArticulo(articuloId) {
 }
 
 
-function editTarifaLinea(id) {
+function editTarifaClienteLinea(id) {
     lineaEnEdicion = true;
-    llamadaAjax("GET", "/api/tarifas/linea/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/tarifas_cliente/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) loadDataLinea(data[0]);
     });
 }
 
-function deleteTarifaLinea(tarifaId) {
+function deleteTarifaClienteLinea(tarifaClienteId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
-            tarifaLinea: {
-                tarifaId: vm.tarifaId()
+            tarifaClienteLinea: {
+                tarifaClienteId: vm.tarifaClienteId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas/lineas/" + tarifaId, data, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_cliente/lineas/" + tarifaClienteId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + vm.tarifaId(), null, function (err, data) {
+            llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + vm.tarifaClienteId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
-                loadLineasTarifa(data.tarifaId);
+                loadLineasTarifaCliente(data.tarifaClienteId);
             });
         });
     }, function () {
@@ -481,46 +457,50 @@ function actualizaLineas(){
     }
 
     var data = creaObjeto();
-    var url = "/api/tarifas/lineas/multiples/";
+    var url = "/api/tarifas_cliente/lineas/multiples/";
+
     if (vm.sgrupoArticuloId() == 0) {
-        url = "/api/tarifas/lineas/multiples/todos";
+        url = "/api/tarifas_cliente/lineas/multiples/todos";
     }
+    
     llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas/" + data.tarifaId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + data.tarifaClienteId, null, function (err, data) {
             if(err) return;
             $('#modalTarifasGrupos').modal('hide');
             loadData(data);
-            loadLineasTarifa(data.tarifaId);
+            loadLineasTarifaCliente(data.tarifaClienteId);
         });
     });
 }
 
 function datosOkLineasGrupos() {
-   if(vm.porcentaje() === "") {
-    vm.porcentaje(null);
-   } 
-    $('#frmLineasGrupos').validate({
-        rules: {
-            txtPorcentaje: {
-                required: true,
-                number: true,
-            }
-        },
-        // Messages for form validation
-        messages: {
-            txtPorcentaje: {
-                required: "Debe proporcionar un porcentaje",
-                number: "Deve introducir un numero válido"
-            }
-        },
-        // Do not change code below
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    var opciones = $("#frmLineasGrupos").validate().settings;
-    return $('#frmLineasGrupos').valid();
-}
+    if(vm.porcentaje() === "") {
+     vm.porcentaje(null);
+    } 
+     $('#frmLineasGrupos').validate({
+         rules: {
+             txtPorcentaje: {
+                 required: true,
+                 number: true,
+             }
+         },
+         // Messages for form validation
+         messages: {
+             txtPorcentaje: {
+                 required: "Debe proporcionar un porcentaje",
+                 number: "Deve introducir un numero válido"
+             }
+         },
+         // Do not change code below
+         errorPlacement: function (error, element) {
+             error.insertAfter(element.parent());
+         }
+     });
+     var opciones = $("#frmLineasGrupos").validate().settings;
+     return $('#frmLineasGrupos').valid();
+ }
+
+
 
 
 function creaObjeto(){
@@ -532,10 +512,10 @@ function creaObjeto(){
         porcent = (100 + porcent) / 100
     }
     var data = {
-        tarifaLinea: {
-            capitulo: vm.sgrupoArticuloId(),
+        tarifaClienteLinea: {
+            grupoArticuloId: vm.sgrupoArticuloId(),
             porcentaje: porcent,
-            tarifaId: vm.tarifaId()
+            tarifaClienteId: vm.tarifaClienteId()
         }
     }
 
@@ -543,12 +523,12 @@ function creaObjeto(){
 }
 
 var mostrarMensajeTarifaNueva = function () {
-    var mens = "Introduzca las líneas de la nueva tarifa en el apartado correspondiente";
+    var mens = "Introduzca las líneas de la nueva tarifaCliente en el apartado correspondiente";
     mensNormal(mens);
 }
 
 var mostrarMensajeArticuloRepetido = function () {
-    var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en esta tarifa";
+    var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en esta tarifaCliente";
     mensNormal(mens);
     loadArticulos();
 }
