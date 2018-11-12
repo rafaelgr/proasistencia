@@ -14,6 +14,10 @@ CONSTRAINT `ref_tarifa_cliente` FOREIGN KEY (`tarifaClienteId`) REFERENCES `proa
 CONSTRAINT `ref_tarifa_cliente_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`)
 );
 
+ALTER TABLE `tarifas_cliente_lineas`   
+  ADD  UNIQUE INDEX `tarifa_cliente_articulo` (`tarifaClienteId`, `articuloId`);
+
+
 CREATE TABLE `tarifas_proveedor` ( 
 `tarifaProveedorId` INT(11) NOT NULL AUTO_INCREMENT,
 `nombre` VARCHAR(255),
@@ -29,6 +33,10 @@ PRIMARY KEY (`tarifaProveedorLineaId`),
 CONSTRAINT `ref_tarifa_proveedor` FOREIGN KEY (`tarifaProveedorId`) REFERENCES `proasistencia`.`tarifas_proveedor`(`tarifaProveedorId`),
 CONSTRAINT `ref_tarifa_proveedor_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`)
 );
+
+ALTER TABLE `proasistencia`.`tarifas_proveedor_lineas`   
+  ADD  UNIQUE INDEX `tarifaProveedor_articulo_unique` (`tarifaProveedorId`, `articuloId`);
+
 
 UPDATE clientes SET tarifaId = NULL;
 
@@ -70,6 +78,8 @@ CONSTRAINT `ref_locales_servicios` FOREIGN KEY (`servicioId`) REFERENCES `proasi
 
 ALTER TABLE `locales_afectados` 
 ADD COLUMN `cargo` VARCHAR(255) NULL AFTER `comentarios`;
+
+
 
 
 
