@@ -34,7 +34,7 @@ CONSTRAINT `ref_tarifa_proveedor` FOREIGN KEY (`tarifaProveedorId`) REFERENCES `
 CONSTRAINT `ref_tarifa_proveedor_articulo` FOREIGN KEY (`articuloId`) REFERENCES `proasistencia`.`articulos`(`articuloId`)
 );
 
-ALTER TABLE `proasistencia`.`tarifas_proveedor_lineas`   
+ALTER TABLE `tarifas_proveedor_lineas`   
   ADD  UNIQUE INDEX `tarifaProveedor_articulo_unique` (`tarifaProveedorId`, `articuloId`);
 
 
