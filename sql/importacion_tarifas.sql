@@ -1,4 +1,4 @@
-/*IMPORTAR EN LA BBDD DE PROASISTENCIA EL FICHERO tarifas_temp.sql y luego importacion_tarifas.sql!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+/*IMPORTAR EN LA BBDD DE PROASISTENCIA EL FICHERO tarifas_temp.sql!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
 DROP TABLE tarifas_lineas;
 
