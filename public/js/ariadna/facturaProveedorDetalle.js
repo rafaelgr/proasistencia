@@ -561,7 +561,6 @@ var aceptarFactura = function () {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
-        
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)

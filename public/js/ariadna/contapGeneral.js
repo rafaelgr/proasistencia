@@ -268,7 +268,12 @@ function contabilizarFacturas() {
             success: function (data, status) {
                 // borramos datos
                 $("#btnAlta").hide();
-                mensNormal('Las facturas han sido pasadas a contabilidad');
+                if(data.length > 0) {
+                    var lista = data.toString();
+                    mensNormal("Las Facturas con numero " + lista + "  no han sido contabilizadas por no tener empresas serviciadas.");
+                } else {
+                    mensNormal('Las facturas han sido pasadas a contabilidad');
+                }
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
