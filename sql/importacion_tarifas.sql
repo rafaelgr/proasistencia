@@ -38,7 +38,7 @@ SELECT codigo, descripcion AS nombre, 28 AS grupoArticuloId, 0.00 AS precioUnita
 /*CREACION TARIFAS*/
 
 /*TARIFA CLIENTE 1*/
-INSERT INTO tarifas_cliente VALUES(4, 'tarifa_cliente_1');
+INSERT INTO tarifas_cliente (nombre) VALUES('tarifa_cliente_1');
 
 INSERT INTO tarifas_cliente_lineas (tarifaClienteId,precioUnitario,articuloId)
 SELECT  tmp.tarifaClienteId, tmp.precio, tmp.articuloId FROM 
@@ -69,7 +69,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA CLIENTE 2*/
 
-INSERT INTO tarifas_cliente VALUES(5, 'tarifa_cliente_2');
+INSERT INTO tarifas_cliente (nombre) VALUES('tarifa_cliente_2');
 
 INSERT INTO tarifas_cliente_lineas (tarifaClienteId,precioUnitario,articuloId)
 
@@ -101,7 +101,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA CLIENTE 3*/
 
-INSERT INTO tarifas_cliente VALUES(6, 'tarifa_cliente_3');
+INSERT INTO tarifas_cliente (nombre) VALUES('tarifa_cliente_3');
 
 INSERT INTO tarifas_cliente_lineas (tarifaClienteId,precioUnitario,articuloId)
 
@@ -134,7 +134,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA CLIENTE 4*/
 
-INSERT INTO tarifas_cliente VALUES(7, 'tarifa_cliente_4');
+INSERT INTO tarifas_cliente (nombre) VALUES('tarifa_cliente_4');
 
 
 INSERT INTO tarifas_cliente_lineas (tarifaClienteId,precioUnitario,articuloId)
@@ -170,7 +170,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA PROVEEDOR 1*/
 
-INSERT INTO tarifas_proveedor VALUES(2, 'tarifa_proveedor_1');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_1');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
@@ -202,7 +202,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA PROVEEDOR 2*/
 
-INSERT INTO tarifas_proveedor VALUES(3, 'tarifa_proveedor_2');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_2');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
@@ -235,7 +235,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA PROVEEDOR 3*/
 
-INSERT INTO tarifas_proveedor VALUES(4, 'tarifa_proveedor_3');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_3');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
@@ -267,7 +267,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*TARIFA PROVEEDOR 4*/
 
-INSERT INTO tarifas_proveedor VALUES(5, 'tarifa_proveedor_4');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_4');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
@@ -299,7 +299,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*PROVEEDOR TARIFA 5*/
 
-INSERT INTO tarifas_proveedor VALUES(6, 'tarifa_proveedor_5');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_5');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
@@ -331,7 +331,7 @@ WHERE tmp.codigo IS NOT NULL AND tmp.precio > 0;
 
 /*PROVEEDOR TARIFA 6*/
 
-INSERT INTO tarifas_proveedor VALUES(7, 'tarifa_proveedor_6');
+INSERT INTO tarifas_proveedor (nombre) VALUES('tarifa_proveedor_6');
 
 INSERT INTO tarifas_proveedor_lineas (tarifaProveedorId,precioUnitario,articuloId)
 
