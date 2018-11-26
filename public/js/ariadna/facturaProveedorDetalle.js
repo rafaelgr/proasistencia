@@ -33,6 +33,8 @@ var breakpointDefinition = {
     phone: 480
 };
 
+eventSalir = true;
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -55,7 +57,11 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     
 
+    
+       cerrar(eventSalir);
 
+    
+    
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
@@ -532,6 +538,7 @@ function datosOK() {
 var aceptarFactura = function () {
     if (!datosOK()) return;
 
+    eventSalir = false;
     if (!vm.total()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -626,6 +633,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
+        eventSalir = false;
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
@@ -1988,7 +1996,7 @@ function datosOKServiciada() {
             txtImporteServiciada: {
                 required: true,
                 number: true,
-                min: 1
+                min: 0.000000000001
             },
             cmbEmpresaServiciadas: {
                required: true
