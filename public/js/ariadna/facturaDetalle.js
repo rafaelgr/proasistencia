@@ -29,6 +29,8 @@ function initForm() {
     // 
     getVersionFooter();
 
+    eventoCerrar();
+
     vm = new admData();
     ko.applyBindings(vm);
 
@@ -350,6 +352,9 @@ function datosOK() {
 var aceptarFactura = function () {
     if (!datosOK()) return;
 
+
+    eventSalir = false;
+    
     if (!vm.total()) {
         vm.total('0');
         vm.totalConIva('0');

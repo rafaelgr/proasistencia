@@ -33,7 +33,7 @@ var breakpointDefinition = {
     phone: 480
 };
 
-eventSalir = true;
+
 
 datePickerSpanish(); // see comun.js
 
@@ -58,7 +58,7 @@ function initForm() {
     
 
     
-       cerrar(eventSalir);
+    eventoCerrar();
 
     
     
@@ -633,7 +633,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        eventSalir = false;
+        
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{

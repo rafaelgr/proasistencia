@@ -5,6 +5,8 @@
 
 //-- Se ejecuta al inciio de todas las páginas
 
+eventSalir = true;//booleana que controla el mansaje de cierre de ventana
+
 function comprobarLogin() {
     // buscar el cookie
     try {
@@ -81,7 +83,7 @@ function mostrarMensajeSmartSiNo(mens) {
     });
 }
 
-function cerrar(eventasir) {
+function eventoCerrar() {
     ClosingVar =true
         window.onbeforeunload = ExitCheck;
         function ExitCheck()
