@@ -104,6 +104,8 @@ function initTablaProveedores() {
         }, {
             data: "nif"
         }, {
+            data: "cuentaContable"
+        },{
             data: "proveedorId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteProveedor(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
