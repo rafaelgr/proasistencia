@@ -33,6 +33,8 @@ var breakpointDefinition = {
     phone: 480
 };
 
+
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -55,7 +57,11 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     
 
+    
+    eventoCerrar();
 
+    
+    
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
@@ -532,6 +538,7 @@ function datosOK() {
 var aceptarFactura = function () {
     if (!datosOK()) return;
 
+    eventSalir = false;
     if (!vm.total()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -561,7 +568,6 @@ var aceptarFactura = function () {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
         returnUrl = "FacturaProveedorGeneral.html?facproveId=";
-        
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)
@@ -627,6 +633,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
+        
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
@@ -861,7 +868,7 @@ function datosOKLineas() {
             txtPrecio: {
                 required: true,
                 number: true,
-                min: 1
+                min: 0.00000000000001
             },
             txtCantidad: {
                 required: true
@@ -1037,14 +1044,15 @@ function loadDataLineaDefecto(data) {
     vm.importeRetencionLinea(0);
     vm.codigo(0);
    
+   
     
     //
-    loadGrupoArticulos(data.grupoArticuloId);
+    /*loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
-    loadUnidades(data.unidadId);
+    loadUnidades(data.unidadId);*/
     //
-    cambioGrupoArticulo(data.grupoArticuloId)
+    //cambioGrupoArticulo(data.grupoArticuloId)
     cambioTiposIva(data.tipoIvaId)
    
 }
@@ -1167,7 +1175,7 @@ function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
-    if (!vm.capituloLinea()) {
+    //if (!vm.capituloLinea()) {
         var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
@@ -1176,7 +1184,7 @@ function cambioGrupoArticulo(grupoArticuloId) {
             nombreCapitulo += data.nombre;
             vm.capituloLinea(nombreCapitulo);
         });
-    }
+    //}
     llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
@@ -1988,7 +1996,7 @@ function datosOKServiciada() {
             txtImporteServiciada: {
                 required: true,
                 number: true,
-                min: 1
+                min: 0.000000000001
             },
             cmbEmpresaServiciadas: {
                required: true

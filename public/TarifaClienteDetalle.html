@@ -468,6 +468,9 @@
                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
+                                                <button id="btnCopiar" title="Copiar tarifa" data-toggle="modal" data-target="#modalCopia" class="btn btn-success btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-crosshairs"></i>
+                                                </button>
                                             </div>
                                         </fieldset>
                                     </form>
@@ -600,6 +603,46 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modalCopia" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title"> COPIA TARIFA</h4>
+                    </div>
+                    <div class="modal-body no-padding">
+                        
+                            <form id="frmCopia" class="smart-form">
+                                    <fieldset>
+                                            <legend>Se copiará la tarifa, se tiene que introducir un nombre.</legend>
+                                            <div class="row">
+                                                    <section class="col col-md-12">
+                                                            <label class="label">Nombre</label>
+                                                            <label class="input">
+                                                                <input id="txtNuevoNombre" name="txtNuevoNombre" type="text" data-bind="value: nuevoNombre"/>
+                                                            </label>
+                                                    </section>
+                                            </div>
+                                    </fieldset>
+                                    <footer>
+                                        <button id="btnAceptarNombre" class="btn btn-primary" onclick="copiarTarifa()">
+                                            Aceptar
+                                        </button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </footer>
+                            </form>
+                             <hr/>
+                    
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
