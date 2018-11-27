@@ -87,8 +87,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // servidor html estático
-app.use(express.static(__dirname+"/public"));
-app.use('/ficheros', serveIndex(__dirname + '/public/ficheros',{'icons': true, 'view': 'details'}));
+app.use(express.static(__dirname + "/public"));
+app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true, 'view': 'details' }));
 
 
 
@@ -96,14 +96,14 @@ app.use('/ficheros', serveIndex(__dirname + '/public/ficheros',{'icons': true, '
 var router = express.Router();
 
 // -- common to all routes
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
     // go on (by now)
     next();
 });
 
 
 // -- general GET (to know if the server is up and runnig)
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     res.json('PROASISTENCIA API / SERVER -- runnig');
 });
 
@@ -159,7 +159,7 @@ app.use('/api/locales_afectados', locales_afectados_router);
 
 
 // -- start server
-var server = require('http').createServer(app); 
+var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 server.listen(config.apiPort);
 
@@ -169,9 +169,9 @@ ioAPI.init(io);
 
 
 // -- console message
-console.log ("-------------------------------------------");
-console.log (" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
-console.log ("-------------------------------------------");
+console.log("-------------------------------------------");
+console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
+console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
 console.log(' PORT: ' + config.apiPort);
-console.log ("-------------------------------------------");
+console.log("-------------------------------------------");
