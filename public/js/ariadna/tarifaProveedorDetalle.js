@@ -51,6 +51,11 @@ function initForm() {
         return false;
     });
 
+    $('#frmCopia').submit(function(){
+        return false;
+    });
+
+
     // select2 things
     $("#cmbCapitulos").select2(select2Spanish());
     loadCapitulos();
@@ -123,6 +128,8 @@ function admData() {
     self.posiblesArticulos = ko.observableArray([]);
     self.elegidosArticulos = ko.observableArray([]);
     
+    //valor para el nombre de copia de tarifa
+    self.nuevoNombre = ko.observable();
 }
 
 function loadData(data) {
@@ -142,18 +149,12 @@ function loadData(data) {
 function datosOK() {
     $('#frmTarifa').validate({
         rules: {
-            cmbGrupo: {
-                required: true
-            },
             txtNombre: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            cmbGrupo: {
-                required: "Debe elegir un grupo"
-            },
             txtNombre: {
                 required: 'Debe elegir un nombre'
             }
@@ -531,4 +532,56 @@ var mostrarMensajeArticuloRepetido = function () {
     var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en esta tarifaProveedor";
     mensNormal(mens);
     loadArticulos();
+}
+
+//funciones relacionadas con la copia de tarifas
+
+function copiarTarifa() {
+    if(!datosOKNuevoNombre()) return;
+    var data = {
+        tarifaProveedor: {
+            "tarifaProveedorId": 0,
+            "nombre": vm.nuevoNombre()
+        }
+    }
+
+    llamadaAjax("POST", "/api/tarifas_proveedor" , data, function (err, data) {
+        if (err) return;
+        var data2 = {
+            tarifaProveedor: {
+                "tarifaProveedorId": vm.tarifaProveedorId(),
+                "nuevaTarifaProveedorId": data.tarifaProveedorId
+            }
+        }
+        llamadaAjax("POST", "/api/tarifas_proveedor/copia/tarifa/proveedor/nombre" , data2, function (err, data) {
+            if (err) return;
+            $('#modalCopia').modal('hide');
+            window.open("TarifaProveedorGeneral.html", '_self');
+        });
+        
+    });
+}
+
+function datosOKNuevoNombre() {
+    $('#frmTarifa').validate({
+        rules: {
+            
+            txtNuevoNombre: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+           
+            txNuevoNombre: {
+                required: 'Debe elegir un nombre'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmTarifa").validate().settings;
+    return $('#frmTarifa').valid();
 }

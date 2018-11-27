@@ -5,6 +5,8 @@
 
 //-- Se ejecuta al inciio de todas las páginas
 
+eventSalir = true;//booleana que controla el mansaje de cierre de ventana
+
 function comprobarLogin() {
     // buscar el cookie
     try {
@@ -79,6 +81,21 @@ function mostrarMensajeSmartSiNo(mens) {
             return 'N';
         }
     });
+}
+
+function eventoCerrar() {
+    ClosingVar =true
+        window.onbeforeunload = ExitCheck;
+        function ExitCheck()
+        {   
+            ///control de cerrar la ventana///
+            if(ClosingVar == true && eventSalir == true) 
+              { ExitCheck = false
+                return "Si decide continuar,abandonará la página pudiendo perder los cambios si no ha GRABADO ¡¡¡";
+                
+              }
+        }
+
 }
 
 var errorAjax = function (xhr, textStatus, errorThrwon) {
@@ -427,3 +444,4 @@ var errorGeneral = function (err, done) {
     if (done) return done(err);
     return err;
 }
+
