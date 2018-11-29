@@ -255,7 +255,6 @@ function buscarFicheros() {
     };
     return mf;
 }
-
 function contabilizarFacturas() {
     var mf = function () {
         // de momento nada
@@ -270,7 +269,7 @@ function contabilizarFacturas() {
                 $("#btnAlta").hide();
                 if(data.length > 0) {
                     var lista = data.toString();
-                    mensNormal("Las Facturas con numero " + lista + "  no han sido contabilizadas por no tener empresas serviciadas.");
+                    mensNormal("Las Facturas con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
                 } else {
                     mensNormal('Las facturas han sido pasadas a contabilidad');
                 }
