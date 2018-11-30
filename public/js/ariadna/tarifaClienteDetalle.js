@@ -51,6 +51,11 @@ function initForm() {
         return false;
     });
 
+    $('#frmCopia').submit(function(){
+        return false;
+    });
+
+
     // select2 things
     $("#cmbCapitulos").select2(select2Spanish());
     loadCapitulos();
@@ -122,6 +127,9 @@ function admData() {
     //
     self.posiblesArticulos = ko.observableArray([]);
     self.elegidosArticulos = ko.observableArray([]);
+
+    //valor para el nombre de copia de tarifa
+    self.nuevoNombre = ko.observable();
     
 }
 
@@ -142,18 +150,14 @@ function loadData(data) {
 function datosOK() {
     $('#frmTarifa').validate({
         rules: {
-            cmbGrupo: {
-                required: true
-            },
+            
             txtNombre: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            cmbGrupo: {
-                required: "Debe elegir un grupo"
-            },
+            
             txtNombre: {
                 required: 'Debe elegir un nombre'
             }
@@ -370,9 +374,13 @@ function loadTablatarifaClienteLineas(data) {
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
+        $('#btnCopiar').hide();
     }
     dt.fnClearTable();
-    if (data != null) dt.fnAddData(data);
+    if (data != null){
+        dt.fnAddData(data);
+        $('#btnCopiar').show();
+    }
     dt.fnDraw();
 }
 
@@ -531,4 +539,56 @@ var mostrarMensajeArticuloRepetido = function () {
     var mens = "La unidad constructiva seleccionada ya se ancuentra incluida en esta tarifaCliente";
     mensNormal(mens);
     loadArticulos();
+}
+
+//funciones relacionadas con la copia de tarifas
+
+function copiarTarifa() {
+    if(!datosOKNuevoNombre()) return;
+    var data = {
+        tarifaCliente: {
+            "tarifaClienteId": 0,
+            "nombre": vm.nuevoNombre()
+        }
+    }
+
+    llamadaAjax("POST", "/api/tarifas_cliente" , data, function (err, data) {
+        if (err) return;
+        var data2 = {
+            tarifaCliente: {
+                "tarifaClienteId": vm.tarifaClienteId(),
+                "nuevaTarifaClienteId": data.tarifaClienteId
+            }
+        }
+        llamadaAjax("POST", "/api/tarifas_cliente/copia/tarifa/cliente/nombre" , data2, function (err, data) {
+            if (err) return;
+            $('#modalCopia').modal('hide');
+            window.open("TarifaClienteGeneral.html", '_self');
+        });
+        
+    });
+}
+
+function datosOKNuevoNombre() {
+    $('#frmTarifa').validate({
+        rules: {
+            
+            txtNuevoNombre: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+           
+            txNuevoNombre: {
+                required: 'Debe elegir un nombre'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmTarifa").validate().settings;
+    return $('#frmTarifa').valid();
 }
