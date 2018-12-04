@@ -13,6 +13,13 @@ cuentaContable = '400000001' OR cuentaContable = '410000357';
 UPDATE proasistencia.proveedores SET cuentaContable = '410000401', 
 tipoProveedor = 2, codigo = 401 WHERE codigo = 1224;
 
+UPDATE proasistencia.proveedores SET cuentaContable = '410000402', 
+tipoProveedor = 2, codigo = 402 WHERE codigo = 1225;
+
+
+UPDATE proasistencia.proveedores SET cuentaContable = '410000413', 
+tipoProveedor = 2, codigo = 413 WHERE codigo = 1246;
+
 UPDATE proasistencia.proveedores pro, tmp_cuentas tp
 SET pro.cuentaContable = tp.codmacta, pro.tipoProveedor = 2, pro.codigo = tp.codigo
 WHERE pro.nif = tp.nifdatos AND tp.codmacta LIKE '41%';
