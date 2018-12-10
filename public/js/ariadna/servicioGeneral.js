@@ -66,7 +66,6 @@ function initForm() {
 function initTablaServicios() {
     tablaCarro = $('#dt_servicio').dataTable({
         autoWidth: true,
-        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -126,8 +125,8 @@ function initTablaServicios() {
         },{
             data: "servicioId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteServicio(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editServicio(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteServicio(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editServicio(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
