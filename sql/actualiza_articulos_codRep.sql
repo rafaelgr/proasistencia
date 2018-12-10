@@ -1,3 +1,5 @@
+use proasistencia;
+
 INSERT INTO grupo_articulo (nombre,cuentacompras,cuentaventas) VALUES ('PARQUETISTA', '623000001', '700000001' ), 
 ('CARPINTEROS', '623000001', '700000001' ),
 ('PULIDOS', '623000001', '700000001' );
@@ -34,7 +36,7 @@ WHERE articuloId IN
  UPDATE articulos  SET grupoArticuloId = 
 (SELECT tmg.grupoArticuloId FROM 
 (SELECT  gp.grupoArticuloId FROM grupo_articulo gp 
-WHERE gp.nombre = 'ALBAÑILERIA') AS tmg)
+WHERE gp.nombre = 'ALBAÃ±ILERIA') AS tmg)
 WHERE articuloId IN 
 (SELECT tma.articuloId FROM 
 (SELECT ar.articuloId FROM articulos ar
