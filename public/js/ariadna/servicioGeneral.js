@@ -66,6 +66,10 @@ function initForm() {
 function initTablaServicios() {
     tablaCarro = $('#dt_servicio').dataTable({
         autoWidth: true,
+        "columnDefs": [
+            { "width": "9%", "targets": 7 },
+            
+          ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
