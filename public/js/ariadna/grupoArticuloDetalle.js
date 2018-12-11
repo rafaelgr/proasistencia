@@ -67,14 +67,14 @@ function datosOK() {
     $('#frmGrupoArticulo').validate({
         rules: {
             txtNombre: { required: true },
-            txtCuentaCompras: { required: true },
-            txtCuentaVentas: { required: true }
+            txtCuentaCompras: { required: true, rangelength: [9, 9] },
+            txtCuentaVentas: { required: true, rangelength: [9, 9] }
         },
         // Messages for form validation
         messages: {
             txtNombre: { required: "Debe dar un nombre" },
-            txtCuentaCompras: { required: "Debe dar una cuenta de compras" },
-            txtCuentaVentas: { required: "Debe dar una cuenta de ventas" }
+            txtCuentaCompras: { required: "Debe dar una cuenta de compras", rangelength: "La longitud tiene que ser de nueve digitos" },
+            txtCuentaVentas: { required: "Debe dar una cuenta de ventas", rangelength: "La longitud tiene que ser de nueve digitos" }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
