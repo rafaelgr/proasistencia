@@ -505,7 +505,8 @@ function datosOK() {
                 required: true
             },
             txtNumero: {
-                required: true
+                required: true,
+                rangelength: [1, 10]
             }
         },
         // Messages for form validation
@@ -524,6 +525,10 @@ function datosOK() {
             },
             cmbContratos: {
                 required: "Debe elegir un contrato asociado"
+            },
+            txtNumero: {
+                required: "Debe introducir un número de factura",
+                rangelength: "El rango de digitos debe estar entre 1 y 10"
             }
         },
         // Do not change code below

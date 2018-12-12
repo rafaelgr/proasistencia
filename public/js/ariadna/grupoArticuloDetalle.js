@@ -107,9 +107,10 @@ function aceptar() {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
-                    loadData(data);
+                    loadData(data[1]);
                     // Nos volvemos al general
-                    var url = "GrupoArticuloGeneral.html?GrupoArticuloId=" + vm.grupoArticuloId();
+                    
+                    var url = "GrupoArticuloGeneral.html?GrupoArticuloId=" + vm.grupoArticuloId() + '&cuentas=' + data[0];
                     window.open(url, '_self');
                 },
                 error: function (err) {
@@ -126,10 +127,11 @@ function aceptar() {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
-                    loadData(data);
+                    loadData(data[1]);
                     // Nos volvemos al general
-                    var url = "GrupoArticuloGeneral.html?GrupoArticuloId=" + vm.grupoArticuloId();
+                    var url = "GrupoArticuloGeneral.html?GrupoArticuloId=" + vm.grupoArticuloId() + '&cuentas=' + data[0];
                     window.open(url, '_self');
+                    
                 },
                 error: function (err) {
                     mensErrorAjax(err);
