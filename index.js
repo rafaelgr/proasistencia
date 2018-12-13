@@ -71,7 +71,11 @@ var bi_router = require('./lib/bi/bi_controller');
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
-var config = require('./config.json');
+//var config = require('./config.json');
+
+//  leer la configurción de .env
+var config = require('dotenv');
+config.config();
 
 
 // starting express
@@ -161,7 +165,7 @@ app.use('/api/locales_afectados', locales_afectados_router);
 // -- start server
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-server.listen(config.apiPort);
+server.listen(process.env.apiPort);
 
 // -- io calls
 var ioAPI = require('./lib/ioapi/ioapi');
@@ -173,5 +177,5 @@ console.log("-------------------------------------------");
 console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
 console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
-console.log(' PORT: ' + config.apiPort);
+console.log(' PORT: ' + process.env.apiPort);
 console.log("-------------------------------------------");
