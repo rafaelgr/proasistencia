@@ -123,7 +123,8 @@ function datosOK() {
                 required: true
             },
             txtNumeroVencimientos: {
-                required: true
+                required: true,
+                min: 1
             },
             txtPrimerVencimiento: {
                 required: true
@@ -144,7 +145,8 @@ function datosOK() {
                 required: "Debe dar un nombre"
             },
             txtNumeroVencimientos: {
-                required: "Introduzca el númnero de vencimientos"
+                required: "Introduzca el númnero de vencimientos",
+                min: "El número de vencimientos no puede ser 0"
             },
             txtPrimerVencimiento: {
                 required: "Dias hasta el primer vencimiento"
