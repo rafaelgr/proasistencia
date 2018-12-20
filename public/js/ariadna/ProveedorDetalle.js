@@ -53,8 +53,16 @@ function initForm() {
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
+
         cambioTipoProveedor(e.added);
     });
+
+    $("#txtNif").on('change', function (e) {
+        var nif = $("#txtNif").val();
+        compruebaRepetido(nif);
+    });
+
+
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
@@ -609,6 +617,26 @@ function cambioTipoProveedor(data) {
         });    
     }
 }
+
+
+function compruebaRepetido(nif) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido" + nif,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            // hay que mostrarlo en la zona de datos
+            loadData(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 //---- Solapa facturas
 function initTablaFacturas() {
