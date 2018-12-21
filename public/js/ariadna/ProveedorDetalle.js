@@ -10,6 +10,7 @@ var intentos = 0;
 var dataFacturas;
 var facproveId;
 var codigoSugerido;
+var antNif = ""//recoge el valor que tiene el nif al cargar la página
 
 
 var responsiveHelper_dt_basic = undefined;
@@ -276,7 +277,8 @@ function loadData(data) {
     vm.iban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.codigoProfesional(data.codigoProfesional);
-
+    
+    antNif = data.nif;
     // split iban
     if (vm.iban()) {
         var ibanl = vm.iban().match(/.{4}/g);
@@ -622,13 +624,15 @@ function cambioTipoProveedor(data) {
 function compruebaRepetido(nif) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido" + nif,
+        url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido/" + nif,
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify(data),
+        data:null,
         success: function (data, status) {
-            // hay que mostrarlo en la zona de datos
-            loadData(data);
+            if(data && data.proveedorId != vm.proveedorId()) {
+               mensError('Ya existe un proveedor con este NIF');
+               $('#txtNif').val(antNif);
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
