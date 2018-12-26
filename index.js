@@ -51,6 +51,8 @@ var facturasProveedores_router = require('./lib/facturas_proveedores/facturasPro
 var servicios_router = require('./lib/servicios/servicios_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 
+var config_router = require('./lib/configuracion_env/config_env_controller');
+
 
 
 var informes_router = require('./lib/informes/informes_controller');
@@ -66,6 +68,7 @@ var upload = require('./lib/upload/upload');
 var cobros = require('./lib/cobros/cobros_controller');
 var bi_router = require('./lib/bi/bi_controller');
 
+var configuracion_router = require('./lib/configuracion_env/config_env_controller');
 
 
 
@@ -160,12 +163,15 @@ app.use('/api/upload', upload);
 app.use('/api/cobros', cobros);
 app.use('/api/servicios', servicios_router);
 app.use('/api/locales_afectados', locales_afectados_router);
+app.use('/api/configuracion', config_router)
+
+
 
 
 // -- start server
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-server.listen(process.env.apiPort);
+server.listen(process.env.API_PORT);
 
 // -- io calls
 var ioAPI = require('./lib/ioapi/ioapi');
@@ -177,5 +183,5 @@ console.log("-------------------------------------------");
 console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
 console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
-console.log(' PORT: ' + process.env.apiPort);
+console.log(' PORT: ' + process.env.API_PORT);
 console.log("-------------------------------------------");
