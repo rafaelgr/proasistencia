@@ -17,7 +17,7 @@ var options = new Stimulsoft.Viewer.StiViewerOptions();
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
 
-obtainKey();//obtiene la clave de usuario de stimulsoft de lña configuracion
+obtainKey();//obtiene la clave de usuario de stimulsoft de la configuracion
 
 options.appearance.scrollbarsMode = true;
 options.appearance.fullScreenMode = true;
