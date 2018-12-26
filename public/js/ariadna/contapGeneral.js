@@ -255,7 +255,6 @@ function buscarFicheros() {
     };
     return mf;
 }
-
 function contabilizarFacturas() {
     var mf = function () {
         // de momento nada
@@ -266,17 +265,20 @@ function contabilizarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                // borramos datos
-                $("#btnAlta").hide();
                 if(data.length > 0) {
+                    //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
                     var lista = data.toString();
-                    mensNormal("Las Facturas con numero " + lista + "  no han sido contabilizadas por no tener empresas serviciadas.");
+                    mensError("Las Facturas con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
+                    var fn = buscarFacturas();
+                    fn();
                 } else {
+                    // borramos datos
+                    $("#btnAlta").hide();
                     mensNormal('Las facturas han sido pasadas a contabilidad');
+                    vm.desdeFecha(null);
+                    vm.hastaFecha(null);
+                    loadTablaFacturas(null);
                 }
-                vm.desdeFecha(null);
-                vm.hastaFecha(null);
-                loadTablaFacturas(null);
             },
             error: function (err) {
                 mensErrorAjax(err);
