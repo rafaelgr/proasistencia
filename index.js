@@ -68,7 +68,8 @@ var upload = require('./lib/upload/upload');
 var cobros = require('./lib/cobros/cobros_controller');
 var bi_router = require('./lib/bi/bi_controller');
 
-var configuracion_router = require('./lib/configuracion_env/config_env_controller');
+//ACTUACIONES
+var estados_actuacion = require('./lib/estados_actuacion/estados_actuacion_controller');
 
 
 
@@ -164,6 +165,9 @@ app.use('/api/cobros', cobros);
 app.use('/api/servicios', servicios_router);
 app.use('/api/locales_afectados', locales_afectados_router);
 app.use('/api/configuracion', config_router)
+
+//ACTUACIONES
+app.use('/api/estados_actuacion', estados_actuacion);
 
 
 
