@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,6 +145,7 @@
             </a>
             </span>
         </div>
+        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -365,9 +366,9 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Gestión</li>
-                <li>Liquidación</li>
-                <li>Detalle de liquidaciones</li>
+                <li>Administracion</li>
+                <li>Estados de actuacion</li>
+                <li>Detalle de estado de actuacion</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -389,8 +390,9 @@
                 <!-- col -->
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                     <h1 class="page-title txt-color-blueDark">
+
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-address-card-o"></i>Detalle de liquidaciones <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-square"></i> Detalle estado de actuación<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -443,7 +445,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Detalle de liquidaciones </h2>
+                                <h2>Mantenimiento estados de actuación</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -456,114 +458,31 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmBuscar" class="smart-form">
+                                    <form id="frmEstadoActuacion" class="smart-form">
                                         <header>
-                                            RESUMEN
+                                            Datos del estado de actuación
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-6">
-                                                    <div><strong>Colaborador:</strong></div>
-                                                    <div><span data-bind="text: colaborador"></span></div>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <div><strong>Tipo:</strong></div>
-                                                    <div><span data-bind="text: tipo"></span></div>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <section class="col col-md-3">
-                                                    <div><strong>Total Comisiones:</strong></div>
-                                                    <div><span data-bind="text: totalComision"></span></div>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-6">
+                                                <section class="col col-md-12">
+                                                    <label class="label">Nombre</label>
+                                                    <label class="input">
+                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
+                                                    </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnPrint" title="Imprimir" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-print"></i>
-                                                </button>                                                
-                                            </div>
-                                        </fieldset>                                        
-                                        <!--
-                                        <header>
-                                            Leyendas de las deducciones del importe para calcular la base.
-                                            (Se muestran los importes de los diferentes conceptos, si el importe es cero es que el concepto no aplica según el contrato comercial)
-                                        </header>
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    CA: Comisión del agente
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    PC: % Sobre el importe al cliente
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    PCA: % Porcentaje sobre el importe al cliente menos comisión del agente
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    PCO: Porcentaje sobre costos
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    ICO: Importe costes
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    IJO: Importe Jefe de Obra
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    IOT: Importe oficina técnica
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    IAT: Importe asesor técnico
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    IC: Importe comercial
-                                                </section>                                                
+                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-sign-out"></i>
+                                                </button>
+                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-check"></i>
+                                                </button>
                                             </div>
                                         </fieldset>
-                                        -->
                                     </form>
-                                    <div id="tbLiquidacion">
-                                        <table id="dt_liquidacion" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    
-                                                
-                                                    <th>
-                                                        Contrato
-                                                    </th>
-                                                    <th>
-                                                        Facturado
-                                                    </th>
-                                                    <th data-hide="tablet">Agente</th>
-                                                    <th data-hide="tablet">% Ventas</th>
-                                                    <th data-hide="tablet">% Comercial</th>
-                                                    <th data-hide="tablet">% Costes</th>
-                                                    <th data-hide="tablet">Costes</th>
-                                                    <th data-hide="tablet">Jefe Obra</th>
-                                                    <th data-hide="tablet">Oficina Técnica.</th>
-                                                    <th data-hide="tablet">Asesor Técnica.</th>
-                                                    <th data-hide="tablet">Comercial</th>
-                                                    <th>
-                                                        Base Calculo
-                                                    </th>
-                                                    <th>
-                                                        %
-                                                    </th>
-                                                    <th>
-                                                        Comision
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -584,7 +503,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
@@ -612,13 +531,16 @@
     }
     </script>
     <!-- IMPORTANT: APP CONFIG -->
+    <!-- NUMERAL -->
+    <script src="js/numeral.min.js"></script>
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
-    <script src="js/numeral.js"></script>
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- MOMENT -->
+    <script src="js/moment.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
@@ -639,8 +561,6 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
-    <!--- KNOCKOUT JS -->
-    <script src="js/knockout-3.1.0.js"></script>
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -656,12 +576,13 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
+    <!--- KNOCKOUT JS -->
+    <script src="js/knockout-3.1.0.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/liquidacionComercialDetalle.js"></script>
-    <script type="text/javascript" src="js/moment.js"></script>
+    <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/estadoActuacionDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
