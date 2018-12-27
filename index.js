@@ -71,6 +71,7 @@ var bi_router = require('./lib/bi/bi_controller');
 //ACTUACIONES
 var estados_actuacion = require('./lib/estados_actuacion/estados_actuacion_controller');
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
+var rechazos_presupuesto = require('./lib/rechazos_presupuesto/rechazos_presupuesto_controller');
 
 
 
@@ -170,6 +171,7 @@ app.use('/api/configuracion', config_router)
 //ACTUACIONES
 app.use('/api/estados_actuacion', estados_actuacion);
 app.use('/api/estados_presupuesto', estados_presupuesto);
+app.use('/api/rechazos_presupuesto', rechazos_presupuesto);
 
 
 
