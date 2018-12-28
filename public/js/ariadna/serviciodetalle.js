@@ -888,12 +888,12 @@ function initTablaActuaciones() {
             infoPostFix: "",
             loadingRecords: "Cargando...",
             zeroRecords: "No se encontraron resultados",
-            emptyTable: "NingÃºn dato disponible en esta tabla",
+            emptyTable: "Ningún dato disponible en esta tabla",
             paginate: {
                 first: "Primero",
                 previous: "Anterior",
                 next: "Siguiente",
-                last: "Ãšltimo"
+                last: "último"
             },
             aria: {
                 sortAscending: ": Activar para ordenar la columna de manera ascendente",
@@ -902,6 +902,10 @@ function initTablaActuaciones() {
         },
         data: dataActuaciones,
         columns: [ {
+            data: "actuacionId"
+        },{
+            data: "servicioId"
+        },{
             data: "nombrecliente"
         }, {
             data: "fechaActuacion",
