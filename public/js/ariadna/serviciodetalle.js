@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-usuarioDetalle.js
-Funciones js par la página UsuarioDetalle.html
+servicioDetalle.js
+Funciones js par la pÃ¡gina ServicioDetalle.html
 ---------------------------------------------------------------------------*/
 
 var responsiveHelper_dt_basic = undefined;
@@ -9,6 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataLocales;
+var dataActuaciones;
 var servicioId;
 var localEnEdicion = false;
 var cmd = "";
@@ -30,7 +31,7 @@ function initForm() {
     getVersionFooter();
     vm = new admData();
     ko.applyBindings(vm);
-    // asignación de eventos al clic
+    // asignaciÃ³n de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#frmServicio").submit(function () {
@@ -67,6 +68,8 @@ function initForm() {
     datePickerSpanish(); // see comun.js
    
     initTablaLocalesAfectados();
+
+    initTablaActuaciones();
     
     servicioId = gup('ServicioId');
     cmd = gup("cmd");
@@ -86,10 +89,11 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 buscarTodosLocalesAfectados(servicioId);
+                loadActuacionesDelServicio(servicioId);
             },
             error: function (err) {
                 mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
+                // si hay algo mÃ¡s que hacer lo haremos aquÃ­.
             }
         });
     } else {
@@ -299,15 +303,15 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
-            txtDescripcion: { required: 'Deve introducir una descripción'},
+            txtDescripcion: { required: 'Deve introducir una descripciÃ³n'},
             txtCalle: {required: 'Requerido'},
             txtNumero: {required: 'Requerido'},
-            txtPoblacion: {required: 'Debe introducir una población'},
+            txtPoblacion: {required: 'Debe introducir una poblaciÃ³n'},
             txtProvincia: {required: 'Debe introducir una provincia'},
             txtLocalAfectado: {required: 'Debe introducir un local'},
             txtPersonaContacto: {required: 'Debe intoducir una persona  de contacto'},
             txtTelefono1: {required: 'Necesita un telefono'},
-            txtFechaCreacion: {required: 'Deve introducir una fecha de creación'}
+            txtFechaCreacion: {required: 'Deve introducir una fecha de creaciÃ³n'}
 
         },
         // Do not change code below
@@ -366,7 +370,7 @@ function aceptar() {
                 },
                 error: function (err) {
                     mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                    // si hay algo mÃ¡s que hacer lo haremos aquÃ­.
                 }
             });
         } else {
@@ -385,7 +389,7 @@ function aceptar() {
                 },
                 error: function (err) {
                     mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                    // si hay algo mÃ¡s que hacer lo haremos aquÃ­.
                 }
             });
         }
@@ -508,7 +512,7 @@ var initAutoCliente = function (id) {
     var url = "/api/clientes/?nombre=";
     llamadaAjax("GET",  '/api/clientes/agente/' + id, null, function (err, dataUno) {
         if (err) return;
-        // incialización propiamente dicha
+        // incializaciÃ³n propiamente dicha
         $("#txtCliente").autocomplete({
             source: function (request, response) {
                 if(dataUno.length > 0 && id != 0) {
@@ -536,12 +540,12 @@ var initAutoCliente = function (id) {
                 cambioCliente(ui.item.id);
             }
         });
-        // regla de validación para el control inicializado
+        // regla de validaciÃ³n para el control inicializado
         jQuery.validator.addMethod("clienteNecesario", function (value, element) {
             var r = false;
             if (vm.sclienteId()) r = true;
             return r;
-        }, "Debe seleccionar un cliente válido");
+        }, "Debe seleccionar un cliente vÃ¡lido");
         
     });
     
@@ -583,12 +587,12 @@ function initTablaLocalesAfectados() {
             infoPostFix: "",
             loadingRecords: "Cargando...",
             zeroRecords: "No se encontraron resultados",
-            emptyTable: "Ningún dato disponible en esta tabla",
+            emptyTable: "NingÃºn dato disponible en esta tabla",
             paginate: {
                 first: "Primero",
                 previous: "Anterior",
                 next: "Siguiente",
-                last: "Último"
+                last: "Ãšltimo"
             },
             aria: {
                 sortAscending: ": Activar para ordenar la columna de manera ascendente",
@@ -655,7 +659,7 @@ function buscarLocalesAfectados() {
             },
                             error: function (err) {
                     mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                    // si hay algo mÃ¡s que hacer lo haremos aquÃ­.
                 }
         });
     };
@@ -678,8 +682,8 @@ function editLocalAfectado(id) {
 }
 
 function deleteLocalAfectado(localAfectadoId) {
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    // mensaje de confirmaciÃ³n
+    var mens = "Â¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
             localAfectado: {
@@ -804,4 +808,189 @@ function nuevoLocalAfectado() {
     loadComboDeDia(null);
     loadComboADia(null);
     localEnEdicion = false;
+}
+
+//---- Solapa actuaciones
+function initTablaActuaciones() {
+    tablaActuaciones = $('#dt_actuacion').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Actuaciones Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Actuaciones filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Actuaciones filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Actuaciones filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Actuaciones filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_actuacion'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "NingÃºn dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Ãšltimo"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataActuaciones,
+        columns: [ {
+            data: "nombrecliente"
+        }, {
+            data: "fechaActuacion",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "fechaPrevistaCierre",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "nombreproveedor"
+        }, {
+            data: "nobreestactuacion"
+        }, {
+            data: "nombreestpresupuesto"
+        },  {
+            data: "actuacionId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_actuacion thead th input[type=text]").on('keyup change', function () {
+        tablaActuaciones
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+}
+
+function loadActuacionesDelServicio(servicioId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/actuaciones/sevicio/" + servicioId, null, function (err, data) {
+        if (err) return;
+        loadTablaActuaciones(data);
+    });
+}
+
+function loadTablaActuaciones(data) {
+    var dt = $('#dt_actuacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function deleteActuacion(id) {
+    // mensaje de confirmaciÃ³n
+    var mens = "Â¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                facturaId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/actuaciones/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadActuacionesDelServicio(vm.contratoId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo mÃ¡s que hacer lo haremos aquÃ­.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function editActuacion(id) {
+    var url = "facturaDetalle.html?FacturaId=" + id;
+    window.open(url, '_new');
 }
