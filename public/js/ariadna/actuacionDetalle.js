@@ -12,7 +12,7 @@ var dataLocales;
 var dataActuaciones;
 var actuacionId;
 var localEnEdicion = false;
-var cmd = "";
+var DesdeGeneral = "";
 
 var breakpointDefinition = {
     tablet: 724,
@@ -20,6 +20,7 @@ var breakpointDefinition = {
 };
 
 var actuacionId = 0;
+var servicioId = 0;
 
 function initForm() {
     comprobarLogin();
@@ -61,7 +62,8 @@ function initForm() {
 
     
     actuacionId = gup('ActuacionId');
-    cmd = gup("cmd");
+    DesdeGeneral = gup("DesdeGeneral");
+    servicioId = gup('ServicioId');
 
     if (actuacionId != 0) {
         var data = {
@@ -86,7 +88,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.actuacionId(0);
-        
+        vm.servicioId(servicioId);
         vm.fechaCreacion(moment(new Date()).format('DD/MM/YYYY'));
     }
 }
@@ -143,6 +145,7 @@ function admData() {
 
 function loadData(data) {
     vm.actuacionId(data.actuacionId);
+    vm.servicioId(data.servicioId)
     vm.proveedorId(data.proveedorId);
     vm.estadoActuacionId(data.estadoActuacionId);
     vm.estadoPresupuestoId(data.estadoPresupuestoId);
@@ -177,14 +180,16 @@ function datosOK() {
     $('#frmActuacion').validate({
         rules: {
             
-            
-            txtFechaCreacion: {required: true}
+            txtCliente: {required: true},
+            txtFechaCreacion: {required: true},
+            cmbProveedores: { required: true}
            
         },
         // Messages for form validation
         messages: {
-            
-            txtFechaCreacion: {required: 'Deve introducir una fecha de creación'}
+            txtCliente: {required: 'Debe introducir un cliente'},
+            txtFechaCreacion: {required: 'Debe introducir una fecha de creación'},
+            cmbProveedores: { required: 'Debe introducir un proveedor'}
 
         },
         // Do not change code below
@@ -212,17 +217,20 @@ function aceptar() {
                 "proveedorId": vm.sproveedorId(),
                 "clienteId": vm.sclienteId(),
                 "estadoActuacionId": vm.sestadoActuacionId(),
-                "estadoPresupuestoId": vm.estadoPresupuestoId(),
-                "rechazoPresupuestoId": vm.rechazoPresupuestoId(),
+                "estadoPresupuestoId": vm.sestadoPresupuestoId(),
+                "rechazoPresupuestoId": vm.srechazoPresupuestoId(),
                 "notaInterna": vm.interna(),
                 "notaAgente": vm.notaAgente(),
                 "notaProveedor": vm.notaProveedor(),
                 "facturaIndividual": vm.facturaIndividual(),
+                "facturadaCliente":  vm.facturadaCliente(),
+                "facturadaProveedor":vm.facturadaProveedor(),
                 "fechaActuacion": spanishDbDate(vm.fechaCreacion()),
                 "fechaPrevistaCierre": spanishDbDate(vm.fechaCierre()),
 
             }
         };
+       
         if (actuacionId == 0) {
             $.ajax({
                 type: "POST",
@@ -234,7 +242,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var returnUrl = "ActuacionDetalle.html?cmd=nueva&ActuacionId=" +  vm.actuacionId();
+                    var returnUrl = "ServicioDetalle.html?ServicioId=" +  vm.servicioId();
                     window.open(returnUrl, '_self');
                 },
                 error: function (err) {
@@ -253,7 +261,10 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var returnUrl = "ActuacionGeneral.html?ActuacionId=" + vm.actuacionId();
+                    var returnUrl = "ServicioDetalle.html?ServicioId=" + vm.servicioId();
+                    if(DesdeGeneral == 'true') {
+                        returnUrl = "ActuacionGeneral.html?ActuacionId=" + vm.actuacionId();
+                    }
                     window.open(returnUrl, '_self');
                 },
                 error: function (err) {
@@ -268,7 +279,10 @@ function aceptar() {
 
 function salir() {
     var mf = function () {
-        var url = "ActuacionGeneral.html";
+        var url = "ServicioDetalle.html?ServicioId=" + vm.servicioId();
+        if(DesdeGeneral == 'true') {
+            url = "ActuacionGeneral.html";
+        }
         window.open(url, '_self');
     }
     return mf;

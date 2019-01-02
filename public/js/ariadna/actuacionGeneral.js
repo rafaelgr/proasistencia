@@ -24,7 +24,7 @@ function initForm() {
     getVersionFooter();
     //
     $('#btnBuscar').click(buscarActuaciones());
-    $('#btnAlta').click(crearActuacion());
+   
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -114,7 +114,13 @@ function initTablaActuaciones() {
         },{
             data: "fechaPrevistaCierre",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                if(data == null) {
+                    data = ""
+                    return  data;
+                } else {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+                
             }
         }, {
             data: "nombreproveedor"
@@ -194,13 +200,6 @@ function buscarActuaciones() {
     return mf;
 }
 
-function crearActuacion() {
-    var mf = function () {
-        var url = "ActuacionDetalle.html?ActuacionId=0";
-        window.open(url, '_self');
-    };
-    return mf;
-}
 
 function deleteActuacion(id) {
     // mensaje de confirmación
@@ -239,7 +238,7 @@ function deleteActuacion(id) {
 function editActuacion(id) {
     // hay que abrir la página de detalle de actuacion
     // pasando en la url ese ID
-    var url = "ActuacionDetalle.html?ActuacionId=" + id;
+    var url = "ActuacionDetalle.html?ActuacionId=" + id + "&DesdeGeneral=true";
     window.open(url, '_self');
 }
 

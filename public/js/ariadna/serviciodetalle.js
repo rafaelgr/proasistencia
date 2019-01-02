@@ -34,9 +34,13 @@ function initForm() {
     // asignaciÃ³n de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+    $("#btnAlta").click(crearActuacion());
+
+
     $("#frmServicio").submit(function () {
         return false;
     });
+
 
     $("#frmLocales").submit(function () {
         return false;
@@ -46,6 +50,9 @@ function initForm() {
         return false;
     });
 
+    $("#frmNuevo").submit(function () {
+        return false;
+    });
 
     $("#cmbTipoProfesional").select2(select2Spanish());
     loadTiposProfesionales();
@@ -915,7 +922,13 @@ function initTablaActuaciones() {
         },{
             data: "fechaPrevistaCierre",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                if(data == null) {
+                    data = ""
+                    return  data;
+                } else {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+                
             }
         }, {
             data: "nombreproveedor"
@@ -926,8 +939,8 @@ function initTablaActuaciones() {
         },  {
             data: "actuacionId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteActuacion(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editActuacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -971,7 +984,7 @@ function deleteActuacion(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facturaId: id
+                actuacionId: id
             };
             $.ajax({
                 type: "DELETE",
@@ -980,7 +993,7 @@ function deleteActuacion(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadActuacionesDelServicio(vm.contratoId());
+                    loadActuacionesDelServicio(vm.servicioId());
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -995,6 +1008,15 @@ function deleteActuacion(id) {
 }
 
 function editActuacion(id) {
-    var url = "facturaDetalle.html?FacturaId=" + id;
+    var url = "ActuacionDetalle.html?ActuacionId=" + id+"&ServicioId="+vm.servicioId();
     window.open(url, '_new');
 }
+
+function crearActuacion() {
+    var mf = function () {
+        var url = "ActuacionDetalle.html?ActuacionId=0&ServicioId="+vm.servicioId();
+        window.open(url, '_self');
+    };
+    return mf;
+}
+
