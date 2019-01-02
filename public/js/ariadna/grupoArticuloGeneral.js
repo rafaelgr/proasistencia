@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataGrupoArticulos;
 var grupoArticuloId;
+var cuentas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -36,6 +37,10 @@ function initForm() {
     initTablaGrupoArticulos();
     // comprobamos parámetros
     grupoArticuloId = gup('GrupoArticuloId');
+    cuentas = gup('cuentas');
+    if(cuentas == 'false') {
+        mensNormal('AVISO: Alguna de las cuentas asociadas no existen en todas las contabilidades.');
+    }
     if (grupoArticuloId !== '') {
         // cargar la tabla con un único valor que es el que corresponde.
         var data = {

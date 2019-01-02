@@ -10,6 +10,7 @@ var intentos = 0;
 var dataFacturas;
 var facproveId;
 var codigoSugerido;
+var antNif = ""//recoge el valor que tiene el nif al cargar la página
 
 
 var responsiveHelper_dt_basic = undefined;
@@ -53,8 +54,16 @@ function initForm() {
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
+
         cambioTipoProveedor(e.added);
     });
+
+    $("#txtNif").on('change', function (e) {
+        var nif = $("#txtNif").val();
+        compruebaRepetido(nif);
+    });
+
+
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
@@ -268,7 +277,8 @@ function loadData(data) {
     vm.iban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.codigoProfesional(data.codigoProfesional);
-
+    
+    antNif = data.nif;
     // split iban
     if (vm.iban()) {
         var ibanl = vm.iban().match(/.{4}/g);
@@ -609,6 +619,28 @@ function cambioTipoProveedor(data) {
         });    
     }
 }
+
+
+function compruebaRepetido(nif) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido/" + nif,
+        dataType: "json",
+        contentType: "application/json",
+        data:null,
+        success: function (data, status) {
+            if(data && data.proveedorId != vm.proveedorId()) {
+               mensError('Ya existe un proveedor con este NIF');
+               $('#txtNif').val(antNif);
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 //---- Solapa facturas
 function initTablaFacturas() {

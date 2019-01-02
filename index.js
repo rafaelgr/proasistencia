@@ -51,6 +51,8 @@ var facturasProveedores_router = require('./lib/facturas_proveedores/facturasPro
 var servicios_router = require('./lib/servicios/servicios_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 
+var config_router = require('./lib/configuracion_env/config_env_controller');
+
 
 
 var informes_router = require('./lib/informes/informes_controller');
@@ -66,12 +68,21 @@ var upload = require('./lib/upload/upload');
 var cobros = require('./lib/cobros/cobros_controller');
 var bi_router = require('./lib/bi/bi_controller');
 
+//ACTUACIONES
+var actuaciones_router = require('./lib/actuaciones/actuaciones_controller');
+var estados_actuacion = require('./lib/estados_actuacion/estados_actuacion_controller');
+var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
+var rechazos_presupuesto = require('./lib/rechazos_presupuesto/rechazos_presupuesto_controller');
 
 
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
-var config = require('./config.json');
+//var config = require('./config.json');
+
+//  leer la configurción de .env
+var config = require('dotenv');
+config.config();
 
 
 // starting express
@@ -156,12 +167,21 @@ app.use('/api/upload', upload);
 app.use('/api/cobros', cobros);
 app.use('/api/servicios', servicios_router);
 app.use('/api/locales_afectados', locales_afectados_router);
+app.use('/api/configuracion', config_router)
+
+//ACTUACIONES
+app.use('/api/actuaciones', actuaciones_router);
+app.use('/api/estados_actuacion', estados_actuacion);
+app.use('/api/estados_presupuesto', estados_presupuesto);
+app.use('/api/rechazos_presupuesto', rechazos_presupuesto);
+
+
 
 
 // -- start server
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-server.listen(config.apiPort);
+server.listen(process.env.API_PORT);
 
 // -- io calls
 var ioAPI = require('./lib/ioapi/ioapi');
@@ -173,5 +193,5 @@ console.log("-------------------------------------------");
 console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
 console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
-console.log(' PORT: ' + config.apiPort);
+console.log(' PORT: ' + process.env.API_PORT);
 console.log("-------------------------------------------");

@@ -29,5 +29,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 node_modules
 public/ficheros
-
+.env
 
