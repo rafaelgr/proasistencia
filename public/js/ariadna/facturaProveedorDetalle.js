@@ -28,6 +28,8 @@ var lineaEnEdicion = false;
 var dataFacproveLineas;
 var dataBases;
 
+var antNumFact = ""//recoge el valor que tiene el nif al cargar la página
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -97,7 +99,11 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
-    
+    $("#txtNumero").on('change', function (e) {
+        var numeroFact = $("#txtNumero").val();
+     
+        compruebaRepetido(numeroFact, vm.sproveedorId());
+    });
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
@@ -483,6 +489,8 @@ function loadData(data) {
     }
     //
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
+
+    antNumFact = data.facproveId;
 }
 
 
@@ -505,7 +513,8 @@ function datosOK() {
                 required: true
             },
             txtNumero: {
-                required: true
+                required: true,
+                rangelength: [1, 10]
             }
         },
         // Messages for form validation
@@ -524,6 +533,10 @@ function datosOK() {
             },
             cmbContratos: {
                 required: "Debe elegir un contrato asociado"
+            },
+            txtNumero: {
+                required: "Debe introducir un número de factura",
+                rangelength: "El rango de digitos debe estar entre 1 y 10"
             }
         },
         // Do not change code below
@@ -706,6 +719,8 @@ function cambioProveedor(proveedorId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
+        var numeroFact = $("#txtNumero").val();
+        compruebaRepetido(numeroFact, proveedorId);
     });
 }
 
@@ -750,6 +765,44 @@ function obrenerTipoClienteID(contratoId) {
         vm.tipoClienteId(data[0].tipoCliente);
     });
 }
+
+function compruebaRepetido(numeroFact, proveedorId) {
+    if(numeroFact.length > 0) {
+       
+
+    if(numeroFact != null) {
+        numeroFact = numeroFact.replace(/\D/g,'');
+    }
+    
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/facturasProveedores/proveedor/facturas/solapa/muestra/tabla/datos/factura/" +  proveedorId,
+            dataType: "json",
+            contentType: "application/json",
+            data:null,
+            success: function (data, status) {
+                if(data) {
+                    data.forEach( (f) => {
+                        var num = f.numeroFacturaProveedor.replace(/\D/g,'');
+                        
+                        if(num == numeroFact && f.facproveId != vm.facproveId()) {
+                            mensError('Ya existe una factura con este numero para este proveedor');
+                            $('#txtNumero').val(antNumFact);
+                            return;
+                        }
+                    });
+                 //
+                //
+                }
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
 
 
 /*------------------------------------------------------------------
