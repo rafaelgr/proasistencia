@@ -86,8 +86,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.actuacionId(0);
-        vm.provincia('Madrid');
-        loadEstadosActuacion();
+        
         vm.fechaCreacion(moment(new Date()).format('DD/MM/YYYY'));
     }
 }
@@ -211,13 +210,17 @@ function aceptar() {
                 "actuacionId":  vm.actuacionId(),
                 "servicioId": vm.servicioId(),
                 "proveedorId": vm.sproveedorId(),
-
                 "clienteId": vm.sclienteId(),
-                "notaInterna": vm.intrerna(),
+                "estadoActuacionId": vm.sestadoActuacionId(),
+                "estadoPresupuestoId": vm.estadoPresupuestoId(),
+                "rechazoPresupuestoId": vm.rechazoPresupuestoId(),
+                "notaInterna": vm.interna(),
                 "notaAgente": vm.notaAgente(),
+                "notaProveedor": vm.notaProveedor(),
                 "facturaIndividual": vm.facturaIndividual(),
-                
-                "fechaCreacion": spanishDbDate(vm.fechaCreacion()),
+                "fechaActuacion": spanishDbDate(vm.fechaCreacion()),
+                "fechaPrevistaCierre": spanishDbDate(vm.fechaCierre()),
+
             }
         };
         if (actuacionId == 0) {
