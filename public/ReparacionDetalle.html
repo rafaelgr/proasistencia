@@ -459,7 +459,7 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmReparacion" class="smart-form">
                                             <header style="border-bottom: 1px solid black">
-                                                    <strong>Actuación.</strong>
+                                                    <strong>Reparación.</strong>
                                                 </header>
                                                 <fieldset>
                                                     <div class="row">
@@ -469,20 +469,15 @@
                                                                         <input id="txtFechaReparacion" name="txtFechaReparacion" data-bind="value: fechaReparacion" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                     </label>
                                                             </section>
-                                                            <section class="col col-md-2">
-                                                                <label class="label">Descripcion</label>
-                                                                <label class="input">
-                                                                    <input id="txtDescripcion" name="txtDescripcion" type="text" data-bind="value: descripcion" />
-                                                                </label>
-                                                            </section>
                                                             
-                                                            <section class="col col-md-4">
-                                                                    <label class="label">Articulo</label>
+                                                            <section class="col col-md-6">
+                                                                    <label class="label">Unidad de obra</label>
                                                                     <label style="width:100%; height:50px;">
                                                                         <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select>
                                                                         <i></i>
                                                                     </label>
                                                             </section>
+                                                            <section class="col col-md-4"></section>
                                                         </div>
                                                         <div class="row">
                                                                 <section class="col col-md-3">
@@ -515,29 +510,20 @@
                                                             </section>
                                                         </div>
                                                         <div class="row">
-                                                                
-                                                                 
-
-                                                        </div>
-                                                </fieldset>
-                                                
-                                                <fieldset>
-                                                    <legend>Nota Interna</legend>
-                                                    <div class="row">
                                                             <section class="col col-md-12">
-                                                                <label class="textarea textarea-resizable">
-                                                                    <textarea id="txtInterna" name="txtInterna"rows="3" class="custom-scroll" data-bind="value: interna"></textarea>
+                                                                <label class="label">Descripcion de la avería</label>
+                                                                <label class="input">
+                                                                    <input id="txtDescripcion" name="txtDescripcion" type="text" data-bind="value: descripcion" />
                                                                 </label>
                                                             </section>
-                                                    </div>
-                                                   
+                                                        </div>
                                                 </fieldset>
                                                 <fieldset>
                                                     <legend>Nota Agente</legend>
                                                     <div class="row">
                                                         <section class="col col-md-12">
                                                             <label class="textarea textarea-resizable">
-                                                                <textarea id="txtNotaAgente" name="txtNotaAgente"rows="3" class="custom-scroll" data-bind="value: notaAgente"></textarea>
+                                                                <textarea id="txtNotaCliente" name="txtNotaCliente"rows="3" class="custom-scroll" data-bind="value: notaCliente"></textarea>
                                                             </label>
                                                         </section>
                                                     </div>

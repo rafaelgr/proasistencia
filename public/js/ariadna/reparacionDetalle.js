@@ -77,7 +77,7 @@ function initForm() {
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/reparaciones/actuaciones/" + actuacionId,
+            url: myconfig.apiUrl + "/api/reparaciones/" + reparacionId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -101,16 +101,10 @@ function initForm() {
 function admData() {
     var self = this;
     self.actuacionId = ko.observable();
-   
     self.descripcion = ko.observable();
-    
-    
-    self.interna = ko.observable();
-    self.notaAgente = ko.observable();
+    self.notaCliente = ko.observable();
     self.notaProveedor = ko.observable();
-  
     self.fechaReparacion = ko.observable();
-    
     //
     self.tarifaProveedorId = ko.observable();
     self.starifaProveedorId = ko.observable();
@@ -147,22 +141,19 @@ function admData() {
 
 function loadData(data) {
     vm.actuacionId(data.actuacionId);
-    
     vm.articuloId(data.articuloId);
     vm.tarifaClienteId(data.tarifaClienteId);
     vm.tarifaProveedorId(data.tarifaProveedorId);
     vm.tipoIvaId(data.tipoIvaId);
     vm.fechaReparacion(spanishDate(data.fechaReparacion));
-    
-   
-    vm.interna(data.notaInterna);
-    vm.notaAgente(data.notaAgente);
-    vm.notaProveedor(data.notaProveedor);
+    vm.descripcion(data.descripcion);
+    vm.notaCliente(data.notasCliente);
+    vm.notaProveedor(data.notasProveedor);
 
     //
     loadTarifasProveedor(data.tarifaProveedorId);
     loadTarifasCliente(data.tarifaClienteId);
-    loadTiposIvaCli(data.tipoIvaId)
+    loadTiposIvaCli(data.tipoIvaCliente)
     loadTiposIvaPro(data.tipoIvaProveedor)
     loadArticulos(data.articuloId);
    
@@ -205,9 +196,8 @@ function aceptar() {
                 "tarifaClienteId": vm.starifaClienteId(),
                 "tarifaProveedorId": vm.starifaProveedorId(),
                 "tipoIvaCliente": vm.stipoIvaId(),
-                "notaInterna": vm.interna(),
-                "notaAgente": vm.notaAgente(),
-                "notaProveedor": vm.notaProveedor(),
+                "notasCliente": vm.notaCliente(),
+                "notasProveedor": vm.notaProveedor(),
               
                 
                 "fechaReparacion": spanishDbDate(vm.fechaReparacion()),
@@ -308,7 +298,7 @@ function loadTiposIvaPro(tipoIvaProId) {
 }
 
 function loadArticulos(articuloId) {
-    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos/concat/articulo/capitulo", null, function (err, data) {
         if (err) return;
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);

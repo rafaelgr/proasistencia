@@ -554,7 +554,7 @@ function initTablaReparaciones() {
 }
 
 function loadReparacionesDeActuacion(actuacionId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/reparaciones/sevicio/" + actuacionId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/reparaciones/actuaciones/" + actuacionId, null, function (err, data) {
         if (err) return;
         loadTablaReparaciones(data);
     });
