@@ -66,7 +66,7 @@ function initForm() {
     DesdeGeneral = gup("DesdeGeneral");
     reparacionId = gup('ReparacionId');
 
-    if (actuacionId != 0) {
+    if (reparacionId != 0) {
         var data = {
             actuacionId: actuacionId
         }
@@ -168,13 +168,13 @@ function datosOK() {
     $('#frmReparacion').validate({
         rules: {
             
-            txtfechaReparacion: {required: true},
+            txtFechaReparacion: {required: true, minlength: 10},
             cmbArticulos: { required: true}
            
         },
         // Messages for form validation
         messages: {
-            txtfechaReparacion: {required: 'Debe introducir una fecha de creación'},
+            txtFechaReparacion: {required: 'Debe introducir una fecha de creación', minlength: 'Formato de fecha incorrecto' },
             cmbArticulos: { required: 'Debe introducir un articulo'}
 
         },
@@ -207,7 +207,7 @@ function aceptar() {
             }
         };
        
-        if (actuacionId == 0) {
+        if (reparacionId == 0) {
             $.ajax({
                 type: "POST",
                 url: myconfig.apiUrl + "/api/reparaciones",
@@ -301,7 +301,7 @@ function loadTiposIvaPro(tipoIvaProId) {
 function loadArticulos(articuloId) {
     llamadaAjax("GET", "/api/articulos/concat/articulo/capitulo", null, function (err, data) {
         if (err) return;
-        var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
+        var articulos = [{ articuloId: null, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
         $("#cmbArticulos").val([articuloId]).trigger('change');
     });

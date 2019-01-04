@@ -480,34 +480,51 @@
                                                             <section class="col col-md-4"></section>
                                                         </div>
                                                         <div class="row">
-                                                                <section class="col col-md-3">
+                                                                <section class="col col-md-6">
                                                                         <label class="label">Tarifa cliente</label>
                                                                         <label style="width:100%; height:50px;">
                                                                             <select style="width:100%" id="cmbTarifasCliente" name="cmbTarifasCliente" data-bind="options: posiblesTarifasCliente, optionsText: 'nombre', optionsValue: 'tarifaClienteId', value: starifaClienteId, valueAllowUnset: true, selectedOptions: elegidosTarifasCliente, selected2:{}"></select>
                                                                             <i></i>
                                                                         </label>
                                                                 </section>
-                                                            <section class="col col-md-3">
-                                                                <label class="label">Tarifa proveedor</label>
-                                                                <label style="width:100%; height:50px;">
-                                                                        <select style="width:100%" id="cmbTarifasProveedor" name="cmbTarifasProveedor" data-bind="options: posiblesTarifasProveedor, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTarifasProveedor, selected2:{}"></select>
-                                                                    <i></i>
-                                                                </label>
-                                                            </section>
-                                                            <section class="col col-md-3">
+                                                            
+                                                            <section class="col col-md-2">
                                                                     <label class="label">Tipo iva cliente</label>
                                                                     <label style="width:100%; height:50px;">
                                                                             <select style="width:100%" id="cmbTiposIvaCli" name="cmbTiposIvaCli" data-bind="options: posiblesTiposIvaCli, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIvaCli, selected2:{}"></select>
                                                                         <i></i>
                                                                     </label>
                                                             </section>
-                                                            <section class="col col-md-3">
-                                                                    <label class="label">Tipo iva Proveedor</label>
-                                                                    <label style="width:100%; height:50px;">
-                                                                            <select style="width:100%" id="cmbTiposIvaPro" name="cmbTiposIvaPro" data-bind="options: posiblesTiposIvaPro, optionsText: 'nombre', optionsValue: 'tipoIvaPro', value: stipoIvaPro, valueAllowUnset: true, selectedOptions: elegidosTiposIvaPro, selected2:{}"></select>
-                                                                        <i></i>
-                                                                    </label>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Importe cliente</label>
+                                                                <label class="input">
+                                                                    <input id="txtImporteCliente" name="txtImporteCliente" type="text" data-bind="value: importeCliente"/>
+                                                                </label>
                                                             </section>
+                                                            <section class="col col-md-2"></section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-6">
+                                                                <label class="label">Tarifa proveedor</label>
+                                                                <label style="width:100%; height:50px;">
+                                                                        <select style="width:100%" id="cmbTarifasProveedor" name="cmbTarifasProveedor" data-bind="options: posiblesTarifasProveedor, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTarifasProveedor, selected2:{}"></select>
+                                                                    <i></i>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Tipo iva Proveedor</label>
+                                                                <label style="width:100%; height:50px;">
+                                                                        <select style="width:100%" id="cmbTiposIvaPro" name="cmbTiposIvaPro" data-bind="options: posiblesTiposIvaPro, optionsText: 'nombre', optionsValue: 'tipoIvaPro', value: stipoIvaPro, valueAllowUnset: true, selectedOptions: elegidosTiposIvaPro, selected2:{}"></select>
+                                                                    <i></i>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Importe Proveedor</label>
+                                                                <label class="input">
+                                                                    <input id="txtImporteProveedor" name="txtImporteProveedor" type="text" data-bind="value: importeProveedor"/>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2"></section>
                                                         </div>
                                                         <div class="row">
                                                             <section class="col col-md-12">

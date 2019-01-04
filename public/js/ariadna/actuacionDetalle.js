@@ -589,7 +589,7 @@ function deleteReparacion(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadReparacionesDelServicio(vm.servicioId());
+                    loadReparacionesDeActuacion(vm.actuacionId());
                 },
                 error: function (err) {
                     mensErrorAjax(err);
