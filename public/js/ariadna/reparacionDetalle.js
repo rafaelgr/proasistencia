@@ -37,11 +37,7 @@ function initForm() {
     $("#btnSalir").click(salir());
    
 
-    $("#frmActuacion").submit(function () {
-        return false;
-    });
-
-    $("#frmNuevo").submit(function () {
+    $("#frmReparacion").submit(function () {
         return false;
     });
 
@@ -101,10 +97,13 @@ function initForm() {
 function admData() {
     var self = this;
     self.actuacionId = ko.observable();
+    self.reparacionId = ko.observable();
     self.descripcion = ko.observable();
     self.notaCliente = ko.observable();
     self.notaProveedor = ko.observable();
     self.fechaReparacion = ko.observable();
+    self.importeCliente = ko.observable();
+    self.importeProveedor = ko.observable();
     //
     self.tarifaProveedorId = ko.observable();
     self.starifaProveedorId = ko.observable();
@@ -141,9 +140,12 @@ function admData() {
 
 function loadData(data) {
     vm.actuacionId(data.actuacionId);
+    vm.reparacionId(data.reparacionId)
     vm.articuloId(data.articuloId);
     vm.tarifaClienteId(data.tarifaClienteId);
     vm.tarifaProveedorId(data.tarifaProveedorId);
+    vm.importeCliente(data.importeCliente);
+    vm.importeProveedor(data.importeProveedor);
     vm.tipoIvaId(data.tipoIvaId);
     vm.fechaReparacion(spanishDate(data.fechaReparacion));
     vm.descripcion(data.descripcion);
@@ -163,7 +165,7 @@ function loadData(data) {
 
 function datosOK() {
     
-    $('#frmActuacion').validate({
+    $('#frmReparacion').validate({
         rules: {
             
             txtfechaReparacion: {required: true},
@@ -181,28 +183,27 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    return $('#frmActuacion').valid();
+    return $('#frmReparacion').valid();
 }
 
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
         var data = {
-            actuacion: {
+            reparacion: {
                 "actuacionId":  vm.actuacionId(),
-                
+                "reparacionId": vm.reparacionId(),
                 "articuloId": vm.sarticuloId(),
-               
                 "tarifaClienteId": vm.starifaClienteId(),
                 "tarifaProveedorId": vm.starifaProveedorId(),
                 "tipoIvaCliente": vm.stipoIvaId(),
+                "tipoIvaProveedor": vm.stipoIvaPro(),
+                "importeProveedor": vm.importeProveedor(),
+                "importeCliente": vm.importeCliente(),
                 "notasCliente": vm.notaCliente(),
                 "notasProveedor": vm.notaProveedor(),
-              
-                
+                "descripcion": vm.descripcion(),
                 "fechaReparacion": spanishDbDate(vm.fechaReparacion()),
-                
-
             }
         };
        
@@ -228,7 +229,7 @@ function aceptar() {
         } else {
             $.ajax({
                 type: "PUT",
-                url: myconfig.apiUrl + "/api/reparaciones/" + actuacionId,
+                url: myconfig.apiUrl + "/api/reparaciones/" + reparacionId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -236,7 +237,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var returnUrl = "ActuacionDetalle.html?ActuacionId=" + vm.ActuacionId();
+                    var returnUrl = "ActuacionDetalle.html?ActuacionId=" + vm.actuacionId();
                    
                     window.open(returnUrl, '_self');
                 },
