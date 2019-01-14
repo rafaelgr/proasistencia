@@ -366,7 +366,7 @@
                 <li>Inicio</li>
                 <li>Servicios</li>
                 <li>Actuaciones</li>
-                <li>Detalle actuacion</li>
+                <li>Detalle reparación</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -391,7 +391,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-mortar-board"></i>
-                            Detalle actuacion <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Detalle reparación <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -444,15 +444,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento actuaciones </h2>
-                                <ul class="nav nav-tabs pull-right in" id="myTab">
-                                    <li class="active">
-                                        <a data-toggle="tab" href="#s1"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Datos</span></a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#s2"><i class="fa fa-address-book"></i> <span class="hidden-mobile hidden-tablet">Reparaciones</span></a>
-                                    </li>                                                                                         
-                                </ul>
+                                <h2>Mantenimiento reparaciones </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -464,243 +456,118 @@
                                 <!-- end widget edit box -->
                                 <!-- widget content -->
                                 <div class="widget-body">
-                                    <div id="myTabContent" class="tab-content">
-                                        <div class="tab-pane fade active in padding-10 no-padding-bottom" id="s1">
-                                                <!-- this is what the user will see -->
-                                            <form id="frmActuacion" class="smart-form">
-                                                    <header style="border-bottom: 1px solid black">
-                                                            <strong>Actuación.</strong>
-                                                        </header>
-                                                        <fieldset>
-                                                            <div class="row">
-                                                                    <section class="col col-md-2">
-                                                                            <label class="label">Fecha de creación</label>
-                                                                            <label class="input">
-                                                                                <input id="txtFechaCreacion" name="txtFechaCreacion" data-bind="value: fechaCreacion" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                            </label>
-                                                                    </section>
-                                                                    <section class="col col-md-2">
-                                                                        <label class="label">Fecha de cierrre</label>
-                                                                        <label class="input">
-                                                                            <input id="txtFechaCierre" name="txtFechaCierre" data-bind="value: fechaCierre" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                        </label>
-                                                                    </section>
-                                                                    <section class="col col-md-4">
-                                                                            <label class="label">Cliente</label>
-                                                                            <label class="input">
-                                                                                <input id="txtCliente" name="txtCliente" />
-                                                                            </label>
-                                                                    </section>
-                                                                    <section class="col col-md-4">
-                                                                            <label class="label">Proveedor</label>
-                                                                            <label style="width:100%; height:50px;">
-                                                                                <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
-                                                                                <i></i>
-                                                                            </label>
-                                                                    </section>
-                                                                </div>
-                                                                <div class="row">
-                                                                        <section class="col col-md-4">
-                                                                                <label class="label">Estado Actuacion</label>
-                                                                                <label style="width:100%; height:50px;">
-                                                                                    <select style="width:100%" id="cmbEstadosActuacion" name="cmbEstadosActuacion" data-bind="options: posiblesEstadosActuacion, optionsText: 'nombre', optionsValue: 'estadoActuacionId', value: sestadoActuacionId, valueAllowUnset: true, selectedOptions: elegidosEstadosActuacion, selected2:{}"></select>
-                                                                                    <i></i>
-                                                                                </label>
-                                                                        </section>
-                                                                    <section class="col col-md-4">
-                                                                        <label class="label">Estado Presupuesto</label>
+                                    <!-- this is what the user will see -->
+                                    <form id="frmReparacion" class="smart-form">
+                                            <header style="border-bottom: 1px solid black">
+                                                    <strong>Reparación.</strong>
+                                                </header>
+                                                <fieldset>
+                                                    <div class="row">
+                                                            <section class="col col-md-2">
+                                                                    <label class="label">Fecha de reparación</label>
+                                                                    <label class="input">
+                                                                        <input id="txtFechaReparacion" name="txtFechaReparacion" data-bind="value: fechaReparacion" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                    </label>
+                                                            </section>
+                                                            
+                                                            <section class="col col-md-6">
+                                                                    <label class="label">Unidad de obra</label>
+                                                                    <label style="width:100%; height:50px;">
+                                                                        <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select>
+                                                                        <i></i>
+                                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-4"></section>
+                                                        </div>
+                                                        <div class="row">
+                                                                <section class="col col-md-6">
+                                                                        <label class="label">Tarifa cliente</label>
                                                                         <label style="width:100%; height:50px;">
-                                                                                <select style="width:100%" id="cmbEstadosPresupuesto" name="cmbEstadosPresupuesto" data-bind="options: posiblesEstadosPresupuesto, optionsText: 'nombre', optionsValue: 'estadoPresupuestoId', value: sestadoPresupuestoId, valueAllowUnset: true, selectedOptions: elegidosEstadosPresupuesto, selected2:{}"></select>
+                                                                            <select style="width:100%" id="cmbTarifasCliente" name="cmbTarifasCliente" data-bind="options: posiblesTarifasCliente, optionsText: 'nombre', optionsValue: 'tarifaClienteId', value: starifaClienteId, valueAllowUnset: true, selectedOptions: elegidosTarifasCliente, selected2:{}"></select>
                                                                             <i></i>
                                                                         </label>
-                                                                    </section>
-                                                                    <section class="col col-md-4">
-                                                                            <label class="label">Causas Rechazo Presupuesto</label>
-                                                                            <label style="width:100%; height:50px;">
-                                                                                    <select style="width:100%" id="cmbRechazosPresupuesto" name="cmbRechazosPresupuesto" data-bind="options: posiblesRechazosPresupuesto, optionsText: 'nombre', optionsValue: 'rechazoPresupuestoId', value: srechazoPresupuestoId, valueAllowUnset: true, selectedOptions: elegidosRechazosPresupuesto, selected2:{}"></select>
-                                                                                <i></i>
-                                                                            </label>
-                                                                    </section>
-                                                                </div>
-                                                                <div class="row">
-                                                                        <section class="col col-md-3">
-                                                                                <label class="checkbox">
-                                                                                    <input id="chkFacturaIndividual" type="checkbox" name="chkFacturaIndividual" data-bind="checked: facturaIndividual">
-                                                                                    <i></i>Factura Individual
-                                                                                </label>
-                                                                         </section>
-                                                                         <section class="col col-md-3">
-                                                                                <label class="checkbox">
-                                                                                    <input id="chkFacturadaCliente" type="checkbox" name="chkFacturadaCliente" data-bind="checked: facturadaCliente">
-                                                                                    <i></i>Facturada al cliente
-                                                                                </label>
-                                                                         </section>
-                                                                         <section class="col col-md-3">
-                                                                                <label class="checkbox">
-                                                                                    <input id="chkFacturadaProveedor" type="checkbox" name="chkFacturadaProveedor"  data-bind="checked: facturadaProveedor">
-                                                                                    <i></i>Facturada al proveedor
-                                                                                </label>
-                                                                         </section>
-                                                                         <section  class="col col-md-3"></section>
-                                                                </div>
-                                                        </fieldset>
-                                                        
-                                                        <fieldset>
-                                                            <legend>Nota Interna</legend>
-                                                            <div class="row">
-                                                                    <section class="col col-md-12">
-                                                                        <label class="textarea textarea-resizable">
-                                                                            <textarea id="txtInterna" name="txtInterna"rows="3" class="custom-scroll" data-bind="value: interna"></textarea>
-                                                                        </label>
-                                                                    </section>
-                                                            </div>
-                                                           
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <legend>Nota Agente</legend>
-                                                            <div class="row">
-                                                                <section class="col col-md-12">
-                                                                    <label class="textarea textarea-resizable">
-                                                                        <textarea id="txtNotaAgente" name="txtNotaAgente"rows="3" class="custom-scroll" data-bind="value: notaAgente"></textarea>
-                                                                    </label>
                                                                 </section>
-                                                            </div>
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <legend>
-                                                                Nota Proveedor
-                                                            </legend>
-                                                            <div class="row">
-                                                                    <section class="col col-md-12">
-                                                                        <label class="textarea textarea-resizable">
-                                                                            <textarea id="txtNotaProveedor" name="txtNotaProveedor"rows="3" class="custom-scroll" data-bind="value: notaProveedor"></textarea>
-                                                                        </label>
-                                                                    </section>
-                                                                </div>
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <div class="pull-right">
-                                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                                    <i class="fa fa-lg fa-sign-out"></i>
-                                                                </button>
-                                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                                    <i class="fa fa-lg fa-check"></i>
-                                                                </button>
-                                                            </div>
-                                                        </fieldset>
-                                            </form>
-                                        </div>
-                                        <div class="tab-pane fade" id="s2">
-                                                <!-- SEGUNDO TAB (REPARACIONES) -->
-                                                <div class="row" id="actuaciones">
-                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <!-- Widget ID (each widget will need unique ID)-->
-                                                        <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                                                            <header>
-                                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                                                <h2>REPARACIONES</h2>
-                                                            </header>
-                                                            <!-- widget div-->
-                                                            <div>
-                                                                <!-- widget edit box -->
-                                                                <div class="jarviswidget-editbox">
-                                                                    <!-- This area used as dropdown edit box -->
-                                                                    <input class="form-control" type="text">
-                                                                </div>
-                                                                <!-- end widget edit box -->
-                                                                <!-- widget content -->
-                                                                <div class="widget-body">
-                                                                    <!-- this is what the user will see -->
-                                                                    <header>
-                                                                        Reparaciones de este servicio
-                                                                    </header>
-                                                                    <fieldset>
-                                                                        <form id="frmNuevo" class="smart-form">
-                                                                                <div class="pull-right">
-                                                                                        <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                                                            <i class="fa fa-lg fa-plus"></i>
-                                                                                        </button>
-                                                                                </div>
-                                                                        </form>
-                                                                    </fieldset>
-                                                                    <hr/>
-                                                                    <div id="tbReparacion">
-                                                                        <table id="dt_reparacion" class="table table-striped table-bordered table-hover" width="100%">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    
-                                                                                    <th class="hasinput">
-                                                                                        <input type="text" class="form-control" placeholder="" />
-                                                                                    </th>
-                                                                                    <th style="width:10%">
-                                                                                    </th>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <th data-class="phone">
-                                                                                        Nº Reparacion
-                                                                                    </th>
-                                                                                    <th data-class="phone">
-                                                                                        Nº Actuacion
-                                                                                    </th>
-                                                                                    <th data-class="phone">
-                                                                                        Articulo
-                                                                                    </th>
-                                                                                    <th data-class="phone">
-                                                                                        Fecha reparacion
-                                                                                    </th>
-                                                                                    
-                                                                                    <th data-hide="phone">
-                                                                                        Importe al cliente
-                                                                                    </th>
-                                                                                    <th data-hide="phone">
-                                                                                        Tarifa cliente
-                                                                                    </th>
-                                                                                    <th data-hide="phone">
-                                                                                        Importe al proveedor
-                                                                                    </th>
-                                                                                    <th data-hide="phone">
-                                                                                        Tarifa proveedor
-                                                                                    </th>
-                                                                                    
-                                                                                    <th style="width:10%; text-align: center;">
-                                                                                        <i class="fa fa-fw fa-gears">
-                                                                                    </th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- end widget content -->
-                                                            </div>
-                                                            <!-- end widget div -->
+                                                            
+                                                            <section class="col col-md-2">
+                                                                    <label class="label">Tipo iva cliente</label>
+                                                                    <label style="width:100%; height:50px;">
+                                                                            <select style="width:100%" id="cmbTiposIvaCli" name="cmbTiposIvaCli" data-bind="options: posiblesTiposIvaCli, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIvaCli, selected2:{}"></select>
+                                                                        <i></i>
+                                                                    </label>
+                                                            </section>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Importe cliente</label>
+                                                                <label class="input">
+                                                                    <input id="txtImporteCliente" name="txtImporteCliente" type="text" data-bind="value: importeCliente"/>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2"></section>
                                                         </div>
-                                                        <!-- end widget -->
-                                                    </article>
-                                                    <!-- WIDGET END -->
-                                                </div>                                        
-                                        </div>
-                                    </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-6">
+                                                                <label class="label">Tarifa proveedor</label>
+                                                                <label style="width:100%; height:50px;">
+                                                                        <select style="width:100%" id="cmbTarifasProveedor" name="cmbTarifasProveedor" data-bind="options: posiblesTarifasProveedor, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTarifasProveedor, selected2:{}"></select>
+                                                                    <i></i>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Tipo iva Proveedor</label>
+                                                                <label style="width:100%; height:50px;">
+                                                                        <select style="width:100%" id="cmbTiposIvaPro" name="cmbTiposIvaPro" data-bind="options: posiblesTiposIvaPro, optionsText: 'nombre', optionsValue: 'tipoIvaPro', value: stipoIvaPro, valueAllowUnset: true, selectedOptions: elegidosTiposIvaPro, selected2:{}"></select>
+                                                                    <i></i>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2">
+                                                                <label class="label">Importe Proveedor</label>
+                                                                <label class="input">
+                                                                    <input id="txtImporteProveedor" name="txtImporteProveedor" type="text" data-bind="value: importeProveedor"/>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-md-2"></section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="label">Descripcion de la avería</label>
+                                                                <label class="input">
+                                                                    <input id="txtDescripcion" name="txtDescripcion" type="text" data-bind="value: descripcion" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <legend>Nota Agente</legend>
+                                                    <div class="row">
+                                                        <section class="col col-md-12">
+                                                            <label class="textarea textarea-resizable">
+                                                                <textarea id="txtNotaCliente" name="txtNotaCliente"rows="3" class="custom-scroll" data-bind="value: notaCliente"></textarea>
+                                                            </label>
+                                                        </section>
+                                                    </div>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <legend>
+                                                        Nota Proveedor
+                                                    </legend>
+                                                    <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="textarea textarea-resizable">
+                                                                    <textarea id="txtNotaProveedor" name="txtNotaProveedor"rows="3" class="custom-scroll" data-bind="value: notaProveedor"></textarea>
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="pull-right">
+                                                        <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-sign-out"></i>
+                                                        </button>
+                                                        <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-check"></i>
+                                                        </button>
+                                                    </div>
+                                                </fieldset>
+                                    </form>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -801,7 +668,7 @@
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/actuacionDetalle.js"></script>
+    <script src="js/ariadna/reparacionDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
