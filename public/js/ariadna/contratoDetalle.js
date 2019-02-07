@@ -414,6 +414,7 @@ function loadData(data) {
     vm.importeCliente(data.importeCliente);
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
+    vm.importeBeneficio(data.importeBeneficio);
     vm.observaciones(data.observaciones);
     vm.obsFactura(data.obsFactura);
     loadFormasPago(data.formaPagoId);
