@@ -1386,7 +1386,7 @@ var cargaAgente = function (id) {
             if (err) return;
             var por = vm.porcentajeAgente()
             if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
-            if(por == 0) { vm.porcentajeAgente(0)}
+            if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
             if(contratoId != 0) {
                 
             } else {
