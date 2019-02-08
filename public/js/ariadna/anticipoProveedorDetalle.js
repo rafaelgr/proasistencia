@@ -411,7 +411,7 @@ function admData() {
     //valores para carga de archivos
     
     self.file = ko.observable();
-    self.nombreAntprovePdf = ko.observable();
+   
 
     //valores para la solapa serviciadas
     self.antproveServiciadoId = ko.observable();
@@ -458,7 +458,7 @@ function loadData(data) {
     vm.emisorDireccion(data.emisorDireccion);
     vm.antproveServiciadoId(0);
     vm.importeServiciada(0);
-    vm.nombreAntprovePdf(data.nombreAntprovePdf);
+    
 
     //
     loadEmpresas(data.empresaId);
@@ -477,10 +477,6 @@ function loadData(data) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeAnticipoNueva();
-    }
-    //se carga el pdf de la anticipo si existe
-    if(vm.nombreAntprovePdf()) {
-        loadDoc(vm.nombreAntprovePdf());
     }
     if(data.noContabilizar == 1){
         $('#chkNoContabilizar').prop("checked", true);
@@ -561,16 +557,7 @@ var aceptarAnticipo = function () {
     var data = generarAnticipoDb();
     var ext;
     // caso alta
-    var dataPdf;
-    if(vm.file()){
-        ext = vm.file().split('.').pop().toLowerCase();
-        var dataPdf = {
-            doc: {
-                file: vm.file(),
-                ext: ext
-            }
-        };
-    };
+    
     var verb = "POST";
     var url =  "/api/anticiposProveedores";
     var returnUrl = "AnticipoProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&antproveId=";
@@ -583,7 +570,7 @@ var aceptarAnticipo = function () {
         returnUrl = "AnticipoProveedorGeneral.html?antproveId=";
     }
     var datosArray = [];
-    datosArray.push(data, dataPdf)
+    datosArray.push(data)
     llamadaAjax(verb, url, datosArray, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.antproveId();
@@ -635,7 +622,6 @@ var generarAnticipoDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "nombreAntprovePdf": vm.nombreAntprovePdf(),
             "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar()
 
@@ -1725,7 +1711,7 @@ var imprimir = function () {
 function printPreanticipo(id) {
     llamadaAjax("GET", "/api/informes/preanticipos/" + id, null, function (err, data) {
         if (err) return;
-        informePDF(data);
+        
     });
 }
 
@@ -1734,16 +1720,6 @@ function printantprove2(id) {
     window.open(url, "_new");
 }
 
-function informePDF(data) {
-    var shortid = "HyGQ0yAP";
-    var data = {
-        "template": {
-            "shortid": shortid
-        },
-        "data": data
-    }
-    f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-}
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
@@ -1774,46 +1750,6 @@ var recuperaParametrosPorDefecto = function (){
     });
 }
 
-//funciones de la pestaña de anticipos en PDF
-
-function loadDoc(filename) {
-    var ext = filename.split('.').pop().toLowerCase();
-    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
-        // see it in container
-        var url = "/../../../ficheros/anticipos_proveedores/" + filename;
-        if (ext == "pdf") {
-            // <iframe src="" width="100%" height="600px"></iframe>
-            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
-        } else {
-            // .html("<img src=' + this.href + '>");
-            $("#docContainer").html('<img src="' + url + '" width="100%">');;
-        }
-        $("#msgContainer").html('');
-    } else {
-        $("#msgContainer").html('Vista previa no dispònible');
-        $("#docContainer").html('');
-    }
-}
-
-
- function checkVisibility(filename) {
-    var ext = filename.split('.').pop().toLowerCase();
-    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
-        // see it in container
-        var url = "/ficheros/uploads/" + filename;
-        if (ext == "pdf") {
-            // <iframe src="" width="100%" height="600px"></iframe>
-            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
-        } else {
-            // .html("<img src=' + this.href + '>");
-            $("#docContainer").html('<img src="' + url + '" width="100%">');;
-        }
-        $("#msgContainer").html('');
-    } else {
-        $("#msgContainer").html('Vista previa no dispònible');
-        $("#docContainer").html('');
-    }
-}
 
 //---- SOLAPA EMPRESAS SERVICIADAS
 function initTablaServiciadas() {
