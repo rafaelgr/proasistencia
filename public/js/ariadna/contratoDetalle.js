@@ -1252,6 +1252,7 @@ var recargaCabeceraLineasBases = function () {
         loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
+        recalcularCostesImportesDesdeCoste()
     });
 }
 
@@ -1505,10 +1506,11 @@ var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
-        if (vm.porcentajeBeneficio()) {
+        if (vm.porcentajeBeneficio())  {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
-        if(!vm.importeBeneficio()) vm.importeBeneficio(0);
+        var imp = vm.importeBeneficio();
+        if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
     if (vm.porcentajeAgente() != null) {
