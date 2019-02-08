@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `antprove`;
+
 
 
 CREATE TABLE `antprove` (
@@ -33,10 +35,10 @@ CREATE TABLE `antprove` (
   `porcentajeAgente` DECIMAL(5,2) DEFAULT NULL,
   `contratoId` INT(11) DEFAULT NULL,
   `periodo` VARCHAR(255) DEFAULT NULL,
-  `obsFactura` TEXT,
+  `obsAnticipo` TEXT,
   `porcentajeRetencion` DECIMAL(4,2) DEFAULT NULL,
   `importeRetencion` DECIMAL(12,2) DEFAULT NULL,
-  `numeroFacturaProveedor` VARCHAR(255) DEFAULT NULL,
+  `numeroAnticipoProveedor` VARCHAR(255) DEFAULT NULL,
   `nombreFacprovePdf` VARCHAR(255) DEFAULT NULL,
   `ref` VARCHAR(255) DEFAULT NULL,
   `fecha_recepcion` DATE DEFAULT NULL,
@@ -44,18 +46,18 @@ CREATE TABLE `antprove` (
   `contabilizada` TINYINT(1) DEFAULT '0',
   `visada` TINYINT(1) DEFAULT '0',
   PRIMARY KEY  (`antproveId`),
-  UNIQUE KEY `antprove_numeroprov` (`numeroFacturaProveedor`,`proveedorId`),
-  KEY `pref_empresas22` (`empresaId`),
-  KEY `pref_proveedores22` (`proveedorId`),
-  KEY `pref_formas_pago22` (`formaPagoId`),
-  KEY `pf_tipoProyecto22` (`tipoProyectoId`),
-  KEY `pref_contrato22` (`contratoId`),
-  CONSTRAINT `RX_contrato22` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`) ON DELETE CASCADE,
-  CONSTRAINT `RX_empresas22` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
-  CONSTRAINT `RX_empresas222` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
-  CONSTRAINT `RX_formas_pago22` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
-  CONSTRAINT `RX_proveedores222` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores` (`proveedorId`),
-  CONSTRAINT `RX_tipoProyecto22` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
+  UNIQUE KEY `antprove_numeroprova` (`numeroAnticipoProveedor`,`proveedorId`),
+  KEY `pref_empresas22a` (`empresaId`),
+  KEY `pref_proveedores22a` (`proveedorId`),
+  KEY `pref_formas_pago22a` (`formaPagoId`),
+  KEY `pf_tipoProyecto22a` (`tipoProyectoId`),
+  KEY `pref_contrato22a` (`contratoId`),
+  CONSTRAINT `RX_contrato22a` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`) ON DELETE CASCADE,
+  CONSTRAINT `RX_empresas22a` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `RX_empresas222a` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `RX_formas_pago22a` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
+  CONSTRAINT `RX_proveedores222a` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores` (`proveedorId`),
+  CONSTRAINT `RX_tipoProyecto22a` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `antprove_bases` */
@@ -147,7 +149,3 @@ CREATE TABLE `antprove_serviciados` (
   CONSTRAINT `serviciados_antproveFK2a` FOREIGN KEY (`antproveId`) REFERENCES `antprove` (`antproveId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

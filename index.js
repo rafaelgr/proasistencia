@@ -78,6 +78,10 @@ var rechazos_presupuesto = require('./lib/rechazos_presupuesto/rechazos_presupue
 var reparaciones_router = require('./lib/reparaciones/reparaciones_controller');
 
 
+//ANTICIPOS PROVEEDOR
+var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProveedores_controller');
+
+
 
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
@@ -180,6 +184,9 @@ app.use('/api/rechazos_presupuesto', rechazos_presupuesto);
 
 //REPARACIONES
 app.use('/api/reparaciones', reparaciones_router);
+
+//ANTICIPOS PROVEEDOR
+app.use('/api/anticiposProveedores/', anticipos_proveedores);
 
 
 
