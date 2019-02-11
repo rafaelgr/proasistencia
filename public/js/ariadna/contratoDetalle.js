@@ -411,7 +411,7 @@ function loadData(data) {
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
-    vm.importeCliente(data.importeCliente);
+    //vm.importeCliente(data.importeCliente);
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
@@ -1252,7 +1252,7 @@ var recargaCabeceraLineasBases = function () {
         loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
-        recalcularCostesImportesDesdeCoste()
+        //recalcularCostesImportesDesdeCoste()
     });
 }
 
@@ -1386,13 +1386,11 @@ var cargaAgente = function (id) {
         obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
             if (err) return;
             var por = vm.porcentajeAgente()
-            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
+            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null || contratoId != 0) vm.porcentajeAgente(comision);
             if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
-            if(contratoId != 0) {
-                
-            } else {
+           
                 recalcularCostesImportesDesdeCoste();
-            }
+            
         });
     });
 };

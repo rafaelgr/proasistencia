@@ -103,7 +103,7 @@ function initTablaAnticipos() {
         },
         data: dataAnticipos,
         columns: [{
-            data: "facproveId",
+            data: "antproveId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
