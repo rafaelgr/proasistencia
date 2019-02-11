@@ -326,7 +326,7 @@ function deleteAnticipo(id) {
 function editAnticipo(id) {
     // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
-    var url = "AnticipoProveedorDetalle.html?facproveId=" + id;
+    var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
     window.open(url, '_new');
 }
 
