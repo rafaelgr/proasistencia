@@ -28,6 +28,8 @@ var lineaEnEdicion = false;
 var dataFacproveLineas;
 var dataBases;
 
+var dataAnticipos;
+
 var antNumFact = ""//recoge el valor que tiene el nif al cargar la página
 
 var breakpointDefinition = {
@@ -170,6 +172,7 @@ function initForm() {
     initTablaFacturasLineas();
     initTablaBases();
     initTablaRetenciones();
+    
 
     facproveId = gup('facproveId');
     cmd = gup("cmd");
@@ -239,6 +242,24 @@ function initForm() {
             loadRetencionesFacprove(data.facproveId);
             loadServiciadasFacprove(facproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
+            llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + data.proveedorId, null, function (err, data2) {
+                if (err) return;
+                var result = [];
+                if(data2) {
+                    if(data2.length > 0) {
+                        data2.forEach(function (f) {
+                            if(f.facproveId == null) {
+                                result.push(f);
+                            }
+                        })
+                    }
+                    if(result.length > 0) {
+                        initTablaAnticipos();
+                        $("#modalAnticipo").modal({show: true});
+                        loadTablaAnticipos(result);
+                    }
+                }
+            })
         })
     } else {
         // caso alta
@@ -2145,6 +2166,86 @@ function buscarServiciadas() {
 var mostrarMensajeCrearServiciadas = function () {
     var mens = "Es necesario crear empresas serviciadas para esta factura en la pestaña correspondinte";
     mensNormal(mens);
+}
+
+//FUNCIONES MODAL ANTICIPOS
+
+function initTablaAnticipos() {
+    tablaAnticipos = $('#dt_anticipos').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAnticipos,
+        columns: [{
+            data: "antproveId",
+            render: function (data, type, row) {
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
+                return html;
+            }
+        }, {
+            data: "ref"
+        },{
+            data: "numeroAnticipoProveedor"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total"
+        }, {
+            data: "totalConIva"
+        },  {
+            data: "vFPago"
+        }, {
+            data: "antproveId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function loadTablaAnticipos(data) {
+    var dt = $('#dt_anticipos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
 }
 
 
