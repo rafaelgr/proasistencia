@@ -252,7 +252,7 @@ function initForm() {
         $("#lineasanticipo").hide();
         $("#basesycuotas").hide();
         $('#btnAltaServiciada').hide();
-        document.title = "NUEVA FACTURA PROVEEDOR";
+        document.title = "NUEVO ANTICIPO PROVEEDOR";
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
@@ -484,7 +484,7 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", false);
     }
     //
-    document.title = "FACTURA PROVEEDOR: " + vm.numero();
+    document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
 
     antNumAnt = data.antproveId;
 }
