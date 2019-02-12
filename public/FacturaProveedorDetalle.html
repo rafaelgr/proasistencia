@@ -562,12 +562,23 @@
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <section class="col col-sm-12" style="padding-top: 2%">
+                                                                    <section class="col col-sm-2" style="padding-top: 2%">
                                                                         <label class="checkbox">
                                                                             <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar">
                                                                             <i></i>No contabilizar
                                                                         </label>
-                                                                </section>
+                                                                    </section>
+                                                                    <section class="col col-md-3">
+                                                                        <label class="label bloqueado">Nº anticipo asociado</label>
+                                                                        <label class="input">
+                                                                            <input id="txtAnticipo" name="txtAnticipo" type="text" data-bind="value: anticipo" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-7">
+                                                                        <fieldset>
+                                                                        <button class='btn btn-circle btn-danger btn-sm' onclick='desvinculaAnticipo();' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>
+                                                                    </fieldset>
+                                                                    </section>
                                                                 </div>
                                                                 <div class="row">
                                                                     <section class="col col-md-6">
@@ -1372,38 +1383,7 @@
                     <div id="tbAnticipos" class="table-responsive">
                         <table id="dt_anticipos" class="table table-striped table-bordered table-hover responsive" width="100%">
                             <thead>
-                                <tr>
-                                    <th data-hide="phone">
-                                        SEL
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                    <th class="hasinput">
-                                        <input type="text" class="form-control" placeholder="" />
-                                    </th>
-                                                                                    
-                                    <th style="width:10%">
-                                    </th>
-                                </tr>
+                                
                                 <tr>
                                     <th>
                                         <i class="fa fa-fw fa-clipboard">
@@ -1441,7 +1421,19 @@
                             </thead>
                         </table>
                     </div>
+                    <form id= "frmAnt" class="smart-form">
+                        <footer>
+                            <button id="btnAceptarServiciada" class="btn btn-primary"  onclick="vinculaAnticipo()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                    
                 </div>
+                
             </div>
             <!-- /.modal-content -->
         </div>

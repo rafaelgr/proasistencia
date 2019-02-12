@@ -49,6 +49,8 @@ function initForm() {
     // 
     getVersionFooter();
 
+   
+
     initTablaServiciadas();
 
     vm = new admData();
@@ -87,6 +89,9 @@ function initForm() {
         return false;
     });
     
+    $('#frmAnt').submit(function () {
+        return false;
+    });
 
     //evento de foco en el modal
     $('#modalLinea').on('shown.bs.modal', function () {
@@ -362,6 +367,8 @@ function admData() {
     self.elegidosFormasPago = ko.observableArray([]);
     //
     self.observaciones = ko.observable();
+    self.anticipo = ko.observable();
+    self.antproveId = ko.observable();
 
     // -- Valores para las líneas
     self.facproveLineaId = ko.observable();
@@ -480,6 +487,8 @@ function loadData(data) {
     vm.facproveServiciadoId(0);
     vm.importeServiciada(0);
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
+    vm.anticipo(data.anticipo);
+    vm.antproveId(data.antproveId)
 
     //
     loadEmpresas(data.empresaId);
@@ -1716,6 +1725,11 @@ var mostratMnesajeTipoNoPermitido = function() {
     mensNormal(mens);
 }
 
+var mostrarMensajeExito = function () {
+    var mens = "Operacionb realizada con exito";
+    mensNormal(mens);
+}
+
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeBeneficio = 0;
     var ventaNeta = 0;
@@ -2201,7 +2215,7 @@ function initTablaAnticipos() {
             data: "antproveId",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="radio%s" type="radio"  name="antGroup" value="%s">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -2248,6 +2262,94 @@ function loadTablaAnticipos(data) {
     dt.fnDraw();
 }
 
+function vinculaAnticipo() {
+    //si opcion = false se desvila un anticipo de la factura
+    var id = $('input:radio[name=antGroup]:checked').val();
+    vm.antproveId(id);
+    var datosArrayAnt = [];
+    var datosArrayFact = [];
+   
+    var data = {
+        antprove: {
+            antproveId: vm.antproveId(),
+            facproveId: vm.facproveId()
+        }
+    }
+
+    var data2 = {
+        facprove: {
+            antproveId: vm.antproveId(),
+            facproveId: vm.facproveId(),
+            empresaId: vm.sempresaId(),
+            proveedorId: vm.sproveedorId(),
+            fecha: spanishDbDate(vm.fecha())
+        }
+    }
+    
+    datosArrayAnt.push(data);
+    datosArrayFact.push(data2);
+
+    llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
+        if (err) return;
+        llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
+            if (err) return;
+            if(data) {
+                $('#modalAnticipo').modal('hide');
+                vm.anticipo(data.numeroAnticipoProveedor);
+                vm.antproveId(data.antproveId);
+                return;
+            }
+        });
+    });
+}
+
+function desvinculaAnticipo() {
+    if(vm.antproveId()) {
+        var datosArrayAnt = [];
+        var datosArrayFact = [];
+   
+        var data = {
+            antprove: {
+                antproveId: vm.antproveId(),
+                facproveId: null
+            }
+        }
+
+        var data2 = {
+            facprove: {
+                antproveId: null,
+                facproveId: vm.facproveId(),
+                empresaId: vm.sempresaId(),
+                proveedorId: vm.sproveedorId(),
+                fecha: spanishDbDate(vm.fecha())
+            }
+        }
+    
+        datosArrayAnt.push(data);
+        datosArrayFact.push(data2);
+
+        
+        // mensaje de confirmación
+        var mensaje = "¿Realmente desea desvincular este anticipo?";
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
+                if (err) return;
+                llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
+                    if (err) return;
+                    if(data) {
+                        mostrarMensajeExito();
+                        vm.anticipo('');
+                        vm.antproveId(null);
+                        return;
+                    }
+                });
+            });
+    
+        }, function () {
+            // cancelar no hace nada
+        });
+    }
+}
 
 
 
