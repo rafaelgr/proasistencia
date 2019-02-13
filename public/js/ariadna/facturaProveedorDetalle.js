@@ -258,14 +258,14 @@ function initForm() {
                             }
                         })
                     }
-                    if(result.length > 0) {
+                    if(result.length > 0 && !data.antproveId) {
                         initTablaAnticipos();
                         $("#modalAnticipo").modal({show: true});
                         loadTablaAnticipos(result);
                     }
                 }
             })
-        })
+        });
     } else {
         // caso alta
         vm.generada(0); // por defecto manual
@@ -1726,7 +1726,7 @@ var mostratMnesajeTipoNoPermitido = function() {
 }
 
 var mostrarMensajeExito = function () {
-    var mens = "Operacionb realizada con exito";
+    var mens = "Operación realizada con exito";
     mensNormal(mens);
 }
 
@@ -2239,15 +2239,6 @@ function initTablaAnticipos() {
             data: "totalConIva"
         },  {
             data: "vFPago"
-        }, {
-            data: "antproveId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
-                return html;
-            }
         }]
     });
 }
@@ -2265,6 +2256,10 @@ function loadTablaAnticipos(data) {
 function vinculaAnticipo() {
     //si opcion = false se desvila un anticipo de la factura
     var id = $('input:radio[name=antGroup]:checked').val();
+    if(!id) {
+        mensError('No se ha elegido ningún anticipo');
+        return;
+    }
     vm.antproveId(id);
     var datosArrayAnt = [];
     var datosArrayFact = [];

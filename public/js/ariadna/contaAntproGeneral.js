@@ -138,8 +138,8 @@ function initTablaAnticipos() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                /*var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";*/
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 /*+ "" + bt3 */+ "</div>";
                 return html;
             }
         }]
@@ -268,13 +268,13 @@ function contabilizarAnticipos() {
                 if(data.length > 0) {
                     //anticipos sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
                     var lista = data.toString();
-                    mensError("Las Anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
+                    mensError("Los Anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
                     var fn = buscarAnticipos();
                     fn();
                 } else {
                     // borramos datos
                     $("#btnAlta").hide();
-                    mensNormal('Las anticipos han sido pasadas a contabilidad');
+                    mensNormal('Los anticipos han sido pasadas a contabilidad');
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
                     loadTablaAnticipos(null);

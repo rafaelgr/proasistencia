@@ -29,11 +29,16 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarAnticipos();
-    //});
-    //
+    
+    //Evento asociadpo al checkbox
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarAnticipos2All();
+        } else {
+            cargarAnticipos2();
+        }
+    });
+
     initTablaAnticipos();
     // comprobamos parámetros
     antproveId = gup('antproveId');
@@ -315,6 +320,7 @@ function cargarAnticipos() {
                 }
             });
         } else {
+            $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/anticiposProveedores",
@@ -388,14 +394,14 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarPrefacturas2() {
+function cargarAnticipos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas",
+        url: myconfig.apiUrl + "/api/anticiposProveedores",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaPrefacturas(data);
+            loadTablaAnticipos(data);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -404,14 +410,14 @@ function cargarPrefacturas2() {
     });
 }
 
-function cargarPrefacturas2All() {
+function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/all",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/all",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaPrefacturas(data);
+            loadTablaAnticipos(data);
         },
         error: function (err) {
             mensErrorAjax(err);
