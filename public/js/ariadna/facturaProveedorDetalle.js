@@ -738,6 +738,20 @@ function cambioEmpresa(empresaId) {
             vm.receptorProvincia(data.provincia);
             $('#chkCerrados').prop('checked', false);
             loadEmpresaServiciadas(data.empresaId);
+            var data2 = {
+                facprove: {
+                    fecha_recepcion: spanishDbDate(vm.fechaRecepcion()),
+                    empresaId: data.empresaId
+
+                }
+            }
+            llamadaAjax("POST", "/api/facturasProveedores/nueva/ref/cambio/empresa", data2, function (err, result) {
+                if(err) return;
+                if(result) {
+                    vm.ref(result.ref);
+                }
+            });
+            
         }
     });
 }

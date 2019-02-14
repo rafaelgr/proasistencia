@@ -720,7 +720,7 @@ function cambioEmpresa(data) {
 
 function cambioTipoProyecto(data) {
     //
-    if (!data || vm.referencia()) {
+    if (!data) {
         return;
     }
     var tipoProyectoId = data.id;
