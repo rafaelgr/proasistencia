@@ -720,7 +720,7 @@ function cambioEmpresa(data) {
 
 function cambioTipoProyecto(data) {
     //
-    if (!data || vm.referencia()) {
+    if (!data) {
         return;
     }
     var tipoProyectoId = data.id;
@@ -1252,7 +1252,7 @@ var recargaCabeceraLineasBases = function () {
         loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
-        //recalcularCostesImportesDesdeCoste()
+        recalcularCostesImportesDesdeCoste()
     });
 }
 
@@ -1386,11 +1386,13 @@ var cargaAgente = function (id) {
         obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
             if (err) return;
             var por = vm.porcentajeAgente()
-            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null || contratoId != 0) vm.porcentajeAgente(comision);
+            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
             if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
-           
+            if(contratoId != 0) {
+                
+            } else {
                 recalcularCostesImportesDesdeCoste();
-            
+            }
         });
     });
 };
