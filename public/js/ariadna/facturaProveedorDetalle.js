@@ -412,6 +412,7 @@ function admData() {
     
     self.file = ko.observable();
     self.nombreFacprovePdf = ko.observable();
+    self.antiguoPdf = ko.observable();
 
     //valores para la solapa serviciadas
     self.facproveServiciadoId = ko.observable();
@@ -459,6 +460,7 @@ function loadData(data) {
     vm.facproveServiciadoId(0);
     vm.importeServiciada(0);
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
+    vm.antiguoPdf(data.nombreFacprovePdf);
 
     //
     loadEmpresas(data.empresaId);
@@ -571,6 +573,16 @@ var aceptarFactura = function () {
             }
         };
     };
+    if(!vm.file() && vm.antiguoPdf()) {
+        ext = vm.antiguoPdf().split('.').pop().toLowerCase();
+        var dataPdf = {
+            doc: {
+                file: vm.nombreFacprovePdf(),
+                oldFile: vm.antiguoPdf(),
+                ext: ext
+            }
+        };
+    }
     var verb = "POST";
     var url =  "/api/facturasProveedores";
     var returnUrl = "FacturaProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&facproveId=";
@@ -749,6 +761,9 @@ function cambioEmpresa(empresaId) {
                 if(err) return;
                 if(result) {
                     vm.ref(result.ref);
+                    if(facproveId > 0 && vm.nombreFacprovePdf()) {
+                        vm.nombreFacprovePdf(result.ref+'.pdf');
+                    }
                 }
             });
             
