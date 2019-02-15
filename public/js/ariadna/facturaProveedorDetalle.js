@@ -173,6 +173,9 @@ function initForm() {
     $("#txtPrecio").blur(cambioPrecioCantidad);
     $('#txtPorcentajeRetencionLinea').blur(cambioPrecioCantidad);
 
+   
+    
+
     
     initTablaFacturasLineas();
     initTablaBases();
@@ -521,6 +524,10 @@ function loadData(data) {
     document.title = "FACTURA PROVEEDOR: " + vm.numero();
 
     antNumFact = data.facproveId;
+    if(!vm.antproveId()) {
+        $('#btnDesVincularAnticipo').hide();
+        $('#btnVincularAnticipo').show();
+    }
 }
 
 
@@ -2292,6 +2299,8 @@ function vinculaAnticipo() {
                 $('#modalAnticipo').modal('hide');
                 vm.anticipo(data.numeroAnticipoProveedor);
                 vm.antproveId(data.antproveId);
+                $('#btnVincularAnticipo').hide();
+                $('#btnDesVincularAnticipo').show();
                 return;
             }
         });
@@ -2335,6 +2344,8 @@ function desvinculaAnticipo() {
                         mostrarMensajeExito();
                         vm.anticipo('');
                         vm.antproveId(null);
+                        $('#btnVincularAnticipo').show();
+                        $('#btnDesVincularAnticipo').hide();
                         return;
                     }
                 });
