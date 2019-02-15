@@ -296,6 +296,7 @@ function admData() {
     self.facproveId = ko.observable();
     self.ref = ko.observable();    
     self.numero = ko.observable();
+    self.numeroRef = ko.observable();
     self.fecha = ko.observable();
     self.fechaRecepcion = ko.observable();
     self.empresaId = ko.observable();
@@ -619,6 +620,7 @@ var generarFacturaDb = function () {
         facprove: {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
+            "numero": vm.numeroRef(),
             "fecha": spanishDbDate(vm.fecha()),
             "fecha_recepcion": spanishDbDate(vm.fechaRecepcion()),
             "empresaId": vm.sempresaId(),
@@ -761,6 +763,7 @@ function cambioEmpresa(empresaId) {
                 if(err) return;
                 if(result) {
                     vm.ref(result.ref);
+                    vm.numeroRef(result.numero);
                     if(facproveId > 0 && vm.nombreFacprovePdf()) {
                         vm.nombreFacprovePdf(result.ref+'.pdf');
                     }
