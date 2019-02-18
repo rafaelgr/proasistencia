@@ -16,6 +16,8 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var antproveId;
+
 
 function initForm() {
     comprobarLogin();
@@ -237,8 +239,9 @@ function deleteFactura(id) {
                 url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(null),
                 success: function (data, status) {
+                    antproveId = data.antproveId;
                    if(data.nombreFacprovePdf){
                     $.ajax({
                         type: "DELETE",
@@ -254,25 +257,27 @@ function deleteFactura(id) {
                         }
                     });
                    }
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                   var data = {
+                    facproveId: id,
+                };
+                if(antproveId) {
+                    data.antproveId =  antproveId;
                 }
-            });
-           
-            var data = {
-                facproveId: id
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    var fn = buscarFacturas();
-                    fn();
+                $.ajax({
+                    type: "DELETE",
+                    url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        var fn = buscarFacturas();
+                        fn();
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
                 },
                 error: function (err) {
                     mensErrorAjax(err);

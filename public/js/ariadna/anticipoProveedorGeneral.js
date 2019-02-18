@@ -237,20 +237,35 @@ function deleteAnticipo(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-           
             var data = {
-                antproveId: id,
-                facproveId: null
-            };
-            $.ajax({
-                type: "DELETE",
+                id: antproveId
+            }
+            $.ajax({//buscamos la factura asociada para extraer su facproveId
+                type: "GET",
                 url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarAnticipos();
-                    fn();
+                    var data2 = {
+                        antproveId: id,
+                        facproveId: data.facproveId
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            var fn = buscarAnticipos();
+                            fn();
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
                 },
                 error: function (err) {
                     mensErrorAjax(err);
