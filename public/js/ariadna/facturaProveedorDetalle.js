@@ -115,6 +115,8 @@ function initForm() {
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
 
+    initTablaAnticipos();
+
     // select2 things
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
     loadEmpresaServiciadas();
