@@ -2301,7 +2301,19 @@ function vinculaAnticipo() {
                 vm.antproveId(data.antproveId);
                 $('#btnVincularAnticipo').hide();
                 $('#btnDesVincularAnticipo').show();
-                return;
+                 //INSERTAMOS LA LINEAS, BASES Y RETENCIONES DEL ANTICIPO EN LA FACTURA
+                 llamadaAjax("POST",  "/api/facturasProveedores/inserta/desde/antprove/" + vm.antproveId() + "/" + vm.facproveId(), null, function (err, data) {
+                    if(err) return
+                    if(data) {
+                        //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
+                        
+                        loadLineasFactura(vm.facproveId());
+                        loadBasesFacprove(vm.facproveId());
+                        loadRetencionesFacprove(vm.facproveId());
+                        loadServiciadasFacprove(vm.facproveId());
+                    }
+                });
+               
             }
         });
     });
@@ -2346,7 +2358,18 @@ function desvinculaAnticipo() {
                         vm.antproveId(null);
                         $('#btnVincularAnticipo').show();
                         $('#btnDesVincularAnticipo').hide();
-                        return;
+                        llamadaAjax("DELETE",  "/api/facturasProveedores/borra/desde/antprove/" + vm.antproveId() + "/" + vm.facproveId(), null, function (err, data) {
+                            if(err) return
+                            if(data) {
+                                //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
+                                
+                                loadLineasFactura(vm.facproveId());
+                                loadBasesFacprove(vm.facproveId());
+                                loadRetencionesFacprove(vm.facproveId());
+                                loadServiciadasFacprove(vm.facproveId());
+                            }
+                        });
+                       
                     }
                 });
             });
