@@ -411,7 +411,7 @@ function loadData(data) {
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
-    vm.importeCliente(data.importeCliente);
+    //vm.importeCliente(data.importeCliente);
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);

@@ -122,7 +122,7 @@
             <!-- fullscreen button -->
             <div id="fullscreen" class="btn-header transparent pull-right">
                 <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Pantalla completa">
+                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
                             <i class="fa fa-arrows-alt"></i>
                         </a>
                     </span>
@@ -145,7 +145,6 @@
             </a>
             </span>
         </div>
-        <!-- NAVIGATION : This navigation is also responsive-->
         <nav>
             <ul>
                 <li id="inicio">
@@ -384,9 +383,9 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Administracion</li>
-                <li>Textos predeterminados</li>
-                <li>Detalle texto</li>
+                <li>Gestión</li>
+                <li>Facturación</li>
+                <li>Contabilizar Anticipos Proveedores</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -409,10 +408,9 @@
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                     <h1 class="page-title txt-color-blueDark">
 
-                            <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-asterisk"></i>
-                            Detalle texto <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
-                        </h1>
+                        <!-- PAGE HEADER -->
+                        <i class="fa-fw fa fa-bell"></i> Contabilizacion de anticipos de proveedores <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                    </h1>
                 </div>
                 <!-- end col -->
                 <!-- right side of the page with the sparkline graphs -->
@@ -464,7 +462,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento textos predeterminados </h2>
+                                <h2>Contabilización de anticipos de proveedores </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -477,37 +475,78 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmTextoPredeterminado" class="smart-form">
+                                    <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Datos del texto
+                                            Seleccione las anticipos que va a contabilizar
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
-                                                    <label class="label">Texto</label>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Desde fecha</label>
                                                     <label class="input">
-                                                        <textarea style="width:100%" id="txtTexto" rows="4" class="custom-scroll" data-bind="value:texto"></textarea>
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Abreviatura</label>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Hasta fecha</label>
                                                     <label class="input">
-                                                        <input id="txtAbrev" name="txtAbrev" type="text" data-bind="value: abrev" />
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
+                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
                                                 </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
+                                                <!-- Cambiaremos este botón a generación -->
+                                                <button id="btnAlta" title="Generar anticipos" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-crosshairs"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
                                     </form>
+                                    <div id="tbAnticipo">
+                                        <table id="dt_anticipo" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="phone">
+                                                        SEL
+                                                    </th>
+                                                    <th data-class="expand">
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Emisor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Receptor
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Dir. Trabajo
+                                                    </th>                                                    
+                                                    <th data-hide="phone">
+                                                        Numero
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Fecha
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Base
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Total
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Forma pago
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Observaciones
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- end widget content -->
                             </div>
@@ -528,11 +567,12 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">NO VERSION</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">
-                    <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong> <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                    <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
+                    <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                 </div>
             </div>
         </div>
@@ -582,6 +622,8 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
+    <!--- KNOCKOUT JS -->
+    <script src="js/knockout-3.1.0.js"></script>
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -597,14 +639,12 @@
     <!-- SmartChat UI : plugin -->
     <script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
-    <!--- KNOCKOUT JS -->
-    <script src="js/knockout-3.1.0.js"></script>
-    <script src="js/numeral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
-    <script src="myconfig.js"></script>
-    <script src="js/ariadna/textoPredeterminadoDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="myconfig.js"></script>
+    <script src="js/ariadna/contaAntproGeneral.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
