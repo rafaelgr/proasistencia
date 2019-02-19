@@ -252,7 +252,7 @@ function initForm() {
             loadRetencionesFacprove(data.facproveId);
             loadServiciadasFacprove(facproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
-            llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + data.proveedorId, null, function (err, data2) {
+            /*llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + data.proveedorId, null, function (err, data2) {
                 if (err) return;
                 var result = [];
                 if(data2) {
@@ -269,7 +269,7 @@ function initForm() {
                         loadTablaAnticipos(result);
                     }
                 }
-            })
+            })*/
         });
     } else {
         // caso alta
@@ -2305,7 +2305,41 @@ function vinculaAnticipo() {
                 $('#btnDesVincularAnticipo').show();
                  //INSERTAMOS LA LINEAS, BASES Y RETENCIONES DEL ANTICIPO EN LA FACTURA
                  llamadaAjax("POST",  "/api/facturasProveedores/inserta/desde/antprove/" + vm.antproveId() + "/" + vm.facproveId(), null, function (err, data) {
-                    if(err) return
+                    if(err) {
+                        var datosArrayAnt = [];
+                        var datosArrayFact = [];
+   
+                        var data = {
+                            antprove: {
+                                antproveId: vm.antproveId(),
+                                facproveId: null
+                            }
+                        }
+                
+                        var data2 = {
+                            facprove: {
+                                antproveId: null,
+                                facproveId: vm.facproveId(),
+                                empresaId: vm.sempresaId(),
+                                proveedorId: vm.sproveedorId(),
+                                fecha: spanishDbDate(vm.fecha())
+                            }
+                        }
+                    
+                        datosArrayAnt.push(data);
+                        datosArrayFact.push(data2);
+
+                        llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
+                            if (err) return;
+                            llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
+                                if (err) return;
+                                vm.anticipo('');
+                                vm.antproveId(null);
+                                $('#btnVincularAnticipo').show();
+                                $('#btnDesVincularAnticipo').hide();
+                            });
+                        });
+                    }
                     if(data) {
                         //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
                         
@@ -2347,6 +2381,7 @@ function desvinculaAnticipo() {
         datosArrayFact.push(data2);
 
         
+        
         // mensaje de confirmación
         var mensaje = "¿Realmente desea desvincular este anticipo?";
         mensajeAceptarCancelar(mensaje, function () {
@@ -2380,6 +2415,26 @@ function desvinculaAnticipo() {
             // cancelar no hace nada
         });
     }
+}
+
+function cargaTablaAnticipos(){
+    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, data2) {
+        if (err) return;
+        var result = [];
+        if(data2) {
+            if(data2.length > 0) {
+                data2.forEach(function (f) {
+                    if(f.facproveId == null) {
+                        result.push(f);
+                    }
+                })
+            }
+            if(result.length > 0 && !vm.antproveId()) {
+                $("#modalAnticipo").modal({show: true});
+                loadTablaAnticipos(result);
+            }
+        }
+    })
 }
 
 

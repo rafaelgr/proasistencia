@@ -229,8 +229,21 @@ function crearAnticipo() {
 }
 
 function deleteAnticipo(id) {
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    var mens;
+    $.ajax({//buscamos la factura asociada para extraer su facproveId
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (data, status) {
+            if(data.facproveId) {
+                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
+            } else {
+                 mens = "¿Realmente desea borrar este registro?";
+            }
+            // mensaje de confirmación
+    
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
@@ -275,6 +288,12 @@ function deleteAnticipo(id) {
         }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
+        }
+    });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
         }
     });
 }
