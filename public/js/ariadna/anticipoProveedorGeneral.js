@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-prefacturaGeneral.js
-Funciones js par la página PrefacturaGeneral.html
+preantturaGeneral.js
+Funciones js par la página PreantturaGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,15 +8,13 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facproveId;
+var dataAnticipos;
+var antproveId;
 
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
-
-var antproveId;
 
 
 function initForm() {
@@ -25,37 +23,42 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
-    $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(crearFactura());
-    $('#btnPrint').click(imprimirFactura);
+    $('#btnBuscar').click(buscarAnticipos());
+    $('#btnAlta').click(crearAnticipo());
+    $('#btnPrint').click(imprimirAnticipo);
     $('#frmBuscar').submit(function () {
         return false
     });
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarFacturas();
-    //});
-    //
-    initTablaFacturas();
+    
+    //Evento asociadpo al checkbox
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarAnticipos2All();
+        } else {
+            cargarAnticipos2();
+        }
+    });
+
+    initTablaAnticipos();
     // comprobamos parámetros
-    facproveId = gup('facproveId');
-    if (facproveId !== '') {
+    antproveId = gup('antproveId');
+    if (antproveId !== '') {
 
         // Si nos pasan una prefafctura determinada esa es
         // la que mostramos en el grid
-        cargarFacturas()(facproveId);
+        cargarAnticipos()(antproveId);
 
     } else {
 
         // Por defecto ahora a la entrada se van a cargar todas 
-        // las facturas que tengamos en el sistema. En un futuro este
+        // las antturas que tengamos en el sistema. En un futuro este
         // criterio puede cambiar y habrá que adaptarlo.
-        cargarFacturas()();
+        cargarAnticipos()();
     }
 }
 
-function initTablaFacturas() {
-    tablaFacturas = $('#dt_factura').DataTable({
+function initTablaAnticipos() {
+    tablaAnticipos = $('#dt_anticipo').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -67,7 +70,7 @@ function initTablaFacturas() {
             "aButtons": [
                 {
                     "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
+                    "sTitle": "Anticipos Seleccionados",
                     "sPdfMessage": "proasistencia PDF Export",
                     "sPdfSize": "A4",
                     "sPdfOrientation": "landscape",
@@ -75,22 +78,22 @@ function initTablaFacturas() {
                 },
                 {
                     "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 }
             ],
@@ -100,7 +103,7 @@ function initTablaFacturas() {
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_anticipo'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -129,9 +132,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataAnticipos,
         columns: [{
-            data: "facproveId",
+            data: "antproveId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -142,7 +145,7 @@ function initTablaFacturas() {
         }, {
             data: "ref"
         },{
-            data: "numeroFacturaProveedor"
+            data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"
         }, {
@@ -159,11 +162,11 @@ function initTablaFacturas() {
         },  {
             data: "vFPago"
         }, {
-            data: "facproveId",
+            data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
             }
@@ -171,8 +174,8 @@ function initTablaFacturas() {
     });
 
     // Apply the filter
-    $("#dt_factura thead th input[type=text]").on('keyup change', function () {
-        tablaFacturas
+    $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
+        tablaAnticipos
             .column($(this).parent().index() + ':visible')
             .search(this.value)
             .draw();
@@ -200,8 +203,8 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaAnticipos(data) {
+    var dt = $('#dt_anticipo').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -210,74 +213,72 @@ function loadTablaFacturas(data) {
     dt.fnDraw();
 }
 
-function buscarFacturas() {
+function buscarAnticipos() {
     var mf = function () {
-        cargarFacturas()();
+        cargarAnticipos()();
     };
     return mf;
 }
 
-function crearFactura() {
+function crearAnticipo() {
     var mf = function () {
-        var url = "FacturaProveedorDetalle.html?facproveId=0";
+        var url = "AnticipoProveedorDetalle.html?antproveId=0";
         window.open(url, '_new');
     };
     return mf;
 }
 
-function deleteFactura(id) {
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+function deleteAnticipo(id) {
+    var mens;
+    $.ajax({//buscamos la factura asociada para extraer su facproveId
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (data, status) {
+            if(data.facproveId) {
+                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
+            } else {
+                 mens = "¿Realmente desea borrar este registro?";
+            }
+            // mensaje de confirmación
+    
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            $.ajax({
+            var data = {
+                id: antproveId
+            }
+            $.ajax({//buscamos la factura asociada para extraer su facproveId
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(null),
+                data: JSON.stringify(data),
                 success: function (data, status) {
-                    antproveId = data.antproveId;
-                   if(data.nombreFacprovePdf){
+                    var data2 = {
+                        antproveId: id,
+                        facproveId: data.facproveId
+                    };
                     $.ajax({
                         type: "DELETE",
-                        url: myconfig.apiUrl + "/api/facturasProveedores/archivo/" + data.nombreFacprovePdf,
+                        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                         dataType: "json",
                         contentType: "application/json",
-                        data: JSON.stringify(data),
+                        data: JSON.stringify(data2),
                         success: function (data, status) {
+                            var fn = buscarAnticipos();
+                            fn();
                         },
                         error: function (err) {
                             mensErrorAjax(err);
                             // si hay algo más que hacer lo haremos aquí.
                         }
                     });
-                   }
-                   var data = {
-                    facproveId: id,
-                };
-                if(antproveId) {
-                    data.antproveId =  antproveId;
-                }
-                $.ajax({
-                    type: "DELETE",
-                    url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        var fn = buscarFacturas();
-                        fn();
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -289,30 +290,36 @@ function deleteFactura(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de prefactura
+function editAnticipo(id) {
+    // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
+function cargarAnticipos() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facproveId
+                id: antproveId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + facproveId,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaAnticipos(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -320,14 +327,15 @@ function cargarFacturas() {
                 }
             });
         } else {
+            $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores",
+                url: myconfig.apiUrl + "/api/anticiposProveedores",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaAnticipos(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -355,8 +363,8 @@ function printPrefactura(id) {
     });
 }
 
-function printFactura2(id) {
-    var url = "InfFacturasProveedores.html?facproveId=" + id;
+function printAnticipo2(id) {
+    var url = "InfAnticiposProveedores.html?antproveId=" + id;
     window.open(url, "_new");
 }
 
@@ -393,14 +401,14 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarPrefacturas2() {
+function cargarAnticipos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas",
+        url: myconfig.apiUrl + "/api/anticiposProveedores",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaPrefacturas(data);
+            loadTablaAnticipos(data);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -409,14 +417,14 @@ function cargarPrefacturas2() {
     });
 }
 
-function cargarPrefacturas2All() {
+function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/all",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/all",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaPrefacturas(data);
+            loadTablaAnticipos(data);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -426,7 +434,7 @@ function cargarPrefacturas2All() {
 }
 
 
-imprimirFactura = function () {
-    var url = "InfFacturasProveedores.html";
+imprimirAnticipo = function () {
+    var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
 }
