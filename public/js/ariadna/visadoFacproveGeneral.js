@@ -137,6 +137,8 @@ function initTablaFacturas() {
             data: "totalConIva"
         }, {
             data: "formaPago"
+        },{
+            data: "refAnticipo"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
