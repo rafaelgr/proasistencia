@@ -16,6 +16,7 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var numIban = [];
 
 
 datePickerSpanish(); // see comun.js
@@ -44,7 +45,7 @@ function initForm() {
     ko.applyBindings(vm);
     //
     $('#btnBuscar').click(buscarAnticipos());
-    $('#btnAlta').click(contabilizarAnticipos());
+    $('#btnAlta').click(muestraMensNoIBAN());
     $('#btnDownload').click(buscarFicheros());
     $('#frmBuscar').submit(function () {
         return false
@@ -228,6 +229,10 @@ function loadTablaAnticipos(data) {
 
 function buscarAnticipos() {
     var mf = function () {
+        var i;
+        var datos = {};
+        numIban = []//reiniciamos el array donde guardamos los proveedores sin IBAN
+        var contador = 0;
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
@@ -235,6 +240,33 @@ function buscarAnticipos() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                data.forEach(function (f) {
+                    contador = 0;
+                    if(!f.IBAN) {// comprovamos si el proveedor de la factura tiene IBAN para añadirlo a una lista
+                        if(numIban.length == 0) {
+                            datos = {
+                                nombre: f.emisorNombre,
+                                id: f.proveedorId
+                            }
+                            numIban.push(datos);
+                            datos = {};
+                        } else {// comprobamos que el proveedor no exista ya en lista y si es así lo añadimos.
+                            for(i = 0; i < numIban.length; i++) {
+                                if(numIban[i].id == f.proveedorId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
+                                    contador ++;
+                                }
+                            };
+                            if(contador == 0) {//si el objeto no está en la lista se añade
+                                datos = {
+                                    nombre: f.emisorNombre,
+                                    id: f.proveedorId
+                                }
+                                numIban.push(datos);
+                            }
+                            datos = {};
+                        }
+                    }
+                });
                 loadTablaAnticipos(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
@@ -256,8 +288,8 @@ function buscarFicheros() {
     return mf;
 }
 function contabilizarAnticipos() {
-    var mf = function () {
-        // de momento nada
+   
+    
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
@@ -285,8 +317,6 @@ function contabilizarAnticipos() {
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
-    };
-    return mf;
 }
 
 function deleteAnticipo(id) {
@@ -321,6 +351,38 @@ function deleteAnticipo(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+function muestraMensNoIBAN() {
+    var mf = function () { 
+        var lista = []
+           // mensaje de confirmación
+           numIban.forEach( function(f) {
+                delete f.id;
+                lista.push(f.nombre.toString());
+           });
+           var mens = "¿Los proveedores "+lista+" no tienen IBAN, desea continuiar";
+           if(numIban.length > 0) {
+               $.SmartMessageBox({
+                   title: "<i class='fa fa-info'></i> Mensaje",
+                   content: mens,
+                   buttons: '[Aceptar][Cancelar]'
+               }, function (ButtonPressed) {
+                   if (ButtonPressed === "Aceptar") {
+                           contabilizarAnticipos();
+                           lista = []
+                       }
+                   if (ButtonPressed === "Cancelar") {
+                       // no hacemos nada
+                       
+                   }
+               });
+           } else {
+               contabilizarAnticipos();
+               lista = []
+           }
+    }
+    return mf;
 }
 
 function editAnticipo(id) {
