@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+anticipoGeneral.js
+Funciones js par la página AnticipoGeneral.html
 PROVEEDORES
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,9 +8,9 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
+var dataAnticipos;
 var dataContrato;
-var facproveId;
+var antproveId;
 var init = 0;
 var visadas;
 var registros;
@@ -57,30 +57,30 @@ function initForm() {
         if (this.checked) {
             visada = 1;
         } 
-        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/" + visada;
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/" + visada;
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
-            loadTablaFacturas(data);
+            loadTablaAnticipos(data);
         });
     });
 
-    initTablaFacturas();
-    buscarFacturas()();
+    initTablaAnticipos();
+    buscarAnticipos()();
     // comprobamos parámetros
-    facproveId = gup('FacturaId');
+    antproveId = gup('AnticipoId');
 }
 
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaAnticipos() {
+    tablaCarro = $('#dt_anticipo').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_anticipo'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -109,9 +109,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataAnticipos,
         columns: [{
-            data: "facproveId",
+            data: "antproveId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -137,22 +137,20 @@ function initTablaFacturas() {
             data: "totalConIva"
         }, {
             data: "formaPago"
-        },{
-            data: "refAnticipo"
         }, {
-            data: "facproveId",
+            data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                ///var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" /*+ bt1 + " " */+ bt2 /*+ "" + bt3 */+ "</div>";
                 return html;
             }
         }]
     });
 }
 
-function initModal(facproveId) {
+function initModal(antproveId) {
     init++
 
     $('#modalContrato').on('hidden.bs.modal', function () {
@@ -161,15 +159,15 @@ function initModal(facproveId) {
     
     if(init == 1){
         $('#modalContrato').on('show.bs.modal', function (e) {
-            initTablaContratos(facproveId);
+            initTablaContratos(antproveId);
         })
     }else {
-        cargarContratos()(facproveId);
+        cargarContratos()(antproveId);
     }
 }
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaAnticipos(data) {
+    var dt = $('#dt_anticipo').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -178,15 +176,15 @@ function loadTablaFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facproveId;
+        var field = "#chk" + v.antproveId;
         if (v.visada == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                facprove: {
-                    facproveId: v.facproveId,
+                antprove: {
+                    antproveId: v.antproveId,
                     empresaId: v.empresaId,
                     proveedorId: v.proveedorId,
                     fecha: moment(v.fecha).format('YYYY-MM-DD'),
@@ -194,12 +192,12 @@ function loadTablaFacturas(data) {
                 }
             };
             if (this.checked) {
-                data.facprove.visada = 1;
+                data.antprove.visada = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
+            var url = sprintf('%s/api/anticiposProveedores/visadas/modificar/%s', myconfig.apiUrl, v.antproveId);
             var data2 = [];
             data2.push(data);
             $.ajax({
@@ -213,7 +211,7 @@ function loadTablaFacturas(data) {
                       }else {
                           vis = 0;
                       }
-                    var url = "VisadoFacproveGeneral.html?visadas="+ vis;
+                    var url = "VisadoAntproveGeneral.html?visadas="+ vis;
                     window.open(url, '_self');
                 },
                 error: function (err) {
@@ -224,14 +222,14 @@ function loadTablaFacturas(data) {
     });
 }
 
-function buscarFacturas() {
+function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/" + 1;
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/" + 1;
           }
           else {
-              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/"  + 0;
+              url =  "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/"  + 0;
           }
         $.ajax({
             type: "GET",
@@ -240,7 +238,7 @@ function buscarFacturas() {
             contentType: "application/json",
             success: function (data, status) {
                 registros = data.length;
-                loadTablaFacturas(data);
+                loadTablaAnticipos(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
             },
@@ -256,7 +254,7 @@ function buscarFacturas() {
 
 
 
-function initTablaContratos(facproveId) {
+function initTablaContratos(antproveId) {
     tablaCarro = $('#dt_contrato').dataTable({
         
         autoWidth: true,
@@ -377,18 +375,18 @@ function initTablaContratos(facproveId) {
         }]
     });
     if(init == 1){
-        cargarContratos()(facproveId);
+        cargarContratos()(antproveId);
     }
 }
 
 function cargarContratos() {
-    var mf = function (facproveId) {
-        if (facproveId) {
+    var mf = function (antproveId) {
+        if (antproveId) {
             var data = null;
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/asociado/facprove/resultado/" + facproveId,
+                url: myconfig.apiUrl + "/api/contratos/asociado/antprove/resultado/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -419,24 +417,24 @@ function loadTablaContratos(data) {
 
 
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de factura
+function editAnticipo(id) {
+    // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
     window.open(url, '_new');
 }
 
 
 
-function printFactura(id) {
+function printAnticipo(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
             if(data.ref){
-                window.open("../../ficheros/facturas_proveedores/"+data.ref+".pdf","_blank");
+                window.open("../../ficheros/anticipos_proveedores/"+data.ref+".pdf","_blank");
             }else{
                 var mens = "No hay registros que mostrar";
                 $.SmartMessageBox({
