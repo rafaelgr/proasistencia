@@ -26,7 +26,7 @@ function initForm() {
 
     //comprobamos si el puerto 465 está configurado con correo seguro
     //o si el correo no seguro está configurado con el puerto 465
-    $('#chkSecure').click(function() {
+    /*$('#chkSecure').click(function() {
         if(!$(this).is(':checked') && vm.portCorreo() == 465) {
           var mens = 'No se permite correo no seguro por el puerto 465';
           mensNormal(mens);
@@ -37,9 +37,9 @@ function initForm() {
             mensNormal(mens);
             vm.portCorreo(465);
         }
-      });
+      });*/
 
-      $('#txtPort').blur(function(){
+      /*$('#txtPort').blur(function(){
         if(!$('#chkSecure').is(':checked') && vm.portCorreo() == 465) {
             var mens = 'No se permite correo no seguro por el puerto 465';
             mensNormal(mens);
@@ -50,7 +50,7 @@ function initForm() {
             mensNormal(mens);
             vm.portCorreo(465);
         }
-      });
+      });*/
 
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
