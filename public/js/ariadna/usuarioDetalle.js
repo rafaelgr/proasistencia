@@ -5,13 +5,13 @@ Funciones js par la página UsuarioDetalle.html
 var adminId = 0;
 
 var posiblesNiveles = [{
-    id: 0,
+    id: 1,
     nombre: "Usuario"
 }, {
-    id: 1,
+    id: 2,
     nombre: "Jefe de Equipo"
 }, {
-    id: 2,
+    id: 3,
     nombre: "Vigilante"
 }];
 

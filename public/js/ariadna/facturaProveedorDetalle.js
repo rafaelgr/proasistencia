@@ -111,6 +111,11 @@ function initForm() {
      
         compruebaRepetido(numeroFact, vm.sproveedorId());
     });
+    
+
+    $('#txtPrecio').focus( function () {
+        $('#txtPrecio').val('');
+    })
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();

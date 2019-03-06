@@ -1,0 +1,1 @@
+UPDATE usuarios SET nivel = 1 WHERE usuarioId = 6;
