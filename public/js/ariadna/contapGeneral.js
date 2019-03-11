@@ -299,15 +299,16 @@ function contabilizarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                if(data.length > 0) {
-                    if(data[0].cuenta) {
-                        var cuentas = data.toString();
+                if(data[0].length > 0  || data[1].length > 0) {
+                    if(data[1][0]) {
+                        var cuentas = JSON.stringify(data[1]);
                         mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
                         var fn = buscarFacturas();
                         fn();
-                    }else {
+                    }
+                    if(data[0].length > 0) {
                         //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
-                        var lista = data.toString();
+                        var lista = data[0].toString();
                         mensError("Las Facturas con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
                         var fn = buscarFacturas();
                         fn();
