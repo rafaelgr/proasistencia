@@ -264,12 +264,19 @@ function contabilizarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                // borramos datos
+                if(data.length > 0) {
+                    var cuentas = JSON.stringify(data);
+                    mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
+                        var fn = buscarFacturas();
+                        fn();
+                } else {
+                     // borramos datos
                 $("#btnAlta").hide();
                 mensNormal('Las facturas han sido pasadas a contabilidad');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
                 loadTablaFacturas(null);
+                }
             },
             error: function (err) {
                 mensErrorAjax(err);
