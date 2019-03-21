@@ -243,6 +243,12 @@ function initForm() {
                         }
                     }, false);
                     return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
                 }
             });
     });
