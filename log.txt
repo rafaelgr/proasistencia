@@ -935,3 +935,51 @@ TypeError: callback is not a function
  VERSION: 2.2.12
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/03/02019 12:19:20
+-------------------------------------------
+ VERSION: 2.2.12
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: callback is not a function
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:297:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:724:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:720:17)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:137:8)
+    at Query.OkPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:72:10)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/03/02019 12:20:18
+-------------------------------------------
+ VERSION: 2.2.12
+ PORT: 8080
+-------------------------------------------
+C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Parser.js:79
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+TypeError: callback is not a function
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:297:29
+    at C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:724:13
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:356:16
+    at replenish (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:877:25)
+    at iterateeCallback (C:\Ariadna\proasistencia\node_modules\async\dist\async.js:867:17)
+    at C:\Ariadna\proasistencia\node_modules\async\dist\async.js:840:16
+    at Query._callback (C:\Ariadna\proasistencia\lib\contabilidad\contabilidad_db_mysql.js:720:17)
+    at Query.Sequence.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Sequence.js:86:24)
+    at Query._handleFinalResultPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:137:8)
+    at Query.OkPacket (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\sequences\Query.js:72:10)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/03/02019 12:20:21
+-------------------------------------------
+ VERSION: 2.2.12
+ PORT: 8080
+-------------------------------------------
