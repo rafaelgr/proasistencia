@@ -300,13 +300,15 @@ function contabilizarFacturas() {
             contentType: "application/json",
             success: function (data, status) {
                 if(data[0].length > 0  || data[1].length > 0) {
-                    if(data[1][0]) {
-                        var cuentas = JSON.stringify(data[1]);
+                    if(data[1]) {
+                        if(data[1].length > 0) {
+                            var cuentas = JSON.stringify(data[1]);
 
-                        cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
-                        mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
-                        var fn = buscarFacturas();
-                        fn();
+                            cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
+                            mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
+                            var fn = buscarFacturas();
+                            fn();
+                        }
                     }
                     if(data[0].length > 0) {
                         //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
