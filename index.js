@@ -49,6 +49,7 @@ var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
 var facturas_router = require('./lib/facturas/facturas_controller');
 var facturasProveedores_router = require('./lib/facturas_proveedores/facturasProveedores_controller');
 var servicios_router = require('./lib/servicios/servicios_controller');
+var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 
 var config_router = require('./lib/configuracion_env/config_env_controller');
@@ -172,7 +173,6 @@ app.use('/api/correoElectronico', correoElectronico);
 app.use('/api/plantillas_correo_facturas', plantillas_correo);
 app.use('/api/upload', upload);
 app.use('/api/cobros', cobros);
-app.use('/api/servicios', servicios_router);
 app.use('/api/locales_afectados', locales_afectados_router);
 app.use('/api/configuracion', config_router)
 
@@ -188,6 +188,10 @@ app.use('/api/reparaciones', reparaciones_router);
 //ANTICIPOS PROVEEDOR
 app.use('/api/anticiposProveedores/', anticipos_proveedores);
 
+
+//servicios
+app.use('/api/servicios', servicios_router);
+app.use('/api/estados_parte', estados_parte_router);
 
 
 
