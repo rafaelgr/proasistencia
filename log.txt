@@ -989,3 +989,27 @@ TypeError: callback is not a function
  VERSION: 2.2.12
  PORT: 8080
 -------------------------------------------
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/03/02019 13:28:44
+-------------------------------------------
+ VERSION: 2.2.12
+ PORT: 8080
+-------------------------------------------
+events.js:160
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (C:\Ariadna\proasistencia\node_modules\mysql\lib\protocol\Protocol.js:109:13)
+    at Socket.<anonymous> (C:\Ariadna\proasistencia\node_modules\mysql\lib\Connection.js:109:28)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+-------------------------------------------
+ PROASISTENCIA RUNNING  21/03/02019 21:44:13
+-------------------------------------------
+ VERSION: 2.2.12
+ PORT: 8080
+-------------------------------------------
