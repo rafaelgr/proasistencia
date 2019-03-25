@@ -8,6 +8,7 @@ INSERT INTO estados_partes (nombre) VALUES('Pendiente de asignación'), ('Asigna
 
 CREATE TABLE `partes` ( 
 `parteId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del parte de trabajo',
+`servicioId` INT(11) NOT NULL  COMMENT 'Identificador del servicio asociado',
 `empresaId` INT(11) NOT NULL COMMENT 'Identificador de la empresa que se encarga',
 `operadorId` INT(11) COMMENT 'Usuario responsable de la operación',
 `tipoProfesionalId` INT(11) COMMENT 'Indica el tipo de profesional que se hará cargo de la avería',
@@ -30,6 +31,7 @@ CREATE TABLE `partes` (
 `trabajos_realizados` TEXT COMMENT 'Desccripción de los trabajos realizados',
 `observaciones` TEXT COMMENT 'Campo de observaciones',
 PRIMARY KEY (`parteId`),
+CONSTRAINT `ref_parte_servicio` FOREIGN KEY (`servicioId`) REFERENCES `servicios`(`servicioId`),
 CONSTRAINT `ref_parte_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`),
 CONSTRAINT `ref_parte_usuario` FOREIGN KEY (`operadorId`) REFERENCES `usuarios`(`usuarioId`),
 CONSTRAINT `ref_parte_profesional` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`),
