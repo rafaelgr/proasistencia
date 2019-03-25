@@ -48,10 +48,6 @@ var tipos_profesional_router = require('./lib/tipos_profesional/tipos_profesiona
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
 var facturas_router = require('./lib/facturas/facturas_controller');
 var facturasProveedores_router = require('./lib/facturas_proveedores/facturasProveedores_controller');
-var servicios_router = require('./lib/servicios/servicios_controller');
-var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
-var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
-
 var config_router = require('./lib/configuracion_env/config_env_controller');
 
 
@@ -81,6 +77,12 @@ var reparaciones_router = require('./lib/reparaciones/reparaciones_controller');
 
 //ANTICIPOS PROVEEDOR
 var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProveedores_controller');
+
+//SEERVICIOS
+var servicios_router = require('./lib/servicios/servicios_controller');
+var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
+var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
+var partes_router = require('./lib/partes/partes_controller');
 
 
 
@@ -192,6 +194,7 @@ app.use('/api/anticiposProveedores/', anticipos_proveedores);
 //servicios
 app.use('/api/servicios', servicios_router);
 app.use('/api/estados_parte', estados_parte_router);
+app.use('/api/partes', partes_router);
 
 
 
