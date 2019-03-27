@@ -44,3 +44,10 @@ CREATE TABLE `estados_partes_profesional` (
 PRIMARY KEY (`estadoParteProfesionalId`)
 );
 
+ALTER TABLE `partes`    
+ADD COLUMN `estadoParteProfesionalId` INT(11) NULL COMMENT 'Estado del parte desde el punto de vista del profesional' AFTER `observaciones`, 
+ADD COLUMN `estadoPresupuesto` INT(11) NULL COMMENT 'Estado del presupuesto' AFTER `estadoParteProfesionalId`, 
+ADD COLUMN `rechazoPresupuestoId` INT(11) NULL COMMENT 'Razón del rechazo del presupesto si es que la hay' AFTER `estadoPresupuesto`,  
+ADD CONSTRAINT `ref_parte_estadoProfesional` FOREIGN KEY (`estadoParteProfesionalId`) REFERENCES `estados_partes_profesional`(`estadoParteProfesionalId`),  
+ADD CONSTRAINT `ref_parte_estadoPresupuesto` FOREIGN KEY (`estadoPresupuesto`) REFERENCES `estados_presupuesto`(`estadoPresupuestoId`),  
+ADD CONSTRAINT `ref_parte_rechazoPresupuesto` FOREIGN KEY (`rechazoPresupuestoId`) REFERENCES `rechazos_presupuesto`(`rechazoPresupuestoId`);
