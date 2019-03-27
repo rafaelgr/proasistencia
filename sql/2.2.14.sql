@@ -37,3 +37,15 @@ CONSTRAINT `ref_parte_usuario` FOREIGN KEY (`operadorId`) REFERENCES `usuarios`(
 CONSTRAINT `ref_parte_profesional` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`),
 CONSTRAINT `ref_part_tipoprofesional` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`)
 );
+
+CREATE TABLE `estados_partes_profesional` ( 
+`estadoParteProfesionalId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del estado del parte desde el punto de vista del profesional',
+`nombre` VARCHAR(255) COMMENT 'Nombre del estado',
+PRIMARY KEY (`estadoParteProfesionalId`)
+);
+
+CREATE TABLE `estados_presupuestos` ( 
+`estadoPresupuestoId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del estado del presupuesto',
+`nombre` VARCHAR(255) COMMENT 'Nombre del estado del presupuesto',
+PRIMARY KEY (`estadoPresupuestoId`)
+);
