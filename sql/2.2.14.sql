@@ -44,8 +44,3 @@ CREATE TABLE `estados_partes_profesional` (
 PRIMARY KEY (`estadoParteProfesionalId`)
 );
 
-CREATE TABLE `estados_presupuestos` ( 
-`estadoPresupuestoId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del estado del presupuesto',
-`nombre` VARCHAR(255) COMMENT 'Nombre del estado del presupuesto',
-PRIMARY KEY (`estadoPresupuestoId`)
-);

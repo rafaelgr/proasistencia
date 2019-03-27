@@ -68,7 +68,6 @@ var bi_router = require('./lib/bi/bi_controller');
 //ACTUACIONES
 var actuaciones_router = require('./lib/actuaciones/actuaciones_controller');
 var estados_actuacion = require('./lib/estados_actuacion/estados_actuacion_controller');
-var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var rechazos_presupuesto = require('./lib/rechazos_presupuesto/rechazos_presupuesto_controller');
 
 //REPARACIONES
@@ -82,6 +81,7 @@ var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProvee
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
+var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 var partes_router = require('./lib/partes/partes_controller');
 
@@ -182,7 +182,7 @@ app.use('/api/configuracion', config_router)
 //ACTUACIONES
 app.use('/api/actuaciones', actuaciones_router);
 app.use('/api/estados_actuacion', estados_actuacion);
-app.use('/api/estados_presupuesto', estados_presupuesto);
+
 app.use('/api/rechazos_presupuesto', rechazos_presupuesto);
 
 //REPARACIONES
@@ -197,6 +197,7 @@ app.use('/api/servicios', servicios_router);
 app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);
+app.use('/api/estados_presupuesto', estados_presupuesto);
 
 
 
