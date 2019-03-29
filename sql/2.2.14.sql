@@ -38,6 +38,11 @@ CONSTRAINT `ref_parte_profesional` FOREIGN KEY (`proveedorId`) REFERENCES `prove
 CONSTRAINT `ref_part_tipoprofesional` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`)
 );
 
+ALTER TABLE `partes`   
+  ADD COLUMN `estadoParteId` INT(11) NULL COMMENT 'id del estado del parte' AFTER `tipoProfesionalId`,
+  ADD CONSTRAINT `ref_estado_parte` FOREIGN KEY (`estadoParteId`) REFERENCES `proasistencia`.`estados_partes`(`estadoParteId`);
+
+
 CREATE TABLE `estados_partes_profesional` ( 
 `estadoParteProfesionalId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del estado del parte desde el punto de vista del profesional',
 `nombre` VARCHAR(255) COMMENT 'Nombre del estado',
