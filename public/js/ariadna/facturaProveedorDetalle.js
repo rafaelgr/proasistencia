@@ -851,11 +851,6 @@ function obrenerTipoClienteID(contratoId) {
 function compruebaRepetido(numeroFact, proveedorId) {
     if(numeroFact.length > 0) {
        
-
-    if(numeroFact != null) {
-        numeroFact = numeroFact.replace(/\D/g,'');
-    }
-    
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturasProveedores/proveedor/facturas/solapa/muestra/tabla/datos/factura/" +  proveedorId,
@@ -865,7 +860,7 @@ function compruebaRepetido(numeroFact, proveedorId) {
             success: function (data, status) {
                 if(data) {
                     data.forEach( (f) => {
-                        var num = f.numeroFacturaProveedor.replace(/\D/g,'');
+                        var num = f.numeroFacturaProveedor;
                         
                         if(num == numeroFact && f.facproveId != vm.facproveId()) {
                             mensError('Ya existe una factura con este numero para este proveedor');
