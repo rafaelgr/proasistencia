@@ -17,3 +17,10 @@ ALTER TABLE `servicios`
   ADD COLUMN `num` INT(11) NULL AFTER `numParte`;
 
 
+CREATE TABLE `partes_locales` ( 
+`partesLocalesId` INT(11) NOT NULL AUTO_INCREMENT,
+`loalesAfectadosId` INT(11) COMMENT 'Relacion con la tabla de locales afectados',
+`parteId` INT(11) COMMENT 'Referencial a la tabla de partes',
+PRIMARY KEY (`partesLocalesId`)
+);
+
