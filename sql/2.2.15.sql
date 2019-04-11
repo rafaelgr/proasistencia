@@ -24,3 +24,17 @@ CREATE TABLE `partes_locales` (
 PRIMARY KEY (`partesLocalesId`)
 );
 
+ALTER TABLE `partes`   
+  ADD COLUMN `descuentoGeneral` DECIMAL(12,2) NULL AFTER `rechazoPresupuestoId`,
+  ADD COLUMN `rappel` DECIMAL(12,2) NULL AFTER `descuentoGeneral`;
+
+  ALTER TABLE `partes`   
+  CHANGE `descuentoGeneral` `descuentoGeneral` DECIMAL(12,2) DEFAULT 0 NULL,
+  CHANGE `rappel` `rappel` DECIMAL(12,2) DEFAULT 0 NULL;
+
+  ALTER TABLE `partes`   
+  ADD COLUMN `hora` VARCHAR(255) DEFAULT '00:00' NULL AFTER `fecha_solicitud`;
+
+
+
+UPDATE partes SET `descuentoGeneral` = 0, `rappel`= 0
