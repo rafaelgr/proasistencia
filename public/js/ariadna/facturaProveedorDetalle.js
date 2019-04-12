@@ -997,8 +997,7 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: true,
-                number: true,
-                min: 0.00000000000001
+                number: true
             },
             txtCantidad: {
                 required: true
@@ -1028,8 +1027,7 @@ function datosOKLineas() {
                 required: 'Necesita una cantidad'
             },
             txtPrecio: {
-                required: 'Necesita un precio',
-                min: "El precio no puede ser cero"
+                required: 'Necesita un precio'
             }
         },
         // Do not change code below
