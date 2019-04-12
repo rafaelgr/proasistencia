@@ -997,8 +997,7 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: true,
-                number: true,
-                min: 0.00000000000001
+                number: true
             },
             txtCantidad: {
                 required: true
@@ -1028,8 +1027,7 @@ function datosOKLineas() {
                 required: 'Necesita una cantidad'
             },
             txtPrecio: {
-                required: 'Necesita un precio',
-                min: "El precio no puede ser cero"
+                required: 'Necesita un precio'
             }
         },
         // Do not change code below
@@ -2130,8 +2128,7 @@ function datosOKServiciada() {
         rules: {
             txtImporteServiciada: {
                 required: true,
-                number: true,
-                min: 0.000000000001
+                number: true
             },
             cmbEmpresaServiciadas: {
                required: true
@@ -2145,8 +2142,7 @@ function datosOKServiciada() {
         messages: {
             txtImporteServiciada: {
                 required: "Debe introducir un importe",
-                number: "Debe introducir un numero válido",
-                min: "El importe no puede ser cero"
+                number: "Debe introducir un numero válido"
             },
             cmbEmpresaServiciadas: {
                 required: 'Se tiene que elegir una empresa serviciada'
