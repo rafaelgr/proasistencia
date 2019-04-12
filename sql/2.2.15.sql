@@ -17,12 +17,15 @@ ALTER TABLE `servicios`
   ADD COLUMN `num` INT(11) NULL AFTER `numParte`;
 
 
-CREATE TABLE `partes_locales` ( 
-`partesLocalesId` INT(11) NOT NULL AUTO_INCREMENT,
-`loalesAfectadosId` INT(11) COMMENT 'Relacion con la tabla de locales afectados',
-`parteId` INT(11) COMMENT 'Referencial a la tabla de partes',
-PRIMARY KEY (`partesLocalesId`)
+CREATE TABLE `partes_locales`(  
+  `partesLocalesId` INT(11) NOT NULL AUTO_INCREMENT,
+  `localesAfectadosId` INT(11),
+  `parteId` INT(11),
+  PRIMARY KEY (`partesLocalesId`),
+  CONSTRAINT `localFK` FOREIGN KEY (`localesAfectadosId`) REFERENCES `locales_afectados`(`localAfectadoId`),
+  CONSTRAINT `parteFK` FOREIGN KEY (`parteId`) REFERENCES `partes`(`parteId`)
 );
+
 
 ALTER TABLE `partes`   
   ADD COLUMN `descuentoGeneral` DECIMAL(12,2) NULL AFTER `rechazoPresupuestoId`,
