@@ -3,5 +3,4 @@ ALTER TABLE `servicios`
   ADD COLUMN `usuarioId` INT(11) NULL AFTER `clienteId`,
   CHANGE `servicioId` `servicioId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a un servicio,'  AFTER `usuarioId`;
 
-ALTER TABLE `servicios`   
-  CHANGE `horaEntrada` `horaEntrada` VARCHAR(255) NULL COMMENT 'Hora de entrada de la solictud';
+ALTER TABLE partes DROP FOREIGN KEY ref_parte_empresa;
