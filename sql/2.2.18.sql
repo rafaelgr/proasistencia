@@ -4,3 +4,5 @@ ALTER TABLE `servicios`
   CHANGE `servicioId` `servicioId` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a un servicio,'  AFTER `usuarioId`;
 
 ALTER TABLE partes DROP FOREIGN KEY ref_parte_empresa;
+
+ALTER TABLE partes DROP COLUMN  empresaId;
