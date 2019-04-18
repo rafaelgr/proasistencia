@@ -774,9 +774,6 @@ function compruebaRepetido(numeroAnt, proveedorId) {
     if(numeroAnt.length > 0) {
        
 
-    if(numeroAnt != null) {
-        numeroAnt = numeroAnt.replace(/\D/g,'');
-    }
     
         $.ajax({
             type: "GET",
@@ -787,7 +784,7 @@ function compruebaRepetido(numeroAnt, proveedorId) {
             success: function (data, status) {
                 if(data) {
                     data.forEach( (f) => {
-                        var num = f.numeroAnticipoProveedor.replace(/\D/g,'');
+                        var num = f.numeroAnticipoProveedor;
                         
                         if(num == numeroAnt && f.antproveId != vm.antproveId()) {
                             mensError('Ya existe una anticipo con este numero para este proveedor');

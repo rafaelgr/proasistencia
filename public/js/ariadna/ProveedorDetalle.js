@@ -76,7 +76,18 @@ function initForm() {
 
     initTablaFacturas();
 
-    
+    // autosalto en IBAN
+    $(function () {
+        $(".ibans").keyup(function () {
+            if (this.value.length == this.maxLength) {
+                var r = $(this).attr('id').substr(0, 7);
+                var n = $(this).attr('id').substr(7);
+                var n1 = n * 1 + 1;
+                var r2 = r + n1;
+                $("#" + r2).focus();
+            }
+        });
+    });
 
 
     //
