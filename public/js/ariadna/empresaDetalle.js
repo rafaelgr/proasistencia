@@ -58,6 +58,7 @@ function initForm() {
 
     $("#cmbSerieMantenimiento").select2(select2Spanish());
     $("#cmbSerieSeguros").select2(select2Spanish());
+    $('#cmbSerieRectificativas').select2(select2Spanish())
     
     // carga del editor de plantillas
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
@@ -197,6 +198,7 @@ function loadData(data) {
     //
     loadSerieMantenimiento(data.serieFac);
     loadSerieSeguros(data.serieFacS);
+    loadSerieRectificativas(data.serieFacR);
 }
 
 function datosOK() {
@@ -301,6 +303,7 @@ function aceptar() {
                 "seriePre": vm.seriePre(),
                 "serieFac": vm.stiporegi(),
                 "serieFacS": vm.stiporegiSeg(),
+                "serieFacR": vm.stiporegiRec(),
                 "infOfertas": vm.infOfertas(),
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
