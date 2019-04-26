@@ -483,7 +483,7 @@ function loadTiposMantenimientos(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+            var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data).concat({ tipoMantenimientoId: 1000, nombre: "RECTIFICATIVA" });
             vm.posiblesTiposMantenimientos(tiposMantenimientos);
             $("#cmbTiposMantenimientos").val([id]).trigger('change');
         },
