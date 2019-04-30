@@ -447,10 +447,12 @@
                                     <form id="frmFactura" class="smart-form">
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-1">
-                                                    <label class="label">SERIE</label>
-                                                    <label class="input">
-                                                        <input id="txtSerie" name="txtSerie" type="text" data-bind="value: serie" disabled/>
+                                                
+                                                <section class="col col-md-2">
+                                                    <label class="label">Serie</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbSeries" name="cmbSeries" data-bind="options: posiblesSeries, optionsText: 'nombre', optionsValue: 'serieId', value: sserieId, valueAllowUnset: true, selectedOptions: elegidasSeries, selected2:{}"></select>
+                                                        <i></i>
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-1">
@@ -477,13 +479,13 @@
                                                         <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="checkbox">
                                                         <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado">
                                                         <i></i>Desactivar el cliente como mantenedor
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-2">
+                                                <section class="col col-md-1">
                                                     <label class="label">Coste</label>
                                                     <label class="input">
                                                         <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>

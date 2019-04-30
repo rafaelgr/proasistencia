@@ -55,6 +55,11 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+
+    $("#cmbSerieMantenimiento").select2(select2Spanish());
+    $("#cmbSerieSeguros").select2(select2Spanish());
+    $('#cmbSerieRectificativas').select2(select2Spanish())
+    
     // carga del editor de plantillas
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
 
@@ -115,8 +120,6 @@ function admData() {
     self.firmante = ko.observable();
     self.contabilidad = ko.observable();
     self.seriePre = ko.observable();
-    self.serieFac = ko.observable();
-    self.serieFacS = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -128,6 +131,30 @@ function admData() {
     self.infFacturas = ko.observable();
     self.infPreFacturas = ko.observable();
     // 
+
+    //SERIES
+    //
+    self.tiporegi = ko.observable();
+    self.stiporegi = ko.observable();
+    //
+    self.posiblesTiposRegis = ko.observableArray([]);
+    self.elegidosTiposRegis = ko.observableArray([]);
+    //
+    //
+    self.tiporegi = ko.observable();
+    self.stiporegiSeg = ko.observable();
+    //
+    self.posiblesTiposRegisSeg = ko.observableArray([]);
+    self.elegidosTiposRegisSeg = ko.observableArray([]);
+
+    //
+    self.tiporegi = ko.observable();
+    self.stiporegiRec = ko.observable();
+    //
+    self.posiblesTiposRegisRec = ko.observableArray([]);
+    self.elegidosTiposRegisRec = ko.observableArray([]);
+
+    //
     self.plantillaCorreoFacturas = ko.observable();
 }
 
@@ -160,8 +187,6 @@ function loadData(data) {
     vm.firmante(data.firmante);
     vm.contabilidad(data.contabilidad);
     vm.seriePre(data.seriePre);
-    vm.serieFac(data.serieFac);
-    vm.serieFacS(data.serieFacS);
     loadTiposVia(data.tipoViaId);
     vm.infOfertas(data.infOfertas);
     vm.infFacturas(data.infFacturas);
@@ -169,6 +194,11 @@ function loadData(data) {
     // 
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
+
+    //
+    loadSerieMantenimiento(data.serieFac);
+    loadSerieSeguros(data.serieFacS);
+    loadSerieRectificativas(data.serieFacR);
 }
 
 function datosOK() {
@@ -189,9 +219,7 @@ function datosOK() {
             txtSeriePre: {
                 required: true
             },
-            txtSerieFac: {
-                required: true
-            }
+            
         },
         // Messages for form validation
         messages: {
@@ -210,9 +238,7 @@ function datosOK() {
             txtSeriePre: {
                 required: 'Indique la serie'
             },
-            txtSerieFac: {
-                required: 'Indique la serie'
-            }
+           
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -275,8 +301,9 @@ function aceptar() {
                 "contabilidad": vm.contabilidad(),
                 "tipoViaId": vm.stipoViaId(),
                 "seriePre": vm.seriePre(),
-                "serieFac": vm.serieFac(),
-                "serieFacS": vm.serieFacS(),
+                "serieFac": vm.stiporegi(),
+                "serieFacS": vm.stiporegiSeg(),
+                "serieFacR": vm.stiporegiRec(),
                 "infOfertas": vm.infOfertas(),
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
@@ -382,6 +409,60 @@ function loadTiposVia(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadSerieMantenimiento(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = data;
+            vm.posiblesTiposRegis(series);
+            $("#cmbSerieMantenimiento").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadSerieSeguros(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = data;
+            vm.posiblesTiposRegisSeg(series);
+            $("#cmbSerieSeguros").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadSerieRectificativas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = data;
+            vm.posiblesTiposRegisRec(series);
+            $("#cmbSerieRectificativas").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
