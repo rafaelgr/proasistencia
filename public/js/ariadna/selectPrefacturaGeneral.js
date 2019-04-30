@@ -94,7 +94,9 @@ function admData() {
     self.sempresaId = ko.observable();
     //
     self.posiblesEmpresas = ko.observableArray([]);
-    self.elegidosEmpresas = ko.observableArray([]);    
+    self.elegidosEmpresas = ko.observableArray([]);   
+    
+    self.rectificativas = ko.observable();
 }
 
 function initTablaPrefacturas() {
@@ -261,6 +263,11 @@ function loadTablaPrefacturas(data) {
 
 function buscarPrefacturas() {
     var mf = function () {
+        if($('#chkRectificativas').prop("checked")) {
+            vm.rectificativas(1);
+        } else {
+            vm.rectificativas(0);
+        }
         // antes comprobamos si han borrado el campo cliente
         if ($("#txtCliente").val() == "") vm.sclienteId(0);
         if (!datosOK()) return;
@@ -269,6 +276,7 @@ function buscarPrefacturas() {
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
         if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
         if (vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0"
+        url += "/" + vm.rectificativas()
         $.ajax({
             type: "GET",
             url: url,
@@ -291,11 +299,17 @@ function buscarPrefacturas() {
 function crearFactura() {
     var mf = function () {
         if (!datosOK()) return;
+        if($('#chkRectificativas').prop("checked")) {
+            vm.rectificativas(1);
+        } else {
+            vm.rectificativas(0);
+        }
         var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura());
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0";
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0";
         if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0";
         if(vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0";      
+        url += "/" + vm.rectificativas()
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) return;
             $("#btnAlta").hide();
@@ -483,7 +497,7 @@ function loadTiposMantenimientos(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+            var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }];
             vm.posiblesTiposMantenimientos(tiposMantenimientos);
             $("#cmbTiposMantenimientos").val([id]).trigger('change');
         },
