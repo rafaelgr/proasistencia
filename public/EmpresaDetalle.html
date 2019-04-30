@@ -626,16 +626,27 @@
                                                                                         <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
                                                                                     </label>
                                                                                 </section>
+                                                                                
                                                                                 <section class="col col-md-3">
                                                                                     <label class="label">Serie Facturas (Mantenimiento)</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtSerieFac" name="txtSerieFac" data-bind="value: serieFac" />
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbSerieMantenimiento" name="cmbSerieMantenimiento" data-bind="options: posiblesTiposRegis, optionsText: 'nombre', optionsValue: 'tiporegi', value: stiporegi, valueAllowUnset: true, selectedOptions: elegidosTiposRegis, selected2:{}"></select>
+                                                                                        <i></i>
+                                                                                    </label>
+                                                                                </section>
+                                                                                
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Serie Facturas (Seguros)</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbSerieSeguros" name="cmbSerieSeguros" data-bind="options: posiblesTiposRegisSeg, optionsText: 'nombre', optionsValue: 'tiporegi', value: stiporegiSeg, valueAllowUnset: true, selectedOptions: elegidosTiposRegisSeg, selected2:{}"></select>
+                                                                                        <i></i>
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-3">
-                                                                                    <label class="label">Serie Facturas (Seguros)</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtSerieFacS" name="txtSerieFaS" data-bind="value: serieFacS" />
+                                                                                    <label class="label">Serie Facturas (Rectificativas)</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbSerieRectificativas" name="cmbSerieRectificativas" data-bind="options: posiblesTiposRegisRec, optionsText: 'nombre', optionsValue: 'tiporegi', value: stiporegiRec, valueAllowUnset: true, selectedOptions: elegidosTiposRegisRec, selected2:{}"></select>
+                                                                                        <i></i>
                                                                                     </label>
                                                                                 </section>
                                                                             </div>

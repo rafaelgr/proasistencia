@@ -9,6 +9,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var facturaId = 0;
 var cmd = "";
+
 var lineaEnEdicion = false;
 
 var dataFacturasLineas;
@@ -104,6 +105,9 @@ function initForm() {
         if (e.added) cambioTiposIva(e.added.id);
     });
 
+    $("#cmbSeries").select2(select2Spanish());
+    
+
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
@@ -114,6 +118,7 @@ function initForm() {
 
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
+
     if (facturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
@@ -122,6 +127,7 @@ function initForm() {
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
+            
         })
     } else {
         // caso alta
@@ -145,6 +151,7 @@ function admData() {
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
+    self.tipoContratoId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -186,6 +193,15 @@ function admData() {
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
+    self.observaciones = ko.observable();
+
+    //
+    self.serieId = ko.observable();
+    self.sserieId = ko.observable();
+    //
+    self.posiblesSeries = ko.observableArray([]);
+    self.elegidasSeries = ko.observableArray([]);
+    //
     self.observaciones = ko.observable();
 
     // -- Valores para las líneas
@@ -246,7 +262,7 @@ function admData() {
     self.enviadaCorreo = ko.observable();
 }
 
-function loadData(data) {
+function loadData(data, desdeLinea) {
     vm.facturaId(data.facturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
@@ -300,6 +316,10 @@ function loadData(data) {
     vm.enviadaCorreo(data.enviadaCorreo);
     //
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
+
+    if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
+        obtenerParametrosCombo();
+    }
 }
 
 
@@ -366,6 +386,9 @@ var aceptarFactura = function () {
     var returnUrl = "FacturaDetalle.html?cmd=nueva&FacturaId=";
     // caso modificación
     if (facturaId != 0) {
+        if(vm.serie() == vm.sserieId()) {// si es igual no se a cambiado la serie u no hay que actualizarla
+            data.factura.serie = null;
+        }
         verb = "PUT";
         url = myconfig.apiUrl + "/api/facturas/" + facturaId;
         returnUrl = "FacturaGeneral.html?FacturaId=";
@@ -379,16 +402,23 @@ var aceptarFactura = function () {
 }
 
 var generarFacturaDb = function () {
+    var serie;
+    if(vm.sserieId()) {
+        serie = vm.sserieId();
+    }else {
+        serie =  vm.serie()
+    }
     var data = {
         factura: {
             "facturaId": vm.facturaId(),
             "ano": vm.ano(),
             "numero": vm.numero(),
-            "serie": vm.serie(),
+            "serie": serie,
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.sclienteId(),
             "contratoId": vm.scontratoId(),
+           
             "emisorNif": vm.emisorNif(),
             "emisorNombre": vm.emisorNombre(),
             "emisorDireccion": vm.emisorDireccion(),
@@ -544,6 +574,57 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
     });
 }
 
+var obtenerParametrosCombo = function () {
+    var comboSeries = [];
+    var obj = {}
+    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
+        if(err) return;
+        if(data) {
+            vm.tipoContratoId(data.tipoContratoId);
+            llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
+                if(err) return;
+                if(data) {//componemos el objeto con las series para cargar el combo
+                    obj = {
+                        nombre: data.seriePre,
+                        serieId: data.seriePre
+                    }
+                    comboSeries.push(obj);
+                    if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
+                        obj = {
+                            nombre: data.serieFacS,
+                            serieId: data.serieFacS
+                        }
+                    } else {
+                        obj = {
+                            nombre: data.serieFac,
+                            serieId: data.serieFac
+                        }
+                    }
+                    comboSeries.push(obj);
+
+                    obj = {
+                        nombre: data.serieFacR,
+                        serieId: data.serieFacR
+                    }
+                    
+                    comboSeries.push(obj);
+    
+                    cargarSeries(comboSeries)
+                }
+            });
+        }
+    });
+
+}
+
+
+
+var cargarSeries = function (data) {
+    var contratos = data;
+    vm.posiblesSeries(contratos);
+    $("#cmbSeries").val([vm.serie()]).trigger('change');
+}
+
 function aceptarLinea() {
     if (!datosOKLineas()) {
         return;
@@ -577,7 +658,7 @@ function aceptarLinea() {
         if (err) return;
         $('#modalLinea').modal('hide');
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + data.facturaId, null, function (err, data) {
-            loadData(data);
+            loadData(data, true);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
@@ -913,7 +994,7 @@ function deleteFacturaLinea(facturaId) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
                 if (err) return;
-                loadData(data);
+                loadData(data, true);
                 loadLineasFactura(data.facturaId);
                 loadBasesFactura(data.facturaId);
                 loadCobrosFactura(data.facturaId);
