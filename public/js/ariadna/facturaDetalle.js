@@ -570,6 +570,9 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         vm.porcentajeBeneficio(data.porcentajeBeneficio);
         vm.porcentajeAgente(data.porcentajeAgente);
         if (!vm.coste()) vm.coste(0);
+        vm.contratoId(data.contratoId);
+        vm.empresaId(data.empresaId);
+        obtenerParametrosCombo()
         recalcularCostesImportesDesdeCoste();
     });
 }
