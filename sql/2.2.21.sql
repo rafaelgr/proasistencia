@@ -2,7 +2,7 @@ CREATE TABLE `partes_lineas`(
   `parteLineaId` INT(11) NOT NULL AUTO_INCREMENT,
   `parteId` INT(11),
   `codigoArticulo` VARCHAR(255),
-  `Descripcion` VARCHAR(255),
+  `descripcion` VARCHAR(255),
   `unidades` INT(11),
   `precioProveedor` DECIMAL(12,2),
   `precioCliente` DECIMAL(12,2),
