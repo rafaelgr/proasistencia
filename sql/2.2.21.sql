@@ -12,6 +12,10 @@ CREATE TABLE `partes_lineas`(
   CONSTRAINT `linea_parteFK` FOREIGN KEY (`parteId`) REFERENCES `partes`(`parteId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+ALTER TABLE `partes_lineas`   
+  CHANGE `totalProveedor` `importeProveedor` DECIMAL(12,2) NULL,
+  CHANGE `totalCliente` `importeCliente` DECIMAL(12,2) NULL;
+
 
 ALTER TABLE `partes`   
   ADD COLUMN `forma_pago_cliente` VARCHAR(255) NULL AFTER `fecha_cobro_cliente`;
