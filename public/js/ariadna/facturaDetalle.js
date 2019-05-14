@@ -588,25 +588,25 @@ var obtenerParametrosCombo = function () {
                 if(err) return;
                 if(data) {//componemos el objeto con las series para cargar el combo
                     obj = {
-                        nombre: data.seriePre,
+                        nombre: data.seriePre + " // Prefactura",
                         serieId: data.seriePre
                     }
                     comboSeries.push(obj);
                     if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
                         obj = {
-                            nombre: data.serieFacS,
+                            nombre: data.serieFacS + " // Contrato asociado",
                             serieId: data.serieFacS
                         }
                     } else {
                         obj = {
-                            nombre: data.serieFac,
+                            nombre: data.serieFac+ " // Contrato asociado",
                             serieId: data.serieFac
                         }
                     }
                     comboSeries.push(obj);
 
                     obj = {
-                        nombre: data.serieFacR,
+                        nombre: data.serieFacR + " // Rectificativa",
                         serieId: data.serieFacR
                     }
                     
