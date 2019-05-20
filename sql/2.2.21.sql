@@ -25,3 +25,5 @@ ALTER TABLE `partes`
   ADD COLUMN `finalizada` TINYINT(1) DEFAULT 0 NULL AFTER `garantia_trabajos`,
   ADD COLUMN `enviar_otro_profesional` TINYINT(1) DEFAULT 0 NULL AFTER `finalizada`;
 
+ALTER TABLE `empresas`   
+  ADD COLUMN `serieFacRep` VARCHAR(255) NULL AFTER `passCorreo`;
