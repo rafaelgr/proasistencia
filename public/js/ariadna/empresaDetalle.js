@@ -58,7 +58,10 @@ function initForm() {
 
     $("#cmbSerieMantenimiento").select2(select2Spanish());
     $("#cmbSerieSeguros").select2(select2Spanish());
-    $('#cmbSerieRectificativas').select2(select2Spanish())
+    $('#cmbSerieRectificativas').select2(select2Spanish());
+    $('#cmbSerieRectificativas').select2(select2Spanish());
+    $('#cmbSerieReparaciones').select2(select2Spanish());
+    
     
     // carga del editor de plantillas
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
@@ -120,6 +123,7 @@ function admData() {
     self.firmante = ko.observable();
     self.contabilidad = ko.observable();
     self.seriePre = ko.observable();
+    self.sereRep = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -153,6 +157,14 @@ function admData() {
     //
     self.posiblesTiposRegisRec = ko.observableArray([]);
     self.elegidosTiposRegisRec = ko.observableArray([]);
+
+     //
+     self.tiporegi = ko.observable();
+     self.stiporegiRep = ko.observable();
+     //
+     self.posiblesTiposRegisRep = ko.observableArray([]);
+     self.elegidosTiposRegisRep = ko.observableArray([]);
+ 
 
     //
     self.plantillaCorreoFacturas = ko.observable();
@@ -199,6 +211,7 @@ function loadData(data) {
     loadSerieMantenimiento(data.serieFac);
     loadSerieSeguros(data.serieFacS);
     loadSerieRectificativas(data.serieFacR);
+    loadSerieReparaciones(data.serieFacRep);
 }
 
 function datosOK() {
@@ -304,6 +317,7 @@ function aceptar() {
                 "serieFac": vm.stiporegi(),
                 "serieFacS": vm.stiporegiSeg(),
                 "serieFacR": vm.stiporegiRec(),
+                "serieFacRep": vm.stiporegiRep(),
                 "infOfertas": vm.infOfertas(),
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
@@ -463,6 +477,25 @@ function loadSerieRectificativas(id) {
             var series = data;
             vm.posiblesTiposRegisRec(series);
             $("#cmbSerieRectificativas").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
+function loadSerieReparaciones(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = data;
+            vm.posiblesTiposRegisRep(series);
+            $("#cmbSerieReparaciones").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);

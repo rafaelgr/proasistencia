@@ -27,3 +27,12 @@ ALTER TABLE `partes`
 
 ALTER TABLE `empresas`   
   ADD COLUMN `serieFacRep` VARCHAR(255) NULL AFTER `passCorreo`;
+
+  ALTER TABLE `partes_lineas`   
+  ADD COLUMN `iva` DECIMAL(12,2) NULL AFTER `codigoArticulo`;
+
+
+ALTER TABLE `partes_lineas`   
+  ADD COLUMN `importeProveedorIva` DECIMAL(12,2) NULL AFTER `importeCliente`,
+  ADD COLUMN `importeClienteIva` DECIMAL(12,2) NULL AFTER `importeProveedorIva`;
+
