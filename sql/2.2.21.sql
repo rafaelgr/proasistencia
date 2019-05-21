@@ -36,3 +36,7 @@ ALTER TABLE `partes_lineas`
   ADD COLUMN `importeProveedorIva` DECIMAL(12,2) NULL AFTER `importeCliente`,
   ADD COLUMN `importeClienteIva` DECIMAL(12,2) NULL AFTER `importeProveedorIva`;
 
+
+ALTER TABLE `partes`   
+  ADD COLUMN `porcentajeBeneficio` DECIMAL(12,2) NULL AFTER `resultado`;
+
