@@ -36,7 +36,18 @@ ALTER TABLE `partes_lineas`
   ADD COLUMN `importeProveedorIva` DECIMAL(12,2) NULL AFTER `importeCliente`,
   ADD COLUMN `importeClienteIva` DECIMAL(12,2) NULL AFTER `importeProveedorIva`;
 
-
 ALTER TABLE `partes`   
-  ADD COLUMN `porcentajeBeneficio` DECIMAL(12,2) NULL AFTER `resultado`;
+  ADD COLUMN `importe_cliente_iva` DECIMAL(12,2) NULL AFTER `importe_cliente`,
+  ADD COLUMN `importe_profesional_iva` DECIMAL(12,2) NULL AFTER `importe_profesional`;
+
+
+ALTER TABLE `partes_lineas`   
+  ADD COLUMN `tipoIvaId` INT(11) NULL AFTER `codigoArticulo`;
+
+  ALTER TABLE `partes_lineas`  
+  ADD CONSTRAINT `lineParte_tipoIvaFK` FOREIGN KEY (`tipoIvaId`) REFERENCES `proasistencia`.`tipos_iva`(`tipoIvaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+  ALTER TABLE `partes_lineas`   
+  ADD COLUMN `comentarios` VARCHAR(255) NULL AFTER `importeClienteIva`;
+
 
