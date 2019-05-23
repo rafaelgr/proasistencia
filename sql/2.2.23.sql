@@ -13,3 +13,7 @@ insert  into `departamentos`(`departamentoId`,`nombre`) values (4,'FINCAS');
 insert  into `departamentos`(`departamentoId`,`nombre`) values (5,'ARQUITECTURA');
 insert  into `departamentos`(`departamentoId`,`nombre`) values (6,'ADMINISTRACIÓN');
 insert  into `departamentos`(`departamentoId`,`nombre`) values (7,'REPARACIONES');
+
+
+ALTER TABLE `departamentos`   
+  CHANGE `departamentoId` `departamentoId` INT(11) NOT NULL AUTO_INCREMENT;

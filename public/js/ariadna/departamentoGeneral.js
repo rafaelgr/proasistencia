@@ -146,14 +146,17 @@ function loadTablaDepartamentos(data) {
     }
 }
 
-function buscarDepartamentos() {
+function buscarDepartamentos(borrado) {
+    var aBuscar
+    if(borrado) {
+        aBuscar = '*'
+    } else {
+        aBuscar = $('#txtBuscar').val();
+    }
     var mf = function () {
         if (!datosOK()) {
             return;
         }
-        // obtener el n.serie del certificado para la firma.
-        var aBuscar = $('#txtBuscar').val();
-        // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/departamentos/?nombre=" + aBuscar,
@@ -199,7 +202,7 @@ function deleteDepartamento(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarDepartamentos();
+                    var fn = buscarDepartamentos(true);
                     fn();
                 },
                                 error: function (err) {
