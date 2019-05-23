@@ -196,6 +196,7 @@ function admData() {
     var self = this;
     self.proveedorId = ko.observable();
     self.codigo = ko.observable();
+    self.serie = ko.observable();
     self.proId = ko.observable();
     self.nombre = ko.observable();
     self.nif = ko.observable();
@@ -267,6 +268,7 @@ function admData() {
 function loadData(data) {
     vm.proveedorId(data.proveedorId);
     vm.codigo(data.codigo);
+    vm.serie(data.serie);
     vm.codigoOriginal(data.codigo);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
@@ -406,6 +408,7 @@ function aceptar() {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
                 "codigo": vm.codigo(),
+                "serie": vm.serie(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
                 "nif": vm.nif(),
