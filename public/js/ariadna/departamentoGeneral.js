@@ -102,10 +102,6 @@ function initTablaDepartamentos() {
         columns: [{
             data: "nombre"
         }, {
-            data: "login"
-        }, {
-            data: "email"
-        }, {
             data: "departamentoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteDepartamento(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
