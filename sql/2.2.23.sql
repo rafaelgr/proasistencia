@@ -17,3 +17,17 @@ insert  into `departamentos`(`departamentoId`,`nombre`) values (7,'REPARACIONES'
 
 ALTER TABLE `departamentos`   
   CHANGE `departamentoId` `departamentoId` INT(11) NOT NULL AUTO_INCREMENT;
+
+  CREATE TABLE `usuarios_departamentos`(  
+  `usuarioDepartamentoId` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuarioId` INT(11),
+  `departamentoId` INT(11),
+  PRIMARY KEY (`usuarioDepartamentoId`),
+  CONSTRAINT `usuarioDepartamento_usuariosFK` FOREIGN KEY (`usuarioId`) REFERENCES `proasistencia`.`usuarios`(`usuarioId`) ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT `usuarioDepartamento_departamentosFK` FOREIGN KEY (`departamentoId`) REFERENCES `proasistencia`.`departamentos`(`departamentoId`) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+ALTER TABLE `usuarios_departamentos`   
+  ADD  UNIQUE INDEX `uniqueDepartamento` (`usuarioId`, `departamentoId`);
+
+
