@@ -182,7 +182,7 @@ function initForm() {
 
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
-        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
             
 
@@ -602,10 +602,10 @@ function loadEmpresas(id) {
 
 
 function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos", null, function (err, data) {
         if (err) return;
         var tipos = [{
-            tipoMantenimientoId: 0,
+            departamentoId: 0,
             nombre: ""
         }].concat(data);
         vm.posiblesTiposContrato(tipos);

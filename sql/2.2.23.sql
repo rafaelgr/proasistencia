@@ -31,3 +31,9 @@ ALTER TABLE `usuarios_departamentos`
   ADD  UNIQUE INDEX `uniqueDepartamento` (`usuarioId`, `departamentoId`);
 
 
+  ALTER TABLE `contratos` 
+  ADD CONSTRAINT `cnt_tipoDepartamento` FOREIGN KEY (`tipoContratoId`) REFERENCES `departamentos`(`departamentoId`),
+  DROP FOREIGN KEY `cnt_tipoMantenimiento`;
+
+
+
