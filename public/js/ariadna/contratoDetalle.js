@@ -19,6 +19,7 @@ var dataFacturas;
 var dataContratosCobros;
 var ContratoId = 0;
 var cmd;
+var usuario;
 
 
 var breakpointDefinition = {
@@ -30,6 +31,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -602,7 +604,7 @@ function loadEmpresas(id) {
 
 
 function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/departamentos", null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
         var tipos = [{
             departamentoId: 0,
