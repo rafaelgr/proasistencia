@@ -164,7 +164,7 @@ function initForm() {
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadData(data);
+                loadData(data, true);
                 $("#wid-id-2").show();
             },
             error: function (err) {
@@ -322,7 +322,7 @@ function admData() {
     self.antiguoAgenteId = ko.observable();
 }
 
-function loadData(data) {
+function loadData(data, desdeLoad) {
     vm.clienteId(data.clienteId);
     vm.comercialId(data.comercialId);
     vm.antiguoAgenteId(data.comercialId);
@@ -378,7 +378,7 @@ function loadData(data) {
     loadClientesCobros(empId);
 
     var data = { id: data.comercialId };
-    cambioAgente(data);
+    cambioAgente(data, desdeLoad);
     //
     loadComisionistas(data.clienteId);
     // split iban
@@ -1096,7 +1096,7 @@ function cambioComercial(data) {
 * cambioAgente
 * Al cambiar un agente hay que traer el colaborador asociado
 */
-function cambioAgente(data) {
+function cambioAgente(data, desdeLoad) {
     //
     if (!data) {
         return;
@@ -1118,12 +1118,14 @@ function cambioAgente(data) {
                 });
                 loadModal(data)
             } else {
-                vm.direccion3(data.direccion);
-                vm.poblacion3(data.poblacion);
-                vm.codPostal3(data.codPostal);
-                vm.provincia3(data.provincia);
-                loadTiposVia3(data.tipoViaId);
-                realizarCambioAgente(data);
+                if(!desdeLoad) {
+                    vm.direccion3(data.direccion);
+                    vm.poblacion3(data.poblacion);
+                    vm.codPostal3(data.codPostal);
+                    vm.provincia3(data.provincia);
+                    loadTiposVia3(data.tipoViaId);
+                    realizarCambioAgente(data);
+                }
             }
         },
         error: function (err) {
