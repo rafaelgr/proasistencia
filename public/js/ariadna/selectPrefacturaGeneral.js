@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataPrefacturas;
 var prefacturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -24,6 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -56,8 +58,8 @@ function initForm() {
     $("#cmbAgentes").select2(select2Spanish());
     loadAgentes();
 
-    $("#cmbTiposMantenimientos").select2(select2Spanish());
-    loadTiposMantenimientos();
+    $("#cmbTiposDepartamentos").select2(select2Spanish());
+    loadTiposDepartamentos();
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -86,10 +88,10 @@ function admData() {
     self.elegidosAgentes = ko.observableArray([]);
     //    
     //
-    self.stipoMantenimientoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
     //
-    self.posiblesTiposMantenimientos = ko.observableArray([]);
-    self.elegidosTiposMantenimientos = ko.observableArray([]);
+    self.posiblesTiposDepartamentos = ko.observableArray([]);
+    self.elegidosTiposDepartamentos = ko.observableArray([]);
     //
     self.sempresaId = ko.observable();
     //
@@ -271,10 +273,10 @@ function buscarPrefacturas() {
         // antes comprobamos si han borrado el campo cliente
         if ($("#txtCliente").val() == "") vm.sclienteId(0);
         if (!datosOK()) return;
-        var url = myconfig.apiUrl + "/api/prefacturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/prefacturas/emision/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + usuario;
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
-        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0"
+        if (vm.sdepartamentoId()) url += "/" + vm.sdepartamentoId(); else url += "/0"
         if (vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0"
         url += "/" + vm.rectificativas()
         $.ajax({
@@ -304,10 +306,10 @@ function crearFactura() {
         } else {
             vm.rectificativas(0);
         }
-        var url = myconfig.apiUrl + "/api/facturas/prefacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura());
+        var url = myconfig.apiUrl + "/api/facturas/prefacturas/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura())+ "/" + usuario;
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0";
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0";
-        if (vm.stipoMantenimientoId()) url += "/" + vm.stipoMantenimientoId(); else url += "/0";
+        if (vm.sdepartamentoId()) url += "/" + vm.sdepartamentoId(); else url += "/0";
         if(vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0";      
         url += "/" + vm.rectificativas()
         llamadaAjax("POST", url, null, function (err, data) {
@@ -490,16 +492,16 @@ function loadAgentes(id) {
     });
 }
 
-function loadTiposMantenimientos(id) {
+function loadTiposDepartamentos(id) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_mantenimientos",
+        url: "/api/departamentos/usuario/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposMantenimientos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposMantenimientos(tiposMantenimientos);
-            $("#cmbTiposMantenimientos").val([id]).trigger('change');
+            var tiposDepartamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposDepartamentos(tiposDepartamentos);
+            $("#cmbTiposDepartamentos").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
