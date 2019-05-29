@@ -15,6 +15,7 @@ var lineaEnEdicion = false;
 var dataFacturasLineas;
 var dataBases;
 var dataCobros;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,6 +26,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -479,8 +481,8 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
-    if (contratoId) url = "/api/contratos/" + contratoId;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
