@@ -11,6 +11,7 @@ var prefacturaId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
 var ClienteId = 0;
+var usuario;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -27,6 +28,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -459,8 +461,8 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
-    if (contratoId) url = "/api/contratos/" + contratoId;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
