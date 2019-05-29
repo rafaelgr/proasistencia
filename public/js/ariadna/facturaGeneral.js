@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -19,6 +20,8 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
+
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -338,7 +341,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas",
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -414,7 +417,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarFacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas",
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -430,7 +433,7 @@ function cargarFacturas2() {
 function cargarFacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/all",
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
