@@ -595,11 +595,17 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-12">
+                                                        <section class="col col-md-6">
                                                             <label class="label">CONTRATO ASOCIADO</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select>
                                                                 <i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-6">
+                                                            <label class="label">Departamento</label>
+                                                            <label class="input">
+                                                                <input id="txtDepartamento" name="txtDepartamento" type="text" data-bind="value: departamento" />
                                                             </label>
                                                         </section>
                                                     </div>

@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facproveId;
-
+var usuario;
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -21,6 +21,7 @@ var antproveId;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -322,7 +323,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores",
+                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" + usuario,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

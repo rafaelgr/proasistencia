@@ -21,6 +21,8 @@ var importeModificar = 0;
 
 var dataServiciadas;
 var dataLineas;
+var idUsuario;
+
 
 
 var lineaEnEdicion = false;
@@ -43,7 +45,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
-    var idUsuario = recuperarIdUsuario();
+     idUsuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -110,6 +112,9 @@ function initForm() {
     })
 
     // select2 things
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -394,6 +399,12 @@ function admData() {
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
     //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
     self.observaciones = ko.observable();
     self.anticipo = ko.observable();
     self.antproveId = ko.observable();
@@ -522,7 +533,7 @@ function loadData(data) {
 
     //
     loadEmpresas(data.empresaId);
-   
+    loadDepartamentos(data.departamentoId);
     
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
@@ -564,6 +575,9 @@ function datosOK() {
             cmbEmpresas: {
                 required: true
             },
+            cmbDepartamentos: {
+                required: true
+            },
             cmbProveedores: {
                 required: true
             },
@@ -588,6 +602,9 @@ function datosOK() {
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir un receptor"
+            },
+            cmbDepartamentos: {
+                required: 'Debe elegir un departamento'
             },
             cmbProveedores: {
                 required: 'Debe elegir un emisor'
@@ -715,7 +732,8 @@ var generarFacturaDb = function () {
             "importeRetencion": vm.importeRetencion(),
             "nombreFacprovePdf": vm.nombreFacprovePdf(),
             "ref": vm.ref(),
-            "noContabilizar": vm.noContabilizar()
+            "noContabilizar": vm.noContabilizar(),
+            "departamentoId": vm.sdepartamentoId()
 
         }
     };
@@ -782,6 +800,15 @@ var cargarContratos = function (data, contratoId) {
     }else{
         $("#cmbContratos").val(0).trigger('change');
     }
+}
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+    });
 }
     
 
