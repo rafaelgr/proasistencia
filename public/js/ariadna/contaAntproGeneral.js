@@ -17,6 +17,7 @@ var breakpointDefinition = {
 };
 
 var numIban = [];
+var usuario;
 
 
 datePickerSpanish(); // see comun.js
@@ -25,6 +26,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -56,6 +58,10 @@ function initForm() {
     initTablaAnticipos();
     // comprobamos parámetros
     facproveId = gup('AnticipoId');
+
+    // select2 things
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
 }
 
 // tratamiento knockout
@@ -64,6 +70,12 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function initTablaAnticipos() {
@@ -236,7 +248,7 @@ function buscarAnticipos() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/anticiposProveedores/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/anticiposProveedores/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -293,7 +305,7 @@ function contabilizarAnticipos() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/anticiposProveedores/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/anticiposProveedores/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -459,6 +471,16 @@ function informePDF(data) {
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+    });
+}
+    
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");

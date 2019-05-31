@@ -272,7 +272,7 @@ function contabilizarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
