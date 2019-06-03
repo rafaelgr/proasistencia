@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -24,6 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -49,8 +51,8 @@ function initForm() {
         return false
     });
     //
-    $("#cmbTiposContrato").select2(select2Spanish());
-    loadTiposContrato();
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -73,11 +75,11 @@ function admData() {
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
     //
-    self.tipoContratoId = ko.observable();
-    self.stipoContratoId = ko.observable();
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
     //
-    self.posiblesTiposContrato = ko.observableArray([]);
-    self.elegidosTiposContrato = ko.observableArray([]);
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -253,16 +255,17 @@ function loadTablaFacturas(data) {
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
-        var tipoContratoId = 0;
-        if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
         var url = myconfig.apiUrl + "/api/facturas/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
-        url += "/" + tipoContratoId;
+        url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
+        url += "/" + usuario;
         $.ajax({
             type: "GET",
             url: url,
@@ -287,16 +290,17 @@ function generarLiquidaciones() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
-        var tipoContratoId = 0;
-        if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
         var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
-        url += "/" + tipoContratoId;
+        url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
+        url += "/" + usuario;
         // Vamos a comprobar si hay datos previos
         $.ajax({
             type: "GET",
@@ -333,16 +337,17 @@ function generarLiquidaciones() {
 }
 
 function generaLiquidaciones2() {
-    var tipoContratoId = 0;
-    if (vm.stipoContratoId()) tipoContratoId = vm.stipoContratoId();
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
     var empresaId = 0;
     if (vm.sempresaId()) empresaId = vm.sempresaId();
     var comercialId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
     var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
-    url += "/" + tipoContratoId;
+    url += "/" + departamentoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
+    url += "/" + usuario;
     $.ajax({
         type: "POST",
         url: url,
@@ -494,15 +499,15 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+function loadDepartamentos(id) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" +usuario, null, function (err, data) {
         if (err) return;
         var tipos = [{
-            tipoMantenimientoId: 0,
+            departamentoId: 0,
             nombre: ""
         }].concat(data);
-        vm.posiblesTiposContrato(tipos);
-        $("#cmbTiposContrato").val([id]).trigger('change');
+        vm.posiblesDepartamentos(tipos);
+        $("#cmbDepartamentos").val([id]).trigger('change');
     });
 }
 
