@@ -159,6 +159,8 @@ function admData() {
     self.prefacturaId = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
+    self.departamento = ko.observable();
+    self.departamentoId = ko.observable()
     self.serie = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
@@ -303,6 +305,8 @@ function loadData(data) {
     vm.importeRetencion(data.importeRetencion);
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
     //
+    obtenerDepartamentoContrato(data.contratoId);
+    //
     if (vm.generada()) {
         // ocultarCamposPrefacturasGeneradas();
         mostrarMensajeFacturaGenerada();
@@ -427,7 +431,8 @@ var generarPrefacturaDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "mantenedorDesactivado": vm.mantenedorDesactivado()
+            "mantenedorDesactivado": vm.mantenedorDesactivado(),
+            "departamentoId": vm.departamentoId()
         }
     };
     return data;
@@ -508,8 +513,20 @@ function cambioEmpresa(empresaId) {
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
     obtenerValoresPorDefectoDelContratoMantenimiento(contratoId);
+    obtenerDepartamentoContrato(contratoId);
 }
 
+function obtenerDepartamentoContrato(contratoId) {
+    if(contratoId) {
+        llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                vm.departamento(data.nombre);
+                vm.departamentoId(data.departamentoId);
+            }
+        });
+    }
+}
 
 
 /*------------------------------------------------------------------

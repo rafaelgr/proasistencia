@@ -9,6 +9,8 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
+
+var usuario;
 // License Key
 
 // Create the report viewer with default options
@@ -29,6 +31,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -142,8 +145,8 @@ function admData() {
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
     //
-    self.tipoMantenimientolId = ko.observable();
-    self.stipoMantenimientoId = ko.observable();
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
@@ -279,12 +282,12 @@ function loadColaboradores(e) {
     }
 }
 
-function loadDepartamentos(tipoMantenimientoId) {
-    llamadaAjax("GET", "/api/tipos_mantenimientos", null, function (err, data) {
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
-        var departamentos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([tipoMantenimientoId]).trigger('change');
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
     });
 }
 
@@ -304,7 +307,7 @@ function loadTiposComerciales(tipoComercialId) {
 var rptLiquidacionGeneralParametros = function () {
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
-    var tipoMantenimientoId = vm.stipoMantenimientoId();
+    var departamentoId = vm.sdepartamentoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     var sql = "SELECT";
@@ -319,7 +322,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
     sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
     sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-    sql += " LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId";
+    sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
     sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
     sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
     if(tipoComercialId != 1) {
@@ -333,8 +336,10 @@ var rptLiquidacionGeneralParametros = function () {
     if (tipoComercialId) {
         sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
     }
-    if (tipoMantenimientoId) {
-        sql += " AND cnt.tipoContratoId IN (" + tipoMantenimientoId + ")";
+    if (departamentoId && departamentoId > 0) {
+        sql += " AND cnt.tipoContratoId = " + departamentoId;
+    }else {
+        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
     }
     return sql;
 }
