@@ -167,11 +167,16 @@
                             </a>
                         </li>
                         <li id="usuarios">
-                            <!--<a href="UsuariosGeneral.html">
+                            <a href="UsuariosGeneral.html">
+                                <i class="fa fa-mortar-board"></i> Usuarios
+                            </a>
+                            <!--<a href="http://10.0.0.3:8089/#!/login" target='_blank'>
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>-->
-                            <a href="http://10.0.0.3:8089/#!/login" target='_blank'>
-                                <i class="fa fa-mortar-board"></i> Usuarios
+                        </li>
+                        <li id="departamentos">
+                            <a href="DepartamentosGeneral.html">
+                                <i class="fa fa-building"></i> Departamentos
                             </a>
                         </li>
   
@@ -550,6 +555,67 @@
                         <!-- end widget -->
                     </article>
                     <!-- WIDGET END -->
+
+                     <!-- row -->
+                     
+                    <div class="row" id="lineasdepartamento">
+                        <!-- NEW WIDGET START -->
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 25px; padding-right: 25px">
+                            <!-- Widget ID (each widget will need unique ID)-->
+                            <div class="jarviswidget" id="wid-id-1dep" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                <header>
+                                    <span class="widget-icon">
+                                        <i class="fa fa-edit"></i>
+                                    </span>
+                                    <h2>LINEAS DE DEPARTAMENTO</h2>
+                                </header>
+                                <!-- widget div-->
+                                <div>
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                        <!-- This area used as dropdown edit box -->
+                                        <input class="form-control" type="text">
+                                    </div>
+                                    <!-- end widget edit box -->
+                                    <!-- widget content -->
+                                    <div class="widget-body">
+                                        <!-- this is what the user will see -->
+                                        <form id="frmLinea">
+                                            <fieldset>
+                                                <div class="pull-right">
+                                                    <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalDepartamento" onclick="nuevoDepartamentoAsociado()" class="btn btn-success btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-plus"></i>
+                                                    </button>
+                                
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                        <hr/>
+                                        <div id="tbLineas">
+                                            <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left">
+                                                            Nombre departamento
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <!-- end widget content -->
+                                </div>
+                                <!-- end widget div -->
+                            </div>
+                            <!-- end widget -->
+                        </article>
+                        <!-- WIDGET END -->
+                    </div> 
+                    
+                    <!-- end row -->
                 </div>
                 <!-- end row -->
             </section>
@@ -558,6 +624,44 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalDepartamento" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">DEPARTAMENTO</h4>
+                    </div>
+                    <div class="modal-body no-padding">
+                        <form id="linea-form" class="smart-form">
+                            <fieldset>
+                                    <div class="row">
+                                        <div class="col col-md-12">
+                                            <label class="label">Departamento asociado</label>
+                                            <label style="width:100%;">
+                                                <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select>
+                                                <i></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                            </fieldset>
+                            <footer>
+                                <button id="btnAceptarLinea" class="btn btn-primary" onclick="aceptarDepartamento()">
+                                    Aceptar
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
@@ -636,8 +740,8 @@
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/usuarioDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/usuarioDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

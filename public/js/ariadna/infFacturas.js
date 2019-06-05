@@ -9,6 +9,7 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
+var usuario;
 // License Key
 
 // Create the report viewer with default options
@@ -30,6 +31,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -105,6 +107,9 @@ function initForm() {
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
+    //
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -146,6 +151,12 @@ function admData() {
     //
     self.posiblesClientes = ko.observableArray([]);
     self.elegidosClientes = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 };
 
 var obtainReport = function () {
@@ -273,6 +284,16 @@ function loadEmpresas(empresaId) {
     });
 }
 
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+    });
+}
+
 // initAutoCliente
 // inicializa el control del cliente como un autocomplete
 var initAutoCliente = function () {
@@ -303,6 +324,7 @@ var initAutoCliente = function () {
 var rptFacturaParametros = function (sql) {
     var facturaId = vm.facturaId();
     var clienteId = vm.sclienteId();
+    var departamentoId = vm.sdepartamentoId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -321,6 +343,11 @@ var rptFacturaParametros = function (sql) {
         }
         if (hFecha) {
             sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
+        }
+        if(departamentoId && departamentoId > 0) {
+            sql += " AND pf.departamentoId =" + departamentoId;
+        } else {
+            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
         }
 
     }

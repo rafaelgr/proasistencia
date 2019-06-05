@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataContratos;
 var contratoId;
-
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -20,6 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario()
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -43,10 +44,10 @@ function initForm() {
         if($('#chkPreaviso').is(':checked')) {
             $('#chkPreaviso').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/activos";
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario;
         checkCerrados =  this;
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos";
+            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario;
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -66,9 +67,9 @@ function initForm() {
         if($('#chkCerrados').is(':checked')) {
             $('#chkCerrados').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/activos";
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario;
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/contratos/clientes/checkbox/preaviso/todos";
+            url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario;
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -348,7 +349,7 @@ function cargarContratos() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/activos",
+                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

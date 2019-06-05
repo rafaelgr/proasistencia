@@ -15,6 +15,7 @@ var lineaEnEdicion = false;
 var dataFacturasLineas;
 var dataBases;
 var dataCobros;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,6 +26,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -152,6 +154,8 @@ function admData() {
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
     self.tipoContratoId = ko.observable();
+    self.departamento = ko.observable();
+    self.departamentoId = ko.observable()
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -304,6 +308,8 @@ function loadData(data, desdeLinea) {
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
     vm.devuelta(data.devuelta);
     //
+    obtenerDepartamentoContrato(data.contratoId);
+    //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
@@ -445,7 +451,8 @@ var generarFacturaDb = function () {
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "devuelta": vm.devuelta(),
-            "enviadaCorreo": vm.enviadaCorreo()
+            "enviadaCorreo": vm.enviadaCorreo(),
+            "departamentoId": vm.departamentoId()
         }
     };
     return data;
@@ -479,8 +486,8 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/" + vm.sempresaId() + "/" + vm.sclienteId();
-    if (contratoId) url = "/api/contratos/" + contratoId;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
@@ -526,6 +533,19 @@ function cambioEmpresa(empresaId) {
 function cambioContrato(contratoId) {
     if (!contratoId || contratoId == 0) return;
     obtenerValoresPorDefectoDelContratoMantenimiento(contratoId);
+    obtenerDepartamentoContrato(contratoId);
+}
+
+function obtenerDepartamentoContrato(contratoId) {
+    if(contratoId) {
+        llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                vm.departamento(data.nombre);
+                vm.departamentoId(data.departamentoId);
+            }
+        });
+    }
 }
 
 

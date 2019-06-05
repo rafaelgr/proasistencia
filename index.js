@@ -17,6 +17,7 @@ var moment = require('moment');
 
 // api support
 var usuarios_router = require('./lib/usuarios/usuarios_controller');
+var departamentos_router = require('./lib/departamentos/departamentos_controller');
 var version_router = require('./lib/version/version_controller');
 var empresas_router = require('./lib/empresas/empresas_controller');
 var clientes_router = require('./lib/clientes/clientes_controller');
@@ -134,6 +135,7 @@ app.use('/bi', bi_router);
 app.use('/api', router);
 app.use('/api/informes', informes_router);
 app.use('/api/usuarios', usuarios_router);
+app.use('/api/departamentos', departamentos_router);
 app.use('/api/version', version_router);
 app.use('/api/empresas', empresas_router);
 app.use('/api/clientes', clientes_router);

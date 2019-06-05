@@ -10,6 +10,7 @@ var breakpointDefinition = {
     phone: 480
 };
 var visadas;
+var usuario;
 // License Key
 
 // Create the report viewer with default options
@@ -30,6 +31,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -175,7 +177,7 @@ var rptLiquidacionGeneralParametros = function () {
     sql += "  FROM facprove AS f";
     sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
     sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
-    sql += " WHERE visada = " + visadas;
+    sql += " WHERE visada = " + visadas + " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")";
     return sql;
 }
 

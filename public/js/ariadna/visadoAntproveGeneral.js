@@ -14,6 +14,7 @@ var antproveId;
 var init = 0;
 var visadas;
 var registros;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -28,6 +29,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -57,7 +59,7 @@ function initForm() {
         if (this.checked) {
             visada = 1;
         } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/" + visada;
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario;
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -226,10 +228,10 @@ function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/" + 1;
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario;
           }
           else {
-              url =  "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/"  + 0;
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario;
           }
         $.ajax({
             type: "GET",
