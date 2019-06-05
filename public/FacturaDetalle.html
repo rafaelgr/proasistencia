@@ -595,7 +595,7 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-6">
+                                                        <section class="col col-md-6" id="contrato">
                                                             <label class="label">CONTRATO ASOCIADO</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select>
@@ -700,6 +700,7 @@
                                                 </section>
                                             </div>
                                             <!-- Calculadoras de importes -->
+                                            <span id="calculadora">
                                             <header>(Calculadora importes)</header>
                                             <div class="row">
                                                 <section class="col col-md-12">
@@ -772,6 +773,7 @@
                                                     </div>
                                                 </section>
                                             </div>
+                                            </span>
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
