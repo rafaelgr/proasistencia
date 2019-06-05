@@ -167,11 +167,16 @@
                             </a>
                         </li>
                         <li id="usuarios">
-                            <!--<a href="UsuariosGeneral.html">
+                            <a href="UsuariosGeneral.html">
+                                <i class="fa fa-mortar-board"></i> Usuarios
+                            </a>
+                            <!--<a href="http://10.0.0.3:8089/#!/login" target='_blank'>
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>-->
-                            <a href="http://10.0.0.3:8089/#!/login" target='_blank'>
-                                <i class="fa fa-mortar-board"></i> Usuarios
+                        </li>
+                        <li id="departamentos">
+                            <a href="DepartamentosGeneral.html">
+                                <i class="fa fa-building"></i> Departamentos
                             </a>
                         </li>
   
@@ -610,10 +615,16 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-12">
+                                                        <section class="col col-md-6">
                                                             <label class="label">CONTRATO ASOCIADO</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'referencia', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-6">
+                                                            <label class="label">Departamento</label>
+                                                            <label class="input">
+                                                                <input id="txtDepartamento" name="txtDepartamento" type="text" data-bind="value: departamento" disabled/>
                                                             </label>
                                                         </section>
                                                     </div>

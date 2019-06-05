@@ -15,8 +15,8 @@ var mantenedorId = 0;
 var comercialId = 0;
 var contratoId = 0;
 var empresaId = 0;
-var tipoMantenimientoId = 0;
-
+var departamentoId = 0;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -31,6 +31,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -132,9 +133,12 @@ function admData() {
     self.elegidasEmpresas = ko.observableArray([]);
     self.sEmpresaId = ko.observable();
 
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
-    self.sTipoMantenimientoId = ko.observable();
     
 }
 
@@ -301,7 +305,7 @@ function loadComerciales(id){
 }
 
 function loadContratosActivos(id){
-    llamadaAjax('GET', "/api/contratos/activos", null, function (err, data) {
+    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario, null, function (err, data) {
         if (err) return
         var contratos = [{
             contratoId: 0,
@@ -325,10 +329,10 @@ function loadEmpresas(id){
 }
 
 function loadDepartamentos(id){
-    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return
         var departamentos = [{
-            tipoMantenimientoId: 0,
+            departamentoId: 0,
             nombre: ""
         }].concat(data);
         vm.posiblesDepartamentos(departamentos);
@@ -408,11 +412,11 @@ function buscarFacturas() {
         comercialId = vm.sComercialId();
         contratoId = vm.sContratoId();
         empresaId = vm.sEmpresaId();
-        tipoMantenimientoId = vm.sTipoMantenimientoId();
+        departamentoId = vm.sdepartamentoId();
 
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId  +"/"+ contratoId +"/"+ empresaId +"/"+ tipoMantenimientoId,
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId  +"/"+ contratoId +"/"+ empresaId +"/"+ departamentoId +"/"+ usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -467,7 +471,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + tipoMantenimientoId;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + departamentoId + "/" + usuario;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();

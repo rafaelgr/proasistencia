@@ -4,6 +4,32 @@ Funciones js par la página UsuarioDetalle.html
 ---------------------------------------------------------------------------*/
 var adminId = 0;
 
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+var lineaEnEdicion = false;
+
+
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
+var dataDepartamentosLineas;
+$("#cmbDepartamentos").select2(select2Spanish());
+
+$("#linea-form").submit(function () {
+    return false;
+});
+
+$("#frmLinea").submit(function () {
+    return false;
+});
+
+
+
 var posiblesNiveles = [{
     id: 1,
     nombre: "Usuario"
@@ -31,6 +57,10 @@ function initForm() {
     });
 
     adminId = gup('UsuarioId');
+   
+
+    initTablaDepartamentosClienteLineas();
+
     if (adminId != 0) {
         var data = {
                 usuarioId: adminId
@@ -45,6 +75,7 @@ function initForm() {
             success: function(data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                loadLineasDepartamentoUsuario(data.usuarioId);
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -54,6 +85,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.usuarioId(0);
+        $('#lineasdepartamento').hide()
     }
 }
 
@@ -66,6 +98,16 @@ function admData() {
     self.email = ko.observable();
     self.posiblesNiveles = ko.observable(posiblesNiveles);
     self.nivel = ko.observable();
+
+    self.usuarioDepartamentoId = ko.observable();
+    //comnbo de los departamentos asociados
+    self.departamentoId = ko.observable();
+    //
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+
 }
 
 function loadData(data) {
@@ -205,4 +247,221 @@ function salir() {
         window.open(url, '_self');
     }
     return mf;
+}
+
+//FUNCIONES RELACIONADAS CON LOS DEPARTAMENTOS ASOCIADOS
+
+function initTablaDepartamentosClienteLineas() {
+    tablaCarro = $('#dt_lineas').DataTable({
+        autoWidth: true,
+        "columnDefs": [
+            { "width": "60%", "targets": 0 }
+          ],
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataDepartamentosLineas,
+        columns: [ {
+            data: "nombreDepartamento",
+            className: "text-left"
+        },  {
+            data: "usuarioDepartamentoId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDepartamentoAsociado(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalDepartamento' onclick='editDepartamentoUsuario(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+
+
+function loadTablatarifaClienteLineas(data) {
+    var dt = $('#dt_lineas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+        $('#btnCopiar').hide();
+    }
+    dt.fnClearTable();
+    if (data != null){
+        dt.fnAddData(data);
+        $('#btnCopiar').show();
+    }
+    dt.fnDraw();
+}
+
+
+function  loadLineasDepartamentoUsuario(id) {
+    llamadaAjax("GET", "/api/usuarios/departamentos/" + id, null, function (err, data) {
+        if (err) return;
+        loadTablatarifaClienteLineas(data);
+    });
+}
+
+function loadDepartamentos(id) {
+    llamadaAjax("GET", "/api/departamentos", null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if (id) {
+            $("#cmbDepartamentos").val([id]).trigger('change');
+        } else {
+            $("#cmbDepartamentos").val([0]).trigger('change');
+        }
+    });
+}
+
+
+function loadCapitulos(id){
+    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+        if (err) return;
+        var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
+        vm.posiblesCapitulos(capitulos);
+        if (id) {
+            $("#cmbCapitulos").val([id]).trigger('change');
+        } else {
+            $("#cmbCapitulos").val([0]).trigger('change');
+        }
+    });
+}
+
+function cambioArticulo(articuloId) {
+    if (!articuloId) return;
+    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+        vm.precioUnitario(data.precioUnitario);
+    });
+}
+
+
+function editDepartamentoUsuario(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/usuarios/departamento/buscar/" + id, null, function (err, data) {
+        if (err) return;
+        if (data) {
+            loadDepartamentos(data.departamentoId);
+            vm.usuarioDepartamentoId(id);
+            vm.departamentoId(data.departamentoId);
+
+        } 
+
+    });
+}
+
+function nuevoDepartamentoAsociado() {
+    limpiaDataLinea();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLinea() {
+    vm.usuarioDepartamentoId(0);
+    vm.departamentoId(0);
+    
+    loadDepartamentos();
+}
+
+
+
+function aceptarDepartamento() {
+    if(!datosOKNuevoDepartamentoAsociado()) {
+        return;
+    }
+  
+    var data = {
+        departamento: {
+            usuarioDepartamentoId: vm.usuarioDepartamentoId(),
+            departamentoId: vm.sdepartamentoId(),
+            usuarioId: vm.usuarioId()
+        }
+    }
+    //compruebaArticuloRepetido en misma tarifaCliente
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/usuarios/departamento";
+                if (lineaEnEdicion) {
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/usuarios/departamento/" + vm.usuarioDepartamentoId();
+                }
+                llamadaAjax(verbo, url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalDepartamento').modal('hide');
+                    loadLineasDepartamentoUsuario(vm.usuarioId());
+                });
+}
+
+
+function deleteDepartamentoAsociado(usuarioDepartamentoId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+        var data = {
+            departamento: {
+                usuarioDepartamentoId: usuarioDepartamentoId
+            }
+        };
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/usuarios/departamento/" + usuarioDepartamentoId, data, function (err, data) {
+            if (err) return;
+            loadLineasDepartamentoUsuario(vm.usuarioId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKNuevoDepartamentoAsociado() {
+    $('#linea-form').validate({
+        rules: {
+            
+            cmbDepartamentos: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+           
+            cmbDepartamentos: {
+                required: 'Debe elegir un departamento'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#linea-form').valid();
 }

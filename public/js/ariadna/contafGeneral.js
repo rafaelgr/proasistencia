@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -24,6 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -55,6 +57,10 @@ function initForm() {
     initTablaFacturas();
     // comprobamos parámetros
     facturaId = gup('FacturaId');
+
+    // select2 things
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
 }
 
 // tratamiento knockout
@@ -63,6 +69,12 @@ function admData() {
     var self = this;
     self.desdeFecha = ko.observable();
     self.hastaFecha = ko.observable();
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function initTablaFacturas() {
@@ -229,7 +241,7 @@ function buscarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -260,7 +272,7 @@ function contabilizarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -396,6 +408,16 @@ function informePDF(data) {
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+    });
+}
+    
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");

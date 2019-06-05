@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var registros = 0;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,6 +26,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -291,7 +293,7 @@ function loadComerciales(id) {
 function loadContratos(id) {
     $.ajax({
         type: "GET",
-        url: "/api/contratos/contratos/beneficio/comercial/cerrados",
+        url: "/api/contratos/contratos/beneficio/comercial/cerrados/usuario/departamento/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

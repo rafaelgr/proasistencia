@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataAnticipos;
 var antproveId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -19,6 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -330,7 +332,7 @@ function cargarAnticipos() {
             $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores",
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -404,7 +406,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarAnticipos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -420,7 +422,7 @@ function cargarAnticipos2() {
 function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/all",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

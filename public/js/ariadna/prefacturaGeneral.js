@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataPrefacturas;
 var prefacturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -19,6 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -304,7 +306,7 @@ function cargarPrefacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas",
+                url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -378,7 +380,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarPrefacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas",
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -394,7 +396,7 @@ function cargarPrefacturas2() {
 function cargarPrefacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/all",
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
