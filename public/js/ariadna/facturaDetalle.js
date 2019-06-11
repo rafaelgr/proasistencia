@@ -125,6 +125,10 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
             if (err) return;
+            if(data.noCalculadora) {
+                $('#calculadora').hide();
+                $('#contrato').hide();obtenerDepartamentoContrato
+            }
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
@@ -300,7 +304,12 @@ function loadData(data, desdeLinea) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
-    loadContratos(data.contratoId);
+    if(!data.noCalculadora) {
+        loadContratos(data.contratoId);
+        obtenerDepartamentoContrato(data.contratoId);
+    } else {
+        obtenerDepartamentoContrato(null);
+    }
     vm.observaciones(data.observaciones);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
@@ -308,7 +317,7 @@ function loadData(data, desdeLinea) {
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
     vm.devuelta(data.devuelta);
     //
-    obtenerDepartamentoContrato(data.contratoId);
+    
     //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
@@ -324,7 +333,11 @@ function loadData(data, desdeLinea) {
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
     if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        obtenerParametrosCombo();
+        if(!data.noCalculadora) {
+            obtenerParametrosCombo(false);
+        }else {
+            obtenerParametrosCombo(true);
+        }
     }
 }
 
@@ -545,6 +558,9 @@ function obtenerDepartamentoContrato(contratoId) {
                 vm.departamentoId(data.departamentoId);
             }
         });
+    } else {
+        vm.departamento('REPARACIONES');
+        vm.departamentoId(7);
     }
 }
 
@@ -592,52 +608,75 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         if (!vm.coste()) vm.coste(0);
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
-        obtenerParametrosCombo()
+        obtenerParametrosCombo(false)
         recalcularCostesImportesDesdeCoste();
     });
 }
 
-var obtenerParametrosCombo = function () {
+var obtenerParametrosCombo = function (noCalculadora) {
     var comboSeries = [];
     var obj = {}
-    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
-        if(err) return;
-        if(data) {
-            vm.tipoContratoId(data.tipoContratoId);
-            llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
-                if(err) return;
-                if(data) {//componemos el objeto con las series para cargar el combo
-                    obj = {
-                        nombre: data.seriePre + " // Prefactura",
-                        serieId: data.seriePre
-                    }
-                    comboSeries.push(obj);
-                    if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
+    if(!noCalculadora) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
+            if(err) return;
+            if(data) {
+                vm.tipoContratoId(data.tipoContratoId);
+                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
+                    if(err) return;
+                    if(data) {//componemos el objeto con las series para cargar el combo
                         obj = {
-                            nombre: data.serieFacS + " // Contrato asociado",
-                            serieId: data.serieFacS
+                            nombre: data.seriePre + " // Prefactura",
+                            serieId: data.seriePre
                         }
-                    } else {
+                        comboSeries.push(obj);
+                        if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
+                            obj = {
+                                nombre: data.serieFacS + " // Contrato asociado",
+                                serieId: data.serieFacS
+                            }
+                        } else {
+                            obj = {
+                                nombre: data.serieFac+ " // Contrato asociado",
+                                serieId: data.serieFac
+                            }
+                        }
+                        comboSeries.push(obj);
+    
                         obj = {
-                            nombre: data.serieFac+ " // Contrato asociado",
-                            serieId: data.serieFac
+                            nombre: data.serieFacR + " // Rectificativa",
+                            serieId: data.serieFacR
                         }
+                        
+                        comboSeries.push(obj);
+        
+                        cargarSeries(comboSeries)
                     }
-                    comboSeries.push(obj);
-
+                });
+            }
+        });
+    } else {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
+            if(err) return;
+            if(data) {//componemos el objeto con las series para cargar el combo
+                
+               
                     obj = {
-                        nombre: data.serieFacR + " // Rectificativa",
-                        serieId: data.serieFacR
+                        nombre: data.serieFacRep + " // Serie Reparaciones",
+                        serieId: data.serieFacRep
                     }
-                    
                     comboSeries.push(obj);
     
-                    cargarSeries(comboSeries)
+                obj = {
+                    nombre: data.serieFacR + " // Serie Rectificativa",
+                    serieId: data.serieFacR
                 }
-            });
-        }
-    });
+                
+                comboSeries.push(obj);
 
+                cargarSeries(comboSeries)
+            }
+        });
+    }
 }
 
 
