@@ -20,12 +20,12 @@ function initCmbDepartamentos() {
     var usu = recuperarUsuario();
 
     //Evento asociado al cambio de departamento
-    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(e.added);
     });
 
-    $('#cmbDepartamentosTrabajo').select2();
+  
     loadDepartamentos(usu.departamentoTrabajo);
 }
 
