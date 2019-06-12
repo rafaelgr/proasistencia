@@ -7,6 +7,81 @@
 
 eventSalir = true;//booleana que controla el mansaje de cierre de ventana
 
+var vm2 = null;
+var usuario;
+
+
+
+function initCmbDepartamentos() {
+    vm2 = new admDataDep();
+    ko.applyBindings(vm2);
+    usuario = recuperarIdUsuario();
+
+    var usu = recuperarUsuario();
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(e.added);
+    });
+
+    $('#cmbDepartamentosTrabajo').select2();
+    loadDepartamentos(usu.departamentoTrabajo);
+}
+
+function admDataDep() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoTrabajoId = ko.observable();
+    //
+    self.posiblesDepartamentosTrabajo = ko.observableArray([]);
+    self.elegidosDepartamentosTrabajo = ko.observableArray([]);
+    
+}
+
+function loadDepartamentos(id){
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return
+        var departamentos = [{
+            departamentoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm2.posiblesDepartamentosTrabajo(departamentos);
+        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
+    });
+}
+
+function cambioDepartamento(departamento) {
+    if(departamento) {
+        departamentoTrabajo = departamento.id;
+        guardaDepartamentoTrabajo(departamentoTrabajo);
+    }
+}
+
+function guardaDepartamentoTrabajo(departamentoTrabajo) {
+    var data = {
+        usuario: {
+            departamentoTrabajo: departamentoTrabajo
+        }
+    }
+    $.ajax({
+        type: "PUT",
+        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario,
+        dataType: "json",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (data, status) {
+            return;
+        },
+        error: function (xhr, textStatus, errorThrwon) {
+            var m = xhr.responseText;
+            if (!m) m = "Error general posiblemente falla la conexión";
+            mostrarMensaje(m);
+        }
+    });
+}
+
 function comprobarLogin() {
     // buscar el cookie
     try {
@@ -34,6 +109,17 @@ function recuperarIdUsuario(){
         window.open('login.html', '_self');
     }
     return user.usuarioId;
+}
+
+function recuperarUsuario(){
+    // buscar el cookie
+    try {
+        var user = JSON.parse(getCookie("usuario"));
+    } catch (e) {
+        // volver al login
+        window.open('login.html', '_self');
+    }
+    return user;
 }
 
 function nivelesUsuario(nivel) {

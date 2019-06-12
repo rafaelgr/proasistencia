@@ -392,11 +392,20 @@
         <!-- RIBBON -->
         <div id="ribbon">
             <!-- breadcrumb -->
-            <ol class="breadcrumb">
-                <li>Inicio</li>
-                <li>Administración</li>
-                <li>Unidades</li>
-            </ol>
+            <div class="row">
+                    <section class="col col-md-10">
+                            <ol  class="breadcrumb">
+                                    <li>Inicio</li>
+                            </ol>
+                    </section>
+                        <section class="col col-md-2">
+                                <label class="label">Departamento de trabajo</label>
+                                <label style="width:100%; height:50px;">
+                                    <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
+                                        data-bind="options: posiblesDepartamentosTrabajo, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoTrabajoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentosTrabajo, selected2:{}"></select><i></i>
+                                </label>
+                            </section>      
+                </div>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
                 ribbon for further usability
@@ -574,6 +583,8 @@
     }
     </script>
     <!-- IMPORTANT: APP CONFIG -->
+     <!--- KNOCKOUT JS -->
+     <script src="js/knockout-3.1.0.js"></script>
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
@@ -632,6 +643,7 @@
     (function($) {
         $(document).ready(function() {
             initForm();
+            initCmbDepartamentos();
         });
     })(jQuery);
     </script>

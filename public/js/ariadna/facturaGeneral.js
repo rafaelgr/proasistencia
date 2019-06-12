@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var usuario;
+var departamentoTrabajo;
 
 var breakpointDefinition = {
     tablet: 1024,
