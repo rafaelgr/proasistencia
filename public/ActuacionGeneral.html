@@ -99,35 +99,47 @@
         </div>
         <!-- end projects dropdown -->
         <!-- #TOGGLE LAYOUT BUTTONS -->
-        <!-- pulled right: nav area -->
+         <!-- pulled right: nav area -->
         <div class="pull-right">
-            <!-- collapse menu button -->
-            <div id="hide-menu" class="btn-header pull-right">
-                <span>
-                        <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
-                            <i class="fa fa-reorder"></i>
-                        </a>
-                    </span>
+            <div class="row">
+                    
+                    <!-- collapse menu button -->
+                    <div id="hide-menu" class="btn-header pull-right" class="col col-md-3">
+                        <span>
+                            <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
+                                <i class="fa fa-reorder"></i>
+                            </a>
+                        </span>
+                    </div> 
+                    <!-- end collapse menu -->
+                    <!-- logout button -->
+                    <div id="logout" class="btn-header transparent pull-right" class="col col-md-3">
+                        <span>
+                            <a href="login.html" title="Salir">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- end logout button -->
+                    <!-- fullscreen button -->
+                    <div id="fullscreen" class="btn-header transparent pull-right">
+                        <span>
+                            <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
+                                <i class="fa fa-arrows-alt"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- end fullscreen button -->
+                    <div class="col col-xs-4 col-sm-4 col-md-5 pull-right" style="padding-bottom: 5%">
+                            <span>
+                                    <label class="label">Departamento de trabajo</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
+                                            data-bind="options: posiblesDepartamentosTrabajo, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoTrabajoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentosTrabajo, selected2:{}"></select><i></i>
+                                    </label>
+                            </span>
+                    </div>    
             </div>
-            <!-- end collapse menu -->
-            <!-- logout button -->
-            <div id="logout" class="btn-header transparent pull-right">
-                <span>
-                        <a href="login.html" title="Salir">
-                            <i class="fa fa-sign-out"></i>
-                        </a>
-                    </span>
-            </div>
-            <!-- end logout button -->
-            <!-- fullscreen button -->
-            <div id="fullscreen" class="btn-header transparent pull-right">
-                <span>
-                        <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
-                            <i class="fa fa-arrows-alt"></i>
-                        </a>
-                    </span>
-            </div>
-            <!-- end fullscreen button -->
         </div>
         <!-- end pulled right: nav area -->
     </header>
@@ -595,6 +607,10 @@
     }
     </script>
     <!-- IMPORTANT: APP CONFIG -->
+     <!--- KNOCKOUT JS -->
+     <script src="js/knockout-3.1.0.js"></script>
+                
+                
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
