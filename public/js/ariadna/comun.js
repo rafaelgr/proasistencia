@@ -8,36 +8,27 @@
 eventSalir = true;//booleana que controla el mansaje de cierre de ventana
 
 var vm2 = null;
-var usuario;
 
 
 
-function initCmbDepartamentos() {
-    vm2 = new admDataDep();
-    ko.applyBindings(vm2);
-    usuario = recuperarIdUsuario();
-
-    var usu = recuperarUsuario();
-
-    //Evento asociado al cambio de departamento
-    $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        cambioDepartamento(e.added);
+function recuperaDepartamento() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/usuarios/" + usuario,
+        dataType: "json",
+        data: null,
+        contentType: "application/json",
+        success: function (data, status) {
+            departamentoTrabajo = data.departamentoTrabajo;
+            loadDepartamentos(departamentoTrabajo);
+            return;
+        },
+        error: function (xhr, textStatus, errorThrwon) {
+            var m = xhr.responseText;
+            if (!m) m = "Error general posiblemente falla la conexión";
+            mostrarMensaje(m);
+        }
     });
-
-  
-    loadDepartamentos(usu.departamentoTrabajo);
-}
-
-function admDataDep() {
-    var self = this;
-    
-    self.departamentoId = ko.observable();
-    self.sdepartamentoTrabajoId = ko.observable();
-    //
-    self.posiblesDepartamentosTrabajo = ko.observableArray([]);
-    self.elegidosDepartamentosTrabajo = ko.observableArray([]);
-    
 }
 
 function loadDepartamentos(id){
@@ -47,14 +38,15 @@ function loadDepartamentos(id){
             departamentoId: 0,
             nombre: ""
         }].concat(data);
-        vm2.posiblesDepartamentosTrabajo(departamentos);
+        vm.posiblesDepartamentosTrabajo(departamentos);
+        vm.sdepartamentoTrabajoId(id);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
 }
 
 function cambioDepartamento(departamento) {
     if(departamento) {
-        departamentoTrabajo = departamento.id;
+        departamentoTrabajo = departamento;
         guardaDepartamentoTrabajo(departamentoTrabajo);
     }
 }

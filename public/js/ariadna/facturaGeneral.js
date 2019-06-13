@@ -21,11 +21,25 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+
+    vm = new admData();
+    ko.applyBindings(vm);
     usuario = recuperarIdUsuario();
+    recuperaDepartamento();
+
+     //Evento asociado al cambio de departamento
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        //vm.sdepartamentoTrabajoId(this.value);
+        cargarFacturas()();
+    });
+
 
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
@@ -63,6 +77,22 @@ function initForm() {
         }
     })
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoTrabajoId = ko.observable();
+    //
+    self.posiblesDepartamentosTrabajo = ko.observableArray([]);
+    self.elegidosDepartamentosTrabajo = ko.observableArray([]);
+    
+} 
+
+
+
+
+
 
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
@@ -342,7 +372,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoTrabajoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -418,7 +448,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarFacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoTrabajoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -434,7 +464,7 @@ function cargarFacturas2() {
 function cargarFacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario,
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoTrabajoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
