@@ -19,8 +19,8 @@ function recuperaDepartamento() {
         data: null,
         contentType: "application/json",
         success: function (data, status) {
-            departamentoTrabajo = data.departamentoTrabajo;
-            loadDepartamentos(departamentoTrabajo);
+            departamento = data.departamentoTrabajo;
+            loadDepartamentos(departamento);
             return;
         },
         error: function (xhr, textStatus, errorThrwon) {
@@ -38,23 +38,23 @@ function loadDepartamentos(id){
             departamentoId: 0,
             nombre: ""
         }].concat(data);
-        vm.posiblesDepartamentosTrabajo(departamentos);
-        vm.sdepartamentoTrabajoId(id);
+        vm.posiblesDepartamentos(departamentos);
+        vm.sdepartamentoId(id);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
 }
 
 function cambioDepartamento(departamento) {
     if(departamento) {
-        departamentoTrabajo = departamento;
-        guardaDepartamentoTrabajo(departamentoTrabajo);
+        departamento = departamento;
+        guardaDepartamento(departamento);
     }
 }
 
-function guardaDepartamentoTrabajo(departamentoTrabajo) {
+function guardaDepartamento(departamento) {
     var data = {
         usuario: {
-            departamentoTrabajo: departamentoTrabajo
+            departamentoTrabajo: departamento
         }
     }
     $.ajax({

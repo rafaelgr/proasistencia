@@ -11,7 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var usuario;
-var departamentoTrabajo;
+var departamento;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -31,7 +31,7 @@ function initForm() {
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
-        //vm.sdepartamentoTrabajoId(this.value);
+        //vm.sdepartamentoId(this.value);
         cargarFacturas()();
     });
 
@@ -82,10 +82,10 @@ function admData() {
     var self = this;
     
     self.departamentoId = ko.observable();
-    self.sdepartamentoTrabajoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
     //
-    self.posiblesDepartamentosTrabajo = ko.observableArray([]);
-    self.elegidosDepartamentosTrabajo = ko.observableArray([]);
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
     
 } 
 
@@ -372,7 +372,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoTrabajoId(),
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -448,7 +448,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarFacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoTrabajoId(),
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -464,7 +464,7 @@ function cargarFacturas2() {
 function cargarFacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoTrabajoId(),
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
