@@ -35,8 +35,6 @@ function initForm() {
     getVersionFooter();
     //
     
-    
-    ko.applyBindings(vm);
 
     visadas = gup('visadas');
 
@@ -59,7 +57,7 @@ function initForm() {
         if (this.checked) {
             visada = 1;
         } 
-        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario;
+        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario+ "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -67,12 +65,36 @@ function initForm() {
         });
     });
 
-    initTablaFacturas();
-    buscarFacturas()();
-    // comprobamos parámetros
-    facproveId = gup('FacturaId');
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        buscarFacturas()();
+    });
+
+    vm = new admData();
+    ko.applyBindings(vm);
+
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaFacturas();
+        buscarFacturas()();
+        // comprobamos parámetros
+        facproveId = gup('FacturaId');
+    });
 }
 
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
@@ -230,10 +252,10 @@ function buscarFacturas() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario;
+            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario + "/" + vm.sdepartamentoId();
           }
           else {
-              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario;
+              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario + "/" + vm.sdepartamentoId();
           }
         $.ajax({
             type: "GET",
@@ -425,7 +447,7 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    window.open(url, 'new');
 }
 
 
@@ -508,7 +530,7 @@ var printGeneral = function () {
         if($("#chkVisadas").prop( "checked" )) {
           vis = 1
         }
-         var url = "InfVisadosGeneral.html?visadas=" + vis;
+         var url = "InfVisadosGeneral.html?visadas=" + vis + '&departamentoId='+vm.sdepartamentoId();
          window.open(url, '_new');
     }
 }

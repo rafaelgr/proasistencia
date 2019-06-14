@@ -11,29 +11,33 @@ var vm2 = null;
 
 
 
-function recuperaDepartamento() {
+function recuperaDepartamento(retorno) {
     $.ajax({
         type: "GET",
         url: myconfig.apiUrl + "/api/usuarios/" + usuario,
         dataType: "json",
         data: null,
         contentType: "application/json",
-        success: function (data, status) {
+        success: function (data, status, request) {
             departamento = data.departamentoTrabajo;
-            loadDepartamentos(departamento);
-            return;
+            loadDepartamentos(departamento, function(err, data) {
+                if(err) return;
+                retorno(null, data, status, request);
+            });
         },
         error: function (xhr, textStatus, errorThrwon) {
             var m = xhr.responseText;
             if (!m) m = "Error general posiblemente falla la conexión";
             mostrarMensaje(m);
+            retorno(err);
         }
     });
 }
 
-function loadDepartamentos(id){
+
+function loadDepartamentos(id, done){
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
-        if (err) return
+        if (err) return done(err);
         var departamentos = [{
             departamentoId: 0,
             nombre: ""
@@ -41,6 +45,7 @@ function loadDepartamentos(id){
         vm.posiblesDepartamentos(departamentos);
         vm.sdepartamentoId(id);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
+        return done(null, data)
     });
 }
 

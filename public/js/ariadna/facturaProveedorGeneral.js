@@ -32,28 +32,56 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        cargarFacturas()();
+    });
+
+    vm = new admData();
+    ko.applyBindings(vm);
+
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaFacturas();
+        // comprobamos parámetros
+        facproveId = gup('facproveId');
+        if (facproveId !== '') {
+    
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarFacturas()(facproveId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las facturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarFacturas()();
+        }
+    });
+
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarFacturas();
     //});
     //
-    initTablaFacturas();
-    // comprobamos parámetros
-    facproveId = gup('facproveId');
-    if (facproveId !== '') {
-
-        // Si nos pasan una prefafctura determinada esa es
-        // la que mostramos en el grid
-        cargarFacturas()(facproveId);
-
-    } else {
-
-        // Por defecto ahora a la entrada se van a cargar todas 
-        // las facturas que tengamos en el sistema. En un futuro este
-        // criterio puede cambiar y habrá que adaptarlo.
-        cargarFacturas()();
-    }
+   
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
@@ -323,7 +351,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" + usuario,
+                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" + usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

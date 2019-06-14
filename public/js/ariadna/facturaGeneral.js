@@ -11,7 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var usuario;
-var departamento;
+
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,13 +25,32 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarIdUsuario();
-    recuperaDepartamento();
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaFacturas();
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+        if (facturaId !== '') {
+
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarFacturas()(facturaId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las facturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarFacturas()();
+        }
+
+    });
 
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
-        //vm.sdepartamentoId(this.value);
+        vm.sdepartamentoId(this.value);
         cargarFacturas()();
     });
 
@@ -52,22 +71,7 @@ function initForm() {
     //        buscarFacturas();
     //});
     //
-    initTablaFacturas();
-    // comprobamos parámetros
-    facturaId = gup('FacturaId');
-    if (facturaId !== '') {
-
-        // Si nos pasan una prefafctura determinada esa es
-        // la que mostramos en el grid
-        cargarFacturas()(facturaId);
-
-    } else {
-
-        // Por defecto ahora a la entrada se van a cargar todas 
-        // las facturas que tengamos en el sistema. En un futuro este
-        // criterio puede cambiar y habrá que adaptarlo.
-        cargarFacturas()();
-    }
+    
 
     $('#chkTodos').change(function () {
         if (this.checked) {

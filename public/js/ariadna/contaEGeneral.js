@@ -54,6 +54,11 @@ function initForm() {
     $('#cmbDepartamentos').select2();
     loadDepartamentos();
     
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentos").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        loadContratosActivos(e.added.id);
+    });
    
     //
     $.validator.addMethod("greaterThan",
@@ -305,7 +310,13 @@ function loadComerciales(id){
 }
 
 function loadContratosActivos(id){
-    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario, null, function (err, data) {
+    var dep;
+    if(id) {
+        dep = id;
+    } else {
+        dep = 0
+    }
+    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario +"/"+ dep, null, function (err, data) {
         if (err) return
         var contratos = [{
             contratoId: 0,
