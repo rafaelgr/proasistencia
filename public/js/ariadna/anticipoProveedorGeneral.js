@@ -41,23 +41,48 @@ function initForm() {
         }
     });
 
-    initTablaAnticipos();
-    // comprobamos parámetros
-    antproveId = gup('antproveId');
-    if (antproveId !== '') {
-
-        // Si nos pasan una prefafctura determinada esa es
-        // la que mostramos en el grid
-        cargarAnticipos()(antproveId);
-
-    } else {
-
-        // Por defecto ahora a la entrada se van a cargar todas 
-        // las antturas que tengamos en el sistema. En un futuro este
-        // criterio puede cambiar y habrá que adaptarlo.
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
         cargarAnticipos()();
-    }
+    });
+
+    vm = new admData();
+    ko.applyBindings(vm);
+
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaAnticipos();
+        // comprobamos parámetros
+        antproveId = gup('antproveId');
+        if (antproveId !== '') {
+    
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarAnticipos()(antproveId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las antturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarAnticipos()();
+        }
+    });
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
 function initTablaAnticipos() {
     tablaAnticipos = $('#dt_anticipo').DataTable({
@@ -332,7 +357,7 @@ function cargarAnticipos() {
             $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -406,7 +431,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarAnticipos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario,
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -422,7 +447,7 @@ function cargarAnticipos2() {
 function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario,
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

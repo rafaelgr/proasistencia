@@ -36,8 +36,7 @@ function initForm() {
     //
     
     
-    ko.applyBindings(vm);
-
+  
     visadas = gup('visadas');
 
     if(visadas == 1) {
@@ -59,7 +58,7 @@ function initForm() {
         if (this.checked) {
             visada = 1;
         } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario;
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario + "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -67,11 +66,45 @@ function initForm() {
         });
     });
 
-    initTablaAnticipos();
-    buscarAnticipos()();
-    // comprobamos parámetros
-    antproveId = gup('AnticipoId');
+    //Evento asociadpo al checkbox
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarAnticipos2All();
+        } else {
+            cargarAnticipos2();
+        }
+    });
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        buscarAnticipos()();
+    });
+
+    vm = new admData();
+    ko.applyBindings(vm);
+
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaAnticipos();
+        buscarAnticipos()();
+        // comprobamos parámetros
+        antproveId = gup('AnticipoId');
+    });
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
 
 function initTablaAnticipos() {
@@ -228,10 +261,10 @@ function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario;
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario + "/" + vm.sdepartamentoId();
           }
           else {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario;
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario + "/" + vm.sdepartamentoId();
           }
         $.ajax({
             type: "GET",
@@ -423,7 +456,7 @@ function editAnticipo(id) {
     // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
     var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
-    window.open(url, '_new');
+    window.open(url, 'new');
 }
 
 

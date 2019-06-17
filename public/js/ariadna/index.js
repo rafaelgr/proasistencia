@@ -8,6 +8,9 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataRondasRealizadas;
 var rondaRealizadaId;
 
+
+var departamentoTrabajo;
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -16,6 +19,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+   
     // de smart admin
     pageSetUp();
     getVersionFooter();

@@ -624,11 +624,6 @@ var obtenerParametrosCombo = function (noCalculadora) {
                 llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
                     if(err) return;
                     if(data) {//componemos el objeto con las series para cargar el combo
-                        obj = {
-                            nombre: data.seriePre + " // Prefactura",
-                            serieId: data.seriePre
-                        }
-                        comboSeries.push(obj);
                         if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
                             obj = {
                                 nombre: data.serieFacS + " // Contrato asociado",
