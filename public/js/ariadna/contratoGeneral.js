@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataContratos;
 var contratoId;
 var usuario;
+var departamento;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -20,7 +21,32 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario()
+
+    vm = new admData();
+    ko.applyBindings(vm);
+    usuario = recuperarIdUsuario();
+    
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaContratos();
+
+        contratoId = gup('ContratoId');
+        if (contratoId !== '') {
+            cargarContratos()(contratoId);
+
+        } else {
+            cargarContratos()();
+        }
+    });
+
+     //Evento asociado al cambio de departamento
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        cargarContratos()();
+    });
+
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -30,24 +56,15 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    initTablaContratos();
-
-    contratoId = gup('ContratoId');
-    if (contratoId !== '') {
-        cargarContratos()(contratoId);
-
-    } else {
-        cargarContratos()();
-    }
-
+    
     $('#chkCerrados').change(function () {
         if($('#chkPreaviso').is(':checked')) {
             $('#chkPreaviso').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario;
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
         checkCerrados =  this;
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario;
+            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId();
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -67,9 +84,9 @@ function initForm() {
         if($('#chkCerrados').is(':checked')) {
             $('#chkCerrados').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario;
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario;
+            url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario + "/" + vm.sdepartamentoId();
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -84,6 +101,18 @@ function initForm() {
         });
     })
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
+
 
 function initTablaContratos() {
     tablaContratos = $('#dt_contrato').DataTable({
@@ -349,7 +378,7 @@ function cargarContratos() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario,
+                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

@@ -12,6 +12,7 @@ var dataFacturas;
 var facturaId;
 var usuario;
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -20,11 +21,44 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+
+    vm = new admData();
+    ko.applyBindings(vm);
     usuario = recuperarIdUsuario();
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaFacturas();
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+        if (facturaId !== '') {
+
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarFacturas()(facturaId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las facturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarFacturas()();
+        }
+
+    });
+
+     //Evento asociado al cambio de departamento
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        cargarFacturas()();
+    });
+
 
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
@@ -37,22 +71,7 @@ function initForm() {
     //        buscarFacturas();
     //});
     //
-    initTablaFacturas();
-    // comprobamos parámetros
-    facturaId = gup('FacturaId');
-    if (facturaId !== '') {
-
-        // Si nos pasan una prefafctura determinada esa es
-        // la que mostramos en el grid
-        cargarFacturas()(facturaId);
-
-    } else {
-
-        // Por defecto ahora a la entrada se van a cargar todas 
-        // las facturas que tengamos en el sistema. En un futuro este
-        // criterio puede cambiar y habrá que adaptarlo.
-        cargarFacturas()();
-    }
+    
 
     $('#chkTodos').change(function () {
         if (this.checked) {
@@ -62,6 +81,22 @@ function initForm() {
         }
     })
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
+
+
+
+
+
 
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
@@ -341,7 +376,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -417,7 +452,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarFacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario,
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -433,7 +468,7 @@ function cargarFacturas2() {
 function cargarFacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario,
+        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

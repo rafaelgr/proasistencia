@@ -7,6 +7,78 @@
 
 eventSalir = true;//booleana que controla el mansaje de cierre de ventana
 
+var vm2 = null;
+
+
+
+function recuperaDepartamento(retorno) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/usuarios/" + usuario,
+        dataType: "json",
+        data: null,
+        contentType: "application/json",
+        success: function (data, status, request) {
+            departamento = data.departamentoTrabajo;
+            loadDepartamentos(departamento, function(err, data) {
+                if(err) return;
+                retorno(null, data, status, request);
+            });
+        },
+        error: function (xhr, textStatus, errorThrwon) {
+            var m = xhr.responseText;
+            if (!m) m = "Error general posiblemente falla la conexión";
+            mostrarMensaje(m);
+            retorno(err);
+        }
+    });
+}
+
+
+function loadDepartamentos(id, done){
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return done(err);
+        var departamentos = [{
+            departamentoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        vm.sdepartamentoId(id);
+        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
+        return done(null, data)
+    });
+}
+
+function cambioDepartamento(departamento) {
+    if(departamento) {
+        departamento = departamento;
+        guardaDepartamento(departamento);
+    }
+}
+
+function guardaDepartamento(departamento) {
+    var data = {
+        usuario: {
+            departamentoTrabajo: departamento
+        }
+    }
+    $.ajax({
+        type: "PUT",
+        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario,
+        dataType: "json",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (data, status) {
+            return;
+        },
+        error: function (xhr, textStatus, errorThrwon) {
+            var m = xhr.responseText;
+            if (!m) m = "Error general posiblemente falla la conexión";
+            mostrarMensaje(m);
+        }
+    });
+}
+
 function comprobarLogin() {
     // buscar el cookie
     try {
@@ -34,6 +106,17 @@ function recuperarIdUsuario(){
         window.open('login.html', '_self');
     }
     return user.usuarioId;
+}
+
+function recuperarUsuario(){
+    // buscar el cookie
+    try {
+        var user = JSON.parse(getCookie("usuario"));
+    } catch (e) {
+        // volver al login
+        window.open('login.html', '_self');
+    }
+    return user;
 }
 
 function nivelesUsuario(nivel) {
