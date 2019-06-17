@@ -31,28 +31,44 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        cargarPrefacturas()();
+    });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarPrefacturas();
     //});
     //
-    initTablaPrefacturas();
-    // comprobamos parámetros
-    prefacturaId = gup('PrefacturaId');
-    if (prefacturaId !== '') {
+    vm = new admData();
+    ko.applyBindings(vm);
 
-        // Si nos pasan una prefafctura determinada esa es
-        // la que mostramos en el grid
-        cargarPrefacturas()(prefacturaId);
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaPrefacturas();
+        // comprobamos parámetros
+        prefacturaId = gup('PrefacturaId');
+        if (prefacturaId !== '') {
+    
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarPrefacturas()(prefacturaId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las facturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarPrefacturas()();
+        }
+    
+    });
 
-    } else {
-
-        // Por defecto ahora a la entrada se van a cargar todas 
-        // las facturas que tengamos en el sistema. En un futuro este
-        // criterio puede cambiar y habrá que adaptarlo.
-        cargarPrefacturas()();
-    }
-
+   
     $('#chkTodos').change(function () {
         if (this.checked) {
             cargarPrefacturas2All();
@@ -61,6 +77,18 @@ function initForm() {
         }
     })
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
+
 
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
@@ -306,7 +334,7 @@ function cargarPrefacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario,
+                url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario+ "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -380,7 +408,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarPrefacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario,
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -396,7 +424,7 @@ function cargarPrefacturas2() {
 function cargarPrefacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario,
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario+ "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

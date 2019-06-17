@@ -11,6 +11,7 @@ var breakpointDefinition = {
 };
 var visadas;
 var usuario;
+var departamentoId;
 // License Key
 
 // Create the report viewer with default options
@@ -44,6 +45,7 @@ function initForm() {
     });
     
     visadas = gup('visadas');
+    departamentoId = gup('departamentoId')
 
     obtainReport();
 }
@@ -177,7 +179,12 @@ var rptLiquidacionGeneralParametros = function () {
     sql += "  FROM facprove AS f";
     sql += " LEFT JOIN formas_pago as fp ON fp.formaPagoId = f.formaPagoId";
     sql += " LEFT JOIN contratos as cnt ON cnt.contratoId = f.contratoId";
-    sql += " WHERE visada = " + visadas + " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")";
+    sql += " WHERE visada = " + visadas
+    if(departamentoId > 0) {
+        sql += " AND f.departamentoId = " + departamentoId;
+    } else {
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")";
+    }
     return sql;
 }
 
