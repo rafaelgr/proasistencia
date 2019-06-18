@@ -616,6 +616,7 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
 var obtenerParametrosCombo = function (noCalculadora) {
     var comboSeries = [];
     var obj = {}
+    var  serie;
     if(!noCalculadora) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
             if(err) return;
@@ -634,11 +635,13 @@ var obtenerParametrosCombo = function (noCalculadora) {
                                 nombre: data.serieFacS + " // Contrato asociado",
                                 serieId: data.serieFacS
                             }
+                            serie = data.serieFacS
                         } else {
                             obj = {
                                 nombre: data.serieFac+ " // Contrato asociado",
                                 serieId: data.serieFac
                             }
+                            serie = data.serieFac
                         }
                         comboSeries.push(obj);
     
@@ -649,7 +652,7 @@ var obtenerParametrosCombo = function (noCalculadora) {
                         
                         comboSeries.push(obj);
         
-                        cargarSeries(comboSeries)
+                        cargarSeries(comboSeries, serie)
                     }
                 });
             }
@@ -673,7 +676,9 @@ var obtenerParametrosCombo = function (noCalculadora) {
                 
                 comboSeries.push(obj);
 
-                cargarSeries(comboSeries)
+                serie = data.serieFacRep
+
+                cargarSeries(comboSeries, serie);
             }
         });
     }
@@ -681,10 +686,14 @@ var obtenerParametrosCombo = function (noCalculadora) {
 
 
 
-var cargarSeries = function (data) {
+var cargarSeries = function (data,serie) {
     var contratos = data;
     vm.posiblesSeries(contratos);
-    $("#cmbSeries").val([vm.serie()]).trigger('change');
+    if(vm.serie()) {
+        $("#cmbSeries").val([vm.serie()]).trigger('change');
+    } else {
+        $("#cmbSeries").val([serie]).trigger('change');
+    }
 }
 
 function aceptarLinea() {
