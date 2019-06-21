@@ -211,7 +211,8 @@ function initTablaFacturas() {
         }, {
             data: "facturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                console.log(type +" "+ row);
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ","+row.noCalculadora+ ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
@@ -277,7 +278,7 @@ function crearFactura() {
     return mf;
 }
 
-function deleteFactura(id) {
+function deleteFactura(id, noCalculadora) {
     // mensaje de confirmación
     var mens = "¿Qué desea hacer con este registro?";
     mens += "<ul>"
@@ -300,13 +301,18 @@ function deleteFactura(id) {
                 buttons: '[Cancelar][Borrar]'
             },function (ButtonPressed2) {
                 if (ButtonPressed2 === "Borrar") {
-                    var data = { facturaId: id };
+                    var data = { 
+                        factura: {
+                            facturaId: id,
+                            noCalculadora: noCalculadora 
+                        }
+                    };
                     
                     llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
                         if (err) return;
                         llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
                             if (err) return;
-                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/" + id, data, function (err) {
+                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id, data, function (err) {
                                 if (err) return;
                                 mostrarMensajeFacturaBorrada();
                                 buscarFacturas()();
