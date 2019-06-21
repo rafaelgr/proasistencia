@@ -4,5 +4,9 @@ ALTER TABLE `partes`
 
   ALTER TABLE `partes`   
   ADD COLUMN `facturaId` INT(11) NULL AFTER `enviar_otro_profesional`,
-  ADD CONSTRAINT `ref_parte_factura` FOREIGN KEY (`facturaId`) REFERENCES `proasistencia`.`facturas`(`facturaId`);
+ 
+ ALTER TABLE `partes`   
+  DROP COLUMN `enviar_otro_profesional`;
+
+
 

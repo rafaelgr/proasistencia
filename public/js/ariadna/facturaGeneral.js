@@ -312,7 +312,7 @@ function deleteFactura(id, noCalculadora) {
                         if (err) return;
                         llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
                             if (err) return;
-                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/" + id, data, function (err) {
+                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id, data, function (err) {
                                 if (err) return;
                                 mostrarMensajeFacturaBorrada();
                                 buscarFacturas()();
