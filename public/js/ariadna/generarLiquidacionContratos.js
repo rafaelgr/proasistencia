@@ -508,7 +508,7 @@ function loadTiposContrato(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesDepartamentos(tipos);
-        $("#cmbDepartamentos").val([id]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
 }
 

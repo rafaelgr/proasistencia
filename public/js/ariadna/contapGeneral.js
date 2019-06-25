@@ -68,7 +68,7 @@ function initForm() {
 
     
     // select2 things
-    $("#cmbDepartamentos").select2(select2Spanish());
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
 }
 
@@ -434,7 +434,7 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
     

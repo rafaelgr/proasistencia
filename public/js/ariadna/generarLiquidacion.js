@@ -51,7 +51,7 @@ function initForm() {
         return false
     });
     //
-    $("#cmbDepartamentos").select2(select2Spanish());
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
@@ -512,7 +512,7 @@ function loadDepartamentos(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesDepartamentos(tipos);
-        $("#cmbDepartamentos").val([id]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
 }
 
