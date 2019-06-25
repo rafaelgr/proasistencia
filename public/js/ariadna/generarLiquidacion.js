@@ -52,8 +52,13 @@ function initForm() {
     });
     //
     $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
-
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
+    //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 

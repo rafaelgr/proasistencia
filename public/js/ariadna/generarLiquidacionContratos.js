@@ -51,8 +51,13 @@ function initForm() {
         return false
     });
     //
-    $("#cmbDepartamentos").select2(select2Spanish());
-    loadTiposContrato();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadTiposContrato();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
