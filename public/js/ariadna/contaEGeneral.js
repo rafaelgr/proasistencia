@@ -52,7 +52,7 @@ function initForm() {
     loadEmpresas();
 
     $('#cmbDepartamentos').select2();
-    loadDepartamentos();
+    //loadDepartamentos();
     
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentos").on('change', function (e) {
@@ -75,6 +75,11 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
+     //Recuperamos el departamento de trabajo
+     recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(enviarCorreos());

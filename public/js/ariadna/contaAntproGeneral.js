@@ -45,6 +45,11 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
     //
     $('#btnBuscar').click(buscarAnticipos());
     $('#btnAlta').click(muestraMensNoIBAN());
