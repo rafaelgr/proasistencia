@@ -30,6 +30,7 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
+   
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
             var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -44,6 +45,13 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
+
+     //Recuperamos el departamento de trabajo
+     recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
+
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(contabilizarFacturas());
@@ -60,7 +68,7 @@ function initForm() {
 
     // select2 things
     $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    //loadDepartamentos();
 }
 
 // tratamiento knockout
