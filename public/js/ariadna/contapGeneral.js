@@ -46,6 +46,13 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
+    //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(muestraMensNoIBAN());
     $('#btnDownload').click(buscarFicheros());
@@ -62,7 +69,7 @@ function initForm() {
     
     // select2 things
     $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    //loadDepartamentos();
 }
 
 // tratamiento knockout
