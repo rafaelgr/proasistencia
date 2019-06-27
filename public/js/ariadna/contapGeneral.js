@@ -172,23 +172,15 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
-            txtDesdeFecha: {
-                required: true
-            },
+            
             txtHastaFecha: {
-                required: true,
                 greaterThan: "#txtDesdeFecha"
             },
 
         },
         // Messages for form validation
         messages: {
-            txtDesdeFecha: {
-                required: "Debe seleccionar una fecha"
-            },
-            txtHastaFecha: {
-                required: "Debe seleccionar una fecha"
-            }
+            
         },
         // Do not change code below
         errorPlacement: function (error, element) {
