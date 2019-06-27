@@ -421,14 +421,14 @@ function editFactura(id) {
     window.open(url, '_new');
 }
 
-function loadDepartamentos(departamentoId) {
+/*function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
-}
+}*/
     
 
 function cargarFacturas() {

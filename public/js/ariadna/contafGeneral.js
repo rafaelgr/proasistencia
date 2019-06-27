@@ -417,14 +417,14 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
-function loadDepartamentos(departamentoId) {
+/*function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
-}
+}*/
     
 
 var f_open_post = function (verb, url, data, target) {

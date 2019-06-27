@@ -344,7 +344,7 @@ function loadEmpresas(id){
     });
 }
 
-function loadDepartamentos(id){
+/*function loadDepartamentos(id){
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return
         var departamentos = [{
@@ -354,7 +354,7 @@ function loadDepartamentos(id){
         vm.posiblesDepartamentos(departamentos);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
-}
+}*/
 
 
 function loadTablaFacturas(data) {

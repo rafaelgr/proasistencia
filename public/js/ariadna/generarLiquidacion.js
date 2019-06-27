@@ -504,7 +504,7 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function loadDepartamentos(id) {
+/*function loadDepartamentos(id) {
     llamadaAjax('GET', "/api/departamentos/usuario/" +usuario, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -514,7 +514,7 @@ function loadDepartamentos(id) {
         vm.posiblesDepartamentos(tipos);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
-}
+}*/
 
 function loadEmpresas(id) {
     llamadaAjax('GET', "/api/empresas", null, function (err, data) {
