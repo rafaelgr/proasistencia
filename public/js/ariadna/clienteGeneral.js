@@ -140,6 +140,8 @@ function initTablaClientes() {
         }, {
             data: "telefono1"
         }, {
+            data: "cuentaContable"
+        },{
             data: "tipo"
         }, {
             data: "clienteId",

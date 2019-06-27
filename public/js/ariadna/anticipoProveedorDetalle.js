@@ -123,7 +123,7 @@ function initForm() {
 
     // select2 things
      // select2 things
-     $("#cmbDepartamentos").select2(select2Spanish());
+     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
      loadDepartamentos();
 
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
@@ -520,7 +520,7 @@ function datosOK() {
             cmbEmpresas: {
                 required: true
             },
-            cmbDepartamentos: {
+            cmbDepartamentosTrabajo: {
                 required: true
             },
             cmbProveedores: {
@@ -548,7 +548,7 @@ function datosOK() {
             cmbEmpresas: {
                 required: "Debe elegir un receptor"
             },
-            cmbDepartamentos: {
+            cmbDepartamentosTrabajo: {
                 required: 'Debe elegir un departamento'
             },
             cmbProveedores: {
@@ -731,7 +731,7 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
 

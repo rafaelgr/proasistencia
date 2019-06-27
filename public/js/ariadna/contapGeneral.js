@@ -46,6 +46,13 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
+    //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(muestraMensNoIBAN());
     $('#btnDownload').click(buscarFicheros());
@@ -61,8 +68,8 @@ function initForm() {
 
     
     // select2 things
-    $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
 }
 
 // tratamiento knockout
@@ -165,23 +172,15 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
-            txtDesdeFecha: {
-                required: true
-            },
+            
             txtHastaFecha: {
-                required: true,
                 greaterThan: "#txtDesdeFecha"
             },
 
         },
         // Messages for form validation
         messages: {
-            txtDesdeFecha: {
-                required: "Debe seleccionar una fecha"
-            },
-            txtHastaFecha: {
-                required: "Debe seleccionar una fecha"
-            }
+            
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -427,7 +426,7 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
     

@@ -103,8 +103,14 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     //
-    $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
+    //
     initAutoCliente(); 
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -240,7 +246,7 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
 

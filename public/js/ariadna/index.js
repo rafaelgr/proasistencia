@@ -9,8 +9,7 @@ var dataRondasRealizadas;
 var rondaRealizadaId;
 
 
-var departamentoTrabajo;
-
+var usuario;
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -19,9 +18,36 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-   
+    usuario = recuperarIdUsuario();
+
+    vm = new admData();
+    ko.applyBindings(vm);
+
+    //recuperamos el departaemnto de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+    });
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+    });
+
     // de smart admin
     pageSetUp();
     getVersionFooter();
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
