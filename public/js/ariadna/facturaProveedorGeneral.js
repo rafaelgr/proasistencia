@@ -286,18 +286,19 @@ function deleteFactura(id) {
                         }
                     });
                    }
-                   var data = {
+                   var datos = {
                     facproveId: id,
+                    departamentoId: data.departamentoId
                 };
                 if(antproveId) {
-                    data.antproveId =  antproveId;
+                    datos.antproveId =  antproveId;
                 }
                 $.ajax({
                     type: "DELETE",
-                    url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                    url: myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id,
                     dataType: "json",
                     contentType: "application/json",
-                    data: JSON.stringify(data),
+                    data: JSON.stringify(datos),
                     success: function (data, status) {
                         var fn = buscarFacturas();
                         fn();
