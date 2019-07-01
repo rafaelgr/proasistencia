@@ -45,6 +45,11 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
     //
     $('#btnBuscar').click(buscarAnticipos());
     $('#btnAlta').click(muestraMensNoIBAN());
@@ -60,8 +65,8 @@ function initForm() {
     facproveId = gup('AnticipoId');
 
     // select2 things
-    $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
 }
 
 // tratamiento knockout
@@ -472,14 +477,14 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
-function loadDepartamentos(departamentoId) {
+/*function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
-}
+}*/
     
 
 var f_open_post = function (verb, url, data, target) {

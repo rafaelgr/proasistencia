@@ -51,11 +51,11 @@ function initForm() {
     $('#cmbEmpresas').select2();
     loadEmpresas();
 
-    $('#cmbDepartamentos').select2();
-    loadDepartamentos();
+    $('#cmbDepartamentosTrabajo').select2();
+    //loadDepartamentos();
     
     //Evento asociado al cambio de departamento
-    $("#cmbDepartamentos").on('change', function (e) {
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         loadContratosActivos(e.added.id);
     });
@@ -75,6 +75,11 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
+     //Recuperamos el departamento de trabajo
+     recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(enviarCorreos());
@@ -339,7 +344,7 @@ function loadEmpresas(id){
     });
 }
 
-function loadDepartamentos(id){
+/*function loadDepartamentos(id){
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return
         var departamentos = [{
@@ -347,9 +352,9 @@ function loadDepartamentos(id){
             nombre: ""
         }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentos").val([id]).trigger('change');
+        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
     });
-}
+}*/
 
 
 function loadTablaFacturas(data) {

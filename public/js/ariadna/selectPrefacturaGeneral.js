@@ -58,8 +58,28 @@ function initForm() {
     $("#cmbAgentes").select2(select2Spanish());
     loadAgentes();
 
-    $("#cmbTiposDepartamentos").select2(select2Spanish());
-    loadTiposDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadTiposDepartamentos();
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaFacturas();
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+        if (facturaId !== '') {
+
+            // Si nos pasan una prefafctura determinada esa es
+            // la que mostramos en el grid
+            cargarFacturas()(facturaId);
+    
+        } else {
+    
+            // Por defecto ahora a la entrada se van a cargar todas 
+            // las facturas que tengamos en el sistema. En un futuro este
+            // criterio puede cambiar y habrá que adaptarlo.
+            cargarFacturas()();
+        }
+
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -87,11 +107,11 @@ function admData() {
     self.posiblesAgentes = ko.observableArray([]);
     self.elegidosAgentes = ko.observableArray([]);
     //    
-    //
+    self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
     //
-    self.posiblesTiposDepartamentos = ko.observableArray([]);
-    self.elegidosTiposDepartamentos = ko.observableArray([]);
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
     //
     self.sempresaId = ko.observable();
     //
@@ -500,8 +520,8 @@ function loadTiposDepartamentos(id) {
         contentType: "application/json",
         success: function (data, status) {
             var tiposDepartamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
-            vm.posiblesTiposDepartamentos(tiposDepartamentos);
-            $("#cmbTiposDepartamentos").val([id]).trigger('change');
+            vm.posiblesDepartamentos(tiposDepartamentos);
+            $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
