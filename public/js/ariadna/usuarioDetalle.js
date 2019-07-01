@@ -18,7 +18,7 @@ var breakpointDefinition = {
 };
 
 var dataDepartamentosLineas;
-$("#cmbDepartamentos").select2(select2Spanish());
+$("#cmbDepartamentosTrabajo").select2(select2Spanish());
 
 $("#linea-form").submit(function () {
     return false;
@@ -341,9 +341,9 @@ function loadDepartamentos(id) {
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         if (id) {
-            $("#cmbDepartamentos").val([id]).trigger('change');
+            $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
         } else {
-            $("#cmbDepartamentos").val([0]).trigger('change');
+            $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
         }
     });
 }
@@ -447,14 +447,14 @@ function datosOKNuevoDepartamentoAsociado() {
     $('#linea-form').validate({
         rules: {
             
-            cmbDepartamentos: {
+            cmbDepartamentosTrabajo: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
            
-            cmbDepartamentos: {
+            cmbDepartamentosTrabajo: {
                 required: 'Debe elegir un departamento'
             }
         },
