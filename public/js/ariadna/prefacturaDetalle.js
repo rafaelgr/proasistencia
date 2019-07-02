@@ -125,6 +125,11 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
             if (err) return;
+            if(data.noCalculadora) {
+                $('#calculadora').hide();
+                $('#contrato').hide();
+                obtenerDepartamentoContrato();
+            }
             loadData(data);
             loadLineasPrefactura(data.prefacturaId);
             loadBasesPrefactura(data.prefacturaId);
@@ -298,7 +303,14 @@ function loadData(data) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
-    loadContratos(data.contratoId);
+
+    if(!data.noCalculadora) {
+        loadContratos(data.contratoId);
+        obtenerDepartamentoContrato(data.contratoId);
+    } else {
+        obtenerDepartamentoContrato(null);
+    }
+
     vm.observaciones(data.observaciones);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
@@ -525,8 +537,12 @@ function obtenerDepartamentoContrato(contratoId) {
                 vm.departamentoId(data.departamentoId);
             }
         });
+    }else {
+        vm.departamento('REPARACIONES');
+        vm.departamentoId(7);
     }
 }
+
 
 
 /*------------------------------------------------------------------
