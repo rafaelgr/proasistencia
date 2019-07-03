@@ -1607,7 +1607,7 @@ var initAutoProveedor = function () {
     $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/proveedores/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("GET", "/api/proveedores/activos/proveedores/todos/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
