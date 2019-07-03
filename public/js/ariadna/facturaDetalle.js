@@ -127,7 +127,8 @@ function initForm() {
             if (err) return;
             if(data.noCalculadora) {
                 $('#calculadora').hide();
-                $('#contrato').hide();obtenerDepartamentoContrato
+                $('#contrato').hide();
+                obtenerDepartamentoContrato();
             }
             loadData(data);
             loadLineasFactura(data.facturaId);
