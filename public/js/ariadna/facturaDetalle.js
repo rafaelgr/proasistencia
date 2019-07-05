@@ -1050,10 +1050,11 @@ function deleteFacturaLinea(facturaId) {
     mensajeAceptarCancelar(mens, function () {
         var data = {
             facturaLinea: {
-                facturaId: vm.facturaId()
+                facturaId: vm.facturaId(),
+                departamentoId: vm.departamentoId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/lineas/" + facturaId, data, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/lineas/con/parte/" + facturaId, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
                 if (err) return;
