@@ -807,6 +807,9 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
@@ -1453,10 +1456,11 @@ function deleteFacturaLinea(facproveLineaId) {
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
             facproveLinea: {
-                facproveId: vm.facproveId()
+                facproveId: vm.facproveId(),
+                departamentoId: vm.departamentoId()
             }
         };
-        llamadaAjax("DELETE",  "/api/facturasProveedores/lineas/" + facproveLineaId, data, function (err, data) {
+        llamadaAjax("DELETE",  "/api/facturasProveedores/lineas/con/parte/" + facproveLineaId, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET",  "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
                 if (err) return;
