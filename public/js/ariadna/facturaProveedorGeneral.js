@@ -85,7 +85,7 @@ function admData() {
 
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
-        bSort: false,
+        bSort: true,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -181,13 +181,18 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
+        },{
+            data: "fecha_recepcion",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
         }, {
             data: "total"
         }, {
             data: "totalConIva"
         },  {
             data: "vFPago"
-        }, {
+        },   {
             data: "facproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";

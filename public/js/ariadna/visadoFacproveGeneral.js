@@ -98,8 +98,8 @@ function admData() {
 
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
-        autoWidth: true,
         paging: false,
+        autoWidth: true,
         "bDestroy": true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -136,7 +136,7 @@ function initTablaFacturas() {
         data: dataFacturas,
         columns: [{
             data: "facproveId",
-            width: "10%",
+            width: '10%',
             render: function (data, type, row) {
                 var html = '<label class="input">';
                 html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
@@ -151,11 +151,11 @@ function initTablaFacturas() {
         }, {
             data: "vNum"
         }, {
-            data: "fecha",
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        }, {
+        },{
             data: "total"
         }, {
             data: "totalConIva"

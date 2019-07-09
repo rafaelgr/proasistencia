@@ -167,6 +167,11 @@ function initTablaAnticipos() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "fecha_recepcion",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
             data: "total"
         }, {
             data: "totalConIva"
