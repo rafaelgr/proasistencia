@@ -142,7 +142,7 @@ function initTablaFacturas() {
         }, {
             data: "vNum"
         }, {
-            data: "fecha",
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
