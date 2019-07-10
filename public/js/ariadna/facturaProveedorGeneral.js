@@ -177,11 +177,6 @@ function initTablaFacturas() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        },{
             data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -192,6 +187,8 @@ function initTablaFacturas() {
             data: "totalConIva"
         },  {
             data: "vFPago"
+        },{
+            data: "numregisconta",
         },   {
             data: "facproveId",
             render: function (data, type, row) {
