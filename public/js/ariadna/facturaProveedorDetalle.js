@@ -361,6 +361,7 @@ function admData() {
     self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
     self.noContabilizar = ko.observable();
+    self.numregis = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -499,6 +500,7 @@ function loadData(data) {
     vm.facproveId(data.facproveId);
     vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
+    vm.numregis(data.numregisconta);
     vm.fecha(spanishDate(data.fecha));
     vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
     vm.empresaId(data.empresaId);

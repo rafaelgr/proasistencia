@@ -86,7 +86,7 @@ function admData() {
 
 function initTablaAnticipos() {
     tablaAnticipos = $('#dt_anticipo').DataTable({
-        bSort: false,
+        bSort: true,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -179,6 +179,11 @@ function initTablaAnticipos() {
             data: "receptorNombre"
         }, {
             data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
