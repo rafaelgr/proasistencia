@@ -134,6 +134,7 @@ function initForm() {
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
+            $('#txtFecha').prop('disabled', true);
             
         })
     } else {
@@ -285,6 +286,7 @@ function loadData(data, desdeLinea) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
+    vm.departamentoId(data.departamentoId);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -301,13 +303,14 @@ function loadData(data, desdeLinea) {
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
 
+
     //
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
     if(!data.noCalculadora) {
         loadContratos(data.contratoId);
-        obtenerDepartamentoContrato(data.contratoId);
+        loadDepartamento(data.departamentoId);
     } else {
         obtenerDepartamentoContrato(null);
     }
@@ -563,6 +566,17 @@ function obtenerDepartamentoContrato(contratoId) {
         vm.departamento('REPARACIONES');
         vm.departamentoId(7);
     }
+}
+
+function loadDepartamento(departamentoId) {
+    if(departamentoId) {
+        llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                vm.departamento(data.nombre);
+            }
+        });
+    } 
 }
 
 
