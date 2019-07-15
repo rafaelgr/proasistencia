@@ -255,9 +255,9 @@ function crearFactura() {
 }
 
 function deleteFactura(id) {
-    var url = 
+    var url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
     if(vm.departamentoId != 7) {
-        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id
+        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
     }
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
@@ -299,7 +299,7 @@ function deleteFactura(id) {
                 }
                 $.ajax({
                     type: "DELETE",
-                    url: myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id,
+                    url: url,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(datos),
