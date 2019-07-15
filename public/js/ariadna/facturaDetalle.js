@@ -1046,6 +1046,7 @@ function editFacturaLinea(id) {
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/facturas/lineas/con/parte/" + facturaId;
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
