@@ -255,6 +255,10 @@ function crearFactura() {
 }
 
 function deleteFactura(id) {
+    var url = 
+    if(vm.departamentoId != 7) {
+        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id
+    }
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
