@@ -255,10 +255,7 @@ function crearFactura() {
 }
 
 function deleteFactura(id) {
-    var url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
-    if(vm.departamentoId != 7) {
-        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
-    }
+    var url = myconfig.apiUrl + "/api/facturasProveedores/" + id;
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -274,6 +271,9 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(null),
                 success: function (data, status) {
+                    if( data.departamentoId == 7) {
+                        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
+                    }
                     antproveId = data.antproveId;
                    if(data.nombreFacprovePdf){
                     $.ajax({
