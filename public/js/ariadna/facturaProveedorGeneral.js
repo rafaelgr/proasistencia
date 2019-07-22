@@ -257,6 +257,7 @@ function crearFactura() {
 }
 
 function deleteFactura(id) {
+    var url = myconfig.apiUrl + "/api/facturasProveedores/" + id;
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -265,6 +266,7 @@ function deleteFactura(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
+            
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
@@ -272,6 +274,14 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(null),
                 success: function (data, status) {
+                    if(data.contabilizada == 1) {
+                        var mensaje =  "Esta factura ya ha sido contabilizada, no se puede borrar.";
+                        mensError(mensaje);
+                        return;
+                    }
+                    if( data.departamentoId == 7) {
+                        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
+                    }
                     antproveId = data.antproveId;
                    if(data.nombreFacprovePdf){
                     $.ajax({
@@ -297,7 +307,7 @@ function deleteFactura(id) {
                 }
                 $.ajax({
                     type: "DELETE",
-                    url: myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id,
+                    url: url,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(datos),
@@ -462,3 +472,4 @@ imprimirFactura = function () {
     var url = "InfFacturasProveedores.html";
     window.open(url, '_blank');
 }
+
