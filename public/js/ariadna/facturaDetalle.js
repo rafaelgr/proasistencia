@@ -1060,14 +1060,19 @@ function editFacturaLinea(id) {
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/facturas/lineas/" + facturaId;
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
             facturaLinea: {
-                facturaId: vm.facturaId()
+                facturaId: vm.facturaId(),
+                departamentoId: vm.departamentoId()
             }
         };
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/lineas/" + facturaId, data, function (err, data) {
+        if(vm.departamentoId() == 7) {
+            url = myconfig.apiUrl + "/api/facturas/lineas/con/parte/" + facturaId;
+        }
+        llamadaAjax("DELETE", url, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
                 if (err) return;
