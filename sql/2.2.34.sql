@@ -12,3 +12,12 @@ ALTER TABLE `partes`
 
 
 
+UPDATE servicios AS ser 
+LEFT JOIN partes AS par ON par.servicioId = ser.servicioId
+
+SET par.empresaParteId = ser.empresaId
+
+WHERE ser.empresaId IN
+
+(SELECT tmp.empresaId FROM  (SELECT ser.empresaId AS empresaId FROM servicios AS ser 
+LEFT JOIN partes AS par ON par.servicioId = ser.servicioId) AS tmp);

@@ -264,6 +264,7 @@ function deleteFactura(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
+            
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
@@ -271,6 +272,11 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(null),
                 success: function (data, status) {
+                    if(data.contabilizada == 1) {
+                        var mensaje =  "Esta factura ya ha sido contabilizada, no se puede borrar.";
+                        mensError(mensaje);
+                        return;
+                    }
                     if( data.departamentoId == 7) {
                         url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
                     }
@@ -464,3 +470,4 @@ imprimirFactura = function () {
     var url = "InfFacturasProveedores.html";
     window.open(url, '_blank');
 }
+
