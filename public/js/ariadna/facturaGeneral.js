@@ -280,6 +280,7 @@ function crearFactura() {
 
 function deleteFactura(id, noCalculadora) {
     // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/facturas/" + id;
     var mens = "¿Qué desea hacer con este registro?";
     mens += "<ul>"
     mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
@@ -307,12 +308,14 @@ function deleteFactura(id, noCalculadora) {
                             noCalculadora: noCalculadora 
                         }
                     };
-                    
+                    if(noCalculadora == 1) {
+                        url =  myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id;
+                    }
                     llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
                         if (err) return;
                         llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
                             if (err) return;
-                            llamadaAjax("DELETE", myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id, data, function (err) {
+                            llamadaAjax("DELETE", url, data, function (err) {
                                 if (err) return;
                                 mostrarMensajeFacturaBorrada();
                                 buscarFacturas()();
