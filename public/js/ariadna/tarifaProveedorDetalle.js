@@ -338,7 +338,10 @@ function initTablaTarifasProveedorLineas() {
         columns: [ {
             data: "unidadConstructiva",
             className: "text-left"
-        }, {
+        },{
+            data: "profesion",
+            className: "text-left"
+        },  {
             data: "precioUnitario",
             className: "text-left",
             render: function (data, type, row) {

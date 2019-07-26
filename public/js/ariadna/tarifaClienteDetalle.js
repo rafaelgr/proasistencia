@@ -68,6 +68,13 @@ function initForm() {
         if (e.added) cambioArticulo(e.added.id);
     });
 
+
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesional();
+    $("#cmbTiposProfesional").select2().on('change', function (e) {
+        if (e.added) cambioTipoProfesional(e.added.id);
+    });
+
     
 
     // select2 things
@@ -89,6 +96,7 @@ function initForm() {
             if (err) return;
             loadData(data);
             loadLineasTarifaCliente(data.tarifaClienteId);
+
         })
     } else {
         // caso alta
@@ -106,6 +114,7 @@ function admData() {
     var self = this;
     self.tarifaClienteId = ko.observable();
     self.nombre = ko.observable();
+    self.tipoProfesional = ko.observable();
     
   
     //valores para el formulario de capitulos
@@ -130,6 +139,14 @@ function admData() {
 
     //valor para el nombre de copia de tarifa
     self.nuevoNombre = ko.observable();
+
+
+    //combo tipos profesionales para el filtrado lde las lineas
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
     
 }
 
@@ -227,6 +244,7 @@ function nuevaLinea() {
 function limpiaDataLinea(data) {
     vm.tarifaClienteLineaId(0);
     vm.precioUnitario(null);
+    vm.tipoProfesional(null);
     
     loadArticulos();
 }
@@ -405,15 +423,23 @@ function loadArticulos(id) {
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
+            loadProfesion(id);
         } else {
             $("#cmbArticulos").val([0]).trigger('change');
         }
     });
 }
 
+function loadProfesion(id) {
+    llamadaAjax("GET", "/api/articulos/profesion/tipo/" + id, null, function (err, data) {
+        if (err) return;
+        vm.tipoProfesional(data.profesion);
+    });
+}
+
 
 function loadCapitulos(id){
-    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
         if (err) return;
         var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
         vm.posiblesCapitulos(capitulos);
@@ -428,9 +454,25 @@ function loadCapitulos(id){
 function cambioArticulo(articuloId) {
     if (!articuloId) return;
     llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+        if(err) return;
         vm.precioUnitario(data.precioUnitario);
+        loadProfesion(articuloId);
     });
 }
+
+
+
+function cambioTipoProfesional(tipoProfesionalId) {
+    var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
+    if (tipoProfesionalId > 0) {
+        url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId() +"/"+ tipoProfesionalId
+    }
+    llamadaAjax("GET", url, null, function (err, data) {
+        if(err) return;
+        loadTablatarifaClienteLineas(data)
+    });
+}
+
 
 
 function editTarifaClienteLinea(id) {
@@ -460,6 +502,24 @@ function deleteTarifaClienteLinea(tarifaClienteId) {
         });
     }, function () {
         // cancelar no hace nada
+    });
+}
+
+function loadTiposProfesional(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProfesional = [{ tipoProfesionalId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposProfesional(tiposProfesional);
+            $("#cmbTiposProfesional").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
