@@ -489,7 +489,7 @@
                             <div>
                                 <!-- widget edit box -->
                                 <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->pipo123@
+                                    <!-- This area used as dropdown edit box -->
                                     <input class="form-control" type="text">
                                 </div>
                                 <!-- end widget edit box -->
@@ -497,6 +497,22 @@
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
                                     <form id="frmLinea">
+                                            <header>
+                                                    Tipo Profesional
+                                                 </header>
+                                         <fieldset>
+                                                 <div class="row">
+                                                         <section class="col col-md-4">
+                                                                 <label class="label">Tipo profesional</label>
+                                                                 <label style="width:100%;">
+                                                                     <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select><i></i>
+                                                                 </label>
+                                                         </section>
+                                                         <section class="col col-md-8">
+                                                                 
+                                                         </section>
+                                                 </div>
+                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
@@ -517,7 +533,10 @@
                                                         UNIDAD CONSTRUCTIVA ASOCIADA
                                                     </th>
                                                     <th data-hide="phone" class="text-left">
-                                                        PRECIO UNITARIO
+                                                            PROFESION
+                                                        </th>
+                                                    <th data-hide="phone" class="text-left">
+                                                        PRECIO UNITARIO (€)
                                                     </th>
                                                     <th data-hide="phone" class="text-left">
                                                             CÓDIGO REPARACIÓN
@@ -560,14 +579,22 @@
                     <form id="linea-form" class="smart-form">
                         <fieldset>
                                 <div class="row">
-                                    <div class="col col-md-8">
+                                    <div class="col col-md-12">
                                         <label class="label">Unidad constructiva asociada</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select>
                                             <i></i>
                                         </label>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <section class="col col-md-4">
+                                            <label class="label">Profesion</label>
+                                            <label class="input">
+                                                <input id="txtTipoProfesional" name="txtTipoProfesional" type="text" data-bind="value: tipoProfesional" disabled/>
+                                            </label>
+                                    </section>
+                                    <section class="col col-md-2">
                                         <label class="label">Precio unitario</label>
                                         <label class="input">
                                             <input id="txtPrecioUnitario" name="txtPrecioUnitario" type="text" data-bind="value: precioUnitario" />
