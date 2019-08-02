@@ -40,7 +40,12 @@ function initForm() {
     loadGruposArticulo();
 
     $("#cmbUnidades").select2(select2Spanish());
-    loadUnidades();
+    loadUnidades()
+    
+    $("#cmbProfesiones").select2(select2Spanish());
+    loadTiposProfesionales();;
+
+    
 
     initTablaTarifas()
     
@@ -95,6 +100,11 @@ function admData() {
     //
     self.posiblesUnidades = ko.observableArray([]);
     self.elegidosUnidades = ko.observableArray([]);
+    //
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesionales = ko.observableArray([]);
+    self.elegidosTiposProfesionales = ko.observableArray([]);
 
 
 }
@@ -109,6 +119,7 @@ function loadData(data) {
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
     loadUnidades(data.unidadId);
+    loadTiposProfesionales(data.tipoProfesionalId)
 }
 
 function datosOK() {
@@ -172,7 +183,8 @@ function aceptar() {
                 "codigoReparacion" : vm.codigoReparacion(),
                 "descripcion": vm.descripcion(),
                 "grupoArticuloId": vm.sgrupoArticuloId(),
-                "unidadId": vm.sunidadId()
+                "unidadId": vm.sunidadId(),
+                "tipoProfesionalId": vm.stipoProfesionalId()
             }
         };
         if (empId == 0) {
@@ -283,6 +295,25 @@ function loadUnidades(id) {
                 }
     });
 }
+
+function loadTiposProfesionales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
+            vm.posiblesTiposProfesionales(tiposProfesional);
+            $("#cmbProfesiones").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 /*----------------------------------------------------------
     Funciones relacionadas con las lines de tarifas

@@ -68,7 +68,12 @@ function initForm() {
         if (e.added) cambioArticulo(e.added.id);
     });
 
-    
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesional();
+    $("#cmbTiposProfesional").select2().on('change', function (e) {
+        if (e.added) cambioTipoProfesional(e.added.id);
+    });
+
 
     // select2 things
     $("#cmbCapitulos").select2(select2Spanish());
@@ -106,7 +111,7 @@ function admData() {
     var self = this;
     self.tarifaProveedorId = ko.observable();
     self.nombre = ko.observable();
-    
+    self.tipoProfesional = ko.observable();
   
     //valores para el formulario de capitulos
     self.porcentaje = ko.observable();
@@ -130,6 +135,14 @@ function admData() {
     
     //valor para el nombre de copia de tarifa
     self.nuevoNombre = ko.observable();
+
+    //combo tipos profesionales para el filtrado lde las lineas
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
+    
 }
 
 function loadData(data) {
@@ -224,6 +237,7 @@ function nuevaLinea() {
 function limpiaDataLinea(data) {
     vm.tarifaProveedorLineaId(0);
     vm.precioUnitario(null);
+    vm.tipoProfesional(null);
     
     loadArticulos();
 }
@@ -338,7 +352,10 @@ function initTablaTarifasProveedorLineas() {
         columns: [ {
             data: "unidadConstructiva",
             className: "text-left"
-        }, {
+        },{
+            data: "profesion",
+            className: "text-left"
+        },  {
             data: "precioUnitario",
             className: "text-left",
             render: function (data, type, row) {
@@ -395,6 +412,7 @@ function loadArticulos(id) {
         vm.posiblesArticulos(articulos);
         if (id) {
             $("#cmbArticulos").val([id]).trigger('change');
+            loadProfesion(id);
         } else {
             $("#cmbArticulos").val([0]).trigger('change');
         }
@@ -403,7 +421,7 @@ function loadArticulos(id) {
 
 
 function loadCapitulos(id){
-    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
         if (err) return;
         var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
         vm.posiblesCapitulos(capitulos);
@@ -415,10 +433,18 @@ function loadCapitulos(id){
     });
 }
 
+function loadProfesion(id) {
+    llamadaAjax("GET", "/api/articulos/profesion/tipo/" + id, null, function (err, data) {
+        if (err) return;
+        vm.tipoProfesional(data.profesion);
+    });
+}
+
 function cambioArticulo(articuloId) {
     if (!articuloId) return;
     llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
         vm.precioUnitario(data.precioUnitario);
+        loadProfesion(articuloId);
     });
 }
 
@@ -452,6 +478,37 @@ function deleteTarifaProveedorLinea(tarifaProveedorId) {
         // cancelar no hace nada
     });
 }
+
+function cambioTipoProfesional(tipoProfesionalId) {
+    var url = "/api/tarifas_proveedor/lineas/" + vm.tarifaProveedorId();
+    if (tipoProfesionalId > 0) {
+        url = "/api/tarifas_proveedor/lineas/" + vm.tarifaProveedorId() +"/"+ tipoProfesionalId
+    }
+    llamadaAjax("GET", url, null, function (err, data) {
+        if(err) return;
+        loadTablatarifaProveedorLineas(data)
+    });
+}
+
+function loadTiposProfesional(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposProfesional = [{ tipoProfesionalId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposProfesional(tiposProfesional);
+            $("#cmbTiposProfesional").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 
 //funciones de tarifas generadas automaticamente
 
