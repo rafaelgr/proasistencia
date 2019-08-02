@@ -429,7 +429,7 @@ insert  into `antenas_nueva`(`Id`,`CODIGO`,`UNIDAD`,`DESCRIPCION`,`TARIFA VERDE`
 INSERT INTO articulos (nombre, unidadId, codigoReparacion, grupoArticuloId, tipoProfesionalId)  (
 SELECT
 fn.descripcion AS nombre, fn.unidadId AS unidadId, fn.codigo AS codigoReparacion,
-48 AS grupoArticuloId,  8 AS tipoProfesionalId FROM antenas_nueva AS fn
+40 AS grupoArticuloId,  8 AS tipoProfesionalId FROM antenas_nueva AS fn
 );
 
 
