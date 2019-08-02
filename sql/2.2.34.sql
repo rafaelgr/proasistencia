@@ -23,7 +23,7 @@ DELIMITER $$
 
 USE `proasistencia`$$
 
-DROP TRIGGER /*!50032 IF EXISTS */ `facprove_after_delete`$$
+
 
 CREATE
     /*!50017 DEFINER = 'root'@'localhost' */
@@ -42,7 +42,6 @@ DELIMITER $$
 
 USE `proasistencia`$$
 
-DROP TRIGGER /*!50032 IF EXISTS */ `facprove_after_update`$$
 
 CREATE
     /*!50017 DEFINER = 'root'@'localhost' */
@@ -60,7 +59,7 @@ DELIMITER $$
 
 USE `proasistencia`$$
 
-DROP TRIGGER /*!50032 IF EXISTS */ `facturas_after_delete`$$
+
 
 CREATE
     /*!50017 DEFINER = 'root'@'localhost' */
@@ -79,7 +78,7 @@ DELIMITER $$
 
 USE `proasistencia`$$
 
-DROP TRIGGER /*!50032 IF EXISTS */ `facturas_after_update`$$
+
 
 CREATE
     /*!50017 DEFINER = 'root'@'localhost' */
