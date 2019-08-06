@@ -521,6 +521,9 @@
                                                 <button id="btnCopiar" title="Copiar tarifa" data-toggle="modal" data-target="#modalCopia" class="btn btn-success btn-circle btn-lg">
                                                         <i class="fa fa-lg fa-crosshairs"></i>
                                                 </button>
+                                                <button id="btnPorcentaje" title="Modificar Precio Artículos" data-toggle="modal" data-target="#modalModPrecio" class="btn btn-danger btn-circle btn-lg">
+                                                        <i class="fa fa-money"></i>
+                                                </button>
                                             </div>
                                         </fieldset>
                                     </form>
@@ -530,17 +533,21 @@
                                             <thead>
                                                 <tr>
                                                     <th data-hide="phone" class="text-left">
-                                                        UNIDAD CONSTRUCTIVA ASOCIADA
-                                                    </th>
-                                                    <th data-hide="phone" class="text-left">
                                                         PROFESION
                                                     </th>
+                                                    <th  class="text-left">
+                                                            CÓDIGO REPARACIÓN
+                                                    </th>
                                                     <th data-hide="phone" class="text-left">
+                                                            UNIDAD
+                                                    </th>
+                                                    <th  class="text-left">
+                                                        UNIDAD CONSTRUCTIVA ASOCIADA
+                                                    </th>
+                                                    <th class="text-left">
                                                         PRECIO UNITARIO (€)
                                                     </th>
-                                                    <th data-hide="phone" class="text-left">
-                                                        CÓDIGO REPARACIÓN
-                                                    </th>
+                                                    
                                                     <th>
                                                     </th>
                                                 </tr>
@@ -703,7 +710,49 @@
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
-        </div>
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="modalModPrecio" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h2 class="modal-title">Modificar Precio Unitario</h2>
+                    </div>
+                    <div class="modal-body no-padding">
+                        
+                            <form id="frmCopia" class="smart-form">
+                                    <fieldset>
+                                            <h3>ATENCIÓN!</h3><p align="justify"><b> modificará el precio unitario de los atículos con el tipo profesional seleccionado. Si no hay ningun tipo profesional seleccionado se modificarán todos.</b></p>
+                                    </br>
+                                            <div class="row">
+                                                    <section class="col col-md-4">
+                                                            <label class="label">Introducir porcentaje</label>
+                                                            <label class="input">
+                                                                <input id="txtPorcentaje" name="txtPorcentaje" type="text" data-bind="value: porcentaje"/>
+                                                            </label>
+                                                    </section>
+                                            </div>
+                                    </fieldset>
+                                    <footer>
+                                        <button id="btnAceptarNombre" class="btn btn-primary" onclick="copiarTarifa()">
+                                            Aceptar
+                                        </button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </footer>
+                            </form>
+                             <hr/>
+                    
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">

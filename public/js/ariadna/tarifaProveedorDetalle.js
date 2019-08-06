@@ -310,7 +310,8 @@ function initTablaTarifasProveedorLineas() {
     tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         "columnDefs": [
-            { "width": "60%", "targets": 0 }
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 }
           ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -349,22 +350,25 @@ function initTablaTarifasProveedorLineas() {
             }
         },
         data: dataTarifasLineas,
-        columns: [ {
-            data: "unidadConstructiva",
-            className: "text-left"
-        },{
+        columns: [{
             data: "profesion",
             className: "text-left"
-        },  {
+        }, {
+            data: "codigoReparacion",
+            className: "text-left"
+        }, {
+            data: "unidad",
+            className: "text-left"
+        },{
+            data: "unidadConstructiva",
+            className: "text-left"
+        }, {
             data: "precioUnitario",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         },{
-            data: "codigoReparacion",
-            className: "text-left"
-        }, {
             data: "tarifaProveedorLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -610,7 +614,8 @@ function copiarTarifa() {
         var data2 = {
             tarifaProveedor: {
                 "tarifaProveedorId": vm.tarifaProveedorId(),
-                "nuevaTarifaProveedorId": data.tarifaProveedorId
+                "nuevaTarifaProveedorId": data.tarifaProveedorId,
+                "tipoProfesionalId": vm.stipoProfesionalId()
             }
         }
         llamadaAjax("POST", "/api/tarifas_proveedor/copia/tarifa/proveedor/nombre" , data2, function (err, data) {

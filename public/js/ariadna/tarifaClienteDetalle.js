@@ -147,6 +147,9 @@ function admData() {
     //
     self.posiblesTiposProfesional = ko.observableArray([]);
     self.elegidosTiposProfesional = ko.observableArray([]);
+
+    //valor del % de incremento/decremento
+    self.porcentaje = ko.observable();
     
 }
 
@@ -317,7 +320,8 @@ function initTablaTarifasClienteLineas() {
     tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         "columnDefs": [
-            { "width": "60%", "targets": 0 }
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 }
           ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -357,10 +361,16 @@ function initTablaTarifasClienteLineas() {
         },
         data: dataTarifasLineas,
         columns: [ {
-            data: "unidadConstructiva",
+            data: "profesion",
             className: "text-left"
         }, {
-            data: "profesion",
+            data: "codigoReparacion",
+            className: "text-left"
+        }, {
+            data: "unidad",
+            className: "text-left"
+        },{
+            data: "unidadConstructiva",
             className: "text-left"
         }, {
             data: "precioUnitario",
@@ -368,10 +378,7 @@ function initTablaTarifasClienteLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
-            data: "codigoReparacion",
-            className: "text-left"
-        }, {
+        },{
             data: "tarifaClienteLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -623,7 +630,8 @@ function copiarTarifa() {
         var data2 = {
             tarifaCliente: {
                 "tarifaClienteId": vm.tarifaClienteId(),
-                "nuevaTarifaClienteId": data.tarifaClienteId
+                "nuevaTarifaClienteId": data.tarifaClienteId,
+                "tipoProfesionalId": vm.stipoProfesionalId()
             }
         }
         llamadaAjax("POST", "/api/tarifas_cliente/copia/tarifa/cliente/nombre" , data2, function (err, data) {
