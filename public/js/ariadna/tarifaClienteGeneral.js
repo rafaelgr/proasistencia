@@ -205,7 +205,7 @@ function crearTarifa() {
 
 function deleteTarifa(id) {
     // mensaje de confirmación
-    var mens = "¿Desea borrar la tarifa y sus lineas asociadas?";
+    var mens = "<p>¿Desea borrar la tarifa?</p> <h3>Se borrarán todas las lineas asociadas a ella</h3>";
     
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",

@@ -447,9 +447,6 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
-                                                <!--<button id="btnLineasCapitulos" title="crear lineas por capitulos" data-toggle="modal" data-target="#modalTarifasGrupos"  class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-repeat"></i>
-                                                </button>-->
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
@@ -520,6 +517,9 @@
                                                 </button>
                                                 <button id="btnCopiar" title="Copiar tarifa" data-toggle="modal" data-target="#modalCopia" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-crosshairs"></i>
+                                                </button>
+                                                <button id="btnPorcentaje" title="Modificar Precio Artículos" data-toggle="modal" data-target="#modalModPrecio" class="btn btn-danger btn-circle btn-lg">
+                                                    <i class="fa fa-money"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
@@ -621,53 +621,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modalTarifasGrupos" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title"> LINEAS POR CAPITULOS</h4>
-                </div>
-                <div class="modal-body no-padding">
-                    
-                        <form id="frmLineasGrupos" class="smart-form">
-                                <fieldset>
-                                        <div class="row">
-                                                
-                                            <section class="col col-md-6">
-                                                <label class="label">Capitulos</label>
-                                                <label style="width:100%;">
-                                                    <select style="width:100%" id="cmbCapitulos" name="cmbCapitulos" data-bind="options: posiblesCapitulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosCapitulos, selected2:{}"></select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                                <section class="col col-md-5">
-                                                        <label class="label">Porcentaje</label>
-                                                        <label class="input">
-                                                            <input id="txtPorcentaje" name="txtPorcentaje" type="text" data-bind="value: porcentaje"/>
-                                                        </label>
-                                                </section>
-                                        </div>
-                                </fieldset>
-                                <footer>
-                                    <button id="btnAceptarLinea" class="btn btn-primary" onclick="actualizaLineas()">
-                                        Aceptar
-                                    </button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Cancelar
-                                    </button>
-                                </footer>
-                        </form>
-                         <hr/>
-                
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+    
     <div class="modal fade" id="modalCopia" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -709,6 +663,47 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <div class="modal fade" id="modalModPrecio" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h2 class="modal-title">Modificar Precio Unitario</h2>
+                </div>
+                <div class="modal-body no-padding">
+                    
+                        <form id="frmPorcentaje" class="smart-form">
+                                <fieldset>
+                                        <h3>ATENCIÓN!</h3><p align="justify"><b> modificará el precio unitario de los atículos con el tipo profesional seleccionado. Si no hay ningun tipo profesional seleccionado se modificarán todos.</b></p>
+                                </br>
+                                        <div class="row">
+                                                <section class="col col-md-4">
+                                                        <label class="label">Introducir porcentaje</label>
+                                                        <label class="input">
+                                                            <input id="txtPorcent" name="txtPorcent" type="text" data-bind="value: porcent"/>
+                                                        </label>
+                                                </section>
+                                        </div>
+                                </fieldset>
+                                <footer>
+                                    <button id="btnAceptarNombre" class="btn btn-primary" onclick="aplicarPorcentaje()">
+                                        Aceptar
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </footer>
+                        </form>
+                         <hr/>
+                
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

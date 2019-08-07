@@ -55,6 +55,11 @@ function initForm() {
         return false;
     });
 
+    
+    $('#frmPorcentaje').submit(function(){
+        return false;
+    });
+
 
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
