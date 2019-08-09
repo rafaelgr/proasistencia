@@ -406,11 +406,13 @@ function loadTablatarifaClienteLineas(data) {
     if (data !== null && data.length === 0) {
         data = null;
         $('#btnCopiar').hide();
+        $('#btnPorcentaje').hide();
     }
     dt.fnClearTable();
     if (data != null){
         dt.fnAddData(data);
         $('#btnCopiar').show();
+        $('#btnPorcentaje').show();
     }
     dt.fnDraw();
 }
