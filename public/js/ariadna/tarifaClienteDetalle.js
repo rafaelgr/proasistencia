@@ -55,11 +55,11 @@ function initForm() {
         return false;
     });
 
+    
+    $('#frmPorcentaje').submit(function(){
+        return false;
+    });
 
-    // select2 things
-    $("#cmbCapitulos").select2(select2Spanish());
-    loadCapitulos();
-   
 
     // select2 things
     $("#cmbArticulos").select2(select2Spanish());
@@ -70,18 +70,19 @@ function initForm() {
 
 
     $("#cmbTiposProfesional").select2(select2Spanish());
-    loadTiposProfesional();
+    loadTiposProfesional(0);
     $("#cmbTiposProfesional").select2().on('change', function (e) {
         if (e.added) cambioTipoProfesional(e.added.id);
     });
 
     
 
-    // select2 things
-    $("#cmbCapitulos").select2(select2Spanish());
-    loadCapitulos();
+   
 
-    
+    $('#txtPorcent').focus( function () {
+        $('#txtPorcent').val('');
+    });
+
     initTablaTarifasClienteLineas();
    
 
@@ -91,7 +92,8 @@ function initForm() {
 
     if (tarifaClienteId != 0) {
         // caso edicion
-        vm.porcentaje(0)
+       
+        vm.porcent(0);
         llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + tarifaClienteId, null, function (err, data) {
             if (err) return;
             loadData(data);
@@ -101,7 +103,8 @@ function initForm() {
     } else {
         // caso alta
         vm.tarifaClienteId(0);
-        vm.porcentaje(0)
+       
+        vm.porcent(0);
         $("#lineastarifa").hide();
         $('#lineasCapitulos').hide();
         //$('#btnLineasCapitulos').hide();
@@ -116,15 +119,14 @@ function admData() {
     self.nombre = ko.observable();
     self.tipoProfesional = ko.observable();
     
+   //valores para el formulario de capitulos
   
-    //valores para el formulario de capitulos
-    self.porcentaje = ko.observable();
-    //
-    self.grupoArticuloId = ko.observable();
-    self.sgrupoArticuloId = ko.observable();
-    //
-    self.posiblesCapitulos = ko.observableArray([]);
-    self.elegidosCapitulos = ko.observableArray([]);
+   //
+   self.grupoArticuloId = ko.observable();
+   self.sgrupoArticuloId = ko.observable();
+   //
+   self.posiblesCapitulos = ko.observableArray([]);
+   self.elegidosCapitulos = ko.observableArray([]);
     
 
     // -- Valores para las líneas
@@ -147,14 +149,15 @@ function admData() {
     //
     self.posiblesTiposProfesional = ko.observableArray([]);
     self.elegidosTiposProfesional = ko.observableArray([]);
+
+    //valor del % de incremento/decremento
+    self.porcent = ko.observable();
     
 }
 
 function loadData(data) {
     vm.tarifaClienteId(data.tarifaClienteId);
     vm.nombre(data.nombre);
-    vm.porcentaje(0);
-   
 
     if (cmd == "nueva") {
         mostrarMensajeTarifaNueva();
@@ -317,7 +320,8 @@ function initTablaTarifasClienteLineas() {
     tablaCarro = $('#dt_lineas').DataTable({
         autoWidth: true,
         "columnDefs": [
-            { "width": "60%", "targets": 0 }
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 }
           ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -357,10 +361,16 @@ function initTablaTarifasClienteLineas() {
         },
         data: dataTarifasLineas,
         columns: [ {
-            data: "unidadConstructiva",
+            data: "profesion",
             className: "text-left"
         }, {
-            data: "profesion",
+            data: "codigoReparacion",
+            className: "text-left"
+        }, {
+            data: "unidad",
+            className: "text-left"
+        },{
+            data: "unidadConstructiva",
             className: "text-left"
         }, {
             data: "precioUnitario",
@@ -368,10 +378,7 @@ function initTablaTarifasClienteLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
-            data: "codigoReparacion",
-            className: "text-left"
-        }, {
+        },{
             data: "tarifaClienteLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -399,11 +406,13 @@ function loadTablatarifaClienteLineas(data) {
     if (data !== null && data.length === 0) {
         data = null;
         $('#btnCopiar').hide();
+        $('#btnPorcentaje').hide();
     }
     dt.fnClearTable();
     if (data != null){
         dt.fnAddData(data);
         $('#btnCopiar').show();
+        $('#btnPorcentaje').show();
     }
     dt.fnDraw();
 }
@@ -438,18 +447,7 @@ function loadProfesion(id) {
 }
 
 
-function loadCapitulos(id){
-    llamadaAjax("GET", "/api/articulos", null, function (err, data) {
-        if (err) return;
-        var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
-        vm.posiblesCapitulos(capitulos);
-        if (id) {
-            $("#cmbCapitulos").val([id]).trigger('change');
-        } else {
-            $("#cmbCapitulos").val([0]).trigger('change');
-        }
-    });
-}
+
 
 function cambioArticulo(articuloId) {
     if (!articuloId) return;
@@ -523,78 +521,6 @@ function loadTiposProfesional(id) {
     });
 }
 
-//funciones de tarifas generadas automaticamente
-
-function actualizaLineas(){
-    if(!datosOkLineasGrupos()) {
-        return;
-    }
-
-    var data = creaObjeto();
-    var url = "/api/tarifas_cliente/lineas/multiples/";
-
-    if (vm.sgrupoArticuloId() == 0) {
-        url = "/api/tarifas_cliente/lineas/multiples/todos";
-    }
-    
-    llamadaAjax("POST", myconfig.apiUrl + url , data, function (err, data) {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + data.tarifaClienteId, null, function (err, data) {
-            if(err) return;
-            $('#modalTarifasGrupos').modal('hide');
-            loadData(data);
-            loadLineasTarifaCliente(data.tarifaClienteId);
-        });
-    });
-}
-
-function datosOkLineasGrupos() {
-    if(vm.porcentaje() === "") {
-     vm.porcentaje(null);
-    } 
-     $('#frmLineasGrupos').validate({
-         rules: {
-             txtPorcentaje: {
-                 required: true,
-                 number: true,
-             }
-         },
-         // Messages for form validation
-         messages: {
-             txtPorcentaje: {
-                 required: "Debe proporcionar un porcentaje",
-                 number: "Deve introducir un numero válido"
-             }
-         },
-         // Do not change code below
-         errorPlacement: function (error, element) {
-             error.insertAfter(element.parent());
-         }
-     });
-     var opciones = $("#frmLineasGrupos").validate().settings;
-     return $('#frmLineasGrupos').valid();
- }
-
-
-
-
-function creaObjeto(){
-    var porcent = parseFloat(vm.porcentaje());
-    
-    if(porcent > 0){
-        porcent = (100 + porcent) / 100
-    } else {
-        porcent = (100 + porcent) / 100
-    }
-    var data = {
-        tarifaClienteLinea: {
-            grupoArticuloId: vm.sgrupoArticuloId(),
-            porcentaje: porcent,
-            tarifaClienteId: vm.tarifaClienteId()
-        }
-    }
-
-    return data
-}
 
 var mostrarMensajeTarifaNueva = function () {
     var mens = "Introduzca las líneas de la nueva tarifaCliente en el apartado correspondiente";
@@ -623,7 +549,8 @@ function copiarTarifa() {
         var data2 = {
             tarifaCliente: {
                 "tarifaClienteId": vm.tarifaClienteId(),
-                "nuevaTarifaClienteId": data.tarifaClienteId
+                "nuevaTarifaClienteId": data.tarifaClienteId,
+                "tipoProfesionalId": vm.stipoProfesionalId()
             }
         }
         llamadaAjax("POST", "/api/tarifas_cliente/copia/tarifa/cliente/nombre" , data2, function (err, data) {
@@ -657,4 +584,40 @@ function datosOKNuevoNombre() {
     });
     var opciones = $("#frmTarifa").validate().settings;
     return $('#frmTarifa').valid();
+}
+
+//FUNCIONES DEL MODAL DE INCREMENTO/DECREMENTO PROCENTAJE
+
+function aplicarPorcentaje() {
+    if(!datosOKPorcent()) return;
+    var porcent = vm.porcent() * 0.01
+    var url = "/api/tarifas_cliente/aplicar/porcentaje/precio/" + porcent  + "/" + vm.stipoProfesionalId() + "/" + tarifaClienteId;
+    var returnUrl = "TarifaClienteGeneral.html?tarifaClienteId="+tarifaClienteId;
+    llamadaAjax("PUT", url, null, function (err, data) {
+        if(err) return;
+        window.open(returnUrl, '_self');
+        
+    });
+}
+
+function datosOKPorcent() {
+    $('#frmPorcentaje').validate({
+        rules: {
+            txtPorcent: {
+                required: true,
+            }
+        },
+        // Messages for form validation
+        messages: {
+            
+            txtPorcent: {
+                required: "Debe introducir un porcentaje"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmPorcentaje').valid();
 }
