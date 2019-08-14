@@ -341,11 +341,10 @@ var rptFacturaParametros = function (sql) {
             sql += " AND f.fecha_recepcion <= '" + hFecha + " 23:59:59'";
         }
         if (tipoIvaId) {
-            sql += " AND fl.tipoIvaId IN (" + tipoIvaId + ")";
+            sql += " AND ti.tipoIvaId IN (" + tipoIvaId + ")";
         }
 
-        sql += " GROUP BY fl.`facproveLineaId`";
-        sql += " ORDER BY `numregisconta`, f.empresaId";
+        sql += " ORDER BY `numregisconta`, f.fecha_recepcion";
         /*if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
