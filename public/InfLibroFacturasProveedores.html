@@ -14,8 +14,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production-plugins.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
-    <!-- Include Date Range Picker -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+   
 
     <script src="js/libs/jquery-2.1.1.min.js"></script>
     <script src="js/libs/jquery-ui-1.10.3.min.js"></script>
@@ -32,15 +31,13 @@
     <script src="js/sprintf/sprintf.min.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>    
-    <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   
     <!--- KNOCKOUT JS -->
     <script src="js/knockout-3.1.0.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- DATERANGE PICKER -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    
     <!-- JQUERY SELECT2 INPUT -->
     <script src="js/plugin/select2/select2.min.js"></script>
     <!-- JQUERY VALIDATE -->
@@ -56,7 +53,9 @@
     <!-- MAIN APP JS FILE -->
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="myconfig.js"></script>
     <script src="js/ariadna/infLibroFacturasProveedores.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
 </head>
 
 <body>
@@ -69,12 +68,20 @@
                 <form id="frmRptOfertas" class="smart-form">
                     <fieldset>
                         <div class="row">
-                            <section class="col col-md-3">
-                                <label class="label">Desde fecha - Hasta fecha </label>
-                                <label class="input">
-                                    <input id="txtRFecha" name="txtRFecha"/>
-                                </label>
-                            </section>
+                           
+                                <section class="col col-md-2">
+                                    <label class="label">Desde fecha recepción</label>
+                                    <label class="input">
+                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Hasta fecha recepción</label>
+                                    <label class="input">
+                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker" />
+                                    </label>
+                                </section>
+                            
                             <section class="col col-md-3">
                                 <label class="label">Empresa</label>
                                 <label style="width:100%; height:50px;">
@@ -87,7 +94,7 @@
                                                         <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select><i></i>
                                                     </label>
                             </section>
-                            <div class="col col-md-3">
+                            <div class="col col-md-2">
                                 <label class="label">Tipo IVA</label>
                                 <label style="width:100%;">
                                     <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>

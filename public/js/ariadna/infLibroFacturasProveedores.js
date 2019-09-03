@@ -29,13 +29,28 @@ viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
 }
 
+
+
 function initForm() {
     comprobarLogin();
     usuario = recuperarIdUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
-    datePickerSpanish();
+    datePickerSpanish(); // see comun.js
+
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
+    
     vm = new admData();
     ko.applyBindings(vm);
     //
@@ -49,61 +64,8 @@ function initForm() {
     });
     $("#btnExportar").click(exportarPDF);
     //
-    $('#txtRFecha').daterangepicker({
-        "showDropdowns": true,
-        "locale": {
-            "direction": "ltr",
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "Desde",
-            "toLabel": "Hasta",
-            "customRangeLabel": "Personalizado",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
-        },
-        "alwaysShowCalendars": true,
-        ranges: {
-            'Hoy': [moment(), moment()],
-            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-            'Semana pasada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-            'Este mes': [moment().startOf('month'), moment().endOf('month')],
-            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Este año': [moment().startOf('year'), moment().endOf('year')],
-            'Último año': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
-        }
-    }, function (start, end, label) {
-        //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-        vm.dFecha(start.format('YYYY-MM-DD'));
-        vm.hFecha(end.format('YYYY-MM-DD'));
-    });
-    vm.dFecha(moment().format('YYYY-MM-DD'));
-    vm.hFecha(moment().format('YYYY-MM-DD'));
-
+    
+    
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -113,6 +75,9 @@ function initForm() {
 
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
+
+   
+   
     //
     // $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
@@ -256,7 +221,11 @@ function datosOK() {
         rules: {
             cmbEmpresas: {
                 required: true
-            }
+            },
+            txtHastaFecha: {
+                greaterThan: "#txtDesdeFecha"
+            },
+        
         },
         // Messages for form validation
         messages: {
@@ -320,10 +289,10 @@ var rptFacturaParametros = function (sql) {
 
 
     var proveedorId = vm.sproveedorId();
-    /*var departamentoId = vm.sdepartamentoId();*/
+  
     var empresaId = vm.sempresaId();
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
+    var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
+    var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var tipoIvaId = vm.stipoIvaId();
 
     sql += " WHERE f.departamentoId IS NOT NULL ";
