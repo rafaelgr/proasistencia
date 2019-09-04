@@ -72,7 +72,7 @@ function initForm() {
     $("#cmbTiposProfesional").select2(select2Spanish());
     loadTiposProfesional(0);
     $("#cmbTiposProfesional").select2().on('change', function (e) {
-        if (e.added) cambioTipoProfesional(e.added.id);
+        if (e.val) cambioTipoProfesional(e.val);
     });
 
     
@@ -460,12 +460,21 @@ function cambioArticulo(articuloId) {
 
 
 
-function cambioTipoProfesional(tipoProfesionalId) {
-    var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
-    if (tipoProfesionalId > 0) {
-        url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId() +"/"+ tipoProfesionalId
+function cambioTipoProfesional(tiposProfesionales) {
+    var tipos = [];
+    var method = "GET"
+    if(tiposProfesionales.length > 0) {
+        method = "POST"
+        tiposProfesionales.forEach(e => {
+            e = parseInt(e);
+            tipos.push(e);
+        });
     }
-    llamadaAjax("GET", url, null, function (err, data) {
+    var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
+    if (tipos.length == 0) {
+        url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
+    }
+    llamadaAjax(method, url, tipos, function (err, data) {
         if(err) return;
         loadTablatarifaClienteLineas(data)
     });
@@ -510,7 +519,7 @@ function loadTiposProfesional(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposProfesional = [{ tipoProfesionalId: 0, nombre: "" }].concat(data);
+            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
             vm.posiblesTiposProfesional(tiposProfesional);
             $("#cmbTiposProfesional").val([id]).trigger('change');
         },
