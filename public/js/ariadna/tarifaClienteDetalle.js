@@ -559,7 +559,7 @@ function copiarTarifa() {
             tarifaCliente: {
                 "tarifaClienteId": vm.tarifaClienteId(),
                 "nuevaTarifaClienteId": data.tarifaClienteId,
-                "tipoProfesionalId": vm.stipoProfesionalId()
+                "tiposProfesionalesId": vm.elegidosTiposProfesional()
             }
         }
         llamadaAjax("POST", "/api/tarifas_cliente/copia/tarifa/cliente/nombre" , data2, function (err, data) {
