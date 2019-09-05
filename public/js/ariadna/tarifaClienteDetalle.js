@@ -630,3 +630,32 @@ function datosOKPorcent() {
     });
     return $('#frmPorcentaje').valid();
 }
+
+function deleteTarifaClienteTipoProfesional() {
+   
+    var mens = "<strong>¡¡ Atención !! Se borrán de la tarifa todas las lineas con tipo profesional seleccionado en el desplegable.</strong></li>";
+    mens += " </br><strong>Si no hay nada seleccionado se borrarán todas.</strong>"
+    mens += " </br><strong>¿ Desea Continuar ?.</strong>"
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Borrar lineas]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Borrar lineas") {
+            var data = { 
+                
+                "tiposProfesionales": vm.elegidosTiposProfesional()
+                
+            };
+            llamadaAjax("DELETE", myconfig.apiUrl +"/api/tarifas_cliente/Borrar/por/tipos/" + tarifaClienteId, data,function (err) {
+                if (err) return;
+                loadLineasTarifaCliente(tarifaClienteId);
+                loadTiposProfesional(0);
+            });
+        }
+        
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
