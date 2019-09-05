@@ -407,12 +407,14 @@ function loadTablatarifaClienteLineas(data) {
         data = null;
         $('#btnCopiar').hide();
         $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
     }
     dt.fnClearTable();
     if (data != null){
         dt.fnAddData(data);
         $('#btnCopiar').show();
         $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
 }
@@ -600,9 +602,14 @@ function datosOKNuevoNombre() {
 function aplicarPorcentaje() {
     if(!datosOKPorcent()) return;
     var porcent = vm.porcent() * 0.01
-    var url = "/api/tarifas_cliente/aplicar/porcentaje/precio/" + porcent  + "/" + vm.stipoProfesionalId() + "/" + tarifaClienteId;
+    var data = {
+        
+            tiposProfesionales: vm.elegidosTiposProfesional()
+        
+    }
+    var url = "/api/tarifas_cliente/aplicar/porcentaje/precio/" + porcent  + "/" + tarifaClienteId;
     var returnUrl = "TarifaClienteGeneral.html?tarifaClienteId="+tarifaClienteId;
-    llamadaAjax("PUT", url, null, function (err, data) {
+    llamadaAjax("PUT", url, data, function (err, result) {
         if(err) return;
         window.open(returnUrl, '_self');
         
