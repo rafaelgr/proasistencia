@@ -72,7 +72,7 @@ function initForm() {
     $("#cmbTiposProfesional").select2(select2Spanish());
     loadTiposProfesional(0);
     $("#cmbTiposProfesional").select2().on('change', function (e) {
-        if (e.added) cambioTipoProfesional(e.added.id);
+        if (e.val) cambioTipoProfesional(e.val);
     });
 
     
@@ -407,12 +407,14 @@ function loadTablatarifaClienteLineas(data) {
         data = null;
         $('#btnCopiar').hide();
         $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
     }
     dt.fnClearTable();
     if (data != null){
         dt.fnAddData(data);
         $('#btnCopiar').show();
         $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
 }
@@ -460,12 +462,20 @@ function cambioArticulo(articuloId) {
 
 
 
-function cambioTipoProfesional(tipoProfesionalId) {
+function cambioTipoProfesional(tiposProfesionales) {
+    var tipos = [];
+    var method = "GET"
     var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
-    if (tipoProfesionalId > 0) {
-        url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId() +"/"+ tipoProfesionalId
+    if(tiposProfesionales.length > 0) {
+        method = "POST"
+        tiposProfesionales.forEach(e => {
+            e = parseInt(e);
+            tipos.push(e);
+        });
     }
-    llamadaAjax("GET", url, null, function (err, data) {
+   
+    
+    llamadaAjax(method, url, tipos, function (err, data) {
         if(err) return;
         loadTablatarifaClienteLineas(data)
     });
@@ -492,11 +502,12 @@ function deleteTarifaClienteLinea(tarifaClienteId) {
         };
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_cliente/lineas/" + tarifaClienteId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + vm.tarifaClienteId(), null, function (err, data) {
+            /*llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + vm.tarifaClienteId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasTarifaCliente(data.tarifaClienteId);
-            });
+            });*/
+            cambioTipoProfesional(vm.elegidosTiposProfesional());
         });
     }, function () {
         // cancelar no hace nada
@@ -510,7 +521,7 @@ function loadTiposProfesional(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposProfesional = [{ tipoProfesionalId: 0, nombre: "" }].concat(data);
+            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
             vm.posiblesTiposProfesional(tiposProfesional);
             $("#cmbTiposProfesional").val([id]).trigger('change');
         },
@@ -550,7 +561,7 @@ function copiarTarifa() {
             tarifaCliente: {
                 "tarifaClienteId": vm.tarifaClienteId(),
                 "nuevaTarifaClienteId": data.tarifaClienteId,
-                "tipoProfesionalId": vm.stipoProfesionalId()
+                "tiposProfesionalesId": vm.elegidosTiposProfesional()
             }
         }
         llamadaAjax("POST", "/api/tarifas_cliente/copia/tarifa/cliente/nombre" , data2, function (err, data) {
@@ -591,9 +602,14 @@ function datosOKNuevoNombre() {
 function aplicarPorcentaje() {
     if(!datosOKPorcent()) return;
     var porcent = vm.porcent() * 0.01
-    var url = "/api/tarifas_cliente/aplicar/porcentaje/precio/" + porcent  + "/" + vm.stipoProfesionalId() + "/" + tarifaClienteId;
+    var data = {
+        
+            tiposProfesionales: vm.elegidosTiposProfesional()
+        
+    }
+    var url = "/api/tarifas_cliente/aplicar/porcentaje/precio/" + porcent  + "/" + tarifaClienteId;
     var returnUrl = "TarifaClienteGeneral.html?tarifaClienteId="+tarifaClienteId;
-    llamadaAjax("PUT", url, null, function (err, data) {
+    llamadaAjax("PUT", url, data, function (err, result) {
         if(err) return;
         window.open(returnUrl, '_self');
         
@@ -620,4 +636,33 @@ function datosOKPorcent() {
         }
     });
     return $('#frmPorcentaje').valid();
+}
+
+function deleteTarifaClienteTipoProfesional() {
+   
+    var mens = "<strong>¡¡ Atención !! Se borrán de la tarifa todas las lineas con tipo profesional seleccionado en el desplegable.</strong></li>";
+    mens += " </br><strong>Si no hay nada seleccionado se borrarán todas.</strong>"
+    mens += " </br><strong>¿ Desea Continuar ?.</strong>"
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Borrar lineas]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Borrar lineas") {
+            var data = { 
+                
+                "tiposProfesionales": vm.elegidosTiposProfesional()
+                
+            };
+            llamadaAjax("DELETE", myconfig.apiUrl +"/api/tarifas_cliente/Borrar/por/tipos/" + tarifaClienteId, data,function (err) {
+                if (err) return;
+                loadLineasTarifaCliente(tarifaClienteId);
+                loadTiposProfesional(0);
+            });
+        }
+        
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }
