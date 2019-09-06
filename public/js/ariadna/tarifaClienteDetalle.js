@@ -465,6 +465,7 @@ function cambioArticulo(articuloId) {
 function cambioTipoProfesional(tiposProfesionales) {
     var tipos = [];
     var method = "GET"
+    var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
     if(tiposProfesionales.length > 0) {
         method = "POST"
         tiposProfesionales.forEach(e => {
@@ -472,10 +473,8 @@ function cambioTipoProfesional(tiposProfesionales) {
             tipos.push(e);
         });
     }
-    var url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
-    if (tipos.length == 0) {
-        url = "/api/tarifas_cliente/lineas/" + vm.tarifaClienteId();
-    }
+   
+    
     llamadaAjax(method, url, tipos, function (err, data) {
         if(err) return;
         loadTablatarifaClienteLineas(data)
@@ -503,11 +502,12 @@ function deleteTarifaClienteLinea(tarifaClienteId) {
         };
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_cliente/lineas/" + tarifaClienteId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + vm.tarifaClienteId(), null, function (err, data) {
+            /*llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_cliente/" + vm.tarifaClienteId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasTarifaCliente(data.tarifaClienteId);
-            });
+            });*/
+            cambioTipoProfesional(vm.elegidosTiposProfesional());
         });
     }, function () {
         // cancelar no hace nada

@@ -391,12 +391,14 @@ function loadTablatarifaProveedorLineas(data) {
         data = null;
         $('#btnCopiar').hide();
         $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
     }
     dt.fnClearTable();
     if (data != null){
         dt.fnAddData(data);
         $('#btnCopiar').show();
         $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
 }
@@ -461,11 +463,12 @@ function deleteTarifaProveedorLinea(tarifaProveedorId) {
         };
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/tarifas_proveedor/lineas/" + tarifaProveedorId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_proveedor/" + vm.tarifaProveedorId(), null, function (err, data) {
+            /*llamadaAjax("GET", myconfig.apiUrl + "/api/tarifas_proveedor/" + vm.tarifaProveedorId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasTarifaProveedor(data.tarifaProveedorId);
-            });
+            });*/
+            cambioTipoProfesional(vm.elegidosTiposProfesional());
         });
     }, function () {
         // cancelar no hace nada
@@ -476,16 +479,13 @@ function deleteTarifaProveedorLinea(tarifaProveedorId) {
 function cambioTipoProfesional(tiposProfesionales) {
     var tipos = [];
     var method = "GET"
+    var url = "/api/tarifas_proveedor/lineas/" + vm.tarifaProveedorId();
     if(tiposProfesionales.length > 0) {
         method = "POST"
         tiposProfesionales.forEach(e => {
             e = parseInt(e);
             tipos.push(e);
         });
-    }
-    var url = "/api/tarifas_proveedor/lineas/" + vm.tarifaProveedorId();
-    if (tipos.length == 0) {
-        url = "/api/tarifas_proveedor/lineas/" + vm.tarifaProveedorId();
     }
     llamadaAjax(method, url, tipos, function (err, data) {
         if(err) return;
@@ -607,9 +607,14 @@ function datosOKNuevoNombre() {
 function aplicarPorcentaje() {
     if(!datosOKPorcent()) return;
     var porcent = vm.porcent() * 0.01
-    var url = "/api/tarifas_proveedor/aplicar/porcentaje/precio/" + porcent  + "/" + vm.stipoProfesionalId() + "/" + tarifaProveedorId;
+    var data = {
+        
+        tiposProfesionales: vm.elegidosTiposProfesional()
+    
+    }
+    var url = "/api/tarifas_proveedor/aplicar/porcentaje/precio/" + porcent  + "/" + tarifaProveedorId;
     var returnUrl = "TarifaProveedorGeneral.html?tarifaProveedorId="+tarifaProveedorId;
-    llamadaAjax("PUT", url, null, function (err, data) {
+    llamadaAjax("PUT", url, data, function (err, data) {
         if(err) return;
         window.open(returnUrl, '_self');
         

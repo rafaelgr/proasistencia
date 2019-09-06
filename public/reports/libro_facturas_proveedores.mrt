@@ -68,7 +68,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
           <Components isList="true" count="2">
             <Text3 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,0.2,9.8,0.6</ClientRectangle>
+              <ClientRectangle>5,0.2,10,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,14.25,Regular,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
@@ -81,7 +81,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             </Text3>
             <Text16 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,0.8,9.8,0.6</ClientRectangle>
+              <ClientRectangle>5,0.8,10,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,12,Regular,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
@@ -232,14 +232,14 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Headerliqgen_tipo Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.2,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>1.2,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_tipo</Name>
               <Page isRef="4" />
               <Parent isRef="10" />
-              <Text>Fecha</Text>
+              <Text>Recepción</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -248,7 +248,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Headerliqgen_totComision Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0,6,0.8</ClientRectangle>
+              <ClientRectangle>5,0,5.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -264,7 +264,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text2 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>3.4,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>5f9d8395047710e9b5d2c08fdc1a698b</Guid>
@@ -306,6 +306,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>12.2,0,1.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>9a24c9f6ea094d94a8441aafbf825f40</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -332,6 +333,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
                 <value>libPro.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>29101da2d0c34f0c8c918a513ade1443</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -357,6 +359,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>13.4,0,1.6,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>227b3a69aa40431b9abf50440bba0971</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -381,6 +384,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>0,0,1,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_nombre</Name>
               <Page isRef="4" />
@@ -398,6 +402,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>1.2,0,1.6,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_tipo</Name>
               <Page isRef="4" />
@@ -413,9 +418,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Dataliqgen_totComision Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>4.8,0,5.4,0.2</ClientRectangle>
+              <ClientRectangle>5,0,5.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_totComision</Name>
               <Page isRef="4" />
@@ -438,9 +444,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text1 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3,0,1.6,0.2</ClientRectangle>
+              <ClientRectangle>3.4,0,1.4,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>c438af3ec48d29f8624ab2f3eb14fdf1</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
@@ -459,6 +466,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>16.8,0,2.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>fa906f2177c440e189c84e0ae44f2fd7</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -484,6 +492,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <ClientRectangle>11,0,1.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
               <Guid>5592025692a34d09907a5e85ced97093</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -852,10 +861,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/3/2019 12:10:25 PM</ReportChanged>
+  <ReportChanged>9/6/2019 11:39:11 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>3bda9d59ede54da7bdb7fc5782cf08a6</ReportGuid>
+  <ReportGuid>30487b5ed60d4fe6876b1cd2132e3dfc</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
