@@ -58,6 +58,11 @@ function initForm() {
         cambioCodComercial();
     });
 
+    $("#txtNif").on('change', function (e) {
+        var nif = $("#txtNif").val();
+        compruebaNifRepetido(nif);
+    });
+
     $("#frmComisionista").submit(function () {
         return false;
     });
@@ -777,6 +782,26 @@ function loadTarifas(id) {
             var tarifas = [{ tarifaClienteId: 0, nombre: "" }].concat(data);
             vm.posiblesTarifas(tarifas);
             $("#cmbTarifas").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function compruebaNifRepetido(nif) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif,
+        dataType: "json",
+        contentType: "application/json",
+        data:null,
+        success: function (data, status) {
+            if(data && data.clienteId != vm.clienteId()) {
+               mensError('Ya existe un cliente con este NIF');
+               $('#txtNif').val(antNif);
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
