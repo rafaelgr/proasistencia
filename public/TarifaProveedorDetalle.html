@@ -502,7 +502,7 @@
                                                          <section class="col col-md-4">
                                                                  <label class="label">Tipo profesional</label>
                                                                  <label style="width:100%;">
-                                                                     <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select><i></i>
+                                                                     <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional" multiple="multiple" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select><i></i>
                                                                  </label>
                                                          </section>
                                                          <section class="col col-md-8">
@@ -520,6 +520,9 @@
                                                 </button>
                                                 <button id="btnPorcentaje" title="Modificar Precio Artículos" data-toggle="modal" data-target="#modalModPrecio" class="btn btn-danger btn-circle btn-lg">
                                                     <i class="fa fa-money"></i>
+                                                </button>
+                                                <button id="btnDeleteTipo" class='btn btn-circle btn-danger btn-lg' onclick=deleteTarifaProveedorTipoProfesional() title='Eliminar tipos profesionales'> 
+                                                        <i class='fa fa-trash-o fa-fw'></i> 
                                                 </button>
                                             </div>
                                         </fieldset>
