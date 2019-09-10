@@ -60,7 +60,16 @@ function initForm() {
 
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
-        compruebaNifRepetido(nif);
+        if(nif != "") {
+            compruebaNifRepetido(nif);
+        }
+    });
+
+    $("#txtProId").on('change', function (e) {
+        var proId = $("#txtProId").val();
+        if(proId != "") {
+            compruebaProIdRepetido(proId);
+        }
     });
 
     $("#frmComisionista").submit(function () {
@@ -800,7 +809,30 @@ function compruebaNifRepetido(nif) {
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
                mensError('Ya existe un cliente con este NIF');
-               $('#txtNif').val(antNif);
+               $('#txtNif').val("");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function compruebaProIdRepetido(proId) {
+    var data = {
+        cod: proId,
+    }
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/clientes/comprueba/codigo/repetido",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data2, status) {
+            if(data2 && data2.clienteId != vm.clienteId()) {
+               mensError('Ya existe un cliente con este codigo');
+               $('#txtProId').val("");
             }
         },
         error: function (err) {
