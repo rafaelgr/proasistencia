@@ -294,7 +294,7 @@ function admData() {
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
-    self.colaborador = ko.observable();
+    //self.colaborador = ko.observable();
     self.direccion2 = ko.observable();
     self.codPostal2 = ko.observable();
     self.poblacion2 = ko.observable();
@@ -1248,17 +1248,7 @@ function realizarCambioAgente(data) {
     // le damos valor al código
     vm.codComercial(data.proId);
     if (data) {
-        $.ajax({
-            type: "GET",
-            url: "/api/comerciales/" + data.ascComercialId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                if (data) {
-                    vm.colaborador(data.nombre);
-                }
-            }
-        });
+        loadComerciales(data.ascComercialId);
     }
 }
 
