@@ -60,6 +60,7 @@ function initForm() {
 
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
+        if(!nif || nif == "") return;
         compruebaRepetido(nif);
     });
 
