@@ -20,3 +20,14 @@ CREATE TABLE `agentes_colaboradores` (
   CONSTRAINT `agente_comercialFK` FOREIGN KEY (`agenteId`) REFERENCES `comerciales` (`comercialId`),
   CONSTRAINT `colaboradorFK` FOREIGN KEY (`colaboradorId`) REFERENCES `comerciales` (`comercialId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `clientes`   
+  ADD COLUMN `tipoIvaId` INT(11) NULL AFTER `colaboradorId`,
+  ADD CONSTRAINT `ref_cliente_tipoIva` FOREIGN KEY (`tipoIvaId`) REFERENCES `tipos_iva`(`tipoIvaId`);
+
+
+ALTER TABLE `proasistencia`.`clientes`   
+  ADD COLUMN `facturarPorEmail` TINYINT(1) DEFAULT 1 NULL AFTER `tipoIvaId`;
+
+  ALTER TABLE `clientes`   
+  ADD COLUMN `limiteCredito` DECIMAL(12,2) NULL AFTER `facturarPorEmail`;

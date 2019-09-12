@@ -847,7 +847,7 @@ function guardaAgenteColaborador() {
                             /*var datos = {
                                 comercialId: vm.sagenteId()
                             }
-                            actualizaContratosActivos(datos);*/
+                            actualizaColaboradorAsociado(datos);*/
 
 
                         },
@@ -964,34 +964,33 @@ function loadAgentesColaboradores(id) {
 }
 
 
-function deleteAgentesColaboradores(clienteAgenteId) {
+function deleteAgentesColaboradores(agenteColaboradorId) {
     // mensaje de confirmación
     var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente borrado como agente del cliente";
     mensajeAceptarCancelar(mensaje, function () {
 
-        llamadaAjax("DELETE", "/api/comerciales/AgenteColaborador/" + clienteAgenteId, null, function (err, data) {
+        llamadaAjax("DELETE", "/api/comerciales/AgenteColaborador/" + agenteColaboradorId, null, function (err, data) {
             if (err) return;
-            var datos = {
-                cliente: {
-                    "clienteId": vm.clienteId(),
-                    "proId": vm.proId(),
-                    "nombre": vm.nombre(),
-                    "nombreComercial": vm.nombreComercial(),
-                    "nif": vm.nif(),
-                    "comercialId": data[0].comercialId
+
+            var data2 =  {
+                comercial: {
+                 comercialId: empId,
+                 nombre: vm.nombre(),
+                 nif: vm.nif(),
+                 ascComercialId: data[0].colaboradorId
                 }
             }
-
+            
             $.ajax({
                 type: "PUT",
                 url: myconfig.apiUrl + "/api/comerciales/" + empId,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(datos),
+                data: JSON.stringify(data2),
                 success: function (dataBis, status) {
                     limpiaModalAgentesColaboradores();
-                    loadAgentesColaboradores(empId);
-                    //actualizaContratosActivos(data[0])
+                    loadAgentesColaboradores(data[0].colaboradorId);
+                    //actualizaColaboradorAsociado(dataBis[0])
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -1044,4 +1043,30 @@ function limpiaModalAgentesColaboradores() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function actualizaColaboradorAsociado(datos) {
+    
+    var data =  {
+        comercial: {
+         comercialId: empId,
+         nombre: vm.nombre(),
+         nif: vm.nif(),
+         ascComercialId: datos.comercialId
+        }
+    }
+    $.ajax({
+     type: "PUT",
+     url: myconfig.apiUrl + "/api/comerciales/" + empId,
+     dataType: "json",
+     contentType: "application/json",
+     data: JSON.stringify(data),
+     success: function (data, status) {
+        loadAgentesColaboradores(datos.comercialId);
+        
+     },
+     error: function (err) {
+         mensErrorAjax(err);
+     }
+     });
 }

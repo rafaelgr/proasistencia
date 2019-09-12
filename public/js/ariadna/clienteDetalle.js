@@ -112,6 +112,9 @@ function initForm() {
     $("#cmbTiposVia3").select2(select2Spanish());
     loadTiposVia3();
 
+    $("#cmbTiposIva").select2(select2Spanish());
+    loadTiposIva();
+
     // select2 things
     $("#cmbAgentes").select2(select2Spanish());
     $("#cmbAgentes").select2().on('change', function (e) {
@@ -234,6 +237,7 @@ function initForm() {
         vm.clienteId(0);
         vm.activa(1);
         vm.fechaAlta(spanishDate(new Date()));
+        $('#chkEmail').prop("checked", true);
         // escondemos el grid de colaboradores asociados
         $("#wid-id-2").hide();
         // contador de código
@@ -294,6 +298,7 @@ function admData() {
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
+    self.limiteCredito = ko.observable();
     //self.colaborador = ko.observable();
     self.direccion2 = ko.observable();
     self.codPostal2 = ko.observable();
@@ -306,6 +311,7 @@ function admData() {
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
+    self.facturarPorEmail = ko.observable()
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -350,6 +356,12 @@ function admData() {
     //
     self.posiblesTarifas = ko.observableArray([]);
     self.elegidasTarifas = ko.observableArray([]);
+    //
+    self.tipoIvaId = ko.observable();
+    self.stipoIvaId = ko.observable();
+    //
+    self.posiblesTiposIva = ko.observableArray([]);
+    self.elegidosTiposIva = ko.observableArray([]);
 
     //-- Valores para form de comisionistas
     //
@@ -411,6 +423,8 @@ function loadData(data, desdeLoad) {
     vm.codComercial(data.codComercial);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
+    vm.facturarPorEmail(data.facturarPorEmail);
+    vm.limiteCredito(data.limiteCredito);
     // direccion 2
     vm.direccion2(data.direccion2);
     vm.codPostal2(data.codPostal2);
@@ -435,6 +449,7 @@ function loadData(data, desdeLoad) {
     loadClientesAgentes(empId);
     loadClientesCobros(empId);
     loadComerciales(data.colaboradorId);
+    loadTiposIva(data.tipoIvaId)
 
     var data = { id: data.comercialId };
     cambioAgente(data, desdeLoad);
@@ -477,6 +492,9 @@ function datosOK() {
                 required: true,
                 number: true
             },
+            txtLimiteCredito: {
+                number: true
+            },
             cmbAgentes: {
                 required: true
             }
@@ -494,6 +512,9 @@ function datosOK() {
             },
             txtEmail2: {
                 email: 'Debe usar un correo válido'
+            },
+            txtLimiteCredito: {
+                number: 'Debe introducir un numero'
             },
             cmbTiposClientes: {
                 required: "Debe elegir un tipo cliente"
@@ -606,7 +627,10 @@ function aceptar() {
                 "codPostal3": vm.codPostal3(),
                 "tipoViaId3": vm.stipoViaId3(),
                 "tarifaId": vm.starifaClienteId(),
-                "colaboradorId": vm.scomercialId()
+                "colaboradorId": vm.scomercialId(),
+                "tipoIvaId": vm.stipoIvaId(),
+                "facturarPorEmail": vm.facturarPorEmail(),
+                "limiteCredito": vm.limiteCredito()
             }
         };
         
@@ -790,6 +814,20 @@ function loadTiposVia(id) {
         }
     });
 }
+
+function loadTiposIva(id) {
+    llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposIva(tiposIva);
+        if (id) {
+            $("#cmbTiposIva").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([0]).trigger('change');
+        }
+    });
+}
+
 
 function loadTiposVia2(id) {
     $.ajax({
