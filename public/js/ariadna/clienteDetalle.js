@@ -12,6 +12,7 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var importeCobro = 0;
 var empId = 0;
 var lineaEnEdicion = false;
 var cambAgente;
@@ -58,6 +59,27 @@ function initForm() {
         cambioCodComercial();
     });
 
+    $("#txtNif").on('change', function (e) {
+        var nif = $("#txtNif").val();
+        if(nif != "") {
+            compruebaNifRepetido(nif);
+        }
+    });
+
+    $("#txtProId").on('change', function (e) {
+        var proId = $("#txtProId").val();
+        if(proId != "") {
+            compruebaProIdRepetido(proId);
+        }
+    });
+
+    $("#txtNombre").on('change', function (e) {
+        var val = $("#txtNombre").val();
+        if(val != "") {
+            vm.nombreComercial(val);
+        }
+    });
+
     $("#frmComisionista").submit(function () {
         return false;
     });
@@ -91,11 +113,15 @@ function initForm() {
     $("#cmbTiposVia3").select2(select2Spanish());
     loadTiposVia3();
 
+    $("#cmbTiposIva").select2(select2Spanish());
+    loadTiposIva();
+
     // select2 things
     $("#cmbAgentes").select2(select2Spanish());
     $("#cmbAgentes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioAgente(e.added);
+        if(e.added) cambioComercial(e.added);
     });
     loadAgentes();
 
@@ -103,10 +129,12 @@ function initForm() {
     // select2 things
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
-    $("#cmbComerciales").select2().on('change', function (e) {
+    /*$("#cmbComerciales").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioComercial(e.added);
-    });
+        if(e.added) cambioComercial(e.added);
+        
+       
+    });*/
 
     // select2 things
     $("#cmbTarifas").select2(select2Spanish());
@@ -121,6 +149,42 @@ function initForm() {
                 var n1 = n * 1 + 1;
                 var r2 = r + n1;
                 $("#" + r2).focus();
+            }
+        });
+    });
+
+    //actuaizacion de visualización del iban
+    $(function () {
+        $("#txtIban").change(function () {
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for(var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
+            }
+            
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for(var i = 0; i < this.value.length; i++ ) {
+                    if(!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+               
             }
         });
     });
@@ -154,7 +218,7 @@ function initForm() {
             clienteId: empId
         }
         loadClientesAgentes(empId);
-        loadClientesCobros(empId);
+        //loadClientesCobros(empId);
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -176,6 +240,9 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.clienteId(0);
         vm.activa(1);
+        vm.fechaAlta(spanishDate(new Date()));
+        vm.limiteCredito(0);
+        $('#chkEmail').prop("checked", true);
         // escondemos el grid de colaboradores asociados
         $("#wid-id-2").hide();
         // contador de código
@@ -236,7 +303,8 @@ function admData() {
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
-    self.colaborador = ko.observable();
+    self.limiteCredito = ko.observable();
+    //self.colaborador = ko.observable();
     self.direccion2 = ko.observable();
     self.codPostal2 = ko.observable();
     self.poblacion2 = ko.observable();
@@ -248,6 +316,7 @@ function admData() {
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
+    self.facturarPorEmail = ko.observable()
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -292,6 +361,12 @@ function admData() {
     //
     self.posiblesTarifas = ko.observableArray([]);
     self.elegidasTarifas = ko.observableArray([]);
+    //
+    self.tipoIvaId = ko.observable();
+    self.stipoIvaId = ko.observable();
+    //
+    self.posiblesTiposIva = ko.observableArray([]);
+    self.elegidosTiposIva = ko.observableArray([]);
 
     //-- Valores para form de comisionistas
     //
@@ -320,6 +395,16 @@ function admData() {
     self.fechaCambio = ko.observable();
     self.nombreAgente = ko.observable();
     self.antiguoAgenteId = ko.observable();
+
+    //valores informativos del agente
+    self.tipoViaAgente = ko.observable();
+    self.direccionAgente = ko.observable();
+    self.poblacionAgente = ko.observable();
+    self.codPostalAgente = ko.observable();
+    self.provinciaAgente = ko.observable();
+    self.telefonoAgente = ko.observable();
+    self.correoAgente = ko.observable();
+
 }
 
 function loadData(data, desdeLoad) {
@@ -353,6 +438,8 @@ function loadData(data, desdeLoad) {
     vm.codComercial(data.codComercial);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
+    vm.facturarPorEmail(data.facturarPorEmail);
+    vm.limiteCredito(data.limiteCredito);
     // direccion 2
     vm.direccion2(data.direccion2);
     vm.codPostal2(data.codPostal2);
@@ -376,9 +463,11 @@ function loadData(data, desdeLoad) {
 
     loadClientesAgentes(empId);
     loadClientesCobros(empId);
+    loadComerciales(data.colaboradorId);
+    loadTiposIva(data.tipoIvaId)
 
-    var data = { id: data.comercialId };
-    cambioAgente(data, desdeLoad);
+    var data2 = { id: data.comercialId };
+    cambioAgente(data2, desdeLoad);
     //
     loadComisionistas(data.clienteId);
     // split iban
@@ -390,6 +479,8 @@ function loadData(data, desdeLoad) {
             vm['iban' + i](ibn);
         });
     }
+
+    cambioComercial(data2);
 }
 
 function datosOK() {
@@ -418,6 +509,13 @@ function datosOK() {
                 required: true,
                 number: true
             },
+            txtLimiteCredito: {
+                number: true,
+                required:true
+            },
+            cmbTiposIva: {
+                required: true
+            },
             cmbAgentes: {
                 required: true
             }
@@ -436,6 +534,10 @@ function datosOK() {
             txtEmail2: {
                 email: 'Debe usar un correo válido'
             },
+            txtLimiteCredito: {
+                number: 'Debe introducir un numero',
+                required: 'Se tiene que establecer un límite de credito'
+            },
             cmbTiposClientes: {
                 required: "Debe elegir un tipo cliente"
             },
@@ -445,6 +547,9 @@ function datosOK() {
             txtCodigo: {
                 required: "Debe introducir un código para contabilidad",
                 number: "El códig debe ser numérico"
+            },
+            cmbTiposIva: {
+                required: 'Debe intruducir un tipo de IVA'
             },
             cmbAgentes: {
                 required: "Debe seleccionar un agente"
@@ -465,7 +570,7 @@ function datosOK() {
     if (!$('#frmCliente').valid()) return false;
     // mas controles
     // iban
-    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    //vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
     if (vm.iban() && vm.iban() != "") {
         if (!IBAN.isValid(vm.iban())) {
             mensError("IBAN incorrecto");
@@ -504,6 +609,7 @@ function aceptar() {
             return;
             
         if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
+        if(vm.scomercialId() == 0) vm.scomercialId(null);
         var data = {
             cliente: {
                 "clienteId": vm.clienteId(),
@@ -546,7 +652,11 @@ function aceptar() {
                 "provincia3": vm.provincia3(),
                 "codPostal3": vm.codPostal3(),
                 "tipoViaId3": vm.stipoViaId3(),
-                "tarifaId": vm.starifaClienteId()
+                "tarifaId": vm.starifaClienteId(),
+                "colaboradorId": vm.scomercialId(),
+                "tipoIvaId": vm.stipoIvaId(),
+                "facturarPorEmail": vm.facturarPorEmail(),
+                "limiteCredito": vm.limiteCredito()
             }
         };
         
@@ -720,7 +830,7 @@ function loadTiposVia(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            var tiposVia = [{ tipoViaId: null, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
@@ -730,6 +840,20 @@ function loadTiposVia(id) {
         }
     });
 }
+
+function loadTiposIva(id) {
+    llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = data;
+        vm.posiblesTiposIva(tiposIva);
+        if (id) {
+            $("#cmbTiposIva").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([0]).trigger('change');
+        }
+    });
+}
+
 
 function loadTiposVia2(id) {
     $.ajax({
@@ -785,6 +909,61 @@ function loadTarifas(id) {
     });
 }
 
+function loadDatosAgente(data) {
+   if(data) {
+    vm.tipoViaAgente(data.tipoViaAgente);
+    vm.direccionAgente(data.direccion);
+    vm.poblacionAgente(data.poblacion);
+    vm.codPostalAgente(data.codPostal);
+    vm.provinciaAgente(data.provincia);
+    vm.telefonoAgente(data.telefono1);
+    vm.correoAgente(data.email)
+   }
+}
+
+function compruebaNifRepetido(nif) {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif,
+        dataType: "json",
+        contentType: "application/json",
+        data:null,
+        success: function (data, status) {
+            if(data && data.clienteId != vm.clienteId()) {
+               mensError('Ya existe un cliente con este NIF');
+               $('#txtNif').val("");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function compruebaProIdRepetido(proId) {
+    var data = {
+        cod: proId,
+    }
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/clientes/comprueba/codigo/repetido",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data2, status) {
+            if(data2 && data2.clienteId != vm.clienteId()) {
+               mensError('Ya existe un cliente con este codigo');
+               $('#txtProId').val("");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de comisionistas
 --------------------------------------------------------------------*/
@@ -799,7 +978,7 @@ function nuevoComisionista() {
     }
 }
 
-function aceptarComisionista() {
+/*function aceptarComisionista() {
 
     if (!datosOKComisionistas()) {
         return;
@@ -848,7 +1027,7 @@ function aceptarComisionista() {
             }
         });
     }
-}
+}*/
 
 function datosOKComisionistas() {
     $('#comisionista-form').validate({
@@ -1057,35 +1236,19 @@ function deleteComisionista(id) {
 */
 function cambioComercial(data) {
     //
-    if (!data) {
-        return;
-    }
+    
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.empresaId(),
+        url: "/api/comerciales/" + comercialId,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // asignamos el manPorVentaNeta al vm
-            vm.manPorVentaNeta(data.manPorVentaNeta);
-            vm.manPorBeneficio(data.manPorBeneficio);
-            vm.porComer(data.comision);
+            vm.porComer(data.porComer);
+            loadDatosAgente(data);
         },
         error: function (err) {
-            // buscamos el comercial para sacar sus datos por defecto
-            $.ajax({
-                type: "GET",
-                url: "/api/comerciales/" + comercialId,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    vm.porComer(data.porComer);
-                },
-                error: function (err) {
-
-                }
-            });
+            mensErrorAjax(err);
         }
     });
 
@@ -1145,17 +1308,7 @@ function realizarCambioAgente(data) {
     // le damos valor al código
     vm.codComercial(data.proId);
     if (data) {
-        $.ajax({
-            type: "GET",
-            url: "/api/comerciales/" + data.ascComercialId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                if (data) {
-                    vm.colaborador(data.nombre);
-                }
-            }
-        });
+        loadComerciales(data.ascComercialId);
     }
 }
 
@@ -1211,6 +1364,7 @@ function guardaClienteAgente() {
                 return;
 
             if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
+            if(vm.scomercialId() == 0) vm.scomercialId(null);
 
 
             var dataClienteAgente = {
@@ -1273,26 +1427,35 @@ function guardaClienteAgente() {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
-                    $.ajax({
-                        type: "POST",
-                        url: myconfig.apiUrl + "/api/clientes/agente",
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(dataClienteAgente),
-                        success: function (data, status) {
-                            limpiaModalClientesAgentes();
-                            var datos = {
-                                comercialId: vm.sagenteId()
+                    if(dataClienteAgente.clienteAgente.comercialId > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: myconfig.apiUrl + "/api/clientes/agente",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(dataClienteAgente),
+                            success: function (data, status) {
+                                limpiaModalClientesAgentes();
+                                var datos = {
+                                    comercialId: vm.sagenteId()
+                                }
+                                actualizaContratosActivos(datos);
+    
+    
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
                             }
-                            actualizaContratosActivos(datos);
-
-
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
+                        });
+                    } else {
+                        limpiaModalClientesAgentes();
+                        var datos = {
+                            comercialId: vm.sagenteId()
                         }
-                    });
+                        actualizaContratosActivos(datos);
+                    }
+                    
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -1540,6 +1703,7 @@ function initTablaClientesCobros() {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
             if ( !aData.seguro )
             {
+                importeCobro += parseFloat(aData.impvenci);
                 $('td', nRow).css('background-color', 'Orange');
             }
         },
@@ -1608,6 +1772,7 @@ function initTablaClientesCobros() {
 
 
 function loadTablaClientesCobros(data) {
+    var limite = parseFloat(vm.limiteCredito())
     var dt = $('#dt_clientesCobros').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -1615,6 +1780,11 @@ function loadTablaClientesCobros(data) {
     dt.fnClearTable();
     if (data) dt.fnAddData(data);
     dt.fnDraw();
+    if(vm.limiteCredito()) {
+        if(importeCobro > limite) {
+            mensError('ATENCION!!!, este cliente ha superado su limete de credito');
+        }
+    }
 }
 
 function loadClientesCobros(id) {
