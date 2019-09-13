@@ -12,6 +12,7 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var importeCobro = 0;
 var empId = 0;
 var lineaEnEdicion = false;
 var cambAgente;
@@ -120,6 +121,7 @@ function initForm() {
     $("#cmbAgentes").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioAgente(e.added);
+        if(e.added) cambioComercial(e.added);
     });
     loadAgentes();
 
@@ -127,10 +129,12 @@ function initForm() {
     // select2 things
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
-    $("#cmbComerciales").select2().on('change', function (e) {
+    /*$("#cmbComerciales").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioComercial(e.added);
-    });
+        if(e.added) cambioComercial(e.added);
+        
+       
+    });*/
 
     // select2 things
     $("#cmbTarifas").select2(select2Spanish());
@@ -214,7 +218,7 @@ function initForm() {
             clienteId: empId
         }
         loadClientesAgentes(empId);
-        loadClientesCobros(empId);
+        //loadClientesCobros(empId);
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -237,6 +241,7 @@ function initForm() {
         vm.clienteId(0);
         vm.activa(1);
         vm.fechaAlta(spanishDate(new Date()));
+        vm.limiteCredito(0);
         $('#chkEmail').prop("checked", true);
         // escondemos el grid de colaboradores asociados
         $("#wid-id-2").hide();
@@ -390,6 +395,16 @@ function admData() {
     self.fechaCambio = ko.observable();
     self.nombreAgente = ko.observable();
     self.antiguoAgenteId = ko.observable();
+
+    //valores informativos del agente
+    self.tipoViaAgente = ko.observable();
+    self.direccionAgente = ko.observable();
+    self.poblacionAgente = ko.observable();
+    self.codPostalAgente = ko.observable();
+    self.provinciaAgente = ko.observable();
+    self.telefonoAgente = ko.observable();
+    self.correoAgente = ko.observable();
+
 }
 
 function loadData(data, desdeLoad) {
@@ -451,8 +466,8 @@ function loadData(data, desdeLoad) {
     loadComerciales(data.colaboradorId);
     loadTiposIva(data.tipoIvaId)
 
-    var data = { id: data.comercialId };
-    cambioAgente(data, desdeLoad);
+    var data2 = { id: data.comercialId };
+    cambioAgente(data2, desdeLoad);
     //
     loadComisionistas(data.clienteId);
     // split iban
@@ -464,6 +479,8 @@ function loadData(data, desdeLoad) {
             vm['iban' + i](ibn);
         });
     }
+
+    cambioComercial(data2);
 }
 
 function datosOK() {
@@ -493,7 +510,11 @@ function datosOK() {
                 number: true
             },
             txtLimiteCredito: {
-                number: true
+                number: true,
+                required:true
+            },
+            cmbTiposIva: {
+                required: true
             },
             cmbAgentes: {
                 required: true
@@ -514,7 +535,8 @@ function datosOK() {
                 email: 'Debe usar un correo válido'
             },
             txtLimiteCredito: {
-                number: 'Debe introducir un numero'
+                number: 'Debe introducir un numero',
+                required: 'Se tiene que establecer un límite de credito'
             },
             cmbTiposClientes: {
                 required: "Debe elegir un tipo cliente"
@@ -525,6 +547,9 @@ function datosOK() {
             txtCodigo: {
                 required: "Debe introducir un código para contabilidad",
                 number: "El códig debe ser numérico"
+            },
+            cmbTiposIva: {
+                required: 'Debe intruducir un tipo de IVA'
             },
             cmbAgentes: {
                 required: "Debe seleccionar un agente"
@@ -584,6 +609,7 @@ function aceptar() {
             return;
             
         if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
+        if(vm.scomercialId() == 0) vm.scomercialId(null);
         var data = {
             cliente: {
                 "clienteId": vm.clienteId(),
@@ -804,7 +830,7 @@ function loadTiposVia(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            var tiposVia = [{ tipoViaId: null, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
@@ -818,7 +844,7 @@ function loadTiposVia(id) {
 function loadTiposIva(id) {
     llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        var tiposIva = data;
         vm.posiblesTiposIva(tiposIva);
         if (id) {
             $("#cmbTiposIva").val([id]).trigger('change');
@@ -881,6 +907,18 @@ function loadTarifas(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function loadDatosAgente(data) {
+   if(data) {
+    vm.tipoViaAgente(data.tipoViaAgente);
+    vm.direccionAgente(data.direccion);
+    vm.poblacionAgente(data.poblacion);
+    vm.codPostalAgente(data.codPostal);
+    vm.provinciaAgente(data.provincia);
+    vm.telefonoAgente(data.telefono1);
+    vm.correoAgente(data.email)
+   }
 }
 
 function compruebaNifRepetido(nif) {
@@ -1198,35 +1236,19 @@ function deleteComisionista(id) {
 */
 function cambioComercial(data) {
     //
-    if (!data) {
-        return;
-    }
+    
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/contratos_comerciales/comercial_empresa/" + comercialId + "/" + vm.empresaId(),
+        url: "/api/comerciales/" + comercialId,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            // asignamos el manPorVentaNeta al vm
-            vm.manPorVentaNeta(data.manPorVentaNeta);
-            vm.manPorBeneficio(data.manPorBeneficio);
-            vm.porComer(data.comision);
+            vm.porComer(data.porComer);
+            loadDatosAgente(data);
         },
         error: function (err) {
-            // buscamos el comercial para sacar sus datos por defecto
-            $.ajax({
-                type: "GET",
-                url: "/api/comerciales/" + comercialId,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    vm.porComer(data.porComer);
-                },
-                error: function (err) {
-
-                }
-            });
+            mensErrorAjax(err);
         }
     });
 
@@ -1342,6 +1364,7 @@ function guardaClienteAgente() {
                 return;
 
             if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
+            if(vm.scomercialId() == 0) vm.scomercialId(null);
 
 
             var dataClienteAgente = {
@@ -1404,26 +1427,35 @@ function guardaClienteAgente() {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
-                    $.ajax({
-                        type: "POST",
-                        url: myconfig.apiUrl + "/api/clientes/agente",
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(dataClienteAgente),
-                        success: function (data, status) {
-                            limpiaModalClientesAgentes();
-                            var datos = {
-                                comercialId: vm.sagenteId()
+                    if(dataClienteAgente.clienteAgente.comercialId > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: myconfig.apiUrl + "/api/clientes/agente",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(dataClienteAgente),
+                            success: function (data, status) {
+                                limpiaModalClientesAgentes();
+                                var datos = {
+                                    comercialId: vm.sagenteId()
+                                }
+                                actualizaContratosActivos(datos);
+    
+    
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
                             }
-                            actualizaContratosActivos(datos);
-
-
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
+                        });
+                    } else {
+                        limpiaModalClientesAgentes();
+                        var datos = {
+                            comercialId: vm.sagenteId()
                         }
-                    });
+                        actualizaContratosActivos(datos);
+                    }
+                    
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -1671,6 +1703,7 @@ function initTablaClientesCobros() {
             responsiveHelper_dt_basic.createExpandIcon(nRow);
             if ( !aData.seguro )
             {
+                importeCobro += parseFloat(aData.impvenci);
                 $('td', nRow).css('background-color', 'Orange');
             }
         },
@@ -1739,6 +1772,7 @@ function initTablaClientesCobros() {
 
 
 function loadTablaClientesCobros(data) {
+    var limite = parseFloat(vm.limiteCredito())
     var dt = $('#dt_clientesCobros').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -1746,6 +1780,11 @@ function loadTablaClientesCobros(data) {
     dt.fnClearTable();
     if (data) dt.fnAddData(data);
     dt.fnDraw();
+    if(vm.limiteCredito()) {
+        if(importeCobro > limite) {
+            mensError('ATENCION!!!, este cliente ha superado su limete de credito');
+        }
+    }
 }
 
 function loadClientesCobros(id) {

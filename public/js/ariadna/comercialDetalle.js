@@ -989,7 +989,7 @@ function deleteAgentesColaboradores(agenteColaboradorId) {
                 data: JSON.stringify(data2),
                 success: function (dataBis, status) {
                     limpiaModalAgentesColaboradores();
-                    loadAgentesColaboradores(data[0].colaboradorId);
+                    loadAgentesColaboradores(data[0].agenteId);
                     //actualizaColaboradorAsociado(dataBis[0])
                 },
                 error: function (err) {

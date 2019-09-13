@@ -31,3 +31,7 @@ ALTER TABLE `proasistencia`.`clientes`
 
   ALTER TABLE `clientes`   
   ADD COLUMN `limiteCredito` DECIMAL(12,2) NULL AFTER `facturarPorEmail`;
+
+  ALTER TABLE `clientes` DROP FOREIGN KEY `ref_cliente_colaborador`;
+
+ALTER TABLE `clientes` ADD CONSTRAINT `ref_cliente_colaborador` FOREIGN KEY (`colaboradorId`) REFERENCES `comerciales`(`comercialId`) ON UPDATE CASCADE ON DELETE NO ACTION;
