@@ -486,6 +486,12 @@
                                     <li>
                                         <a data-toggle="tab" href="#s3"><i class="fa fa-file-o"></i> <span class="hidden-mobile hidden-tablet">Clientes</span></a>
                                     </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s4">
+                                            <i class="fa  fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">Historial de colaboradores</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </header>
                             <!-- widget div-->
@@ -821,6 +827,60 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade" id="s4">
+                                            <!-- CUARTO  TAB (COLABORADORES) -->
+                                            <div class="row" id="colaboradores">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                    <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon">
+                                                                <i class="fa fa-edit"></i>
+                                                            </span>
+                                                            <h2>HISTORIAL DE COLABORADORES</h2>
+                                                        </header>
+                                                        <!-- widget div-->
+                                                        <div>
+                                                            <!-- widget edit box -->
+                                                            <div class="jarviswidget-editbox">
+                                                                <!-- This area used as dropdown edit box -->
+                                                                <input class="form-control" type="text">
+                                                            </div>
+                                                            <!-- end widget edit box -->
+                                                            <!-- widget content -->
+                                                            <div class="widget-body">
+                                                                <!-- this is what the user will see -->
+                                                                <header>
+                                                                    colaboradores que han estado asociados a este agente.
+                                                                </header>
+                                                                <hr/>
+                                                                <div id="tbClientesColaboradores">
+                                                                    <table id="dt_clientesColaboradores" class="table table-striped table-bordered table-hover" width="100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th data-class="expand">
+                                                                                    <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Hata fecha
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Colaborador
+                                                                                </th>
+                                                                                <th>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end widget content -->
+                                                        </div>
+                                                        <!-- end widget div -->
+                                                    </div>
+                                                    <!-- end widget -->
+                                                </article>
+                                                <!-- WIDGET END -->
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <!-- end widget content -->
@@ -838,6 +898,56 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!--MODAL-->
+    <div class="modal fade" id="modalCambioColaborador" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title"> Cambio Colaborador</h4>
+                    </div>
+                    <div class="modal-body no-padding">
+                        <form id="frmCambioAgente" class="smart-form">
+                            <fieldset>
+                                <section class="col col-sm-5">
+                                    <label class="label">Antiguo Colaborador</label>
+                                    <label class="input">
+                                        <input id="txtAntiguoColaboradorNombre" name="txtAntiguoColaboradorNombre" type="text" disabled data-bind="value: antiguoColaboradorNombre"
+                                        />
+                                    </label>
+                                </section>
+                                <section class="col col-sm-5">
+                                    <label class="label">Nuevo colaborador</label>
+                                    <label class="input">
+                                        <input id="txtNuevoColaboradorNombre" name="txtNuevoColaboradorNombre" type="text" disabled data-bind="value: nuevoColaboradorNombre" />
+                                    </label>
+                                </section>
+                                <section class="col col-sm-2">
+                                    <label class="label">Fecha cambio</label>
+                                    <label class="input">
+                                        <input id="txtNuevaFecha" name="txtNuevaFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: fechaCambio"
+                                        />
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <footer>
+                                <label class="label">Click en aceptar para confirmar cambio</label>
+                                <button id="btnAceptarCambioAgente" class="btn btn-primary" onclick="realizarCambioColaborador()">
+                                    Aceptar
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadAscComerciales(-1)">
+                                    Cancelar
+                                </button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

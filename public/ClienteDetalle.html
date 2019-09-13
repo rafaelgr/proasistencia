@@ -489,6 +489,12 @@
                                             <span class="hidden-mobile hidden-tablet">Historial de agentes</span>
                                         </a>
                                     </li>
+                                    <!--<li>
+                                            <a data-toggle="tab" href="#s4">
+                                                <i class="fa  fa fa-file-text-o"></i>
+                                                <span class="hidden-mobile hidden-tablet">Historial colaboradores</span>
+                                            </a>
+                                        </li>-->
                                     <li>
                                         <a data-toggle="tab" href="#s3">
                                             <i class="fa  fa fa-file-text-o"></i>
@@ -572,44 +578,11 @@
                                                                                 </label>
                                                                             </section>
                                                                             <section class="col col-md-6">
-                                                                                <div class="row">
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">IBAN:</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban1" name="txtIban1" type="text" data-bind="value: iban1" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">-</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban2" name="txtIban2" type="text" data-bind="value: iban2" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">-</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban3" name="txtIban3" type="text" data-bind="value: iban3" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">-</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban4" name="txtIban4" type="text" data-bind="value: iban4" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">-</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban5" name="txtIban5" type="text" data-bind="value: iban5" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                    <section class="col col-md-2">
-                                                                                        <label class="label">-</label>
-                                                                                        <label class="input">
-                                                                                            <input class="ibans" id="txtIban6" name="txtIban6" type="text" data-bind="value: iban6" maxlength="4" />
-                                                                                        </label>
-                                                                                    </section>
-                                                                                </div>
+                                                                                    <label class="label">IBAN</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
+                                                                                    </label>
+                                                                                
                                                                             </section>
                                                                             <section class="col col-md-1">
                                                                                 <label class="label">C.AGEN.</label>
@@ -625,6 +598,44 @@
                                                                                 </label>
                                                                             </section>
                                                                         </div>
+                                                                        <div class="row">
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">IBAN:</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban1" name="txtIban1" type="text" data-bind="value: iban1" maxlength="4" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">-</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban2" name="txtIban2" type="text" data-bind="value: iban2" maxlength="4" disabled />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">-</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban3" name="txtIban3" type="text" data-bind="value: iban3" maxlength="4" disabled />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">-</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban4" name="txtIban4" type="text" data-bind="value: iban4" maxlength="4" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">-</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban5" name="txtIban5" type="text" data-bind="value: iban5" maxlength="4" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">-</label>
+                                                                                    <label class="input">
+                                                                                        <input class="ibans" id="txtIban6" name="txtIban6" type="text" data-bind="value: iban6" maxlength="4" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-9">
                                                                                 <label class="label">Nombre comercial</label>
@@ -654,11 +665,13 @@
                                                                                 </label>
                                                                             </section>
                                                                             <section class="col col-md-3">
-                                                                                <label class="label">Colaborador asociado</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtColaborador" name="txtColaborador" data-bind="value: colaborador" disabled />
-                                                                                </label>
-                                                                            </section>
+                                                                                    <label class="label">Colaborador</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
+                                                                                        <i></i>
+                                                                                    </label>
+                                                                                </section>
+                                                                            
                                                                         </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-6" style="border:solid; border-width:1px;">
@@ -794,8 +807,63 @@
                                                                                 </div>
                                                                             </section>
                                                                             <section class="col col-md-6" style="border:solid; border-width:1px;">
-                                                                            </section>
+                                                                                    <header>
+                                                                                        Datos agente
+                                                                                    </header>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-3">
+                                                                                                <label class="label">Tipo via</label>
+                                                                                                <label class="input">
+                                                                                                    <input id="txtTipoViaAgente" name="txtTipoViaAgente" data-bind="value: tipoViaAgente" disabled/>
+                                                                                                </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-9">
+                                                                                            <label class="label">Direccion</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtDireccionAgente" name="txtDireccionAgente" data-bind="value: direccionAgente" disabled/>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-4">
+                                                                                            <label class="label">Poblacion</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtPoblacionAgente" name="txtPoblacionAgente" data-bind="value: poblacionAgente" disabled/>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                   
+                                                                                        <section class="col col-md-3">
+                                                                                            <label class="label">Cod.Postal</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtCodPostalAgente" name="txtCodPostalAgente" data-bind="value: codPostalAgente" disabled/>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-5">
+                                                                                            <label class="label">Provincia</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtProvinciaAgente" name="txtProvinciaAgente" data-bind="value: provinciaAgente" disabled/>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                            <section class="col col-md-3">
+                                                                                                    <label class="label">Teléfono</label>
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtTelefonoAgente" name="txtTelefonoAgente" data-bind="value: telefonoAgente" disabled/>
+                                                                                                    </label>
+                                                                                                </section>
+                                                                                           
+                                                                                                <section class="col col-md-9">
+                                                                                                    <label class="label">Correo</label>
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtCorreolAgente" name="txtCorreoAgente" data-bind="value: correoAgente" disabled/>
+                                                                                                    </label>
+                                                                                                </section>
+                                                                                        
+                                                                                    </div>
+                                                                                </section>
                                                                         </div>
+                                                                        
                                                                         <div class="row">
                                                                             <section class="col col-md-2">
                                                                                 <label class="label">Fecha alta</label>
@@ -803,26 +871,42 @@
                                                                                     <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-4">
                                                                                 <label class="label">Forma de pago</label>
                                                                                 <label style="width:100%;">
                                                                                     <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select>
                                                                                     <i></i>
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-2">
-                                                                                <label class="checkbox">
-                                                                                    <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                                                    <i></i>La cliente está activa
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Iva</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select>
+                                                                                    <i></i>
                                                                                 </label>
                                                                             </section>
+                                                                            
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Limite de credito</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtLimiteCredito" name="txtLimiteCredito" type="text" data-bind="value: limiteCredito" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="checkbox">
+                                                                                    <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                                                        <i></i>El cliente está activo
+                                                                                        </label>
+                                                                                </section>
                                                                             <section class="col col-md-2">
                                                                                 <label class="label">Fecha baja</label>
                                                                                 <label class="input">
                                                                                     <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-7">
                                                                                 <label class="label">Motivo de baja</label>
                                                                                 <label style="width:100%;">
                                                                                     <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select>
@@ -863,16 +947,22 @@
                                                                                     <input id="txtFax" name="txtFax" data-bind="value: fax" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-2">
                                                                                 <label class="label">Correo electrónico (1)</label>
                                                                                 <label class="input">
                                                                                     <input id="txtEmail" name="txtEmail" data-bind="value: email" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-2">
                                                                                 <label class="label">Correo electrónico (2)</label>
                                                                                 <label class="input">
                                                                                     <input id="txtEmail2" name="txtEmail2" data-bind="value: email2" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-2">
+                                                                                <label class="checkbox">
+                                                                                    <input id="chkEmail" type="checkbox" name="chkEmail" data-bind="checked: facturarPorEmail">
+                                                                                    <i></i>Enviar factura por Email
                                                                                 </label>
                                                                             </section>
                                                                         </div>
@@ -928,70 +1018,7 @@
                                     </div>
                                     <!-- end row -->
                                     <!-- row -->
-                                    <div class="row">
-                                        <!-- NEW WIDGET START -->
-                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <!-- Widget ID (each widget will need unique ID)-->
-                                            <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                                                <header>
-                                                    <span class="widget-icon">
-                                                        <i class="fa fa-edit"></i>
-                                                    </span>
-                                                    <h2>COLABORADORES</h2>
-                                                </header>
-                                                <!-- widget div-->
-                                                <div>
-                                                    <!-- widget edit box -->
-                                                    <div class="jarviswidget-editbox">
-                                                        <!-- This area used as dropdown edit box -->
-                                                        <input class="form-control" type="text">
-                                                    </div>
-                                                    <!-- end widget edit box -->
-                                                    <!-- widget content -->
-                                                    <div class="widget-body">
-                                                        <!-- this is what the user will see -->
-                                                        <header>
-                                                            Colaboradores asociados al cliente
-                                                        </header>
-                                                        <form id="frmComisionista">
-                                                            <fieldset>
-                                                                <div class="pull-right">
-                                                                    <button id="btnNuevoComisionista" title="Nuevo comisionista" data-toggle="modal" data-target="#modalComisionista" onclick="nuevoComisionista()"
-                                                                        class="btn btn-success btn-circle btn-lg">
-                                                                        <i class="fa fa-lg fa-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </fieldset>
-                                                        </form>
-                                                        <hr/>
-                                                        <div id="tbComisionistas">
-                                                            <table id="dt_comisiones" class="table table-striped table-bordered table-hover" width="100%">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th data-class="expand">
-                                                                            <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Colaborador
-                                                                        </th>
-                                                                        <th>
-                                                                            Tipo
-                                                                        </th>
-                                                                        <th data-hide="phone">
-                                                                            % Comision
-                                                                        </th>
-                                                                        <th>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end widget content -->
-                                                </div>
-                                                <!-- end widget div -->
-                                            </div>
-                                            <!-- end widget -->
-                                        </article>
-                                        <!-- WIDGET END -->
-                                    </div>
+                                    
 
 
                                 </div>
@@ -1116,6 +1143,57 @@
                                         <!-- WIDGET END -->
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="s4">
+                                        <!-- TERCER TAB (COBROS) -->
+                                        <div class="row" id="colaboradores">
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon">
+                                                            <i class="fa fa-edit"></i>
+                                                        </span>
+                                                        <h2>HISTORIAL DE COLABORADORES</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                                <div id="tbComisionistas">
+                                                                        <table id="dt_comisiones" class="table table-striped table-bordered table-hover" width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th data-class="expand">
+                                                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Colaborador
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        Tipo
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        % Comision
+                                                                                    </th>
+                                                                                    <th>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                        </table>
+                                                                    </div>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
+                                    </div>
                                 <!-- end row -->
                             </div>
                         </div>
@@ -1142,13 +1220,13 @@
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <div class="col col-md-10">
+                                    <!--<div class="col col-md-10">
                                         <label class="label">Colaborador</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
                                             <i></i>
                                         </label>
-                                    </div>
+                                    </div>-->
                                     <section class="col col-md-2">
                                         <label class="label">% Comision</label>
                                         <label class="input">

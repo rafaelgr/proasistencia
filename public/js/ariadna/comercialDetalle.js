@@ -17,6 +17,9 @@ var breakpointDefinition = {
 };
 
 var empId = 0;
+var cambColaborador;
+var datosCambioColaborador;
+var dataAgentesColaboradores;
 
 datePickerSpanish(); // see comun.js
 
@@ -33,6 +36,10 @@ function initForm() {
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
     $("#frmComercial").submit(function () {
+        return false;
+    });
+
+    $('#frmCambioAgente').submit(function () {
         return false;
     });
 
@@ -54,11 +61,20 @@ function initForm() {
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
 
+    $("#cmbAscComerciales").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioAscColaborador(e.added);
+    });
+    
+    initTablaClientesAgentes();
+
     empId = gup('ComercialId');
     if (empId != 0) {
         var data = {
             comercialId: empId
         }
+
+        loadAgentesColaboradores(empId);
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -68,7 +84,7 @@ function initForm() {
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadData(data);
+                loadData(data, true);
                 // cargamos los contratos relacionados
                 $.ajax({
                     type: "GET",
@@ -87,7 +103,7 @@ function initForm() {
                 });
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/clientes/agente/" + empId,
+                    url: myconfig.apiUrl +  "/api/clientes/agente/" + empId,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -146,6 +162,13 @@ function admData() {
     self.porComer = ko.observable();
     self.loginWeb = ko.observable();
     self.passWeb = ko.observable();
+    self.ascComercialId = ko.observable();
+    self.antiguoAscCoimercialId = ko.observable();
+    self.antiguoColaboradorNombre = ko.observable();
+    self.nuevoColaboradorNombre = ko.observable();
+    self.antiguoColaboradorNombre = ko.observable();
+    self.nuevoColaboradorNombre = ko.observable();
+    self.fechaCambio = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -178,7 +201,7 @@ function admData() {
     self.elegidosMotivosBaja = ko.observableArray([]);
 }
 
-function loadData(data) {
+function loadData(data, desdeLoad) {
     vm.comercialId(data.comercialId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
@@ -202,8 +225,13 @@ function loadData(data) {
     vm.poblacion(data.poblacion);
     vm.loginWeb(data.loginWeb);
     vm.passWeb(data.passWeb);
+    vm.ascComercialId(data.ascComercialId);
+    vm.antiguoAscCoimercialId(data.ascComercialId);
+    vm.antiguoColaboradorNombre(data.colaborador);
+
     loadTiposComerciales(data.tipoComercialId);
     loadAscComerciales(data.ascComercialId);
+
     vm.iban(data.iban);
     vm.porComer(data.porComer);
     loadMotivosBaja(data.motivoBajaId);    
@@ -218,6 +246,8 @@ function loadData(data) {
     }
     loadFormasPago(data.formaPagoId);
     loadTiposVia(data.tipoViaId);
+
+    cambioAscColaborador(data, desdeLoad);
 }
 
 function datosOK() {
@@ -466,6 +496,9 @@ function loadTiposComerciales(id) {
 }
 
 function loadAscComerciales(id) {
+    if(id < 0) {
+        id = vm.antiguoAscCoimercialId();
+    }
     $.ajax({
         type: "GET",
         url: "/api/comerciales/colaboradores/activos",
@@ -697,4 +730,343 @@ function loadMotivosBaja(id) {
                     // si hay algo más que hacer lo haremos aquí.
                 }
     });
+}
+
+function cambioAscColaborador(data, desdeLoad) {
+    //
+    if (!data) {
+        return;
+    }
+    //guardamos la id del nuevo agente.
+    cambColaborador = data.id;
+
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales/" + data.id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            datosCambioColaborador = data;
+            //comparamos la id del nuevo agente con la id del agente del cliente para ver si hay cambio
+            if (cambColaborador != vm.antiguoAscCoimercialId() && empId != 0 && vm.antiguoAscCoimercialId() != null) {
+                $('#modalCambioColaborador').modal({
+                    show: 'true'
+                });
+                loadModal(data)
+            } else {
+                if(!desdeLoad) {
+                    realizarCambioColaborador(data);
+                }
+            }
+        },
+        error: function (err) {
+            if (err.status !== 404) {
+                mensErrorAjax(err);
+            }
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function realizarCambioColaborador(data) {
+    if (!data) {
+        data = datosCambioColaborador;
+        guardaAgenteColaborador();
+    }
+}
+
+function guardaAgenteColaborador() {
+    //se actualiza el cliente con los nuevos valores
+
+    if (!datosOkAgenteColaborador()) {
+        return;
+    } else {
+            if (!datosOK())
+                return;
+
+
+            var dataAgenteColaborador = {
+                AgenteColaborador: {
+                    agenteId: vm.comercialId(),
+                    colaboradorId:  vm.antiguoAscCoimercialId(),
+                    fechaCambio: spanishDbDate(vm.fechaCambio())
+                }
+            }
+           
+            var data = {
+                comercial: {
+                    "comercialId": vm.comercialId(),
+                    "proId": vm.proId(),
+                    "nombre": vm.nombre(),
+                    "nif": vm.nif(),
+                    "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                    "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                    "activa": vm.activa(),
+                    "contacto1": vm.contacto1(),
+                    "contacto2": vm.contacto2(),
+                    "direccion": vm.direccion(),
+                    "poblacion": vm.poblacion(),
+                    "provincia": vm.provincia(),
+                    "codPostal": vm.codPostal(),
+                    "telefono1": vm.telefono1(),
+                    "telefono2": vm.telefono2(),
+                    "fax": vm.fax(),
+                    "email": vm.email(),
+                    "email2": vm.email2(),
+                    "observaciones": vm.observaciones(),
+                    "dniFirmante": vm.dniFirmante(),
+                    "firmante": vm.firmante(),
+                    "tipoComercialId": vm.stipoComercialId(),
+                    "ascComercialId": vm.sascComercialId(),
+                    "formaPagoId": vm.sformaPagoId(),
+                    "iban": vm.iban(),
+                    "porComer": vm.porComer(),
+                    "tipoViaId": vm.stipoViaId(),
+                    "motivoBajaId": vm.smotivoBajaId(),
+                    "loginWeb": vm.loginWeb(),
+                    "passWeb": vm.passWeb()
+                }
+            };            
+            $.ajax({
+                type: "PUT",
+                url: myconfig.apiUrl + "/api/comerciales/" + empId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
+                    $.ajax({
+                        type: "POST",
+                        url: myconfig.apiUrl + "/api/comerciales/agente",
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify(dataAgenteColaborador),
+                        success: function (data, status) {
+                            limpiaModalAgentesColaboradores();
+                            loadAgentesColaboradores(empId);
+                            /*var datos = {
+                                comercialId: vm.sagenteId()
+                            }
+                            actualizaColaboradorAsociado(datos);*/
+
+
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        
+    }
+
+}
+
+function loadModal(data) {
+    vm.nuevoColaboradorNombre(data.nombre);
+    vm.antiguoColaboradorNombre();
+    vm.fechaCambio(spanishDate(new Date()));
+}
+
+/* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COLABORADORES */
+
+function initTablaClientesAgentes() {
+    tablaCarro = $('#dt_clientesColaboradores').dataTable({
+        sort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_clientesColaboradores'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAgentesColaboradores,
+        columnDefs: [{
+            "width": "20%",
+            "targets": 0
+        }, {
+            "width": "5%",
+            "targets": 2
+        }
+        ],
+        columns: [{
+            data: "fechaCambio",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        }, {
+            data: "nombre",
+            className: "text-right",
+        }, {
+            data: "agenteColaboradorId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAgentesColaboradores(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var html = "<div>" + bt1 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function loadTablaAgentesColaboradores(data) {
+    var dt = $('#dt_clientesColaboradores').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadAgentesColaboradores(id) {
+    llamadaAjax('GET', "/api/comerciales/historial/agentes/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) {
+            fechaTope = spanishDate(data[0].fechaCambio);
+            fechaTope = spanishDbDate(fechaTope);
+        } else {
+            fechaTope = null;
+        }
+        loadTablaAgentesColaboradores(data);
+    });
+}
+
+
+function deleteAgentesColaboradores(agenteColaboradorId) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?. Al borrarse se establecerá el agente borrado como agente del cliente";
+    mensajeAceptarCancelar(mensaje, function () {
+
+        llamadaAjax("DELETE", "/api/comerciales/AgenteColaborador/" + agenteColaboradorId, null, function (err, data) {
+            if (err) return;
+
+            var data2 =  {
+                comercial: {
+                 comercialId: empId,
+                 nombre: vm.nombre(),
+                 nif: vm.nif(),
+                 ascComercialId: data[0].colaboradorId
+                }
+            }
+            
+            $.ajax({
+                type: "PUT",
+                url: myconfig.apiUrl + "/api/comerciales/" + empId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data2),
+                success: function (dataBis, status) {
+                    limpiaModalAgentesColaboradores();
+                    loadAgentesColaboradores(data[0].agenteId);
+                    //actualizaColaboradorAsociado(dataBis[0])
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOkAgenteColaborador() {
+
+    $('#frmCambioAgente').validate({
+        rules: {
+            txtNuevaFecha: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNuevaFecha: {
+                required: "Debe introducir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmCambioAgente").validate().settings;
+    return $('#frmCambioAgente').valid();
+}
+
+function limpiaModalAgentesColaboradores() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/comerciales/" + empId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            vm.nuevoColaboradorNombre(null)
+            vm.fechaCambio(null);
+            loadData(data);
+            $('#modalCambioColaborador').modal('hide');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function actualizaColaboradorAsociado(datos) {
+    
+    var data =  {
+        comercial: {
+         comercialId: empId,
+         nombre: vm.nombre(),
+         nif: vm.nif(),
+         ascComercialId: datos.comercialId
+        }
+    }
+    $.ajax({
+     type: "PUT",
+     url: myconfig.apiUrl + "/api/comerciales/" + empId,
+     dataType: "json",
+     contentType: "application/json",
+     data: JSON.stringify(data),
+     success: function (data, status) {
+        loadAgentesColaboradores(datos.comercialId);
+        
+     },
+     error: function (err) {
+         mensErrorAjax(err);
+     }
+     });
 }
