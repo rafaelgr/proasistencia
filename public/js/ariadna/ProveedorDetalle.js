@@ -11,6 +11,7 @@ var dataFacturas;
 var facproveId;
 var codigoSugerido;
 var antNif = ""//recoge el valor que tiene el nif al cargar la página
+var idUsuario;
 
 
 var responsiveHelper_dt_basic = undefined;
@@ -34,6 +35,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
+    idUsuario = recuperarIdUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -51,6 +53,9 @@ function initForm() {
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
     loadTiposProfesional();
+    // select2 things
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -68,8 +73,12 @@ function initForm() {
     loadTiposProveedor();
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
+
     $("#cmbTarifas").select2(select2Spanish());
     loadTarifas();
+
+    $("#cmbTiposRetencion").select2(select2Spanish());
+    loadTiposRetencion();
 
     $("#txtCodigo").blur(function () {
         compruebaCodigoProveedor();
@@ -86,6 +95,42 @@ function initForm() {
                 var n1 = n * 1 + 1;
                 var r2 = r + n1;
                 $("#" + r2).focus();
+            }
+        });
+    });
+
+    //actuaizacion de visualización del iban
+    $(function () {
+        $("#txtIban").change(function () {
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for(var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
+            }
+            
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for(var i = 0; i < this.value.length; i++ ) {
+                    if(!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+               
             }
         });
     });
@@ -227,6 +272,13 @@ function admData() {
     self.inicioCuenta = ko.observable();
     self.tipoProOriginalId = ko.observable();
     self.codigoOriginal = ko.observable();
+    self.observaciones = ko.observable();
+    //DATOS DE LA FIANZA
+    self.fianza = ko.observable('0,00');
+    self.fianzaAcumulada = ko.observable('0,00');
+    self.retencionFianza = ko.observable('0,00');
+    self.revisionFianza = ko.observable();
+
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -263,6 +315,21 @@ function admData() {
     //
     self.posiblesTarifas = ko.observableArray([]);
     self.elegidasTarifas = ko.observableArray([]);
+
+    //COMBIO RETENCIONES
+    self.codigoRetencion = ko.observable();
+    self.scodigoRetencion = ko.observable();
+    //
+    self.posiblesTiposRetencion = ko.observableArray([]);
+    self.elegidosCodigosRetencion = ko.observableArray([]);
+
+    //combo departamentos
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
     
 }
 
@@ -290,7 +357,11 @@ function loadData(data) {
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
+    vm.fianzaAcumulada(numeral(data.fianzaAcumulada).format('0,0.00'));
+    vm.retencionFianza(numeral(data.retencionFianza).format('0,0.00'));
+    vm.revisionFianza(spanishDate(data.revisionFianza));
     vm.codigoProfesional(data.codigoProfesional);
+    vm.observaciones(data.observaciones);
     
     antNif = data.nif;
     // split iban
@@ -309,6 +380,8 @@ function loadData(data) {
     loadTiposProfesional(data.tipoProfesionalId);
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
+    loadTiposRetencion(data.codigoRetencion);
+    loadDepartamentos(data.departamentoId)
 }
 
 function datosOK() {
@@ -388,7 +461,7 @@ function datosOK() {
     var opciones = $("#frmProveedor").validate().settings;
 
     // iban
-    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    //vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
     var opciones = $("#frmProveedor").validate().settings;
     if (vm.iban() && vm.iban() != "") {
         if (!IBAN.isValid(vm.iban())) {
@@ -435,7 +508,14 @@ function aceptar() {
                 "IBAN": vm.iban(),
                 "codigoProfesional": vm.codigoProfesional(),
                 "fianza": numeroDbf(vm.fianza()),
-                "tarifaId": vm.starifaProveedorId()
+               
+                "fianzaAcumulada": numeroDbf(vm.fianzaAcumulada()),
+                "retencionFianza" :numeroDbf(vm.retencionFianza()),
+                "revisionFianza": spanishDbDate(vm.revisionFianza()),
+                "tarifaId": vm.starifaProveedorId(),
+                "codigoRetencion": vm.scodigoRetencion(),
+                "observaciones": vm.observaciones(),
+                "departamentoId": vm.sdepartamentoId()
 
             }
         };
@@ -582,6 +662,35 @@ function loadTarifas(id){
         }
     });
 }
+
+function loadTiposRetencion(id) {
+    llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove", null, function (err, data) {
+        if (err) return;
+        vm.posiblesTiposRetencion(data);
+        if (id) {
+            $("#cmbTiposRetencion").val([id]).trigger('change');
+            vm.scodigoRetencion(id);
+        
+        } else {
+            $("#cmbTiposRetencion").val([0]).trigger('change');
+            vm.scodigoRetencion(0);
+          
+        }
+    });
+}
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+   
 
 
 
