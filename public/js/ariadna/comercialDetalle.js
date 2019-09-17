@@ -65,8 +65,52 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioAscColaborador(e.added);
     });
+
+    $("#txtNif").on('blur', function () {
+       vm.dniFirmante(vm.nif());
+    });
+
+    $("#txtNombre").on('blur', function () {
+        vm.firmante(vm.nombre());
+     });
     
     initTablaClientesAgentes();
+
+    //actuaizacion de visualización del iban
+    $(function () {
+        $("#txtIban").change(function () {
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for(var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
+            }
+            
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for(var i = 0; i < this.value.length; i++ ) {
+                    if(!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+               
+            }
+        });
+    });
 
     empId = gup('ComercialId');
     if (empId != 0) {
@@ -244,6 +288,43 @@ function loadData(data, desdeLoad) {
             vm['iban' + i](ibn);
         });
     }
+
+    //actuaizacion de visualización del iban
+    $(function () {
+        $("#txtIban").change(function () {
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for(var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
+            }
+            
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for(var i = 0; i < this.value.length; i++ ) {
+                    if(!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+               
+            }
+        });
+    });
+
     loadFormasPago(data.formaPagoId);
     loadTiposVia(data.tipoViaId);
 
@@ -307,7 +388,7 @@ function datosOK() {
     $('#frmComercial').validate(options);
     var opciones = $("#frmComercial").validate().settings;
     // iban
-    vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
+    //vm.iban(vm.iban1() + vm.iban2() + vm.iban3() + vm.iban4() + vm.iban5() + vm.iban6());
     var opciones = $("#frmComercial").validate().settings;
     if (vm.iban() && vm.iban() != "") {
         if (!IBAN.isValid(vm.iban())) {
