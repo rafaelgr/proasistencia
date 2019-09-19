@@ -597,7 +597,7 @@ function datosOK() {
             },
             txtNumero: {
                 required: true,
-                rangelength: [1, 10]
+                rangelength: [1, 20]
             }
         },
         // Messages for form validation
