@@ -805,6 +805,11 @@
                                                                                         </label>
                                                                                     </section>
                                                                                 </div>
+                                                                                <div class="row">
+                                                                                    <section class="col col-md-12" style="min-height: 50px">
+                                                                                      
+                                                                                    </section>
+                                                                                </div>
                                                                             </section>
                                                                             <section class="col col-md-6" style="border:solid; border-width:1px;">
                                                                                     <header>
@@ -846,6 +851,14 @@
                                                                                         </section>
                                                                                     </div>
                                                                                     <div class="row">
+                                                                                        <section class="col col-md-12">
+                                                                                            <label class="label">Persona de contacto</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtContactoAgente" name="txtContactoAgente" data-bind="value: contactoAgente" disabled/>
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="row">
                                                                                             <section class="col col-md-3">
                                                                                                     <label class="label">Teléfono</label>
                                                                                                     <label class="input">
@@ -861,6 +874,7 @@
                                                                                                 </section>
                                                                                         
                                                                                     </div>
+                                                                                    
                                                                                 </section>
                                                                         </div>
                                                                         
@@ -947,22 +961,31 @@
                                                                                     <input id="txtFax" name="txtFax" data-bind="value: fax" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-2">
+                                                                            <section class="col col-md-3">
                                                                                 <label class="label">Correo electrónico (1)</label>
                                                                                 <label class="input">
                                                                                     <input id="txtEmail" name="txtEmail" data-bind="value: email" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-2">
+                                                                            <section class="col col-md-3">
                                                                                 <label class="label">Correo electrónico (2)</label>
                                                                                 <label class="input">
                                                                                     <input id="txtEmail2" name="txtEmail2" data-bind="value: email2" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-2">
+                                                                            
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-6">
                                                                                 <label class="checkbox">
                                                                                     <input id="chkEmail" type="checkbox" name="chkEmail" data-bind="checked: facturarPorEmail">
                                                                                     <i></i>Enviar factura por Email
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-6">
+                                                                                <label class="label">Correo electrónico facturas</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtEmailFacturas" name="txtEmailFacturas" data-bind="value: emailFacturas" />
                                                                                 </label>
                                                                             </section>
                                                                         </div>
