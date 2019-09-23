@@ -3,6 +3,10 @@ ALTER TABLE `clientes`
   
 UPDATE clientes SET `emailFacturas` = `email`;
 
-LTER TABLE `proveedores`   
+ALTER TABLE `proveedores`   
   CHANGE `fianzaAcumulada` `fianzaAcumulada` DECIMAL(10,2) DEFAULT 0 NULL,
   CHANGE `retencionFianza` `retencionFianza` DECIMAL(10,2) DEFAULT 0 NULL;
+
+  ALTER TABLE `facprove`   
+  ADD COLUMN `fianza` DECIMAL(10,2) DEFAULT 0 NULL AFTER `numregisconta`;
+
