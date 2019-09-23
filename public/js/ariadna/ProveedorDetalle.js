@@ -102,6 +102,8 @@ function initForm() {
     //actuaizacion de visualización del iban
     $(function () {
         $("#txtIban").change(function () {
+            this.value = this.value.replace(/[- \s]/g, '');
+            vm.iban(this.value);
             var num = 0;
             var cadena = null;
             var n1 = 0;

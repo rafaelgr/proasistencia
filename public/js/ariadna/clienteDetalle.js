@@ -80,6 +80,44 @@ function initForm() {
         }
     });
 
+     //actuaizacion de visualización del iban
+     $(function () {
+        $("#txtIban").change(function () {
+            this.value = this.value.replace(/[- \s]/g, '');
+            vm.iban(this.value);
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for(var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
+            }
+            
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for(var i = 0; i < this.value.length; i++ ) {
+                    if(!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+               
+            }
+        });
+    });
+
     $("#frmComisionista").submit(function () {
         return false;
     });
@@ -153,41 +191,7 @@ function initForm() {
         });
     });
 
-    //actuaizacion de visualización del iban
-    $(function () {
-        $("#txtIban").change(function () {
-            var num = 0;
-            var cadena = null;
-            var n1 = 0;
-            for(var j = 1; j < 7; j++) {
-                var s = $(this).attr('id').substr(0, 7);
-                var s2 = s + j;
-                $("#" + s2).val(null);
-            }
-            
-            console.log(this.value)
-            if (this.value.length > 0) {
-                for(var i = 0; i < this.value.length; i++ ) {
-                    if(!cadena) {
-                        cadena = this.value.substr(i, 1);
-                        num++;
-                    } else {
-                        cadena += this.value.substr(i, 1);
-                        num++;
-                    }
-                    if (num == 4) {
-                        var r = $(this).attr('id').substr(0, 7);
-                        n1++;
-                        var r2 = r + n1;
-                        $("#" + r2).val(cadena);
-                        num = 0;
-                        cadena = null;
-                    }
-                }
-               
-            }
-        });
-    });
+   
 
     initTablaComisionistas();
     initTablaClientesAgentes();
@@ -316,7 +320,8 @@ function admData() {
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
-    self.facturarPorEmail = ko.observable()
+    self.facturarPorEmail = ko.observable();
+    self.emailFacturas = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -404,6 +409,7 @@ function admData() {
     self.provinciaAgente = ko.observable();
     self.telefonoAgente = ko.observable();
     self.correoAgente = ko.observable();
+    self.contactoAgente = ko.observable();
 
 }
 
@@ -440,6 +446,7 @@ function loadData(data, desdeLoad) {
     vm.firmante(data.firmante);
     vm.facturarPorEmail(data.facturarPorEmail);
     vm.limiteCredito(data.limiteCredito);
+    vm.emailFacturas(data.emailFacturas);
     // direccion 2
     vm.direccion2(data.direccion2);
     vm.codPostal2(data.codPostal2);
@@ -469,7 +476,7 @@ function loadData(data, desdeLoad) {
     var data2 = { id: data.comercialId };
     cambioAgente(data2, desdeLoad);
     //
-    loadComisionistas(data.clienteId);
+    //loadComisionistas(data.clienteId);
     // split iban
     if (vm.iban()) {
         var ibanl = vm.iban().match(/.{1,4}/g);
@@ -656,7 +663,8 @@ function aceptar() {
                 "colaboradorId": vm.scomercialId(),
                 "tipoIvaId": vm.stipoIvaId(),
                 "facturarPorEmail": vm.facturarPorEmail(),
-                "limiteCredito": vm.limiteCredito()
+                "limiteCredito": vm.limiteCredito(),
+                "emailFacturas": vm.emailFacturas()
             }
         };
         
@@ -917,7 +925,8 @@ function loadDatosAgente(data) {
     vm.codPostalAgente(data.codPostal);
     vm.provinciaAgente(data.provincia);
     vm.telefonoAgente(data.telefono1);
-    vm.correoAgente(data.email)
+    vm.correoAgente(data.email);
+    vm.contactoAgente(data.contacto1);
    }
 }
 
@@ -1137,7 +1146,7 @@ function loadTablaComisionistas(data) {
     dt.fnDraw();
 }
 
-function loadComisionistas(id) {
+/*function loadComisionistas(id) {
     $.ajax({
         type: "GET",
         url: "/api/clientes/comisionistas/" + vm.clienteId(),
@@ -1151,7 +1160,7 @@ function loadComisionistas(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
-}
+}*/
 
 function loadComerciales(id) {
     $.ajax({
@@ -1194,7 +1203,7 @@ function editComisionista(id) {
     });
 }
 
-function deleteComisionista(id) {
+/*function deleteComisionista(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -1227,7 +1236,7 @@ function deleteComisionista(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
-}
+}*/
 
 /*
 * cambioComercial
