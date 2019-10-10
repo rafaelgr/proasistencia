@@ -54,7 +54,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnImprimir").click(obtainReport);
+    $("#btnBuscar").click(obtainReport);
     // avoid form submmit
     $("#frmRptOfertas").submit(function () {
         return false;
@@ -75,6 +75,9 @@ function initForm() {
 
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
+
+    $('#cmbConta').select2();
+    loadComboEstado();
 
     
     $('.datepicker').datepicker({
@@ -154,6 +157,25 @@ function admData() {
     //
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
+
+    //Combo option conta
+
+    self.optionsConta = ko.observableArray([
+        {
+            'nombreConta': 'Todas',
+            'valorConta': 'todas'
+        }, 
+        {
+            'nombreConta': 'Sin contabilizar',
+            'valorConta': 'sinConta'
+        }, 
+        {
+            'nombreConta': 'contabilizadas',
+            'valorConta': 'conta'
+        }
+    ]);
+    self.selectedContas = ko.observableArray([]);
+    self.sconta = ko.observable();
 };
 
 var obtainReport = function () {
@@ -308,6 +330,10 @@ function loadTiposIva(id) {
     });
 }
 
+function loadComboEstado(){
+    $("#cmbConta option[value='todas']").attr("selected",true).trigger('change');    
+}
+
 
 
 var rptFacturaParametros = function (sql) {
@@ -319,6 +345,7 @@ var rptFacturaParametros = function (sql) {
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var tipoIvaId = vm.stipoIvaId();
+    var conta = vm.sconta();
 
     sql += " WHERE f.departamentoId IS NOT NULL ";
    
@@ -336,6 +363,12 @@ var rptFacturaParametros = function (sql) {
         }
         if (tipoIvaId) {
             sql += " AND ti.tipoIvaId IN (" + tipoIvaId + ")";
+        }
+        if(conta == "sinConta") {
+            sql += " AND f.contabilizada = 0"
+        }
+        if(conta == "conta") {
+            sql += " AND f.contabilizada = 1"
         }
 
         sql += " ORDER BY `numregisconta`, f.fecha_recepcion";
