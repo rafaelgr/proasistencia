@@ -79,6 +79,8 @@ function initForm() {
     $('#cmbConta').select2();
     loadComboEstado();
 
+    $('#cmbOrden').select2();
+    loadComboOrden();
     
     $('.datepicker').datepicker({
         closeText: 'Cerrar',
@@ -176,6 +178,25 @@ function admData() {
     ]);
     self.selectedContas = ko.observableArray([]);
     self.sconta = ko.observable();
+
+    //Combo option orden 
+
+    self.optionsOrden = ko.observableArray([
+        {
+            'nombreOrden': 'Numero Registro',
+            'valorOrden': 'numregisconta'
+        }, 
+        {
+            'nombreOrden': 'Fecha Recepcion',
+            'valorOrden': 'fecha_recepcion'
+        }, 
+        {
+            'nombreOrden': 'Referencia',
+            'valorOrden': 'ref'
+        }
+    ]);
+    self.selectedOrden = ko.observableArray([]);
+    self.sorden = ko.observable();
 };
 
 var obtainReport = function () {
@@ -334,6 +355,9 @@ function loadComboEstado(){
     $("#cmbConta option[value='todas']").attr("selected",true).trigger('change');    
 }
 
+function loadComboOrden(){
+    $("#cmbOrden option[value='numregisconta']").attr("selected",true).trigger('change');    
+}
 
 
 var rptFacturaParametros = function (sql) {
@@ -346,6 +370,7 @@ var rptFacturaParametros = function (sql) {
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var tipoIvaId = vm.stipoIvaId();
     var conta = vm.sconta();
+    var orden = vm.sorden();
 
     sql += " WHERE f.departamentoId IS NOT NULL ";
    
@@ -371,7 +396,7 @@ var rptFacturaParametros = function (sql) {
             sql += " AND f.contabilizada = 1"
         }
 
-        sql += " ORDER BY `numregisconta`, f.fecha_recepcion";
+        sql += " ORDER BY " +  orden;
         /*if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
