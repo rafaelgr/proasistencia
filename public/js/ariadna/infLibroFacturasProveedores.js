@@ -396,13 +396,13 @@ var rptFacturaParametros = function (sql) {
             sql += " AND f.contabilizada = 1"
         }
 
-        sql += " ORDER BY " +  orden;
+
+        sql += " ORDER BY "+ orden+" ASC";
         /*if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
             sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
         }*/
-
     return sql;
 }
 
