@@ -397,7 +397,7 @@ var rptFacturaParametros = function (sql) {
         }
 
 
-        sql += " ORDER BY " +  orden + " ASC";
+        sql += " ORDER BY "+ orden+" ASC";
         /*if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
