@@ -632,24 +632,23 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             </Text21>
             <Text22 Ref="48" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.2,0.2,1.8,0.4</ClientRectangle>
+              <ClientRectangle>17,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
-              <Guid>a53f9b28a22947099f55f86c45e37c07</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="4" />
               <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.totalConIva)}</Text>
+              <Text>{Sum(DatalibPro,libPro.basFact)+Sum(DatalibPro,libPro.cuota)-Sum(DatalibPro,libPro.importeRetencion)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="49" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator</State>
               </TextFormat>
-              <Type>Totals</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
           </Components>
@@ -887,10 +886,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>10/11/2019 10:16:37 AM</ReportChanged>
+  <ReportChanged>10/14/2019 9:32:53 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>0d99b8eb99314d61b23586e4803f2c05</ReportGuid>
+  <ReportGuid>7fdd448b776743728003b3ee87d46b84</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
