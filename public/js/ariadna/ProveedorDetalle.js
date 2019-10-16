@@ -383,6 +383,7 @@ function loadData(data) {
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
     loadTiposRetencion(data.codigoRetencion);
+    buacaDepartamentos();
     loadDepartamentos(data.departamentoId)
 }
 
@@ -517,8 +518,11 @@ function aceptar() {
                 "tarifaId": vm.starifaProveedorId(),
                 "codigoRetencion": vm.scodigoRetencion(),
                 "observaciones": vm.observaciones(),
-                "departamentoId": vm.sdepartamentoId()
+                //"departamentoId": vm.sdepartamentoId()
 
+            },
+            departamentos: {
+                "departamentos": vm.elegidosDepartamentos()
             }
         };
         if (proId == 0) {
@@ -681,15 +685,23 @@ function loadTiposRetencion(id) {
     });
 }
 
-function loadDepartamentos(departamentoId) {
+function loadDepartamentos(departamentosIds) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        if(departamentoId) {
-            vm.departamentoId(departamentoId);
+        if(departamentosIds) {
+            vm.departamentoId(departamentosIds);
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+
+
+function buscaDepartamentos() {
+    llamadaAjax("GET", "/api/proveedores/departamentos/asociados" + proId, null, function (err, data) {
+        if (err) return;
+        loadDepartamentos(data);
     });
 }
    
