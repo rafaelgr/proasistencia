@@ -383,8 +383,8 @@ function loadData(data) {
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
     loadTiposRetencion(data.codigoRetencion);
-    buacaDepartamentos();
-    loadDepartamentos(data.departamentoId)
+    buscaDepartamentos();
+    //loadDepartamentos(data.departamentoId)
 }
 
 function datosOK() {
@@ -687,19 +687,23 @@ function loadTiposRetencion(id) {
 
 function loadDepartamentos(departamentosIds) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+        var ids = [];
         if (err) return;
-        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        var departamentos = data;
         vm.posiblesDepartamentos(departamentos);
         if(departamentosIds) {
-            vm.departamentoId(departamentosIds);
+            vm.elegidosDepartamentos(departamentosIds);
+            for ( var i = 0; i < departamentosIds.length; i++ ) {
+                ids.push(departamentosIds[i].departamentoId)
+            }
+            $("#cmbDepartamentosTrabajo").val(ids).trigger('change');
         }
-        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
 
 
 function buscaDepartamentos() {
-    llamadaAjax("GET", "/api/proveedores/departamentos/asociados" + proId, null, function (err, data) {
+    llamadaAjax("GET", "/api/proveedores/departamentos/asociados/" + proId, null, function (err, data) {
         if (err) return;
         loadDepartamentos(data);
     });

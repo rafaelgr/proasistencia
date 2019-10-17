@@ -65,6 +65,7 @@ function initForm() {
 
 function initTablaProveedores() {
     tablaCarro = $('#dt_proveedor').dataTable({
+        
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -115,6 +116,14 @@ function initTablaProveedores() {
             }
         }]
     });
+    // Apply the filter
+    $("#dt_proveedor thead th input[type=text]").on('keyup change', function () {
+        tablaCarro
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
 }
 
 function datosOK() {

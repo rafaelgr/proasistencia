@@ -11,3 +11,8 @@ CREATE TABLE `proveedores_departamentos`(
   CONSTRAINT `proveedoresDepartamentos_proveedores` FOREIGN KEY (`proveedorId`) REFERENCES  `proveedores`(`proveedorId`),
   CONSTRAINT `proveedoresDepartamentos_departamentos` FOREIGN KEY (`departamentoId`) REFERENCES  `departamentos`(`departamentoId`)
 );
+
+ALTER TABLE `proveedores_departamentos` DROP FOREIGN KEY `proveedoresDepartamentos_proveedores`;
+
+ALTER TABLE `proveedores_departamentos` ADD CONSTRAINT `proveedoresDepartamentos_proveedores` FOREIGN KEY (`proveedorId`) REFERENCES `proasistencia`.`proveedores`(`proveedorId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
