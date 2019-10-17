@@ -413,7 +413,7 @@ function admData() {
 
 }
 
-function loadData(data, desdeLoad) {
+function loadData(data, desdeLoad, importacion) {
     vm.clienteId(data.clienteId);
     vm.comercialId(data.comercialId);
     vm.antiguoAgenteId(data.comercialId);
@@ -441,17 +441,28 @@ function loadData(data, desdeLoad) {
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.iban);
     vm.codigo(data.codigo);
-    vm.codComercial(data.codComercial);
+    vm.codComercial(data.codigoComercial);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.facturarPorEmail(data.facturarPorEmail);
     vm.limiteCredito(data.limiteCredito);
     vm.emailFacturas(data.emailFacturas);
-    // direccion 2
-    vm.direccion2(data.direccion2);
-    vm.codPostal2(data.codPostal2);
-    vm.provincia2(data.provincia2);
-    vm.poblacion2(data.poblacion2);
+
+    if(importacion) {
+        vm.direccion2(data.direccion);
+        vm.codPostal2(data.codPostal);
+        vm.provincia2(data.provincia);
+        vm.poblacion2(data.poblacion);
+        vm.nombreComercial(data.nombre)
+    } else {
+        // direccion 2
+        vm.direccion2(data.direccion2);
+        vm.codPostal2(data.codPostal2);
+        vm.provincia2(data.provincia2);
+        vm.poblacion2(data.poblacion2);
+
+    }
+    
     // direccion 3
     vm.direccion3(data.direccion3);
     vm.codPostal3(data.codPostal3);
@@ -734,7 +745,7 @@ function importar() {
                 data = rData[0];
                 data.clienteId = vm.clienteId(); // Por si es un update
                 // hay que mostrarlo en la zona de datos
-                loadData(data);
+                loadData(data, null, true);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -849,6 +860,7 @@ function loadTiposVia(id) {
     });
 }
 
+
 function loadTiposIva(id) {
     llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
         if (err) return;
@@ -857,7 +869,7 @@ function loadTiposIva(id) {
         if (id) {
             $("#cmbTiposIva").val([id]).trigger('change');
         } else {
-            $("#cmbTiposIva").val([0]).trigger('change');
+            $("#cmbTiposIva").val([3]).trigger('change');
         }
     });
 }
