@@ -64,8 +64,47 @@ function initForm() {
 }
 
 function initTablaProveedores() {
-    tablaCarro = $('#dt_proveedor').dataTable({
-        
+    tablaFacturas = $('#dt_proveedor').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -116,9 +155,10 @@ function initTablaProveedores() {
             }
         }]
     });
+
     // Apply the filter
     $("#dt_proveedor thead th input[type=text]").on('keyup change', function () {
-        tablaCarro
+        tablaFacturas
             .column($(this).parent().index() + ':visible')
             .search(this.value)
             .draw();
