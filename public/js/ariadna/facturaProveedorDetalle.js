@@ -362,6 +362,8 @@ function admData() {
     self.contratoId = ko.observable();
     self.noContabilizar = ko.observable();
     self.numregis = ko.observable();
+    self.aCuenta = ko.observable();
+    self.totalSinAcuenta = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -511,6 +513,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
+    vm.aCuenta(data.aCuenta);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -735,7 +738,8 @@ var generarFacturaDb = function () {
             "nombreFacprovePdf": vm.nombreFacprovePdf(),
             "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar(),
-            "departamentoId": vm.sdepartamentoId()
+            "departamentoId": vm.sdepartamentoId(),
+            "totalSinAcuenta": numeroDbf(vm.totalSinAcuenta()),
 
         }
     };
@@ -1578,7 +1582,10 @@ function loadBasesFacprove(facproveId) {
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
-           
+            var acuenta = parseFloat(vm.aCuenta());
+            var totSoinAcuenta = t2-acuenta;
+            vm.totalSinAcuenta(numeral(totSoinAcuenta).format('0,0.00'));
+            
             loadTablaBases(data);
         });
     });
