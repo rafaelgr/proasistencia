@@ -1194,7 +1194,8 @@ function loadBasesFactura(facturaId) {
         vm.totalConIva(numeral(t2).format('0,0.00'));
     
         var acuenta = parseFloat(vm.aCuenta());
-        vm.totalSinAcuenta(t2-acuenta);
+        var totSinAcuenta =  t2-acuenta
+        vm.totalSinAcuenta(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
@@ -1354,7 +1355,8 @@ var cambioPorcentajeRetencion = function () {
         vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-        vm.totalSinAcuenta(vm.totalConIva()-vm.aCuenta());
+        var totalSinAcuenta = vm.totalConIva()-vm.aCuenta();
+        vm.totalSinAcuenta(numeral(totalSinAcuenta).format('0,0.00'));
     }
 }
 
