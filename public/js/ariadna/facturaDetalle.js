@@ -162,6 +162,8 @@ function admData() {
     self.tipoContratoId = ko.observable();
     self.departamento = ko.observable();
     self.departamentoId = ko.observable()
+    self.aCuenta = ko.observable();
+    self.totalSinAcuenta = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -287,6 +289,7 @@ function loadData(data, desdeLinea) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
+    vm.aCuenta(data.aCuenta);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -456,6 +459,7 @@ var generarFacturaDb = function () {
             "receptorProvincia": vm.receptorProvincia(),
             "total": numeroDbf(vm.total()),
             "totalConIva": numeroDbf(vm.totalConIva()),
+            "totalSinAcuenta": numeroDbf(vm.totalSinAcuenta()),
             "formaPagoId": vm.sformaPagoId(),
             "observaciones": vm.observaciones(),
             "coste": vm.coste(),
@@ -1188,6 +1192,10 @@ function loadBasesFactura(facturaId) {
         vm.total(numeral(t1).format('0,0.00'));
         vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
+    
+        var acuenta = parseFloat(vm.aCuenta());
+        var totSinAcuenta =  t2-acuenta
+        vm.totalSinAcuenta(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
@@ -1347,6 +1355,8 @@ var cambioPorcentajeRetencion = function () {
         vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
+        var totalSinAcuenta = vm.totalConIva()-vm.aCuenta();
+        vm.totalSinAcuenta(numeral(totalSinAcuenta).format('0,0.00'));
     }
 }
 

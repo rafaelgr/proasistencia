@@ -576,9 +576,23 @@
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
-                                                                        <label class="label bloqueado">Total a cobrar</label>
+                                                                        <label class="label bloqueado">Total factura</label>
                                                                         <label class="input">
                                                                             <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">A cuenta</label>
+                                                                        <label class="input">
+                                                                            <input id="txtAcuenta" name="txtACuenta" type="text" data-bind="value: aCuenta" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Total a Cobrar</label>
+                                                                        <label class="input">
+                                                                            <input id="txtTotalSinAcuenta" name="txtTotalSinAcuenta" type="text" data-bind="value: totalSinAcuenta" disabled/>
                                                                         </label>
                                                                     </section>
                                                                 </div>
@@ -891,7 +905,7 @@
                                                             <div class="pull-left">
                                                                 <strong>Total: </strong><span data-bind="text: total"></span>
                                                                 <br/>
-                                                                <strong> Total a cobrar: </strong><span data-bind="text: totalConIva"></span>
+                                                                <strong> Total factura: </strong><span data-bind="text: totalConIva"></span>
                                                             </div>
                                                             <div class="pull-right">
                                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
