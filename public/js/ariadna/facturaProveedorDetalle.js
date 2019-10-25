@@ -645,6 +645,7 @@ var aceptarFactura = function () {
         vm.total('0');
         vm.totalCuota('0');
         vm.totalConIva('0');
+        vm.totalSinAcuenta('0');
     }
 
     var data = generarFacturaDb();
@@ -1583,8 +1584,8 @@ function loadBasesFacprove(facproveId) {
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
             var acuenta = parseFloat(vm.aCuenta());
-            var totSoinAcuenta = t2-acuenta;
-            vm.totalSinAcuenta(numeral(totSoinAcuenta).format('0,0.00'));
+            var totSinAcuenta = t2-acuenta;
+            vm.totalSinAcuenta(numeral(totSinAcuenta).format('0,0.00'));
             
             loadTablaBases(data);
         });
