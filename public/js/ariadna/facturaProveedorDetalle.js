@@ -645,6 +645,7 @@ var aceptarFactura = function () {
         vm.total('0');
         vm.totalCuota('0');
         vm.totalConIva('0');
+        vm.totalSinAcuenta('0');
     }
 
     var data = generarFacturaDb();
