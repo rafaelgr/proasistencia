@@ -404,6 +404,7 @@ var aceptarFactura = function () {
     if (!vm.total()) {
         vm.total('0');
         vm.totalConIva('0');
+        vm.totalSinAcuenta('0');
     }
     var data = generarFacturaDb();
     // caso alta
