@@ -122,6 +122,8 @@ UPDATE `nuevaFontaneria` AS nf
 LEFT JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
  SET nf.Id = ar.articuloId
  WHERE ar.codigoReparacion IS NOT NULL;
+
+ UPDATE `nuevafontaneria` SET id = 0 WHERE id < 50;
  
  #ACTUALIZAMOS LOS ARTICULOS DE Fontaneria
 
@@ -197,7 +199,337 @@ INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
  SET nf.Id = ar.articuloId
  WHERE ar.codigoReparacion IS NOT NULL;
 
+UPDATE `nuevaelectricidad`  SET id = 0 WHERE id < 50;
+
 
   UPDATE articulos AS ar 
  INNER JOIN `nuevaelectricidad` AS nf ON  nf.id = ar.articuloId
- SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN, ar.UNIDADID = nf.UNIDADIDN;
+ SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN;
+
+ #TABLA CERRAJERIA
+
+ USE `proasistencia`;
+
+/*Table structure for table `nuevacerrajeria` */
+
+DROP TABLE IF EXISTS `nuevacerrajeria`;
+
+CREATE TABLE `nuevacerrajeria` (
+  `Id` int(11) default NULL,
+  `MALCODIGON` double default NULL,
+  `UNIDADN` varchar(255) default NULL,
+  `DESCRIPCIONN` varchar(255) default NULL,
+  `VERDEN` decimal(12,2) default NULL,
+  `AZULN` decimal(12,2) default NULL,
+  `TARIFA1N` decimal(12,2) default NULL,
+  `CODIGON` varchar(255) default NULL,
+  `MALCODIGO` double default NULL,
+  `UNIDAD` varchar(255) default NULL,
+  `DESCRIPCION` varchar(255) default NULL,
+  `VERDE` decimal(12,2) default NULL,
+  `AZUL` decimal(12,2) default NULL,
+  `TARIFA1` decimal(12,2) default NULL,
+  `CODIGO` varchar(255) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `nuevacerrajeria` */
+
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (587,300.01,'Ud.','Apertura de puerta',112.12,124.58,55.00,'300.01',300.01,'Ud.','Apertura de puerta',112.12,124.58,55.00,'300.01');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (588,300.02,'Ud.','Apertura de puerta con sustitución de bombín llave serreta',165.00,183.33,81.00,'300.02',300.02,'Ud.','Apertura de puerta con sustitución de bombín o cerradura',165.00,183.33,81.00,'300.02');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (589,300.03,'Ud.','Apertura de puerta con sustitución de bombín llave de puntos',175.00,194.00,91.00,'300.03',300.03,'Ud.','Reparacion provisional (con o sin elementos recuperables)',95.89,106.54,51.83,'300.03');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (590,300.04,'Ud.','Reparacion provisional (con o sin elementos recuperables)',95.89,106.54,51.83,'300.04',300.04,'Ud.','Soldadura con equipo autógeno o eléctrico (Intervención mínima)',129.83,144.26,70.18,'300.04');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (5,300.05,'Ud.','Soldadura con equipo autógeno o eléctrico (Intervención mínima)',129.83,144.26,70.18,'300.05',300.05,'Ud.','Soldadura con equipo autógeno o eléctrico (Intervención mínima)',129.83,144.26,70.18,'300.05');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (591,301.01,'Ud.','Sustitución de bombin normal (Tipo CVL, EZCUR, TESA, AZBE o similar)',99.61,110.68,49.15,'301.01',301.01,'Ud.','Sustitución de bombin normal (Tipo CVL, EZCUR, TESA, AZBE o similar)',99.61,110.68,49.15,'301.01');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (592,301.02,'Ud.','Sustituc. bombillo seguridad, pompa o borjas g. baja (EZCURRA,ESA)',143.63,159.59,70.86,'301.02',301.02,'Ud.','Sustituc. bombillo seguridad, pompa o borjas g. baja (EZCURRA,ESA)',143.63,159.59,70.86,'301.02');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (593,301.03,'Ud.','Sustituc. bombillo seguridad,pompa o borjas g. media (EZCURRA,ESA)',205.77,228.63,101.51,'301.03',301.03,'Ud.','Sustituc. bombillo seguridad,pompa o borjas g. media (EZCURRA,ESA)',205.77,228.63,101.51,'301.03');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (594,301.04,'Ud.','Sustituc. bombillo seguridad,pompa o borjas g. media (EZCURRA,ESA)',216.29,240.32,106.70,'301.04',301.04,'Ud.','Sustituc. bombillo seguridad,pompa o borjas g. media (EZCURRA,ESA)',216.29,240.32,106.70,'301.04');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (595,301.05,'Ud.','Sust. bombillo seguridad, pompa, borjas g. media, serie alta(STS)',189.46,210.51,93.46,'301.05',301.05,'Ud.','Sust. bombillo seguridad, pompa, borjas g. media, serie alta(STS)',189.46,210.51,93.46,'301.05');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (596,302.01,'Ud.','Sustitución cerrojo (LINCE 3940, LINCE 2930, EZCURRA 400 o similar)',152.89,169.88,75.42,'302.01',302.01,'Ud.','Sustitución cerrojo (LINCE 3940, LINCE 2930, EZCURRA 400 o similar)',152.89,169.88,75.42,'302.01');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (597,302.02,'Ud.','Sustitución cerrojo (FAC 300, FAC 301, FAC 307 o similar)',144.79,160.88,71.42,'302.02',302.02,'Ud.','Sustitución cerrojo (FAC 300, FAC 301, FAC 307 o similar)',144.79,160.88,71.42,'302.02');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (598,302.03,'Ud.','Sustitución de cerradura de buzón incluida apertura',58.27,64.74,38.85,'302.03',302.03,'Ud.','Sustitución de cerradura de buzón incluida apertura',58.27,64.74,38.85,'302.03');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (599,302.04,'Ud.','Sustitución de cerradura de buzón sin apertura',49.86,55.40,33.91,'302.04',302.04,'Ud.','Sustitución de cerradura de buzón sin apertura',49.86,55.40,33.91,'302.04');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (0,302.05,'Ud.','Sustitución de cerradero electrónico sin desbloqueo',87.75,97.50,45.00,'302.05',302.05,'Ud.','Sustitución de cerradero electrónico sin desbloqueo',87.75,97.50,45.00,'302.05');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (16,302.06,'Ud.','Sustitución de cerradero electrónico con desbloqueo',97.50,108.33,50.00,'302.06',302.06,'Ud.','Sustitución de cerradero electrónico con desbloqueo',97.50,108.33,50.00,'302.06');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (600,303.01,'Ud.','Sustitución de muelle básico',178.15,197.94,90.00,'303.01',303.01,'Ud.','Sustitución de muelle básico',178.15,197.94,90.00,'303.01');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (601,303.02,'Ud.','Sustitución de muelle Dorma TS-71 ',237.00,263.33,120.00,'303.02',303.02,'Ud.','Sustitución de muelle Dorma TS-71 ',237.00,263.33,120.00,'303.02');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (602,303.03,'Ud.','Adicional chapa aluminio para instalación de muelle ',44.00,48.89,22.00,'303.03',303.03,'Ud.','Adicional chapa aluminio para instalación de muelle ',44.00,48.89,22.00,'303.03');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (603,390.01,'Hr.','Mano de obra de oficial de cerrajería.',52.05,57.83,25.91,'390.01',390.01,'Hr.','Mano de obra de oficial de cerrajería.',52.05,57.83,25.91,'390.01');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (604,390.02,'Hr.','Mano de obra de ayudante de cerrajería',26.03,28.92,12.96,'390.02',390.02,'Hr.','Mano de obra de ayudante de cerrajería',26.03,28.92,12.96,'390.02');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (605,390.03,'Ud.','Desplazamiento',29.00,29.00,15.00,'390.03',390.05,'Ud.','Desplazamiento',29.00,29.00,15.00,'390.05');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (606,390.04,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'390.04',390.06,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'390.06');
+insert  into `nuevacerrajeria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (607,390.05,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'390.05',390.07,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'390.07');
+
+
+#ACTUALIZAMOS LA TABLA NUEVA CERRAJERIA Y LA TABLA ARTICULOS
+
+UPDATE `nuevacerrajeria` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL;
+ 
+ UPDATE `nuevacerrajeria`  SET id = 0 WHERE id < 50;
+
+UPDATE articulos AS ar 
+ INNER JOIN `nuevacerrajeria` AS nf ON  nf.id = ar.articuloId
+ SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN;
+
+ #TABLA ALBAÑILERIA
+
+ USE `proasistencia`;
+
+/*Table structure for table `nuevaalbanileria` */
+
+DROP TABLE IF EXISTS `nuevaalbanileria`;
+
+CREATE TABLE `nuevaalbanileria` (
+  `Id` int(11) default NULL,
+  `MALCODIGON` varchar(255) default NULL,
+  `UNIDADN` varchar(255) default NULL,
+  `DESCRIPCIONN` varchar(255) default NULL,
+  `VERDEN` decimal(12,2) default NULL,
+  `AZULN` decimal(12,2) default NULL,
+  `TARIFA1N CODIGON` decimal(12,2) default NULL,
+  `CODIGON` varchar(255) default NULL,
+  `MALCODIGO` varchar(255) default NULL,
+  `UNIDAD` varchar(255) default NULL,
+  `DESCRIPCION` varchar(255) default NULL,
+  `VERDE` decimal(12,2) default NULL,
+  `AZUL` decimal(12,2) default NULL,
+  `TARIFA1N` decimal(12,2) default NULL,
+  `CODIGO` varchar(255) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `nuevaalbanileria` */
+
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (1,'400.01','M2','Picado de guarnecido de yeso en techos o paredes',13.80,15.33,5.52,'400.01','400.01','M2','Picado de guarnecido de yeso en techos o paredes',13.80,15.33,5.52,'400.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (2,'400.02','M2','Picado de enfoscados de mortero de cemento en paredes.',21.30,23.67,8.52,'400.02','400.02','M2','Picado de enfoscados de mortero de cemento en paredes.',21.30,23.67,8.52,'400.02');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (3,'400.03','M2','Picado de  hormigon en soleras o muros',35.16,39.07,11.72,'400.03','400.03','M2','Picado de  hormigon en soleras o muros',35.16,39.07,11.72,'400.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (4,'400.04','M2','Picado en techo de escayola.',22.80,25.33,9.12,'400.04','400.04','M2','Picado en techo de escayola.',22.80,25.33,9.12,'400.04');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (5,'400.05','M2','Picado en paramentos verticales de ladrillo con guarnecido de yeso',26.40,29.33,10.56,'400.05','400.05','M2','Picado en paramentos verticales de ladrillo con guarnecido de yeso',26.40,29.33,10.56,'400.05');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (6,'400.06','M2','Picado en paramentos verticales de ladrillo con alicatado',31.20,34.67,12.48,'400.06','400.06','M2','Picado en paramentos verticales de ladrillo con alicatado',31.20,34.67,12.48,'400.06');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (7,'400.07','M2','Picado en suelos con gres, terrazo o similares',30.95,34.39,12.38,'400.07','400.07','M2','Picado en suelos con gres, terrazo o similares',30.95,34.39,12.38,'400.07');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (8,'400.08','Ml','Excavación a mano en zanja en tierra hasta 40 cm de profundidad',44.80,49.78,16.00,'400.08','400.08','Ml','Excavación a mano en zanja en tierra hasta 40 cm de profundidad',44.80,49.78,16.00,'400.08');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (9,'401.01','Ud.','Tapado de 1/2m2 de cala con enlucido 1 o 2 caras.',80.23,89.14,26.75,'401.01','401.01','Ud.','Tapado de 1/2m2 de cala con enlucido 1 o 2 caras.',80.23,89.14,26.75,'401.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (10,'401.02','Ud.','Tapado de cala con enlucido 1 o 2 caras 1m2.',118.36,131.51,41.73,'401.02','401.02','Ud.','Tapado de cala con enlucido 1 o 2 caras 1m2.',118.36,131.51,41.73,'401.02');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (11,'401.03','Ud.','Tapado de 1/2m2 de cala en techo de escayola.',92.88,103.20,25.06,'401.03','401.03','Ud.','Tapado de 1/2m2 de cala en techo de escayola.',92.88,103.20,25.06,'401.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (12,'401.04','Ud.','Tapado de 1m2 de cala en techo de escayola.',106.07,117.86,40.08,'401.04','401.04','Ud.','Tapado de 1m2 de cala en techo de escayola.',106.07,117.86,40.08,'401.04');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (13,'401.05','Ud.','Tapado de 1/2m2 de cala con alicatado o solado a 1cara.',93.84,104.27,34.53,'401.05','401.05','Ud.','Tapado de 1/2m2 de cala con alicatado o solado a 1cara.',93.84,104.27,34.53,'401.05');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (14,'401.06','Ud.','Tapado de 1m2 de cala con alicatado o solado a 1 cara.',129.50,143.89,46.94,'401.06','401.06','Ud.','Tapado de 1m2 de cala con alicatado o solado a 1 cara.',129.50,143.89,46.94,'401.06');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (15,'401.07','Ud.','Tapado de cala con hormigon 1m2.',69.10,76.78,38.25,'401.07','401.07','Ud.','Tapado de cala con hormigon 1m2.',69.10,76.78,38.25,'401.07');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (16,'401.08','M2','Adicional tapar cala con hormigon',44.93,49.92,22.37,'401.08','401.08','M2','Adicional tapar cala con hormigon',44.93,49.92,22.37,'401.08');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (17,'401.09','Ml','Tapado a mano de zanjas en tierra',28.00,31.11,10.00,'401.09','401.09','Ml','Tapado a mano de zanjas en tierra',28.00,31.11,10.00,'401.09');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (18,'402,01','Ud.','Reconstruccion de mocheta hasta 1m, acabada en yeso.',103.83,115.37,41.73,'402.01','402,01','Ud.','Reconstruccion de mocheta hasta 1m, acabada en yeso.',103.83,115.37,41.73,'402.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (19,'402,02','Ud.','Reconstruccion de mocheta hasta 2,5m, acabada en yeso.',180.89,200.99,73.06,'402.02','402,02','Ud.','Reconstruccion de mocheta hasta 2,5m, acabada en yeso.',180.89,200.99,73.06,'402.02');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (20,'402.03','Ud.','Reconstruccion de mocheta hasta 1m, acabada en mortero de cemento.',134.34,149.27,47.98,'402.03','402.03','Ud.','Reconstruccion de mocheta hasta 1m, acabada en mortero de cemento.',134.34,149.27,47.98,'402.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (21,'402.04','Ud.','Reconstruccion de mocheta hasta 2,5m, acabada en mortero de cemento',235.73,261.92,84.19,'402.04','402.04','Ud.','Reconstruccion de mocheta hasta 2,5m, acabada en mortero de cemento',235.73,261.92,84.19,'402.04');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (22,'402.05','Ud.','Tabicado acabado guarnecido y enlucido de yeso, hasta 1/2 m2.',63.70,70.78,22.75,'402.05','402.05','Ud.','Tabicado acabado guarnecido y enlucido de yeso, hasta 1/2 m2.',63.70,70.78,22.75,'402.05');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (23,'402.06','Ud.','Tabicado acabado guarnecido y enlucido de yeso,  hasta 1 m2.',105.31,117.01,37.61,'402.06','402.06','Ud.','Tabicado acabado guarnecido y enlucido de yeso,  hasta 1 m2.',105.31,117.01,37.61,'402.06');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (24,'402.07','Ud.','Tabicado acabado enfoscado de mortero de cemento hasta 1/2 m2.',70.97,78.86,25.28,'402.07','402.07','Ud.','Tabicado acabado enfoscado de mortero de cemento hasta 1/2 m2.',70.97,78.86,25.28,'402.07');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (25,'402.08','Ud.','Tabicado acabado enfoscado de mortero de cemento hasta 1 m2.',110.54,122.82,41.73,'402.08','402.08','Ud.','Tabicado acabado enfoscado de mortero de cemento hasta 1 m2.',110.54,122.82,41.73,'402.08');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (26,'402.09','Ud.','Tabicado de pared, m2 adicional.',40.21,44.68,15.03,'402.09','402.09','Ud.','Tabicado de pared, m2 adicional.',40.21,44.68,15.03,'402.09');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (27,'403.01','M2','Tendido de yeso negro.',18.42,20.47,7.01,'403.01','403.01','M2','Tendido de yeso negro.',18.42,20.47,7.01,'403.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (28,'403.02','M2','Enlucido de yeso blanco.',14.99,16.66,6.01,'403.02','403.02','M2','Enlucido de yeso blanco.',14.99,16.66,6.01,'403.02');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (29,'403.03','M2','Enfoscado de mortero de cemento.',24.59,27.32,10.51,'403.03','403.03','M2','Enfoscado de mortero de cemento.',24.59,27.32,10.51,'403.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (30,'403.04','M2','Alicatado o solado.',65.41,72.68,26.04,'403.04','403.04','M2','Alicatado o solado.',65.41,72.68,26.04,'403.04');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (31,'403.05','M2','Alicatado o solado, para superficie mayor de 3m2.',50.38,55.98,19.42,'403.05','403.05','M2','Alicatado o solado, para superficie mayor de 3m2.',50.38,55.98,19.42,'403.05');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (32,'403.06','M2','Solera de mortero de cemento fratasado, hasta 5 cm de espesor',19.44,21.60,12.75,'403.06','403.06','M2','Solera de mortero de cemento fratasado, hasta 5 cm de espesor',19.44,21.60,12.75,'403.06');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (33,'403.07','M2','Solado de terrazo',49.21,54.68,24.19,'403.07','403.07','M2','Solado de terrazo',49.21,54.68,24.19,'403.07');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (34,'403.08','Ml','Moldura de escayola.',18.99,21.10,7.51,'403.08','403.08','Ml','Moldura de escayola.',18.99,21.10,7.51,'403.08');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (35,'403.09','Ud.','Falso techo de escayola, hasta 1 m2. y hasta una altura de 2,50 m.',56.32,62.58,22.35,'403.09','406,03','Ud.','Falso techo de escayola, hasta 1 m2. y hasta una altura de 2,50 m.',56.32,62.58,22.35,'406.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (36,'403.10','M2','Falso techo de escayola m.adicional, hasta una altura de 2,50 m.',37.93,42.14,15.03,'403.10','406,01','M2','Falso techo de escayola m.adicional, hasta una altura de 2,50 m.',37.93,42.14,15.03,'406.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (37,'490,01','Hr.','Mano de obra  oficial de albañilería',39.45,43.83,20.52,'490.01','490,01','Hr.','Mano de obra  oficial de albañilería',39.45,43.83,20.52,'490.01');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (38,'490,02','Hr.','Mano de obra ayudante de albañilería',33.52,37.25,17.44,'490.02','490,02','Hr.','Mano de obra ayudante de albañilería',33.52,37.25,17.44,'490.02');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (39,'490,03','Ud.','Desplazamiento',29.00,29.00,15.00,'490.03','490,03','Ud.','Desplazamiento',29.00,29.00,15.00,'490.03');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (40,'490,04','Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'490.04','490,04','Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'490.04');
+insert  into `nuevaalbanileria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N CODIGON`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1N`,`CODIGO`) values (41,'490,05','Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'490.05','490,05','Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'490.05');
+
+
+
+#ACTUALIZAMOS LA TABLA NUEVA ALBAÑILERIA Y LA TABLA ARTICULOS
+
+UPDATE `nuevaalbanileria` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL;
+ 
+UPDATE `nuevaalbanileria`  SET id = 0 WHERE id < 50;
+
+UPDATE articulos AS ar 
+ INNER JOIN `nuevaalbanileria` AS nf ON  nf.id = ar.articuloId
+ SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN;
+
+#TABLA PINTURA
+
+USE `proasistencia`;
+
+/*Table structure for table `nuevapintura` */
+
+DROP TABLE IF EXISTS `nuevapintura`;
+
+CREATE TABLE `nuevapintura` (
+  `Id` int(11) default NULL,
+  `MALCODIGON` double default NULL,
+  `UNIDADN` varchar(255) default NULL,
+  `DESCRIPCIONN` varchar(255) default NULL,
+  `VERDEN` decimal(12,2) default NULL,
+  `AZULN` decimal(12,2) default NULL,
+  `TARIFA1N` decimal(12,2) default NULL,
+  `CODIGON` varchar(255) default NULL,
+  `MALCODIGO` double default NULL,
+  `UNIDAD` varchar(255) default NULL,
+  `DESCRIPCION` varchar(255) default NULL,
+  `VERDE` decimal(12,2) default NULL,
+  `AZUL` decimal(12,2) default NULL,
+  `TARIFA1` decimal(12,2) default NULL,
+  `CODIGO` varchar(255) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `nuevapintura` */
+
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (1,500.01,'Ud.','Pintura al temple liso de 1 a 7 m2.',80.91,89.90,30.59,'500.01',500.01,'Ud.','Pintura al temple liso de 1 a 7 m2.',80.91,89.90,30.59,'500.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (2,500.02,'Ud.','Pintura al temple liso de 7 a 15 m2.',97.39,108.21,36.69,'500.02',500.02,'Ud.','Pintura al temple liso de 7 a 15 m2.',97.39,108.21,36.69,'500.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (3,500.03,'Ud.','Pintura al temple liso m2 adicional.',4.66,5.18,1.50,'500.03',500.03,'Ud.','Pintura al temple liso m2 adicional.',4.66,5.18,1.50,'500.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (4,501.01,'Ud.','Pintura al temple picado de 1 a 7 m2.',109.32,121.47,40.51,'501.01',501.01,'Ud.','Pintura al temple picado de 1 a 7 m2.',109.32,121.47,40.51,'501.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (5,501.02,'Ud.','Pintura al temple picado de 7 a 15 m2.',156.31,173.68,47.28,'501.02',501.02,'Ud.','Pintura al temple picado de 7 a 15 m2.',156.31,173.68,47.28,'501.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (6,501.03,'Ud.','Pintura al temple picado m2 adicional.',7.06,7.84,2.31,'501.03',501.03,'Ud.','Pintura al temple picado m2 adicional.',7.06,7.84,2.31,'501.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (7,502.01,'Ud.','Pintura al temple gotele de 1 a 7 m2.',109.32,121.47,40.51,'502.01',502.01,'Ud.','Pintura al temple gotele de 1 a 7 m2.',109.32,121.47,40.51,'502.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (8,502.02,'Ud.','Pintura al temple gotele de 7 a 15 m2.',124.18,137.98,47.28,'502.02',502.02,'Ud.','Pintura al temple gotele de 7 a 15 m2.',124.18,137.98,47.28,'502.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (9,502.03,'Ud.','Pintura al temple gotele m2 adicional.',7.06,7.84,2.31,'502.03',502.03,'Ud.','Pintura al temple gotele m2 adicional.',7.06,7.84,2.31,'502.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (10,503.01,'Ud.','Pintura plastica lisa de 1 a 7 m2.',103.47,114.97,35.30,'503.01',503.01,'Ud.','Pintura plastica lisa de 1 a 7 m2.',103.47,114.97,35.30,'503.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (11,503.02,'Ud.','Pintura plastica lisa de 7 a 15 m2.',130.54,145.04,42.88,'503.02',503.02,'Ud.','Pintura plastica lisa de 7 a 15 m2.',130.54,145.04,42.88,'503.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (12,503.03,'Ud.','Pintura plastica lisa m2 adicional.',8.27,9.19,2.16,'503.03',503.03,'Ud.','Pintura plastica lisa m2 adicional.',8.27,9.19,2.16,'503.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (13,504.01,'Ud.','Temple picado plastificado de 1 a 7 m2.',167.99,186.66,47.65,'504.01',504.01,'Ud.','Temple picado plastificado de 1 a 7 m2.',167.99,186.66,47.65,'504.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (14,504.02,'Ud.','Temple picado plastificado de 7 a 15 m2.',181.14,201.27,53.01,'504.02',504.02,'Ud.','Temple picado plastificado de 7 a 15 m2.',181.14,201.27,53.01,'504.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (15,504.03,'Ud.','Temple picado plastificado m2 adicional',10.14,11.27,2.52,'504.03',504.03,'Ud.','Temple picado plastificado m2 adicional',10.14,11.27,2.52,'504.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (16,505.01,'Ud.','Temple gotele plastificado de 1 a 7 m2.',135.92,151.02,47.65,'505.01',505.01,'Ud.','Temple gotele plastificado de 1 a 7 m2.',135.92,151.02,47.65,'505.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (17,505.02,'Ud.','Temple gotele plastificado de 7 a 15 m2.',156.31,173.68,53.01,'505.02',505.02,'Ud.','Temple gotele plastificado de 7 a 15 m2.',156.31,173.68,53.01,'505.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (18,505.03,'Ud.','Temple gotele plastificado m2 adicional',9.42,10.47,2.52,'505.03',505.03,'Ud.','Temple gotele plastificado m2 adicional',9.42,10.47,2.52,'505.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (19,506.01,'Ud.','Pasta rayada de 1 a 7 m2.',103.47,114.97,41.67,'506.01',506.01,'Ud.','Pasta rayada de 1 a 7 m2.',103.47,114.97,41.67,'506.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (20,506.02,'Ud.','Pasta rayada de 7 a 15 m2.',130.54,145.04,47.28,'506.02',506.02,'Ud.','Pasta rayada de 7 a 15 m2.',130.54,145.04,47.28,'506.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (21,506.03,'Ud.','Pasta rayada m2 adicional.',8.27,9.19,2.31,'506.03',506.03,'Ud.','Pasta rayada m2 adicional.',8.27,9.19,2.31,'506.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (22,507.01,'Ud.','Pintura al esmalte de 1 a 7 m2.',136.89,152.10,51.47,'507.01',507.01,'Ud.','Pintura al esmalte de 1 a 7 m2.',136.89,152.10,51.47,'507.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (23,507.02,'Ud.','Pintura al esmalte de 7 a 15 m2.',219.00,243.33,69.33,'507.02',507.02,'Ud.','Pintura al esmalte de 7 a 15 m2.',219.00,243.33,69.33,'507.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (24,507.03,'Ud.','Pintura al esmalte m2 adicional.',16.51,18.34,4.22,'507.03',507.03,'Ud.','Pintura al esmalte m2 adicional.',16.51,18.34,4.22,'507.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (25,508.01,'Ud.','Pintura tixotrópica de 1 a 7 m2.',136.89,152.10,51.47,'508.01',508.01,'Ud.','Pintura tixotrópica de 1 a 7 m2.',136.89,152.10,51.47,'508.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (26,508.02,'Ud.','Pintura tixotrópica de 7 a 15 m2.',219.00,243.33,69.33,'508.02',508.02,'Ud.','Pintura tixotrópica de 7 a 15 m2.',219.00,243.33,69.33,'508.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (27,508.03,'Ud.','Pintura tixotrópica m2 adicional.',16.51,18.34,4.22,'508.03',508.03,'Ud.','Pintura tixotrópica m2 adicional.',16.51,18.34,4.22,'508.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (28,509.01,'Ud.','Picado y tendido de paramento de 1 a 7 m2.',150.00,166.67,75.00,'509.01',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (29,509.02,'Ud.','Picado y tendido de paramento de 7 a 15 m2.',260.00,288.89,130.00,'509.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (30,509.02,'Ud.','Picado y tendido de paramento m2 adicional.',30.00,33.33,15.00,'509.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (31,509.04,'Ud.','Colocación de malla de fibra en grietas  de 1 a 7m2.',50.00,55.56,20.00,'509.04',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (32,509.05,'Ud.','Colocación de malla de fibra en grietas  de 7 a 15 m2.',75.00,83.33,30.00,'509.05',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (33,509.06,'Ud.','Colocación de malla de fibra en grietas  m2 adicional.',17.50,19.44,7.00,'509.06',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (34,590.01,'Hr.','Mano de obra de oficialde pintura.',38.30,42.56,20.52,'590.01',590.01,'Hr.','Mano de obra de oficialde pintura.',38.30,42.56,20.52,'590.01');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (35,590.02,'Hr.','Mano de obra ayudante de pintura.',38.30,42.56,20.52,'590.02',590.02,'Hr.','Mano de obra de pintura.',38.30,42.56,20.52,'590.02');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (36,590.03,'Ud.','Desplazamiento',29.00,29.00,15.00,'590.03',590.03,'Ud.','Desplazamiento',29.00,29.00,15.00,'590.03');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (37,590.04,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'590.04',590.04,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'590.04');
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (38,590.05,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'590.05',590.05,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'590.05');
+
+
+#ACTUALIZAMOS LA TABLA NUEVA PINTURA Y LA TABLA ARTICULOS
+
+UPDATE `nuevapintura` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL;
+
+ UPDATE `nuevapintura` SET id = 0 WHERE id < 50;
+
+ 
+
+UPDATE articulos AS ar 
+ INNER JOIN `nuevapintura` AS nf ON  nf.id = ar.articuloId
+ SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN;
+
+ #TABLA CRISTALERIA
+
+ USE `proasistencia`;
+
+/*Table structure for table `nuevacristaleria` */
+
+DROP TABLE IF EXISTS `nuevacristaleria`;
+
+CREATE TABLE `nuevacristaleria` (
+  `Id` int(11) default NULL,
+  `MALCODIGON` double default NULL,
+  `UNIDADN` varchar(255) default NULL,
+  `DESCRIPCIONN` varchar(255) default NULL,
+  `VERDEN` decimal(12,2) default NULL,
+  `AZULN` decimal(12,2) default NULL,
+  `TARIFA1N` decimal(12,2) default NULL,
+  `CODIGON` varchar(255) default NULL,
+  `MAlCODIGO` double default NULL,
+  `UNIDAD` varchar(255) default NULL,
+  `DESCRIPCION` varchar(255) default NULL,
+  `VERDE` decimal(12,2) default NULL,
+  `AZUL` decimal(12,2) default NULL,
+  `TARIFA1` decimal(12,2) default NULL,
+  `CODIGO` varchar(255) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `nuevacristaleria` */
+
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (1,800.01,'M2.','Luna pulida de 3 mm.',69.12,76.80,34.42,'800.01',900.01,'M2.','Luna pulida de 3 mm.',69.12,76.80,34.42,'900.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (2,800.02,'M2.','Luna pulida de 4 mm.',79.34,88.16,39.51,'800.02',900.02,'M2.','Luna pulida de 4 mm.',79.34,88.16,39.51,'900.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (3,800.03,'M2.','Luna pulida de 5 mm.',88.38,98.20,44.00,'800.03',900.03,'M2.','Luna pulida de 5 mm.',88.38,98.20,44.00,'900.03');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (4,800.04,'M2.','Luna pulida de 6 mm.',96.31,107.01,47.95,'800.04',900.04,'M2.','Luna pulida de 6 mm.',96.31,107.01,47.95,'900.04');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (5,800.05,'M2.','Luna pulida de 8 mm.',122.38,135.98,60.93,'800.05',900.05,'M2.','Luna pulida de 8 mm.',122.38,135.98,60.93,'900.05');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (6,800.06,'M2.','Luna pulida de 10 mm.',148.44,164.93,73.90,'800.06',900.06,'M2.','Luna pulida de 10 mm.',148.44,164.93,73.90,'900.06');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (7,801.01,'M2.','Luna Parsol de 5 mm.',98.59,109.54,49.08,'801.01',901.01,'M2.','Luna Parsol de 5 mm.',98.59,109.54,49.08,'901.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (8,801.02,'M2.','Luna Parsol de 6 mm.',112.17,124.63,55.85,'801.02',901.02,'M2.','Luna Parsol de 6 mm.',112.17,124.63,55.85,'901.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (9,801.03,'M2.','Luna Parsol de 10 mm.',175.66,195.18,87.46,'801.03',901.03,'M2.','Luna Parsol de 10 mm.',175.66,195.18,87.46,'901.03');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (10,802.01,'M2.','Luna espejo de 3 mm.',88.38,98.20,44.00,'802.01',902.01,'M2.','Luna espejo de 3 mm.',88.38,98.20,44.00,'902.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (11,802.02,'M2.','Luna espejo 5 mm.',125.81,139.79,62.63,'802.02',902.02,'M2.','Luna espejo 5 mm.',125.81,139.79,62.63,'902.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (12,803.01,'M2.','Vidrio listral.',68.00,75.56,33.86,'803.01',903.01,'M2.','Vidrio listral.',68.00,75.56,33.86,'903.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (13,803.02,'M2.','Vidrio Madras.',181.31,201.46,90.27,'803.02',903.02,'M2.','Vidrio Madras.',181.31,201.46,90.27,'903.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (14,803.03,'M2.','Vidrio armado.',93.48,103.87,46.55,'803.03',903.03,'M2.','Vidrio armado.',93.48,103.87,46.55,'903.03');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (15,804.01,'Ml.','Canto pulido hasta 6 mm.',7.14,7.93,3.56,'804.01',906.01,'Ml.','Canto pulido hasta 6 mm.',7.14,7.93,3.56,'906.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (16,804.02,'Ml.','Canto pulido mas de 6 mm.',11.92,13.24,5.92,'804.02',906.02,'Ml.','Canto pulido mas de 6 mm.',11.92,13.24,5.92,'906.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (17,804.03,'Ml.','Bisel hasta 6 mm.',14.37,15.97,7.16,'804.03',906.03,'Ml.','Bisel hasta 6 mm.',14.37,15.97,7.16,'906.03');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (18,804.04,'Ml.','Bisel mas de 6 mm.',16.77,18.63,8.35,'804.04',906.04,'Ml.','Bisel mas de 6 mm.',16.77,18.63,8.35,'906.04');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (19,804.05,'Ml.','Taladro hasta 10 mm.',7.20,8.00,3.58,'804.05',906.05,'Ml.','Taladro hasta 10 mm.',7.20,8.00,3.58,'906.05');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (20,804.06,'Ml.','Taladro hasta 40 mm.',20.00,22.22,9.95,'804.06',906.06,'Ml.','Taladro hasta 40 mm.',20.00,22.22,9.95,'906.06');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (21,890.01,'Hr.','Mano de obra de oficial cristalería',52.08,57.87,24.96,'890.01',990.01,'Hr.','Mano de obra de oficial cristalería',52.08,57.87,24.96,'990.01');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (22,890.02,'Hr.','Mano de obra de ayudante de cristalería',26.04,28.93,12.48,'890.02',990.02,'Hr.','Mano de obra de ayudante de cristalería',26.04,28.93,12.48,'990.02');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (23,890.03,'Ud.','Reparación provicional o protección de elementos a sustituir',95.89,106.54,51.83,'890.03',990.03,'Ud.','Reparación provicional o protección de elementos a sustituir',95.89,106.54,51.83,'990.03');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (24,890.04,'Ud.','Desplazamiento',29.00,29.00,15.00,'890.04',990.04,'Ud.','Desplazamiento',29.00,29.00,15.00,'990.04');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (25,890.05,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'890.05',990.05,'Ud.','Desplazamiento superior a 30 Km',59.00,59.00,30.00,'990.05');
+insert  into `nuevacristaleria`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MAlCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (26,890.06,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'890.06',990.06,'Ud.','Servicio realizado fuera del horario laboral',50.00,50.00,25.00,'990.06');
+
+#ACTUALIZAMOS LA TABLA NUEVA CRISTALERIA Y LA TABLA ARTICULOS
+
+
+UPDATE `nuevacristaleria` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGO
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL;
+
+ UPDATE `nuevacristaleria`  SET id = 0 WHERE id < 50;
+ 
+
+UPDATE articulos AS ar 
+ INNER JOIN `nuevacristaleria` AS nf ON  nf.id = ar.articuloId
+ SET ar.codigoReparacion = nf.CODIGON, ar.nombre = nf.DESCRIPCIONN;
+
+ #INSERTAMOS ARTICULOS NUEVOS
+
+ INSERT INTO articulos (codigoreparacion, nombre, grupoArticuloId, precioUnitario, unidadId, tipoProfesionalId)
+(SELECT CODIGON AS codigoreparacion, DESCRIPCIONN AS nombre, 46 AS grupoArticuloId, 0.00 AS precioUnitario, 9 
+AS unidadId, 2 AS tipoProfesionalId FROM  nuevafontaneria WHERE CODIGON LIKE '1__.%' AND id = 0);
+
+INSERT INTO articulos (codigoreparacion, nombre, grupoArticuloId, precioUnitario, unidadId, tipoProfesionalId)
+(SELECT CODIGON AS codigoreparacion, DESCRIPCIONN AS nombre, 45 AS grupoArticuloId, 0.00 AS precioUnitario, 
+9 AS unidadId, 4 AS tipoProfesionalId FROM  nuevaelectricidad WHERE id = 0);
+
+INSERT INTO articulos (codigoreparacion, nombre, grupoArticuloId, precioUnitario, unidadId, tipoProfesionalId)
+(SELECT CODIGON AS codigoreparacion, DESCRIPCIONN AS nombre, 43 AS grupoArticuloId, 0.00 AS precioUnitario, 
+9 AS unidadId, 6 AS tipoProfesionalId FROM  nuevacerrajeria WHERE id = 0);
+
+INSERT INTO articulos (codigoreparacion, nombre, grupoArticuloId, precioUnitario, unidadId, tipoProfesionalId)
+(SELECT CODIGON AS codigoreparacion, DESCRIPCIONN AS nombre, 47 AS grupoArticuloId, 0.00 AS precioUnitario, 
+9 AS unidadId, 5 AS tipoProfesionalId FROM  nuevapintura WHERE id = 0);
+
+
+
+
+ 
