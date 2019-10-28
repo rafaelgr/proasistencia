@@ -154,42 +154,42 @@ CREATE TABLE `nuevaelectricidad` (
   `UNIDADID` double default NULL,
   `UNIDAD` varchar(255) default NULL,
   `DESCRIPCIÓN` varchar(255) default NULL,
-  `TARIFA VERDE` decimal(12,2) default NULL,
-  `TARIFA AZUL` decimal(12,2) default NULL,
+  `VERDE` decimal(12,2) default NULL,
+  `AZUL` decimal(12,2) default NULL,
   `TARIFA 1` decimal(12,2) default NULL,
   `CODIGO` varchar(255) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `nuevaelectricidad` */
 
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (417,'200.01',NULL,'Ud.','Sustitucion de interruptor, enchufe o timbre serie SIMON31 o similar.',49.94,55.49,25.41,'200.01','200.01',NULL,'Ud.','Sustitucion de interruptor, enchufe o timbre serie SIMON31 o similar.',49.94,55.49,25.41,'200.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (418,'200.02',NULL,'Ud.','Sustitución pulsador con indicador luminoso serie SIMON31 o similar.',61.92,68.80,30.72,'200.02','200.02',NULL,'Ud.','Sustitución pulsador con indicador luminoso serie SIMON31 o similar.',61.92,68.80,30.72,'200.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (419,'200.03',NULL,'Ud.','Sustitucion automatico escalera T20 o similar',87.73,97.48,45.94,'200.03','200.03',NULL,'Ud.','Sustitucion automatico escalera T20 o similar',87.73,97.48,45.94,'200.03');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (420,'200.04',NULL,'Ud.','Sustitución de automático de escalera T11 o similar.',111.89,124.32,55.51,'200.04','200.04',NULL,'Ud.','Sustitución de automático de escalera T11 o similar.',111.89,124.32,55.51,'200.04');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (421,'200.05',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.38,56.82,'200.05','200.05',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.38,56.82,'200.05');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (422,'201,01',NULL,'Ud.','Sustitucion de diferencial hasta 2x40A sensibilidad 30mA.',82.17,91.30,40.77,'201.01','201,01',NULL,'Ud.','Sustitucion de diferencial hasta 2x40A sensibilidad 30mA.',82.17,91.30,40.77,'201.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (423,'201,02',NULL,'Ud.','Sustitucion de diferencial de 2x63A sensibilidad 30mA.',231.46,257.18,167.46,'201.02','201,02',NULL,'Ud.','Sustitucion de diferencial de 2x63A sensibilidad 30mA.',231.46,257.18,167.46,'201.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (424,'201,03',NULL,'Ud.','Sustitucion de diferencial  hasta 4x40A sensibilidad 300mA.',255.81,284.23,126.91,'201.03','201,03',NULL,'Ud.','Sustitucion de diferencial  hasta 4x40A sensibilidad 300mA.',255.81,284.23,126.91,'201.03');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (425,'201,04',NULL,'Ud.','Sustitucion de diferencial de 4x63A sensibilidad 300mA.',281.21,312.46,139.51,'201.04','201,04',NULL,'Ud.','Sustitucion de diferencial de 4x63A sensibilidad 300mA.',281.21,312.46,139.51,'201.04');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (426,'202,01',NULL,'Ud.','Sustitucion de magnetotermico de hasta 2x25A.',62.55,69.50,31.03,'202.01','202,01',NULL,'Ud.','Sustitucion de magnetotermico de hasta 2x25A.',62.55,69.50,31.03,'202.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (427,'202,02',NULL,'Ud.','Sustitucion de magnetotermico 2x40A.',68.58,76.20,34.02,'202.02','202,02',NULL,'Ud.','Sustitucion de magnetotermico 2x40A.',68.58,76.20,34.02,'202.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (428,'202,03',NULL,'Ud.','Sustitucion de magnetotermico 2x63A.',79.35,88.17,39.37,'202.03','202,03',NULL,'Ud.','Sustitucion de magnetotermico 2x63A.',79.35,88.17,39.37,'202.03');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (429,'202,04',NULL,'Ud.','Sustitucion de magnetotermico de hasta 4x25A.',127.96,142.18,63.48,'202.04','202,04',NULL,'Ud.','Sustitucion de magnetotermico de hasta 4x25A.',127.96,142.18,63.48,'202.04');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (430,'202,05',NULL,'Ud.','Sustitucion de magnetotermico 4x40A.',149.97,166.63,74.40,'202.05','202,05',NULL,'Ud.','Sustitucion de magnetotermico 4x40A.',149.97,166.63,74.40,'202.05');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (431,'202,06',NULL,'Ud.','Sustitucion de magnetotermico 4x63A.',252.89,280.99,139.20,'202.06','202,06',NULL,'Ud.','Sustitucion de magnetotermico 4x63A.',252.89,280.99,139.20,'202.06');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (426,'203,01',NULL,'Ml.','Cambio de linea hasta 2,5 mm2',7.56,8.40,3.75,'203.01','202,01',NULL,'Ml.','Cambio de linea hasta 2,5 mm2',7.56,8.40,3.75,'202.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (427,'203,02',NULL,'Ml.','Cambio de linea de 4 mm2 ',7.94,8.82,3.94,'203.02','202,02',NULL,'Ml.','Cambio de linea de 4 mm2 ',7.94,8.82,3.94,'202.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (428,'203,03',NULL,'Ml.','Cambio de linea hasta 6 mm2 ',8.33,9.26,4.13,'203.03','202,03',NULL,'Ml.','Cambio de linea hasta 6 mm2 ',8.33,9.26,4.13,'202.03');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (429,'203,04',NULL,'Ud.','Intervención mínima en sustitución de linea eléctrica',75.60,84.00,37.50,'203.04','202,04',NULL,'Ud.','Intervención mínima en sustitución de linea eléctrica',75.60,84.00,37.50,'202.04');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (430,'203,05',NULL,'Ud.','Revision instalacion electrica',63.68,70.76,34.88,'203.05','202,05',NULL,'Ud.','Revision instalacion electrica',63.68,70.76,34.88,'202.05');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (437,'290,01',NULL,'Hr.','Mano de obra de oficial instalador electricista',39.45,43.83,20.00,'290.01','290,01',NULL,'Hr.','Mano de obra de oficial instalador electricista',39.45,43.83,20.00,'290.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (438,'290,02',NULL,'Hr.','Mano de obra de ayudante instalador electricista',34.00,37.78,17.00,'290.02','290,02',NULL,'Hr.','Mano de obra de ayudante instalador electricista',34.00,37.78,17.00,'290.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (439,'290,03',NULL,'Ud.','Desplazamiento',29.00,29.00,15.00,'290.03','290,03',NULL,'Ud.','Desplazamiento',29.00,29.00,15.00,'290.03');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (440,'290,04',NULL,'Ud.','Desplazamiento superior a 30km',59.00,59.00,30.00,'290.04','290,04',NULL,'Ud.','Desplazamiento superior a 30km',59.00,59.00,30.00,'290.04');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (441,'290,05',NULL,'Ud.','Incremento de servicio de electricidad realizado fuera del horario laboral',50.00,50.00,25.00,'290.05','290,05',NULL,'Ud.','Incremento de servicio de electricidad realizado fuera del horario laboral',50.00,50.00,25.00,'290.05');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (443,'250,03',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.37,56.82,'250.03','250,01',NULL,'Ud.','Suministro de tubo de led de 120 cm, tipo Philips o similar.',25.24,28.04,15.77,'250.01');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (0,'250,01',NULL,'Ud.','Suministro de tubo de led de 120 cm, tipo Philips o similar.',25.24,28.04,15.77,'250.01','250,02',NULL,'Ud.','Suministro de downlight de led, 18W.',36.15,40.17,24.30,'250.02');
-insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`TARIFA VERDE`,`TARIFA AZUL`,`TARIFA 1`,`CODIGO`) values (0,'250,02',NULL,'Ud.','Suministro de downlight de led, 18W.',36.15,40.17,24.30,'250.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (417,'200.01',NULL,'Ud.','Sustitucion de interruptor, enchufe o timbre serie SIMON31 o similar.',49.94,55.49,25.41,'200.01','200.01',NULL,'Ud.','Sustitucion de interruptor, enchufe o timbre serie SIMON31 o similar.',49.94,55.49,25.41,'200.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (418,'200.02',NULL,'Ud.','Sustitución pulsador con indicador luminoso serie SIMON31 o similar.',61.92,68.80,30.72,'200.02','200.02',NULL,'Ud.','Sustitución pulsador con indicador luminoso serie SIMON31 o similar.',61.92,68.80,30.72,'200.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (419,'200.03',NULL,'Ud.','Sustitucion automatico escalera T20 o similar',87.73,97.48,45.94,'200.03','200.03',NULL,'Ud.','Sustitucion automatico escalera T20 o similar',87.73,97.48,45.94,'200.03');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (420,'200.04',NULL,'Ud.','Sustitución de automático de escalera T11 o similar.',111.89,124.32,55.51,'200.04','200.04',NULL,'Ud.','Sustitución de automático de escalera T11 o similar.',111.89,124.32,55.51,'200.04');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (421,'200.05',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.38,56.82,'200.05','200.05',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.38,56.82,'200.05');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (422,'201,01',NULL,'Ud.','Sustitucion de diferencial hasta 2x40A sensibilidad 30mA.',82.17,91.30,40.77,'201.01','201,01',NULL,'Ud.','Sustitucion de diferencial hasta 2x40A sensibilidad 30mA.',82.17,91.30,40.77,'201.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (423,'201,02',NULL,'Ud.','Sustitucion de diferencial de 2x63A sensibilidad 30mA.',231.46,257.18,167.46,'201.02','201,02',NULL,'Ud.','Sustitucion de diferencial de 2x63A sensibilidad 30mA.',231.46,257.18,167.46,'201.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (424,'201,03',NULL,'Ud.','Sustitucion de diferencial  hasta 4x40A sensibilidad 300mA.',255.81,284.23,126.91,'201.03','201,03',NULL,'Ud.','Sustitucion de diferencial  hasta 4x40A sensibilidad 300mA.',255.81,284.23,126.91,'201.03');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (425,'201,04',NULL,'Ud.','Sustitucion de diferencial de 4x63A sensibilidad 300mA.',281.21,312.46,139.51,'201.04','201,04',NULL,'Ud.','Sustitucion de diferencial de 4x63A sensibilidad 300mA.',281.21,312.46,139.51,'201.04');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (426,'202,01',NULL,'Ud.','Sustitucion de magnetotermico de hasta 2x25A.',62.55,69.50,31.03,'202.01','202,01',NULL,'Ud.','Sustitucion de magnetotermico de hasta 2x25A.',62.55,69.50,31.03,'202.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (427,'202,02',NULL,'Ud.','Sustitucion de magnetotermico 2x40A.',68.58,76.20,34.02,'202.02','202,02',NULL,'Ud.','Sustitucion de magnetotermico 2x40A.',68.58,76.20,34.02,'202.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (428,'202,03',NULL,'Ud.','Sustitucion de magnetotermico 2x63A.',79.35,88.17,39.37,'202.03','202,03',NULL,'Ud.','Sustitucion de magnetotermico 2x63A.',79.35,88.17,39.37,'202.03');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (429,'202,04',NULL,'Ud.','Sustitucion de magnetotermico de hasta 4x25A.',127.96,142.18,63.48,'202.04','202,04',NULL,'Ud.','Sustitucion de magnetotermico de hasta 4x25A.',127.96,142.18,63.48,'202.04');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (430,'202,05',NULL,'Ud.','Sustitucion de magnetotermico 4x40A.',149.97,166.63,74.40,'202.05','202,05',NULL,'Ud.','Sustitucion de magnetotermico 4x40A.',149.97,166.63,74.40,'202.05');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (431,'202,06',NULL,'Ud.','Sustitucion de magnetotermico 4x63A.',252.89,280.99,139.20,'202.06','202,06',NULL,'Ud.','Sustitucion de magnetotermico 4x63A.',252.89,280.99,139.20,'202.06');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (426,'203,01',NULL,'Ml.','Cambio de linea hasta 2,5 mm2',7.56,8.40,3.75,'203.01','202,01',NULL,'Ml.','Cambio de linea hasta 2,5 mm2',7.56,8.40,3.75,'202.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (427,'203,02',NULL,'Ml.','Cambio de linea de 4 mm2 ',7.94,8.82,3.94,'203.02','202,02',NULL,'Ml.','Cambio de linea de 4 mm2 ',7.94,8.82,3.94,'202.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (428,'203,03',NULL,'Ml.','Cambio de linea hasta 6 mm2 ',8.33,9.26,4.13,'203.03','202,03',NULL,'Ml.','Cambio de linea hasta 6 mm2 ',8.33,9.26,4.13,'202.03');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (429,'203,04',NULL,'Ud.','Intervención mínima en sustitución de linea eléctrica',75.60,84.00,37.50,'203.04','202,04',NULL,'Ud.','Intervención mínima en sustitución de linea eléctrica',75.60,84.00,37.50,'202.04');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (430,'203,05',NULL,'Ud.','Revision instalacion electrica',63.68,70.76,34.88,'203.05','202,05',NULL,'Ud.','Revision instalacion electrica',63.68,70.76,34.88,'202.05');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (437,'290,01',NULL,'Hr.','Mano de obra de oficial instalador electricista',39.45,43.83,20.00,'290.01','290,01',NULL,'Hr.','Mano de obra de oficial instalador electricista',39.45,43.83,20.00,'290.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (438,'290,02',NULL,'Hr.','Mano de obra de ayudante instalador electricista',34.00,37.78,17.00,'290.02','290,02',NULL,'Hr.','Mano de obra de ayudante instalador electricista',34.00,37.78,17.00,'290.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (439,'290,03',NULL,'Ud.','Desplazamiento',29.00,29.00,15.00,'290.03','290,03',NULL,'Ud.','Desplazamiento',29.00,29.00,15.00,'290.03');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (440,'290,04',NULL,'Ud.','Desplazamiento superior a 30km',59.00,59.00,30.00,'290.04','290,04',NULL,'Ud.','Desplazamiento superior a 30km',59.00,59.00,30.00,'290.04');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (441,'290,05',NULL,'Ud.','Incremento de servicio de electricidad realizado fuera del horario laboral',50.00,50.00,25.00,'290.05','290,05',NULL,'Ud.','Incremento de servicio de electricidad realizado fuera del horario laboral',50.00,50.00,25.00,'290.05');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (443,'250,03',NULL,'Ud.','Suministro e instalación de detector tipo Koban 360º',97.54,108.37,56.82,'250.03','250,01',NULL,'Ud.','Suministro de tubo de led de 120 cm, tipo Philips o similar.',25.24,28.04,15.77,'250.01');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (0,'250,01',NULL,'Ud.','Suministro de tubo de led de 120 cm, tipo Philips o similar.',25.24,28.04,15.77,'250.01','250,02',NULL,'Ud.','Suministro de downlight de led, 18W.',36.15,40.17,24.30,'250.02');
+insert  into `nuevaelectricidad`(`Id`,`MALCODIGON`,`UNIDADIDN`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZUlN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDADID`,`UNIDAD`,`DESCRIPCIÓN`,`VERDE`,`AZUL`,`TARIFA 1`,`CODIGO`) values (0,'250,02',NULL,'Ud.','Suministro de downlight de led, 18W.',36.15,40.17,24.30,'250.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 
  #ACTUALIZAMOS LAS IDS DE LA TABLA CON LOS ARTICULOS proasistencia
@@ -531,5 +531,130 @@ INSERT INTO articulos (codigoreparacion, nombre, grupoArticuloId, precioUnitario
 
 
 
+#ACTUALIZAMOS LAS IDS DE LAS TABLAS TEMPORALES
 
+UPDATE `nuevaFontaneria` AS nf
+LEFT JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGON
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL AND nf.id = 0;
+
+UPDATE `nuevaelectricidad` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGON
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL AND nf.id = 0;
+
+UPDATE `nuevacerrajeria` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGON
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL AND nf.id = 0;
  
+ UPDATE `nuevapintura` AS nf
+INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGON
+ SET nf.Id = ar.articuloId
+ WHERE ar.codigoReparacion IS NOT NULL AND nf.id = 0;
+
+ #ACTUALIZAMOS LA TARIFA AZUL
+
+ UPDATE tarifa_azul AS ta
+INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
+SET ta.codigo = ar.codigoReparacion;
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+UPDATE tarifa_azul AS ta
+INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.AZULN;
+
+
+#ACTUALIZAMOS LA TARIFA VERDE
+
+UPDATE tarifa_verde AS ta
+INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
+SET ta.codigo = ar.codigoReparacion;
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+UPDATE tarifa_verde AS ta
+INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.VERDEN;
+
+
+#ACTUALIZAMOS LA TARIFA 1
+
+UPDATE tarifa_1 AS ta
+INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
+SET ta.codigo = ar.codigoReparacion;
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+UPDATE tarifa_1 AS ta
+INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA1N;
+
+#ACTUALIZAMOS LA TARIFA 2
+
+UPDATE tarifa_2 AS ta
+INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
+SET ta.codigo = ar.codigoReparacion;
+
+UPDATE tarifa_2 AS ta
+INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
+SET ta.precioUnitario = nf.TARIFA2N;
+
