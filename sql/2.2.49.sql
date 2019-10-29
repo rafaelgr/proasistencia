@@ -1,3 +1,5 @@
+
+
 #TABLA DE fontaneria
 
 USE `proasistencia`;
@@ -555,184 +557,194 @@ INNER JOIN articulos AS ar ON ar.codigoReparacion = nf.CODIGON
 
  #ACTUALIZAMOS LA TARIFA AZUL
 
- UPDATE tarifa_azul AS ta
-INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
-SET ta.codigo = ar.codigoReparacion;
+ 
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
-UPDATE tarifa_azul AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.AZULN;
+SET ta.precioUnitario = nf.AZULN
+WHERE tarifaClienteId = 2;
 
 
 #ACTUALIZAMOS LA TARIFA VERDE
 
-UPDATE tarifa_verde AS ta
-INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
-SET ta.codigo = ar.codigoReparacion;
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
-UPDATE tarifa_verde AS ta
+UPDATE tarifas_cliente_lineas AS ta
 INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.VERDEN;
+SET ta.precioUnitario = nf.VERDEN
+WHERE tarifaClienteId = 1;
 
 
 #ACTUALIZAMOS LA TARIFA 1
 
-UPDATE tarifa_1 AS ta
-INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
-SET ta.codigo = ar.codigoReparacion;
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevaelectricidad` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevacerrajeria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevaalbanileria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevapintura` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
-UPDATE tarifa_1 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevacristaleria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA1N;
+SET ta.precioUnitario = nf.TARIFA1N
+WHERE tarifaProveedorId = 1;
 
 #ACTUALIZAMOS LA TARIFA 2
 
-UPDATE tarifa_2 AS ta
-INNER JOIN articulos AS ar ON ar.articuloId = ta.articuloId
-SET ta.codigo = ar.codigoReparacion;
 
-UPDATE tarifa_2 AS ta
+UPDATE tarifas_proveedor_lineas AS ta
 INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
-SET ta.precioUnitario = nf.TARIFA2N;
+SET ta.precioUnitario = nf.TARIFA2N
+WHERE tarifaProveedorId = 2;
 
 #INSERTAMOS LOS NUEVOS ARTICULOS EN LAS TARIFAS
 
 #fontaneria
 
-INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaClienteId, nf.AZULN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
 
 
-INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas(articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaClienteId, nf.VERDEN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
 
-INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaProveedorId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
 
 
-INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.TARIFA2N AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaProveedorId, nf.TARIFA2N AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
+
+
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaProveedorId, 23.00 AS precioUnitario FROM articulos AS ar
+WHERE ar.codigoReparacion = '190.02';
 
 
 #electricidad
-INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaClienteId, nf.AZULN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
 
-INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaClienteId, nf.VERDEN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
 
 
-INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaProveedorId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
 
 #PINTURA
 
-INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaClienteId, nf.AZULN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
 
-INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaClienteId, nf.VERDEN AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
-i
-INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 1 AS tarifaProveedorId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
 INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
 WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
 
 
 #antenas
 
-INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 15.00 AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
 WHERE ar.codigoReparacion = '790.03';
 
-INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 15.00 AS precioUnitario FROM articulos AS ar
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
 WHERE ar.codigoReparacion = '790.03';
 
-INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
-SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 23.00 AS precioUnitario FROM articulos AS ar
-WHERE ar.codigoReparacion = '190.02';
 
 
 
