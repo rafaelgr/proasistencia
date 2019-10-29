@@ -56,8 +56,8 @@ insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (248,'Ud.',9,'Tubería de distribución desde 1\"1/4 hasta 2\" y hasta 2ml.',93.96,104.40,28.71,52.20,'104.06','Ud.',9,'Tubería de distribución desde 1\"1/4 hasta 2\" y hasta 3ml.',402.54,447.27,172.04,74.70,'104.06');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (249,'Ud.',9,'Tubería de distribución desde 1\"1/4 hasta 2\" y hasta 3ml.',402.54,447.27,172.04,74.70,'104.07','Ud.',9,'Reparación de tubería de distribución sin sustitución.',71.22,79.13,25.36,35.10,'104.07');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (288,'Ml.',11,'Tubería de distribución desde 1\"1/4 hasta 2\" m adiccional.',57.34,63.71,28.67,12.45,'104.08','Ud.',9,'Reparación adiccional de tubería de distribución sin sustitución.\n',29.16,32.40,8.91,15.00,'104.08');
-insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (0,'Ud.',9,'Reparación de tubería de distribución sin sustitución.',71.22,79.13,25.36,35.10,'104.09',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'.');
-insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (0,'Ud.',9,'Reparación adiccional de tubería de distribución sin sustitución.\n',29.16,32.40,8.91,15.00,'104.10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'.');
+insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (0,'Ud.',9,'Reparación de tubería de distribución sin sustitución.',71.22,79.13,25.36,35.10,'104.09',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (0,'Ud.',9,'Reparación adiccional de tubería de distribución sin sustitución.\n',29.16,32.40,8.91,15.00,'104.10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (269,'Ud.',9,'Reparación de tubería con de gebo tapaporos de 1/2\".',92.56,102.84,27.69,31.50,'105.01','Ud.',9,'Reparación de tubería con de gebo tapaporos de 1/2\".',92.56,102.84,27.69,31.50,'105.01');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (270,'Ud.',9,'Reparación de tubería con de gebo tapaporos de 3/4\".',93.14,103.49,28.11,39.60,'105.02','Ud.',9,'Reparación de tubería con de gebo tapaporos de 3/4\".',93.14,103.49,28.11,39.60,'105.02');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (293,'Ud.',9,'Reparación de tubería con de gebo tapaporos de 1\" \n',90.72,100.80,27.72,50.40,'105.03','Ud.',9,'Reparación de tubería con de gebo tapaporos de 1\" \n',90.72,100.80,27.72,50.40,'105.03');
@@ -657,4 +657,84 @@ SET ta.codigo = ar.codigoReparacion;
 UPDATE tarifa_2 AS ta
 INNER JOIN `nuevafontaneria` AS nf ON nf.id = ta.articuloId
 SET ta.precioUnitario = nf.TARIFA2N;
+
+#INSERTAMOS LOS NUEVOS ARTICULOS EN LAS TARIFAS
+
+#fontaneria
+
+INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
+
+
+INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
+
+INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
+
+
+INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.TARIFA2N AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevafontaneria AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevafontaneria` WHERE codigo IS NULL);
+
+
+#electricidad
+INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
+
+INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
+
+
+INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevaelectricidad AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevaelectricidad` WHERE codigo IS NULL);
+
+#PINTURA
+
+INSERT INTO tarifa_azul (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, nf.AZULN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
+
+INSERT INTO tarifa_verde (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.VERDEN AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
+i
+INSERT INTO tarifa_1 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 1 AS tarifaId, nf.TARIFA1N AS precioUnitario FROM articulos AS ar
+INNER JOIN nuevapintura AS nf ON nf.id = ar.articuloId
+WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
+
+
+#antenas
+
+INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 15.00 AS precioUnitario FROM articulos AS ar
+WHERE ar.codigoReparacion = '790.03';
+
+INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 15.00 AS precioUnitario FROM articulos AS ar
+WHERE ar.codigoReparacion = '790.03';
+
+INSERT INTO tarifa_2 (codigo, articuloId, tarifaId, precioUnitario)
+SELECT ar.codigoReparacion AS codigo, ar.articuloId, 2 AS tarifaId, 23.00 AS precioUnitario FROM articulos AS ar
+WHERE ar.codigoReparacion = '190.02';
+
+
+
+
 
