@@ -417,7 +417,7 @@ insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (27,508.03,'Ud.','Pintura tixotrópica m2 adicional.',16.51,18.34,4.22,'508.03',508.03,'Ud.','Pintura tixotrópica m2 adicional.',16.51,18.34,4.22,'508.03');
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (28,509.01,'Ud.','Picado y tendido de paramento de 1 a 7 m2.',150.00,166.67,75.00,'509.01',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (29,509.02,'Ud.','Picado y tendido de paramento de 7 a 15 m2.',260.00,288.89,130.00,'509.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (30,509.02,'Ud.','Picado y tendido de paramento m2 adicional.',30.00,33.33,15.00,'509.02',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (30,509.03,'Ud.','Picado y tendido de paramento m2 adicional.',30.00,33.33,15.00,'509.03',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (31,509.04,'Ud.','Colocación de malla de fibra en grietas  de 1 a 7m2.',50.00,55.56,20.00,'509.04',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (32,509.05,'Ud.','Colocación de malla de fibra en grietas  de 7 a 15 m2.',75.00,83.33,30.00,'509.05',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 insert  into `nuevapintura`(`Id`,`MALCODIGON`,`UNIDADN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`CODIGON`,`MALCODIGO`,`UNIDAD`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`CODIGO`) values (33,509.06,'Ud.','Colocación de malla de fibra en grietas  m2 adicional.',17.50,19.44,7.00,'509.06',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -736,10 +736,6 @@ WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
 
 
 #antenas
-
-INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
-SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
-WHERE ar.codigoReparacion = '790.03';
 
 INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
 SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
