@@ -112,8 +112,8 @@ insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (413,'Ud.',9,'Desmontaje y montaje de termos hasta 80 l., sin material.',157.00,174.44,69.30,126.00,'111.07','Ud.',9,'Desmontaje y montaje de termos hasta 80 l., sin material.',157.00,174.44,69.30,126.00,'113.07');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (303,'Ud.',9,'Desatascos en hogar manual o con máquina de presión.',97.20,108.00,29.70,54.00,'112.01','Ud.',9,'Desatascos en hogar manual o con máquina de presión.',97.20,108.00,29.70,54.00,'114.01');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (304,'Ud.',9,'Desatascos en zona comunitaria manual o con máquina de presión.',162.00,180.00,49.50,90.00,'112.02','Ud.',9,'Desatascos en zona comunitaria manual o con máquina de presión.',162.00,180.00,49.50,90.00,'114.02');
-insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (280,'Hr.',NULL,'Mano de obra oficial de fontaneria ',39.45,43.83,17.96,27.00,'190.01','Hr.',NULL,'Mano de obra oficial de fontaneria ',39.45,43.83,17.96,27.00,'190.01');
-insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (281,'Hr.',NULL,'Mano de obra ayudante de fontaneria ',33.51,37.23,15.26,23.00,'190.02','Hr.',NULL,'Mano de obra ayudante de fontaneria ',33.51,37.23,15.26,NULL,'190.02');
+insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (280,'Hr.',12,'Mano de obra oficial de fontaneria ',39.45,43.83,17.96,27.00,'190.01','Hr.',12,'Mano de obra oficial de fontaneria ',39.45,43.83,17.96,27.00,'190.01');
+insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (281,'Hr.',12,'Mano de obra ayudante de fontaneria ',33.51,37.23,15.26,23.00,'190.02','Hr.',12,'Mano de obra ayudante de fontaneria ',33.51,37.23,15.26,NULL,'190.02');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (414,'Ud.',9,'Desplazamiento',29.00,30.00,15.00,0.00,'190.03','Ud.',9,'Desplazamiento',29.00,30.00,15.00,0.00,'190.03');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (415,'Ud.',9,'Desplazamiento superior a 30 km',59.00,59.00,30.00,30.00,'190.04','Ud.',9,'Desplazamiento superior a 30 km',59.00,59.00,30.00,30.00,'190.04');
 insert  into `nuevaFontaneria`(`Id`,`UNIDADN`,`UNIDADIDN`,`DESCRIPCIONN`,`VERDEN`,`AZULN`,`TARIFA1N`,`TARIFA2N`,`CODIGON`,`UNIDAD`,`UNIDADID`,`DESCRIPCION`,`VERDE`,`AZUL`,`TARIFA1`,`TARIFA2`,`CODIGO`) values (416,'Ud.',9,'Servicio realizado fuera del horario laboral',50.00,50.00,25.00,NULL,'190.05','Ud.',9,'Servicio realizado fuera del horario laboral',50.00,50.00,25.00,NULL,'190.05');
@@ -740,6 +740,23 @@ WHERE articuloId IN (SELECT id FROM `nuevapintura` WHERE codigo IS NULL);
 INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
 SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
 WHERE ar.codigoReparacion = '790.03';
+
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT ar.articuloId, 2 AS tarifaProveedorId, 15.00 AS precioUnitario FROM articulos AS ar
+WHERE ar.codigoReparacion = '790.04';
+
+#CERRAJERIA
+
+/*INSERT INTO tarifas_cliente_lineas (articuloId, tarifaClienteId, precioUnitario)
+SELECT id, 2 AS tarifaClienteId, nc.AZULN AS precioUnitario FROM nuevaCerrajeria nc WHERE nc.CODIGON NOT IN 
+(SELECT codigoReparacion FROM articulos AS ar INNER JOIN `tarifas_cliente_lineas` AS tf ON tf.articuloId = ar.articuloId);
+
+
+
+INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnitario)
+SELECT id, 1 AS tarifaProveedorId, nc.AZULN AS precioUnitario FROM nuevaCerrajeria nc WHERE nc.CODIGON NOT IN 
+(SELECT codigoReparacion FROM articulos AS ar INNER JOIN `tarifas_proveedor_lineas` AS tf ON tf.articuloId = ar.articuloId)*/
+
 
 
 
