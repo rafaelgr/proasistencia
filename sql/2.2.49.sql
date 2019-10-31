@@ -757,7 +757,8 @@ INSERT INTO tarifas_proveedor_lineas (articuloId, tarifaProveedorId, precioUnita
 SELECT id, 1 AS tarifaProveedorId, nc.AZULN AS precioUnitario FROM nuevaCerrajeria nc WHERE nc.CODIGON NOT IN 
 (SELECT codigoReparacion FROM articulos AS ar INNER JOIN `tarifas_proveedor_lineas` AS tf ON tf.articuloId = ar.articuloId)*/
 
-
+UPDATE clientes SET tarifaId` = 2;
+UPDATE proveedores SET tarifaId = 1;
 
 
 
