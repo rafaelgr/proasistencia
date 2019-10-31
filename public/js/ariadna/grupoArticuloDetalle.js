@@ -54,6 +54,12 @@ function admData() {
     self.nombre = ko.observable();
     self.cuentaventas = ko.observable();
     self.cuentacompras = ko.observable();
+   //
+   self.departamentoId = ko.observable();
+   self.sdepartamentoId = ko.observable();
+   //
+   self.posiblesDepartamentos = ko.observableArray([]);
+   self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -61,6 +67,7 @@ function loadData(data) {
     vm.nombre(data.nombre);
     vm.cuentacompras(data.cuentacompras);
     vm.cuentaventas(data.cuentaventas);
+    vm.departamentoId(data.departamentoId);
 }
 
 function datosOK() {
