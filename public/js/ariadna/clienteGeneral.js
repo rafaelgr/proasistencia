@@ -18,6 +18,7 @@ var breakpointDefinition = {
 
 
 function initForm() {
+    var b;
     comprobarLogin();
     // de smart admin
     pageSetUp();
@@ -40,8 +41,19 @@ function initForm() {
     // comprobamos parámetros
     clienteId = gup('ClienteId');
     var bus = getCookie("buscador_clientes");
+    $('#chkTodos').change(function () {
+        if(bus) {
+        b = JSON.parse(bus);
+        vm.bCodigo(b.Codigo);
+        vm.bNif(b.Nif);
+        vm.bNombre(b.Nombre);
+        vm.bTelefono(b.Telefono);
+        vm.bDireccion(b.Direccion);
+        buscarClientes()();
+        }
+    })
     if (bus) {
-        var b = JSON.parse(bus);
+        b = JSON.parse(bus);
         vm.bCodigo(b.Codigo);
         vm.bNif(b.Nif);
         vm.bNombre(b.Nombre);
@@ -205,20 +217,38 @@ function buscarClientes() {
             Telefono: vm.bTelefono()
         };
         setCookie("buscador_clientes", JSON.stringify(b), 1);
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/clientes/buscar/" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaClientes(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
+        if($('#chkTodos').prop('checked')) {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/buscar/" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaClientes(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/buscar/activos/" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaClientes(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        }
+       
     };
     return mf;
 }
