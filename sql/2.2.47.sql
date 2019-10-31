@@ -12,11 +12,11 @@ ALTER TABLE `facturas`
 
 ALTER TABLE  `partes`   
   ADD COLUMN `aCuentaProfesional` DECIMAL(12,2) NULL AFTER `formaPagoClienteId`,
-  ADD COLUMN `aCuentaCli` DECIMAL(12,2) NULL AFTER `formaPagoProfesionalId`;
+  ADD COLUMN `aCuentaCli` DECIMAL(12,2) NULL  DEFAULT 0 AFTER `formaPagoProfesionalId`;
 
   ALTER TABLE `partes`   
   CHANGE `aCuentaProfesional` `aCuentaProfesional` DECIMAL(12,2) DEFAULT 0 NULL,
-  CHANGE `aCuentaCli` `aCuentaCliente` DECIMAL(12,2) DEFAULT 0 NULL;
+  CHANGE `aCuentaCli` `aCuentaCli` DECIMAL(12,2) NULL DEFAULT 0;
 
 
   ALTER TABLE `empresas`   
