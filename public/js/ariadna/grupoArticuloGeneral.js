@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataGrupoArticulos;
 var grupoArticuloId;
 var cuentas;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -23,6 +24,9 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    vm = new admData();
+    ko.applyBindings(vm);
+    usuario = recuperarIdUsuario();
     //
     $('#btnBuscar').click(buscarGrupoArticulos());
     $('#btnAlta').click(crearGrupoArticulo());
@@ -41,31 +45,52 @@ function initForm() {
     if(cuentas == 'false') {
         mensNormal('AVISO: Alguna de las cuentas asociadas no existen en todas las contabilidades.');
     }
-    if (grupoArticuloId !== '') {
-        // cargar la tabla con un único valor que es el que corresponde.
-        var data = {
-            id: grupoArticuloId
+    recuperaDepartamento(function(err, data2) {  
+        if (grupoArticuloId !== '') {
+            // cargar la tabla con un único valor que es el que corresponde.
+            var data = {
+                id: grupoArticuloId
+            }
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/grupo_articulo/" + grupoArticuloId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaGrupoArticulos(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        } else {
+            buscarTodos();
         }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/grupo_articulo/" + grupoArticuloId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaGrupoArticulos(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
-    } else {
+    });
+
+     //Evento asociado al cambio de departamento
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
         buscarTodos();
-    }
+    });
 }
+
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 
 function initTablaGrupoArticulos() {
     tablaCarro = $('#dt_grupoArticulo').dataTable({
@@ -227,7 +252,7 @@ function editGrupoArticulo(id) {
 }
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/grupo_articulo/?nombre=*";
+    var url = myconfig.apiUrl + "/api/grupo_articulo/departamento/"+usuario + "/" + vm.sdepartamentoId()+"/?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
         if (err) return;
         loadTablaGrupoArticulos(data);

@@ -3,6 +3,7 @@ grupoArticuloDetalle.js
 Funciones js par la página GrupoArticuloDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
+var idUsuario;
 
 datePickerSpanish(); // see comun.js
 
@@ -12,6 +13,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
+    idUsuario = recuperarIdUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -20,6 +22,9 @@ function initForm() {
     $("#frmGrupoArticulo").submit(function () {
         return false;
     });
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
 
     empId = gup('GrupoArticuloId');
     if (empId != 0) {
@@ -67,21 +72,40 @@ function loadData(data) {
     vm.nombre(data.nombre);
     vm.cuentacompras(data.cuentacompras);
     vm.cuentaventas(data.cuentaventas);
-    vm.departamentoId(data.departamentoId);
+    loadDepartamentos(data.departamentoId);
 }
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+    
 
 function datosOK() {
     $('#frmGrupoArticulo').validate({
         rules: {
             txtNombre: { required: true },
             txtCuentaCompras: { required: true, rangelength: [9, 9] },
-            txtCuentaVentas: { required: true, rangelength: [9, 9] }
+            txtCuentaVentas: { required: true, rangelength: [9, 9] },
+            cmbDepartamentosTrabajo: {
+                required: true
+            },
         },
         // Messages for form validation
         messages: {
             txtNombre: { required: "Debe dar un nombre" },
             txtCuentaCompras: { required: "Debe dar una cuenta de compras", rangelength: "La longitud tiene que ser de nueve digitos" },
-            txtCuentaVentas: { required: "Debe dar una cuenta de ventas", rangelength: "La longitud tiene que ser de nueve digitos" }
+            txtCuentaVentas: { required: "Debe dar una cuenta de ventas", rangelength: "La longitud tiene que ser de nueve digitos" },
+            cmbDepartamentosTrabajo: {
+                required: 'Debe elegir un departamento'
+            },
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -102,7 +126,8 @@ function aceptar() {
                 "grupoArticuloId": vm.grupoArticuloId(),
                 "nombre": vm.nombre(),
                 "cuentacompras": vm.cuentacompras(),
-                "cuentaventas": vm.cuentaventas()
+                "cuentaventas": vm.cuentaventas(),
+                "departamentoId": vm.sdepartamentoId(),
             }
         };
         if (empId == 0) {

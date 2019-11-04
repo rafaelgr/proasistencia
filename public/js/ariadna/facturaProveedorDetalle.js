@@ -812,7 +812,7 @@ var cargarContratos = function (data, contratoId) {
 function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
         if (err) return;
-        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
             vm.departamentoId(departamentoId);
