@@ -75,9 +75,14 @@ function initForm() {
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
+        var aBuscar = $('#txtBuscar').val();
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        buscarTodos();
+        if(aBuscar!=="" && aBuscar !== "*") {
+            buscarGrupoArticulos()();
+        } else {
+            buscarTodos();
+        }
     });
 }
 
@@ -166,7 +171,10 @@ function loadTablaGrupoArticulos(data) {
     var dt = $('#dt_grupoArticulo').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbGrupoArticulo").hide();
+        //$("#tbGrupoArticulo").hide();
+        dt.fnClearTable();
+        dt.fnDraw();
+        $("#tbGrupoArticulo").show();
     } else {
         dt.fnClearTable();
         dt.fnAddData(data);
@@ -185,7 +193,7 @@ function buscarGrupoArticulos() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/grupo_articulo/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/grupo_articulo/departamento/"+usuario + "/" + vm.sdepartamentoId()+"?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

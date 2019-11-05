@@ -36,3 +36,11 @@ UPDATE grupo_articulo SET departamentoId = 4 WHERE grupoArticuloId IN
 INNER JOIN `grupo_articulo` AS ga ON ga.grupoArticuloId = ar.grupoArticuloid
 WHERE codigoReparacion IS NULL AND ga.departamentoId IS NULL AND ga.nombre LIKE '%suplidos%' OR ga.nombre LIKE '%ADMINISTRACIÓN Y GESTIÓN DE FINCA%' ) AS tmp);
 
+CREATE TABLE `formaspago_porcentajes`(  
+  `formaPagoPorcenId` INT(11) NOT NULL AUTO_INCREMENT,
+  `formaPagoId` INT(11),
+  `concepto` VARCHAR(255),
+  `porcentaje` DECIMAL(12,2) DEFAULT 0,
+  PRIMARY KEY (`formaPagoPorcenId`),
+  CONSTRAINT `forpaPorcen_formaPagoFK` FOREIGN KEY (`farmaPagoId`) REFERENCES `formas_pago`(`formaPagoId`)
+);

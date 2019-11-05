@@ -31,8 +31,8 @@ function initForm() {
     $("#frmTipoProyecto").submit(function () {
         return false;
     });
-    $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamento();
 
     adminId = gup('TipoProyectoId');
     if (adminId != 0) {
@@ -78,7 +78,7 @@ function loadData(data) {
     vm.tipoProyectoId(data.tipoProyectoId);
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
-    loadDepartamentos(data.departamentoId);
+    loadDepartamento(data.tipoMantenimientoId);
 }
 
 function datosOK() {
@@ -92,7 +92,11 @@ function datosOK() {
             },
             txtAbrev: {
                 required: true
+            },
+            cmbDepartamentosTrabajo: {
+                required:true
             }
+
         },
         // Messages for form validation
         messages: {
@@ -104,6 +108,9 @@ function datosOK() {
             },
             txtAbrev: {
                 required: 'Introduzca una breviatura'
+            },
+            cmbDepartamentosTrabajo: {
+                required:"Debe introducir un deparatamento"
             }
         },
         // Do not change code below
@@ -178,7 +185,7 @@ function salir() {
     return mf;
 }
 
-function loadDepartamentos(departamentoId) {
+function loadDepartamento(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
