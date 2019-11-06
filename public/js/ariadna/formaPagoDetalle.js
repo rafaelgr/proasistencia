@@ -2,7 +2,21 @@
 formaPagoDetalle.js
 Funciones js par la página FormaPagoDetalle.html
 ---------------------------------------------------------------------------*/
+
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
 var empId = 0;
+var lineaEnEdicion = false;
+var dataFormaPagoLineas;
+
 
 datePickerSpanish(); // see comun.js
 
@@ -20,6 +34,16 @@ function initForm() {
     $("#frmFormaPago").submit(function () {
         return false;
     });
+
+    $("#frmLinea").submit(function () {
+        return false;
+    });
+
+    $("#linea-form").submit(function () {
+        return false;
+    });
+
+    initTablaFormaPagoLineas();
 
     $("#cmbTiposFormaPago").select2({
         allowClear: true,
@@ -100,6 +124,11 @@ function admData() {
     //
     self.posiblesTiposFormaPago = ko.observableArray([]);
     self.elegidosTiposFormaPago = ko.observableArray([]);
+
+    //LINEAS DEL PAGO
+    self.conceptoPago = ko.observable();
+    self.porcentajePago = ko.observable();
+    self.formaPagoPorcenId = ko.observable();
 }
 
 function loadData(data) {
@@ -111,6 +140,8 @@ function loadData(data) {
     vm.restoVencimiento(data.restoVencimiento);
     vm.codigoContable(data.codigoContable);
     loadTiposFormaPago(data.tipoFormaPagoId);
+
+    loadFormaPagoLineas(data.formaPagoId);
 }
 
 function datosOK() {
@@ -253,3 +284,193 @@ function loadTiposFormaPago(id) {
         }
     });
 }
+
+//FUNCIONES DE LAS LINEAS
+
+function initTablaFormaPagoLineas() {
+    tablaCarro = $('#dt_lineas').DataTable({
+        autoWidth: true,
+       
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFormaPagoLineas,
+        columns: [ {
+            data: "concepto",
+            
+        }, {
+            data: "porcentaje",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "formaPagoPorcenId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFormaPagoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalLinea' onclick='editFprmaPagoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function  loadFormaPagoLineas(id) {
+    llamadaAjax("GET", "/api/formas_pago/linea/" + id, null, function (err, data) {
+        if (err) return;
+        loadTablaFormaPagoLineas(data);
+    });
+}
+
+function loadTablaFormaPagoLineas(data) {
+    var dt = $('#dt_lineas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+        $('#btnCopiar').hide();
+        $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
+    }
+    dt.fnClearTable();
+    if (data != null){
+        dt.fnAddData(data);
+        $('#btnCopiar').show();
+        $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
+    }
+    dt.fnDraw();
+}
+
+
+function nuevaLinea() {
+    limpiaDataLinea();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLinea(data) {
+    vm.conceptoPago('');
+    vm.porcentajePago(0);
+}
+
+
+function aceptarLinea() {
+    if (!datosOKLineas()) {
+        return;
+    }
+    var data = {
+        pagoPorcen: {
+            formaPagoId: vm.formaPagoId(),
+            concepto: vm.conceptoPago(),
+            porcentaje: vm.porcentajePago()
+        }
+    }
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/formas_pago/linea";
+                if (lineaEnEdicion) {
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.formaPagoPorcenId();
+                }
+                llamadaAjax(verbo, url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalLinea').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
+                        loadTablaFormaPagoLineas(data);
+                    });
+                });
+}
+
+function editFprmaPagoLinea(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/formas_pago/linea/Porcen/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLinea(data[0]);
+    });
+}
+function loadDataLinea(data) {
+    vm.formaPagoPorcenId(data.formaPagoPorcenId);
+    vm.conceptoPago(data.concepto);
+    vm.porcentajePago(data.porcentaje);
+    
+}
+
+function deleteFormaPagoLinea(formaPagoPorcenId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+       
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/formas_pago/linea/" + formaPagoPorcenId, null, function (err, data) {
+            if (err) return;
+                $('#modalLinea').modal('hide');
+                llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
+                    loadTablaFormaPagoLineas(data);
+                });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKLineas() {
+    $('#linea-form').validate({
+        rules: {
+            txtConceptoPago: {
+                required: true
+            },
+            txtPorcentajePago: {
+                required: true,
+                number:true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtConceptoPago: {
+                required: "Debe dar unaconcepto"
+            },
+            txtPorcentajePago: {
+                required: "Debe proporcionar un porcentaje",
+                number: "Se tiene que introducir un numero válido"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#linea-form").validate().settings;
+    return $('#linea-form').valid();
+}
+

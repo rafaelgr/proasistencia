@@ -3,6 +3,7 @@ tipoProyectoDetalle.js
 Funciones js par la página TipoProyectoDetalle.html
 ---------------------------------------------------------------------------*/
 var adminId = 0;
+var idUsuario;
 
 var posiblesNiveles = [{
     id: 0,
@@ -21,6 +22,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
+    idUsuario = recuperarIdUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -29,8 +31,8 @@ function initForm() {
     $("#frmTipoProyecto").submit(function () {
         return false;
     });
-    $("#cmbTiposContrato").select2(select2Spanish());
-    loadTiposContrato();
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamento();
 
     adminId = gup('TipoProyectoId');
     if (adminId != 0) {
@@ -65,18 +67,18 @@ function admData() {
     self.nombre = ko.observable();
     self.abrev = ko.observable();
     //
-    self.tipoContratoId = ko.observable();
-    self.stipoContratoId = ko.observable();
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
     //
-    self.posiblesTiposContrato = ko.observableArray([]);
-    self.elegidosTiposContrato = ko.observableArray([]);
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.tipoProyectoId(data.tipoProyectoId);
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
-    loadTiposContrato(data.tipoMantenimientoId);
+    loadDepartamento(data.tipoMantenimientoId);
 }
 
 function datosOK() {
@@ -90,7 +92,11 @@ function datosOK() {
             },
             txtAbrev: {
                 required: true
+            },
+            cmbDepartamentosTrabajo: {
+                required:true
             }
+
         },
         // Messages for form validation
         messages: {
@@ -102,6 +108,9 @@ function datosOK() {
             },
             txtAbrev: {
                 required: 'Introduzca una breviatura'
+            },
+            cmbDepartamentosTrabajo: {
+                required:"Debe introducir un deparatamento"
             }
         },
         // Do not change code below
@@ -122,7 +131,7 @@ function aceptar() {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
                 "abrev": vm.abrev(),
-                "tipoMantenimientoId": vm.stipoContratoId()
+                "tipoMantenimientoId": vm.sdepartamentoId()
             }
         };
         if (adminId == 0) {
@@ -176,14 +185,15 @@ function salir() {
     return mf;
 }
 
-function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+function loadDepartamento(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
         if (err) return;
-        var tipos = [{
-            tipoMantenimientoId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesTiposContrato(tipos);
-        $("#cmbTiposContrato").val([id]).trigger('change');
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
+    
