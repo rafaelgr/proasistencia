@@ -158,7 +158,7 @@ function initForm() {
     });
     // select2 things
     $("#cmbGrupoArticulos").select2(select2Spanish());
-    loadGrupoArticulos();
+    //loadGrupoArticulos();
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioGrupoArticulo(e.added.id);
@@ -812,7 +812,7 @@ var cargarContratos = function (data, contratoId) {
 function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
         if (err) return;
-        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
             vm.departamentoId(departamentoId);
@@ -1276,7 +1276,13 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+    var url;
+    if(id) {
+        url =  "/api/grupo_articulo";
+    } else {
+        url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    }
+    llamadaAjax("GET", url, null, function (err, data) {
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
