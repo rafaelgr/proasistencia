@@ -571,6 +571,7 @@ function limpiaDataLinea(data) {
     vm.importe(null);
     vm.costeLinea(null);
     vm.totalLinea(null);
+   
     //
     loadGrupoArticulos();
     // loadArticulos();
@@ -907,20 +908,21 @@ function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
-    if (!vm.capituloLinea()) {
         var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
         llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
             if (err) return;
+            var capituloAntiguo = vm.capituloLinea();
             nombreCapitulo += data.nombre;
-            vm.capituloLinea(nombreCapitulo);
+            if(capituloAntiguo != nombreCapitulo) {
+                vm.capituloLinea(nombreCapitulo);
+            }
         });
-    }
     llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
-    });
+    }); 
 }
 
 function cambioTiposIva(tipoIvaId) {
@@ -1208,7 +1210,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     }
     if (vm.porcentajeAgente() != null) {
         importeAlCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
-        importeAgente = roundToTwo(importeAlCliente - ventaNeta);
+        importeAgente = importeAlCliente - ventaNeta;
     }
     importeAlCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
     if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
