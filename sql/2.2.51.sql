@@ -42,5 +42,5 @@ CREATE TABLE `formaspago_porcentajes`(
   `concepto` VARCHAR(255),
   `porcentaje` DECIMAL(12,2) DEFAULT 0,
   PRIMARY KEY (`formaPagoPorcenId`),
-  CONSTRAINT `forpaPorcen_formaPagoFK` FOREIGN KEY (`farmaPagoId`) REFERENCES `formas_pago`(`formaPagoId`)
+  CONSTRAINT `forpaPorcen_formaPagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago`(`formaPagoId`)
 );

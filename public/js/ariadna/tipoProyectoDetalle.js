@@ -131,7 +131,7 @@ function aceptar() {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
                 "abrev": vm.abrev(),
-                "tipoMantenimientoId": vm.stipoContratoId()
+                "tipoMantenimientoId": vm.sdepartamentoId()
             }
         };
         if (adminId == 0) {

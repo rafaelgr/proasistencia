@@ -128,6 +128,7 @@ function admData() {
     //LINEAS DEL PAGO
     self.conceptoPago = ko.observable();
     self.porcentajePago = ko.observable();
+    self.formaPagoPorcenId = ko.observable();
 }
 
 function loadData(data) {
@@ -331,7 +332,7 @@ function initTablaFormaPagoLineas() {
             data: "concepto",
             
         }, {
-            data: "pocentaje",
+            data: "porcentaje",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -387,9 +388,9 @@ function limpiaDataLinea(data) {
 
 
 function aceptarLinea() {
-    /*if (!datosOKLineas()) {
+    if (!datosOKLineas()) {
         return;
-    }*/
+    }
     var data = {
         pagoPorcen: {
             formaPagoId: vm.formaPagoId(),
@@ -401,15 +402,75 @@ function aceptarLinea() {
                 var url = myconfig.apiUrl + "/api/formas_pago/linea";
                 if (lineaEnEdicion) {
                     verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.formaPagoId();
+                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.formaPagoPorcenId();
                 }
                 llamadaAjax(verbo, url, data, function (err, data) {
                     if (err) return;
                     $('#modalLinea').modal('hide');
                     llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
-                        loadData(data);
-                        loadLineasTarifaCliente(data.tarifaClienteId);
-                       
+                        loadTablaFormaPagoLineas(data);
                     });
                 });
 }
+
+function editFprmaPagoLinea(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/formas_pago/linea/Porcen/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLinea(data[0]);
+    });
+}
+function loadDataLinea(data) {
+    vm.formaPagoPorcenId(data.formaPagoPorcenId);
+    vm.conceptoPago(data.concepto);
+    vm.porcentajePago(data.porcentaje);
+    
+}
+
+function deleteFormaPagoLinea(formaPagoPorcenId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+       
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/formas_pago/linea/" + formaPagoPorcenId, null, function (err, data) {
+            if (err) return;
+                $('#modalLinea').modal('hide');
+                llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
+                    loadTablaFormaPagoLineas(data);
+                });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKLineas() {
+    $('#linea-form').validate({
+        rules: {
+            txtConceptoPago: {
+                required: true
+            },
+            txtPorcentajePago: {
+                required: true,
+                number:true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtConceptoPago: {
+                required: "Debe dar unaconcepto"
+            },
+            txtPorcentajePago: {
+                required: "Debe proporcionar un porcentaje",
+                number: "Se tiene que introducir un numero válido"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#linea-form").validate().settings;
+    return $('#linea-form').valid();
+}
+
