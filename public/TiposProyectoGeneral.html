@@ -128,6 +128,15 @@
                 </span>
             </div>
             <!-- end fullscreen button -->
+            <div class="col col-xs-4 col-sm-4 col-md-5 pull-right" style="padding-bottom: 5%">
+                <span>
+                        <label class="label">Departamento de trabajo</label>
+                        <label style="width:100%; height:50px;">
+                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
+                                data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                        </label>
+                </span>
+            </div>    
         </div>
         <!-- end pulled right: nav area -->
     </header>
