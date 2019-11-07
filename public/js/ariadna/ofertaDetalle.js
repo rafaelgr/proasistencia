@@ -30,6 +30,12 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
 
+    //Evento de cambio de departamento
+    $("#cmbDepartamentos").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) cambioDepartamento(e.added.id);
+    });
+
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
@@ -64,8 +70,8 @@ function initForm() {
         cambioEmpresa(e.added);
     });
 
-    $("#cmbTiposOferta").select2(select2Spanish());
-    loadTiposOferta();
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDepartamentos();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
@@ -255,7 +261,7 @@ function admData() {
 
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
-    loadTiposOferta(data.tipoOfertaId);
+    loadDepartamentos(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
@@ -274,6 +280,7 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
+    cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
 }
 
@@ -292,7 +299,7 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
-            cmbTiposOferta: {
+            cmbDepartamentos: {
                 required: true
             },
             cmbTipoProyecto: {
@@ -316,8 +323,8 @@ function datosOK() {
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
             },
-            cmbTiposOferta: {
-                required: "Debe elegir un tipo de oferta"
+            cmbDepartamentos: {
+                required: "Debe elegir un departamento"
             },
             cmbTipoProyecto: {
                 required: "Debe elegir un tipo de proyecto"
@@ -402,12 +409,12 @@ function loadEmpresas(id) {
 }
 
 
-function loadTiposOferta(id) {
-    llamadaAjax('GET', "/api/tipos_mantenimientos", null, function (err, data) {
+function loadDepartamentos(id) {
+    llamadaAjax('GET', "/api/departamentos", null, function (err, data) {
         if (err) return;
-        var tipos = [{ tipoMantenimientoId: 0, nombre: "" }].concat(data);
+        var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
-        $("#cmbTiposOferta").val([id]).trigger('change');
+        $("#cmbDepartamentos").val([id]).trigger('change');
     });
 }
 
@@ -459,6 +466,24 @@ function loadContratos(id) {
     }
 }
 
+function cambioDepartamento(departamentoId) {
+    if(!departamentoId) return;
+    llamadaAjax('GET', "/api/departamentos/" + departamentoId, null, function (err, data) {
+        if (err) return;
+        if(data.usaCalculadora == 0) {
+            $('#calculadora').hide();
+            vm.porcentajeAgente(0);
+            vm.porcentajeBeneficio(0);
+        } else {
+            $('#calculadora').show();
+            obtenerPorcentajeBeneficioPorDefecto();
+            if(vm.agenteId()) {
+                cargaAgente(vm.agenteId(), false);
+            }
+        }
+    });
+
+}
 
 var cambioCliente = function (data) {
     //
@@ -1096,7 +1121,8 @@ var cargaAgente = function (id, encarga) {
         if (!encarga) {
             obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
                 if (err) return;
-                if (!vm.porcentajeAgente()) vm.porcentajeAgente(comision);
+                var porcenAgen = vm.porcentajeAgente();
+                if (!vm.porcentajeAgente() || porcenAgen == 0) vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
             });
         }

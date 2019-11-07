@@ -498,7 +498,7 @@
                                                 <section class="col col-md-3">
                                                     <label class="label">Departamento</label>
                                                     <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbTiposOferta" name="cmbTiposOferta" data-bind="options: posiblesTiposOferta, optionsText: 'nombre', optionsValue: 'tipoMantenimientoId', value: stipoOfertaId, valueAllowUnset: true, selectedOptions: elegidosTiposOferta, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" data-bind="options: posiblesTiposOferta, optionsText: 'nombre', optionsValue: 'departamentoId', value: stipoOfertaId, valueAllowUnset: true, selectedOptions: elegidosTiposOferta, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>                                                
                                                 <section class="col col-md-3">
@@ -560,8 +560,9 @@
                                                 </section>
                                             </div>
                                             <!-- Calculadoras de importes -->
-                                            <header>(Calculadora importes)</header>
-                                            <div class="row">
+                                           
+                                            <div class="row" id="calculadora">
+                                                <header>(Calculadora importes)</header>
                                                 <section class="col col-md-12">
                                                     <div class="table-responsive">
                                                         <table class="table table-bordered">
