@@ -13,6 +13,7 @@ var facturaId;
 var usuario;
 
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
