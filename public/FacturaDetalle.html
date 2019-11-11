@@ -880,6 +880,12 @@
                                                     <th data-hide="phone" class="text-right">
                                                         TOTAL
                                                     </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        IMPORTE BENEFICIO
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        IMPORTE AGENTE
+                                                    </th>
                                                     <th>
                                                     </th>
                                                 </tr>
@@ -1126,6 +1132,21 @@
                                             <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
                                         </label>
                                     </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-2">
+                                        <label class="label">Importe beneficio</label>
+                                        <label class="input">
+                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importeBeneficioLinea" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Importe Agente</label>
+                                        <label class="input">
+                                            <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: importeAgenteLinea" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-8"> </section>
                                 </div>
                             </section>
                         </fieldset>

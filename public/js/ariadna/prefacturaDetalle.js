@@ -228,6 +228,8 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
+    self.importeBeneficioLinea = ko.observable();
+    self.importeAgenteLinea = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -590,7 +592,8 @@ function limpiaDataLinea(data) {
     vm.importe(null);
     vm.costeLinea(null);
     vm.totalLinea(null);
-   
+    vm.importeBeneficioLinea(null);
+    vm.importeAgenteLinea(null)
     //
     loadGrupoArticulos();
     // loadArticulos();
@@ -793,6 +796,20 @@ function initTablaPrefacturasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
+            data: null,
+            className: "text-right",
+            render: function (data, type, row) {
+                var data = ( row.coste * row.porcentajeBeneficio ) / 100 ;
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: null,
+            className: "text-right",
+            render: function (data, type, row) {
+                var data = ( row.totalLinea * row.porcentajeAgente ) / 100 ;
+                return numeral(data).format('0,0.00');
+            }
+        },{
             data: "prefacturaLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -825,6 +842,7 @@ function loadDataLinea(data) {
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
     //
+    desglosaPorcentajes();    
 }
 
 
@@ -963,8 +981,13 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    desglosaPorcentajes();
 }
 
+function desglosaPorcentajes() {
+    vm.importeBeneficioLinea(roundToTwo((vm.costeLinea() * vm.porcentajeBeneficio()) / 100));
+    vm.importeAgenteLinea((vm.totalLinea() * vm.porcentajeAgente()) / 100);
+}
 function editPrefacturaLinea(id) {
     lineaEnEdicion = true;
     llamadaAjax("GET", "/api/prefacturas/linea/" + id, null, function (err, data) {
