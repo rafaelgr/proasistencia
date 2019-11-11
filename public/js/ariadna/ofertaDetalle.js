@@ -12,6 +12,8 @@ var lineaEnEdicion = false;
 
 var dataOfertasLineas;
 var dataBases;
+var usuario;
+usuario = recuperarIdUsuario();
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -71,18 +73,20 @@ function initForm() {
     });
 
     $("#cmbDepartamentos").select2(select2Spanish());
-    loadDepartamentos();
+    loadDepartamentosUsuario();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
-    loadTipoProyecto();
-    $("#cmbTipoProyecto").select2().on('change', function (e) {
-        cambioTipoProyecto(e.added);
-    });
+    //loadTipoProyecto();
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
     $("#cmbTextosPredeterminados").select2().on('change', function (e) {
         cambioTextosPredeterminados(e.added);
+    });
+
+    $("#cmbDepartamentos").on('change', function (e) {
+        if(!e.added) return;
+        loadTipoProyecto();
     });
 
     initAutoCliente();
@@ -261,7 +265,7 @@ function admData() {
 
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
-    loadDepartamentos(data.tipoOfertaId);
+    loadDepartamentosUsuario(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
@@ -418,8 +422,18 @@ function loadDepartamentos(id) {
     });
 }
 
+function loadDepartamentosUsuario(id) {
+    if(id) vm.stipoOfertaId(id);
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesTiposOferta(tipos);
+        $("#cmbDepartamentos").val([id]).trigger('change');
+    });
+}
+
 function loadTipoProyecto(id) {
-    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+    llamadaAjax('GET', "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.stipoOfertaId(), null, function (err, data) {
         if (err) return;
         var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
         vm.posiblesTipoProyecto(tipos);
