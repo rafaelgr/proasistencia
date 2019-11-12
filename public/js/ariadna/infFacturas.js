@@ -108,6 +108,9 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     //
+    $("#cmbColaboradores").select2(select2Spanish());
+    loadColaboradores();
+
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
@@ -163,6 +166,12 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    // 
+    self.comercialId = ko.observable();
+    self.scomercialId = ko.observable();
+    //
+    self.posiblesColaboradores = ko.observableArray([]);
+    self.elegidosColaboradores = ko.observableArray([]);
 };
 
 var obtainReport = function () {
@@ -290,6 +299,15 @@ function loadEmpresas(empresaId) {
     });
 }
 
+function loadColaboradores() {
+    llamadaAjax("GET", "/api/comerciales/agentes/activos", null, function (err, data) {
+        if (err) return;
+        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesColaboradores(colaboradores);
+        $("#cmbColaboradores").val([0]).trigger('change');
+    });
+}
+
 
 /*function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
@@ -328,6 +346,7 @@ var initAutoCliente = function () {
 };
 
 var rptFacturaParametros = function (sql) {
+    var agenteId = vm.scomercialId();
     var facturaId = vm.facturaId();
     var clienteId = vm.sclienteId();
     var departamentoId = vm.sdepartamentoId();
@@ -343,6 +362,9 @@ var rptFacturaParametros = function (sql) {
         }
         if (empresaId) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
+        }
+        if(agenteId) {
+            sql += " AND cnt.agenteId IN (" + agenteId + ")";
         }
         if (dFecha) {
             sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";
