@@ -20,6 +20,7 @@ var dataContratosCobros;
 var ContratoId = 0;
 var cmd;
 var usuario;
+var dataConceptosLineas;
 
 
 var breakpointDefinition = {
@@ -79,13 +80,25 @@ function initForm() {
     $("#renovarContratos-form").submit(function () {
         return false;
     });
-
+    $("#concepto-form").submit(function () {
+        return false;
+    });
+    
+    $("#frmLineaConceptos").submit(function () {
+        return false;
+    });
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
     });
+
+    $("#txtPorcentajeCobro").focus(function () {
+        $('#txtPorcentajeCobro').val(null);
+    });
+
+    
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
@@ -161,6 +174,7 @@ function initForm() {
     initTablaFacproves();
     initTablaContratosCobros();
 
+    initTablaConceptosLineas();
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
     $("#cmbComerciales").select2().on('change', function (e) {
@@ -398,6 +412,11 @@ function admData() {
     self.elegidosTiposVia = ko.observableArray([]);
     //
     self.porcentajeRetencion = ko.observable();
+
+    //CONCEPTOS
+    self.conceptoCobro = ko.observable();
+    self.porcentajeCobro = ko.observable();
+    self.contratoPorcenId = ko.observable();
 }
 
 function loadData(data) {
@@ -438,6 +457,8 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
+
+    loadConceptosLineas(data.contratoId);
 }
 
 
@@ -3242,13 +3263,13 @@ function loadContratosCobros(id) {
 //FUNCIONES DE LOS CONCEPTOS/PORCENTAJES
 
 function initTablaConceptosLineas() {
-    tablaCarro = $('#dt_lineas').DataTable({
+    tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -3292,11 +3313,11 @@ function initTablaConceptosLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "formaPagoPorcenId",
+            data: "contratoPorcenId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalLinea' onclick='editFprmaPagoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -3305,14 +3326,14 @@ function initTablaConceptosLineas() {
 }
 
 function  loadConceptosLineas(id) {
-    llamadaAjax("GET", "/api/formas_pago/linea/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/conceptos/porcentaje/" + id, null, function (err, data) {
         if (err) return;
         loadTablaConceptosLineas(data);
     });
 }
 
 function loadTablaConceptosLineas(data) {
-    var dt = $('#dt_lineas').dataTable();
+    var dt = $('#dt_lineasConcepto').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
         $('#btnCopiar').hide();
@@ -3330,66 +3351,66 @@ function loadTablaConceptosLineas(data) {
 }
 
 
-function nuevaLinea() {
-    limpiaDataLinea();
+function nuevaLineaConcepto() {
+    limpiaDataLineaConcepto();
     lineaEnEdicion = false;
 }
 
-function limpiaDataLinea(data) {
-    vm.conceptoPago('');
-    vm.porcentajePago(0);
+function limpiaDataLineaConcepto() {
+    vm.conceptoCobro('');
+    vm.porcentajeCobro(0);
 }
 
 
-function aceptarLinea() {
-    if (!datosOKLineasConcepotos()) {
+function aceptarLineaConcepto() {
+    if (!datosOKLineasConceptos()) {
         return;
     }
     var data = {
-        pagoPorcen: {
-            formaPagoId: vm.formaPagoId(),
-            concepto: vm.conceptoPago(),
-            porcentaje: vm.porcentajePago()
+        cobroPorcen: {
+            contratoId: vm.contratoId(),
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro()
         }
     }
                 var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/formas_pago/linea";
+                var url = myconfig.apiUrl + "/api/contratos/concepto";
                 if (lineaEnEdicion) {
                     verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.formaPagoPorcenId();
+                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
                 }
                 llamadaAjax(verbo, url, data, function (err, data) {
                     if (err) return;
-                    $('#modalLinea').modal('hide');
-                    llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
+                    $('#modalConcepto').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
                         loadTablaConceptosLineas(data);
                     });
                 });
 }
 
-function editFprmaPagoLinea(id) {
+function editFprmaPagoLineaConcepto(id) {
     lineaEnEdicion = true;
-    llamadaAjax("GET", "/api/formas_pago/linea/Porcen/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
         if (err) return;
-        if (data.length > 0) loadDataLinea(data[0]);
+        if (data.length > 0) loadDataLineaConcepto(data[0]);
     });
 }
-function loadDataLinea(data) {
-    vm.formaPagoPorcenId(data.formaPagoPorcenId);
-    vm.conceptoPago(data.concepto);
-    vm.porcentajePago(data.porcentaje);
+function loadDataLineaConcepto(data) {
+    vm.contratoPorcenId(data.contratoPorcenId);
+    vm.conceptoCobro(data.concepto);
+    vm.porcentajeCobro(data.porcentaje);
     
 }
 
-function deleteConceptosLinea(formaPagoPorcenId) {
+function deleteConceptosLinea(contratoPorcenId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
        
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/formas_pago/linea/" + formaPagoPorcenId, null, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/concepto/" + contratoPorcenId, null, function (err, data) {
             if (err) return;
-                $('#modalLinea').modal('hide');
-                llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
+                $('#modalConcepto').modal('hide');
+                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
                     loadTablaConceptosLineas(data);
                 });
         });
@@ -3399,22 +3420,22 @@ function deleteConceptosLinea(formaPagoPorcenId) {
 }
 
 function datosOKLineasConceptos() {
-    $('#linea-form').validate({
+    $('#concepto-form').validate({
         rules: {
-            txtConceptoPago: {
+            txtConceptoCobro: {
                 required: true
             },
-            txtPorcentajePago: {
+            txtPorcentajeCobro: {
                 required: true,
                 number:true
             }
         },
         // Messages for form validation
         messages: {
-            txtConceptoPago: {
-                required: "Debe dar unaconcepto"
+            txtConceptoCobro: {
+                required: "Debe dar un concepto"
             },
-            txtPorcentajePago: {
+            txtPorcentajeCobro: {
                 required: "Debe proporcionar un porcentaje",
                 number: "Se tiene que introducir un numero válido"
             }
@@ -3424,7 +3445,6 @@ function datosOKLineasConceptos() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#linea-form").validate().settings;
-    return $('#linea-form').valid();
+    return $('#concepto-form').valid();
 }
 

@@ -43,7 +43,7 @@ function initForm() {
         return false;
     });
 
-    initTablaFormaPagoLineas();
+    initTablaFormaCobroLineas();
 
     $("#cmbTiposFormaPago").select2({
         allowClear: true,
@@ -125,10 +125,7 @@ function admData() {
     self.posiblesTiposFormaPago = ko.observableArray([]);
     self.elegidosTiposFormaPago = ko.observableArray([]);
 
-    //LINEAS DEL PAGO
-    self.conceptoPago = ko.observable();
-    self.porcentajePago = ko.observable();
-    self.formaPagoPorcenId = ko.observable();
+    
 }
 
 function loadData(data) {
@@ -287,14 +284,14 @@ function loadTiposFormaPago(id) {
 
 //FUNCIONES DE LAS LINEAS
 
-function initTablaFormaPagoLineas() {
-    tablaCarro = $('#dt_lineas').DataTable({
+function initTablaFormasCobroLineas() {
+    tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -338,7 +335,7 @@ function initTablaFormaPagoLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "formaPagoPorcenId",
+            data: "conceptoPorcenId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFormaPagoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -358,7 +355,7 @@ function  loadFormaPagoLineas(id) {
 }
 
 function loadTablaFormaPagoLineas(data) {
-    var dt = $('#dt_lineas').dataTable();
+    var dt = $('#dt_lineasConcepto').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
         $('#btnCopiar').hide();
@@ -382,8 +379,8 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.conceptoPago('');
-    vm.porcentajePago(0);
+    vm.conceptoCobro('');
+    vm.porcentajeCobro(0);
 }
 
 
@@ -394,15 +391,15 @@ function aceptarLinea() {
     var data = {
         pagoPorcen: {
             formaPagoId: vm.formaPagoId(),
-            concepto: vm.conceptoPago(),
-            porcentaje: vm.porcentajePago()
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro()
         }
     }
                 var verbo = "POST";
                 var url = myconfig.apiUrl + "/api/formas_pago/linea";
                 if (lineaEnEdicion) {
                     verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.formaPagoPorcenId();
+                    url = myconfig.apiUrl + "/api/formas_pago/linea/" +  vm.conceptoPorcenId();
                 }
                 llamadaAjax(verbo, url, data, function (err, data) {
                     if (err) return;
@@ -421,18 +418,18 @@ function editFprmaPagoLinea(id) {
     });
 }
 function loadDataLinea(data) {
-    vm.formaPagoPorcenId(data.formaPagoPorcenId);
-    vm.conceptoPago(data.concepto);
-    vm.porcentajePago(data.porcentaje);
+    vm.conceptoPorcenId(data.conceptoPorcenId);
+    vm.conceptoCobro(data.concepto);
+    vm.porcentajeCobro(data.porcentaje);
     
 }
 
-function deleteFormaPagoLinea(formaPagoPorcenId) {
+function deleteFormaPagoLinea(conceptoPorcenId) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
        
-        llamadaAjax("DELETE", myconfig.apiUrl + "/api/formas_pago/linea/" + formaPagoPorcenId, null, function (err, data) {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/formas_pago/linea/" + conceptoPorcenId, null, function (err, data) {
             if (err) return;
                 $('#modalLinea').modal('hide');
                 llamadaAjax("GET", myconfig.apiUrl + "/api/formas_pago/linea/" + vm.formaPagoId(), null, function (err, data) {
@@ -447,20 +444,20 @@ function deleteFormaPagoLinea(formaPagoPorcenId) {
 function datosOKLineas() {
     $('#linea-form').validate({
         rules: {
-            txtConceptoPago: {
+            txtConceptoCobro: {
                 required: true
             },
-            txtPorcentajePago: {
+            txtPorcentajeCobro: {
                 required: true,
                 number:true
             }
         },
         // Messages for form validation
         messages: {
-            txtConceptoPago: {
+            txtConceptoCobro: {
                 required: "Debe dar unaconcepto"
             },
-            txtPorcentajePago: {
+            txtPorcentajeCobro: {
                 required: "Debe proporcionar un porcentaje",
                 number: "Se tiene que introducir un numero válido"
             }

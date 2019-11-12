@@ -867,7 +867,7 @@
                                     <form id="frmLineaConceptos">
                                         <fieldset>
                                             <div class="pull-right">
-                                                <button id="btnNuevaLineaConcepto" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLineaConcepto()" class="btn btn-success btn-circle btn-lg">
+                                                <button id="btnNuevaLineaConcepto" title="Nueva línea" data-toggle="modal" data-target="#modalConcepto" onclick="nuevaLineaConcepto()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
                                             </div>
@@ -1767,7 +1767,50 @@
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-    </div>    
+    </div>  
+    <!-- Modal -->
+    <div class="modal fade" id="modalConcepto" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LINEA DEL PAGO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="concepto-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-10">
+                                        <label class="label">Concepto</label>
+                                        <label class="input">
+                                            <input id="txtConceptoCobro" name="txtConceptoCobro" type="text" data-bind="value: conceptoCobro" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Porcentaje</label>
+                                        <label class="input">
+                                            <input id="txtPorcentajeCobro" name="txtPorcentajeCobro" type="text" data-bind="value: porcentajeCobro" />
+                                        </label>
+                                    </section>
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaConcepto()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
