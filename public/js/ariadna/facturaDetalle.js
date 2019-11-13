@@ -918,7 +918,12 @@ function initTablaFacturasLineas() {
             data: null,
             className: "text-right",
             render: function (data, type, row) {
-                var data = ( row.totalLinea * row.porcentajeAgente ) / 100 ;
+                var ventaNeta = vm.ventaNeta();
+                var importeAlCliente = vm.importeAlCliente();
+                var beneficoAgente = importeAlCliente - ventaNeta;
+                
+                var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) + vm.coste(); ;
+                var data = (ventaNetaLinea * beneficoAgente) / ventaNeta;
                 return numeral(data).format('0,0.00');
             }
         }, {
