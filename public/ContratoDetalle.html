@@ -878,6 +878,9 @@
                                         <table id="dt_lineasConcepto" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
+                                                    <th  class="text-left">
+                                                        Fecha factura
+                                                    </th>
                                                     <th data-hide="phone" class="text-left">
                                                         Concepto
                                                     </th>
@@ -1782,7 +1785,7 @@
                     <form id="concepto-form" class="smart-form">
                         <fieldset>
                                 <div class="row">
-                                    <section class="col col-md-10">
+                                    <section class="col col-md-8">
                                         <label class="label">Concepto</label>
                                         <label class="input">
                                             <input id="txtConceptoCobro" name="txtConceptoCobro" type="text" data-bind="value: conceptoCobro" />
@@ -1792,6 +1795,12 @@
                                         <label class="label">Porcentaje</label>
                                         <label class="input">
                                             <input id="txtPorcentajeCobro" name="txtPorcentajeCobro" type="text" data-bind="value: porcentajeCobro" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Fecha concepto</label>
+                                        <label class="input">
+                                            <input id="txtFechaConcepto" name="txtFechaConcepto" data-bind="value: fechaConcepto" class="datepicker" data-dateformat="dd/mm/yy" />
                                         </label>
                                     </section>
                                 </div>
