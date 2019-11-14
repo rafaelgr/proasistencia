@@ -52,12 +52,14 @@ function admData() {
     var self = this;
     self.departamentoId = ko.observable();
     self.nombre = ko.observable();
+    self.usaCalculadora = ko.observable();
    
 }
 
 function loadData(data) {
     vm.departamentoId(data.departamentoId);
     vm.nombre(data.nombre);
+    vm.usaCalculadora(data.usaCalculadora);
 }
 
 function datosOK() {
@@ -91,6 +93,7 @@ function aceptar() {
             departamento: {
                 "departamentoId": vm.departamentoId(),
                 "nombre": vm.nombre(),
+                "usaCalculadora": vm.usaCalculadora()
             }
         };
         if (adminId == 0) {
