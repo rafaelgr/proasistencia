@@ -193,7 +193,7 @@ function buscarGrupoArticulos() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/grupo_articulo/departamento/"+usuario + "/" + vm.sdepartamentoId()+"?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/grupo_articulo/departamento/" + usuario + "/" + vm.sdepartamentoId()+"?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

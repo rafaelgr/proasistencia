@@ -16,6 +16,7 @@ var dataFacturasLineas;
 var dataBases;
 var dataCobros;
 var usuario;
+var usaCalculadora;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -125,11 +126,11 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
             if (err) return;
-            if(data.noCalculadora) {
+            /*if(data.noCalculadora) {
                 $('#calculadora').hide();
                 $('#contrato').hide();
                 obtenerDepartamentoContrato();
-            }
+            }*/
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
@@ -228,6 +229,7 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
+    
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -311,12 +313,9 @@ function loadData(data, desdeLinea) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
-    if(!data.noCalculadora) {
-        loadContratos(data.contratoId);
-        loadDepartamento(data.departamentoId);
-    } else {
-        obtenerDepartamentoContrato(null);
-    }
+    loadContratos(data.contratoId);
+    loadDepartamento(data.departamentoId);
+    if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
@@ -340,7 +339,7 @@ function loadData(data, desdeLinea) {
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
     if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        if(!data.noCalculadora) {
+        if(data.departamentoId !=7) {
             obtenerParametrosCombo(false);
         }else {
             obtenerParametrosCombo(true);
@@ -559,29 +558,35 @@ function cambioContrato(contratoId) {
 }
 
 function obtenerDepartamentoContrato(contratoId) {
-    if(contratoId) {
-        llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
-            if (err) return;
-            if(data) {
-                vm.departamento(data.nombre);
-                vm.departamentoId(data.departamentoId);
-            }
-        });
-    } else {
-        vm.departamento('REPARACIONES');
-        vm.departamentoId(7);
-    }
+    if(!contratoId) return;
+    llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
+        if (err) return;
+        if(data) {
+            //vm.departamento(data.nombre);
+            vm.departamentoId(data.departamentoId);
+            loadDepartamento(data.departamentoId);
+        }
+    });
 }
 
 function loadDepartamento(departamentoId) {
-    if(departamentoId) {
+    if(!departamentoId) return;
         llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
             if (err) return;
             if(data) {
+                usaCalculadora = data.usaCalculadora;
                 vm.departamento(data.nombre);
+                if(data.departamentoId == 7) $('#contrato').hide();
+                if(!data.usaCalculadora) {
+                    $('#calculadora').hide();
+                    vm.porcentajeAgente(0);
+                    vm.porcentajeBeneficio(0);
+                    obtenerDepartamentoContrato();
+                }
             }
+
         });
-    } 
+    
 }
 
 
@@ -611,6 +616,7 @@ function limpiaDataLinea(data) {
     vm.importe(null);
     vm.costeLinea(null);
     vm.totalLinea(null);
+    
     //
     loadGrupoArticulos();
     // loadArticulos();
@@ -633,11 +639,12 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
     });
 }
 
-var obtenerParametrosCombo = function (noCalculadora) {
+function obtenerParametrosCombo(noContrato) {
+    //if(!noContrato) return;
     var comboSeries = [];
     var obj = {}
     var  serie;
-    if(!noCalculadora) {
+    if(!noContrato) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
             if(err) return;
             if(data) {
@@ -736,7 +743,7 @@ function aceptarLinea() {
             coste: vm.costeLinea(),
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
-            capituloLinea: vm.capituloLinea(),
+            capituloLinea: vm.capituloLinea()
         }
     }
     var verbo = "POST";
@@ -899,6 +906,23 @@ function initTablaFacturasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
+            data: null,
+            className: "text-right",
+            render: function (data, type, row) {
+                var data = ( row.coste * row.porcentajeBeneficio ) / 100 ;
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: null,
+            className: "text-right",
+            render: function (data, type, row) {
+                var ventaNeta = vm.ventaNeta();
+                    var importeAgente = vm.importeAgente();
+                    var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) +  row.coste; 
+                    var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
+                    return numeral(data).format('0,0.00');
+            }
+        }, {
             data: "facturaLineaId",
             render: function (data, type, row) {
                 var html = "";
@@ -930,7 +954,7 @@ function loadDataLinea(data) {
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
-    //
+   
 }
 
 
@@ -1068,6 +1092,7 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+  
 }
 
 function editFacturaLinea(id) {
@@ -1077,6 +1102,8 @@ function editFacturaLinea(id) {
         if (data.length > 0) loadDataLinea(data[0]);
     });
 }
+
+
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
@@ -1089,9 +1116,9 @@ function deleteFacturaLinea(facturaId) {
                 departamentoId: vm.departamentoId()
             }
         };
-        if(vm.departamentoId() == 7) {
+        /*if(vm.departamentoId() == 7) {
             url = myconfig.apiUrl + "/api/facturas/lineas/con/parte/" + facturaId;
-        }
+        }*/
         llamadaAjax("DELETE", url, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
@@ -1431,6 +1458,8 @@ var mostrarMensajeFacturaNueva = function () {
 }
 
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
+    if(usaCalculadora == 0) return coste;
+    
     var importeBeneficio = 0;
     var ventaNeta = 0;
     var importeAlCliente = 0;
