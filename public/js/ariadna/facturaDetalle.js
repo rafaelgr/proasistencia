@@ -229,8 +229,7 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
-    self.importeBeneficioLinea = ko.observable();
-    self.importeAgenteLinea = ko.observable();
+    
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -617,8 +616,7 @@ function limpiaDataLinea(data) {
     vm.importe(null);
     vm.costeLinea(null);
     vm.totalLinea(null);
-    vm.importeBeneficioLinea(null);
-    vm.importeAgenteLinea(null)
+    
     //
     loadGrupoArticulos();
     // loadArticulos();
@@ -919,12 +917,10 @@ function initTablaFacturasLineas() {
             className: "text-right",
             render: function (data, type, row) {
                 var ventaNeta = vm.ventaNeta();
-                var importeAlCliente = vm.importeAlCliente();
-                var beneficoAgente = importeAlCliente - ventaNeta;
-                
-                var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) + vm.coste(); ;
-                var data = (ventaNetaLinea * beneficoAgente) / ventaNeta;
-                return numeral(data).format('0,0.00');
+                    var importeAgente = vm.importeAgente();
+                    var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) +  row.coste; 
+                    var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
+                    return numeral(data).format('0,0.00');
             }
         }, {
             data: "facturaLineaId",
@@ -958,8 +954,7 @@ function loadDataLinea(data) {
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
-    //
-    desglosaPorcentajes();    
+   
 }
 
 
@@ -1097,7 +1092,7 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    desglosaPorcentajes()
+  
 }
 
 function editFacturaLinea(id) {
@@ -1108,11 +1103,7 @@ function editFacturaLinea(id) {
     });
 }
 
-function desglosaPorcentajes() {
-    vm.importeBeneficioLinea(roundToTwo((vm.costeLinea() * vm.porcentajeBeneficio()) / 100));
-    vm.importeAgenteLinea((vm.totalLinea() * vm.porcentajeAgente()) / 100);
 
-}
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación

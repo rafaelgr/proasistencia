@@ -1985,7 +1985,9 @@ var loadPeriodosPagos = function (periodoPagoId) {
 
 var generarPrefacturas = function () {
     if(numConceptos > 0) {
-        desactivaFormulario();
+        modificaFormulario(true);
+    } else {
+        modificaFormulario(false);
     }
     $("#cmbPeriodosPagos").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
@@ -2002,12 +2004,12 @@ var generarPrefacturas = function () {
     });
 }
 
-function desactivaFormulario() {
-    $("#cmbPeriodosPagos").prop('disabled', true);
-    $("#txtGFechaPrimeraFactura").prop('disabled', true);
-    $("#txtGFechaInicio").prop('disabled', true);
-    $("#txtGFechaFinal").prop('disabled', true);
-    $("input[name='chkFacturaParcial']").prop("disabled", true);
+function modificaFormulario(option) {
+    $("#cmbPeriodosPagos").prop('disabled', option);
+    $("#txtGFechaPrimeraFactura").prop('disabled', option);
+    $("#txtGFechaInicio").prop('disabled', option);
+    $("#txtGFechaFinal").prop('disabled', option);
+    $("input[name='chkFacturaParcial']").prop("disabled", option);
 }
 
 var cambioPeriodosPagos = function (data) {
@@ -3185,14 +3187,15 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     // de mes 
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
     var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
+    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
     var pagos = [];
     var nPagos = numPagos;
     var acumulado = 0;
     for (var j =0; j< nPagos; j++) {
         acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
     }
-    if((acumulado - 0.01) < importePago || (acumulado + 0.01) > importePago) {
-        mostrarMensaje('Revise los conceptos, la suma de los importes de las fracturas no se corresponden con el total del contrato');
+    if( acumulado < (importe - 0.01)  || acumulado  > importe + 0.01) {
+        mensError('Revise los conceptos, la suma de los importes de las facturas no se corresponden con el total del contrato');
         return;
     }
     for (var i = 0; i < nPagos; i++) {
@@ -3202,9 +3205,18 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         // sucesivas fechas de factura
         var f = moment(dataConceptos[i].fecha).format('DD/MM/YYYY');
         // inicio de periodo
-        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        if(i == 0) {
+            var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        } else {
+            var f0 = moment(dataConceptos[i].fecha).format('DD/MM/YYYY');
+        }
+       
         // fin de periodo
-        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        if(dataConceptos[i+1]) {
+            var f2 = moment(dataConceptos[i+1].fecha).format('DD/MM/YYYY');
+        } else {
+            var f2 = moment(finContrato).format('DD/MM/YYYY');
+        }
         var p = {
             fecha: f,
             importe: importePago,
@@ -3435,12 +3447,18 @@ function  loadConceptosLineas(id) {
         if (err) return;
         
         loadTablaConceptosLineas(data);
-        dataConceptos = data;
+        
     });
 }
 
 function loadTablaConceptosLineas(data) {
-    numConceptos = data.length;
+    if (data) {
+        dataConceptos = data;
+        numConceptos = data.length;
+    } else {
+        dataConceptos = null;
+        numConceptos = 0;
+    }
     var dt = $('#dt_lineasConcepto').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -3467,7 +3485,7 @@ function nuevaLineaConcepto() {
 function limpiaDataLineaConcepto() {
     vm.conceptoCobro('');
     vm.porcentajeCobro(0);
-    vm.fechaConcepto(spanishDate(new Date()));
+    vm.fechaConcepto(vm.fechaInicio());
 }
 
 
