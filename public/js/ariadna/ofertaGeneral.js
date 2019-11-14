@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataOfertas;
 var ofertaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -22,6 +23,9 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    vm = new admData();
+    ko.applyBindings(vm);
+    usuario = recuperarIdUsuario();
     //
     $('#btnBuscar').click(buscarOfertas());
     $('#btnAlta').click(crearOferta());
@@ -32,22 +36,46 @@ function initForm() {
     initTablaOfertas();
 
     ofertaId = gup('OfertaId');
-    if (ofertaId !== '') {
-        cargarOfertas(ofertaId);
-
-    } else {
-        cargarOfertasNoAceptadas();
-    }
-
-    $('#chkAceptadas').change(function () {
-        if (this.checked) {
-            cargarOfertas();
+    recuperaDepartamento(function(err, data) {
+        if (ofertaId !== '') {
+            cargarOfertas(ofertaId);
+    
         } else {
             cargarOfertasNoAceptadas();
         }
-    })
+    
+        $('#chkAceptadas').change(function () {
+            if (this.checked) {
+                cargarOfertas();
+            } else {
+                cargarOfertasNoAceptadas();
+            }
+        })
+    });
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        if ($('#chkAceptadas').prop('checked')) {
+            cargarOfertas();
+    
+        } else {
+            cargarOfertasNoAceptadas();
+        }
+    });
 }
 
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
 function initTablaOfertas() {
     tablaOfertas = $('#dt_oferta').DataTable({
         bSort: false,
@@ -275,7 +303,7 @@ function editOferta(id) {
 }
 
 var cargarOfertas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas";
+    var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario + "/" + vm.sdepartamentoId();
     if (id) {
         var data = {
             id: ofertaId
@@ -288,7 +316,7 @@ var cargarOfertas = function (id) {
 }
 
 var cargarOfertasNoAceptadas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas";
+    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas/usuario/logado/departamento/"+ usuario + "/" + vm.sdepartamentoId();
     llamadaAjax("GET", url, null, function (err, data) {
         loadTablaOfertas(data);
     });
