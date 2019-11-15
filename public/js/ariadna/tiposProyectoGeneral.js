@@ -19,6 +19,7 @@ var breakpointDefinition = {
 
 
 function initForm() {
+    var carga = true;
     comprobarLogin();
     // de smart admin
     pageSetUp();
@@ -69,7 +70,10 @@ function initForm() {
     });
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
+        if (carga) {
+            carga = false;
+            return;
+        }
         var aBuscar = $('#txtBuscar').val();
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
