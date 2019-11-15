@@ -11,16 +11,13 @@
       </PROA_REPORT>
     </Databases>
     <DataSources isList="true" count="1">
-      <libPro Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
-        <Alias>libPro</Alias>
-        <Columns isList="true" count="15">
+      <libCli Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
+        <Alias>libCli</Alias>
+        <Columns isList="true" count="16">
           <value>empresaId,System.Int32</value>
-          <value>referencia,System.String</value>
           <value>empresaNombre,System.String</value>
-          <value>facproveId,System.Int32</value>
-          <value>fecha_recep,System.Byte[]</value>
-          <value>numeroFacturaProveedor,System.String</value>
-          <value>numregisconta,System.Int32</value>
+          <value>facturaId,System.Int32</value>
+          <value>fecha,System.Byte[]</value>
           <value>emisorNombre,System.String</value>
           <value>tipoIva,System.String</value>
           <value>totalConIva,System.Decimal</value>
@@ -29,24 +26,27 @@
           <value>basFact,System.Decimal</value>
           <value>cuota,System.Decimal</value>
           <value>importeRetencion,System.Decimal</value>
+          <value>ano,System.Int32</value>
+          <value>numero,System.Int32</value>
+          <value>serie,System.String</value>
+          <value>receptorNombre,System.String</value>
         </Columns>
         <CommandTimeout>24</CommandTimeout>
         <Dictionary isRef="1" />
-        <Name>libPro</Name>
+        <Name>libCli</Name>
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT  f.empresaId,  f.ref AS referencia, emp.nombre AS empresaNombre, f.facproveId,  DATE_FORMAT(fecha_recepcion,'%Y-%m-%d') AS fecha_recep, `numeroFacturaProveedor`,  COALESCE(`numregisconta`, 0) AS `numregisconta`,
-`emisorNombre`,  ti.nombre AS tipoIva, f.totalConIva, pro.cuentaContable,  fb.porcentaje AS porcentaje,  fb.base AS basFact, fb.cuota, fr.`importeRetencion`
-FROM facprove AS f
-
-LEFT JOIN facprove_bases AS fb ON fb.facproveId = f.facproveId
-LEFT JOIN facprove_retenciones AS fr ON (fr.facproveId = fb.facproveId AND fr.porcentajeRetencion &lt;&gt; 0)
-LEFT JOIN proveedores AS pro ON pro.proveedorId = f.proveedorId
+        <SqlCommand>SELECT  f.empresaId,  emp.nombre AS empresaNombre, f.facturaId,  DATE_FORMAT(fecha,'%Y-%m-%d') AS fecha,
+`emisorNombre`,  ti.nombre AS tipoIva, f.totalConIva, cli.cuentaContable,  fb.porcentaje AS porcentaje,  fb.base AS basFact, 
+fb.cuota, f.`importeRetencion`, f.ano, f.numero, f.serie, f.receptorNombre
+FROM facturas AS f
+LEFT JOIN facturas_bases AS fb ON fb.facturaId = f.facturaId
+LEFT JOIN clientes AS cli ON cli.clienteId = f.clienteId
 LEFT JOIN `tipos_iva` AS ti ON ti.tipoIvaId = fb.tipoIvaId
 LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
  
  </SqlCommand>
-      </libPro>
+      </libCli>
     </DataSources>
     <Relations isList="true" count="0" />
     <Report isRef="0" />
@@ -76,13 +76,13 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Text3</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>LISTADO DE FACTURAS PROVEEDORES</Text>
+              <Text>LISTADO DE FACTURAS CLIENTES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text3>
             <Text16 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.2,0.8,12,0.6</ClientRectangle>
+              <ClientRectangle>5,0.8,10,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,12,Regular,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
@@ -127,11 +127,11 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <HeaderlibPro Ref="10" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,3.4,19,0.8</ClientRectangle>
-          <Components isList="true" count="10">
+          <Components isList="true" count="9">
             <Text6 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>11.6,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>831f3923acd34c74aae0ee984e29f8a0</Guid>
@@ -148,7 +148,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text8 Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.6,0,1.2,0.8</ClientRectangle>
+              <ClientRectangle>13.2,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>a08b2dd5aa5b4de4b2f550881621528b</Guid>
@@ -165,7 +165,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text10 Ref="13" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.2,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>15.8,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>070e40d35f924f12bc1afac403b85268</Guid>
@@ -182,7 +182,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text14 Ref="14" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,0,2.2,0.8</ClientRectangle>
+              <ClientRectangle>17.4,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>80c5816b0bd44672bd25b9082d332fc8</Guid>
@@ -200,7 +200,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text12 Ref="15" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,1,0.8</ClientRectangle>
+              <ClientRectangle>14.6,0,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>6f67543450e746f7816f410bcfe4af4d</Guid>
@@ -217,14 +217,14 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Headerliqgen_nombre Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,0.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_nombre</Name>
               <Page isRef="4" />
               <Parent isRef="10" />
-              <Text>Reg</Text>
+              <Text>Factura</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -233,14 +233,14 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Headerliqgen_tipo Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>4,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_tipo</Name>
               <Page isRef="4" />
               <Parent isRef="10" />
-              <Text>F.recep</Text>
+              <Text>Cuenta</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -249,7 +249,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Headerliqgen_totComision Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.8,0,4,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0,5.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -262,27 +262,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqgen_totComision>
-            <Text2 Ref="19" type="Text" isKey="true">
+            <Text17 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.2,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Guid>5f9d8395047710e9b5d2c08fdc1a698b</Guid>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text2</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Num.</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text2>
-            <Text17 Ref="20" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>1,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>2.2,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>28552fa0073747309a96d89d9d5f6fa5</Guid>
@@ -290,7 +273,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Text17</Name>
               <Page isRef="4" />
               <Parent isRef="10" />
-              <Text>Ref.</Text>
+              <Text>Fecha</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -303,14 +286,15 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
           <Parent isRef="4" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderlibPro>
-        <DatalibPro Ref="21" type="DataBand" isKey="true">
+        <DatalibCli Ref="20" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,5,19,0.2</ClientRectangle>
-          <Components isList="true" count="10">
-            <Text9 Ref="22" type="Text" isKey="true">
+          <Components isList="true" count="9">
+            <Text9 Ref="21" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>12.6,0,1.2,0.2</ClientRectangle>
+              <ClientRectangle>13.2,0,1.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -319,10 +303,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <Text>{libPro.porcentaje}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="23" type="NumberFormat" isKey="true">
+              <TextFormat Ref="22" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -331,10 +315,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text9>
-            <Text11 Ref="24" type="Text" isKey="true">
+            <Text11 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.2,0,1.4,0.2</ClientRectangle>
+              <ClientRectangle>15.8,0,1.4,0.2</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libPro.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
@@ -345,11 +329,11 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
+              <Parent isRef="20" />
               <ProcessingDuplicates>Hide</ProcessingDuplicates>
-              <Text>{libPro.importeRetencion}</Text>
+              <Text>{libCli.importeRetencion}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="25" type="NumberFormat" isKey="true">
+              <TextFormat Ref="24" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -358,10 +342,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text11>
-            <Text13 Ref="26" type="Text" isKey="true">
+            <Text13 Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>14,0,1,0.2</ClientRectangle>
+              <ClientRectangle>14.6,0,1,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -370,10 +354,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <Text>{libPro.cuota}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.cuota}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="27" type="NumberFormat" isKey="true">
+              <TextFormat Ref="26" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -382,63 +366,53 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text13>
-            <Dataliqgen_nombre Ref="28" type="Text" isKey="true">
+            <Dataliqgen_nombre Ref="27" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,0.8,0.2</ClientRectangle>
+              <ClientRectangle>0,0,2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
-              <HideZeros>True</HideZeros>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_nombre</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
+              <Parent isRef="20" />
               <ProcessingDuplicates>Hide</ProcessingDuplicates>
-              <Text>{libPro.numregisconta}</Text>
+              <Text>{libCli.serie}-{libCli.ano}-{libCli.numero.ToString("000000")}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="29" type="NumberFormat" isKey="true">
-                <DecimalDigits>0</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits</State>
-                <UseGroupSeparator>False</UseGroupSeparator>
-              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_nombre>
-            <Dataliqgen_tipo Ref="30" type="Text" isKey="true">
+            <Dataliqgen_tipo Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0,1.4,0.2</ClientRectangle>
+              <ClientRectangle>4,0,1.4,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_tipo</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <Text>{libPro.fecha_recep}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.cuentaContable}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="31" type="DateFormat" isKey="true" />
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_tipo>
-            <Dataliqgen_totComision Ref="32" type="Text" isKey="true">
+            <Dataliqgen_totComision Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>6.8,0,4,0.2</ClientRectangle>
+              <ClientRectangle>5.6,0,5.8,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_totComision</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <Text>{libPro.emisorNombre}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.receptorNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -449,28 +423,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_totComision>
-            <Text1 Ref="34" type="Text" isKey="true">
+            <Text15 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.2,0,1.4,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>c438af3ec48d29f8624ab2f3eb14fdf1</Guid>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text1</Name>
-              <Page isRef="4" />
-              <Parent isRef="21" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
-              <Text>{libPro.numeroFacturaProveedor}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text1>
-            <Text15 Ref="35" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>16.8,0,2.2,0.2</ClientRectangle>
+              <ClientRectangle>17.4,0,1.6,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -479,11 +435,11 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
+              <Parent isRef="20" />
               <ProcessingDuplicates>Hide</ProcessingDuplicates>
-              <Text>{libPro.totalConIva}</Text>
+              <Text>{libCli.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="36" type="NumberFormat" isKey="true">
+              <TextFormat Ref="32" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -492,10 +448,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text15>
-            <Text7 Ref="37" type="Text" isKey="true">
+            <Text7 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11,0,1.2,0.2</ClientRectangle>
+              <ClientRectangle>11.6,0,1.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -504,10 +460,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <Text>{libPro.basFact}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.basFact}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="38" type="NumberFormat" isKey="true">
+              <TextFormat Ref="34" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -516,49 +472,84 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text7>
-            <Text25 Ref="39" type="Text" isKey="true">
+            <Text25 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>1,0,2.4,0.2</ClientRectangle>
+              <ClientRectangle>2.2,0,1.6,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
               <Page isRef="4" />
-              <Parent isRef="21" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
-              <Text>{libPro.referencia}</Text>
+              <Parent isRef="20" />
+              <Text>{libCli.fecha}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="36" type="DateFormat" isKey="true" />
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
+              <Type>DataColumn</Type>
             </Text25>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
-          <DataSourceName>libPro</DataSourceName>
+          <DataSourceName>libCli</DataSourceName>
           <Filters isList="true" count="0" />
-          <Name>DatalibPro</Name>
+          <Name>DatalibCli</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
           <Sort isList="true" count="0" />
-        </DatalibPro>
-        <FooterBand1 Ref="40" type="FooterBand" isKey="true">
+        </DatalibCli>
+        <FooterBand1 Ref="37" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,6,19,1.4</ClientRectangle>
+          <ClientRectangle>0,6,19,0.8</ClientRectangle>
           <Components isList="true" count="5">
-            <Text18 Ref="41" type="Text" isKey="true">
+            <Text18 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.6,0.2,1.6,0.4</ClientRectangle>
+              <ClientRectangle>11.2,0.2,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="4" />
-              <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.basFact)}</Text>
+              <Parent isRef="37" />
+              <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="39" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text19 Ref="40" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.2,5.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>TOTAL GENERAL</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text19>
+            <Text20 Ref="41" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14,0.2,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial Narrow,9,Bold,Point,False,0</Font>
+              <Guid>ed27cd7f96d04199b190ce6941e31493</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="42" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -568,45 +559,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text18>
-            <Text19 Ref="43" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.2,5.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text19</Name>
-              <Page isRef="4" />
-              <Parent isRef="40" />
-              <Text>TOTAL GENERAL</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text19>
-            <Text20 Ref="44" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0.2,1.6,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial Narrow,9,Bold,Point,False,0</Font>
-              <Guid>ed27cd7f96d04199b190ce6941e31493</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text20</Name>
-              <Page isRef="4" />
-              <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.cuota)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text21 Ref="46" type="Text" isKey="true">
+            <Text21 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.2,0.2,1.4,0.4</ClientRectangle>
+              <ClientRectangle>15.8,0.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <Guid>713afcaf74c94d0283bc8d1bb83f1b0a</Guid>
@@ -614,10 +570,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
               <Page isRef="4" />
-              <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.importeRetencion)}</Text>
+              <Parent isRef="37" />
+              <Text>{Sum(DatalibCli,libCli.importeRetencion)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="NumberFormat" isKey="true">
+              <TextFormat Ref="44" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -626,25 +582,26 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text21>
-            <Text22 Ref="48" type="Text" isKey="true">
+            <Text22 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17,0.2,2,0.4</ClientRectangle>
+              <ClientRectangle>17.2,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
+              <Guid>a53f9b28a22947099f55f86c45e37c07</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="4" />
-              <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.basFact)+Sum(DatalibPro,libPro.cuota)-Sum(DatalibPro,libPro.importeRetencion)}</Text>
+              <Parent isRef="37" />
+              <Text>{Sum(DatalibCli,libCli.totalConIva)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="NumberFormat" isKey="true">
+              <TextFormat Ref="46" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
               </TextFormat>
-              <Type>Expression</Type>
+              <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
           </Components>
@@ -653,136 +610,136 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
           <Page isRef="4" />
           <Parent isRef="4" />
         </FooterBand1>
-        <HeaderBand1 Ref="50" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="47" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,8.2,19,0.6</ClientRectangle>
+          <ClientRectangle>0,7.6,19,0.6</ClientRectangle>
           <Components isList="true" count="5">
-            <Text29 Ref="51" type="Text" isKey="true">
+            <Text1 Ref="48" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,4.2,0.4</ClientRectangle>
+              <ClientRectangle>0.2,0.2,4.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
-              <Guid>0c2eeecbf4e94b26b5877bcbf4b80135</Guid>
+              <Guid>60caffd24c034c85b4b67de33a22cc1d</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Text29</Name>
+              <Name>Text1</Name>
               <Page isRef="4" />
-              <Parent isRef="50" />
+              <Parent isRef="47" />
               <Text>REGIMEN GENERAL</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text29>
-            <Text4 Ref="52" type="Text" isKey="true">
+            </Text1>
+            <Text2 Ref="49" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.8,0,2,0.4</ClientRectangle>
+              <ClientRectangle>7,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>98f0c87614c7466d8a609a46a22a0313</Guid>
+              <Guid>fa1d3e953eea4eb5827e83b9f1ba4c14</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Text4</Name>
+              <Name>Text2</Name>
               <Page isRef="4" />
-              <Parent isRef="50" />
+              <Parent isRef="47" />
               <Text>Tipo de IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text4>
-            <Text23 Ref="53" type="Text" isKey="true">
+            </Text2>
+            <Text31 Ref="50" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>9,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>9.2,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>a8472f79d95f4269905d62903aaf9fd6</Guid>
+              <Guid>8efe0c938fce4fb48816fa72565b092a</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text23</Name>
+              <Name>Text31</Name>
               <Page isRef="4" />
-              <Parent isRef="50" />
+              <Parent isRef="47" />
               <Text>Base imp.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text23>
-            <Text26 Ref="54" type="Text" isKey="true">
+            </Text31>
+            <Text33 Ref="51" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,0,1,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0.2,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>8828b3dd757c4e8e82893d86279f4e7b</Guid>
+              <Guid>ae5b76d2c4414ff7959da68f9679eb0c</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Text26</Name>
+              <Name>Text33</Name>
               <Page isRef="4" />
-              <Parent isRef="50" />
+              <Parent isRef="47" />
               <Text>% IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text26>
-            <Text24 Ref="55" type="Text" isKey="true">
+            </Text33>
+            <Text34 Ref="52" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.6,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>12.8,0.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>7f3508e645f34fa3898ab44a432a8260</Guid>
+              <Guid>b0ca8d6052d5475dbc1346f50c501f5e</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text24</Name>
+              <Name>Text34</Name>
               <Page isRef="4" />
-              <Parent isRef="50" />
+              <Parent isRef="47" />
               <Text>IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text24>
+            </Text34>
           </Components>
           <Conditions isList="true" count="0" />
           <Name>HeaderBand1</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
         </HeaderBand1>
-        <GroupHeaderBand2 Ref="56" type="GroupHeaderBand" isKey="true">
+        <GroupHeaderBand1 Ref="53" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,9.6,19,0.4</ClientRectangle>
+          <ClientRectangle>0,9,19,0.4</ClientRectangle>
           <Components isList="true" count="4">
-            <Text32 Ref="57" type="Text" isKey="true">
+            <Text32 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>6.8,0,2,0.2</ClientRectangle>
+              <ClientRectangle>7.2,0,2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>9040d04175be4c28bb23a604c43e667b</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text32</Name>
               <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>{libPro.tipoIva}</Text>
+              <Parent isRef="53" />
+              <Text>{libCli.tipoIva}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>DataColumn</Type>
+              <Type>Expression</Type>
             </Text32>
-            <Text27 Ref="58" type="Text" isKey="true">
+            <Text27 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>9.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>9.4,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>{Sum(DatalibPro,libPro.basFact)}</Text>
+              <Parent isRef="53" />
+              <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="59" type="NumberFormat" isKey="true">
+              <TextFormat Ref="56" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -790,19 +747,19 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               </TextFormat>
               <Type>Totals</Type>
             </Text27>
-            <Text28 Ref="60" type="Text" isKey="true">
+            <Text28 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,0,1,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
               <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>{libPro.porcentaje}</Text>
+              <Parent isRef="53" />
+              <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="61" type="NumberFormat" isKey="true">
+              <TextFormat Ref="58" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -810,9 +767,9 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
-            <Text30 Ref="62" type="Text" isKey="true">
+            <Text30 Ref="59" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>13,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>3dc05cf06e1d4162979804f900f1926c</Guid>
@@ -820,10 +777,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
               <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>{Sum(DatalibPro,libPro.cuota)}</Text>
+              <Parent isRef="53" />
+              <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="63" type="NumberFormat" isKey="true">
+              <TextFormat Ref="60" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -832,21 +789,19 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Type>Totals</Type>
             </Text30>
           </Components>
-          <Condition>{libPro.porcentaje}</Condition>
+          <Condition>{libCli.porcentaje}</Condition>
           <Conditions isList="true" count="0" />
-          <Guid>57638f7d0927451e864a26719d6900d8</Guid>
-          <Name>GroupHeaderBand2</Name>
+          <Name>GroupHeaderBand1</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
-        </GroupHeaderBand2>
-        <DataBand1 Ref="64" type="DataBand" isKey="true">
+        </GroupHeaderBand1>
+        <DataBand1 Ref="61" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,10.8,19,0</ClientRectangle>
+          <ClientRectangle>0,10.2,19,0</ClientRectangle>
           <Components isList="true" count="0" />
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
-          <DataSourceName>libPro</DataSourceName>
+          <DataSourceName>libCli</DataSourceName>
           <Filters isList="true" count="0" />
           <Name>DataBand1</Name>
           <Page isRef="4" />
@@ -863,13 +818,13 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="65" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="62" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="66" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="63" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -882,10 +837,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>10/14/2019 10:47:22 AM</ReportChanged>
+  <ReportChanged>11/15/2019 1:42:29 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>0e61800518de45c6b24fe49a9e156598</ReportGuid>
+  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
+  <ReportGuid>8b6af1063d424a418a7d5e0db5238615</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
