@@ -71,7 +71,9 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
     });
-
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        cambioTipoProyecto(e.added);
+    });
     $("#cmbDepartamentos").select2(select2Spanish());
     loadDepartamentosUsuario();
 
@@ -583,17 +585,12 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    if (vm.sgrupoArticuloId()) {
-        loadGrupoArticulos(vm.sgrupoArticuloId());
-        var data = {
-            id: vm.sgrupoArticuloId()
-        };
-        cambioGrupoArticulo(data);
-    } else {
-        loadGrupoArticulos();
-        loadArticulos();
-    }
+    //
+    loadGrupoArticulos();
+    // loadArticulos();
     loadTiposIva();
+    //
+    loadArticulos();
     loadUnidades();
 }
 
@@ -934,9 +931,9 @@ function cambioArticulo(data) {
 function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
-    if (!vm.capituloLinea()) {
+    
         crearTextoDeCapituloAutomatico(grupoArticuloId);
-    }
+    
     cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
 
@@ -946,8 +943,11 @@ var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
     // ahora hay que buscar el nombre del capitulo para concatenarlo
     llamadaAjax('GET', "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
         if (err) return;
+        var capituloAntiguo = vm.capituloLinea();
         nombreCapitulo += data.nombre;
-        vm.capituloLinea(nombreCapitulo);
+        if(capituloAntiguo != nombreCapitulo) {
+            vm.capituloLinea(nombreCapitulo);
+        }
     });
 }
 

@@ -586,9 +586,7 @@ function loadDepartamento(departamentoId) {
             }
 
         });
-    
 }
-
 
 
 /*------------------------------------------------------------------
@@ -909,7 +907,7 @@ function initTablaFacturasLineas() {
             data: null,
             className: "text-right",
             render: function (data, type, row) {
-                var data = ( row.coste * row.porcentajeBeneficio ) / 100 ;
+                var data = ( row.coste * vm.porcentajeBeneficio() ) / 100 ;
                 return numeral(data).format('0,0.00');
             }
         }, {
@@ -918,7 +916,7 @@ function initTablaFacturasLineas() {
             render: function (data, type, row) {
                 var ventaNeta = vm.ventaNeta();
                     var importeAgente = vm.importeAgente();
-                    var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) +  row.coste; 
+                    var ventaNetaLinea = (( row.coste * vm.porcentajeBeneficio() ) / 100) +  row.coste; 
                     var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
                     return numeral(data).format('0,0.00');
             }
@@ -1064,16 +1062,17 @@ function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
-    if (!vm.capituloLinea()) {
         var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
         llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
             if (err) return;
+            var capituloAntiguo = vm.capituloLinea();
             nombreCapitulo += data.nombre;
-            vm.capituloLinea(nombreCapitulo);
+            if(capituloAntiguo != nombreCapitulo) {
+                vm.capituloLinea(nombreCapitulo);
+            }
         });
-    }
     llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
