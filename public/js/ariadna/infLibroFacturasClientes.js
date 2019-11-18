@@ -434,7 +434,7 @@ var rptFacturaParametros = function (sql) {
             sql += " AND f.contabilizada = 1"
         }
 
-        sql += " ORDER BY " +  orden;
+        sql += " ORDER BY  f.facturaId, " +  orden;
         /*if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {

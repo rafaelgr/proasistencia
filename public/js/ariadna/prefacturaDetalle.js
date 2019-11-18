@@ -886,11 +886,12 @@ function loadArticulos(id) {
 
 function loadGrupoArticulos(id) {
     var url;
-    if(id) {
+    url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    /*if(id) {
         url =  "/api/grupo_articulo";
     } else {
         url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
-    }
+    }*/
     llamadaAjax("GET", url, null, function (err, data) {
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);

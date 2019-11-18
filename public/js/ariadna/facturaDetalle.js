@@ -332,7 +332,7 @@ function loadData(data, desdeLinea) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
-        cmd = "";
+        cmd == ""
     }
     vm.enviadaCorreo(data.enviadaCorreo);
     //
@@ -997,11 +997,12 @@ function loadArticulos(id) {
 
 function loadGrupoArticulos(id) {
     var url;
-    if(id) {
-        url =  "/api/grupo_articulo";
-    } else {
+    url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    /*if (cmd == "nueva") {
         url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
-    }
+    } else {
+        url =  "/api/grupo_articulo";
+    }*/
     llamadaAjax("GET", url, null, function (err, data) {
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);

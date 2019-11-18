@@ -265,6 +265,7 @@ function admData() {
 
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
+    vm.tipoOfertaId(data.tipoOfertaId)
     loadDepartamentosUsuario(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
@@ -856,7 +857,14 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax('GET', "/api/grupo_articulo", null, function (err, data) {
+    var url;
+    url = "/api/grupo_articulo/departamento/" + vm.tipoOfertaId();
+    /*if(id) {
+        url =  "/api/grupo_articulo";
+    } else {
+        url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    }*/
+    llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);

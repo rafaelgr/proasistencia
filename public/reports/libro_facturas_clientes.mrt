@@ -90,7 +90,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Text16</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>{libPro.empresaNombre}</Text>
+              <Text>{libCli.empresaNombre}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text16>
@@ -289,12 +289,13 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <DatalibCli Ref="20" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,5,19,0.2</ClientRectangle>
+          <CanBreak>True</CanBreak>
+          <ClientRectangle>0,5,19,0.4</ClientRectangle>
           <Components isList="true" count="9">
             <Text9 Ref="21" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>13.2,0,1.2,0.2</ClientRectangle>
+              <ClientRectangle>13.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -318,9 +319,9 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text11 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.8,0,1.4,0.2</ClientRectangle>
+              <ClientRectangle>15.8,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
-                <value>libPro.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+                <value>libCli.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -345,7 +346,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text13 Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>14.6,0,1,0.2</ClientRectangle>
+              <ClientRectangle>14.6,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -369,7 +370,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Dataliqgen_nombre Ref="27" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,2,0.2</ClientRectangle>
+              <ClientRectangle>0,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -377,7 +378,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Dataliqgen_nombre</Name>
               <Page isRef="4" />
               <Parent isRef="20" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
+              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Text>{libCli.serie}-{libCli.ano}-{libCli.numero.ToString("000000")}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -386,7 +387,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Dataliqgen_tipo Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>4,0,1.4,0.2</ClientRectangle>
+              <ClientRectangle>4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -402,7 +403,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Dataliqgen_totComision Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.6,0,5.8,0.2</ClientRectangle>
+              <ClientRectangle>5.6,0,5.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -425,8 +426,9 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             </Dataliqgen_totComision>
             <Text15 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>17.4,0,1.6,0.2</ClientRectangle>
+              <ClientRectangle>17.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -451,7 +453,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text7 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11.6,0,1.2,0.2</ClientRectangle>
+              <ClientRectangle>11.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -475,7 +477,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
             <Text25 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>2.2,0,1.6,0.2</ClientRectangle>
+              <ClientRectangle>2.2,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -502,7 +504,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <FooterBand1 Ref="37" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,6,19,0.8</ClientRectangle>
+          <ClientRectangle>0,6.2,19,0.8</ClientRectangle>
           <Components isList="true" count="5">
             <Text18 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -593,7 +595,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Text22</Name>
               <Page isRef="4" />
               <Parent isRef="37" />
-              <Text>{Sum(DatalibCli,libCli.totalConIva)}</Text>
+              <Text>{Sum(DatalibCli,libCli.basFact)+ Sum(DatalibCli, libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="46" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -601,7 +603,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
                 <NegativePattern>1</NegativePattern>
                 <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
               </TextFormat>
-              <Type>Totals</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
           </Components>
@@ -612,7 +614,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </FooterBand1>
         <HeaderBand1 Ref="47" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,7.6,19,0.6</ClientRectangle>
+          <ClientRectangle>0,7.8,19,0.6</ClientRectangle>
           <Components isList="true" count="5">
             <Text1 Ref="48" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -708,7 +710,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </HeaderBand1>
         <GroupHeaderBand1 Ref="53" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,9,19,0.4</ClientRectangle>
+          <ClientRectangle>0,9.2,19,0.4</ClientRectangle>
           <Components isList="true" count="4">
             <Text32 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -797,7 +799,8 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </GroupHeaderBand1>
         <DataBand1 Ref="61" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,10.2,19,0</ClientRectangle>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,10.4,19,0</ClientRectangle>
           <Components isList="true" count="0" />
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -837,10 +840,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>11/15/2019 1:42:29 PM</ReportChanged>
+  <ReportChanged>11/18/2019 11:22:41 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>8b6af1063d424a418a7d5e0db5238615</ReportGuid>
+  <ReportFile />
+  <ReportGuid>6abea233a8bf4a308d51d95eb69f5c65</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
