@@ -14,6 +14,7 @@ var dataOfertasLineas;
 var dataBases;
 var usuario;
 usuario = recuperarIdUsuario();
+var usaCalculadora;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -71,7 +72,9 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
     });
-
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        cambioTipoProyecto(e.added);
+    });
     $("#cmbDepartamentos").select2(select2Spanish());
     loadDepartamentosUsuario();
 
@@ -265,6 +268,7 @@ function admData() {
 
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
+    vm.tipoOfertaId(data.tipoOfertaId)
     loadDepartamentosUsuario(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
@@ -426,6 +430,7 @@ function loadDepartamentosUsuario(id) {
     if(id) vm.stipoOfertaId(id);
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
+        //if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
         var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbDepartamentos").val([id]).trigger('change');
@@ -490,7 +495,7 @@ function cambioDepartamento(departamentoId) {
             vm.porcentajeBeneficio(0);
         } else {
             $('#calculadora').show();
-            obtenerPorcentajeBeneficioPorDefecto();
+            if( !vm.porcentajeBeneficio() ) obtenerPorcentajeBeneficioPorDefecto();
             if(vm.agenteId()) {
                 cargaAgente(vm.agenteId(), false);
             }
@@ -582,17 +587,12 @@ function limpiaDataLinea(data) {
     vm.costeLinea(null);
     vm.totalLinea(null);
     //
-    if (vm.sgrupoArticuloId()) {
-        loadGrupoArticulos(vm.sgrupoArticuloId());
-        var data = {
-            id: vm.sgrupoArticuloId()
-        };
-        cambioGrupoArticulo(data);
-    } else {
-        loadGrupoArticulos();
-        loadArticulos();
-    }
+    //
+    loadGrupoArticulos();
+    // loadArticulos();
     loadTiposIva();
+    //
+    loadArticulos();
     loadUnidades();
 }
 
@@ -856,7 +856,14 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax('GET', "/api/grupo_articulo", null, function (err, data) {
+    var url;
+    url = "/api/grupo_articulo/departamento/" + vm.tipoOfertaId();
+    /*if(id) {
+        url =  "/api/grupo_articulo";
+    } else {
+        url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    }*/
+    llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
@@ -917,7 +924,7 @@ function cambioArticulo(data) {
             id: data.tipoIvaId
         };
         // poner la unidades por defecto de ese artículo
-        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
         cambioPrecioCantidad();
     });
@@ -926,9 +933,9 @@ function cambioArticulo(data) {
 function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
-    if (!vm.capituloLinea()) {
+    
         crearTextoDeCapituloAutomatico(grupoArticuloId);
-    }
+    
     cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
 
@@ -938,8 +945,11 @@ var crearTextoDeCapituloAutomatico = function (grupoArticuloId) {
     // ahora hay que buscar el nombre del capitulo para concatenarlo
     llamadaAjax('GET', "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
         if (err) return;
+        var capituloAntiguo = vm.capituloLinea();
         nombreCapitulo += data.nombre;
-        vm.capituloLinea(nombreCapitulo);
+        if(capituloAntiguo != nombreCapitulo) {
+            vm.capituloLinea(nombreCapitulo);
+        }
     });
 }
 
@@ -1297,6 +1307,7 @@ var ocultarCamposOfertasGeneradas = function () {
 }
 
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
+    if(usaCalculadora == 0) return coste;
     var importeBeneficio = 0;
     var ventaNeta = 0;
     var importeCliente = 0;

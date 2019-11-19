@@ -332,7 +332,7 @@ function loadData(data, desdeLinea) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
-        cmd = "";
+        cmd == ""
     }
     vm.enviadaCorreo(data.enviadaCorreo);
     //
@@ -586,9 +586,7 @@ function loadDepartamento(departamentoId) {
             }
 
         });
-    
 }
-
 
 
 /*------------------------------------------------------------------
@@ -909,7 +907,7 @@ function initTablaFacturasLineas() {
             data: null,
             className: "text-right",
             render: function (data, type, row) {
-                var data = ( row.coste * row.porcentajeBeneficio ) / 100 ;
+                var data = ( row.coste * vm.porcentajeBeneficio() ) / 100 ;
                 return numeral(data).format('0,0.00');
             }
         }, {
@@ -918,7 +916,7 @@ function initTablaFacturasLineas() {
             render: function (data, type, row) {
                 var ventaNeta = vm.ventaNeta();
                     var importeAgente = vm.importeAgente();
-                    var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) +  row.coste; 
+                    var ventaNetaLinea = (( row.coste * vm.porcentajeBeneficio() ) / 100) +  row.coste; 
                     var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
                     return numeral(data).format('0,0.00');
             }
@@ -997,11 +995,12 @@ function loadArticulos(id) {
 
 function loadGrupoArticulos(id) {
     var url;
-    if(id) {
-        url =  "/api/grupo_articulo";
-    } else {
+    url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    /*if (cmd == "nueva") {
         url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
-    }
+    } else {
+        url =  "/api/grupo_articulo";
+    }*/
     llamadaAjax("GET", url, null, function (err, data) {
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
@@ -1053,7 +1052,7 @@ function cambioArticulo(articuloId) {
         vm.cantidad(1);
         vm.importe(data.precioUnitario);
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data.tipoIvaId);
         cambioPrecioCantidad();
     });
@@ -1063,16 +1062,17 @@ function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
-    if (!vm.capituloLinea()) {
         var numeroCapitulo = Math.floor(vm.linea());
         var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
         // ahora hay que buscar el nombre del capitulo para concatenarlo
         llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
             if (err) return;
+            var capituloAntiguo = vm.capituloLinea();
             nombreCapitulo += data.nombre;
-            vm.capituloLinea(nombreCapitulo);
+            if(capituloAntiguo != nombreCapitulo) {
+                vm.capituloLinea(nombreCapitulo);
+            }
         });
-    }
     llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
         vm.posiblesArticulos(articulos);
