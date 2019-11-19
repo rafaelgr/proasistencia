@@ -797,7 +797,7 @@ function initTablaPrefacturasLineas() {
             data: null,
             className: "text-right",
             render: function (data, type, row) {
-                var data = ( row.coste * row.porcentajeBeneficio ) / 100 ;
+                var data = ( row.coste * vm.porcentajeBeneficio() ) / 100 ;
                 return numeral(data).format('0,0.00');
             }
         }, {
@@ -806,7 +806,7 @@ function initTablaPrefacturasLineas() {
             render: function (data, type, row) {
                 var ventaNeta = vm.ventaNeta();
                     var importeAgente = vm.importeAgente();
-                    var ventaNetaLinea = (( row.coste * row.porcentajeBeneficio ) / 100) +  row.coste; 
+                    var ventaNetaLinea = (( row.coste * vm.porcentajeBeneficio()  ) / 100) +  row.coste; 
                     var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
                     return numeral(data).format('0,0.00');
             }
@@ -886,11 +886,12 @@ function loadArticulos(id) {
 
 function loadGrupoArticulos(id) {
     var url;
-    if(id) {
+    url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
+    /*if(id) {
         url =  "/api/grupo_articulo";
     } else {
         url = "/api/grupo_articulo/departamento/" + vm.departamentoId();
-    }
+    }*/
     llamadaAjax("GET", url, null, function (err, data) {
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
@@ -942,7 +943,7 @@ function cambioArticulo(articuloId) {
         vm.cantidad(1);
         vm.importe(data.precioUnitario);
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data.tipoIvaId);
         cambioPrecioCantidad();
     });

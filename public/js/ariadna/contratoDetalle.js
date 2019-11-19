@@ -1209,7 +1209,7 @@ function cambioArticulo(data) {
             id: data.tipoIvaId
         };
         // poner la unidades por defecto de ese artículo
-        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
         cambioPrecioCantidad();
     });

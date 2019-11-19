@@ -6,7 +6,7 @@ UPDATE departamentos SET usaCalculadora = 0 WHERE departamentoId = 7;
 ALTER TABLE `ofertas` ADD CONSTRAINT `of_departamentos` FOREIGN KEY (`tipoOfertaId`) 
 REFERENCES `departamentos`(`departamentoId`), DROP FOREIGN KEY `of_tipoMantenimiento`; 
 
-CREATE TABLE `proasistencia`.`contrato_porcentajes`(  
+CREATE TABLE `contrato_porcentajes`(  
   `contratoPorcenId` INT(11) NOT NULL AUTO_INCREMENT,
   `contratoId` INT(11),
   `concepto` VARCHAR(255),
