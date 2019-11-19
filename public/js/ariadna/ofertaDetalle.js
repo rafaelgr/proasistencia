@@ -14,6 +14,7 @@ var dataOfertasLineas;
 var dataBases;
 var usuario;
 usuario = recuperarIdUsuario();
+var usaCalculadora;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -429,6 +430,7 @@ function loadDepartamentosUsuario(id) {
     if(id) vm.stipoOfertaId(id);
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
+        //if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
         var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbDepartamentos").val([id]).trigger('change');
@@ -493,7 +495,7 @@ function cambioDepartamento(departamentoId) {
             vm.porcentajeBeneficio(0);
         } else {
             $('#calculadora').show();
-            obtenerPorcentajeBeneficioPorDefecto();
+            if( !vm.porcentajeBeneficio() ) obtenerPorcentajeBeneficioPorDefecto();
             if(vm.agenteId()) {
                 cargaAgente(vm.agenteId(), false);
             }
@@ -1305,6 +1307,7 @@ var ocultarCamposOfertasGeneradas = function () {
 }
 
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
+    if(usaCalculadora == 0) return coste;
     var importeBeneficio = 0;
     var ventaNeta = 0;
     var importeCliente = 0;
