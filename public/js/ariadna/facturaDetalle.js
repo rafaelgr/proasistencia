@@ -1052,7 +1052,7 @@ function cambioArticulo(articuloId) {
         vm.cantidad(1);
         vm.importe(data.precioUnitario);
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-        if (!vm.sunidadId()) $("#cmbUnidades").val([data.unidadId]).trigger('change');
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data.tipoIvaId);
         cambioPrecioCantidad();
     });
