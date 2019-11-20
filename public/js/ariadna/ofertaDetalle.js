@@ -15,6 +15,9 @@ var dataBases;
 var usuario;
 usuario = recuperarIdUsuario();
 var usaCalculadora;
+var dataConceptosLineas;
+var numConceptos = 0;
+var dataConceptos; 
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -61,6 +64,14 @@ function initForm() {
         return false;
     });
 
+    $("#concepto-form").submit(function () {
+        return false;
+    });
+    
+    $("#frmLineaConceptos").submit(function () {
+        return false;
+    });
+    
     $("#generar-contrato-form").submit(function () {
         return false;
     });
@@ -80,7 +91,6 @@ function initForm() {
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     //loadTipoProyecto();
-
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
     $("#cmbTextosPredeterminados").select2().on('change', function (e) {
@@ -128,6 +138,7 @@ function initForm() {
 
     initTablaOfertasLineas();
     initTablaBases();
+    initTablaConceptosLineas();
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
@@ -148,6 +159,16 @@ function initForm() {
         //
         document.title = "NUEVA OFERTA";
     }
+
+    //metodo de validacion de fechas
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } 
+        }, 'La fecha de la factura debe ser mayor o igual que la fecha de inicio de contrato.');
 }
 
 function admData() {
@@ -264,6 +285,12 @@ function admData() {
     self.fechaPrimeraFactura = ko.observable();
     self.facturaParcial = ko.observable();
     self.preaviso = ko.observable();
+    
+    //CONCEPTOS
+    self.conceptoCobro = ko.observable();
+    self.porcentajeCobro = ko.observable();
+    self.contratoPorcenId = ko.observable();
+    self.fechaConcepto = ko.observable();
 }
 
 function loadData(data) {
@@ -290,6 +317,8 @@ function loadData(data) {
     //
     cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
+
+    loadConceptosLineas(data.contratoId);
 }
 
 function datosOK() {
@@ -1440,8 +1469,21 @@ var generarContratoAPI = function () {
     var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
     llamadaAjax('POST', url, data, function (err, data) {
         if (err) return;
+        var datos = {
+            contratoId: data.contratoId,
+            ofertaId: vm.ofertaId(),
+        }
+        generarLineasConceptos(datos);
         var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
         window.open(url, '_new');
+    })
+}
+
+var generarLineasConceptos = function(datos) {
+    var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto/";
+    llamadaAjax('POST', url, datos, function (err, data) {
+        if (err) return;
+        
     })
 }
 
@@ -1515,3 +1557,217 @@ var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, ti
         done(null, data);
     })
 }
+
+//FUNCIONES DE LOS CONCEPTOS/PORCENTAJES
+
+function initTablaConceptosLineas() {
+    tablaCarro = $('#dt_lineasConcepto').DataTable({
+        autoWidth: true,
+        order: [[ 0, "asc" ]], //or asc,
+       
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataConceptosLineas,
+        columns: [  {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "concepto",
+            
+        }, {
+            data: "porcentaje",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "ofertaPorcenId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function  loadConceptosLineas(id) {
+    llamadaAjax("GET", "/api/ofertas/conceptos/porcentaje/" + id, null, function (err, data) {
+        if (err) return;
+        
+        loadTablaConceptosLineas(data);
+        
+    });
+}
+
+function loadTablaConceptosLineas(data) {
+    if (data) {
+        dataConceptos = data;
+        numConceptos = data.length;
+    } else {
+        dataConceptos = null;
+        numConceptos = 0;
+    }
+    var dt = $('#dt_lineasConcepto').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+        $('#btnCopiar').hide();
+        $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
+    }
+    dt.fnClearTable();
+    if (data != null){
+        dt.fnAddData(data);
+        $('#btnCopiar').show();
+        $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
+    }
+    dt.fnDraw();
+}
+
+
+function nuevaLineaConcepto() {
+    limpiaDataLineaConcepto();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLineaConcepto() {
+    vm.conceptoCobro('');
+    vm.porcentajeCobro(0);
+    vm.fechaConcepto(vm.fechaOferta());
+}
+
+
+function aceptarLineaConcepto() {
+    if (!datosOKLineasConceptos()) {
+        return;
+    }
+    var data = {
+        cobroPorcen: {
+            ofertaId: vm.ofertaId(),
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro(),
+            fecha: spanishDbDate(vm.fechaConcepto()),
+        }
+    }
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/ofertas/concepto";
+                if (lineaEnEdicion) {
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/ofertas/concepto/" +  vm.ofertaPorcenId();
+                }
+                llamadaAjax(verbo, url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalConcepto').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/ofertas/conceptos/porcentaje/" + vm.ofertaId(), null, function (err, data) {
+                        loadTablaConceptosLineas(data);
+                    });
+                });
+}
+
+function editFprmaPagoLineaConcepto(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/ofertas/concepto/porcenteje/registro/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLineaConcepto(data[0]);
+    });
+}
+function loadDataLineaConcepto(data) {
+    vm.ofertaPorcenId(data.ofertaPorcenId);
+    vm.conceptoCobro(data.concepto);
+    vm.porcentajeCobro(data.porcentaje);
+    vm.fechaConcepto(spanishDate(data.fecha));
+    
+}
+
+function deleteConceptosLinea(ofertaPorcenId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+       
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/ofertas/concepto/" + ofertaPorcenId, null, function (err, data) {
+            if (err) return;
+                $('#modalConcepto').modal('hide');
+                llamadaAjax("GET", myconfig.apiUrl + "/api/ofertas/conceptos/porcentaje/" + vm.ofertaId(), null, function (err, data) {
+                    loadTablaConceptosLineas(data);
+                });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKLineasConceptos() {
+    $('#concepto-form').validate({
+        rules: {
+            txtConceptoCobro: {
+                required: true
+            },
+            txtPorcentajeCobro: {
+                required: true,
+                number:true
+            },
+            txtFechaConcepto: {
+                required: true,
+                greaterThan: '#txtFechaOferta'
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtConceptoCobro: {
+                required: "Debe dar un concepto"
+            },
+            txtPorcentajeCobro: {
+                required: "Debe proporcionar un porcentaje",
+                number: "Se tiene que introducir un numero válido"
+            },
+            txtFechaConcepto: {
+                required: "Debe proporcionar una fecha de factura",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#concepto-form').valid();
+}
+
