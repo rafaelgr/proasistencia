@@ -17,3 +17,7 @@ CREATE TABLE `oferta_porcentajes` (
 
 ALTER TABLE `prefacturas`   
   ADD COLUMN `observacionesPago` TEXT NULL AFTER `noCalculadora`;
+
+  ALTER TABLE `facturas`   
+  ADD COLUMN `observacionesPago` TEXT NULL AFTER `totalSinAcuenta`;
+
