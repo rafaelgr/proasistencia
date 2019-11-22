@@ -14,3 +14,6 @@ CREATE TABLE `oferta_porcentajes` (
   KEY `contratos_porcentajesFK` (`ofertaId`),
   CONSTRAINT `ofertaConceptoFK` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas` (`ofertaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `prefacturas`   
+  ADD COLUMN `observacionesPago` TEXT NULL AFTER `noCalculadora`;
