@@ -565,7 +565,7 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-6">
+                                                        <section class="col col-md-4">
                                                             <label class="label">IBAN</label>
                                                             <label class="input">
                                                                 <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
@@ -582,6 +582,13 @@
                                                             <label class="label">Forma de pago</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">Tarifa asociada</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaClienteId', value: starifaClienteId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select>
+                                                                <i></i>
                                                             </label>
                                                         </section>
                                                     </div>

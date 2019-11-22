@@ -60,6 +60,8 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbTarifas").select2(select2Spanish());
+    loadTarifas();
 
     $("#cmbAscComerciales").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -777,6 +779,24 @@ function loadMotivosBaja(id) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+    });
+}
+
+function loadTarifas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tarifas_cliente",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tarifas = [{ tarifaClienteId: 0, nombre: "" }].concat(data);
+            vm.posiblesTarifas(tarifas);
+            $("#cmbTarifas").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
