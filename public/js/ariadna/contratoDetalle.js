@@ -3191,6 +3191,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     var pagos = [];
     var nPagos = numPagos;
     var acumulado = 0;
+    var copiaDataConceptos = dataConceptos.slice();
     for (var j =0; j< nPagos; j++) {
         acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
     }
@@ -3217,6 +3218,16 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         } else {
             var f2 = moment(finContrato).format('DD/MM/YYYY');
         }
+        //completamos el compo observacionesPago
+        var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
+        var campoDestacado = copiaDataConceptos[i].concepto + " " + copiaDataConceptos[i].porcentaje+"\n";
+        var cabOtrosConceptos = '\nOTROSCONCEPTOS';
+        var otrosConceptos = ''
+        copiaDataConceptos.splice(i, 1);
+        for( var k  = 0; k < copiaDataConceptos.length; k++ ) {
+            otrosConceptos += "\n"+copiaDataConceptos[k].concepto + " " + copiaDataConceptos[k].porcentaje;
+        }
+
         var p = {
             fecha: f,
             importe: importePago,
@@ -3228,7 +3239,8 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: f0 + "-" + f2
+            periodo: f0 + "-" + f2,
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos
         };
         /*if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -3241,6 +3253,8 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             p.importeCoste = import22;
         }*/
         pagos.push(p);
+        copiaDataConceptos = [];
+        copiaDataConceptos = dataConceptos.slice();
     }
     /*if (pagos.length > 1) {
         // en la última factura ponemos los restos

@@ -215,6 +215,7 @@ function admData() {
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
+    self.observacionesPago = ko.observable();
 
     // -- Valores para las líneas
     self.prefacturaLineaId = ko.observable();
@@ -316,6 +317,7 @@ function loadData(data) {
     } 
 
     vm.observaciones(data.observaciones);
+    vm.observacionesPago(data.observacionesPago);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
@@ -448,7 +450,8 @@ var generarPrefacturaDb = function () {
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
-            "departamentoId": vm.departamentoId()
+            "departamentoId": vm.departamentoId(),
+            "observacionesPago": vm.observacionesPago()
         }
     };
     return data;
