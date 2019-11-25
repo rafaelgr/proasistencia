@@ -1480,7 +1480,7 @@ var generarContratoAPI = function () {
 }
 
 var generarLineasConceptos = function(datos) {
-    var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto/";
+    var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto";
     llamadaAjax('POST', url, datos, function (err, data) {
         if (err) return;
         

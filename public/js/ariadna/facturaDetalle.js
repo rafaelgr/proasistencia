@@ -207,6 +207,8 @@ function admData() {
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
+    self.observacionesPago = ko.observable();
+
 
     //
     self.serieId = ko.observable();
@@ -317,6 +319,7 @@ function loadData(data, desdeLinea) {
     loadDepartamento(data.departamentoId);
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones);
+    vm.observacionesPago(data.observacionesPago);
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
@@ -473,7 +476,8 @@ var generarFacturaDb = function () {
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "devuelta": vm.devuelta(),
             "enviadaCorreo": vm.enviadaCorreo(),
-            "departamentoId": vm.departamentoId()
+            "departamentoId": vm.departamentoId(),
+            "observacionesPago": vm.observacionesPago()
         }
     };
     return data;

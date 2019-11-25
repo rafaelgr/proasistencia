@@ -529,6 +529,9 @@
                                                         </section>
                                                         <section class="col col-md-3">
                                                             <div class="pull-right">
+                                                                <button id="btnActualizarClientes" title="Actualizar los clientes asociados" class="btn btn-success btn-circle btn-lg">
+                                                                    <i class="fa fa-lg fa-arrow-right"></i>
+                                                                </button>
                                                                 <button id="btnImportar" title="Importar datos de la antigua aplicación" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-refresh"></i>
                                                                 </button>
@@ -565,15 +568,15 @@
                                                         </section>
                                                     </div>
                                                     <div class="row">
-                                                        <section class="col col-md-6">
+                                                        <section class="col col-md-4">
                                                             <label class="label">IBAN</label>
                                                             <label class="input">
                                                                 <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
                                                             </label>
                                                         
                                                         </section>
-                                                        <section class="col col-md-3">
-                                                            <label class="label">% Comision por defecto</label>
+                                                        <section class="col col-md-2">
+                                                            <label class="label">% Comision</label>
                                                             <label class="input">
                                                                 <input id="txtPorComer" name="txtPorComer" data-bind="value: porComer" />
                                                             </label>
@@ -582,6 +585,13 @@
                                                             <label class="label">Forma de pago</label>
                                                             <label style="width:100%;">
                                                                 <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-md-3">
+                                                            <label class="label">Tarifa asociada</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaClienteId', value: starifaClienteId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select>
+                                                                <i></i>
                                                             </label>
                                                         </section>
                                                     </div>

@@ -14,3 +14,13 @@ CREATE TABLE `oferta_porcentajes` (
   KEY `contratos_porcentajesFK` (`ofertaId`),
   CONSTRAINT `ofertaConceptoFK` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas` (`ofertaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `prefacturas`   
+  ADD COLUMN `observacionesPago` TEXT NULL AFTER `noCalculadora`;
+
+  ALTER TABLE `facturas`   
+  ADD COLUMN `observacionesPago` TEXT NULL AFTER `totalSinAcuenta`;
+  
+  ALTER TABLE `comerciales` ADD COLUMN `tarifaId` INT(11) NULL AFTER `passWeb`, 
+  ADD CONSTRAINT `ref_comercial_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas_cliente`(`tarifaClienteId`); 
+
