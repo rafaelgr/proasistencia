@@ -35,6 +35,7 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
+    $('#btnActualizarClientes').click(actualizaClientes());
     $("#frmComercial").submit(function () {
         return false;
     });
@@ -247,6 +248,12 @@ function admData() {
     //
     self.posiblesMotivosBaja = ko.observableArray([]);
     self.elegidosMotivosBaja = ko.observableArray([]);
+     //
+     self.tarifaClienteId = ko.observable();
+     self.starifaClienteId = ko.observable();
+     //
+     self.posiblesTarifas = ko.observableArray([]);
+     self.elegidasTarifas = ko.observableArray([]);
 }
 
 function loadData(data, desdeLoad) {
@@ -296,7 +303,7 @@ function loadData(data, desdeLoad) {
 
     loadFormasPago(data.formaPagoId);
     loadTiposVia(data.tipoViaId);
-
+    loadTarifas(data.tarifaId);
     cambioAscColaborador(data, desdeLoad);
 }
 
@@ -430,7 +437,8 @@ function aceptar() {
                 "tipoViaId": vm.stipoViaId(),
                 "motivoBajaId": vm.smotivoBajaId(),
                 "loginWeb": vm.loginWeb(),
-                "passWeb": vm.passWeb()
+                "passWeb": vm.passWeb(),
+                "tarifaId": vm.starifaClienteId(),
             }
         };
         if (empId == 0) {
@@ -510,6 +518,45 @@ function importar() {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+        });
+    };
+    return mf;
+}
+
+function actualizaClientes() {
+    var mf = function () {
+        if (!datosImportOK())
+            return;
+        $('#btnActualizaClientes').addClass('fa-spin');
+        var url = myconfig.apiUrl + "/api/clientes/desde/agente/" + empId
+        var data = {
+            cliente: {
+                tipoViaId3: vm.stipoViaId(),
+                direccion3: vm.direccion(),
+                poblacion3: vm.poblacion(),
+                codPostal3: vm.codPostal(),
+                provincia3: vm.provincia(),
+                telefono1: vm.telefono1(),
+                fax: vm.fax(),
+                email: vm.email(),
+                colaboradorId: vm.sascComercialId(),
+                tarifaId: vm.starifaClienteId()
+            }
+        };            
+        
+        $.ajax({
+            type: "PUT",
+            url: url,
+            dataType: "json",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (data, status) {
+                $('#btnActualizaClientes').removeClass('fa-spin');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;

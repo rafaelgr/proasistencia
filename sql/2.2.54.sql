@@ -20,4 +20,7 @@ ALTER TABLE `prefacturas`
 
   ALTER TABLE `facturas`   
   ADD COLUMN `observacionesPago` TEXT NULL AFTER `totalSinAcuenta`;
+  
+  ALTER TABLE `comerciales` ADD COLUMN `tarifaId` INT(11) NULL AFTER `passWeb`, 
+  ADD CONSTRAINT `ref_comercial_tarifa` FOREIGN KEY (`tarifaId`) REFERENCES `tarifas_cliente`(`tarifaClienteId`); 
 
