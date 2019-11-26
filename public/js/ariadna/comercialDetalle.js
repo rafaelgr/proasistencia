@@ -552,6 +552,7 @@ function actualizaClientes() {
             contentType: "application/json",
             success: function (data, status) {
                 $('#btnActualizaClientes').removeClass('fa-spin');
+                mensNormal('Los clientes se han actualizado con exito');
             },
             error: function (err) {
                 mensErrorAjax(err);
