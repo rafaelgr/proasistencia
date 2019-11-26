@@ -66,6 +66,13 @@ function initForm() {
         }
     });
 
+    $("#txtCuentaContable").on('change', function (e) {
+        var nif = vm.nif();
+        if(nif != "" && nif) {
+            compruebaNifRepetido(nif);
+        }
+    });
+
     $("#txtProId").on('change', function (e) {
         var proId = $("#txtProId").val();
         if(proId != "") {
@@ -77,6 +84,13 @@ function initForm() {
         var val = $("#txtNombre").val();
         if(val != "") {
             vm.nombreComercial(val);
+        }
+    });
+
+    $('#chkActiva').on('change', function (e) {
+        var cuentaContable = vm.cuentaContable();
+        if( $('#chkEmail').prop("checked", true)) {
+            compruebaCuentaContable(cuentaContable);
         }
     });
 
@@ -943,16 +957,48 @@ function loadDatosAgente(data) {
 }
 
 function compruebaNifRepetido(nif) {
+    var cuentaContable = vm.cuentaContable();
+    if(!cuentaContable || cuentaContable == '') {
+        mensError('Se tiene que introducir una cuenta contable');
+        return;
+    }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif,
+        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif + "/" + cuentaContable,
         dataType: "json",
         contentType: "application/json",
         data:null,
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
-               mensError('Ya existe un cliente con este NIF');
+               mensError('Ya existe un cliente con este NIF y la misma cuenta contable');
                $('#txtNif').val("");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function compruebaCuentaContable(cuentaContable) {
+    if(!cuentaContable || cuentaContable == '') {
+        mensError('Se tiene que introducir una cuenta contable');
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/clientes/comprueba/cuentaContable/repetida/" + cuentaContable,
+        dataType: "json",
+        contentType: "application/json",
+        data:null,
+        success: function (data, status) {
+            if(data && data.clienteId != vm.clienteId()) {
+               mensError('Ya existe un cliente con esta cuenta contable');
+               $('#txtCuentaContable').val("");
+               $('#txtCodigo').val("");
+            } else {
+                vm.cuentaContable(cuentaContable);
             }
         },
         error: function (err) {
@@ -1532,7 +1578,7 @@ function cambioCodigo(data) {
                 vm.nombreComercial(data.nombre);
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
-            vm.cuentaContable(codmacta);
+            compruebaCuentaContable(codmacta)
         },
         error: function (err) {
 
