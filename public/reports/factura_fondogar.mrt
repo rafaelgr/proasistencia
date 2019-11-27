@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "b5a5b2638f7749b5ac38649ac542dfec",
+  "ReportGuid": "1c538da6dcd24761bb50217fb474dc17",
   "ReportName": "FacturaFondogar",
   "ReportAlias": "FacturaFondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(10800000+0100)/",
-  "ReportChanged": "/Date(1574756781540+0100)/",
+  "ReportChanged": "/Date(1574842426915+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1224,7 +1224,7 @@
         "7": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,17.2,19,4.4",
+          "ClientRectangle": "0,17.2,19,6.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1287,7 +1287,7 @@
               "Name": "Text42",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.6,18.6,0.6",
+              "ClientRectangle": "0.2,4.8,18.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1307,7 +1307,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,3.4,18.6,0.6",
+              "ClientRectangle": "0.2,5.6,18.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1328,15 +1328,16 @@
               "Guid": "adfee741a4d346d19645814580a47a8a",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,1,18.6,0.6",
+              "ClientRectangle": "0.2,1.2,18.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Observaciones Pago"
               },
+              "VertAlignment": "Center",
               "Font": ";9.75;;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top;165,165,165;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -1348,7 +1349,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,1.6,18.6,0.8",
+              "ClientRectangle": "0.2,2.2,18.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },

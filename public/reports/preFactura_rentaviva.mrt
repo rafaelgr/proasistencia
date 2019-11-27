@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "9ca3994db8fd4a17a962b7108d70e55c",
+  "ReportGuid": "08c59f8d602c42f594b11d25fa4a2314",
   "ReportName": "factura_fondogar",
   "ReportAlias": "factura_fondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
-  "ReportChanged": "/Date(1574757115943+0100)/",
+  "ReportChanged": "/Date(1574847375745+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class factura_fondogar : Stimulsoft.Report.StiReport\r\n    {\r\n        public factura_fondogar()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1237,7 +1237,7 @@
         "7": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,20.6,19,3.6",
+          "ClientRectangle": "0,20.6,19,5.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1298,7 +1298,7 @@
               "Name": "Text42",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.4,18.6,0.4",
+              "ClientRectangle": "0.2,3.4,18.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1316,7 +1316,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.8,18.6,0.6",
+              "ClientRectangle": "0.2,3.8,18.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
