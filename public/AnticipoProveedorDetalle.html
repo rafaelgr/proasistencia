@@ -471,7 +471,7 @@
                                         </a>
                                     </li>
                                     
-                                    <li>
+                                    <li id="serv">
                                         <a data-toggle="tab" href="#s3">
                                             <i class="fa fa-file-text-o"></i>
                                             <span class="hidden-mobile hidden-tablet">Empresas serviciadas</span>
@@ -567,19 +567,31 @@
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
-                                                                        <label class="label bloqueado">Total a cobrar</label>
+                                                                        <label class="label bloqueado">Importe anticipo</label>
                                                                         <label class="input">
-                                                                            <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
+                                                                            <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" />
                                                                         </label>
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <section class="col col-sm-12" style="padding-top: 2%">
+                                                                    <section class="col col-md-6">
+                                                                        <label class="label">Concepto</label>
+                                                                        <label class="input">
+                                                                           <input id="txtReceptorNif" name="txtReceptorNif" type="text" data-bind="value: conceptoAnticipo" />
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-sm-3" style="padding-top: 2%">
                                                                         <label class="checkbox">
                                                                             <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar">
                                                                             <i></i>No contabilizar
                                                                         </label>
-                                                                </section>
+                                                                    </section>
+                                                                    <section class="col col-sm-3" style="padding-top: 2%">
+                                                                        <label class="checkbox">
+                                                                            <input id="chkCompleto" type="checkbox" name="chkCompleto">
+                                                                                <i></i>completo
+                                                                       </label>
+                                                                    </section>
                                                                 </div>
                                                                 <div class="row">
                                                                     <section class="col col-md-6">

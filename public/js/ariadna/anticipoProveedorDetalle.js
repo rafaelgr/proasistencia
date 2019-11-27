@@ -246,16 +246,54 @@ function initForm() {
             });
     });
 
+    //Evento asociado al cambio de chkcompleto
+    $('#chkCompleto').change(function () {
+        if($('#chkCompleto').is(':checked')) {
+            $('#lineasanticipo').show();
+            $('#basesycuotas').show();
+            $('#retenciones').show();
+            $('#serviciadas').show();
+            $('#serv').show();
+            $('#txtTotalConIva').prop('disabled', true);
+        } else  {
+            $('#lineasanticipo').hide();
+            $('#basesycuotas').hide();
+            $('#retenciones').hide();
+            $('#serviciadas').hide();
+            $('#serv').hide();
+            $('#txtTotalConIva').prop('disabled', false);
+        }
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
+        checkCerrados =  this;
+        if (this.checked) {
+            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId();
+        } 
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            data.forEach(function(d) {
+                if(d.preaviso == null) {
+                    d.preaviso = 0;
+                }
+                d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+            }, this);
+            loadTablaContratos(data);
+        });
+    });
+
+
     if (antproveId != 0) {
         // caso edicion
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            loadLineasAnticipo(data.antproveId);
-            loadBasesAntprove(data.antproveId);
-            loadRetencionesAntprove(data.antproveId);
-            loadServiciadasAntprove(antproveId);
-            $('#btnAltaServiciada').click(reiniciaValores);
+            if($('chkCompleto').prop('checked')) {
+                loadLineasAnticipo(data.antproveId);
+                loadBasesAntprove(data.antproveId);
+                loadRetencionesAntprove(data.antproveId);
+                loadServiciadasAntprove(antproveId);
+                $('#btnAltaServiciada').click(reiniciaValores);
+            }
         })
     } else {
         // caso alta
@@ -319,6 +357,8 @@ function admData() {
     self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
     self.noContabilizar = ko.observable();
+    self.conceptoAnticipo = ko.observable();
+    self.completo = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -464,7 +504,11 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    recalcularCostesImportesDesdeCoste();
+    if($('chkCompleto').prop('checked')) {
+        recalcularCostesImportesDesdeCoste();
+    } else {
+        vm.totalConIva(data.totalConIva);
+    }
     //
     vm.receptorNif(data.receptorNif);
     vm.receptorNombre(data.receptorNombre);
@@ -479,6 +523,7 @@ function loadData(data) {
     vm.emisorPoblacion(data.emisorPoblacion);
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
+    vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.antproveServiciadoId(0);
     vm.importeServiciada(0);
     
@@ -506,6 +551,24 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", true);
     } else {
         $('#chkNoContabilizar').prop("checked", false);
+    }
+    //
+    if(data.completo == 1){
+        $('#chkCompleto').prop("checked", true);
+        $('#lineasanticipo').show();
+        $('#basesycuotas').show();
+        $('#retenciones').show();
+        $('#serviciadas').show();
+        $('#serv').show();
+        $('#txtTotalConIva').prop('disabled', true);
+    } else {
+        $('#chkCompleto').prop("checked", false);
+        $('#lineasanticipo').hide();
+        $('#basesycuotas').hide();
+        $('#retenciones').hide();
+        $('#serviciadas').hide();
+        $('#serv').hide();
+        $('#txtTotalConIva').prop('disabled', false);
     }
     //
     document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
@@ -581,7 +644,7 @@ var aceptarAnticipo = function () {
     if (!datosOK()) return;
 
     eventSalir = false;
-    if (!vm.total()) {
+    if (!vm.total() && vm.completo()) {
         vm.total('0');
         vm.totalCuota('0');
         vm.totalConIva('0');
@@ -616,12 +679,20 @@ var aceptarAnticipo = function () {
        
     });
 }
-
+var totConIva;
 var generarAnticipoDb = function () {
     if($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
         vm.noContabilizar(false);
+    }
+    //
+    if($('#chkCompleto').prop("checked")) {
+        vm.completo(true);
+        totConIva: numeroDbf(vm.totalConIva());
+    } else {
+        vm.completo(false);
+        totConIva = vm.totalConIva()
     }
     var data = {
         antprove: {
@@ -645,7 +716,7 @@ var generarAnticipoDb = function () {
             "receptorPoblacion": vm.receptorPoblacion(),
             "receptorProvincia": vm.receptorProvincia(),
             "total": numeroDbf(vm.total()),
-            "totalConIva": numeroDbf(vm.totalConIva()),
+            "totalConIva": totConIva,
             "formaPagoId": vm.sformaPagoId(),
             "observaciones": vm.observaciones(),
             "coste": vm.coste(),
@@ -657,7 +728,9 @@ var generarAnticipoDb = function () {
             "importeRetencion": vm.importeRetencion(),
             "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar(),
-            "departamentoId": vm.sdepartamentoId()
+            "departamentoId": vm.sdepartamentoId(),
+            "conceptoAnticipo": vm.conceptoAnticipo(),
+            "completo": vm.completo()
 
         }
     };
@@ -1493,7 +1566,7 @@ function loadBasesAntprove(antproveId) {
                 t2 = t2 - dataBis[j].importeRetencion;
             }
             vm.total(numeral(t1).format('0,0.00'));
-            vm.totalCuota(numeral(t3).format('0,0.00'))
+            vm.totalCuota(numeral(t3).format('0,0.00'));
             vm.totalConIva(numeral(t2).format('0,0.00'));
            
             loadTablaBases(data);
