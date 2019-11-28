@@ -263,22 +263,6 @@ function initForm() {
             $('#serv').hide();
             $('#txtTotalConIva').prop('disabled', false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
-        checkCerrados =  this;
-        if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId();
-        } 
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            data.forEach(function(d) {
-                if(d.preaviso == null) {
-                    d.preaviso = 0;
-                }
-                d.plazo = restarDias(d.fechaFinal, d.preaviso);
-                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-            }, this);
-            loadTablaContratos(data);
-        });
     });
 
 
@@ -287,7 +271,7 @@ function initForm() {
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            if($('chkCompleto').prop('checked')) {
+            if($('#chkCompleto').prop('checked')) {
                 loadLineasAnticipo(data.antproveId);
                 loadBasesAntprove(data.antproveId);
                 loadRetencionesAntprove(data.antproveId);
@@ -307,6 +291,7 @@ function initForm() {
         $("#lineasanticipo").hide();
         $("#basesycuotas").hide();
         $('#btnAltaServiciada').hide();
+        $('#retenciones').hide();
         document.title = "NUEVO ANTICIPO PROVEEDOR";
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
@@ -504,7 +489,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    if($('chkCompleto').prop('checked')) {
+    if($('#chkCompleto').prop('checked')) {
         recalcularCostesImportesDesdeCoste();
     } else {
         vm.totalConIva(data.totalConIva);
@@ -692,7 +677,8 @@ var generarAnticipoDb = function () {
         totConIva: numeroDbf(vm.totalConIva());
     } else {
         vm.completo(false);
-        totConIva = vm.totalConIva()
+        totConIva = vm.totalConIva();
+        vm.total("0");
     }
     var data = {
         antprove: {
