@@ -637,7 +637,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Name>Text22</Name>
               <Page isRef="4" />
               <Parent isRef="40" />
-              <Text>{Sum(DatalibPro,libPro.basFact)+ Sum(DatalibPro, libPro.cuota)}</Text>
+              <Text>{(Sum(DatalibPro,libPro.basFact)-Sum(DatalibPro,libPro.importeRetencion))+ Sum(DatalibPro, libPro.cuota)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="49" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -883,10 +883,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>11/18/2019 9:58:44 AM</ReportChanged>
+  <ReportChanged>11/29/2019 10:24:01 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>fb1a9bbc013c44ad8e3593a8377a7800</ReportGuid>
+  <ReportFile />
+  <ReportGuid>99f94a05a145437e814e388d55559749</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
