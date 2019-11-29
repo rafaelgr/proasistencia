@@ -108,7 +108,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json(
     {
-        limit: '1000mb'
+        limit: '100mb'
     }
 ));
 
