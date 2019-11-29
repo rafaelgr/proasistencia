@@ -99,12 +99,18 @@ config.config();
 
 // starting express
 var app = express();
+
 // to parse body content
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    limit: '100mb'
 }));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json(
+    {
+        limit: '1000mb'
+    }
+));
 
 // using cors for cross class
 app.use(cors());
@@ -207,6 +213,7 @@ app.use('/api/estados_presupuesto', estados_presupuesto);
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 server.listen(process.env.API_PORT);
+server.setTimeout(800000000);
 
 // -- io calls
 var ioAPI = require('./lib/ioapi/ioapi');
