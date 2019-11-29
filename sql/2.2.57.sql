@@ -17,5 +17,13 @@ ALTER TABLE `antprove`
   CHANGE `aCuenta` `importeAnticipo` DECIMAL(12,2) DEFAULT 0.00 NULL;
 
 
+CREATE TABLE `facprove_antproves`(  
+  `facproveAntproveId` INT(11) NOT NULL AUTO_INCREMENT,
+  `facproveId` INT,
+  `antproveId` INT(11),
+  PRIMARY KEY (`facproveAntproveId`),
+  CONSTRAINT `facAnt_facprove` FOREIGN KEY (`facproveId`) REFERENCES `facprove`(`facproveId`),
+  CONSTRAINT `facAnt_antprove` FOREIGN KEY (`antproveId`) REFERENCES `antprove`(`antproveId`)
+);
 
   
