@@ -90,5 +90,9 @@ CREATE TABLE `antclien` (
   CONSTRAINT `antclien_tipoproyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `partes`   
+  CHANGE `aCuentaProfesional` `aCuentaProfesional` DECIMAL(12,2) DEFAULT 0 NULL,
+  CHANGE `aCuentaCli` `aCuentaCli` DECIMAL(12,2) DEFAULT 0 NULL;
+
 
   

@@ -249,11 +249,11 @@ function initForm() {
     //Evento asociado al cambio de chkcompleto
     $('#chkCompleto').change(function () {
         if($('#chkCompleto').is(':checked')) {
-            $('#lineasanticipo').show();
-            $('#basesycuotas').show();
-            $('#retenciones').show();
-            $('#serviciadas').show();
-            $('#serv').show();
+            // $('#lineasanticipo').show();
+            // $('#basesycuotas').show();
+            // $('#retenciones').show();
+            // $('#serviciadas').show();
+            // $('#serv').show();
             $('#txtTotalConIva').prop('disabled', true);
         } else  {
             $('#lineasanticipo').hide();
@@ -278,6 +278,7 @@ function initForm() {
                 loadServiciadasAntprove(antproveId);
                 $('#btnAltaServiciada').click(reiniciaValores);
             }
+            $('#chkCompleto').prop("disabled", true);
         })
     } else {
         // caso alta
