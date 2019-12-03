@@ -1244,7 +1244,7 @@ function loadDataLineaDefecto(data) {
 
 function loadTablaFacturaLineas(data) {
     var dt = $('#dt_lineas').dataTable();
-    if (data !== null && data.length === 0) {
+    if (data !== null && data.length == 0) {
         data = null;
         numLineas = 0
     }
