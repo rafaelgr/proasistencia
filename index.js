@@ -78,6 +78,9 @@ var reparaciones_router = require('./lib/reparaciones/reparaciones_controller');
 //ANTICIPOS PROVEEDOR
 var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProveedores_controller');
 
+//ANTICIPOS CLIERNTES
+var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_controller');
+
 //SEERVICIOS
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
@@ -108,7 +111,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json(
     {
-        limit: '1000mb'
+        limit: '100mb'
     }
 ));
 
@@ -198,6 +201,9 @@ app.use('/api/reparaciones', reparaciones_router);
 
 //ANTICIPOS PROVEEDOR
 app.use('/api/anticiposProveedores/', anticipos_proveedores);
+
+//ANTICIPOS CLIENTES
+app.use('/api/anticiposClientes/', anticipos_clientes)
 
 
 //servicios
