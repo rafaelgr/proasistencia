@@ -248,12 +248,12 @@ function initForm() {
 
     //Evento asociado al cambio de chkcompleto
     $('#chkCompleto').change(function () {
-        if($('#chkCompleto').is(':checked')) {
-            // $('#lineasanticipo').show();
-            // $('#basesycuotas').show();
-            // $('#retenciones').show();
-            // $('#serviciadas').show();
-            // $('#serv').show();
+        if($('#chkCompleto').is(':checked') && cmd != "") {
+            $('#lineasanticipo').show();
+            $('#basesycuotas').show();
+            $('#retenciones').show();
+            $('#serviciadas').show();
+            $('#serv').show();
             $('#txtTotalConIva').prop('disabled', true);
         } else  {
             $('#lineasanticipo').hide();
@@ -286,6 +286,7 @@ function initForm() {
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
         vm.importeRetencion(0);
+        vm.total('0');
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
         vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
@@ -530,7 +531,7 @@ function loadData(data) {
         mostrarMensajeAnticipoGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva") {
+    if (cmd == "nueva" && !$('chkCompleto').prop('checked', false)) {
         mostrarMensajeAnticipoNueva();
     }
     if(data.noContabilizar == 1){
@@ -674,8 +675,9 @@ var generarAnticipoDb = function () {
     }
     //
     if($('#chkCompleto').prop("checked")) {
+        if(antproveId != 0) totConIva: numeroDbf(vm.totalConIva());
         vm.completo(true);
-        totConIva: numeroDbf(vm.totalConIva());
+        
     } else {
         vm.completo(false);
         totConIva = vm.totalConIva();
@@ -838,10 +840,10 @@ function cambioEmpresa(empresaId) {
                 if(err) return;
                 if(result) {
                     vm.ref(result.ref);
-                    vm.numeroRef(result.numero);
-                    if(facproveId > 0 && vm.nombreFacprovePdf()) {
+                    //vm.numeroRef(result.numero);
+                    /*if(facproveId > 0 && vm.nombreFacprovePdf()) {
                         vm.nombreFacprovePdf(result.ref+'.pdf');
-                    }
+                    }*/
                 }
             });
         }
