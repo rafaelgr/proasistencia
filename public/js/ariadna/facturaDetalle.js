@@ -163,8 +163,8 @@ function admData() {
     self.tipoContratoId = ko.observable();
     self.departamento = ko.observable();
     self.departamentoId = ko.observable()
-    self.aCuenta = ko.observable();
-    self.totalSinAcuenta = ko.observable();
+    self.importeAnticipo = ko.observable();
+    self.restoPagar = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -183,6 +183,7 @@ function admData() {
     self.total = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
+    self.conceptoAnticipo = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -293,7 +294,8 @@ function loadData(data, desdeLinea) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
-    vm.aCuenta(data.aCuenta);
+    vm.importeAnticipo(data.importeAnticipo);
+    vm.conceptoAnticipo(data.conceptoAnticipo);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -406,7 +408,7 @@ var aceptarFactura = function () {
     if (!vm.total()) {
         vm.total('0');
         vm.totalConIva('0');
-        vm.totalSinAcuenta('0');
+        vm.restoPagar('0');
     }
     var data = generarFacturaDb();
     // caso alta
@@ -462,7 +464,7 @@ var generarFacturaDb = function () {
             "receptorProvincia": vm.receptorProvincia(),
             "total": numeroDbf(vm.total()),
             "totalConIva": numeroDbf(vm.totalConIva()),
-            "totalSinAcuenta": numeroDbf(vm.totalSinAcuenta()),
+            "restoPagar": numeroDbf(vm.restoPagar()),
             "formaPagoId": vm.sformaPagoId(),
             "observaciones": vm.observaciones(),
             "coste": vm.coste(),
@@ -477,7 +479,8 @@ var generarFacturaDb = function () {
             "devuelta": vm.devuelta(),
             "enviadaCorreo": vm.enviadaCorreo(),
             "departamentoId": vm.departamentoId(),
-            "observacionesPago": vm.observacionesPago()
+            "observacionesPago": vm.observacionesPago(),
+            "conceptoAnticipo": vm.conceptoAnticipo(),
         }
     };
     return data;
@@ -1231,9 +1234,9 @@ function loadBasesFactura(facturaId) {
         vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
     
-        var acuenta = parseFloat(vm.aCuenta());
+        var acuenta = parseFloat(vm.importeAnticipo());
         var totSinAcuenta =  t2-acuenta
-        vm.totalSinAcuenta(numeral(totSinAcuenta).format('0,0.00'));
+        vm.restoPagar(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
@@ -1393,8 +1396,8 @@ var cambioPorcentajeRetencion = function () {
         vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-        var totalSinAcuenta = vm.totalConIva()-vm.aCuenta();
-        vm.totalSinAcuenta(numeral(totalSinAcuenta).format('0,0.00'));
+        var restoPagar = vm.totalConIva()-vm.importeAnticipo();
+        vm.restoPagar(numeral(restoPagar).format('0,0.00'));
     }
 }
 

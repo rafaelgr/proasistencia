@@ -197,11 +197,10 @@ function initTablaAntcliens() {
         }, {
             data: "antClienId",
             render: function (data, type, row) {
-                console.log(type +" "+ row);
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntclien(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
                 return html;
             }
         }]
@@ -266,67 +265,52 @@ function crearAntclien() {
 }
 
 function deleteAntclien(id, noCalculadora) {
-    // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/anticiposClientes/" + id;
-    var mens = "¿Qué desea hacer con este registro?";
-    mens += "<ul>"
-    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
-    mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo. ¡¡ Atención !! Puede dejar huecos en los números de anticipo de la serie</li>";
-    mens += "</ul>"
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Cancelar][Descontabilizar anticipo][Borrar anticipo]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Borrar anticipo") {
-            mens = "<ul>"
-            mens += "<li><strong>¡¡ Atención !! Se borrá tambien la liquidación asociada a la anticipo</strong></li>";
-            mens += "<li>¿Desea continuar?</li>";
-            mens += "</ul>"
+    var mens;
+    $.ajax({//buscamos la factura asociada para extraer su facproveId
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposClientes/factura/asociada/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (data, status) {
+            if(data.length > 0) {
+                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
+            } else {
+                 mens = "¿Realmente desea borrar este registro?";
+            }
+            // mensaje de confirmación
+    
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
-                buttons: '[Cancelar][Borrar]'
-            },function (ButtonPressed2) {
-                if (ButtonPressed2 === "Borrar") {
-                    var data = { 
-                        antclien: {
-                            antClienId: id,
-                            noCalculadora: noCalculadora 
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    $.ajax({
+                        type: "DELETE",
+                        url: myconfig.apiUrl + "/api/anticiposClientes/" + id,
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: null,
+                        success: function (data, status) {
+                            var fn = buscarAntcliens()
+                            fn();
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
                         }
-                    };
-                    if(noCalculadora == 1) {
-                        url =  myconfig.apiUrl + "/api/anticiposClientes/parte/relacionado/" + id;
-                    }
-                    llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/desmarcar-prefactura/" + id, null, function (err) {
-                        if (err) return;
-                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-antClien/" + id, data,function (err) {
-                            if (err) return;
-                            llamadaAjax("DELETE", url, data, function (err) {
-                                if (err) return;
-                                mostrarMensajeAntclienBorrada();
-                                buscarAntcliens()();
-                            });
-                        });
                     });
+                    
                 }
-                if (ButtonPressed2 === "Cancelar") {
+                if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
                 }
             });
-            
-        }
-        if (ButtonPressed === "Descontabilizar anticipo") {
-            var data = { antClienId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/descontabilizar/" + id, null, function (err) {
-                if (err) return;
-                $('#chkTodos').prop('checked',false);
-                mostrarMensajeAntclienDescontabilizada();
-                buscarAntcliens()();
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
         }
     });
 }
