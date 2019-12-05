@@ -74,8 +74,6 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
-
-    $("#cmbSeries").select2(select2Spanish());
     
     antClienId = gup('AntClienId');
     cmd = gup("cmd");
@@ -99,9 +97,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.antClienId = ko.observable();
-    self.ano = ko.observable();
     self.numero = ko.observable();
-    self.serie = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
@@ -151,12 +147,6 @@ function admData() {
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
     //
-    self.serieId = ko.observable();
-    self.sserieId = ko.observable();
-    //
-    self.posiblesSeries = ko.observableArray([]);
-    self.elegidasSeries = ko.observableArray([]);
-    //
     self.observaciones = ko.observable();
 
     // Nuevo Total de coste para la antClien
@@ -168,11 +158,9 @@ function admData() {
     self.tipoClienteId = ko.observable();
 }
 
-function loadData(data, desdeLinea) {
+function loadData(data) {
     vm.antClienId(data.antClienId);
-    vm.ano(data.ano);
     vm.numero(data.numero);
-    vm.serie(data.serie);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
@@ -205,15 +193,7 @@ function loadData(data, desdeLinea) {
     vm.periodo(data.periodo);
     
     //
-    document.title = "Anticipo: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
-
-    if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        if(data.departamentoId !=7) {
-            obtenerParametrosCombo(false);
-        }else {
-            obtenerParametrosCombo(true);
-        }
-    }
+    document.title = "Anticipo: " + vm.numero();
 }
 
 
@@ -279,9 +259,6 @@ var aceptarAntClien = function () {
     var returnUrl = "AnticipoClienteDetalle.html?cmd=nueva&AntClienId=";
     // caso modificación
     if (antClienId != 0) {
-        if(vm.serie() == vm.sserieId()) {// si es igual no se a cambiado la serie u no hay que actualizarla
-            data.antClien.serie = null;
-        }
         verb = "PUT";
         url = myconfig.apiUrl + "/api/anticiposClientes/" + antClienId;
         returnUrl = "AnticipoClienteGeneral.html?AntClienId=";
@@ -295,18 +272,10 @@ var aceptarAntClien = function () {
 }
 
 var generarAntClienDb = function () {
-    var serie;
-    if(vm.sserieId()) {
-        serie = vm.sserieId();
-    }else {
-        serie =  vm.serie()
-    }
-    var data = {
+     var data = {
         antClien: {
             "antClienId": vm.antClienId(),
-            "ano": vm.ano(),
             "numero": vm.numero(),
-            "serie": serie,
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.sclienteId(),
@@ -554,91 +523,7 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         if (err) return;
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
-        obtenerParametrosCombo(false)
     });
 }
 
-function obtenerParametrosCombo(noContrato) {
-    //if(!noContrato) return;
-    var comboSeries = [];
-    var obj = {}
-    var  serie;
-    if(!noContrato) {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
-            if(err) return;
-            if(data) {
-                vm.tipoContratoId(data.tipoContratoId);
-                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
-                    if(err) return;
-                    if(data) {//componemos el objeto con las series para cargar el combo
-                        obj = {
-                            nombre: data.seriePre + " // PreantClien",
-                            serieId: data.seriePre
-                        }
-                        comboSeries.push(obj);
-                        if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
-                            obj = {
-                                nombre: data.serieFacS + " // Contrato asociado",
-                                serieId: data.serieFacS
-                            }
-                            serie = data.serieFacS
-                        } else {
-                            obj = {
-                                nombre: data.serieFac+ " // Contrato asociado",
-                                serieId: data.serieFac
-                            }
-                            serie = data.serieFac
-                        }
-                        comboSeries.push(obj);
-    
-                        obj = {
-                            nombre: data.serieFacR + " // Rectificativa",
-                            serieId: data.serieFacR
-                        }
-                        
-                        comboSeries.push(obj);
-        
-                        cargarSeries(comboSeries, serie)
-                    }
-                });
-            }
-        });
-    } else {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
-            if(err) return;
-            if(data) {//componemos el objeto con las series para cargar el combo
-                
-               
-                    obj = {
-                        nombre: data.serieFacRep + " // Serie Reparaciones",
-                        serieId: data.serieFacRep
-                    }
-                    comboSeries.push(obj);
-    
-                obj = {
-                    nombre: data.serieFacR + " // Serie Rectificativa",
-                    serieId: data.serieFacR
-                }
-                
-                comboSeries.push(obj);
-
-                serie = data.serieFacRep
-
-                cargarSeries(comboSeries, serie);
-            }
-        });
-    }
-}
-
-
-
-var cargarSeries = function (data,serie) {
-    var contratos = data;
-    vm.posiblesSeries(contratos);
-    if(vm.serie()) {
-        $("#cmbSeries").val([vm.serie()]).trigger('change');
-    } else {
-        $("#cmbSeries").val([serie]).trigger('change');
-    }
-}
 
