@@ -19,3 +19,25 @@ ALTER TABLE `facturas`
 
   ALTER TABLE `facturas`   
   ADD COLUMN `conceptoAnticipo` VARCHAR(255) NULL AFTER `departamentoId`;
+
+  ALTER TABLE `antprove`   
+  DROP COLUMN `fecha_recepcion`;
+
+  ALTER TABLE `antprove`   
+  DROP COLUMN `ref`;
+
+ALTER TABLE `antprove`   
+  DROP COLUMN `numero`, 
+  DROP COLUMN `tipoProyectoId`, 
+  DROP INDEX `pf_tipoProyecto22a`,
+  DROP FOREIGN KEY `RX_tipoProyecto22a`;
+
+  ALTER TABLE `antprove`   
+  DROP COLUMN `ano`, 
+  DROP COLUMN `serie`;
+
+ALTER TABLE `antprove`   
+  DROP COLUMN `nombreFacprovePdf`;
+
+
+

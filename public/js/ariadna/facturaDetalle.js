@@ -15,6 +15,7 @@ var lineaEnEdicion = false;
 var dataFacturasLineas;
 var dataBases;
 var dataCobros;
+var dataAnticipos;
 var usuario;
 var usaCalculadora;
 
@@ -118,6 +119,7 @@ function initForm() {
     initTablaFacturasLineas();
     initTablaBases();
     initTablaCobros();
+    initTablaAnticipos();
 
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
@@ -1545,4 +1547,93 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+// FUNCIONES RELACIONADAS CON LOS ANTICIPOS
+
+function initTablaAnticipos() {
+    tablaAnticipos = $('#dt_anticipos').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAnticipos,
+        columns: [{
+            data: "antClienId",
+            render: function (data, type, row) {
+                var html = '<label class="input">';
+                html += sprintf('<input id="radio%s" type="radio"  name="antGroup" value="%s">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
+                return html;
+            }
+        }, {
+            data: "referencia"
+        },{
+            data: "numero"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "totalConIva"
+        },  {
+            data: "vFPago"
+        }]
+    });
+}
+
+function cargaTablaAnticipos(){
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.facturaId(), null, function (err, data2) {
+        if (err) return;
+        var result = [];
+        if(data2) {
+            if(data2.length > 0) {
+                data2.forEach(function (f) {
+                    if(!f.vinculada) {
+                        result.push(f);
+                    }
+                })
+            }
+            if(result.length > 0) {
+                $("#modalAnticipo").modal({show: true});
+                loadTablaAnticipos(result);
+            }
+        }
+    })
+}
+
+function loadTablaAnticipos(data) {
+    var dt = $('#dt_anticipos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
 

@@ -2338,8 +2338,6 @@ function initTablaAnticipos() {
                 return html;
             }
         }, {
-            data: "ref"
-        },{
             data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"

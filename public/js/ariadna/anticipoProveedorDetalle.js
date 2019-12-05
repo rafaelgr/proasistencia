@@ -46,20 +46,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    //
-    $.validator.addMethod("greaterThan",
-        function (value, element, params) {
-            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
-            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-            if (!/Invalid|NaN/.test(new Date(fv))) {
-                return new Date(fv) >= new Date(fp);
-            } else {
-                // esto es debido a que permitimos que la segunda fecha nula
-                return true;
-            }
-        }, 'La fecha de recpción debe ser mayor que la fecha de la factura.');
-   
-
+    
     initTablaServiciadas();
 
     vm = new admData();
@@ -289,7 +276,7 @@ function initForm() {
         vm.total('0');
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
-        vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
+        vm.fecha(spanishDate(new Date()));//fecha  ofertada
         $("#lineasanticipo").hide();
         $("#basesycuotas").hide();
         $('#btnAltaServiciada').hide();
@@ -336,7 +323,6 @@ function contratosCerrados(id){
 function admData() {
     var self = this;
     self.antproveId = ko.observable();
-    self.ref = ko.observable();    
     self.numero = ko.observable();
     self.fecha = ko.observable();
     self.fechaRecepcion = ko.observable();
@@ -479,10 +465,8 @@ function admData() {
 
 function loadData(data) {
     vm.antproveId(data.antproveId);
-    vm.ref(data.ref);
     vm.numero(data.numeroAnticipoProveedor);
     vm.fecha(spanishDate(data.fecha));
-    vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
@@ -579,9 +563,7 @@ function datosOK() {
             txtFecha: {
                 required: true
             },
-            txtFechaRecepcion: {
-                greaterThan: "#txtFecha"
-            },
+           
             cmbFormasPago: {
                 required: true
             },
@@ -688,7 +670,6 @@ var generarAnticipoDb = function () {
             "antproveId": vm.antproveId(),
             "numeroAnticipoProveedor": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
-            "fecha_recepcion": spanishDbDate(vm.fechaRecepcion()),
             "empresaId": vm.sempresaId(),
             "empresaId2": vm.sempresaServiciadaId(),
             "proveedorId": vm.sproveedorId(),
@@ -715,7 +696,6 @@ var generarAnticipoDb = function () {
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
-            "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.sdepartamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
@@ -831,21 +811,11 @@ function cambioEmpresa(empresaId) {
 
             var data2 = {
                 antprove: {
-                    fecha_recepcion: spanishDbDate(vm.fechaRecepcion()),
+                    fecha: spanishDbDate(vm.fecha()),
                     empresaId: data.empresaId
     
                 }
             }
-            llamadaAjax("POST", "/api/anticiposProveedores/nueva/ref/cambio/empresa", data2, function (err, result) {
-                if(err) return;
-                if(result) {
-                    vm.ref(result.ref);
-                    //vm.numeroRef(result.numero);
-                    /*if(facproveId > 0 && vm.nombreFacprovePdf()) {
-                        vm.nombreFacprovePdf(result.ref+'.pdf');
-                    }*/
-                }
-            });
         }
     });
 }
