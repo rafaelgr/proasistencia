@@ -537,6 +537,9 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
+            cmbTiposIva: {
+                required: true
+            },
             txtCodigo: {
                 required: true,
                 number: true
@@ -575,6 +578,9 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
+            },
+            cmbTiposIva: {
+                required: "Debe elegir un tipo de iva"
             },
             txtCodigo: {
                 required: "Debe introducir un código para contabilidad",
@@ -878,16 +884,16 @@ function loadTiposVia(id) {
 function loadTiposIva(id) {
     llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        var tiposIva = data;
+        [{ formaPagoId: 0, nombre: "" }]
+        var tiposIva = [{ tipoIvaId: null, nombre: "" }].concat(data);
         vm.posiblesTiposIva(tiposIva);
         if (id) {
             $("#cmbTiposIva").val([id]).trigger('change');
         } else {
-            $("#cmbTiposIva").val([3]).trigger('change');
+            $("#cmbTiposIva").val([null]).trigger('change');
         }
     });
 }
-
 
 function loadTiposVia2(id) {
     $.ajax({
