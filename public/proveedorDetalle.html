@@ -767,8 +767,14 @@
                                                                                                                         <select style="width:100%" id="cmbTiposRetencion" name="cmbTiposRetencion" data-bind="options: posiblesTiposRetencion, optionsText: 'descripcion', optionsValue: 'codigoRetencion', value: scodigoRetencion, valueAllowUnset: true, selectedOptions: elegidosCodigosRetencion, selected2:{}"></select><i></i>
                                                                                                                     </label>
                                                                                                                 </section>
+                                                                                                                <section class="col col-md-3">
+                                                                                                                    <label class="label">Tipo Iva</label>
+                                                                                                                    <label style="width:100%;">
+                                                                                                                        <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
+                                                                                                                    </label>
+                                                                                                                </section>
                                                                                                             
-                                                                                                                <section class="col col-md-4">
+                                                                                                                <section class="col col-md-3">
                                                                                                                     <label class="label">Departamento</label>
                                                                                                                     <label style="width:100%;">
                                                                                                                         <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" multiple="multiple" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>

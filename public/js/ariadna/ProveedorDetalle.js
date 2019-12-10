@@ -47,6 +47,8 @@ function initForm() {
     });
 
     //carga de combos
+    $("#cmbTiposIva").select2(select2Spanish());
+    loadTiposIva();
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
     $("#cmbFormasPago").select2(select2Spanish());
@@ -83,6 +85,8 @@ function initForm() {
     $("#txtCodigo").blur(function () {
         compruebaCodigoProveedor();
     });
+    $("#cmbTiposVia").select2(select2Spanish());
+    loadTiposVia();
 
     initTablaFacturas();
 
@@ -324,6 +328,12 @@ function admData() {
     //
     self.posiblesTiposRetencion = ko.observableArray([]);
     self.elegidosCodigosRetencion = ko.observableArray([]);
+    //COMBO TIPOS IVA
+    self.tipoIvaId = ko.observable();
+    self.stipoIvaId = ko.observable();
+    //
+    self.posiblesTiposIva = ko.observableArray([]);
+    self.elegidosTiposIva = ko.observableArray([]);
 
     //combo departamentos
     //
@@ -377,6 +387,7 @@ function loadData(data) {
     }
 
     loadTiposVia(data.tipoViaId);
+    loadTiposIva(data.tipoIvaId)
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
     loadTiposProfesional(data.tipoProfesionalId);
@@ -403,6 +414,9 @@ function datosOK() {
                 email: true
             },
             cmbFormasPago: {
+                required: true
+            },
+            cmbTiposIva: {
                 required: true
             },
             cmbTiposProveedor: {
@@ -438,6 +452,9 @@ function datosOK() {
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
+            },
+            cmbTiposIva: {
+                required: "Debe elegir un tipo de iva"
             },
             cmbTiposProveedor: {
                 required: "Debe elegir un tipo de proveedor"
@@ -511,7 +528,7 @@ function aceptar() {
                 "IBAN": vm.iban(),
                 "codigoProfesional": vm.codigoProfesional(),
                 "fianza": numeroDbf(vm.fianza()),
-               
+                "tipoIvaId": vm.stipoIvaId(),
                 "fianzaAcumulada": numeroDbf(vm.fianzaAcumulada()),
                 "retencionFianza" :numeroDbf(vm.retencionFianza()),
                 "revisionFianza": spanishDbDate(vm.revisionFianza()),
@@ -590,6 +607,21 @@ function loadTiposVia(id) {
         error: function (err) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
+function loadTiposIva(id) {
+    llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        [{ formaPagoId: null, nombre: "" }]
+        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposIva(tiposIva);
+        if (id) {
+            $("#cmbTiposIva").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([null]).trigger('change');
         }
     });
 }
