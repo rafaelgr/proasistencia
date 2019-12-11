@@ -39,5 +39,19 @@ ALTER TABLE `antprove`
 ALTER TABLE `antprove`   
   DROP COLUMN `nombreFacprovePdf`;
 
+  ALTER TABLE `antclien`   
+  DROP COLUMN `serie`, 
+  DROP COLUMN `tipoProyectoId`, 
+  DROP COLUMN `ref`, 
+  DROP COLUMN `fecha_recepcion`, 
+  DROP INDEX `pf_tipoProyecto22a`,
+  DROP FOREIGN KEY `antclien_tipoproyectoFK`;
+
+  ALTER TABLE `antclien`   
+  DROP COLUMN `ano`, 
+  DROP COLUMN `numero`;
+
+
+
 
 

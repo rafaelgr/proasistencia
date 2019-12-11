@@ -97,7 +97,7 @@ function initForm() {
 function admData() {
     var self = this;
     self.antClienId = ko.observable();
-    self.numero = ko.observable();
+    self.numeroAnticipoCliente = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
@@ -160,7 +160,7 @@ function admData() {
 
 function loadData(data) {
     vm.antClienId(data.antClienId);
-    vm.numero(data.numero);
+    vm.numeroAnticipoCliente(data.numeroAnticipoCliente);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
@@ -193,7 +193,7 @@ function loadData(data) {
     vm.periodo(data.periodo);
     
     //
-    document.title = "Anticipo: " + vm.numero();
+    document.title = "Anticipo: " + vm.numeroAnticipoCliente();
 }
 
 
@@ -275,7 +275,7 @@ var generarAntClienDb = function () {
      var data = {
         antClien: {
             "antClienId": vm.antClienId(),
-            "numero": vm.numero(),
+            "numeroAnticipoCliente": vm.numeroAnticipoCliente(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
             "clienteId": vm.sclienteId(),
@@ -305,7 +305,7 @@ var generarAntClienDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "AntClienGeneral.html";
+        var url = "AnticipoClienteGeneral.html";
         window.open(url, '_self');
     }
     return mf;
