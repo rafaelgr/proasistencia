@@ -84,7 +84,7 @@ CREATE TABLE `antclien` (
   KEY `antprove_departamento` (`departamentoId`),
   CONSTRAINT `antclien_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos` (`departamentoId`),
   CONSTRAINT `antclien_contratosFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
-  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`clienteId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `antclien_formaspagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `antclien_clientesFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `antclien_tipoproyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)

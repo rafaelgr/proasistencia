@@ -256,12 +256,11 @@ var aceptarAntClien = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/anticiposClientes";
-    var returnUrl = "AnticipoClienteDetalle.html?cmd=nueva&AntClienId=";
+    var returnUrl = "AnticipoClienteGeneral.html?AntClienId=";
     // caso modificación
     if (antClienId != 0) {
         verb = "PUT";
         url = myconfig.apiUrl + "/api/anticiposClientes/" + antClienId;
-        returnUrl = "AnticipoClienteGeneral.html?AntClienId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
