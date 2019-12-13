@@ -51,7 +51,9 @@ ALTER TABLE `antprove`
   DROP COLUMN `ano`, 
   DROP COLUMN `numero`;
 
-
+UPDATE facturas SET restoPagar = totalConIva;
+UPDATE facprove SET restoPagar = totalConIva WHERE antproveId IS NULL;
+UPDATE facprove SET restoPagar = 0, importeAnticipo = totalConIva WHERE NOT antproveId IS NULL;
 
 
 

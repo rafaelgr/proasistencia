@@ -320,6 +320,10 @@
                                     <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                                 <li>
+                                    <a href="AnticipoClienteGeneral.html"><i class="fa fa-money"></i> Anticipos 
+                                        de clientes</a>
+                                </li>
+                                <li>
                                     <a href="FacturaProveedorGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas
                                         Proveedores</a>
                                 </li>
@@ -543,7 +547,7 @@
                                                                     <section class="col col-md-2">
                                                                         <label class="label bloqueado">Total IVA</label>
                                                                         <label class="input">
-                                                                            <input id="txtTotal" name="txtTotal" type="text" data-bind="value: totalCuota" disabled/>
+                                                                            <input id="txtTotalCuota" name="txtTotalCuaota" type="text" data-bind="value: totalCuota" disabled/>
                                                                         </label>
                                                                     </section>
                                                                 </div>
@@ -1483,7 +1487,7 @@
                     </div>
                     <form id= "frmAnt" class="smart-form">
                         <footer>
-                            <button id="btnAceptarServiciada" class="btn btn-primary"  onclick="vinculaAnticipo()">
+                            <button id="btnVinculaAnticipo" class="btn btn-primary"  onclick="vinculaAnticipo()">
                                 Aceptar
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">
