@@ -40,16 +40,12 @@ ALTER TABLE `antprove`
   DROP COLUMN `nombreFacprovePdf`;
 
   ALTER TABLE `antclien`   
-  DROP COLUMN `serie`, 
   DROP COLUMN `tipoProyectoId`, 
   DROP COLUMN `ref`, 
   DROP COLUMN `fecha_recepcion`, 
   DROP INDEX `pf_tipoProyecto22a`,
   DROP FOREIGN KEY `antclien_tipoproyectoFK`;
 
-  ALTER TABLE `antclien`   
-  DROP COLUMN `ano`, 
-  DROP COLUMN `numero`;
 
   ALTER TABLE `antclien`   
   DROP COLUMN `noContabilizar`;
@@ -58,6 +54,10 @@ ALTER TABLE `antprove`
 UPDATE facturas SET restoPagar = totalConIva;
 UPDATE facprove SET restoPagar = totalConIva WHERE antproveId IS NULL;
 UPDATE facprove SET restoPagar = 0, importeAnticipo = totalConIva WHERE NOT antproveId IS NULL;
+
+ALTER TABLE `antclien`   
+  ADD  UNIQUE INDEX `serie_ano_numeroUNIQUE` (`ano`, `numero`, `serie`);
+
 
 
 

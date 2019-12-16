@@ -17,6 +17,7 @@ var dataBases;
 var dataCobros;
 var usuario;
 var usaCalculadora;
+var antSerie = null;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -104,7 +105,10 @@ function admData() {
     self.contratoId = ko.observable();
     self.tipoContratoId = ko.observable();
     self.departamento = ko.observable();
-    self.departamentoId = ko.observable()
+    self.departamentoId = ko.observable();
+    self.serie = ko.observable();
+    self.ano = ko.observable();
+    self.numero = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -166,6 +170,10 @@ function loadData(data) {
     vm.clienteId(data.clienteId);
     vm.contratoId(data.contratoId);
     vm.departamentoId(data.departamentoId);
+    vm.serie(data.serie);
+    vm.ano(data.ano);
+    vm.numero(data.numero);
+    antSerie = vm.serie();
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -261,12 +269,19 @@ var aceptarAntClien = function () {
     if (antClienId != 0) {
         verb = "PUT";
         url = myconfig.apiUrl + "/api/anticiposClientes/" + antClienId;
+        var serie = vm.serie();
+        if(antSerie == serie) {
+            data.antClien.serie = null;
+        }
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.antClienId();
         window.open(returnUrl, '_self');
+        if(!antSerie) {
+            vm.serie(null);
+        }
     });
 }
 
@@ -297,6 +312,7 @@ var generarAntClienDb = function () {
             "periodo": vm.periodo(),
             "departamentoId": vm.departamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
+            "serie": vm.serie()
         }
     };
     return data;
@@ -371,6 +387,7 @@ function cambioEmpresa(empresaId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         loadContratos();
+        obtenerSerie(empresaId);
     });
 }
 
@@ -524,5 +541,15 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         vm.empresaId(data.empresaId);
     });
 }
+
+function obtenerSerie(empresaId) {
+    if(!empresaId) return;
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + empresaId, null, function (err, data) {
+            if(err) return;
+            if(vm.serie) antSerie = vm.serie();
+            vm.serie(data.seriePre);
+        });
+}
+
 
 
