@@ -19,6 +19,7 @@ var dataAnticipos;
 var usuario;
 var usaCalculadora;
 var anticipos;
+var numLineas = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -55,7 +56,7 @@ function initForm() {
         return false;
     });
 
-    $("#frmBuscar").submit(function () {
+    $("#frmAnt").submit(function () {
         return false;
     });
     $("#frmLinea").submit(function () {
@@ -344,6 +345,7 @@ function loadData(data, desdeLinea) {
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
         cmd == ""
+        if(numLineas > 0) cargaTablaAnticipos();
     }
     vm.enviadaCorreo(data.enviadaCorreo);
     //
@@ -976,7 +978,13 @@ function loadTablaFacturaLineas(data) {
         data = null;
     }
     dt.fnClearTable();
-    if (data != null) dt.fnAddData(data);
+    if (data != null) {
+        numLineas = data.length;
+        dt.fnAddData(data);
+        if (cmd == "nueva" && numLineas > 0) {
+            cargaTablaAnticipos();
+        }
+    }
     dt.fnDraw();
 }
 
@@ -1661,7 +1669,13 @@ function vinculaAnticipo() {
             }
         }); 
         if(id.length == 0) {
-            mensError('No se ha elegido ningún anticipo');
+            //SI SIMPLEMETE SE SE HAN DEMARCADO TODOS ES QUER NO HAY NINGÚN ANTICIPOA SOCIADO Y SOLO SE BORRA LO QUE PUDIESE HABER ASOCIADO
+            var tot = numeroDbf(vm.totalConIva());
+            var result = tot - impAnticipo
+            vm.restoPagar(numeral(result).format('0,0.00'));
+            vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+            vm.conceptoAnticipo('');
+            $('#modalAnticipo').modal('hide');
             return;
         }
        
