@@ -107,6 +107,10 @@ function initForm() {
         return false;
     });
 
+    $('#frmVinculaAnticipos').submit(function () {
+        return false;
+    });
+
     //evento de foco en el modal
     $('#modalLinea').on('shown.bs.modal', function () {
         $('#txtDescripcion').focus();
@@ -204,6 +208,7 @@ function initForm() {
     initTablaFacturasLineas();
     initTablaBases();
     initTablaRetenciones();
+    initTablaAnticiposAsociados();
     
 
     facproveId = gup('facproveId');
@@ -574,6 +579,8 @@ function loadData(data) {
         $('#btnDesVincularAnticipo').hide();
         $('#btnVincularAnticipo').show();
     }
+
+    cargaTablaAnticiposAsociados();
 }
 
 
@@ -2331,11 +2338,19 @@ function initTablaAnticipos() {
         columns: [{
             data: "antproveId",
             render: function (data, type, row) {
-                var html = '<label class="input">';
-                html += sprintf('<input id="radio%s" type="radio"  name="antGroup" value="%s">', data, data);
-                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
-                html += '</label>';
-                return html;
+                if(row.completo == 1) {
+                    var html = '<label class="input">';
+                    html += sprintf('<input id="radio%s" type="radio"  name="antGroup" value="%s">', data, data);
+                    //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                    html += '</label>';
+                    return html;
+                } else {
+                    var html = '<label class="input">';
+                    html += sprintf('<input id="chk%s" type="checkbox" name="anticipos" value="'+data+'">', data, data);
+                    //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                    html += '</label>';
+                    return html;
+                }
             }
         }, {
             data: "numeroAnticipoProveedor"
@@ -2368,7 +2383,7 @@ function loadTablaAnticipos(data) {
     dt.fnDraw();
 }
 
-function vinculaAnticipo() {
+function vinculaAnticipo(completo) {
     //si opcion = false se desvincula un anticipo de la factura
     var id = $('input:radio[name=antGroup]:checked').val();
     if(!id) {
@@ -2584,24 +2599,178 @@ function desvinculaAnticipo() {
     }
 }
 
-function cargaTablaAnticipos(){
-    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, data2) {
+function cargaTablaAnticipos(completo){
+    if(completo) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, data2) {
+            if (err) return;
+            var result = [];
+            if(data2) {
+                if(data2.length > 0) {
+                    data2.forEach(function (f) {
+                        if(f.facproveId == null) {
+                            result.push(f);
+                        }
+                    })
+                }
+                if(result.length > 0 && !vm.antproveId()) {
+                    $("#modalAnticipo").modal({show: true});
+                    loadTablaAnticipos(result);
+                }
+            }
+        })
+    } else {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
+            if (err) return;
+            var result = [];
+            if(data2) {
+                if(data2.length > 0) {
+                    data2.forEach(function (f) {
+                        if(f.facproveId == null) {
+                            result.push(f);
+                        }
+                    })
+                }
+                if(result.length > 0 && !vm.antproveId()) {
+                    $("#modalAnticipo").modal({show: true});
+                    loadTablaAnticipos(result);
+                }
+            }
+        })
+    }
+}
+
+
+//FUNCIONES RELACIONADAS CON LOS ANTICIPOS ASOCIADOS
+
+function initTablaAnticiposAsociados() {
+    tablaAnticipos = $('#dt_anticiposAsociados').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAnticipos,
+        columns: [{
+            data: "antproveId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "vNum"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "totalConIva"
+        },  {
+            data: "vFPago"
+        }, {
+            data: "antproveId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function cargaTablaAnticiposAsociados(){
+    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId(),null, function (err, data) {
         if (err) return;
-        var result = [];
-        if(data2) {
-            if(data2.length > 0) {
-                data2.forEach(function (f) {
-                    if(f.facproveId == null) {
-                        result.push(f);
-                    }
-                })
-            }
-            if(result.length > 0 && !vm.antproveId()) {
-                $("#modalAnticipo").modal({show: true});
-                loadTablaAnticipos(result);
-            }
-        }
+        loadTablaAnticiposAsociados(data);
     })
+}
+
+function loadTablaAnticiposAsociados(data) {
+    var dt = $('#dt_anticiposAsociados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    anticipos = data;
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function desvinculaAnticipo(anticipoId) {
+    var impAnticipo = 0
+    llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/" + anticipoId, null, function (err, data) {
+        if (err) return;
+        //recperamos los anticipos que queden asociados y recalculamos
+        llamadaAjax("GET", "/api/anticiposProveedores/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId(), null, function (err, anticipos) {
+            if (err) return;
+
+            //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
+            if(anticipos) { //si hay anticipos asociados
+                anticipos.forEach(function(a) {
+                    if(a.totalConIva > 0) {
+                        impAnticipo += a.totalConIva;
+                    }
+                });
+                if(impAnticipo > 0) {
+                    var tot = numeroDbf(vm.totalConIva());
+                    var result = tot - impAnticipo
+                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+                    vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
+                }
+            } else {//SI NO HAY ANTICIPOS ASOCIADOS
+                var tot = numeroDbf(vm.totalConIva());
+                    var result = tot - 0
+                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+                    vm.conceptoAnticipo('');
+            }
+            
+            //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
+            var data = {
+                factura: {
+                    "facturaId": vm.facturaId(),
+                    "empresaId": vm.empresaId(),
+                    "clienteId": vm.clienteId(),
+                    "fecha": spanishDbDate(vm.fecha()),
+                    "importeAnticipo": impAnticipo,
+                    "restoPagar": result,
+                    "conceptoAnticipo": vm.conceptoAnticipo()
+                }
+            };
+            llamadaAjax("PUT", "/api/facprove/" + vm.facproveId(), data, function (err, data) {
+                if (err) return;
+                loadTablaAnticiposAsociados(anticipos);//limpiamos la tabla
+            });
+        });
+    });
 }
 
 
