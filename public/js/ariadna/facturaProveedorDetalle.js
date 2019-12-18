@@ -1606,7 +1606,7 @@ function loadBasesFacprove(facproveId) {
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
-            var importeAnticipo = parseFloat(vm.importeAnticipo());
+            var importeAnticipo = numeroDbf(vm.importeAnticipo());
             var totSinImporteAnticipo = t2-importeAnticipo;
             vm.restoPagar(numeral(totSinImporteAnticipo).format('0,0.00'));
             
