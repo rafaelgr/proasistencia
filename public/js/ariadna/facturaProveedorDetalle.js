@@ -23,6 +23,7 @@ var dataServiciadas;
 var dataLineas;
 var idUsuario;
 var numLineas = 0;
+var comp;
 
 
 
@@ -520,7 +521,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    vm.importeAnticipo(data.importeAnticipo);
+    vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
     recalcularCostesImportesDesdeCoste();
     //
@@ -2383,7 +2384,19 @@ function loadTablaAnticipos(data) {
     dt.fnDraw();
 }
 
-function vinculaAnticipo(completo) {
+function vinculaAnticipo() {
+    if(vm.antproveId()) {
+        mensError('No se puede vincular, esta factura ya tiene un anticipo completo');
+        return;
+    }
+    if(comp) {
+        vinculaAnticipoCompleto();
+    } else {
+        vinculaAnticiposIncompletos()
+    }
+}
+
+function vinculaAnticipoCompleto() {
     //si opcion = false se desvincula un anticipo de la factura
     var id = $('input:radio[name=antGroup]:checked').val();
     if(!id) {
@@ -2504,7 +2517,73 @@ function vinculaAnticipo(completo) {
     });
 }
 
-function desvinculaAnticipo() {
+
+function vinculaAnticiposIncompletos() {
+    var impAnticipo = 0;
+    var selected;
+    var id = []
+    $('#dt_anticipos input[type=checkbox]').each(function(){
+        if (this.checked) {
+            selected = $(this).val();
+            id.push(selected);
+        }
+    }); 
+    if(id.length == 0) {
+        mensError("No se ha elegido ningún anticipo");
+        return;
+    }
+   
+        var datosArrayAnt = [];
+        id.forEach(function(f) {
+            
+            var  antProve = {
+                    antproveId: f,
+                    facproveId: vm.facproveId()
+                }
+        
+            datosArrayAnt.push(antProve);
+        })
+       
+        llamadaAjax("POST", "/api/anticiposProveedores/vincula/varios/", datosArrayAnt, function (err, data) {
+            if (err) return;
+            $('#modalAnticipo').modal('hide');
+            llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" +vm.facproveId(), null, function (err, anticipos) {
+                if (err) return;
+                //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
+            anticipos.forEach(function(a) {
+                impAnticipo += a.totalConIva;
+            });
+            if(impAnticipo > 0) {
+                var tot = numeroDbf(vm.totalConIva());
+                var result = tot - impAnticipo
+                vm.restoPagar(numeral(result).format('0,0.00'));
+                vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+                vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
+            }
+            //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
+            var data = {
+                facprove: {
+                    "facproveId": vm.facproveId(),
+                    "empresaId": vm.empresaId(),
+                    "proveedorId": vm.proveedorId(),
+                    "fecha": spanishDbDate(vm.fecha()),
+                    "importeAnticipo": impAnticipo,
+                    "restoPagar": result,
+                    "conceptoAnticipo": vm.conceptoAnticipo()
+                }
+            };
+            var datosArray = [];
+            datosArray.push(data)
+            llamadaAjax("PUT", "/api/facturasProveedores/" + vm.facproveId(), datosArray, function (err, data) {
+                if (err) return;
+                loadTablaAnticiposAsociados(anticipos);//CARGAMOS LA TABLA
+            });
+                
+            });
+        });
+}
+
+function desvinculaAnticipoCompleto() {
     if(vm.antproveId()) {
         var datosArrayAnt = [];
         var datosArrayFact = [];
@@ -2600,7 +2679,13 @@ function desvinculaAnticipo() {
 }
 
 function cargaTablaAnticipos(completo){
-    if(completo) {
+    comp = completo;
+    if(comp) {
+        var cantidad = numeroDbf(vm.importeAnticipo());
+        if(cantidad > 0) {
+            mensError('Ya existen anticipos vinculados');
+            return;
+        }
         llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, data2) {
             if (err) return;
             var result = [];
@@ -2615,11 +2700,13 @@ function cargaTablaAnticipos(completo){
                 if(result.length > 0 && !vm.antproveId()) {
                     $("#modalAnticipo").modal({show: true});
                     loadTablaAnticipos(result);
+                } else {
+                    loadTablaAnticipos(null);
                 }
             }
         })
     } else {
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + vm.facproveId(), null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {
@@ -2633,6 +2720,8 @@ function cargaTablaAnticipos(completo){
                 if(result.length > 0 && !vm.antproveId()) {
                     $("#modalAnticipo").modal({show: true});
                     loadTablaAnticipos(result);
+                } else {
+                    loadTablaAnticipos(null);
                 }
             }
         })
@@ -2679,7 +2768,7 @@ function initTablaAnticiposAsociados() {
                 return html;
             }
         }, {
-            data: "vNum"
+            data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"
         }, {
@@ -2696,7 +2785,7 @@ function initTablaAnticiposAsociados() {
         }, {
             data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -2706,7 +2795,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId(),null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/"+ vm.facproveId(),null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
@@ -2723,12 +2812,12 @@ function loadTablaAnticiposAsociados(data) {
     dt.fnDraw();
 }
 
-function desvinculaAnticipo(anticipoId) {
+function desvinculaAnticipoIncompleto(anticipoId) {
     var impAnticipo = 0
     llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
-        llamadaAjax("GET", "/api/anticiposProveedores/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId(), null, function (err, anticipos) {
+        llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" + vm.facproveId(), null, function (err, anticipos) {
             if (err) return;
 
             //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
@@ -2755,17 +2844,19 @@ function desvinculaAnticipo(anticipoId) {
             
             //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
             var data = {
-                factura: {
-                    "facturaId": vm.facturaId(),
+                facprove: {
+                    "facproveId": vm.facproveId(),
                     "empresaId": vm.empresaId(),
-                    "clienteId": vm.clienteId(),
+                    "proveedorId": vm.proveedorId(),
                     "fecha": spanishDbDate(vm.fecha()),
                     "importeAnticipo": impAnticipo,
                     "restoPagar": result,
                     "conceptoAnticipo": vm.conceptoAnticipo()
                 }
             };
-            llamadaAjax("PUT", "/api/facprove/" + vm.facproveId(), data, function (err, data) {
+            var datosArray = [];
+            datosArray.push(data)
+            llamadaAjax("PUT", "/api/facturasProveedores/" + vm.facproveId(), datosArray, function (err, data) {
                 if (err) return;
                 loadTablaAnticiposAsociados(anticipos);//limpiamos la tabla
             });
