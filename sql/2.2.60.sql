@@ -56,7 +56,7 @@ UPDATE facprove SET restoPagar = totalConIva WHERE antproveId IS NULL;
 UPDATE facprove SET restoPagar = 0, importeAnticipo = totalConIva WHERE NOT antproveId IS NULL;
 
 ALTER TABLE `antclien`   
-  ADD  UNIQUE INDEX `serie_ano_numeroUNIQUE` (`ano`, `numero`, `serie`);
+  ADD  UNIQUE INDEX `serie_ano_numeroUNIQUE` (`ano`, `numero`, `serie`, `empresaId`);
 
 
 
