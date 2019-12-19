@@ -138,6 +138,9 @@ function initForm() {
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
 
+    $('#txtPrecio').focus( function () {
+        $('#txtPrecio').val('');
+    })
 
     $("#cmbUnidades").select2(select2Spanish());
     loadUnidades();
@@ -265,7 +268,7 @@ function initForm() {
                 loadServiciadasAntprove(antproveId);
                 $('#btnAltaServiciada').click(reiniciaValores);
             }
-            $('#chkCompleto').prop("disabled", true);
+            //$('#chkCompleto').prop("disabled", true);
         })
     } else {
         // caso alta
@@ -573,6 +576,12 @@ function datosOK() {
             txtNumero: {
                 required: true,
                 rangelength: [1, 20]
+            },
+            txtTotalConIva: {
+                required: true
+            },
+            txtCoceptoAnticipo: {
+                required: true
             }
         },
         // Messages for form validation
@@ -598,6 +607,12 @@ function datosOK() {
             txtNumero: {
                 required: "Debe introducir un número de anticipo",
                 rangelength: "El rango de digitos debe estar entre 1 y 10"
+            },
+            txtTotalConIva: {
+                required: "Debe introducir una cantidad"
+            },
+            txtCoceptoAnticipo: {
+                required: "Debe introducir un concepto"
             }
         },
         // Do not change code below
@@ -998,9 +1013,6 @@ function datosOKLineas() {
                 number: true,
                 min: 0.00000000000001
             },
-            txtCantidad: {
-                required: true
-            },
             txtTotalLinea: {
                 required: true
             }
@@ -1021,9 +1033,6 @@ function datosOKLineas() {
             },
             txtDescripcion: {
                 required: 'Necesita una descripcion'
-            },
-            txtCantidad: {
-                required: 'Necesita una cantidad'
             },
             txtPrecio: {
                 required: 'Necesita un precio',

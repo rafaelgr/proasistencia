@@ -562,6 +562,25 @@ function loadData(data) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
+       
+        //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, result) {
+            if (err) return;
+            if(result) {
+                if(result.length > 0) {
+                    cargaTablaAnticipos(true);
+            }
+            }
+        });
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
+            if (err) return;
+            if(data2) {
+                if(data2.length > 0) {
+                    var mens = "Existen anticipos incompletos para este proveedor, puede vincularlos en la pestaña anticipos";
+                    mensNormal(mens);
+            }
+            }
+        });
     }
     //se carga el pdf de la factura si existe
     if(vm.nombreFacprovePdf()) {
@@ -2706,7 +2725,7 @@ function cargaTablaAnticipos(completo){
             }
         })
     } else {
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + vm.facproveId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {
@@ -2786,8 +2805,8 @@ function initTablaAnticiposAsociados() {
             data: "antproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+               //var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 /*+ " " + bt2 */+ "</div>";
                 return html;
             }
         }]

@@ -304,7 +304,7 @@ function loadData(data, desdeLinea) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
-    vm.importeAnticipo(data.importeAnticipo);
+    vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
     recalcularCostesImportesDesdeCoste();
     //
@@ -348,7 +348,15 @@ function loadData(data, desdeLinea) {
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
         cmd == ""
-        if(numLineas > 0) cargaTablaAnticipos();
+        //comprovamos si hay anticipos
+        llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
+            if (err) return;
+            if(data) {
+                if(data.length > 0) {
+                    mensNormal('Hay anticipos para este cliente de este contrato, puede vincularlos desde la pestaña anticipos');
+                }
+            }
+        });
     }
     vm.enviadaCorreo(data.enviadaCorreo);
     //
@@ -1253,7 +1261,7 @@ function loadBasesFactura(facturaId) {
         vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
     
-        var acuenta = parseFloat(vm.importeAnticipo());
+        var acuenta = numeroDbf(vm.importeAnticipo());
         var totSinAcuenta =  t2-acuenta
         vm.restoPagar(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
@@ -1679,15 +1687,13 @@ function vinculaAnticipo() {
             llamadaAjax("POST", "/api/anticiposClientes/vincula/varios/", datosArrayAnt, function (err, data) {
                 if (err) return;
                 $('#modalAnticipo').modal('hide');
-                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId(), null, function (err, anticipos) {
+                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" + facturaId, null, function (err, anticipos) {
                     if (err) return;
                     //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
                 anticipos.forEach(function(a) {
-                    id.forEach(function(d) {
-                        if(d == a.antClienId) {
-                            impAnticipo += a.totalConIva;
-                        }
-                    });
+                    if(a.totalConIva > 0) {
+                        impAnticipo += a.totalConIva;
+                    }
                 });
                 if(impAnticipo > 0) {
                     var tot = numeroDbf(vm.totalConIva());
@@ -1783,7 +1789,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" +facturaId, null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
@@ -1805,7 +1811,7 @@ function desvinculaAnticipo(anticipoId) {
     llamadaAjax("DELETE", "/api/anticiposClientes/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
-        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId(), null, function (err, anticipos) {
+        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" + facturaId, null, function (err, anticipos) {
             if (err) return;
 
             //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
