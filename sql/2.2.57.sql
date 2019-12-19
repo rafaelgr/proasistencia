@@ -29,7 +29,7 @@ CREATE TABLE `facprove_antproves`(
 DROP TABLE IF EXISTS `antclien`;
 
 CREATE TABLE `antclien` (
-  `antclienId` int(11) NOT NULL auto_increment,
+  `antClienId` int(11) NOT NULL auto_increment,
   `ano` int(11) default NULL,
   `numero` int(11) default NULL,
   `serie` varchar(255) default NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `antclien` (
   `facturaId` int(11) default NULL,
   `departamentoId` int(11) default NULL,
   `conceptoAnticipo` varchar(255) default NULL,
-  PRIMARY KEY  (`antclienId`),
+  PRIMARY KEY  (`antClienId`),
   UNIQUE KEY `antprove_numeroprova` (`numeroAnticipoCliente`,`clienteId`),
   KEY `pref_empresas22a` (`empresaId`),
   KEY `pref_proveedores22a` (`clienteId`),
@@ -84,7 +84,7 @@ CREATE TABLE `antclien` (
   KEY `antprove_departamento` (`departamentoId`),
   CONSTRAINT `antclien_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos` (`departamentoId`),
   CONSTRAINT `antclien_contratosFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
-  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`clienteId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `antclien_formaspagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `antclien_clientesFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
   CONSTRAINT `antclien_tipoproyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
