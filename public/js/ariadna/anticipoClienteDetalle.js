@@ -222,6 +222,12 @@ function datosOK() {
             },
             cmbContratos: {
                 required: true
+            },
+            txtNumeroAnticipoCliente: {
+                required: true
+            },
+            txtTotalConIva: {
+                required: true,
             }
         },
         // Messages for form validation
@@ -240,6 +246,12 @@ function datosOK() {
             },
             cmbContratos: {
                 required: "Debe elegir un contrato asociado"
+            },
+            txtNumeroAnticipoCliente: {
+                required: "Debe elegir un numero de anticipo"
+            },
+            txtTotalConIva: {
+                required: "debe de introducir una cantiad"
             }
         },
         // Do not change code below
@@ -387,7 +399,8 @@ function cambioEmpresa(empresaId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         loadContratos();
-        obtenerSerie(empresaId);
+        //obtenerSerie(empresaId);
+        vm.serie('ANT');
     });
 }
 

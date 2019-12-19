@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataAnticipos;
-var facproveId;
+var antClienId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -62,7 +62,7 @@ function initForm() {
 
     initTablaAnticipos();
     // comprobamos parámetros
-    facproveId = gup('AnticipoId');
+    antClienId = gup('AnticipoId');
 
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
@@ -121,7 +121,7 @@ function initTablaAnticipos() {
         },
         data: dataAnticipos,
         columns: [{
-            data: "antproveId",
+            data: "antClienId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -150,7 +150,7 @@ function initTablaAnticipos() {
         }, {
             data: "observaciones"
         }, {
-            data: "antproveId",
+            data: "antClienId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -194,7 +194,7 @@ function loadTablaAnticipos(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.antproveId;
+        var field = "#chk" + v.antClienId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
@@ -202,20 +202,20 @@ function loadTablaAnticipos(data) {
             var quantity = 0;
             var data = {
                 antprove: {
-                    antproveId: v.antproveId,
+                    antClienId: v.antClienId,
                     empresaId: v.empresaId,
-                    proveedorId: v.proveedorId,
+                    clienteId: v.clienteId,
                     fecha: moment(v.fecha).format('YYYY-MM-DD'),
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.antprove.sel = 1;
+                data.antClienId.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/anticiposClientes/%s', myconfig.apiUrl, v.antproveId);
+            var url = sprintf('%s/api/anticiposClientes/%s', myconfig.apiUrl, v.antClienId);
             var data2 = [];
             data2.push(data);
             $.ajax({
@@ -253,20 +253,20 @@ function buscarAnticipos() {
                         if(numIban.length == 0) {
                             datos = {
                                 nombre: f.emisorNombre,
-                                id: f.proveedorId
+                                id: f.clienteId
                             }
                             numIban.push(datos);
                             datos = {};
                         } else {// comprobamos que el cliente no exista ya en lista y si es así lo añadimos.
                             for(i = 0; i < numIban.length; i++) {
-                                if(numIban[i].id == f.proveedorId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
+                                if(numIban[i].id == f.clienteId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
                                     contador ++;
                                 }
                             };
                             if(contador == 0) {//si el objeto no está en la lista se añade
                                 datos = {
                                     nombre: f.emisorNombre,
-                                    id: f.proveedorId
+                                    id: f.clienteId
                                 }
                                 numIban.push(datos);
                             }
@@ -329,7 +329,7 @@ function deleteAnticipo(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facproveId: id
+                antClienId: id
             };
             $.ajax({
                 type: "DELETE",
@@ -388,7 +388,7 @@ function muestraMensNoIBAN() {
 function editAnticipo(id) {
     // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
-    var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
+    var url = "AnticipoClienteDetalle.html?AntClienId=" + id;
     window.open(url, '_new');
 }
 
@@ -396,12 +396,12 @@ function cargarAnticipos() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facproveId
+                id: antClienId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposClientes/" + facproveId,
+                url: myconfig.apiUrl + "/api/anticiposClientes/" + antClienId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
