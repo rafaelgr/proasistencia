@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataAntcliens;
-var antclienId;
+var antClienId;
 var usuario;
 
 
@@ -19,23 +19,49 @@ var breakpointDefinition = {
     phone: 480
 };
 
-
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
+    // de smart admin
+    pageSetUp();
+    getVersionFooter();
+    //
+    //
+    $('#btnBuscar').click(buscarAntcliens());
+    $('#btnAlta').click(crearAntclien());
+    $('#btnPrint').click(imprimirAntclien);
+    $('#frmBuscar').submit(function () {
+        return false
+    });
+    
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarAntcliens2All();
+        } else {
+            cargarAntcliens2();
+        }
+    })
+
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        cargarAntcliens()();
+    });
 
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+
     recuperaDepartamento(function(err, data) {
-        if(err) return;
         initTablaAntcliens();
         // comprobamos parámetros
-        antclienId = gup('AntclienId');
-        if (antclienId !== '') {
+        antClienId = gup('AntclienId');
+        if (antClienId !== '') {
 
             // Si nos pasan una prefafctura determinada esa es
             // la que mostramos en el grid
-            cargarAntcliens()(antclienId);
+            cargarAntcliens()(antClienId);
     
         } else {
     
@@ -44,44 +70,11 @@ function initForm() {
             // criterio puede cambiar y habrá que adaptarlo.
             cargarAntcliens()();
         }
-
     });
-
-     //Evento asociado al cambio de departamento
-     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        cambioDepartamento(this.value);
-        vm.sdepartamentoId(this.value);
-        cargarAntcliens()();
-    });
-
-
-    // de smart admin
-    pageSetUp();
-    getVersionFooter();
-    
-    //
-    $('#btnBuscar').click(buscarAntcliens());
-    $('#btnAlta').click(crearAntclien());
-    $('#btnPrint').click(imprimirAntclien);
-    $('#frmBuscar').submit(function () {
-        return false
-    });
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarAntcliens();
-    //});
-    //
-    
-
-    $('#chkTodos').change(function () {
-        if (this.checked) {
-            cargarAntcliens2All();
-        } else {
-            cargarAntcliens2();
-        }
-    })
 }
+
+
+
 
 function admData() {
     var self = this;
@@ -93,7 +86,6 @@ function admData() {
     self.elegidosDepartamentos = ko.observableArray([]);
     
 } 
-
 
 
 
@@ -176,16 +168,11 @@ function initTablaAntcliens() {
         },
         data: dataAntcliens,
         columns: [{
-            data: "antclienId",
+            data: "antClienId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
-                if (row.contafich || row.contabilizada) {
-                    html = "<i class='fa fa-file'></i>";
-                }
                 return html;
             }
-        }, {
-            data: "referencia"
         }, {
             data: "emisorNombre"
         }, {
@@ -197,30 +184,26 @@ function initTablaAntcliens() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        }, {
-            data: "total"
-        }, {
+        },  {
             data: "totalConIva"
-        }, {
-            data: "vFac"
-        }, {
+        },  {
             data: "vFPago"
         }, {
             data: "observaciones"
         }, {
             data: "dirTrabajo"
         }, {
-            data: "antclienId",
+            data: "antClienId",
             render: function (data, type, row) {
-                console.log(type +" "+ row);
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ","+row.noCalculadora+ ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntclien(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
                 return html;
             }
         }]
     });
+
 
     // Apply the filter
     $("#dt_antclien thead th input[type=text]").on('keyup change', function () {
@@ -273,92 +256,77 @@ function buscarAntcliens() {
 
 function crearAntclien() {
     var mf = function () {
-        var url = "AntclienDetalle.html?AntclienId=0";
+        var url = "AnticipoClienteDetalle.html?AntClienId=0";
         window.open(url, '_new');
     };
     return mf;
 }
 
 function deleteAntclien(id, noCalculadora) {
-    // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/anticiposClientes/" + id;
-    var mens = "¿Qué desea hacer con este registro?";
-    mens += "<ul>"
-    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
-    mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo. ¡¡ Atención !! Puede dejar huecos en los números de anticipo de la serie</li>";
-    mens += "</ul>"
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Cancelar][Descontabilizar factura][Borrar factura]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Borrar factura") {
-            mens = "<ul>"
-            mens += "<li><strong>¡¡ Atención !! Se borrá tambien la liquidación asociada a la factura</strong></li>";
-            mens += "<li>¿Desea continuar?</li>";
-            mens += "</ul>"
+    var mens;
+    $.ajax({//buscamos la factura asociada para extraer su facproveId
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposClientes/factura/asociada/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (data, status) {
+            if(data.length > 0) {
+                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
+            } else {
+                 mens = "¿Realmente desea borrar este registro?";
+            }
+            // mensaje de confirmación
+    
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
-                buttons: '[Cancelar][Borrar]'
-            },function (ButtonPressed2) {
-                if (ButtonPressed2 === "Borrar") {
-                    var data = { 
-                        antclien: {
-                            facturaId: id,
-                            noCalculadora: noCalculadora 
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    $.ajax({
+                        type: "DELETE",
+                        url: myconfig.apiUrl + "/api/anticiposClientes/" + id,
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: null,
+                        success: function (data, status) {
+                            var fn = buscarAntcliens()
+                            fn();
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
                         }
-                    };
-                    if(noCalculadora == 1) {
-                        url =  myconfig.apiUrl + "/api/anticiposClientes/parte/relacionado/" + id;
-                    }
-                    llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/desmarcar-prefactura/" + id, null, function (err) {
-                        if (err) return;
-                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
-                            if (err) return;
-                            llamadaAjax("DELETE", url, data, function (err) {
-                                if (err) return;
-                                mostrarMensajeAntclienBorrada();
-                                buscarAntcliens()();
-                            });
-                        });
                     });
+                    
                 }
-                if (ButtonPressed2 === "Cancelar") {
+                if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
                 }
             });
-            
-        }
-        if (ButtonPressed === "Descontabilizar factura") {
-            var data = { facturaId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/descontabilizar/" + id, null, function (err) {
-                if (err) return;
-                $('#chkTodos').prop('checked',false);
-                mostrarMensajeAntclienDescontabilizada();
-                buscarAntcliens()();
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
         }
     });
 }
 
 var mostrarMensajeAntclienDescontabilizada = function () {
-    var mens = "La factura se ha descontabilizado correctamente.";
+    var mens = "El anticipo se ha descontabilizado correctamente.";
     mensNormal(mens);
 }
 
 var mostrarMensajeAntclienBorrada = function () {
-    var mens = "La factura se ha borrado correctamente.";
+    var mens = "El anticipo se ha borrado correctamente.";
     mensNormal(mens);
 }
 
 function editAntclien(id) {
     // hay que abrir la página de detalle de antclien
     // pasando en la url ese ID
-    var url = "AnticipoClienteDetalle.html?AntclienId=" + id;
+    var url = "AnticipoClienteDetalle.html?AntClienId=" + id;
     window.open(url, '_new');
 }
 
@@ -366,12 +334,12 @@ function cargarAntcliens() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: antClienId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposClientes/" + facturaId,
+                url: myconfig.apiUrl + "/api/anticiposClientes/" + antClienId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -404,7 +372,7 @@ function cargarAntcliens() {
 }
 
 function printAntclien2(id) {
-    var url = "InfAntcliens.html?facturaId=" + id;
+    var url = "InfAntcliens.html?antClienId=" + id;
     window.open(url, '_new');
 }
 
