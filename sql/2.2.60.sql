@@ -59,5 +59,8 @@ ALTER TABLE `antclien`
   ADD  UNIQUE INDEX `serie_ano_numeroUNIQUE` (`ano`, `numero`, `serie`, `empresaId`);
 
 
+ALTER TABLE `antclien`   
+  ADD COLUMN `noContabilizar` TINYINT(1) DEFAULT 0 NULL AFTER `conceptoAnticipo`;
+
 
 

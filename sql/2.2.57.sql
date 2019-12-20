@@ -33,7 +33,6 @@ CREATE TABLE `antclien` (
   `ano` int(11) default NULL,
   `numero` int(11) default NULL,
   `serie` varchar(255) default NULL,
-  `tipoProyectoId` int(11) default NULL,
   `fecha` date default NULL,
   `clienteId` int(11) default NULL,
   `empresaId` int(11) default NULL,
@@ -66,9 +65,6 @@ CREATE TABLE `antclien` (
   `importeRetencion` decimal(12,2) default NULL,
   `numeroAnticipoCliente` varchar(255) default NULL,
   `nombreFacprovePdf` varchar(255) default NULL,
-  `ref` varchar(255) default NULL,
-  `fecha_recepcion` date default NULL,
-  `noContabilizar` tinyint(1) default NULL,
   `contabilizada` tinyint(1) default '0',
   `visada` tinyint(1) default '0',
   `facturaId` int(11) default NULL,
@@ -76,18 +72,17 @@ CREATE TABLE `antclien` (
   `conceptoAnticipo` varchar(255) default NULL,
   PRIMARY KEY  (`antClienId`),
   UNIQUE KEY `antprove_numeroprova` (`numeroAnticipoCliente`,`clienteId`),
+  UNIQUE KEY `serie_ano_numeroUNIQUE` (`ano`,`numero`,`serie`,`empresaId`),
   KEY `pref_empresas22a` (`empresaId`),
   KEY `pref_proveedores22a` (`clienteId`),
   KEY `pref_formas_pago22a` (`formaPagoId`),
-  KEY `pf_tipoProyecto22a` (`tipoProyectoId`),
   KEY `pref_contrato22a` (`contratoId`),
   KEY `antprove_departamento` (`departamentoId`),
-  CONSTRAINT `antclien_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos` (`departamentoId`),
-  CONSTRAINT `antclien_contratosFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
-  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
-  CONSTRAINT `antclien_formaspagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `antclien_clientesFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes` (`clienteId`),
-  CONSTRAINT `antclien_tipoproyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto` (`tipoProyectoId`)
+  CONSTRAINT `antclien_contratosFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
+  CONSTRAINT `antclien_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos` (`departamentoId`),
+  CONSTRAINT `antclien_empresasFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
+  CONSTRAINT `antclien_formaspagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `partes`   
