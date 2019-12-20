@@ -109,6 +109,7 @@ function admData() {
     self.serie = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
+    self.noContabilizar = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -199,6 +200,12 @@ function loadData(data) {
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones); 
     vm.periodo(data.periodo);
+
+    if(data.noContabilizar == 1){
+        $('#chkNoContabilizar').prop("checked", true);
+    } else {
+        $('#chkNoContabilizar').prop("checked", false);
+    }
     
     //
     document.title = "Anticipo: " + vm.numeroAnticipoCliente();
@@ -273,6 +280,7 @@ var aceptarAntClien = function () {
         vm.totalConIva('0');
     }
     var data = generarAntClienDb();
+
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/anticiposClientes";
@@ -298,6 +306,13 @@ var aceptarAntClien = function () {
 }
 
 var generarAntClienDb = function () {
+
+    if($('#chkNoContabilizar').prop("checked")) {
+        vm.noContabilizar(true);
+    } else {
+        vm.noContabilizar(false);
+    }
+
      var data = {
         antClien: {
             "antClienId": vm.antClienId(),
@@ -324,7 +339,8 @@ var generarAntClienDb = function () {
             "periodo": vm.periodo(),
             "departamentoId": vm.departamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
-            "serie": vm.serie()
+            "serie": vm.serie(),
+            "noContabilizar": vm.noContabilizar()
         }
     };
     return data;
