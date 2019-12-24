@@ -238,7 +238,7 @@ function initForm() {
 
     //Evento asociado al cambio de chkcompleto
     $('#chkCompleto').change(function () {
-        if($('#chkCompleto').is(':checked') && cmd != "") {
+        if($('#chkCompleto').is(':checked')) {
             $('#lineasanticipo').show();
             $('#basesycuotas').show();
             $('#retenciones').show();
@@ -277,6 +277,7 @@ function initForm() {
         vm.importeServiciada(0);
         vm.importeRetencion(0);
         vm.total('0');
+        vm.totalConIva(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
         vm.fecha(spanishDate(new Date()));//fecha  ofertada
@@ -672,7 +673,7 @@ var generarAnticipoDb = function () {
     }
     //
     if($('#chkCompleto').prop("checked")) {
-        if(antproveId != 0) totConIva: numeroDbf(vm.totalConIva());
+        if(antproveId != 0) totConIva = numeroDbf(vm.totalConIva());
         vm.completo(true);
         
     } else {
