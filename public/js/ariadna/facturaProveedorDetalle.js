@@ -2722,6 +2722,8 @@ function cargaTablaAnticipos(completo){
                 } else {
                     loadTablaAnticipos(null);
                 }
+            } else {
+                loadTablaAnticipos(null);
             }
         })
     } else {
