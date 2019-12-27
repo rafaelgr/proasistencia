@@ -174,7 +174,7 @@ function admData() {
     self.departamento = ko.observable();
     self.departamentoId = ko.observable()
     self.importeAnticipo = ko.observable();
-    self.restoPagar = ko.observable();
+    self.restoCobrar = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -429,7 +429,7 @@ var aceptarFactura = function () {
     if (!vm.total()) {
         vm.total('0');
         vm.totalConIva('0');
-        vm.restoPagar('0');
+        vm.restoCobrar('0');
     }
     var data = generarFacturaDb();
     // caso alta
@@ -485,7 +485,7 @@ var generarFacturaDb = function () {
             "receptorProvincia": vm.receptorProvincia(),
             "total": numeroDbf(vm.total()),
             "totalConIva": numeroDbf(vm.totalConIva()),
-            "restoPagar": numeroDbf(vm.restoPagar()),
+            "restoCobrar": numeroDbf(vm.restoCobrar()),
             "formaPagoId": vm.sformaPagoId(),
             "observaciones": vm.observaciones(),
             "coste": vm.coste(),
@@ -1263,7 +1263,7 @@ function loadBasesFactura(facturaId) {
     
         var acuenta = numeroDbf(vm.importeAnticipo());
         var totSinAcuenta =  t2-acuenta
-        vm.restoPagar(numeral(totSinAcuenta).format('0,0.00'));
+        vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
@@ -1423,8 +1423,8 @@ var cambioPorcentajeRetencion = function () {
         vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-        var restoPagar = vm.totalConIva()-vm.importeAnticipo();
-        vm.restoPagar(numeral(restoPagar).format('0,0.00'));
+        var restoCobrar = vm.totalConIva()-vm.importeAnticipo();
+        vm.restoCobrar(numeral(restoCobrar).format('0,0.00'));
     }
 }
 
@@ -1698,7 +1698,7 @@ function vinculaAnticipo() {
                 if(impAnticipo > 0) {
                     var tot = numeroDbf(vm.totalConIva());
                     var result = tot - impAnticipo
-                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
                 }
@@ -1710,7 +1710,7 @@ function vinculaAnticipo() {
                         "clienteId": vm.clienteId(),
                         "fecha": spanishDbDate(vm.fecha()),
                         "importeAnticipo": impAnticipo,
-                        "restoPagar": result,
+                        "restoCobrar": result,
                         "conceptoAnticipo": vm.conceptoAnticipo()
                     }
                 };
@@ -1824,14 +1824,14 @@ function desvinculaAnticipo(anticipoId) {
                 if(impAnticipo > 0) {
                     var tot = numeroDbf(vm.totalConIva());
                     var result = tot - impAnticipo
-                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
                 }
             } else {//SI NO HAY ANTICIPOS ASOCIADOS
                 var tot = numeroDbf(vm.totalConIva());
                     var result = tot - 0
-                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo('');
             }
@@ -1844,7 +1844,7 @@ function desvinculaAnticipo(anticipoId) {
                     "clienteId": vm.clienteId(),
                     "fecha": spanishDbDate(vm.fecha()),
                     "importeAnticipo": impAnticipo,
-                    "restoPagar": result,
+                    "restoCobrar": result,
                     "conceptoAnticipo": vm.conceptoAnticipo()
                 }
             };
