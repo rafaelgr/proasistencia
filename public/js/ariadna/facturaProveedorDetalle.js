@@ -1501,7 +1501,8 @@ function editFacturaLinea(id) {
 
 function deleteFacturaLinea(facproveLineaId) {
     // mensaje de confirmación
-    var url =  "/api/facturasProveedores/lineas/con/parte/" + facproveLineaId;
+    //var url =  "/api/facturasProveedores/lineas/con/parte/" + facproveLineaId;
+    var url = "/api/facturasProveedores/lineas/" + facproveLineaId
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
@@ -1510,9 +1511,9 @@ function deleteFacturaLinea(facproveLineaId) {
                 departamentoId: vm.departamentoId()
             }
         };
-        if(vm.departamentoId() != 7) {
+        /*if(vm.departamentoId() != 7) {
             url = "/api/facturasProveedores/lineas/" + facproveLineaId
-        }
+        }*/
         llamadaAjax("DELETE", url, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET",  "/api/facturasProveedores/" + vm.facproveId(), null, function (err, data) {
