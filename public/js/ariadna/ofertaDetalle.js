@@ -129,6 +129,10 @@ function initForm() {
 
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
+
+    $("#cmbTiposIvaProveedor").select2(select2Spanish());
+    loadTiposIvaProveedor();
+
     $("#cmbTiposIva").select2().on('change', function (e) {
         cambioTiposIva(e.added);
     });
@@ -247,6 +251,8 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
+    self.importeProveedor = ko.observable();
+    self.costeLineaProveedor = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -273,6 +279,11 @@ function admData() {
     //
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
+    //
+    self.stipoIvaProveedorId = ko.observable();
+    //
+    self.posiblesTiposIvaProveedor = ko.observableArray([]);
+    self.elegidosTiposIvaProveedor = ko.observableArray([]);
     //
     // Nuevo Total de coste para la oferta
     self.totalCoste = ko.observable();
@@ -620,6 +631,7 @@ function limpiaDataLinea(data) {
     loadGrupoArticulos();
     // loadArticulos();
     loadTiposIva();
+   
     //
     loadArticulos();
     loadUnidades();
@@ -926,6 +938,19 @@ function loadTiposIva(id) {
             $("#cmbTiposIva").val([id]).trigger('change');
         } else {
             $("#cmbTiposIva").val([0]).trigger('change');
+        }
+    });
+}
+
+function loadTiposIvaProveedor(id) {
+    llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposIvaProveedor(tiposIva);
+        if (id) {
+            $("#cmbTiposIvaProveedor").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIvaProveedor").val([0]).trigger('change');
         }
     });
 }
