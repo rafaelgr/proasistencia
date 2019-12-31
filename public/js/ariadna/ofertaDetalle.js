@@ -79,6 +79,7 @@ function initForm() {
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
+
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
@@ -100,6 +101,12 @@ function initForm() {
     $("#cmbDepartamentos").on('change', function (e) {
         if(!e.added) return;
         loadTipoProyecto();
+    });
+
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+    $("#cmbProveedores").select2().on('change', function (e) {
+        cambioProveedor(e.added.id);
     });
 
     initAutoCliente();
@@ -139,6 +146,7 @@ function initForm() {
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
+    $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -253,6 +261,7 @@ function admData() {
     self.capituloLinea = ko.observable();
     self.importeProveedor = ko.observable();
     self.costeLineaProveedor = ko.observable();
+    self.totalLineaProveedor = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -268,7 +277,12 @@ function admData() {
     //
     self.posiblesTextosPredeterminados = ko.observableArray([]);
     self.elegidosTextosPredeterminados = ko.observableArray([]);
-
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
     //
     self.sarticuloId = ko.observable();
     //
@@ -330,6 +344,7 @@ function loadData(data) {
     document.title = "OFERTA: " + vm.referencia();
 
     loadConceptosLineas(data.contratoId);
+    loadGrupoArticulos();
 }
 
 function datosOK() {
@@ -467,7 +482,7 @@ function loadDepartamentos(id) {
 }
 
 function loadDepartamentosUsuario(id) {
-    if(id) vm.stipoOfertaId(id);
+    if(id) vm.tipoOfertaId(id);
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
         //if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
@@ -529,6 +544,7 @@ function cambioDepartamento(departamentoId) {
     if(!departamentoId) return;
     llamadaAjax('GET', "/api/departamentos/" + departamentoId, null, function (err, data) {
         if (err) return;
+        usaCalculadora = data.usaCalculadora;
         if(data.usaCalculadora == 0) {
             $('#calculadora').hide();
             vm.porcentajeAgente(0);
@@ -626,11 +642,16 @@ function limpiaDataLinea(data) {
     vm.importe(null);
     vm.costeLinea(null);
     vm.totalLinea(null);
+    vm.costeLineaProveedor(null);
+    vm.importeProveedor(null);
+    vm.totalLineaProveedor(null);
     //
     //
     loadGrupoArticulos();
     // loadArticulos();
     loadTiposIva();
+    loadTiposIvaProveedor();
+    loadProveedores();
    
     //
     loadArticulos();
@@ -658,6 +679,11 @@ var guardarLinea = function () {
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             capituloLinea: vm.capituloLinea(),
+            importeProveedor: vm.importeProveedor(),
+            totalLineaProveedor: vm.totalLineaProveedor(),
+            costeLineaProveedor: vm.costeLineaProveedor(),
+            tipoIvaProveedorId: vm.stipoIvaProveedorId(),
+            proveedorId: vm.proveedorId()
         }
     }
     var verboAjax = '';
@@ -823,6 +849,20 @@ function initTablaOfertasLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },  {
+            data: "proveedorNombre",
+        },{
+            data: "importeProveedor",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "costeLineaProveedor",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "ofertaLineaId",
             render: function (data, type, row) {
@@ -851,10 +891,17 @@ function loadDataLinea(data) {
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
     //
+    //cantidades de proveedor
+    vm.importeProveedor(data.importeProveedor);
+    vm.totalLineaProveedor(data.totalLineaProveedor);
+    vm.costeLineaProveedor(data.costeLineaProveedor);
+    //
     loadGrupoArticulos(data.grupoArticuloId);
     loadUnidades(data.unidadId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
+    loadTiposIvaProveedor(data.tipoIvaProveedorId);
+    loadProveedores(data.proveedorId)
     //
 }
 
@@ -955,6 +1002,15 @@ function loadTiposIvaProveedor(id) {
     });
 }
 
+function loadProveedores(proveedorId) {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        $("#cmbProveedores").val([proveedorId]).trigger('change');
+    });
+}
+
 function cambioArticulo(data) {
     //
     if (!data) {
@@ -1025,10 +1081,23 @@ function cambioTiposIva(data) {
     });
 }
 
+function cambioProveedor(proveedorId) {
+    if (!proveedorId) return;
+    llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
+        if (err) return;
+        vm.proveedorId(proveedorId);
+        loadTiposIvaProveedor(data.tipoIvaId);
+    });
+}
+
 var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+
+    //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
+    vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
+    vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
 }
 
 function editOfertaLinea(id) {
@@ -1313,6 +1382,7 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
+    if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (!vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);

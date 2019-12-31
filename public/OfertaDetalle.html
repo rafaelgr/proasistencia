@@ -715,13 +715,22 @@
                                                         CONCEPTO
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        COSTE/UD.
+                                                        COSTE/UD. CLIENTE
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
                                                         CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        TOTAL
+                                                        TOTAL CLIENTE
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        PROVEEDOR
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        COSTE/UD. PROVEEDOR
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        TOTAL PROVEEDOR
                                                     </th>
                                                     <th>
                                                     </th>
@@ -979,12 +988,11 @@
                                 <h3> Importes del proveedor</h3>
                                 <div class="row">
                                     <section class="col col-md-4">
-                                        <!--
-                                        <label class="label">Importe</label>
-                                        <label class="input">
-                                            <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
+                                        <label class="label">Proveedor</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
+                                            <i></i>
                                         </label>
-                                        -->
                                     </section>
                                     <section class="col col-md-2">
                                         <label class="label">Tipo IVA</label>
@@ -995,7 +1003,7 @@
                                     <section class="col col-md-2">
                                         <label class="label">Coste / Ud</label>
                                         <label class="input">
-                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importeProveedor" />
+                                            <input id="txtPrecioProveedor" name="txtPrecioProveedor" type="text" data-bind="value: importeProveedor" />
                                         </label>
                                     </section>
                                     <section class="col col-md-4">
