@@ -287,7 +287,7 @@ function contabilizarFacturas() {
                 if(data != "OK" ) {
                     var cuentas = JSON.stringify(data);
                     cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
-                    mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de ventas no existen.");
+                    mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contables no existen.");
                         var fn = buscarFacturas();
                         fn();
                 } else {

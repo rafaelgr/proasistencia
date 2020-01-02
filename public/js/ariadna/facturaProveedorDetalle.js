@@ -577,8 +577,17 @@ function loadData(data) {
             if(data2) {
                 if(data2.length > 0) {
                     var mens = "Existen anticipos incompletos para este proveedor, puede vincularlos en la pestaña anticipos";
-                    mensNormal(mens);
-            }
+                    // mensaje de AVISO con confirmación
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            
+                        }
+                    });
+                }
             }
         });
     }

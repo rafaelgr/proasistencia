@@ -571,8 +571,8 @@ function loadTablaReparaciones(data) {
 }
 
 function deleteReparacion(id) {
-    // mensaje de confirmaciÃ³n
-    var mens = "Â¿Realmente desea borrar este registro?";
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
