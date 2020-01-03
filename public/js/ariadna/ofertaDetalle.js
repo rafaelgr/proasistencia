@@ -106,6 +106,7 @@ function initForm() {
     $("#cmbProveedores").select2(select2Spanish());
     loadProveedores();
     $("#cmbProveedores").select2().on('change', function (e) {
+        if(!e.added) return;
         cambioProveedor(e.added.id);
     });
 
@@ -143,6 +144,11 @@ function initForm() {
     $("#cmbTiposIva").select2().on('change', function (e) {
         cambioTiposIva(e.added);
     });
+
+    $("#cmbTiposIvaProveedor").select2().on('change', function (e) {
+        cambioTiposIvaProveedor(e.added);
+    });
+
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
@@ -262,6 +268,7 @@ function admData() {
     self.importeProveedor = ko.observable();
     self.costeLineaProveedor = ko.observable();
     self.totalLineaProveedor = ko.observable();
+    self.porcentajeProveedor = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -645,6 +652,7 @@ function limpiaDataLinea(data) {
     vm.costeLineaProveedor(null);
     vm.importeProveedor(null);
     vm.totalLineaProveedor(null);
+    vm.porcentajeProveedor(null)
     //
     //
     loadGrupoArticulos();
@@ -683,6 +691,7 @@ var guardarLinea = function () {
             totalLineaProveedor: vm.totalLineaProveedor(),
             costeLineaProveedor: vm.costeLineaProveedor(),
             tipoIvaProveedorId: vm.stipoIvaProveedorId(),
+            porcentajeProveedor: vm.porcentajeProveedor(),
             proveedorId: vm.proveedorId()
         }
     }
@@ -844,7 +853,7 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "coste",
+            data: "costeLinea",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -895,6 +904,7 @@ function loadDataLinea(data) {
     vm.importeProveedor(data.importeProveedor);
     vm.totalLineaProveedor(data.totalLineaProveedor);
     vm.costeLineaProveedor(data.costeLineaProveedor);
+    vm.porcentajeProveedor(data.porcentajeProveedor);
     //
     loadGrupoArticulos(data.grupoArticuloId);
     loadUnidades(data.unidadId);
@@ -919,7 +929,7 @@ function loadTablaOfertaLineas(data) {
 
 
 function loadLineasOferta(id) {
-    llamadaAjax('GET', "/api/ofertas/lineas/" + id, null, function (err, data) {
+    llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false, null, function (err, data) {
         if (err) return;
         var totalCoste = 0;
         data.forEach(function (linea) {
@@ -1078,6 +1088,16 @@ function cambioTiposIva(data) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+    });
+}
+
+function cambioTiposIvaProveedor(data) {
+    if (!data) return;
+    var tipoIvaId = data.id;
+    llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
+        if (err) return;
+        vm.tipoIvaId(data.tipoIvaId);
+        vm.porcentajeProveedor(data.porcentaje);
     });
 }
 

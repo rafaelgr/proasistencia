@@ -12,3 +12,7 @@ ALTER TABLE `partes`
   ADD COLUMN `ofertaId` INT(11) NULL AFTER `ano`,
   ADD CONSTRAINT `ref_parte_oferta` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas`(`ofertaId`);
 
+  ALTER TABLE `ofertas_lineas`   
+  ADD COLUMN `porcentajeProveedor` DECIMAL(5,2) NULL AFTER `tipoIvaProveedorId`;
+
+
