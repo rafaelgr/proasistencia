@@ -162,7 +162,7 @@ function initTablaFacturas() {
         }, {
             data: "formaPago"
         },{
-            data: "refAnticipo"
+            data: "numAnticipo"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
