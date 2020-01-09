@@ -1096,7 +1096,7 @@ function cambioTiposIvaProveedor(data) {
     var tipoIvaId = data.id;
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
-        vm.tipoIvaId(data.tipoIvaId);
+        vm.stipoIvaProveedorId(data.tipoIvaId);
         vm.porcentajeProveedor(data.porcentaje);
     });
 }
