@@ -15,4 +15,9 @@ ALTER TABLE `partes`
   ALTER TABLE `ofertas_lineas`   
   ADD COLUMN `porcentajeProveedor` DECIMAL(5,2) NULL AFTER `tipoIvaProveedorId`;
 
+  ALTER TABLE `ofertas`   
+  ADD COLUMN `servicioId` INT(11) NULL AFTER `contratoId`,
+  ADD CONSTRAINT `of_servicio` FOREIGN KEY (`servicioId`) REFERENCES `servicios`(`servicioId`) ON DELETE NO ACTION;
+
+
 
