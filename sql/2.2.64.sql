@@ -19,5 +19,10 @@ ALTER TABLE `partes`
   ADD COLUMN `servicioId` INT(11) NULL AFTER `contratoId`,
   ADD CONSTRAINT `of_servicio` FOREIGN KEY (`servicioId`) REFERENCES `servicios`(`servicioId`) ON DELETE NO ACTION;
 
+  ALTER TABLE `ofertas` DROP FOREIGN KEY `of_servicio`;
+
+ALTER TABLE `ofertas` ADD CONSTRAINT `of_servicio` FOREIGN KEY (`servicioId`) REFERENCES `proasistencia`.`servicios`(`servicioId`) ON DELETE SET NULL;
+
+
 
 
