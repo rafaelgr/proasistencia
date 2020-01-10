@@ -741,6 +741,12 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
+            },
+            cmbTiposIva: {
+                required: true
+            },
+            cmbTiposIvaProveedor: {
+                required: true
             }
         },
         // Messages for form validation
@@ -768,6 +774,11 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: 'Necesita un precio'
+            }, cmbTiposIva: {
+                required: "Debe elegir un tipo de iva"
+            },
+            cmbTiposIvaProveedor: {
+                required: "Debe elegir un tipo de iva"
             }
         },
         // Do not change code below
@@ -989,7 +1000,7 @@ function loadUnidades(id) {
 function loadTiposIva(id) {
     llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        var tiposIva = [{ tipoIvaId: null, nombre: "" }].concat(data);
         vm.posiblesTiposIva(tiposIva);
         if (id) {
             $("#cmbTiposIva").val([id]).trigger('change');
@@ -1002,7 +1013,7 @@ function loadTiposIva(id) {
 function loadTiposIvaProveedor(id) {
     llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
+        var tiposIva = [{ tipoIvaId: null, nombre: "" }].concat(data);
         vm.posiblesTiposIvaProveedor(tiposIva);
         if (id) {
             $("#cmbTiposIvaProveedor").val([id]).trigger('change');
