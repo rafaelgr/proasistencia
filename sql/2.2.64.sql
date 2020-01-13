@@ -23,6 +23,18 @@ ALTER TABLE `partes`
 
 ALTER TABLE `ofertas` ADD CONSTRAINT `of_servicio` FOREIGN KEY (`servicioId`) REFERENCES `proasistencia`.`servicios`(`servicioId`) ON DELETE SET NULL;
 
+ALTER TABLE `audit_facturas`   
+  CHANGE `numFactu` `numFactu` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci DEFAULT '' NULL,
+  CHANGE `procesado` `procesado` TINYINT(1) DEFAULT 0 NULL,
+  CHANGE `cambio` `cambio` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL;
+
+  ALTER TABLE `audit_facproves`   
+  CHANGE `numFactu` `numFactu` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci DEFAULT '' NULL,
+  CHANGE `procesado` `procesado` TINYINT(1) DEFAULT 0 NULL,
+  CHANGE `cambio` `cambio` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL;
+
+
+
 
 
 
