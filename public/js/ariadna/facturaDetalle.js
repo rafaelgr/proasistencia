@@ -353,7 +353,17 @@ function loadData(data, desdeLinea) {
             if (err) return;
             if(data) {
                 if(data.length > 0) {
-                    mensNormal('Hay anticipos para este cliente de este contrato, puede vincularlos desde la pestaña anticipos');
+                    var mens = 'Hay anticipos para este cliente de este contrato, puede vincularlos desde la pestaña anticipos';
+                    // mensaje de AVISO con confirmación
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            
+                        }
+                    });
                 }
             }
         });

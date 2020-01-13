@@ -177,6 +177,7 @@ function initForm() {
         var data = {
             proveedorId: proId
         }
+        $('#cmbTiposProveedor').attr('disabled', true);
         $('#txtCodigo').attr('disabled', true)
         // hay que buscar ese elemento en concreto
         $.ajax({
@@ -776,21 +777,51 @@ function compruebaCodigoProveedor() {
 }
 
 function cambioTipoProveedor(data) {
-    if(data){
-        $.ajax({
-            type: "GET",
-            url: "/api/tipos_proveedor/" + data.id,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                vm.inicioCuenta(data.inicioCuenta);
-                    compruebaCodigoProveedor();
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });    
+    if(data) {
+        if(vm.cuentaContable()) {
+            // mensaje de confirmación
+            var mens = "Al cambiar el tipo de proveedor se cambiará su cuenta contable ¿Realmente desea cambiar el tipo de proveedor registro?";
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/tipos_proveedor/" + data.id,
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data, status) {
+                            vm.inicioCuenta(data.inicioCuenta);
+                                compruebaCodigoProveedor();
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });    
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
+                }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "/api/tipos_proveedor/" + data.id,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    vm.inicioCuenta(data.inicioCuenta);
+                        compruebaCodigoProveedor();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });   
+        }
     }
 }
 
