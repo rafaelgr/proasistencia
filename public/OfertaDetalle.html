@@ -329,32 +329,30 @@
                                     <a href="AnticipoProveedorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         proveedores</a>
                                 </li>
-                                <li>
-                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de clientes</a>
+                               <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
                                 </li>
+                            </ul>
+                        </li>
+                        <li id="Contabilización">
+                            <a href="#"><i class="fa fa-fw fa-list-ol"></i> Contabilización</a>
+                            <ul>
                                 <li>
-                                    <a href="ContaAntCliGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar anticipos
+                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-user-plus"></i> Contabilizar facturas
                                         de clientes</a>
                                 </li>
                                 <li>
-                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas
+                                    <a href="ContaAntCliGeneral.html"><i class="fa fa-fw fa-address-card"></i> Contabilizar anticipos
+                                        de clientes</a>
+                                </li>
+                                <li>
+                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-building"></i> Contabilizar facturas
                                         de proveedores</a>
                                 </li>
                                 <li>
-                                    <a href="ContaAntProGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar anticipos
+                                    <a href="ContaAntProGeneral.html"><i class="fa fa-fw fa-briefcase"></i> Contabilizar anticipos
                                         de proveedores</a>
                                 </li>
-                                <li>
-                                    <a href="VisadoFacproveGeneral.html"><i class="fa fa-map-marker"></i> Visado de
-                                        facturas de proveedores</a>
-                                </li>
-                                <li>
-                                    <a href="VisadoAntproveGeneral.html"><i class="fa fa-map-marker"></i> Visado de
-                                        anticipos de proveedores</a>
-                                </li>
-                                <li>
-                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li> 
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -370,7 +368,21 @@
                                     <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones general</a>
                                 </li>
                                 <li>
-                                    <a href="LiquidacionColaboradores.html"><i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones colaboradores</a>
+                                    <a href="LiquidacionColaboradores.html"><i class="fa fa-fw fa-address-card-o"></i>
+                                        Consultar liquidaciones colaboradores</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="visados">
+                            <a href="#"><i class="fa fa-fw fa-hand-o-up"></i> Visados</a>
+                            <ul>
+                                <li>
+                                    <a href="VisadoFacproveGeneral.html"><i class="fa fa-arrow-circle-up"></i> Visado de
+                                        facturas de proveedores</a>
+                                </li>
+                                <li>
+                                    <a href="VisadoAntproveGeneral.html"><i class="fa fa-thumbs-o-up"></i> Visado de
+                                        anticipos de proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -392,6 +404,7 @@
                     <i class="fa fa-fw fa-wrench"></i> <span class="menu-item-parent">SERVICIOS</span>
                 </a>
             </li>
+         </ul> 
         </nav>
         <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
     </aside>
@@ -715,13 +728,22 @@
                                                         CONCEPTO
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        COSTE/UD.
+                                                        COSTE/UD. CLIENTE
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
                                                         CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
-                                                        TOTAL
+                                                        TOTAL CLIENTE
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        PROVEEDOR
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        COSTE/UD. PROVEEDOR
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        TOTAL PROVEEDOR
                                                     </th>
                                                     <th>
                                                     </th>
@@ -924,9 +946,9 @@
                                         </label>
                                     </div>
                                     <div class="col col-md-2">
-                                        <label class="label">Tipo IVA</label>
-                                        <label style="width:100%;">
-                                            <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
+                                        <label class="label">Cantidad</label>
+                                        <label class="input">
+                                            <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
                                         </label>
                                     </div>
                                 </div>
@@ -939,6 +961,11 @@
                                         </label>
                                     </section>
                                 </div>
+                            </section>
+                        </fieldset>
+                        <fieldset>
+                            <section>
+                                <h3> Importes del cliente</h3>
                                 <div class="row">
                                     <section class="col col-md-4">
                                         <!--
@@ -947,23 +974,55 @@
                                             <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
                                         </label>
                                         -->
-                                    </section>                                    
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Tipo IVA</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>                                   
                                     <section class="col col-md-2">
                                         <label class="label">Coste / Ud</label>
                                         <label class="input">
                                             <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importe" />
                                         </label>
                                     </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">Cantidad</label>
+                                    <section class="col col-md-4">
+                                        <label class="label">Total coste</label>
                                         <label class="input">
-                                            <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
+                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <fieldset>
+                            <section>
+                                <h3> Importes del proveedor</h3>
+                                <div class="row">
+                                    <section class="col col-md-4">
+                                        <label class="label">Proveedor</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
+                                            <i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Tipo IVA</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposIvaProveedor" name="cmbTiposIvaProveedor" data-bind="options: posiblesTiposIvaProveedor, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposIvaProveedor, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>                                             
+                                    <section class="col col-md-2">
+                                        <label class="label">Coste / Ud</label>
+                                        <label class="input">
+                                            <input id="txtPrecioProveedor" name="txtPrecioProveedor" type="text" data-bind="value: importeProveedor" />
                                         </label>
                                     </section>
                                     <section class="col col-md-4">
                                         <label class="label">Total coste</label>
                                         <label class="input">
-                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
+                                            <input id="txtCosteLineaProveedor" name="txtCosteLineaProveedor" type="text" data-bind="value: costeLineaProveedor" disabled />
                                         </label>
                                     </section>
                                 </div>

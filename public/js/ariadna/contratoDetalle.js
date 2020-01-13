@@ -195,6 +195,7 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
+    $('#sinUso').hide();//ocultamos campo sin uso
    
 
 
