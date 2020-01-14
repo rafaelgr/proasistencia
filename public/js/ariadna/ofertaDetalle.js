@@ -108,6 +108,10 @@ function initForm() {
     $("#cmbProveedores").select2().on('change', function (e) {
         if(!e.added) return;
         cambioProveedor(e.added.id);
+        var tipof =  vm.tipoOfertaId();
+        if(tipof == 7) {
+            buscaTarifaProveedor(e.added.id);
+        }
     });
 
     initAutoCliente();
@@ -133,6 +137,11 @@ function initForm() {
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioArticulo(e.added);
+        var tipof =  vm.tipoOfertaId();
+        if(tipof == 7) {
+            buscaTarifaCliente(e.added);
+            if(vm.proveedorId()) buscaTarifaProveedor(vm.proveedorId())
+        }
     });
 
     $("#cmbTiposIva").select2(select2Spanish());
@@ -653,6 +662,7 @@ function limpiaDataLinea(data) {
     vm.importeProveedor(null);
     vm.totalLineaProveedor(null);
     vm.porcentajeProveedor(null)
+    vm.proveedorId(null);
     //
     //
     loadGrupoArticulos();
@@ -692,7 +702,7 @@ var guardarLinea = function () {
             costeLineaProveedor: vm.costeLineaProveedor(),
             tipoIvaProveedorId: vm.stipoIvaProveedorId(),
             porcentajeProveedor: vm.porcentajeProveedor(),
-            proveedorId: vm.proveedorId()
+            proveedorId: vm.sproveedorId()
         }
     }
     var verboAjax = '';
@@ -741,12 +751,6 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
-            },
-            cmbTiposIva: {
-                required: true
-            },
-            cmbTiposIvaProveedor: {
-                required: true
             }
         },
         // Messages for form validation
@@ -774,11 +778,6 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: 'Necesita un precio'
-            }, cmbTiposIva: {
-                required: "Debe elegir un tipo de iva"
-            },
-            cmbTiposIvaProveedor: {
-                required: "Debe elegir un tipo de iva"
             }
         },
         // Do not change code below
@@ -910,6 +909,7 @@ function loadDataLinea(data) {
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
+    vm.proveedorId(data.proveedorId);
     //
     //cantidades de proveedor
     vm.importeProveedor(data.importeProveedor);
@@ -1060,6 +1060,35 @@ function cambioArticulo(data) {
         cambioPrecioCantidad();
     });
 }
+
+
+function buscaTarifaCliente(data) {
+    if (!data) {
+        return;
+    }
+    var articuloId = data.id;
+    llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, data) {
+        if (err) return;
+        if(data.length > 0)  {
+            vm.importe(data[0].precioCliente);
+            cambioPrecioCantidad();
+        }
+        
+    });
+}
+
+function buscaTarifaProveedor(proveedorId) {
+    if (!proveedorId) return;
+    llamadaAjax('GET', "/api/proveedores/tarifa/por/articuloId/" + proveedorId + "/" + vm.sarticuloId(), null, function (err, data) {
+        if (err) return;
+        if(data.length > 0)  {
+            vm.importeProveedor(data[0].precioProveedor);
+            cambioPrecioCantidad();
+        }
+        
+    });
+}
+
 
 function cambioGrupoArticulo(data) {
     if (!data) return;
