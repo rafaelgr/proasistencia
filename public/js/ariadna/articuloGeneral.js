@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataArticulos;
 var articuloId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -20,6 +21,50 @@ var breakpointDefinition = {
 function initForm() {
     comprobarLogin();
     // de smart admin
+
+    vm = new admData();
+    ko.applyBindings(vm);
+    usuario = recuperarIdUsuario();
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaArticulos();
+        // comprobamos parámetros
+        articuloId = gup('ArticuloId');
+        if (articuloId !== '') {
+            // cargar la tabla con un único valor que es el que corresponde.
+            var data = {
+                id: articuloId
+            }
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/articulos/" + articuloId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaArticulos(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        } else {
+            var fn  = buscarArticulos();
+            fn();
+        }
+    });
+
+     //Evento asociado al cambio de departamento
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        cambioDepartamento(this.value);
+        vm.sdepartamentoId(this.value);
+        var fn  = buscarArticulos();
+        fn();
+    });
     pageSetUp();
     getVersionFooter();
     //
@@ -33,37 +78,22 @@ function initForm() {
     //        buscarArticulos();
     //});
     //
-    initTablaArticulos();
-    // comprobamos parámetros
-    articuloId = gup('ArticuloId');
-    if (articuloId !== '') {
-        // cargar la tabla con un único valor que es el que corresponde.
-        var data = {
-            id: articuloId
-        }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/articulos/" + articuloId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaArticulos(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
-    } else {
-        buscarTodos();
-    }
 }
 
+function admData() {
+    var self = this;
+    
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    
+} 
+
+
 function initTablaArticulos() {
-    tablaCarro = $('#dt_articulo').dataTable({
+    tablaCarro = $('#dt_articulo').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -101,6 +131,12 @@ function initTablaArticulos() {
         columns: [{
             data: "nombre"
         }, {
+            data: "capitulo"
+        },{
+            data: "profesion"
+        },{
+            data: "codigoReparacion"
+        },{
             data: "precioUnitario"
         }, {
             data: "tipoIVA"
@@ -113,6 +149,13 @@ function initTablaArticulos() {
                 return html;
             }
         }]
+    });
+     // Apply the filter
+     $("#dt_articulo thead th input[type=text]").on('keyup change', function () {
+        tablaCarro
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
     });
 }
 
@@ -151,15 +194,16 @@ function loadTablaArticulos(data) {
 
 function buscarArticulos() {
     var mf = function () {
-        if (!datosOK()) {
+        /*if (!datosOK()) {
             return;
-        }
+        }*/
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
+        //if(!aBuscar) aBuscar = "*"
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/articulos/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/articulos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId() + "/?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

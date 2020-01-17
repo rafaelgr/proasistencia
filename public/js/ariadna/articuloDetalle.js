@@ -45,6 +45,9 @@ function initForm() {
     $("#cmbProfesiones").select2(select2Spanish());
     loadTiposProfesionales();;
 
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
+
     
 
     initTablaTarifas()
@@ -106,6 +109,13 @@ function admData() {
     self.posiblesTiposProfesionales = ko.observableArray([]);
     self.elegidosTiposProfesionales = ko.observableArray([]);
 
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+
 
 }
 
@@ -119,7 +129,8 @@ function loadData(data) {
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
     loadUnidades(data.unidadId);
-    loadTiposProfesionales(data.tipoProfesionalId)
+    loadTiposProfesionales(data.tipoProfesionalId);
+    loadDepartamentos(data.departamentoId);
 }
 
 function datosOK() {
@@ -311,6 +322,19 @@ function loadTiposProfesionales(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/", null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
 
