@@ -555,20 +555,26 @@
                                                                                                     </label>
                                                                                                 </section>
                                                                                                 <section class="col col-md-4">
+                                                                                                    <label class="label">Departamento</label>
+                                                                                                    <label style="width:100%;">
+                                                                                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                                                                    </label>
+                                                                                                </section>
+                                                                                                <section class="col col-md-4">
                                                                                                     <label class="label">Profesion</label>
                                                                                                     <label style="width:100%;">
                                                                                                         <select style="width:100%" id="cmbProfesiones" name="cmbProfesiones" data-bind="options: posiblesTiposProfesionales, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesionales, selected2:{}"></select><i></i>
                                                                                                     </label>
                                                                                                 </section>
-                                                                                                <section class="col col-md-4">
-                                                                                                    <label class="label">Unidades</label>
-                                                                                                    <label style="width:100%;">
-                                                                                                        <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'nombre', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
-                                                                                                    </label>
-                                                                                                </section>
                                                                                                 <section class="col col-md-2"></section>
                                                                                             </div>
                                                                                             <div class="row">
+                                                                                                        <section class="col col-md-4">
+                                                                                                            <label class="label">Unidades</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'nombre', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                                                                                            </label>
+                                                                                                        </section>
                                                                                                         <section class="col col-md-3">
                                                                                                             <label class="label">Código Barras</label>
                                                                                                             <label class="input">
@@ -587,7 +593,15 @@
                                                                                                                 <input id="txtPrecioUnitario" name="txtPrecioUnitario" data-bind="value: precioUnitario" />
                                                                                                             </label>
                                                                                                         </section>
-                                                                                                        <section class="col col-md-6"></section>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <section class="col col-md-4">
+                                                                                                    <label class="checkbox">
+                                                                                                        <input id="chkVarios" type="checkbox" name="chkVarios" data-bind="checked: varios">
+                                                                                                        <i></i>Varios
+                                                                                                    </label>
+                                                                                                </section>
+                                                                                                <section class="col col-md-8">
                                                                                             </div>
                                                                                             <div class="row">
                                                                                                 <section class="col col-md-12">
@@ -597,6 +611,7 @@
                                                                                                     </label>
                                                                                                 </section>
                                                                                             </div>
+                                                                                            </section>
                                                                                         </fieldset>
                                                                                         <fieldset>
                                                                                             <div class="pull-right">

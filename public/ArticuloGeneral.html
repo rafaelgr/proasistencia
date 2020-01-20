@@ -128,6 +128,15 @@
                 </span>
             </div>
             <!-- end fullscreen button -->
+            <div class="col col-xs-4 col-sm-4 col-md-5 pull-right" style="padding-bottom: 5%">
+                <span>
+                        <label class="label">Departamento de trabajo</label>
+                        <label style="width:100%; height:50px;">
+                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
+                                data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                        </label>
+                </span>
+            </div>    
         </div>
         <!-- end pulled right: nav area -->
     </header>
@@ -536,13 +545,48 @@
                                         <table id="dt_articulo" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
+                                                    <th class="hasinput">
+                                                         <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                   </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                </tr>
+                                                <tr>
                                                     <th data-class="expand">
                                                         <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre
                                                     </th>
-                                                    <th data-hide="phone">
-                                                        Precio
+                                                    <th>
+                                                        Capitulo
                                                     </th>
                                                     <th data-hide="phone">
+                                                        Profesion
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        departamento
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Codigo reparación
+                                                    </th>
+                                                    <th>
+                                                        Precio
+                                                    </th>
+                                                    <th>
                                                         IVA
                                                     </th>
                                                     <th>
