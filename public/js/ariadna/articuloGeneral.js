@@ -135,6 +135,8 @@ function initTablaArticulos() {
         },{
             data: "profesion"
         },{
+            data: "departamento"
+        },{
             data: "codigoReparacion"
         },{
             data: "precioUnitario"
