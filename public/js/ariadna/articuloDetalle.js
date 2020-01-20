@@ -88,6 +88,7 @@ function admData() {
     self.codigoBarras = ko.observable();
     self.codigoReparacion = ko.observable();
     self.descripcion = ko.observable();
+    self.varios = ko.observable();
     //
     self.stipoIvaId = ko.observable();
     //
@@ -126,6 +127,7 @@ function loadData(data) {
     vm.codigoBarras(data.codigoBarras);
     vm.codigoReparacion(data.codigoReparacion);
     vm.descripcion(data.descripcion);
+    vm.varios(data.varios);
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
     loadUnidades(data.unidadId);
@@ -195,7 +197,8 @@ function aceptar() {
                 "descripcion": vm.descripcion(),
                 "grupoArticuloId": vm.sgrupoArticuloId(),
                 "unidadId": vm.sunidadId(),
-                "tipoProfesionalId": vm.stipoProfesionalId()
+                "tipoProfesionalId": vm.stipoProfesionalId(),
+                "varios": vm.varios()
             }
         };
         if (empId == 0) {
