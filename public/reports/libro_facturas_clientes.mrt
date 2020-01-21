@@ -897,7 +897,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   <ReportChanged>1/21/2020 12:46:41 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>7b348ee3594c4952bab06e6d870845d1</ReportGuid>
+  <ReportGuid>de10c837ef0e4d92977670e124ec9c25</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
