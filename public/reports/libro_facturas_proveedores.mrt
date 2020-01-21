@@ -65,7 +65,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
       <Components isList="true" count="8">
         <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,19,2.2</ClientRectangle>
+          <ClientRectangle>0,0.4,27.7,2.2</ClientRectangle>
           <Components isList="true" count="2">
             <Text3 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -102,7 +102,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </PageHeaderBand1>
         <PageFooterBand1 Ref="8" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,26.9,19,0.8</ClientRectangle>
+          <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
             <Text5 Ref="9" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -126,7 +126,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </PageFooterBand1>
         <HeaderlibPro Ref="10" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,3.4,19,0.8</ClientRectangle>
+          <ClientRectangle>0,3.4,27.7,0.8</ClientRectangle>
           <Components isList="true" count="10">
             <Text6 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
@@ -306,7 +306,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <DatalibPro Ref="21" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,5,19,0.2</ClientRectangle>
+          <ClientRectangle>0,5,27.7,0.2</ClientRectangle>
           <Components isList="true" count="10">
             <Text9 Ref="22" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -497,7 +497,9 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>11,0,1.2,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <Conditions isList="true" count="1">
+                <value>libPro.porcentaje,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>5592025692a34d09907a5e85ced97093</Guid>
@@ -547,7 +549,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <FooterBand1 Ref="40" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,6,19,1.4</ClientRectangle>
+          <ClientRectangle>0,6,27.7,1.4</ClientRectangle>
           <Components isList="true" count="5">
             <Text18 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -656,7 +658,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </FooterBand1>
         <HeaderBand1 Ref="50" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,8.2,19,0.6</ClientRectangle>
+          <ClientRectangle>0,8.2,27.7,0.6</ClientRectangle>
           <Components isList="true" count="5">
             <Text29 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -752,7 +754,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         </HeaderBand1>
         <GroupHeaderBand2 Ref="56" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,9.6,19,0.4</ClientRectangle>
+          <ClientRectangle>0,9.6,27.7,0.4</ClientRectangle>
           <Components isList="true" count="4">
             <Text32 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -843,7 +845,7 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
         <DataBand1 Ref="64" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,10.8,19,0</ClientRectangle>
+          <ClientRectangle>0,10.8,27.7,0</ClientRectangle>
           <Components isList="true" count="0" />
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -861,8 +863,9 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
       <Guid>7f7989b68a2aca6d444ff67b30b21651</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
-      <PageHeight>29.7</PageHeight>
-      <PageWidth>21</PageWidth>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
       <Watermark Ref="65" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
@@ -883,10 +886,10 @@ LEFT JOIN empresas AS emp ON emp.empresaId = f.empresaId
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>11/29/2019 10:24:01 AM</ReportChanged>
+  <ReportChanged>1/21/2020 11:54:53 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile />
-  <ReportGuid>99f94a05a145437e814e388d55559749</ReportGuid>
+  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
+  <ReportGuid>faca4014ea4e4499b5dd00e0131fa1c6</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
