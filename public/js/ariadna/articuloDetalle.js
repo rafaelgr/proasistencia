@@ -48,6 +48,8 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
 
+    $("#txtCoste").blur(calculaPrecioVenta);
+
     
 
     initTablaTarifas()
@@ -89,6 +91,9 @@ function admData() {
     self.codigoReparacion = ko.observable();
     self.descripcion = ko.observable();
     self.varios = ko.observable();
+    self.coste = ko.observable();
+    self.porcentaje = ko.observable();
+    self.precioVenta = ko.observable();
     //
     self.stipoIvaId = ko.observable();
     //
@@ -128,6 +133,9 @@ function loadData(data) {
     vm.codigoReparacion(data.codigoReparacion);
     vm.descripcion(data.descripcion);
     vm.varios(data.varios);
+    vm.coste(data.coste);
+    vm.porcentaje(data.porcentaje);
+    vm.precioVenta(data.precioVenta);
     loadTiposIva(data.tipoIvaId);
     loadGruposArticulo(data.grupoArticuloId);
     loadUnidades(data.unidadId);
@@ -198,7 +206,10 @@ function aceptar() {
                 "grupoArticuloId": vm.sgrupoArticuloId(),
                 "unidadId": vm.sunidadId(),
                 "tipoProfesionalId": vm.stipoProfesionalId(),
-                "varios": vm.varios()
+                "varios": vm.varios(),
+                "coste": vm.coste(),
+                "porcentaje": vm.porcentaje(),
+                "precioVenta": vm.precioVenta()
             }
         };
         if (empId == 0) {
@@ -411,4 +422,12 @@ function loadTarifas(id) {
         if (err) return;
         loadTablaTarifas(data);
     });
+}
+
+var calculaPrecioVenta = function () {
+    var porcen = parseFloat(vm.porcentaje());
+    var cost = parseFloat(vm.coste());
+    porcen = porcen / 100;
+    vm.precioVenta(cost + (cost*porcen));
+  
 }
