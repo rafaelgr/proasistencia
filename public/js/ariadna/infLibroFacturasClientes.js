@@ -234,12 +234,6 @@ var obtainReport = function () {
 };
 
 var obtainReportJson = function (obj) {
-    //var  obj = rptFacturaParametros();
-        //
-
-        Stimulsoft.Base.StiLicense.key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHltN9ZO4D78QwpEoh6+UpBm5mrGyhSAIsuWoljPQdUv6R6vgviStsx8W3jirJvfPH27oRYrC2WIPEmaoAZTNtqb+nDxUpJlSmG62eA46oRJDV8kJ2cJSEx19GMJXYgZvv7yQT9aJHYaSrTVD7wdhpNVS1nQC3OtisVd7MQNQeM40GJxcZpyZDPfvld8mK6VX0RTPJsQZ7UcCEH4Y3LaKzA5DmUS+mwSnjXz/JFv1uO2JNkfcioieXfYfTaBIgZlKecarCS5vBgMrXly3m5kw+YwpJ2v+cMXuDk3UrZgrdxNnOhg8ZHPg9ijHxqUomZZBzKpVQU0d06ne60j/liMH5KirAI2JCVfBcBvIcyliJos8LAWr9q/1sPR9y7LmA1eyS1/dXaxmEaqi5ubhLqlf+OS0xFX6tlBBgegqHlIj6Fytwvq5YlGAZ0Cra05JhnKh/ohYlADQz6Jbg5sOKyn5EbejvPS3tWr0LRBH2FO6+mJaSEAwzGmoWT057ScSvGgQmfx8wCqSF+PgK/zTzjy75Oh";
-        //Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("Roboto-Black.ttf");
-       
         var file = "../reports/libro_facturas_clientes.mrt";
         var report = new Stimulsoft.Report.StiReport();
             
@@ -467,7 +461,11 @@ var rptFacturaParametros = function () {
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
-        obtainReportJson(data)
+        if(data.length > 0) {
+            obtainReportJson(data)
+        } else {
+            alert("No hay registros con estas condiciones");
+        }
     });
 }
 
