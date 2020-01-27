@@ -372,6 +372,7 @@ function admData() {
     self.importeAnticipo = ko.observable();
     self.restoPagar = ko.observable();
     self.conceptoAnticipo = ko.observable();
+    self.fianza = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -523,6 +524,8 @@ function loadData(data) {
     vm.importeAlCliente(data.totalAlCliente);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
+    vm.fianza(numeral(data.fianza).format('0,0.00'));
+    vm.restoPagar(data.restoPagar);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -1637,11 +1640,22 @@ function loadBasesFacprove(facproveId) {
             vm.totalConIva(numeral(t2).format('0,0.00'));
             var importeAnticipo = numeroDbf(vm.importeAnticipo());
             var totSinImporteAnticipo = t2-importeAnticipo;
-            vm.restoPagar(numeral(totSinImporteAnticipo).format('0,0.00'));
+            var fianza = numeroDbf(vm.fianza());
+            var restoPagar = totSinImporteAnticipo-fianza;
+            vm.restoPagar(numeral(restoPagar).format('0,0.00'));
             
             loadTablaBases(data);
         });
     });
+}
+
+function recalculaInticiposFianzas() {
+    var importeAnticipo = numeroDbf(vm.importeAnticipo());
+    var importeFianza = numeroDbf(vm.fianza());
+    var totSinImporteAnticipo = t2-importeAnticipo;
+    var totalSinFian = totSinImporteAnticipo-importeFianza;
+    vm.restoPagar(numeral(totalSinFian).format('0,0.00'));
+            
 }
 
 
