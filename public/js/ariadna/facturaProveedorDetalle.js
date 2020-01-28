@@ -144,13 +144,14 @@ function initForm() {
 
     initTablaAnticipos();
 
-    // select2 things
-    $("#cmbEmpresaServiciadas").select2(select2Spanish());
-    loadEmpresaServiciadas();
-    $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioEmpresaServiciada(e.added.id);
-    });
+   // select2 things
+   $("#cmbEmpresaServiciadas").select2(select2Spanish());
+   loadEmpresaServiciadas();
+   $("#cmbEmpresaServiciadas").select2().on('change', function (e) {
+       //alert(JSON.stringify(e.added));
+       if (e.added) cambioEmpresaServiciada(e.added.id);
+   });
+
 
 
 
@@ -169,6 +170,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
+
 
 
     $("#cmbUnidades").select2(select2Spanish());
@@ -1638,21 +1640,17 @@ function loadBasesFacprove(facproveId) {
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
-            var importeAnticipo = numeroDbf(vm.importeAnticipo());
-            var totSinImporteAnticipo = t2-importeAnticipo;
-            var fianza = numeroDbf(vm.fianza());
-            var restoPagar = totSinImporteAnticipo-fianza;
-            vm.restoPagar(numeral(restoPagar).format('0,0.00'));
-            
+            recalculaRestoPagar()
             loadTablaBases(data);
         });
     });
 }
 
-function recalculaInticiposFianzas() {
+function recalculaRestoPagar() {
     var importeAnticipo = numeroDbf(vm.importeAnticipo());
     var importeFianza = numeroDbf(vm.fianza());
-    var totSinImporteAnticipo = t2-importeAnticipo;
+    var totConIva =  numeroDbf(vm.totalConIva());
+    var totSinImporteAnticipo = totConIva-importeAnticipo;
     var totalSinFian = totSinImporteAnticipo-importeFianza;
     vm.restoPagar(numeral(totalSinFian).format('0,0.00'));
             
@@ -2564,6 +2562,8 @@ function vinculaAnticipoCompleto() {
 function vinculaAnticiposIncompletos() {
     var impAnticipo = 0;
     var selected;
+    var impFianza = parseFloat(vm.fianza());
+    var result = numeroDbf(vm.totalConIva());
     var id = []
     $('#dt_anticipos input[type=checkbox]').each(function(){
         if (this.checked) {
@@ -2596,12 +2596,15 @@ function vinculaAnticiposIncompletos() {
             anticipos.forEach(function(a) {
                 impAnticipo += a.totalConIva;
             });
+
             if(impAnticipo > 0) {
-                var tot = numeroDbf(vm.totalConIva());
-                var result = tot - impAnticipo
-                vm.restoPagar(numeral(result).format('0,0.00'));
+                result = result - impAnticipo
+                //vm.restoPagar(numeral(result).format('0,0.00'));
                 vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                 vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
+            }
+            if(impFianza > 0) {
+                result = result - impFianza;
             }
             //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
             var data = {
@@ -2620,6 +2623,7 @@ function vinculaAnticiposIncompletos() {
             llamadaAjax("PUT", "/api/facturasProveedores/" + vm.facproveId(), datosArray, function (err, data) {
                 if (err) return;
                 loadTablaAnticiposAsociados(anticipos);//CARGAMOS LA TABLA
+                recalculaRestoPagar();
             });
                 
             });
@@ -2831,8 +2835,8 @@ function initTablaAnticiposAsociados() {
             data: "antproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-               //var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 /*+ " " + bt2 */+ "</div>";
+               //var brecalculaRestoPagar = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 /*+ " " + brecalculaRestoPagar */+ "</div>";
                 return html;
             }
         }]
@@ -2859,6 +2863,8 @@ function loadTablaAnticiposAsociados(data) {
 
 function desvinculaAnticipoIncompleto(anticipoId) {
     var impAnticipo = 0
+    var impFianza = numeroDbf(vm.fianza());
+    var result = numeroDbf(vm.totalConIva());
     llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
@@ -2873,18 +2879,17 @@ function desvinculaAnticipoIncompleto(anticipoId) {
                     }
                 });
                 if(impAnticipo > 0) {
-                    var tot = numeroDbf(vm.totalConIva());
-                    var result = tot - impAnticipo
-                    vm.restoPagar(numeral(result).format('0,0.00'));
+                    result = result - impAnticipo
+                    //vm.restoPagar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
                 }
             } else {//SI NO HAY ANTICIPOS ASOCIADOS
-                var tot = numeroDbf(vm.totalConIva());
-                    var result = tot - 0
-                    vm.restoPagar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo('');
+            }
+            if(impFianza > 0) {
+                result = result - impFianza;
             }
             
             //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
@@ -2903,6 +2908,7 @@ function desvinculaAnticipoIncompleto(anticipoId) {
             datosArray.push(data)
             llamadaAjax("PUT", "/api/facturasProveedores/" + vm.facproveId(), datosArray, function (err, data) {
                 if (err) return;
+                recalculaRestoPagar();
                 loadTablaAnticiposAsociados(anticipos);//limpiamos la tabla
             });
         });
