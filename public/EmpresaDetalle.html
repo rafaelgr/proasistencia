@@ -650,12 +650,7 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <section class="col col-md-3">
-                                                                                    <label class="label">Serie Prefacturas</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
-                                                                                    </label>
-                                                                                </section>
+                                                                                
                                                                                 
                                                                                 <section class="col col-md-3">
                                                                                     <label class="label">Serie Facturas (Mantenimiento)</label>
@@ -915,9 +910,6 @@
                                                                                     <th data-class="phone">
                                                                                         Departamento
                                                                                     </th>
-                                                                                    <th data-hide="expand">
-                                                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
-                                                                                    </th>
                                                                                     <th data-hide="phone">
                                                                                         Tipo de proyecto
                                                                                     </th>
@@ -959,6 +951,64 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!--MODAL  -->
+    <div class="modal fade" id="modalSeries" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> SERIES FACTURACION</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="series-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-4">
+                                        <label class="label">Departamento</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Tipo Proyecto</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>    
+                                    <section class="col col-md-3">
+                                        <label class="label">Serie Facturas</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbSerieFac" name="cmbSerieFac" data-bind="options: posiblesTiposRegis, optionsText: 'nombre', optionsValue: 'tiporegi', value: stiporegi, valueAllowUnset: true, selectedOptions: elegidosTiposRegis, selected2:{}"></select>
+                                            <i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Serie Prefacturas</label>
+                                        <label class="input">
+                                            <input id="txtSeriePre" name="txtSeriePre" data-bind="value: seriePre" />
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarSeries" class="btn btn-primary" onclick="guardarSeries()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

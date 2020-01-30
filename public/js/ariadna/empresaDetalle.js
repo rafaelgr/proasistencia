@@ -2,7 +2,18 @@
 empresaDetalle.js
 Funciones js par la página EmpresaDetalle.html
 ---------------------------------------------------------------------------*/
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
 var empId = 0;
+var dataSeries;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
 
 datePickerSpanish(); // see comun.js
 
@@ -23,6 +34,10 @@ function initForm() {
         return false;
     });
     $("#frmSeries").submit(function () {
+        return false;
+    });
+    
+    $("#series-form").submit(function () {
         return false;
     });
     
@@ -65,6 +80,17 @@ function initForm() {
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieReparaciones').select2(select2Spanish());
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+     loadDepartamentos();
+
+    $("#cmbTipoProyecto").select2(select2Spanish());
+    loadTipoProyecto();
+
+    $('#cmbSerieFac').select2(select2Spanish());
+   
+
+
     initTablaSeries();
     
     
@@ -86,6 +112,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                loadSeriesDelContrato(empId);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -174,7 +201,22 @@ function admData() {
 
     //
     self.plantillaCorreoFacturas = ko.observable();
+
+
+    //MODAL
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.tipoProyectoId = ko.observable();
+    self.stipoProyectoId = ko.observable();
+    //
+    self.posiblesTipoProyecto = ko.observableArray([]);
+    self.elegidosTipoProyecto = ko.observableArray([]);
 }
+
 
 function loadData(data) {
     vm.empresaId(data.empresaId);
@@ -204,7 +246,7 @@ function loadData(data) {
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.contabilidad(data.contabilidad);
-    vm.seriePre(data.seriePre);
+    //vm.seriePre(data.seriePre);
     loadTiposVia(data.tipoViaId);
     vm.infOfertas(data.infOfertas);
     vm.infFacturas(data.infFacturas);
@@ -215,10 +257,11 @@ function loadData(data) {
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
 
     //
-    loadSerieMantenimiento(data.serieFac);
+    //loadSerieMantenimiento(data.serieFac);
     loadSerieSeguros(data.serieFacS);
     loadSerieRectificativas(data.serieFacR);
     loadSerieReparaciones(data.serieFacRep);
+    loadSeriesFact();
 }
 
 function datosOK() {
@@ -236,9 +279,7 @@ function datosOK() {
             txtContabilidad: {
                 required: true
             },
-            txtSeriePre: {
-                required: true
-            },
+            
             
         },
         // Messages for form validation
@@ -255,9 +296,7 @@ function datosOK() {
             txtContabilidad: {
                 required: 'Indique la contabilidad'
             },
-            txtSeriePre: {
-                required: 'Indique la serie'
-            },
+           
            
         },
         // Do not change code below
@@ -320,7 +359,7 @@ function aceptar() {
                 "firmante": vm.firmante(),
                 "contabilidad": vm.contabilidad(),
                 "tipoViaId": vm.stipoViaId(),
-                "seriePre": vm.seriePre(),
+                //"seriePre": vm.seriePre(),
                 "serieFac": vm.stiporegi(),
                 "serieFacS": vm.stiporegiSeg(),
                 "serieFacR": vm.stiporegiRec(),
@@ -493,6 +532,24 @@ function loadSerieRectificativas(id) {
     });
 }
 
+function loadSeriesFact() {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = data;
+            vm.posiblesTiposRegis(series);
+            $("#cmbSerieFac").val([]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 function loadSerieReparaciones(id) {
     $.ajax({
@@ -509,6 +566,28 @@ function loadSerieReparaciones(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos", null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+
+function loadTipoProyecto(id) {
+    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{
+            tipoProyectoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');
     });
 }
 
@@ -529,7 +608,7 @@ function comprobarVacios(){
 
 // --------------- Solapa de Series
 function initTablaSeries() {
-    tablaSeries = $('#dt_Series').DataTable({
+    tablaSeries = $('#dt_series').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -540,7 +619,7 @@ function initTablaSeries() {
         "oTableTools": {
             "aButtons": [{
                 "sExtends": "pdf",
-                "sTitle": "Series Seleccionadas",
+                "sTitle": "Prefacturas Seleccionadas",
                 "sPdfMessage": "proasistencia PDF Export",
                 "sPdfSize": "A4",
                 "sPdfOrientation": "landscape",
@@ -551,7 +630,7 @@ function initTablaSeries() {
             },
             {
                 "sExtends": "copy",
-                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
                 "oSelectorOpts": {
                     filter: 'applied',
                     order: 'current'
@@ -559,7 +638,7 @@ function initTablaSeries() {
             },
             {
                 "sExtends": "csv",
-                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
                 "oSelectorOpts": {
                     filter: 'applied',
                     order: 'current'
@@ -567,7 +646,7 @@ function initTablaSeries() {
             },
             {
                 "sExtends": "xls",
-                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
                 "oSelectorOpts": {
                     filter: 'applied',
                     order: 'current'
@@ -575,7 +654,7 @@ function initTablaSeries() {
             },
             {
                 "sExtends": "print",
-                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
                 "oSelectorOpts": {
                     filter: 'applied',
                     order: 'current'
@@ -647,34 +726,83 @@ function initTablaSeries() {
         }]
     });
 
-    // Apply the filter
-    $("#dt_Series thead th input[type=text]").on('keyup change', function () {
-        tablaSeries
-            .column($(this).parent().index() + ':visible')
-            .search(this.value)
-            .draw();
-    });
-
-    // Hide some columns by default
-    tablaSeries.columns(8).visible(false);
-    tablaSeries.columns(10).visible(false);
 }
 
-function loadSeriesDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresa-series/" + empresaId, null, function (err, data) {
+function loadSeriesDelContrato(empresaId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + empresaId, null, function (err, data) {
         if (err) return;
         loadTablaSeries(data);
     });
 }
 
 function loadTablaSeries(data) {
-    var dt = $('#dt_Series').dataTable();
+    var dt = $('#dt_series').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();
+}
+
+function guardarSeries(id) {
+    var data = {
+        empresaSerie: {
+            empresaId: vm.empresaId(),
+            departamentoId: vm.sdepartamentoId(),
+            tipoProyectoId: vm.stipoProyectoId(),
+            serie_factura: vm.stiporegi(),
+            serie_prefactura: vm.seriePre()
+        }
+    }
+    if (!id) {
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadSeriesDelContrato(vm.empresaId());
+                $('#modalSeries').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie" + id,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadSeriesDelContrato(vm.empresaId());
+                $('#modalSeries').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
+function cargaModalSeries(id) {
+    if(id) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
+            if (err) return;
+            loadTablaSeries(data);
+            loadDepartamentos(data.departamentoId);
+            loadTipoProyecto(data.tipoProyectoId)
+            loadSeriesFact(data.serie_factura);
+            vm.serie_prefactura(data.serie_prefactura);
+        });
+    }
 }
 
 
