@@ -22,6 +22,10 @@ function initForm() {
     $("#frmEmpresa").submit(function () {
         return false;
     });
+    $("#frmSeries").submit(function () {
+        return false;
+    });
+    
 
 
     //comprobamos si el puerto 465 está configurado con correo seguro
@@ -61,6 +65,7 @@ function initForm() {
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieReparaciones').select2(select2Spanish());
+    initTablaSeries();
     
     
     // carga del editor de plantillas
@@ -521,4 +526,156 @@ function comprobarVacios(){
             vm.portCorreo(null);
         }
 }
+
+// --------------- Solapa de Series
+function initTablaSeries() {
+    tablaSeries = $('#dt_Series').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Series Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Series filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_series'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataSeries,
+        columns: [{
+            data: "empresaSerieId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "departamentoNombre"
+        }, {
+            data: "tipoProyectoNombre"
+        }, {
+            data: "serie_prefactura"
+        }, {
+            data: "serie_factura"
+        }, {
+            data: "empresaSerieId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_Series thead th input[type=text]").on('keyup change', function () {
+        tablaSeries
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    // Hide some columns by default
+    tablaSeries.columns(8).visible(false);
+    tablaSeries.columns(10).visible(false);
+}
+
+function loadSeriesDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresa-series/" + empresaId, null, function (err, data) {
+        if (err) return;
+        loadTablaSeries(data);
+    });
+}
+
+function loadTablaSeries(data) {
+    var dt = $('#dt_Series').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
 
