@@ -15,6 +15,9 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var serieEnEdicion = false;
+var empSerieId = 0;
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -532,7 +535,7 @@ function loadSerieRectificativas(id) {
     });
 }
 
-function loadSeriesFact() {
+function loadSeriesFact(id) {
     $.ajax({
         type: "GET",
         url: "/api/empresas/series/" + vm.contabilidad(),
@@ -541,6 +544,10 @@ function loadSeriesFact() {
         success: function (data, status) {
             var series = data;
             vm.posiblesTiposRegis(series);
+            if(id)  {
+                $("#cmbSerieFac").val([id]).trigger('change');
+                return;
+            }
             $("#cmbSerieFac").val([]).trigger('change');
         },
         error: function (err) {
@@ -717,10 +724,10 @@ function initTablaSeries() {
         }, {
             data: "empresaSerieId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteSeries(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editSeries(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
@@ -745,7 +752,7 @@ function loadTablaSeries(data) {
     dt.fnDraw();
 }
 
-function guardarSeries(id) {
+function guardarSeries() {
     var data = {
         empresaSerie: {
             empresaId: vm.empresaId(),
@@ -755,7 +762,7 @@ function guardarSeries(id) {
             serie_prefactura: vm.seriePre()
         }
     }
-    if (!id) {
+    if (!serieEnEdicion) {
         $.ajax({
             type: "POST",
             url: myconfig.apiUrl + "/api/empresas/empresaSerie",
@@ -775,12 +782,14 @@ function guardarSeries(id) {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/empresas/empresaSerie" + id,
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie/" + empSerieId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
+                serieEnEdicion = false;
+                empSerieId = 0;
                 loadSeriesDelContrato(vm.empresaId());
                 $('#modalSeries').modal('hide');
             },
@@ -792,15 +801,53 @@ function guardarSeries(id) {
     }
 }
 
+function deleteSeries(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/empresas/empresaSerie/del/contrato/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadSeriesDelContrato(vm.empresaId());
+                    $('#modalSeries').modal('hide');
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function editSeries(id) {
+    cargaModalSeries(id);
+}
+
 function cargaModalSeries(id) {
     if(id) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
             if (err) return;
-            loadTablaSeries(data);
+            //loadTablaSeries(data);
+            serieEnEdicion = true;
+            empSerieId = id;
             loadDepartamentos(data.departamentoId);
             loadTipoProyecto(data.tipoProyectoId)
             loadSeriesFact(data.serie_factura);
-            vm.serie_prefactura(data.serie_prefactura);
+            vm.seriePre(data.serie_prefactura);
+            $('#modalSeries').modal('show');
         });
     }
 }
