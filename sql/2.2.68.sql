@@ -9,25 +9,26 @@
 );
 
 
-ALTER TABLE `proasistencia`.`empresas_series`   
-  ADD  UNIQUE INDEX `empresaDepTipoProUNIQUE` (`empresaId`, `departamentoId`, `tipoProyectoId`);
-
-
-ALTER TABLE `proasistencia`.`empresas_series`   
-  DROP INDEX `empresaDepTipoProUNIQUE`,
+ALTER TABLE `empresas_series`   
   ADD  UNIQUE INDEX `empresaDepartamentoUNIQUE` (`empresaId`, `departamentoId`),
   ADD  UNIQUE INDEX `empresaTipoProyectoUNIQUE` (`empresaId`, `tipoProyectoId`);
 
   #ACTUALIZACIÓN DE EMPRESAS Y SERIES
 
-  INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
-(SELECT  departamentoId, 2 AS empresaId, 'PM' AS serie_factura, 'PF' AS `serie_prefactura` FROM departamentos
+INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
+(SELECT  departamentoId, 2 AS empresaId, 'PM' AS serie_factura, 'PF' AS `serie_prefactura` FROM departamentos);
+
+INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
+(SELECT  departamentoId, 3 AS empresaId, 'M' AS serie_factura, 'M' AS `serie_prefactura` FROM departamentos
 WHERE departamentoId <> 2);
+
+  INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
+(SELECT  departamentoId, 3 AS empresaId, 'S' AS serie_factura, 'M' AS `serie_prefactura` FROM departamentos
+WHERE departamentoId = 2);
 
 INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
 (SELECT  departamentoId, 4 AS empresaId, 'FGR' AS serie_factura, 'M' AS `serie_prefactura` FROM departamentos 
 WHERE departamentoId <> 2);
-
 
 
 INSERT INTO empresas_series (departamentoId, empresaId, serie_factura, serie_prefactura)
