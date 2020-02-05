@@ -688,44 +688,40 @@ function obtenerParametrosCombo(noContrato) {
             if(err) return;
             if(data) {
                 vm.tipoContratoId(data.tipoContratoId);
-                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + vm.sempresaId(), null, function (err, data) {
+                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + vm.sempresaId(), null, function (err, data2) {
                     if(err) return;
-                    if(data) {//componemos el objeto con las series para cargar el combo
-                        obj = {
-                            nombre: data[0].seriePre + " // Prefactura",
-                            serieId: data[0].seriePre
-                        }
-                        comboSeries.push(obj);
-                        
-                        for(var i = 0; i < data.length; i++) {
-                            if(data[i].tipoProyectoId == vm.tipoProyectoId()) {
-                                obj = {
-                                    nombre: data.serieFac+ " // Contrato asociado",
-                                    serieId: data.serieFac
+                    if(data2) {//componemos el objeto con las series para cargar el combo
+                        for(var i = 0; i < data2.length; i++) {
+                            if(data.tipoContratoId == data2[i].departamentoId) {
+                                if(data2[i].serie_prefactura || data2[i].serie_prefactura != '') {
+                                    obj = {
+                                        nombre: data2[i].serie_prefactura + " // Prefactura",
+                                        serieId: data2[i].serie_prefactura
+                                    }
+                                    comboSeries.push(obj);
                                 }
-                                serie = data.serieFac
+                                if(data2[i].serie_factura) {
+                                    obj = {
+                                        nombre: data2[i].serie_factura + " // serie del departamento",
+                                        serieId: data2[i].serie_factura
+                                    }
+                                    comboSeries.push(obj);
+                                }
+                                
+                            }
+                            if(data.tipoProyectoId == data2[i].tipoProyectoId) {
+                                obj = {
+                                    nombre: data2[i].serie_factura + " // serie del tipo Proyecto",
+                                    serieId: data2[i].serie_factura
+                                }
+                                comboSeries.push(obj);
                             }
                         }
-                        comboSeries.push(obj);
-                        /*if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
-                            obj = {
-                                nombre: data.serieFacS + " // Contrato asociado",
-                                serieId: data.serieFacS
-                            }
-                            serie = data.serieFacS
-                        } else {
-                            obj = {
-                                nombre: data.serieFac+ " // Contrato asociado",
-                                serieId: data.serieFac
-                            }
-                            serie = data.serieFac
-                        }
-                        comboSeries.push(obj);*/
-    
                         obj = {
-                            nombre: data.serieFacR + " // Rectificativa",
-                            serieId: data.serieFacR
+                            nombre: data2[0].serieFacR + " // Rectificativa",
+                            serieId: data2[0].serieFacR
                         }
+                        
                         comboSeries.push(obj);
         
                         cargarSeries(comboSeries, serie)
@@ -759,6 +755,7 @@ function obtenerParametrosCombo(noContrato) {
         });
     }
 }
+
 
 
 
