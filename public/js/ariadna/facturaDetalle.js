@@ -175,6 +175,7 @@ function admData() {
     self.departamentoId = ko.observable()
     self.importeAnticipo = ko.observable();
     self.restoCobrar = ko.observable();
+    self.tipoProyectoId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -512,6 +513,7 @@ var generarFacturaDb = function () {
             "departamentoId": vm.departamentoId(),
             "observacionesPago": vm.observacionesPago(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
+            "tipoProyectoId": vm.tipoProyectoId()
         }
     };
     return data;
@@ -670,6 +672,7 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         if (!vm.coste()) vm.coste(0);
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
+        vm.tipoProyectoId(data.tipoProyectoId);
         obtenerParametrosCombo(false)
         recalcularCostesImportesDesdeCoste();
     });
@@ -685,32 +688,38 @@ function obtenerParametrosCombo(noContrato) {
             if(err) return;
             if(data) {
                 vm.tipoContratoId(data.tipoContratoId);
-                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
+                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + vm.sempresaId(), null, function (err, data2) {
                     if(err) return;
-                    if(data) {//componemos el objeto con las series para cargar el combo
-                        obj = {
-                            nombre: data.seriePre + " // Prefactura",
-                            serieId: data.seriePre
-                        }
-                        comboSeries.push(obj);
-                        if(vm.tipoContratoId() == 2) {//según el tipo de contrato cargamos una serie u otra
-                            obj = {
-                                nombre: data.serieFacS + " // Contrato asociado",
-                                serieId: data.serieFacS
+                    if(data2) {//componemos el objeto con las series para cargar el combo
+                        for(var i = 0; i < data2.length; i++) {
+                            if(data.tipoContratoId == data2[i].departamentoId) {
+                                if(data2[i].serie_prefactura || data2[i].serie_prefactura != '') {
+                                    obj = {
+                                        nombre: data2[i].serie_prefactura + " // Prefactura",
+                                        serieId: data2[i].serie_prefactura
+                                    }
+                                    comboSeries.push(obj);
+                                }
+                                if(data2[i].serie_factura) {
+                                    obj = {
+                                        nombre: data2[i].serie_factura + " // serie del departamento",
+                                        serieId: data2[i].serie_factura
+                                    }
+                                    comboSeries.push(obj);
+                                }
+                                
                             }
-                            serie = data.serieFacS
-                        } else {
-                            obj = {
-                                nombre: data.serieFac+ " // Contrato asociado",
-                                serieId: data.serieFac
+                            if(data.tipoProyectoId == data2[i].tipoProyectoId) {
+                                obj = {
+                                    nombre: data2[i].serie_factura + " // serie del tipo Proyecto",
+                                    serieId: data2[i].serie_factura
+                                }
+                                comboSeries.push(obj);
                             }
-                            serie = data.serieFac
                         }
-                        comboSeries.push(obj);
-    
                         obj = {
-                            nombre: data.serieFacR + " // Rectificativa",
-                            serieId: data.serieFacR
+                            nombre: data2[0].serieFacR + " // Rectificativa",
+                            serieId: data2[0].serieFacR
                         }
                         
                         comboSeries.push(obj);
@@ -746,6 +755,7 @@ function obtenerParametrosCombo(noContrato) {
         });
     }
 }
+
 
 
 
