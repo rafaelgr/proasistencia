@@ -542,13 +542,10 @@ function loadSeriesFact(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var series = data;
+            var series = [{tiporegi: 100, nomregis: null}].concat(data);
             vm.posiblesTiposRegis(series);
-            if(id)  {
-                $("#cmbSerieFac").val([id]).trigger('change');
-                return;
-            }
-            $("#cmbSerieFac").val([]).trigger('change');
+            $("#cmbSerieFac").val([id]).trigger('change');
+            return;
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -580,7 +577,7 @@ function loadSerieReparaciones(id) {
 function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos", null, function (err, data) {
         if (err) return;
-        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
+        var departamentos = [{ departamentoId: 0, nombre: '' }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
@@ -753,6 +750,14 @@ function loadTablaSeries(data) {
 }
 
 function guardarSeries() {
+    var departamentoId = vm.sdepartamentoId();
+    var tipoProyectoId = vm.stipoProyectoId();
+    var tiporegi = vm.stiporegi();
+    var seriepre =  vm.seriePre();
+    if(departamentoId == 0) vm.sdepartamentoId(null);
+    if(tipoProyectoId == 0) vm.stipoProyectoId(null);
+    if(tiporegi == 100) vm.stiporegi(null);
+    if(seriepre = '') vm.seriePre(null);
     var data = {
         empresaSerie: {
             empresaId: vm.empresaId(),
@@ -818,6 +823,7 @@ function deleteSeries(id) {
                 data: null,
                 success: function (data, status) {
                     loadSeriesDelContrato(vm.empresaId());
+                    limpiaModal();
                     $('#modalSeries').modal('hide');
                 },
                 error: function (err) {
@@ -827,9 +833,17 @@ function deleteSeries(id) {
             });
         }
         if (ButtonPressed === "Cancelar") {
+            limpiaModal();
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+function limpiaModal() {
+    loadDepartamentos(0);
+    loadTipoProyecto(0);
+    loadSeriesFact(100);
+    vm.seriePre(null);
 }
 
 function editSeries(id) {
@@ -837,6 +851,7 @@ function editSeries(id) {
 }
 
 function cargaModalSeries(id) {
+    limpiaModal();
     if(id) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
             if (err) return;
