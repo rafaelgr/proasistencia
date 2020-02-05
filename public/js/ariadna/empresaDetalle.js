@@ -2,7 +2,21 @@
 empresaDetalle.js
 Funciones js par la página EmpresaDetalle.html
 ---------------------------------------------------------------------------*/
+var responsiveHelper_dt_basic = undefined;
+var responsiveHelper_datatable_fixed_column = undefined;
+var responsiveHelper_datatable_col_reorder = undefined;
+var responsiveHelper_datatable_tabletools = undefined;
+
 var empId = 0;
+var dataSeries;
+
+var breakpointDefinition = {
+    tablet: 1024,
+    phone: 480
+};
+
+var serieEnEdicion = false;
+var empSerieId = 0;
 
 datePickerSpanish(); // see comun.js
 
@@ -22,6 +36,14 @@ function initForm() {
     $("#frmEmpresa").submit(function () {
         return false;
     });
+    $("#frmSeries").submit(function () {
+        return false;
+    });
+    
+    $("#series-form").submit(function () {
+        return false;
+    });
+    
 
 
     //comprobamos si el puerto 465 está configurado con correo seguro
@@ -61,6 +83,23 @@ function initForm() {
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieReparaciones').select2(select2Spanish());
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+     loadDepartamentos();
+
+    $("#cmbTipoProyecto").select2(select2Spanish());
+    loadTipoProyecto();
+
+    $('#cmbSerieFac').select2(select2Spanish());
+   
+
+    
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        loadDepartamentos(0);
+    });
+
+    initTablaSeries();
     
     
     // carga del editor de plantillas
@@ -81,6 +120,7 @@ function initForm() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                loadSeriesDelContrato(empId);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -169,7 +209,22 @@ function admData() {
 
     //
     self.plantillaCorreoFacturas = ko.observable();
+
+
+    //MODAL
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.tipoProyectoId = ko.observable();
+    self.stipoProyectoId = ko.observable();
+    //
+    self.posiblesTipoProyecto = ko.observableArray([]);
+    self.elegidosTipoProyecto = ko.observableArray([]);
 }
+
 
 function loadData(data) {
     vm.empresaId(data.empresaId);
@@ -199,7 +254,7 @@ function loadData(data) {
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
     vm.contabilidad(data.contabilidad);
-    vm.seriePre(data.seriePre);
+    //vm.seriePre(data.seriePre);
     loadTiposVia(data.tipoViaId);
     vm.infOfertas(data.infOfertas);
     vm.infFacturas(data.infFacturas);
@@ -210,10 +265,11 @@ function loadData(data) {
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
 
     //
-    loadSerieMantenimiento(data.serieFac);
+    //loadSerieMantenimiento(data.serieFac);
     loadSerieSeguros(data.serieFacS);
     loadSerieRectificativas(data.serieFacR);
     loadSerieReparaciones(data.serieFacRep);
+    loadSeriesFact();
 }
 
 function datosOK() {
@@ -231,9 +287,7 @@ function datosOK() {
             txtContabilidad: {
                 required: true
             },
-            txtSeriePre: {
-                required: true
-            },
+            
             
         },
         // Messages for form validation
@@ -250,9 +304,7 @@ function datosOK() {
             txtContabilidad: {
                 required: 'Indique la contabilidad'
             },
-            txtSeriePre: {
-                required: 'Indique la serie'
-            },
+           
            
         },
         // Do not change code below
@@ -315,7 +367,7 @@ function aceptar() {
                 "firmante": vm.firmante(),
                 "contabilidad": vm.contabilidad(),
                 "tipoViaId": vm.stipoViaId(),
-                "seriePre": vm.seriePre(),
+                //"seriePre": vm.seriePre(),
                 "serieFac": vm.stiporegi(),
                 "serieFacS": vm.stiporegiSeg(),
                 "serieFacR": vm.stiporegiRec(),
@@ -488,6 +540,25 @@ function loadSerieRectificativas(id) {
     });
 }
 
+function loadSeriesFact(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas/series/" + vm.contabilidad(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var series = [{tiporegi: 100, nomregis: null}].concat(data);
+            vm.posiblesTiposRegis(series);
+            $("#cmbSerieFac").val([id]).trigger('change');
+            return;
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 function loadSerieReparaciones(id) {
     $.ajax({
@@ -507,6 +578,29 @@ function loadSerieReparaciones(id) {
     });
 }
 
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos", null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: 0, nombre: '' }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+
+
+function loadTipoProyecto(id) {
+    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+        if (err) return;
+        var tipos = [{
+            tipoProyectoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesTipoProyecto(tipos);
+        $("#cmbTipoProyecto").val([id]).trigger('change');
+    });
+}
+
 function comprobarVacios(){
         if(/^\s+|\s+$/.test(vm.passCorreo()) || vm.passCorreo() == "") {
             vm.passCorreo(null);
@@ -521,4 +615,263 @@ function comprobarVacios(){
             vm.portCorreo(null);
         }
 }
+
+// --------------- Solapa de Series
+function initTablaSeries() {
+    tablaSeries = $('#dt_series').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Prefacturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_series'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataSeries,
+        columns: [{
+            data: "empresaSerieId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "departamentoNombre"
+        }, {
+            data: "tipoProyectoNombre"
+        }, {
+            data: "serie_prefactura"
+        }, {
+            data: "serie_factura"
+        }, {
+            data: "empresaSerieId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteSeries(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editSeries(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+}
+
+function loadSeriesDelContrato(empresaId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + empresaId, null, function (err, data) {
+        if (err) return;
+        loadTablaSeries(data);
+    });
+}
+
+function loadTablaSeries(data) {
+    var dt = $('#dt_series').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function guardarSeries() {
+    var departamentoId = vm.sdepartamentoId();
+    var tipoProyectoId = vm.stipoProyectoId();
+    var tiporegi = vm.stiporegi();
+    var seriepre =  vm.seriePre();
+    if(departamentoId == 0) vm.sdepartamentoId(null);
+    if(tipoProyectoId == 0) vm.stipoProyectoId(null);
+    if(tiporegi == 100) vm.stiporegi(null);
+    if(seriepre = '') vm.seriePre(null);
+    var data = {
+        empresaSerie: {
+            empresaId: vm.empresaId(),
+            departamentoId: vm.sdepartamentoId(),
+            tipoProyectoId: vm.stipoProyectoId(),
+            serie_factura: vm.stiporegi(),
+            serie_prefactura: vm.seriePre()
+        }
+    }
+    if (!serieEnEdicion) {
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadSeriesDelContrato(vm.empresaId());
+                $('#modalSeries').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie/" + empSerieId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                serieEnEdicion = false;
+                empSerieId = 0;
+                loadSeriesDelContrato(vm.empresaId());
+                $('#modalSeries').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
+function deleteSeries(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/empresas/empresaSerie/del/contrato/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadSeriesDelContrato(vm.empresaId());
+                    limpiaModal();
+                    $('#modalSeries').modal('hide');
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            limpiaModal();
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function limpiaModal() {
+    loadDepartamentos(0);
+    loadTipoProyecto(0);
+    loadSeriesFact(100);
+    vm.seriePre(null);
+}
+
+function editSeries(id) {
+    cargaModalSeries(id);
+}
+
+function cargaModalSeries(id) {
+    limpiaModal();
+    if(id) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
+            if (err) return;
+            //loadTablaSeries(data);
+            serieEnEdicion = true;
+            empSerieId = id;
+            loadDepartamentos(data.departamentoId);
+            loadTipoProyecto(data.tipoProyectoId)
+            loadSeriesFact(data.serie_factura);
+            vm.seriePre(data.serie_prefactura);
+            $('#modalSeries').modal('show');
+        });
+    }
+}
+
+
 

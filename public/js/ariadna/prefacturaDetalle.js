@@ -229,6 +229,7 @@ function admData() {
     self.costeLinea = ko.observable();
     self.totalLinea = ko.observable();
     self.capituloLinea = ko.observable();
+    self.tipoProyectoId = ko.observable();
    
     //
     self.sgrupoArticuloId = ko.observable();
@@ -451,7 +452,8 @@ var generarPrefacturaDb = function () {
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "departamentoId": vm.departamentoId(),
-            "observacionesPago": vm.observacionesPago()
+            "observacionesPago": vm.observacionesPago(),
+            "tipoProyectoId": vm.tipoProyectoId()
         }
     };
     return data;
@@ -609,6 +611,7 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         if (err) return;
         vm.porcentajeBeneficio(data.porcentajeBeneficio);
         vm.porcentajeAgente(data.porcentajeAgente);
+        vm.tipoProyectoId(data.tipoProyectoId);
         if (!vm.coste()) vm.coste(0);
         recalcularCostesImportesDesdeCoste();
     });
