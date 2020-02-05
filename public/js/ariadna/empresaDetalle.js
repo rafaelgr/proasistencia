@@ -93,6 +93,11 @@ function initForm() {
     $('#cmbSerieFac').select2(select2Spanish());
    
 
+    
+    $("#cmbTipoProyecto").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        loadDepartamentos(0);
+    });
 
     initTablaSeries();
     
@@ -582,6 +587,7 @@ function loadDepartamentos(departamentoId) {
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
+
 
 function loadTipoProyecto(id) {
     llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
