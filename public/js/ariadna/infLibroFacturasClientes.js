@@ -461,7 +461,7 @@ var rptFacturaParametros = function () {
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
-        if(data.length > 0) {
+        if(data.libCli.length > 0) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
