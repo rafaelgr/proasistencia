@@ -207,6 +207,7 @@ function aceptar() {
                 "unidadId": vm.sunidadId(),
                 "tipoProfesionalId": vm.stipoProfesionalId(),
                 "varios": vm.varios(),
+                "departamentoId": vm.sdepartamentoId(),
                 "coste": vm.coste(),
                 "porcentaje": vm.porcentaje(),
                 "precioVenta": vm.precioVenta()
