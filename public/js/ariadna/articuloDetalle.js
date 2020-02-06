@@ -347,7 +347,7 @@ function loadDepartamentos(departamentoId) {
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
-            vm.departamentoId(departamentoId);
+            vm.sdepartamentoId(departamentoId);
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
