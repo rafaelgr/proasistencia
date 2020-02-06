@@ -201,13 +201,15 @@ function loadTablaProveedores(data) {
 
 function buscarProveedores(exito) {
     var mf = function () {
+        var aBuscar = $('#txtBuscar').val();
+        if(aBuscar == '') $('#txtBuscar').val('*')
         if (!datosOK()) {
             if (!exito) return;
             var url = "ProveedoresGeneral.html";
             window.open(url, '_self');
         }
         // obtener el n.serie del certificado para la firma.
-        var aBuscar = $('#txtBuscar').val();
+        aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",

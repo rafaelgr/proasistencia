@@ -731,6 +731,14 @@
                                                                         </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-12">
+                                                                                <label class="label">IBAN</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtIban" name="txtIban" type="text" data-bind="value: emisorIban" disabled/>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
                                                                                 <label class="label">Departamento</label>
                                                                                 <label style="width:100%;">
                                                                                     <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
