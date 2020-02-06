@@ -336,6 +336,7 @@ function admData() {
     self.noContabilizar = ko.observable();
     self.conceptoAnticipo = ko.observable();
     self.completo = ko.observable();
+    self.emisorIban = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -498,6 +499,7 @@ function loadData(data) {
     vm.emisorPoblacion(data.emisorPoblacion);
     vm.emisorProvincia(data.emisorProvincia);
     vm.emisorDireccion(data.emisorDireccion);
+    vm.emisorIban(data.IBAN);
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.antproveServiciadoId(0);
     vm.importeServiciada(0);
@@ -607,7 +609,7 @@ function datosOK() {
             },
             txtNumero: {
                 required: "Debe introducir un número de anticipo",
-                rangelength: "El rango de digitos debe estar entre 1 y 10"
+                rangelength: "El rango de digitos debe estar entre 1 y 20"
             },
             txtTotalConIva: {
                 required: "Debe introducir una cantidad"
@@ -804,6 +806,7 @@ function cambioProveedor(proveedorId) {
         vm.emisorCodPostal(data.codPostal);
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
+        vm.emisorIban(data.IBAN);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         var numeroAnt = $("#txtNumero").val();
         compruebaRepetido(numeroAnt, proveedorId);

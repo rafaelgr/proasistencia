@@ -372,6 +372,7 @@ function admData() {
     self.importeAnticipo = ko.observable();
     self.restoPagar = ko.observable();
     self.conceptoAnticipo = ko.observable();
+    self.emisorIban = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -523,6 +524,7 @@ function loadData(data) {
     vm.importeAlCliente(data.totalAlCliente);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
+    vm.emisorIban(data.IBAN);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -664,7 +666,7 @@ function datosOK() {
             },
             txtNumero: {
                 required: "Debe introducir un número de factura",
-                rangelength: "El rango de digitos debe estar entre 1 y 10"
+                rangelength: "El rango de digitos debe estar entre 1 y 20"
             }
         },
         // Do not change code below
@@ -873,6 +875,7 @@ function cambioProveedor(proveedorId) {
         vm.emisorCodPostal(data.codPostal);
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
+        vm.emisorIban(data.IBAN);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         var numeroFact = $("#txtNumero").val();
         compruebaRepetido(numeroFact, proveedorId);
