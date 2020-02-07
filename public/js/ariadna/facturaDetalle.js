@@ -1430,10 +1430,11 @@ var cambioPorcentajeRetencion = function () {
     if (vm.porcentajeRetencion()) {
         var total = numeroDbf(vm.total()) * 1.0;
         var totalCuota = numeroDbf(vm.totalCuota()) * 1.0;
+        var importeAnticipo = numeroDbf(vm.importeAnticipo()) * 1.0;
         vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
+        var restoCobrar = totalConIva-importeAnticipo;
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-        var restoCobrar = vm.totalConIva()-vm.importeAnticipo();
         vm.restoCobrar(numeral(restoCobrar).format('0,0.00'));
     }
 }
