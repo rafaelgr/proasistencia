@@ -7,3 +7,5 @@ ALTER TABLE `articulos`
   ADD COLUMN `inicioCuentaFianza` INT(11) NULL AFTER `inicioCuenta`;
 
   UPDATE tipos_proveedor SET inicioCuentaFianza = 180;
+
+
