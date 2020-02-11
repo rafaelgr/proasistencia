@@ -8,4 +8,5 @@ ALTER TABLE `articulos`
 
   UPDATE tipos_proveedor SET inicioCuentaFianza = 180;
 
-
+ALTER TABLE `proveedores`   
+  CHANGE `revisionFianza` `revisionFianza` DATETIME NULL;
