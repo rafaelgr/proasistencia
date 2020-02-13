@@ -53,12 +53,14 @@ function admData() {
     self.tipoProveedorId = ko.observable();
     self.nombre = ko.observable();
     self.inicioCuenta = ko.observable();
+    self.inicioCuentaFianza = ko.observable();
 }
 
 function loadData(data) {
     vm.tipoProveedorId(data.tipoProveedorId);
     vm.nombre(data.nombre);
     vm.inicioCuenta(data.inicioCuenta);
+    vm.inicioCuentaFianza(data.inicioCuentaFianza);
 }
 
 function datosOK() {
@@ -92,7 +94,8 @@ function aceptar() {
             tipoProveedor: {
                 "tipoProveedorId": vm.tipoProveedorId(),
                 "nombre": vm.nombre(),
-                "inicioCuenta": vm.inicioCuenta()
+                "inicioCuenta": vm.inicioCuenta(),
+                "inicioCuentaFianza": vm.inicioCuentaFianza()
             }
         };
         if (empId == 0) {

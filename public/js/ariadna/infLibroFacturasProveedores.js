@@ -54,7 +54,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnBuscar").click(obtainReport);
+    $("#btnBuscar").click(rptFacturaParametros);
     // avoid form submmit
     $("#frmRptOfertas").submit(function () {
         return false;
@@ -235,6 +235,27 @@ var obtainReport = function () {
 
 };
 
+var obtainReportJson = function (obj) {
+    var file = "../reports/libro_facturas_proveedores.mrt";
+    var report = new Stimulsoft.Report.StiReport();
+        
+        
+    report.loadFile(file);
+
+    var dataSet = new Stimulsoft.System.Data.DataSet("liq_ant");
+    dataSet.readJson(obj);
+    
+     // Remove all connections from the report template
+     report.dictionary.databases.clear();
+
+     //
+    report.regData(dataSet.dataSetName, "", dataSet);
+    report.dictionary.synchronize();
+
+    viewer.report = report;
+};
+
+
 var obtainReportPdf = function () {
     var file = "../reports/libro_facturas_proveedores.mrt";
     // Create a new report instance
@@ -359,52 +380,28 @@ function loadComboOrden(){
     $("#cmbOrden option[value='numregisconta']").attr("selected",true).trigger('change');    
 }
 
-
-var rptFacturaParametros = function (sql) {
-
-
+var rptFacturaParametros = function () {
     var proveedorId = vm.sproveedorId();
-  
     var empresaId = vm.sempresaId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var tipoIvaId = vm.stipoIvaId();
     var conta = vm.sconta();
     var orden = vm.sorden();
+    if(!tipoIvaId) tipoIvaId = 0;
+    if(!proveedorId) proveedorId = 0;
+    var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + proveedorId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden
 
-    sql += " WHERE f.departamentoId IS NOT NULL ";
-   
-        if (proveedorId) {
-            sql += " AND f.proveedorId IN (" + proveedorId + ")";
-        }
-        if (empresaId) {
-            sql += " AND f.empresaId IN (" + empresaId + ")";
-        }
-        if (dFecha) {
-            sql += " AND f.fecha_recepcion >= '" + dFecha + " 00:00:00'";
-        }
-        if (hFecha) {
-            sql += " AND f.fecha_recepcion <= '" + hFecha + " 23:59:59'";
-        }
-        if (tipoIvaId) {
-            sql += " AND ti.tipoIvaId IN (" + tipoIvaId + ")";
-        }
-        if(conta == "sinConta") {
-            sql += " AND f.contabilizada = 0"
-        }
-        if(conta == "conta") {
-            sql += " AND f.contabilizada = 1"
-        }
-
-
-        sql += " ORDER BY "+ orden+" ASC";
-        /*if(departamentoId && departamentoId > 0) {
-            sql += " AND pf.departamentoId =" + departamentoId;
+    llamadaAjax("POST", url, null, function (err, data) {
+        if(err) return;
+        if(data) {
+            obtainReportJson(data)
         } else {
-            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
-        }*/
-    return sql;
+            alert("No hay registros con estas condiciones");
+        }
+    });
 }
+
 
 var exportarPDF = function () {
     $("#mensajeExportacion").hide();

@@ -65,8 +65,9 @@ function initForm() {
 function initTablaTiposProveedor() {
     tablaCarro = $('#dt_tipoProveedor').dataTable({
         "columnDefs": [
-            { "width": "60%", "targets": 0 },
-            { "width": "20%", "targets": 1 }
+            { "width": "40%", "targets": 0 },
+            { "width": "30%", "targets": 1 },
+            { "width": "30%", "targets": 2 }
           ],
         autoWidth: true,
         preDrawCallback: function () {
@@ -106,6 +107,8 @@ function initTablaTiposProveedor() {
             data: "nombre"
         }, {
             data: "inicioCuenta"
+        },{
+            data: "inicioCuentaFianza"
         },{
             data: "tipoProveedorId",
             render: function (data, type, row) {
