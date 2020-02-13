@@ -54,7 +54,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnBuscar").click(obtainReport);
+    $("#btnBuscar").click(rptFacturaParametros);
     // avoid form submmit
     $("#frmRptOfertas").submit(function () {
         return false;
@@ -233,6 +233,54 @@ var obtainReport = function () {
 
 };
 
+var obtainReportJson = function (obj) {
+        var file = "../reports/libro_facturas_clientes.mrt";
+        var report = new Stimulsoft.Report.StiReport();
+            
+            
+        report.loadFile(file);
+
+        var dataSet = new Stimulsoft.System.Data.DataSet("liq_ant");
+        dataSet.readJson(obj);
+        
+         // Remove all connections from the report template
+         report.dictionary.databases.clear();
+    
+         //
+        report.regData(dataSet.dataSetName, "", dataSet);
+        report.dictionary.synchronize();
+
+        viewer.report = report;
+
+        var resultado = JSON.stringify(obj);
+        /*fs.writeFile(process.env.JSON_DIR + "\\FGAS_castelduc.json", resultado, function(err) {
+            if(err) return callback(err);
+            return callback(null, true);
+        });*/
+
+        /* report.renderAsync(function (err, data2) {
+            // Creating export settings
+            var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
+            // Creating export service
+            var service = new Stimulsoft.Report.Export.StiPdfExportService();
+            // Creating MemoryStream
+            var stream = new Stimulsoft.System.IO.MemoryStream();
+            var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
+            var service = new Stimulsoft.Report.Export.StiPdfExportService();
+            var stream = new Stimulsoft.System.IO.MemoryStream();
+
+            service.exportTo(report, stream, settings);
+
+            var data = stream.toArray();
+
+            /*fs.writeFile(process.env.CLASIF_DIR + "\\" + numfactu + ".pdf", buffer, function(err){
+                if(err) return callback(err, null);
+            });
+            callback(null, data2);
+        });*/
+
+};
+
 var obtainReportPdf = function () {
     var file = "../reports/libro_facturas_clientes.mrt";
     // Create a new report instance
@@ -398,9 +446,7 @@ function loadComboOrden(){
 }
 
 
-var rptFacturaParametros = function (sql) {
-
-
+var rptFacturaParametros = function () {
     var clienteId = vm.sclienteId();
   
     var empresaId = vm.sempresaId();
@@ -409,39 +455,18 @@ var rptFacturaParametros = function (sql) {
     var tipoIvaId = vm.stipoIvaId();
     var conta = vm.sconta();
     var orden = vm.sorden();
+    if(!tipoIvaId) tipoIvaId = 0;
+    if(!clienteId) clienteId = 0;
+    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden
 
-    sql += " WHERE f.departamentoId IS NOT NULL ";
-   
-        if (clienteId) {
-            sql += " AND f.clienteId IN (" + clienteId + ")";
-        }
-        if (empresaId) {
-            sql += " AND f.empresaId IN (" + empresaId + ")";
-        }
-        if (dFecha) {
-            sql += " AND f.fecha >= '" + dFecha + " 00:00:00'";
-        }
-        if (hFecha) {
-            sql += " AND f.fecha <= '" + hFecha + " 23:59:59'";
-        }
-        if (tipoIvaId) {
-            sql += " AND ti.tipoIvaId IN (" + tipoIvaId + ")";
-        }
-        if(conta == "sinConta") {
-            sql += " AND f.contabilizada = 0"
-        }
-        if(conta == "conta") {
-            sql += " AND f.contabilizada = 1"
-        }
-
-        sql += " ORDER BY  f.facturaId, " +  orden;
-        /*if(departamentoId && departamentoId > 0) {
-            sql += " AND pf.departamentoId =" + departamentoId;
+    llamadaAjax("POST", url, null, function (err, data) {
+        if(err) return;
+        if(data.libCli.length > 0) {
+            obtainReportJson(data)
         } else {
-            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
-        }*/
-
-    return sql;
+            alert("No hay registros con estas condiciones");
+        }
+    });
 }
 
 var exportarPDF = function () {
