@@ -128,6 +128,9 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
+    $("#cmbTiposOperacion").select2(select2Spanish());
+    loadTiposOperacion();
+
     $("#txtNumero").on('change', function (e) {
         var numeroFact = $("#txtNumero").val();
      
@@ -467,7 +470,12 @@ function admData() {
     //
     self.posiblesTiposRetencion = ko.observableArray([]);
     self.elegidosCodigos = ko.observableArray([]);
-    
+    //
+    self.tipoOperacionId = ko.observable();
+    self.stipoOperacionId = ko.observable();
+    //
+    self.posiblesTiposOperacion = ko.observableArray([]);
+    self.elegidosTiposOperacion = ko.observableArray([]);    
 
 
 
@@ -530,6 +538,7 @@ function loadData(data) {
     vm.emisorIban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.restoPagar(data.restoPagar);
+    vm.tipoOperacionId(data.tipoOperacionId);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -555,6 +564,7 @@ function loadData(data) {
     //
     loadEmpresas(data.empresaId);
     loadDepartamentos(data.departamentoId);
+    loadTiposOperacion(data.tipoOperacionId)
     
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
@@ -647,6 +657,9 @@ function datosOK() {
             txtNumero: {
                 required: true,
                 rangelength: [1, 20]
+            },
+            cmbTiposOperacion: {
+                required: true
             }
         },
         // Messages for form validation
@@ -672,6 +685,9 @@ function datosOK() {
             txtNumero: {
                 required: "Debe introducir un número de factura",
                 rangelength: "El rango de digitos debe estar entre 1 y 20"
+            },
+            cmbTiposOperacion: {
+                required: "Debe elegir un tipo de operacion"
             }
         },
         // Do not change code below
@@ -787,7 +803,8 @@ var generarFacturaDb = function () {
             "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.sdepartamentoId(),
             "restoPagar": numeroDbf(vm.restoPagar()),
-            "conceptoAnticipo": vm.conceptoAnticipo()
+            "conceptoAnticipo": vm.conceptoAnticipo(),
+            "tipoOperacionId": vm.stipoOperacionId()
 
         }
     };
@@ -817,7 +834,17 @@ function loadEmpresas(empresaId) {
     });
 }
 
-function loadEmpresaServiciadas(empresaId2){
+function loadTiposOperacion(tipoOperacionId) {
+    llamadaAjax("GET", "/api/facturasProveedores/tipo/operacion/factura", null, function (err, data) {
+        if (err) return;
+        var tipoOperacion = [{ tipoOperacionId: null, nombre: "" }].concat(data);
+        vm.posiblesTiposOperacion(tipoOperacion);
+        $("#cmbTiposOperacion").val([tipoOperacionId]).trigger('change');
+    });
+}
+
+
+function loadEmpresaServiciadas(empresaId2) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
         var empresaServiciada = [{ empresaId: null, nombre: "" }].concat(data);
@@ -1402,9 +1429,16 @@ function cambioArticulo(articuloId) {
         }
         vm.cantidad(1);
         vm.importe(data.precioUnitario);
-        $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+        if(vm.tipoOperacionId() == 2) {
+            $("#cmbTiposIva").val([7]).trigger('change');
+            cambioTiposIva(7);
+            $("#cmbTiposIva").prop( "disabled", true);
+        }  else {
+            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+            cambioTiposIva(data.tipoIvaId);
+            $("#cmbTiposIva").prop( "disabled", false);
+        }
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
-        cambioTiposIva(data.tipoIvaId);
         cambioPrecioCantidad();
     });
 }
