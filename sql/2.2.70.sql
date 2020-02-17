@@ -273,7 +273,7 @@ INSERT  INTO `paises`(`codpais`,`nompais`,`intracom`) VALUES ('ZW','ZIMBABWE',0)
 
 ALTER TABLE `proveedores`   
   ADD COLUMN `paisId` INT(11) NULL AFTER `observaciones`,
-  ADD CONSTRAINT `proveedores_paises` FOREIGN KEY (`paisId`) REFERENCES `proasistencia`.`paises`(`paisId`);
+  ADD CONSTRAINT `proveedores_paises` FOREIGN KEY (`paisId`) REFERENCES `paises`(`paisId`);
 
 
   UPDATE proveedores SET paisId = 66;
