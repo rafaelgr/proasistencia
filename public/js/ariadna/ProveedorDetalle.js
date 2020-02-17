@@ -58,6 +58,8 @@ function initForm() {
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
+    $("#cmbPaises").select2(select2Spanish());
+    loadPaises();
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -344,6 +346,14 @@ function admData() {
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
     
+    //combo paises
+    //
+    self.paisId = ko.observable();
+    self.spaisId = ko.observable();
+    //
+    self.posiblesPaises = ko.observableArray([]);
+    self.elegidosPaises = ko.observableArray([]);
+    
 }
 
 function loadData(data) {
@@ -375,6 +385,7 @@ function loadData(data) {
     vm.revisionFianza(spanishDate(data.revisionFianza));
     vm.codigoProfesional(data.codigoProfesional);
     vm.observaciones(data.observaciones);
+    vm.paisId(data.paisId);
     
     antNif = data.nif;
     // split iban
@@ -395,6 +406,7 @@ function loadData(data) {
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
     loadTiposRetencion(data.codigoRetencion);
+    loadPaises(data.paisId)
     buscaDepartamentos();
     //loadDepartamentos(data.departamentoId)
 }
@@ -438,6 +450,9 @@ function datosOK() {
             },
             txtCodigoProfesional: {
                 required: true
+            },
+            cmbPaises: {
+                required: true,
             }
         },
         // Messages for form validation
@@ -472,6 +487,9 @@ function datosOK() {
             },
             txtCodigoProfesional: {
                 required: "Debe introducir un código profesional de proveedor"
+            },
+            cmbPaises: {
+                required: "Debe introducir un código de país"
             }
         },
         // Do not change code below
@@ -536,7 +554,7 @@ function aceptar() {
                 "tarifaId": vm.starifaProveedorId(),
                 "codigoRetencion": vm.scodigoRetencion(),
                 "observaciones": vm.observaciones(),
-                //"departamentoId": vm.sdepartamentoId()
+                "paisId": vm.spaisId()
 
             },
             departamentos: {
@@ -616,7 +634,6 @@ function loadTiposVia(id) {
 function loadTiposIva(id) {
     llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
         if (err) return;
-        [{ formaPagoId: null, nombre: "" }]
         var tiposIva = [{ tipoIvaId: 0, nombre: "" }].concat(data);
         vm.posiblesTiposIva(tiposIva);
         if (id) {
@@ -733,6 +750,20 @@ function loadDepartamentos(departamentosIds) {
         }
     });
 }
+
+function loadPaises(id) {
+    llamadaAjax("GET", "/api/proveedores/recupera/cod/pais", null, function (err, data) {
+        if (err) return;
+        var paises = [{ paisId: null, nombre: "" }].concat(data);
+        vm.posiblesPaises(paises);
+        if (id) {
+            $("#cmbPaises").val([id]).trigger('change');
+        } else {
+            $("#cmbPaises").val([null]).trigger('change');
+        }
+    });
+}
+
 
 
 function buscaDepartamentos() {
