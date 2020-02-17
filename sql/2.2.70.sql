@@ -14,8 +14,8 @@ INSERT INTO `tipos_operaciones` (`nombre`, `codopera`) VALUES ('INTRACOMUNITARIA
 ALTER TABLE `facprove`   
   ADD COLUMN `tipoOperacionId` INT(11) NULL AFTER `conceptoAnticipo`;
 
-  ALTER TABLE `proasistencia`.`facprove`  
-  ADD CONSTRAINT `RX_tipoOperacionFK` FOREIGN KEY (`tipoOperacionId`) REFERENCES `proasistencia`.`tipos_operaciones`(`tipoOperacionId`);
+  ALTER TABLE `facprove`  
+  ADD CONSTRAINT `RX_tipoOperacionFK` FOREIGN KEY (`tipoOperacionId`) REFERENCES `tipos_operaciones`(`tipoOperacionId`);
 
   UPDATE facprove SET tipoOperacionId = 1;
 
