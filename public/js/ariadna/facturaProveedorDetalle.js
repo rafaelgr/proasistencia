@@ -808,6 +808,9 @@ var generarFacturaDb = function () {
 
         }
     };
+    if(vm.stipoOperacionId() == 2) {
+        data.facprove.totalConIva =  numeroDbf(vm.total());
+    }
     return data;
 }
 
@@ -839,6 +842,7 @@ function loadTiposOperacion(tipoOperacionId) {
         if (err) return;
         var tipoOperacion = [{ tipoOperacionId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOperacion(tipoOperacion);
+        if(tipoOperacionId) vm.stipoOperacionId(tipoOperacionId);
         $("#cmbTiposOperacion").val([tipoOperacionId]).trigger('change');
     });
 }
@@ -1667,7 +1671,11 @@ function loadBasesFacprove(facproveId) {
         for (var i = 0; i < data.length; i++) {
             t1 += data[i].base;
             t3 += data[i].cuota;
-            t2 += data[i].base + data[i].cuota;
+            if(vm.stipoOperacionId() == 2) {
+                t2 += data[i].base;
+            } else {
+                t2 += data[i].base + data[i].cuota;
+            }
         }
         llamadaAjax("GET", "/api/facturasProveedores/retenciones/" + facproveId, null, function (err, dataBis) {
             if (err) return;
