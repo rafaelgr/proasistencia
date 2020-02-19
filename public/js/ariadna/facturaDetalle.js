@@ -19,6 +19,7 @@ var dataAnticipos;
 var usuario;
 var usaCalculadora;
 var numLineas = 0;
+var cont = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -46,13 +47,16 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
-
+    
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmFactura").submit(function () {
         return false;
+    });
+    $("#txtPrecio").focus(function () {
+        $('#txtPrecio').val(null);
     });
 
     $("#frmAnt").submit(function () {
@@ -354,17 +358,20 @@ function loadData(data, desdeLinea) {
             if (err) return;
             if(data) {
                 if(data.length > 0) {
-                    var mens = 'Hay anticipos para este cliente de este contrato, puede vincularlos desde la pestaña anticipos';
-                    // mensaje de AVISO con confirmación
-                    $.SmartMessageBox({
-                        title: "<i class='fa fa-info'></i> Mensaje",
-                        content: mens,
-                        buttons: '[Aceptar]'
-                    }, function (ButtonPressed) {
-                        if (ButtonPressed === "Aceptar") {
-                            
-                        }
-                    });
+                    if(cont != 1) {
+                        cont = 1;
+                        var mens = 'Hay anticipos para este cliente de este contrato, puede vincularlos desde la pestaña anticipos';
+                        // mensaje de AVISO con confirmación
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-info'></i> Mensaje",
+                            content: mens,
+                            buttons: '[Aceptar]'
+                        }, function (ButtonPressed) {
+                            if (ButtonPressed === "Aceptar") {
+                            }
+                        });
+                    }
+                    
                 }
             }
         });
@@ -374,7 +381,7 @@ function loadData(data, desdeLinea) {
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
     if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        if(data.departamentoId !=7) {
+        if(!vm.contratoId()) {
             obtenerParametrosCombo(false);
         }else {
             obtenerParametrosCombo(true);
@@ -673,7 +680,12 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
         vm.tipoProyectoId(data.tipoProyectoId);
-        obtenerParametrosCombo(false)
+        if(contratoId){
+            obtenerParametrosCombo(false);
+        } else {
+            obtenerParametrosCombo(true);
+        }
+        
         recalcularCostesImportesDesdeCoste();
     });
 }
@@ -706,6 +718,7 @@ function obtenerParametrosCombo(noContrato) {
                                         serieId: data2[i].serie_factura
                                     }
                                     comboSeries.push(obj);
+                                    serie = data2[i].serie_factura
                                 }
                                 
                             }
@@ -1659,8 +1672,12 @@ function cargaTablaAnticipos(){
     llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
         if (err) return;
         if(data) {
-            $("#modalAnticipo").modal({show: true});
-            loadTablaAnticipos(data);
+            if(cont != 1) {
+                $("#modalAnticipo").modal({show: true});
+                
+            } else {
+                loadTablaAnticipos(data);
+            }
         } else {
             $("#modalAnticipo").modal('hide');
             var mens = "No hay anticipos que vincular a esta factura"
