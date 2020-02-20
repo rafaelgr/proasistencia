@@ -20,6 +20,7 @@ var usuario;
 var usaCalculadora;
 var numLineas = 0;
 var cont = 0;
+var importeSuplido = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -1038,10 +1039,14 @@ function loadTablaFacturaLineas(data) {
 function loadLineasFactura(id) {
     llamadaAjax("GET", "/api/facturas/lineas/" + id, null, function (err, data) {
         if (err) return;
+        importeSuplido = 0;
         var totalCoste = 0;
         data.forEach(function (linea) {
             totalCoste += (linea.coste * linea.cantidad);
             vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+            if(linea.tipoIvaId == 6) {
+                importeSuplido = linea.totalLinea;
+            }
         })
         loadTablaFacturaLineas(data);
     });
@@ -1452,10 +1457,12 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 var cambioPorcentajeRetencion = function () {
     if (vm.porcentajeRetencion()) {
         var total = numeroDbf(vm.total()) * 1.0;
+        var totalSinSuplido = total - importeSuplido;
         var totalCuota = numeroDbf(vm.totalCuota()) * 1.0;
         var importeAnticipo = numeroDbf(vm.importeAnticipo()) * 1.0;
-        vm.importeRetencion(roundToTwo((total * vm.porcentajeRetencion()) / 100.0));
-        var totalConIva = roundToTwo(total + totalCuota - vm.importeRetencion());
+        vm.importeRetencion(roundToTwo((totalSinSuplido * vm.porcentajeRetencion()) / 100.0));
+        var totalConIva = roundToTwo(totalSinSuplido + totalCuota - vm.importeRetencion());
+        totalConIva = roundToTwo(totalConIva + importeSuplido)
         var restoCobrar = totalConIva-importeAnticipo;
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
         vm.restoCobrar(numeral(restoCobrar).format('0,0.00'));
