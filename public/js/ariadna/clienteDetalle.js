@@ -66,12 +66,12 @@ function initForm() {
         }
     });
 
-    $("#txtCuentaContable").on('change', function (e) {
-        var nif = vm.nif();
-        if(nif != "" && nif) {
-            compruebaNifRepetido(nif);
-        }
-    });
+    // $("#txtCuentaContable").on('blur', function (e) {
+    //     var nif = vm.nif();
+    //     if(nif != "" && nif) {
+    //         compruebaNifRepetido(nif);
+    //     }
+    // });
 
     $("#txtProId").on('change', function (e) {
         var proId = $("#txtProId").val();
@@ -970,14 +970,14 @@ function compruebaNifRepetido(nif) {
     }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif + "/" + cuentaContable,
+        url: myconfig.apiUrl + "/api/clientes/comprueba/nif/repetido/" + nif,
         dataType: "json",
         contentType: "application/json",
         data:null,
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
-               mensError('Ya existe un cliente con este NIF y la misma cuenta contable');
-               $('#txtNif').val("");
+               mensError('Ya existe un cliente con este NIF.');
+               //$('#txtNif').val("");
             }
         },
         error: function (err) {
