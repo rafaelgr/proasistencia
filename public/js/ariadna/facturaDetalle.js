@@ -382,11 +382,7 @@ function loadData(data, desdeLinea) {
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
     if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        if(!vm.contratoId()) {
-            obtenerParametrosCombo(false);
-        }else {
-            obtenerParametrosCombo(true);
-        }
+        obtenerParametrosCombo();
     }
 
     cargaTablaAnticiposAsociados();
@@ -681,22 +677,19 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
         vm.tipoProyectoId(data.tipoProyectoId);
-        if(contratoId){
-            obtenerParametrosCombo(false);
-        } else {
-            obtenerParametrosCombo(true);
-        }
+      
+        obtenerParametrosCombo();
         
         recalcularCostesImportesDesdeCoste();
     });
 }
 
-function obtenerParametrosCombo(noContrato) {
+function obtenerParametrosCombo() {
     //if(!noContrato) return;
     var comboSeries = [];
     var obj = {}
     var  serie;
-    if(!noContrato) {
+    if(vm.contratoId()) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
             if(err) return;
             if(data) {
