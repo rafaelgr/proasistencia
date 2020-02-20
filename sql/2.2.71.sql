@@ -19,8 +19,12 @@
 ALTER TABLE `partes_lineas`   
   CHANGE `comentarios` `comentarios` TEXT CHARSET utf8 COLLATE utf8_general_ci NULL;
 
-#CLIENTES REPETIDOS
-  (SELECT nif FROM clientes  WHERE activa = 1 AND NOT CuentaContable IS NULL GROUP BY nif HAVING COUNT(nif) > 1)
-SELECT nombre,clienteId,nif FROM clientes WHERE clienteId IN
-(SELECT DISTINCT clienteId FROM contratos WHERE clienteId IN
-(SELECT clienteId FROM clientes WHERE nif = 'H78630001' OR  nif = 'B87645990' OR  nif = 'H79791950'))
+  ALTER TABLE `partes_lineas`   
+  CHANGE `descripcion` `descripcion` TEXT CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+
+-- #CLIENTES REPETIDOS
+--   (SELECT nif FROM clientes  WHERE activa = 1 AND NOT CuentaContable IS NULL GROUP BY nif HAVING COUNT(nif) > 1)
+-- SELECT nombre,clienteId,nif FROM clientes WHERE clienteId IN
+-- (SELECT DISTINCT clienteId FROM contratos WHERE clienteId IN
+-- (SELECT clienteId FROM clientes WHERE nif = 'H78630001' OR  nif = 'B87645990' OR  nif = 'H79791950'))
