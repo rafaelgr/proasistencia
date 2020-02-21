@@ -269,7 +269,6 @@ function admData() {
     self.fechaAlta = ko.observable();
     self.fechaBaja = ko.observable();
     self.cuentaContable = ko.observable();
-    self.fianza = ko.observable('0,00');
     self.codigoProfesional = ko.observable();
     self.iban = ko.observable();
     self.iban1 = ko.observable();
@@ -283,9 +282,9 @@ function admData() {
     self.codigoOriginal = ko.observable();
     self.observaciones = ko.observable();
     //DATOS DE LA FIANZA
-    self.fianza = ko.observable('0,00');
-    self.fianzaAcumulada = ko.observable('0,00');
-    self.retencionFianza = ko.observable('0,00');
+    self.fianza = ko.observable('0.00');
+    self.fianzaAcumulada = ko.observable('0.00');
+    self.retencionFianza = ko.observable('0.00');
     self.revisionFianza = ko.observable();
 
     //
@@ -379,9 +378,9 @@ function loadData(data) {
     vm.fechaBaja(spanishDate(data.fechaBaja));
     vm.cuentaContable(data.cuentaContable);
     vm.iban(data.IBAN);
-    vm.fianza(numeral(data.fianza).format('0,0.00'));
-    vm.fianzaAcumulada(numeral(data.fianzaAcumulada).format('0,0.00'));
-    vm.retencionFianza(numeral(data.retencionFianza).format('0,0.00'));
+    vm.fianza(data.fianza);
+    vm.fianzaAcumulada(data.fianzaAcumulada);
+    vm.retencionFianza(data.retencionFianza);
     vm.revisionFianza(spanishDate(data.revisionFianza));
     vm.codigoProfesional(data.codigoProfesional);
     vm.observaciones(data.observaciones);
@@ -515,7 +514,7 @@ function datosOK() {
 function aceptar() {
     var mf = function () {
         if (!datosOK()) return;
-        if(!vm.fianza() || vm.fianza() == '') vm.fianza('0,00'); 
+        if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
         if(vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
         var data = {
             proveedor: {
@@ -546,10 +545,10 @@ function aceptar() {
                 "formaPagoId": vm.sformaPagoId(),
                 "IBAN": vm.iban(),
                 "codigoProfesional": vm.codigoProfesional(),
-                "fianza": numeroDbf(vm.fianza()),
+                "fianza": vm.fianza(),
                 "tipoIvaId": vm.stipoIvaId(),
-                "fianzaAcumulada": numeroDbf(vm.fianzaAcumulada()),
-                "retencionFianza" :numeroDbf(vm.retencionFianza()),
+                "fianzaAcumulada": vm.fianzaAcumulada(),
+                "retencionFianza" : vm.retencionFianza(),
                 "revisionFianza": spanishDbDate(vm.revisionFianza()),
                 "tarifaId": vm.starifaProveedorId(),
                 "codigoRetencion": vm.scodigoRetencion(),
