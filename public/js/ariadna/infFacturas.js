@@ -182,7 +182,13 @@ var obtainReport = function () {
     verb = "GET";
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     llamadaAjax(verb, url, null, function (err, data) {
-        var infFacturas = data.infFacturas;
+        var infFacturas;
+        if(vm.sdepartamentoId() == 7) {
+            infFacturas = data.infFacCliRep;
+        } else {
+            infFacturas = data.infFacturas;
+        }
+        
         file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
         report.loadFile(file);
@@ -273,12 +279,18 @@ function datosOK() {
         rules: {
             cmbEmpresas: {
                 required: true
+            },
+            cmbDepartamentosTrabajo: {
+                required: true
             }
         },
         // Messages for form validation
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
+            },
+            cmbDepartamentosTrabajo: {
+                required: "Debe elegir un departamento"
             }
         },
         // Do not change code below
