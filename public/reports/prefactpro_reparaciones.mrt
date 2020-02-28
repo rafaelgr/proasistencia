@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "1f8132b2d4244ecd9a7ccfc8fd65dd8a",
+  "ReportGuid": "d8eb8e1b7b374fa09977e141b63eaf0c",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1577950646935+0100)/",
+  "ReportChanged": "/Date(1582882925686+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -406,7 +406,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "  SELECT pf.*,\r\n     CONCAT(COALESCE(pf.ano,' '),'-',COALESCE(CAST(pf.serie AS CHAR(50)),' '),'-',COALESCE(CAST(pf.numero AS CHAR(50)),' ')) AS vnum,\r\n     fp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\n     FROM facprove AS pf\r\n     LEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\n     LEFT JOIN contratos as cm ON cm.contratoId = pf.contratoId\r\n     LEFT JOIN clientes as c ON c.clienteId = cm.clienteId\r\n\t LEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
+        "SqlCommand": "SELECT pf.*,\r\nCONCAT(COALESCE(pf.ano,' '),'-',COALESCE(CAST(pf.serie AS CHAR(50)),' '),'-',COALESCE(CAST(pf.numero AS CHAR(50)),' ')) AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos as cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes as c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -2035,6 +2035,17 @@
           "MasterComponent": "Datacabecera"
         },
         "8": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBand1",
+          "ClientRectangle": "0,12.4,19,0",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "NewPageAfter": true
+        },
+        "9": {
           "Ident": "StiRoundedRectanglePrimitive",
           "Name": "RoundedRectanglePrimitive2",
           "Guid": "5f7a0930ccec4cbcae76fe3d47df4f94",
@@ -2045,7 +2056,7 @@
             "Ident": "StiInteraction"
           }
         },
-        "9": {
+        "10": {
           "Ident": "StiRoundedRectanglePrimitive",
           "Name": "RoundedRectanglePrimitive3",
           "Guid": "328d6df2790e495197f6b8b94f84997b",

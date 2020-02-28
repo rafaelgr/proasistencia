@@ -30,6 +30,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarIdUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -105,6 +106,17 @@ function initForm() {
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
+
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
     initAutoProveedor();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -148,11 +160,23 @@ function admData() {
     //
     self.posiblesProveedores = ko.observableArray([]);
     self.elegidosProveedores = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
 };
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/facturaProveedor_general.mrt";
+    var file = "../reports/prefactpro_reparaciones.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     verb = "GET";
@@ -248,12 +272,18 @@ function datosOK() {
         rules: {
             cmbEmpresas: {
                 required: true
-            }
+            },
+            cmbDepartamentosTrabajo: {
+                required: true
+            },
         },
         // Messages for form validation
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
+            },
+            cmbDepartamentosTrabajo: {
+                required: "Debe elegir un departamento"
             }
         },
         // Do not change code below
@@ -274,36 +304,19 @@ function loadEmpresas(empresaId) {
     });
 }
 
-// initAutoProveedor
-// inicializa el control del proveedor como un autocomplete
-var initAutoProveedor = function () {
-    // incialización propiamente dicha
-    $("#txtProveedor").autocomplete({
-        source: function (request, response) {
-            // call ajax
-            llamadaAjax("GET", "/api/proveedores/?nombre=" + request.term, null, function (err, data) {
-                if (err) return;
-                var r = []
-                data.forEach(function (d) {
-                    var v = {
-                        value: d.nombre,
-                        id: d.proveedorId
-                    };
-                    r.push(v);
-                });
-                response(r);
-            });
-        },
-        minLength: 2,
-        select: function (event, ui) {
-            vm.sproveedorId(ui.item.id);
-        }
+function loadProveedores(proveedorId) {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        $("#cmbProveedores").val([proveedorId]).trigger('change');
     });
-};
+}
 
 var rptFacturaParametros = function (sql) {
     var facproveId = vm.facproveId();
     var proveedorId = vm.sproveedorId();
+    var departamentoId = vm.sdepartamentoId();
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -322,6 +335,11 @@ var rptFacturaParametros = function (sql) {
         }
         if (hFecha) {
             sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
+        }
+        if(departamentoId && departamentoId > 0) {
+            sql += " AND pf.departamentoId =" + departamentoId;
+        } else {
+            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
         }
 
     }
