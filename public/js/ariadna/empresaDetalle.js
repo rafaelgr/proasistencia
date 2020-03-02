@@ -90,15 +90,6 @@ function initForm() {
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
 
-    $('#cmbSerieFac').select2(select2Spanish());
-   
-
-    
-    $("#cmbTipoProyecto").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        loadDepartamentos(0);
-    });
-
     initTablaSeries();
     
     
@@ -265,10 +256,7 @@ function loadData(data) {
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
 
     //
-    //loadSerieMantenimiento(data.serieFac);
-    loadSerieSeguros(data.serieFacS);
     loadSerieRectificativas(data.serieFacR);
-    loadSerieReparaciones(data.serieFacRep);
     loadSeriesFact();
 }
 
@@ -496,24 +484,6 @@ function loadSerieMantenimiento(id) {
             var series = data;
             vm.posiblesTiposRegis(series);
             $("#cmbSerieMantenimiento").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-function loadSerieSeguros(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas/series/" + vm.contabilidad(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var series = data;
-            vm.posiblesTiposRegisSeg(series);
-            $("#cmbSerieSeguros").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);

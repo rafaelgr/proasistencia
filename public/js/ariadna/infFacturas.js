@@ -128,7 +128,7 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
-            obtainReport();
+            obtainReport(true);
             $('#selector').hide();
         });
     }
@@ -174,8 +174,11 @@ function admData() {
     self.elegidosColaboradores = ko.observableArray([]);
 };
 
-var obtainReport = function () {
-    if (!datosOK()) return;
+var obtainReport = function (carga) {
+    if(!carga) {
+        if (!datosOK()) return;
+    }
+    
     var file = "../reports/factura_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
