@@ -38,6 +38,8 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
+        if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
+        else{ $('#btnPrint').show() }
         cargarFacturas()();
     });
 
@@ -47,6 +49,8 @@ function initForm() {
     recuperaDepartamento(function(err, data) {
         if(err) return;
         initTablaFacturas();
+        if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
+        else{ $('#btnPrint').show() }
         // comprobamos parámetros
         facproveId = gup('facproveId');
         if (facproveId !== '') {

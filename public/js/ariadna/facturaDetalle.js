@@ -382,7 +382,7 @@ function loadData(data, desdeLinea) {
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
     if(!desdeLinea) {//si se vualven a cargar los datos despues de crear una linea no es necesario volver a cargar el combo
-        obtenerParametrosCombo();
+        obtenerParametrosCombo(data.empresaId);
     }
 
     cargaTablaAnticiposAsociados();
@@ -538,6 +538,7 @@ function loadEmpresas(empresaId) {
         var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
+        if(empresaId) vm.sempresaId(empresaId);
     });
 }
 
@@ -684,17 +685,19 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
     });
 }
 
-function obtenerParametrosCombo() {
+function obtenerParametrosCombo(empresaId) {
     //if(!noContrato) return;
     var comboSeries = [];
     var obj = {}
     var  serie;
+    var empId;
+    if(empresaId) { empId = empresaId } else {  empId = vm.sempresaId() }
     if(vm.contratoId()) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
             if(err) return;
             if(data) {
                 vm.tipoContratoId(data.tipoContratoId);
-                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + vm.sempresaId(), null, function (err, data2) {
+                llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + empId, null, function (err, data2) {
                     if(err) return;
                     if(data2) {//componemos el objeto con las series para cargar el combo
                         for(var i = 0; i < data2.length; i++) {
@@ -714,7 +717,6 @@ function obtenerParametrosCombo() {
                                     comboSeries.push(obj);
                                     serie = data2[i].serie_factura
                                 }
-                                
                             }
                             if(data.tipoProyectoId == data2[i].tipoProyectoId) {
                                 obj = {
@@ -727,37 +729,42 @@ function obtenerParametrosCombo() {
                         obj = {
                             nombre: data2[0].serieFacR + " // Rectificativa",
                             serieId: data2[0].serieFacR
-                        }
-                        
+                        }     
                         comboSeries.push(obj);
-        
                         cargarSeries(comboSeries, serie)
                     }
                 });
             }
         });
     } else {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + vm.empresaId(), null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/" + empId, null, function (err, data2) {
             if(err) return;
-            if(data) {//componemos el objeto con las series para cargar el combo
-                
-               
-                    obj = {
-                        nombre: data.serieFacRep + " // Serie Reparaciones",
-                        serieId: data.serieFacRep
+            if(data2) {//componemos el objeto con las series para cargar el combo
+                for(var i = 0; i < data2.length; i++) {
+                    if(vm.departamentoId() == data2[i].departamentoId) {
+                        if(data2[i].serie_prefactura || data2[i].serie_prefactura != '') {
+                            obj = {
+                                nombre: data2[i].serie_prefactura + " // Prefactura",
+                                serieId: data2[i].serie_prefactura
+                            }
+                            comboSeries.push(obj);
+                        }
+                        if(data2[i].serie_factura) {
+                            obj = {
+                                nombre: data2[i].serie_factura + " // serie del departamento",
+                                serieId: data2[i].serie_factura
+                            }
+                            comboSeries.push(obj);
+                            serie = data2[i].serie_factura
+                        }
                     }
-                    comboSeries.push(obj);
-    
-                obj = {
-                    nombre: data.serieFacR + " // Serie Rectificativa",
-                    serieId: data.serieFacR
                 }
-                
+                obj = {
+                    nombre: data2[0].serieFacR + " // Rectificativa",
+                    serieId: data2[0].serieFacR
+                }
                 comboSeries.push(obj);
-
-                serie = data.serieFacRep
-
-                cargarSeries(comboSeries, serie);
+                cargarSeries(comboSeries, serie)
             }
         });
     }

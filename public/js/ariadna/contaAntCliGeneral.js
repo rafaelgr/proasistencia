@@ -201,7 +201,7 @@ function loadTablaAnticipos(data) {
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                antprove: {
+                antClien: {
                     antClienId: v.antClienId,
                     empresaId: v.empresaId,
                     clienteId: v.clienteId,
@@ -210,19 +210,19 @@ function loadTablaAnticipos(data) {
                 }
             };
             if (this.checked) {
-                data.antClienId.sel = 1;
+                data.antClien.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
             var url = sprintf('%s/api/anticiposClientes/%s', myconfig.apiUrl, v.antClienId);
-            var data2 = [];
-            data2.push(data);
+            //var data2 = [];
+            //data2.push(data);
             $.ajax({
                 type: type,
                 url: url,
                 contentType: "application/json",
-                data: JSON.stringify(data2),
+                data: JSON.stringify(data),
                 success: function (data, status) {
 
                 },

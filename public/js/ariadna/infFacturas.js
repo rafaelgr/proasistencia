@@ -128,7 +128,7 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
-            obtainReport();
+            obtainReport(true);
             $('#selector').hide();
         });
     }
@@ -174,15 +174,24 @@ function admData() {
     self.elegidosColaboradores = ko.observableArray([]);
 };
 
-var obtainReport = function () {
-    if (!datosOK()) return;
+var obtainReport = function (carga) {
+    if(!carga) {
+        if (!datosOK()) return;
+    }
+    
     var file = "../reports/factura_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     verb = "GET";
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     llamadaAjax(verb, url, null, function (err, data) {
-        var infFacturas = data.infFacturas;
+        var infFacturas;
+        if(vm.sdepartamentoId() == 7) {
+            infFacturas = data.infFacCliRep;
+        } else {
+            infFacturas = data.infFacturas;
+        }
+        
         file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
         report.loadFile(file);
@@ -273,12 +282,18 @@ function datosOK() {
         rules: {
             cmbEmpresas: {
                 required: true
+            },
+            cmbDepartamentosTrabajo: {
+                required: true
             }
         },
         // Messages for form validation
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
+            },
+            cmbDepartamentosTrabajo: {
+                required: "Debe elegir un departamento"
             }
         },
         // Do not change code below

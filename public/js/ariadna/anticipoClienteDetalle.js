@@ -232,8 +232,8 @@ function datosOK() {
             },
             txtNumeroAnticipoCliente: {
                 required: true
-            },
-            txtTotalConIva: {
+            },          
+              txtTotalConIva: {
                 required: true,
             }
         },
