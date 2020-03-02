@@ -90,6 +90,8 @@ function initForm() {
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
 
+    $("#cmbSerieFac").select2(select2Spanish());
+
     initTablaSeries();
     
     
