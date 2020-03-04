@@ -295,8 +295,6 @@ function buscarFicheros() {
     return mf;
 }
 function contabilizarAnticipos() {
-   
-    
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
@@ -304,6 +302,13 @@ function contabilizarAnticipos() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                if(data != "OK" ) {
+                    var cuentas = JSON.stringify(data);
+                    cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
+                    mensError("Las Facturas siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contables no existen.");
+                        var fn = buscarFacturas();
+                        fn();
+                } else {
                     // borramos datos
                     $("#btnAlta").hide();
                     mensNormal('Los anticipos han sido pasadas a contabilidad');
@@ -311,6 +316,7 @@ function contabilizarAnticipos() {
                     vm.hastaFecha(null);
                     loadTablaAnticipos(null);
                 
+                }
             },
             error: function (err) {
                 mensErrorAjax(err);

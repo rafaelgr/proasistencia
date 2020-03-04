@@ -62,6 +62,10 @@ function initForm() {
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
         if(nif != "") {
+            patron = /-/,
+            nuevoValor    = "",
+            nif = nif.replace(patron, nuevoValor);
+
             compruebaNifRepetido(nif);
         }
     });
@@ -236,7 +240,8 @@ function initForm() {
             clienteId: empId
         }
         loadClientesAgentes(empId);
-        //loadClientesCobros(empId);
+        loadClientesCobros(empId);
+        compruebaFacturasAnticipos(empId);
         // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
@@ -1584,6 +1589,7 @@ function cambioCodigo(data) {
                 vm.nombreComercial(data.nombre);
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
+            //vm.cuentaContable(codmacta);
             compruebaCuentaContable(codmacta)
         },
         error: function (err) {
@@ -1870,5 +1876,23 @@ function loadClientesCobros(id) {
             fechaTope = null;
         }
         loadTablaClientesCobros(data);
+    });
+}
+
+function compruebaFacturasAnticipos(id) {
+    llamadaAjax('GET', "/api/facturas/cliente/recupera/todas/" + id, null, function (err, data) {
+        if (err) return;
+        llamadaAjax('GET', "/api/anticiposClientes/cliente/recupera/todos/" + id, null, function (err, data2) {
+            if (err) return;
+            if(data.length > 0 || data2.length > 0) {
+                $( "#txtNif" ).prop( "disabled", true );
+                $( "#txtCodigo" ).prop( "disabled", true );
+                $( "#txtNombreComercial" ).prop( "disabled", true );
+            } else {
+                $( "#txtNif" ).prop( "disabled", false );
+                $( "#txtCodigo" ).prop( "disabled", false );
+                $( "#txtNombreComercial" ).prop( "disabled", false );
+            }
+        });
     });
 }

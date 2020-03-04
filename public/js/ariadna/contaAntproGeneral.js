@@ -296,9 +296,7 @@ function buscarFicheros() {
     };
     return mf;
 }
-function contabilizarAnticipos() {
-   
-    
+function contabilizarAnticipos() { 
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
@@ -306,19 +304,31 @@ function contabilizarAnticipos() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                if(data.length > 0) {
-                    //anticipos sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
-                    var lista = data.toString();
-                    mensError("Los Anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
-                    var fn = buscarAnticipos();
-                    fn();
+                if(data[0].length > 0  || data[1].length > 0) {
+                    if(data[1]) {
+                        if(data[1].length > 0) {
+                            var cuentas = JSON.stringify(data[1]);
+
+                            cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
+                            mensError("Los anticipos siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
+                            var fn = buscarFacturas();
+                            fn();
+                        }
+                    }
+                    if(data[0].length > 0) {
+                        //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
+                        var lista = data[0].toString();
+                        mensError("Los anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
+                        var fn = buscarFacturas();
+                        fn();
+                    }
                 } else {
                     // borramos datos
                     $("#btnAlta").hide();
-                    mensNormal('Los anticipos han sido pasadas a contabilidad');
+                    mensNormal('Las facturas han sido pasadas a contabilidad');
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
-                    loadTablaAnticipos(null);
+                    loadTablaFacturas(null);
                 }
             },
             error: function (err) {
