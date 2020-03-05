@@ -12,6 +12,7 @@ var facproveId;
 var codigoSugerido;
 var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var idUsuario;
+var numfactu = 0;
 
 
 var responsiveHelper_dt_basic = undefined;
@@ -70,7 +71,24 @@ function initForm() {
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
         if(!nif || nif == "") return;
-        compruebaRepetido(nif);
+
+        var nif = $("#txtNif").val();
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            $('#txtNif').val(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+                compruebaNifRepetido(nif);
+            } else {
+                mensError('El nif introducido no tiene un formato valido');
+                $('#txtNif').val('');
+            }
+        }
     });
 
 
@@ -218,7 +236,8 @@ function initForm() {
             }
         });
 
-        loadFacturasDelProveedor(proId)
+        loadFacturasDelProveedor(proId);
+        compruebaAnticipos(proId);
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.proveedorId(0);
@@ -1014,6 +1033,9 @@ function loadTablaFacturas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(data) {
+        numfactu = data.length;
+    }
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();
@@ -1094,4 +1116,17 @@ function buscarFacturas() {
         loadFacturasDelProveedor(proId);
     };
     return mf;
+}
+
+function compruebaAnticipos(id) {
+        llamadaAjax('GET', "/api/anticiposProveedores/proveedor/recupera/todos/" + id, null, function (err, data) {
+            if (err) return;
+            if(data.length > 0 || numfactu > 0) {
+                $( "#txtNif" ).prop( "disabled", true );
+                $( "#txtCodigo" ).prop( "disabled", true );
+            } else {
+                $( "#txtNif" ).prop( "disabled", false );
+                $( "#txtCodigo" ).prop( "disabled", false );
+            }
+        });
 }

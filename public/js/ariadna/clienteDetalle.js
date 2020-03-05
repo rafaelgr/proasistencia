@@ -62,11 +62,20 @@ function initForm() {
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
         if(nif != "") {
-            patron = /-/,
-            nuevoValor    = "",
-            nif = nif.replace(patron, nuevoValor);
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            $('#txtNif').val(nif);
 
-            compruebaNifRepetido(nif);
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+                compruebaNifRepetido(nif);
+            } else {
+                mensError('El nif introducido no tiene un formato valido');
+                $('#txtNif').val('');
+            }
         }
     });
 
@@ -648,9 +657,10 @@ function datosImportOK() {
 
 function aceptar() {
     var mf = function () {
-        if (!datosOK())
+        if($('#chkActiva').prop('checked')) {
+            if (!datosOK())
             return;
-            
+        }    
         if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
         if(vm.scomercialId() == 0) vm.scomercialId(null);
         var data = {
@@ -982,7 +992,7 @@ function compruebaNifRepetido(nif) {
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
                mensError('Ya existe un cliente con este NIF.');
-               //$('#txtNif').val("");
+               $('#txtNif').val("");
             }
         },
         error: function (err) {
@@ -1589,8 +1599,8 @@ function cambioCodigo(data) {
                 vm.nombreComercial(data.nombre);
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
-            //vm.cuentaContable(codmacta);
-            compruebaCuentaContable(codmacta)
+            vm.cuentaContable(codmacta);
+            //compruebaCuentaContable(codmacta)
         },
         error: function (err) {
 
