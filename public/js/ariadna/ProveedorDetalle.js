@@ -415,6 +415,7 @@ function loadData(data) {
             vm['iban' + i](ibn);
         });
     }
+    obtenInicioCuenta();
 
     loadTiposVia(data.tipoViaId);
     loadTiposIva(data.tipoIvaId)
@@ -427,6 +428,13 @@ function loadData(data) {
     loadPaises(data.paisId)
     buscaDepartamentos();
     //loadDepartamentos(data.departamentoId)
+}
+
+function obtenInicioCuenta() {
+    var codmacta = vm.cuentaContable();
+    var inicio = codmacta.substr(0, 2);
+    vm.inicioCuenta(inicio);
+
 }
 
 function datosOK() {

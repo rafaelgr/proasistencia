@@ -1698,6 +1698,25 @@ function recalculaRestoPagar() {
     var totSinImporteAnticipo = totConIva-importeAnticipo;
     var totalSinFian = totSinImporteAnticipo-importeFianza;
     vm.restoPagar(numeral(totalSinFian).format('0,0.00'));
+
+    //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
+    var data = {
+        facprove: {
+            "facproveId": vm.facproveId(),
+            "empresaId": vm.empresaId(),
+            "proveedorId": vm.proveedorId(),
+            "fecha": spanishDbDate(vm.fecha()),
+            "importeAnticipo": importeAnticipo,
+            "restoPagar": totalSinFian,
+            "conceptoAnticipo": vm.conceptoAnticipo()
+        }
+    };
+    var datosArray = [];
+    datosArray.push(data)
+    llamadaAjax("PUT", "/api/facturasProveedores/" + vm.facproveId(), datosArray, function (err, data) {
+        if (err) return;
+    });
+        
             
 }
 

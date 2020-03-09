@@ -311,7 +311,7 @@ function contabilizarAnticipos() {
 
                             cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
                             mensError("Los anticipos siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
-                            var fn = buscarFacturas();
+                            var fn = buscarAnticipos();
                             fn();
                         }
                     }
@@ -319,7 +319,7 @@ function contabilizarAnticipos() {
                         //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
                         var lista = data[0].toString();
                         mensError("Los anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
-                        var fn = buscarFacturas();
+                        var fn = buscarAnticipos();
                         fn();
                     }
                 } else {
@@ -328,7 +328,7 @@ function contabilizarAnticipos() {
                     mensNormal('Las facturas han sido pasadas a contabilidad');
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
-                    loadTablaFacturas(null);
+                    loadTablaAnticipos(null);
                 }
             },
             error: function (err) {

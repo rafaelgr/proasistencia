@@ -1600,7 +1600,7 @@ function cambioCodigo(data) {
             }
             var codmacta = montarCuentaContable('43', vm.codigo(), numDigitos); // (comun.js)
             vm.cuentaContable(codmacta);
-            //compruebaCuentaContable(codmacta)
+            compruebaCuentaContable(codmacta)
         },
         error: function (err) {
 

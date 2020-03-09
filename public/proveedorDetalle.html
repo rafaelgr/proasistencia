@@ -586,7 +586,7 @@
                                                                                                                                                           
                                                                                                             </div>
                                                                                                             <div class="row">
-                                                                                                                <section class="col col-md-3">
+                                                                                                                <section class="col col-md-2">
                                                                                                                     <label class="label">NIF</label>
                                                                                                                     <label class="input">
                                                                                                                         <input id="txtNif" name="txtNif" data-bind="value: nif" />
@@ -597,8 +597,14 @@
                                                                                                                     <label class="input">
                                                                                                                         <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                                                                                     </label>
-                                                                                                                </section>   
-                                                                                                                <section class="col col-md-3">
+                                                                                                                </section>  
+                                                                                                                <section class="col col-md-2">
+                                                                                                                    <label class="label">Cuenta contable</label>
+                                                                                                                    <label class="input">
+                                                                                                                        <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" disabled />
+                                                                                                                    </label>
+                                                                                                                </section> 
+                                                                                                                <section class="col col-md-2">
                                                                                                                     <label class="label">Tipo proveedor</label>
                                                                                                                     <label style="width:100%;">
                                                                                                                         <select style="width:100%" id="cmbTiposProveedor" name="cmbTiposProveedor" data-bind="options: posiblesTiposProveedor, optionsText: 'nombre', optionsValue: 'tipoProveedorId', value: stipoProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposProveedor, selected2:{}"></select>
@@ -731,19 +737,14 @@
                                                                                                         <fieldset>
                                                                                                             <div class="row">
                                                                                                                
-                                                                                                                <section class="col col-md-4">
+                                                                                                                <section class="col col-md-5">
                                                                                                                         <label class="label">IBAN</label>
                                                                                                                         <label class="input">
                                                                                                                             <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
                                                                                                                         </label>
                                                                                                                 </section>
-                                                                                                                <section class="col col-md-3">
-                                                                                                                    <label class="label">Cuenta contable</label>
-                                                                                                                    <label class="input">
-                                                                                                                        <input id="txtCuentaContable" name="txtCuentaContable" data-bind="value: cuentaContable" disabled />
-                                                                                                                    </label>
-                                                                                                                </section>
-                                                                                                                <section class="col col-md-5">
+                                                                                                                
+                                                                                                                <section class="col col-md-7">
                                                                                                                     <label class="label">Forma de pago</label>
                                                                                                                     <label style="width:100%;">
                                                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select>
