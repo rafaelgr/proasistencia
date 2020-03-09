@@ -992,7 +992,7 @@ function compruebaNifRepetido(nif) {
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
                mensError('Ya existe un cliente con este NIF.');
-               $('#txtNif').val("");
+               //$('#txtNif').val("");
             }
         },
         error: function (err) {
