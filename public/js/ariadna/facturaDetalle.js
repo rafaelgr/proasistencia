@@ -1304,6 +1304,22 @@ function loadBasesFactura(facturaId) {
         vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
+
+        //actualizamosm el resto a cobrar
+         var data = {
+            factura: {
+                "facturaId": vm.facturaId(),
+                "empresaId": vm.empresaId(),
+                "clienteId": vm.clienteId(),
+                "fecha": spanishDbDate(vm.fecha()),
+                "importeAnticipo":  acuenta,
+                "restoCobrar": totSinAcuenta,
+                "conceptoAnticipo": vm.conceptoAnticipo()
+            }
+        };
+        llamadaAjax("PUT", "/api/facturas/" + vm.facturaId(), data, function (err, data) {
+            if (err) return;
+        });
     });
 }
 
