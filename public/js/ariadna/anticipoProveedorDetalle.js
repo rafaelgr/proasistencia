@@ -644,6 +644,7 @@ var aceptarAnticipo = function () {
     var verb = "POST";
     var url =  "/api/anticiposProveedores";
     var returnUrl = "AnticipoProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&antproveId=";
+    if(!$('#chkCompleto').prop("checked"))  returnUrl = "AnticipoProveedorGeneral.html?antproveId=";
     
     
     // caso modificación

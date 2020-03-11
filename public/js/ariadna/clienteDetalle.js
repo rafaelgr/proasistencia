@@ -52,6 +52,7 @@ function initForm() {
     });
 
     $("#txtCodigo").blur(function () {
+        //if(!vm.codigo() || vm.codigo() == "") return;
         cambioCodigo();
     });
 
@@ -350,6 +351,7 @@ function admData() {
     self.firmante = ko.observable();
     self.facturarPorEmail = ko.observable();
     self.emailFacturas = ko.observable();
+    self.antCuentaContable = ko.observable();
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -467,6 +469,8 @@ function loadData(data, desdeLoad, importacion) {
     vm.observaciones(data.observaciones);
     vm.poblacion(data.poblacion);
     vm.cuentaContable(data.cuentaContable);
+    vm.antCuentaContable(data.cuentaContable);
+
     vm.iban(data.iban);
     vm.codigo(data.codigo);
     vm.codComercial(data.codigoComercial);
@@ -567,6 +571,10 @@ function datosOK() {
             },
             cmbAgentes: {
                 required: true
+            },
+            txtCuentaContable: {
+                required: true,
+                number: true
             }
         },
         // Messages for form validation
@@ -605,6 +613,10 @@ function datosOK() {
             },
             cmbAgentes: {
                 required: "Debe seleccionar un agente"
+            },
+            txtCuentaContable: {
+                required: "Campo obligatorio",
+                length: "La longitud es de 9 digitos"
             }
         },
         // Do not change code below
@@ -660,7 +672,11 @@ function aceptar() {
         if($('#chkActiva').prop('checked')) {
             if (!datosOK())
             return;
-        }    
+        }
+        if(vm.cuentaContable() == null || vm.cuentaContable == "") {
+            mensError('El Campo cuenta contable es obligatorio');
+            return;
+        }
         if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
         if(vm.scomercialId() == 0) vm.scomercialId(null);
         var data = {
@@ -711,7 +727,7 @@ function aceptar() {
                 "facturarPorEmail": vm.facturarPorEmail(),
                 "limiteCredito": vm.limiteCredito(),
                 "emailFacturas": vm.emailFacturas()
-            }
+            } 
         };
         
         if (empId == 0) {
@@ -735,6 +751,7 @@ function aceptar() {
                 }
             });
         } else {
+            data.cliente.antCuentaContable = vm.antCuentaContable();
             $.ajax({
                 type: "PUT",
                 url: myconfig.apiUrl + "/api/clientes/" + empId,
@@ -779,6 +796,8 @@ function importar() {
                 }
                 data = rData[0];
                 data.clienteId = vm.clienteId(); // Por si es un update
+                data.codigo = vm.codigo();
+                data.cuentaContable = vm.cuentaContable();
                 // hay que mostrarlo en la zona de datos
                 loadData(data, null, true);
             },
@@ -1016,8 +1035,9 @@ function compruebaCuentaContable(cuentaContable) {
         success: function (data, status) {
             if(data && data.clienteId != vm.clienteId()) {
                mensError('Ya existe un cliente con esta cuenta contable');
-               $('#txtCuentaContable').val("");
-               $('#txtCodigo').val("");
+               //$('#txtCuentaContable').val("");
+               vm.cuentaContable(null);
+               //$('#txtCodigo').val("");
             } else {
                 vm.cuentaContable(cuentaContable);
             }
