@@ -670,12 +670,11 @@ function datosImportOK() {
 function aceptar() {
     var mf = function () {
         if($('#chkActiva').prop('checked')) {
-            if (!datosOK())
-            return;
-        }
-        if(vm.cuentaContable() == null || vm.cuentaContable == "") {
-            mensError('El Campo cuenta contable es obligatorio');
-            return;
+            if (!datosOK()) return;
+            if(vm.cuentaContable() == null || vm.cuentaContable == "") {
+                mensError('El Campo cuenta contable es obligatorio');
+                return;
+            }
         }
         if(vm.starifaClienteId() == 0) vm.starifaClienteId(null);
         if(vm.scomercialId() == 0) vm.scomercialId(null);
