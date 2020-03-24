@@ -35,6 +35,7 @@ function initForm() {
     $("#btnSalir").click(salir());
     $("#btnGuardarPlantilla").click(aceptar());
     $("#btnImportar").click(importar());
+
     $("#frmEmpresa").submit(function () {
         return false;
     });
@@ -884,15 +885,42 @@ function limpiaDataLinea(data) {
     loadTiposFormaPago();
 }
 
-function aceptarLinea() {
+function comprobarCuenta() {
     if (!datosOKLineas()) {
         return;
     }
+    var codmacta = $('#txtCuentaPago').val();
+    llamadaAjax("GET", "/api/empresas/empresaCuentas/cuenta/pago/comprueba/existe/" + vm.contabilidad() +  "/" + codmacta, null, function (err, data) {
+        if (err) return;
+        if (!data) {
+            mostrarMensaje();
+        } else {
+            aceptarLinea();
+        }
+    });
+}
+
+function mostrarMensaje() {
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: 'La cuenta Contable no existe en la contabilidad de la empresa, ¿ desea continuar ?',
+        buttons: '[Cancelar][Aceptar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            aceptarLinea();
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada
+        }
+    });
+}
+
+function aceptarLinea() {
     var data = {
         empresaCuentas: {
             empresaCuentapagoId: vm.empresaCuentapagoId(),
             empresaId: vm.empresaId(),
-            tipoFormaPagoId: vm.tipoFormaPagoId(),
+            tipoFormaPagoId: vm.stipoFormaPagoId(),
             cuentapago: vm.cuentapago(),
             //cuentaCobro: vm.cuentaCobro()
         }
@@ -901,50 +929,59 @@ function aceptarLinea() {
     var url = myconfig.apiUrl + "/api/empresas/empresaCuentas/alta";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url = myconfig.apiUrl + "/api/empresas/empresaCuentas/alta/" + vm.empresaCuentapagoId();
+        url = myconfig.apiUrl + "/api/empresas/empresaCuentas/modifica/" + vm.empresaCuentapagoId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        loadLineasCuenta();
+        loadLineasCuenta(empId);
+    });
+}
+
+function deleteCuentaLinea(id) {
+    // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/empresas/empresaCuentas/" + id;
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+        
+        llamadaAjax("DELETE", url, null, function (err, data) {
+            if (err) return;
+            loadLineasCuenta(empId);
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function editCuentaLinea(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/empresas/empresaCuentas/lineas/registro/uno/" + id, null, function (err, data) {
+        if (err) return;
+        if (data) loadDataLinea(data);
     });
 }
 
 function datosOKLineas() {
     $('#linea-form').validate({
         rules: {
-            txtCapitulo: {
+            cmbTiposFormaPago: {
                 required: true
             },
-            txtLinea: {
-                required: true
-            },
-            cmbArticulos: {
-                required: true
-            },
-            cmbTiposIva: {
-                required: true
-            },
-            txtDescripcion: {
-                required: true
-            },
-            txtPrecio: {
-                required: true
-            },
-            txtCantidad: {
-                required: true
-            },
-            txtTotalLinea: {
-                required: true
+            txtCuentaPago: {
+                required: true,
+                minlength: 9,
+                maxlength: 9
             }
         },
         // Messages for form validation
         messages: {
-            txtCapitulo: {
-                required: "Debe dar un texto al capítulo"
+            cmbTiposFormaPago: {
+                required: "Debe introducir un tipo de forma de pago"
             },
-            cmbArticulos: {
-                required: "Debe elegir un articulo"
+            txtCuentaPago: {
+                required: "Debe introducir una cuanta contable",
+                minlength: "La cuenta debe tener 9 digitos",
+                maxlength: "La cuenta debe tener 9 digitos"
             },
             cmbTiposIva: {
                 required: 'Debe elegir un tipo de IVA'
@@ -985,17 +1022,6 @@ function initTablaCuentasLineas() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
-            var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
-            api.column(1, { page: 'current' }).data().each(function (group, i) {
-                if (last !== group) {
-                    $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
-                    );
-                    last = group;
-                }
-            });
         },
         language: {
             processing: "Procesando...",
@@ -1075,7 +1101,7 @@ function loadTiposFormaPago(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var tiposFormaPago = [{ tipoFormaPagoId: 0, nombre: "" }].concat(data);
+            var tiposFormaPago = [{ tipoFormaPagoId: null, nombre: "" }].concat(data);
             vm.posiblesTiposFormaPago(tiposFormaPago);
             $("#cmbTiposFormaPago").val([id]).trigger('change');
         },
