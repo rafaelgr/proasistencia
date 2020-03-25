@@ -19,6 +19,7 @@ var usuario;
 var usaCalculadora;
 var antSerie = null;
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -56,6 +57,10 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
+    // select2 things
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
+
 
     // Ahora cliente en autocomplete
     initAutoCliente();
@@ -153,6 +158,12 @@ function admData() {
     self.observaciones = ko.observable();
     //
     self.observaciones = ko.observable();
+     //
+     self.departamentoId = ko.observable();
+     self.sdepartamentoId = ko.observable();
+     //
+     self.posiblesDepartamentos = ko.observableArray([]);
+     self.elegidosDepartamentos = ko.observableArray([]);
 
     // Nuevo Total de coste para la antClien
     self.totalCoste = ko.observable();
@@ -196,7 +207,7 @@ function loadData(data) {
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
-    loadDepartamento(data.departamentoId);
+    loadDepartamentos(data.departamentoId);
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones); 
     vm.periodo(data.periodo);
@@ -221,15 +232,15 @@ function datosOK() {
             cmbClientes: {
                 required: true
             },
+            cmbDepartamentosTrabajo: {
+                required: true
+            },
             txtFecha: {
                 required: true
             },
             cmbFormasPago: {
                 required: true
             },
-            cmbContratos: {
-                required: true
-            },      
               txtTotalConIva: {
                 required: true,
             }
@@ -242,14 +253,14 @@ function datosOK() {
             cmbClientes: {
                 required: 'Debe elegir un receptor'
             },
+            cmbDepartamentosTrabajo: {
+                required: 'Debe elegir un departamento'
+            },
             txtFecha: {
                 required: 'Debe elegir una fecha'
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
-            },
-            cmbContratos: {
-                required: "Debe elegir un contrato asociado"
             },
             txtTotalConIva: {
                 required: "debe de introducir una cantiad"
@@ -306,7 +317,6 @@ var generarAntClienDb = function () {
     } else {
         vm.noContabilizar(false);
     }
-
      var data = {
         antClien: {
             "antClienId": vm.antClienId(),
@@ -331,7 +341,7 @@ var generarAntClienDb = function () {
             "formaPagoId": vm.sformaPagoId(),
             "observaciones": vm.observaciones(),
             "periodo": vm.periodo(),
-            "departamentoId": vm.departamentoId(),
+            "departamentoId": vm.sdepartamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "serie": vm.serie(),
             "noContabilizar": vm.noContabilizar()
@@ -383,6 +393,20 @@ var cargarContratos = function (data) {
 }
 
 
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+    
+
+
 function cambioCliente(clienteId) {
     if (!clienteId) return;
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
@@ -426,8 +450,7 @@ function obtenerDepartamentoContrato(contratoId) {
         if (err) return;
         if(data) {
             //vm.departamento(data.nombre);
-            vm.departamentoId(data.departamentoId);
-            loadDepartamento(data.departamentoId);
+            loadDepartamentos(data.departamentoId);
         }
     });
 }
