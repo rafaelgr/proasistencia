@@ -7,7 +7,7 @@ CREATE TABLE empresas_cuentaspago (
     CONSTRAINT ref_emcu_tipoforma FOREIGN KEY (tipoFormaPagoId) REFERENCES tipos_forma_pago(tipoFormaPagoId)
 );
 
-ALTER TABLE `proasistencia`.`empresas_cuentaspago`   
+ALTER TABLE `empresas_cuentaspago`   
   ADD  UNIQUE INDEX `unico_tipoforpa_empresa` (`empresaId`, `tipoFormaPagoId`);
 
   ALTER TABLE `antclien`   
