@@ -190,9 +190,7 @@ function initTablaAntcliens() {
             data: "vFPago"
         }, {
             data: "observaciones"
-        }, {
-            data: "dirTrabajo"
-        }, {
+        },  {
             data: "antClienId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -203,19 +201,6 @@ function initTablaAntcliens() {
             }
         }]
     });
-
-
-    // Apply the filter
-    $("#dt_antclien thead th input[type=text]").on('keyup change', function () {
-        tablaAntcliens
-            .column($(this).parent().index() + ':visible')
-            .search(this.value)
-            .draw();
-    });
-
-    // Hide some columns by default
-    tablaAntcliens.columns(8).visible(false);
-    tablaAntcliens.columns(10).visible(false);
 }
 
 function datosOK() {
