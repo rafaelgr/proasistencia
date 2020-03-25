@@ -355,7 +355,7 @@ function loadData(data, desdeLinea) {
         mostrarMensajeFacturaNueva();
         cmd == ""
         //comprovamos si hay anticipos
-        llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
+        llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId(),null, function (err, data) {
             if (err) return;
             if(data) {
                 if(data.length > 0) {
@@ -1692,11 +1692,12 @@ function initTablaAnticipos() {
 }
 
 function cargaTablaAnticipos(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId(),null, function (err, data) {
         if (err) return;
         if(data) {
             if(cont != 1) {
                 $("#modalAnticipo").modal({show: true});
+                loadTablaAnticipos(data);
                 
             } else {
                 loadTablaAnticipos(data);
@@ -1748,7 +1749,7 @@ function vinculaAnticipo() {
             llamadaAjax("POST", "/api/anticiposClientes/vincula/varios/", datosArrayAnt, function (err, data) {
                 if (err) return;
                 $('#modalAnticipo').modal('hide');
-                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" + facturaId, null, function (err, anticipos) {
+                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId()  + "/" + facturaId, null, function (err, anticipos) {
                     if (err) return;
                     //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
                 anticipos.forEach(function(a) {
@@ -1850,7 +1851,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" +facturaId, null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" +facturaId, null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
@@ -1872,7 +1873,7 @@ function desvinculaAnticipo(anticipoId) {
     llamadaAjax("DELETE", "/api/anticiposClientes/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
-        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId() + "/" + facturaId, null, function (err, anticipos) {
+        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() +  "/" + facturaId, null, function (err, anticipos) {
             if (err) return;
 
             //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados

@@ -12,3 +12,6 @@ ALTER TABLE `empresas_cuentaspago`
 
   ALTER TABLE `antclien`   
   ADD COLUMN `parteLineaId` INT(11) NULL AFTER `noContabilizar`;
+
+
+  ALTER TABLE `antclien` DROP INDEX `antprove_numeroprova`;
