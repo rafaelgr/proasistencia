@@ -17,6 +17,8 @@ var breakpointDefinition = {
 
 var serieEnEdicion = false;
 var empSerieId = 0;
+var dataCuentasLineas;
+var lineaEnEdicion = false;
 
 datePickerSpanish(); // see comun.js
 
@@ -33,6 +35,7 @@ function initForm() {
     $("#btnSalir").click(salir());
     $("#btnGuardarPlantilla").click(aceptar());
     $("#btnImportar").click(importar());
+
     $("#frmEmpresa").submit(function () {
         return false;
     });
@@ -43,6 +46,15 @@ function initForm() {
     $("#series-form").submit(function () {
         return false;
     });
+    
+    $("#frmLinea").submit(function () {
+        return false;
+    });
+
+    $("#linea-form").submit(function () {
+        return false;
+    });
+
     
 
 
@@ -83,6 +95,7 @@ function initForm() {
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieRectificativas').select2(select2Spanish());
     $('#cmbSerieReparaciones').select2(select2Spanish());
+    $('#cmbTiposFormaPago').select2(select2Spanish());
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
      loadDepartamentos();
@@ -93,6 +106,7 @@ function initForm() {
     $("#cmbSerieFac").select2(select2Spanish());
 
     initTablaSeries();
+    initTablaCuentasLineas();
     
     
     // carga del editor de plantillas
@@ -114,6 +128,7 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 loadSeriesDelContrato(empId);
+                loadLineasCuenta(empId)
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -216,6 +231,18 @@ function admData() {
     //
     self.posiblesTipoProyecto = ko.observableArray([]);
     self.elegidosTipoProyecto = ko.observableArray([]);
+
+    //LINEAS FORSMAS PAGO/CUENTAS CONTABLES
+
+    self.empresaCuentapagoId = ko.observable(),
+    self.cuentapago = ko.observable();
+    //self.cuentaCobro = ko.observable();
+    //
+    self.tipoFormaPagoId = ko.observable();
+    self.stipoFormaPagoId = ko.observable();
+    //
+    self.posiblesTiposFormaPago = ko.observableArray([]);
+    self.elegidosTiposFormaPago = ko.observableArray([]);
 }
 
 
@@ -844,6 +871,248 @@ function cargaModalSeries(id) {
         });
     }
 }
+
+// FUNCIONES RELACIONADAS CON LA TABLA FORMAS PAGO / CUENTAS CONTABLES
+
+function nuevaLinea() {
+    limpiaDataLinea();
+}
+
+function limpiaDataLinea(data) {
+    vm.empresaCuentapagoId (0);
+    vm.cuentapago(null);
+    //
+    loadTiposFormaPago();
+}
+
+function comprobarCuenta() {
+    if (!datosOKLineas()) {
+        return;
+    }
+    var codmacta = $('#txtCuentaPago').val();
+    llamadaAjax("GET", "/api/empresas/empresaCuentas/cuenta/pago/comprueba/existe/" + vm.contabilidad() +  "/" + codmacta, null, function (err, data) {
+        if (err) return;
+        if (!data) {
+            mostrarMensaje();
+        } else {
+            aceptarLinea();
+        }
+    });
+}
+
+function mostrarMensaje() {
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: 'La cuenta Contable no existe en la contabilidad de la empresa, ¿ desea continuar ?',
+        buttons: '[Cancelar][Aceptar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            aceptarLinea();
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada
+        }
+    });
+}
+
+function aceptarLinea() {
+    var data = {
+        empresaCuentas: {
+            empresaCuentapagoId: vm.empresaCuentapagoId(),
+            empresaId: vm.empresaId(),
+            tipoFormaPagoId: vm.stipoFormaPagoId(),
+            cuentapago: vm.cuentapago(),
+            //cuentaCobro: vm.cuentaCobro()
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/empresas/empresaCuentas/alta";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/empresas/empresaCuentas/modifica/" + vm.empresaCuentapagoId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalLinea').modal('hide');
+        loadLineasCuenta(empId);
+    });
+}
+
+function deleteCuentaLinea(id) {
+    // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/empresas/empresaCuentas/" + id;
+    var mens = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mens, function () {
+        
+        llamadaAjax("DELETE", url, null, function (err, data) {
+            if (err) return;
+            loadLineasCuenta(empId);
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function editCuentaLinea(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/empresas/empresaCuentas/lineas/registro/uno/" + id, null, function (err, data) {
+        if (err) return;
+        if (data) loadDataLinea(data);
+    });
+}
+
+function datosOKLineas() {
+    $('#linea-form').validate({
+        rules: {
+            cmbTiposFormaPago: {
+                required: true
+            },
+            txtCuentaPago: {
+                required: true,
+                minlength: 9,
+                maxlength: 9
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbTiposFormaPago: {
+                required: "Debe introducir un tipo de forma de pago"
+            },
+            txtCuentaPago: {
+                required: "Debe introducir una cuanta contable",
+                minlength: "La cuenta debe tener 9 digitos",
+                maxlength: "La cuenta debe tener 9 digitos"
+            },
+            cmbTiposIva: {
+                required: 'Debe elegir un tipo de IVA'
+            },
+            txtLinea: {
+                required: 'Necesita un número de linea'
+            },
+            txtDescripcion: {
+                required: 'Necesita una descripcion'
+            },
+            txtCantidad: {
+                required: 'Necesita una cantidad'
+            },
+            txtPrecio: {
+                required: 'Necesita un precio'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#linea-form").validate().settings;
+    return $('#linea-form').valid();
+}
+
+function initTablaCuentasLineas() {
+    tablaCarro = $('#dt_lineas').DataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataCuentasLineas,
+        columns: [ {
+            data: "TipoFormaPagoNombre"
+        }, {
+            data: "cuentapago",
+           
+        }, {
+            data: "empresaCuentapagoId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteCuentaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editCuentaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                // if (!vm.generada())
+                //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function loadDataLinea(data) {
+    vm.empresaCuentapagoId(data.empresaCuentapagoId),
+    vm.cuentapago(data.cuentapago),
+    //vm.cuentaCobro(data.cuentaCobro)
+    loadTiposFormaPago(data.tipoFormaPagoId);
+}
+
+
+
+function loadTablaCuentasLineas(data) {
+    var dt = $('#dt_lineas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) {
+        numLineas = data.length;
+        dt.fnAddData(data);
+    }
+    dt.fnDraw();
+}
+
+
+function loadLineasCuenta(id) {
+    llamadaAjax("GET", "/api/empresas/empresaCuentas/lineas/" + id, null, function (err, data) {
+        if (err) return;
+        loadTablaCuentasLineas(data);
+    });
+}
+
+function loadTiposFormaPago(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_forma_pago",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposFormaPago = [{ tipoFormaPagoId: null, nombre: "" }].concat(data);
+            vm.posiblesTiposFormaPago(tiposFormaPago);
+            $("#cmbTiposFormaPago").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 
 
 
