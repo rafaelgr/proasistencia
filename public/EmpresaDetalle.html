@@ -919,6 +919,66 @@
                     <!-- WIDGET END -->
                 </div>
                 <!-- end row -->
+                <!-- row -->
+                <div class="row" id="lineascuenta">
+                    <!-- NEW WIDGET START -->
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                            <header>
+                                <span class="widget-icon">
+                                    <i class="fa fa-edit"></i>
+                                </span>
+                                <h2>LINEAS DE CUENTAS</h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                    <input class="form-control" type="text">
+                                </div>
+                                <!-- end widget edit box -->
+                                <!-- widget content -->
+                                <div class="widget-body">
+                                    <!-- this is what the user will see -->
+                                    <form id="frmLinea">
+                                        <fieldset>
+                                            <div class="pull-right">
+                                                <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    <hr/>
+                                    <div id="tbLineas">
+                                        <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="phone">
+                                                        Tipo de Forma de pago
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                       Cuenta de Pago
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <hr/>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                            <!-- end widget div -->
+                        </div>
+                        <!-- end widget -->
+                    </article>
+                    <!-- WIDGET END -->
+                </div>
+                <!-- end row -->
             </section>
             <!-- end widget grid -->
         </div>
@@ -983,6 +1043,60 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalLinea" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> Forma pago/cuentas</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="linea-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section  class="col col-md-8">
+                                        <label class="label">Tipo de forma de pago</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="label">Cuenta de pago</label>
+                                        <label class="input">
+                                            <input id="txtCuentaPago" name="txtCuentaPago"  data-bind="value: cuentapago">
+                                            
+                                        </label>
+                                    </section>
+                                    <!-- <section class="col col-md-12">
+                                        <label class="label">Cuenta de cobro</label>
+                                        <label class="textarea textarea-resizable">
+                                            <textarea id="txtCuentaCobro" name="txtCuentaCobro" rows="6" class="custom-scroll" data-bind="value: cuentaCobro">
+                                            </textarea>
+                                        </label>
+                                    </section> -->
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLinea" class="btn btn-primary" onclick="comprobarCuenta()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

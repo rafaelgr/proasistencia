@@ -144,6 +144,7 @@ function initForm() {
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();
+    initAutoProveedorNif();
 
     initTablaAnticipos();
 
@@ -912,6 +913,7 @@ function cambioProveedor(proveedorId) {
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
         vm.emisorIban(data.IBAN);
+        $('#txtProveedor').val(data.nombre);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         var numeroFact = $("#txtNumero").val();
         compruebaRepetido(numeroFact, proveedorId);
@@ -1832,6 +1834,41 @@ var initAutoProveedor = function () {
                 data.forEach(function (d) {
                     var v = {
                         value: d.nombre,
+                        id: d.proveedorId
+                    };
+                    r.push(v);
+                });
+                response(r);
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            vm.sproveedorId(ui.item.id);
+            cambioProveedor(ui.item.id);
+        }
+    });
+    // regla de validación para el control inicializado
+    jQuery.validator.addMethod("proveedorNecesario", function (value, element) {
+        var r = false;
+        if (vm.sproveedorId()) r = true;
+        return r;
+    }, "Debe seleccionar un Proveedor válido");
+};
+
+
+// initAutoProveedor
+// inicializa el control del Proveedor como un autocomplete
+var initAutoProveedorNif = function () {
+    // incialización propiamente dicha
+    $("#txtEmisorNif").autocomplete({
+        source: function (request, response) {
+            // call ajax
+            llamadaAjax("GET", "/api/proveedores/activos/proveedores/todos/por/nif/?nif=" + request.term, null, function (err, data) {
+                if (err) return;
+                var r = []
+                data.forEach(function (d) {
+                    var v = {
+                        value: d.nif,
                         id: d.proveedorId
                     };
                     r.push(v);
