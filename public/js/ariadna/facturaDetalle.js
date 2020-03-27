@@ -18,6 +18,7 @@ var dataCobros;
 var dataAnticipos;
 var usuario;
 var usaCalculadora;
+var usaContrato = true;//por defecto se usa contrato
 var numLineas = 0;
 var cont = 0;
 var importeSuplido = 0;
@@ -48,6 +49,7 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
+   
     
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
@@ -81,6 +83,13 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
+
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) loadDepartamento(e.added.id);
+    });
+     loadDepartamentos();
+
 
     // Ahora cliente en autocomplete
     initAutoCliente();
@@ -177,7 +186,6 @@ function admData() {
     self.contratoId = ko.observable();
     self.tipoContratoId = ko.observable();
     self.departamento = ko.observable();
-    self.departamentoId = ko.observable()
     self.importeAnticipo = ko.observable();
     self.restoCobrar = ko.observable();
     self.tipoProyectoId = ko.observable();
@@ -225,6 +233,12 @@ function admData() {
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
     self.observacionesPago = ko.observable();
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 
 
     //
@@ -334,7 +348,7 @@ function loadData(data, desdeLinea) {
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
-    loadDepartamento(data.departamentoId);
+    loadDepartamentos(data.departamentoId);
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones);
     vm.observacionesPago(data.observacionesPago);
@@ -552,7 +566,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + usaContrato;
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -609,7 +623,7 @@ function obtenerDepartamentoContrato(contratoId) {
         if(data) {
             //vm.departamento(data.nombre);
             vm.departamentoId(data.departamentoId);
-            loadDepartamento(data.departamentoId);
+            loadDepartamentos(data.departamentoId);
         }
     });
 }
@@ -620,19 +634,33 @@ function loadDepartamento(departamentoId) {
             if (err) return;
             if(data) {
                 usaCalculadora = data.usaCalculadora;
-                vm.departamento(data.nombre);
-                if(data.departamentoId == 7) $('#contrato').hide();
-                if(!data.usaCalculadora) {
+                usaContrato = data.usaContrato
+                if(!usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
                     obtenerDepartamentoContrato();
+                }
+                if(!usaContrato) {
+                    loadContratos();
                 }
             }
 
         });
 }
 
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de facturas

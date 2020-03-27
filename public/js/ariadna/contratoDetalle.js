@@ -510,7 +510,7 @@ function datosOK() {
                 required: true
             },
             txtCliente: {
-                clienteNecesario: true
+                clienteNecesario: false
             },
             txtAgente: {
                 agenteNecesario: true
@@ -587,8 +587,8 @@ var guardarContrato = function (done) {
             "tipoProyectoId": vm.stipoProyectoId(),
             "referencia": vm.referencia(),
             "empresaId": vm.sempresaId(),
-            "clienteId": vm.clienteId(),
             "agenteId": vm.agenteId(),
+            "clienteId": vm.clienteId(),
             "mantenedorId": vm.mantenedorId(),
             "fechaContrato": spanishDbDate(vm.fechaContrato()),
             "coste": vm.coste(),
@@ -1444,6 +1444,7 @@ var cargaAgente = function (id) {
 };
 
 var initAutoCliente = function () {
+    vm.clienteId(null);
     $("#txtCliente").autocomplete({
         source: function (request, response) {
             llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
