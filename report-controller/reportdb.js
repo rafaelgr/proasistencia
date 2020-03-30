@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var MySQLAdapter = require('(/usr/src/app/report-controller/MySqlAdapter');
-var FirebirdAdapter = require('(/usr/src/app/report-controller/FirebirdAdapter');
-var MSSQLAdapter = require('(/usr/src/app/report-controller/MsSqlAdapter');
-var PostgreSQLAdapter = require('(/usr/src/app/report-controller/PostgreSQLAdapter');
+var MySQLAdapter = require('/usr/src/app/report-controller/MySqlAdapter');
+var FirebirdAdapter = require('/usr/src/app/report-controller/FirebirdAdapter');
+var MSSQLAdapter = require('/usr/src/app/report-controller/MsSqlAdapter');
+var PostgreSQLAdapter = require('/usr/src/app/report-controller/PostgreSQLAdapter');
 var OracleAdapter = require('(/usr/src/app/report-controller/OracleAdapter');
 
 var connectionStringBuilder;
