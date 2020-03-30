@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,6 @@
     "connect": "^3.4.0",
     "cors": "^2.7.1",
     "dotenv": "^6.2.0",
-    "edge": "^7.10.1",
     "express": "^4.13.3",
     "formidable": "^1.1.1",
     "glob": "^7.1.2",
