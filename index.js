@@ -88,7 +88,7 @@ var estados_parte_profesional_router = require('./lib/estados_parte_profesional/
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 var partes_router = require('./lib/partes/partes_controller');
-
+var report_router = require('./lib/report-controller/reportdb')
 
 
 var pack = require('./package.json');
@@ -182,7 +182,7 @@ app.use('/api/contratos', contratos_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/tipos_profesional', tipos_profesional_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
-app.use('/api/streport', require('./report-controller/reportdb'));
+app.use('/api/streport', report_router);
 app.use('/api/correoElectronico', correoElectronico);
 app.use('/api/plantillas_correo_facturas', plantillas_correo);
 app.use('/api/upload', upload);
