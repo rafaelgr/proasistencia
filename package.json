@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -32,13 +32,13 @@
     "express": "^4.13.3",
     "formidable": "^1.1.1",
     "glob": "^7.1.2",
-    "moment": "^2.10.6",
+    "moment": "^2.24.0",
     "multer": "^1.1.0",
     "mysql": "^2.13.0",
     "nodemailer": "^4.1.2",
     "numeral": "^1.5.3",
-    "serve-index": "^1.7.2",
-    "socket.io": "^2.0.3",
+    "serve-index": "^1.9.1",
+    "socket.io": "^2.3.0",
     "sprintf-js": "^1.0.3",
     "stimulsoft-reports-js": "^2017.1.10"
   },
