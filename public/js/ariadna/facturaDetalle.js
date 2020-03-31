@@ -1700,6 +1700,8 @@ function initTablaAnticipos() {
             }
         }, {
             data: "vNum"
+        },{
+            data: "conceptoAnticipo"
         }, {
             data: "emisorNombre"
         }, {
@@ -1851,6 +1853,8 @@ function initTablaAnticiposAsociados() {
             }
         }, {
             data: "vNum"
+        }, {
+            data: "conceptoAnticipo"
         }, {
             data: "emisorNombre"
         }, {

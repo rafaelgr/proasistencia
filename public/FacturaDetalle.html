@@ -124,7 +124,7 @@
                             <!--<a href="ParametroDetalle.html">
                                         <i class="fa fa-cog"></i> Parámetros
                             </a>-->
-                            <a href="http://10.0.0.3:8082/#!/login" target='_blank'>
+                            <a href="http://10.0.0.3:8089/#!/login" target='_blank'>
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
                         </li>
@@ -132,7 +132,7 @@
                             <a href="UsuariosGeneral.html">
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>
-                            <!--<a href="http://10.0.0.3:8082/#!/login" target='_blank'>
+                            <!--<a href="http://10.0.0.3:8089/#!/login" target='_blank'>
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>-->
                         </li>
@@ -298,30 +298,32 @@
                                     <a href="AnticipoProveedorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         proveedores</a>
                                 </li>
-                               <li>
+                                <li>
+                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas de clientes</a>
+                                </li>
+                                <li>
+                                    <a href="ContaAntCliGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar anticipos
+                                        de clientes</a>
+                                </li>
+                                <li>
+                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar facturas
+                                        de proveedores</a>
+                                </li>
+                                <li>
+                                    <a href="ContaAntProGeneral.html"><i class="fa fa-fw fa-bell"></i> Contabilizar anticipos
+                                        de proveedores</a>
+                                </li>
+                                <li>
+                                    <a href="VisadoFacproveGeneral.html"><i class="fa fa-map-marker"></i> Visado de
+                                        facturas de proveedores</a>
+                                </li>
+                                <li>
+                                    <a href="VisadoAntproveGeneral.html"><i class="fa fa-map-marker"></i> Visado de
+                                        anticipos de proveedores</a>
+                                </li>
+                                <li>
                                     <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li id="Contabilización">
-                            <a href="#"><i class="fa fa-fw fa-list-ol"></i> Contabilización</a>
-                            <ul>
-                                <li>
-                                    <a href="ContafGeneral.html"><i class="fa fa-fw fa-user-plus"></i> Contabilizar facturas
-                                        de clientes</a>
-                                </li>
-                                <li>
-                                    <a href="ContaAntCliGeneral.html"><i class="fa fa-fw fa-address-card"></i> Contabilizar anticipos
-                                        de clientes</a>
-                                </li>
-                                <li>
-                                    <a href="ContapGeneral.html"><i class="fa fa-fw fa-building"></i> Contabilizar facturas
-                                        de proveedores</a>
-                                </li>
-                                <li>
-                                    <a href="ContaAntProGeneral.html"><i class="fa fa-fw fa-briefcase"></i> Contabilizar anticipos
-                                        de proveedores</a>
-                                </li>
+                                </li> 
                             </ul>
                         </li>
                         <li id="liquidacion">
@@ -335,14 +337,6 @@
                                 <li>
                                     <a href="LiquidacionGeneral.html">
                                         <i class="fa fa-fw fa-address-card-o"></i> Consultar liquidaciones</a>
-                                </li>
-                                <li>
-                                    <a href="LiquidacionGeneral.html"><i class="fa fa-fw fa-address-card-o"></i>
-                                        Consultar liquidaciones general</a>
-                                </li>
-                                <li>
-                                    <a href="LiquidacionColaboradores.html"><i class="fa fa-fw fa-address-card-o"></i>
-                                        Consultar liquidaciones colaboradores</a>
                                 </li>
                             </ul>
                         </li>
@@ -361,12 +355,11 @@
                         </li>
                     </ul>
                 </li>
-                <li id="servicios">
+        <li id="servicios">
                 <a href="http://10.0.0.3:8089/#!/login" target="_blank">
                     <i class="fa fa-fw fa-wrench"></i> <span class="menu-item-parent">SERVICIOS</span>
                 </a>
-                </li>
-            </ul>
+            </li>
         </nav>
         <span class="minifyme" data-action="minifyMenu">
             <i class="fa fa-arrow-circle-left hit"></i>
@@ -582,9 +575,9 @@
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-3">
-                                                    <label class="label">Resto a cobrar</label>
+                                                    <label class="label">Resto a pagar</label>
                                                     <label class="input">
-                                                        <input id="txtRestoCobrar" name="txtRestoCobrar" type="text" data-bind="value: restoCobrar" disabled/>
+                                                        <input id="txtRestoPagar" name="txtRestoPagar" type="text" data-bind="value: restoCobrar" disabled/>
                                                     </label>
                                                 </section>
                                             </div>
@@ -661,9 +654,9 @@
                                                         </section>
                                                         <section class="col col-md-6">
                                                             <label class="label">Departamento</label>
-                                                                <label style="width:100%;">
-                                                                    <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                                                </label>
+                                                            <label class="input">
+                                                                <input id="txtDepartamento" name="txtDepartamento" type="text" data-bind="value: departamento" disabled/>
+                                                            </label>
                                                         </section>
                                                     </div>
                                                 </section>
@@ -1133,6 +1126,9 @@
                                                             <th data-class="phone">
                                                                 Numero
                                                             </th>
+                                                            <th data-class="phone">
+                                                                Concepto
+                                                            </th>
                                                             <th data-hide="expand">
                                                                 <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
                                                             </th>
@@ -1301,7 +1297,7 @@
                     <div class="modal-body no-padding">
                         <form id="frmBuscar" class="smart-form">
                                 <header>
-                                    Estos son los anticipos para este cliente. Puede seleccionar los que desee.
+                                    Estos son los anticipos para este cliente y contrato. Los que se encuentran resaltados ya estan vinculados. Puede seleccionar los que desee.
                                 </header>
                         </form>
                         <div id="tbAnticipos" class="table-responsive">
@@ -1315,6 +1311,9 @@
                                         <th data-class="phone">
                                             Numero
                                         </th>
+                                        <th data-hide="expand">
+                                            Concepto
+                                        </th>      
                                         <th data-hide="expand">
                                             <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
                                         </th>
