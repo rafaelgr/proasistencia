@@ -634,7 +634,7 @@ function loadDepartamento(departamentoId) {
             if (err) return;
             if(data) {
                 usaCalculadora = data.usaCalculadora;
-                usaContrato = data.usaContrato
+                usaContrato = data.usaContrato;
                 if(!usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);

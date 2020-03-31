@@ -17,6 +17,7 @@ var dataBases;
 var dataCobros;
 var usuario;
 var usaCalculadora;
+var usaContrato = true;//por defecto se usa contrato
 var antSerie = null;
 
 
@@ -49,6 +50,9 @@ function initForm() {
     $("#frmAntClien").submit(function () {
         return false;
     });
+    $("#txtPrecio").focus(function () {
+        $('#txtPrecio').val(null);
+    });
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
@@ -57,9 +61,12 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
-    // select2 things
-    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    loadDepartamentos();
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) loadDepartamento(e.added.id);
+    });
+     loadDepartamentos();
+
 
 
     // Ahora cliente en autocomplete
@@ -180,6 +187,7 @@ function loadData(data) {
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
     vm.clienteId(data.clienteId);
+    vm.sclienteId(data.clienteId);
     vm.contratoId(data.contratoId);
     vm.departamentoId(data.departamentoId);
     vm.serie(data.serie);
@@ -378,7 +386,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato;    
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -391,20 +399,6 @@ var cargarContratos = function (data) {
     vm.posiblesContratos(contratos);
     $("#cmbContratos").val([data.contratoId]).trigger('change');
 }
-
-
-function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
-        if (err) return;
-        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
-        vm.posiblesDepartamentos(departamentos);
-        if(departamentoId) {
-            vm.departamentoId(departamentoId);
-        }
-        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
-    });
-}
-    
 
 
 function cambioCliente(clienteId) {
@@ -449,6 +443,7 @@ function obtenerDepartamentoContrato(contratoId) {
     llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
         if (err) return;
         if(data) {
+            vm.departamentoId(data.departamentoId);
             //vm.departamento(data.nombre);
             loadDepartamentos(data.departamentoId);
         }
@@ -461,17 +456,29 @@ function loadDepartamento(departamentoId) {
             if (err) return;
             if(data) {
                 usaCalculadora = data.usaCalculadora;
-                vm.departamento(data.nombre);
-                if(data.departamentoId == 7) $('#contrato').hide();
-                if(!data.usaCalculadora) {
+                usaContrato = data.usaContrato
+                if(!usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
                     obtenerDepartamentoContrato();
                 }
+                loadContratos();
             }
 
         });
+}
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
 }
 
 
