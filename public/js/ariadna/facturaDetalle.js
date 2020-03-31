@@ -1877,7 +1877,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" +facturaId, null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() +  "/" + vm.contratoId() + "/" +facturaId, null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
