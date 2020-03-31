@@ -20,6 +20,7 @@ var dataPrefacturasLineas;
 var dataBases;
 
 var usaCalculadora;
+var usaContrato = true;//por defecto se usa contrato
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -47,7 +48,9 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
-
+    $("#txtPrecio").focus(function () {
+        $('#txtPrecio').val(null);
+    });
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarPrefactura);
     $("#btnSalir").click(salir());
@@ -71,6 +74,13 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
+
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) loadDepartamento(e.added.id);
+    });
+     loadDepartamentos();
+
 
     // Ahora cliente en autocomplete
     initAutoCliente();
@@ -167,7 +177,6 @@ function admData() {
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.departamento = ko.observable();
-    self.departamentoId = ko.observable()
     self.serie = ko.observable();
     self.fecha = ko.observable();
     self.empresaId = ko.observable();
@@ -252,6 +261,13 @@ function admData() {
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
     //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+
+    //
     // Para calculadora de costes
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -310,7 +326,7 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
 
     loadContratos(data.contratoId);
-    loadDepartamento(data.departamentoId);
+    loadDepartamentos(data.departamentoId);
     if(!data.contratoId) {
         obtenerDepartamentoContrato(null);
     } else {
@@ -487,32 +503,46 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato;
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
     });
 }
+
 function loadDepartamento(departamentoId) {
     if(!departamentoId) return;
         llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
             if (err) return;
             if(data) {
                 usaCalculadora = data.usaCalculadora;
-                vm.departamento(data.nombre);
-                if(data.departamentoId == 7) $('#contrato').hide();
-                if(!data.usaCalculadora) {
+                usaContrato = data.usaContrato
+                if(!usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
                     obtenerDepartamentoContrato();
                 }
+                    loadContratos();
             }
 
         });
-    
 }
+
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
+
 
 var cargarContratos = function (data) {
     var contratos = [{ contratoId: 0, referencia: "" }].concat(data);
@@ -563,7 +593,7 @@ function obtenerDepartamentoContrato(contratoId) {
         if(data) {
             //vm.departamento(data.nombre);
             vm.departamentoId(data.departamentoId);
-            loadDepartamento(data.departamentoId);
+            loadDepartamentos(data.departamentoId);
         }
     });
 }
