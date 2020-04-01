@@ -162,11 +162,14 @@ function initForm() {
             $('#txtFecha').prop('disabled', true);
             
         })
-    } else {
+    } else { 
         // caso alta
         vm.facturaId(0);
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
+        vm.sempresaId(0);
+        vm.sclienteId(0);
+        vm.sdepartamentoId(0)
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -585,6 +588,8 @@ function cambioCliente(clienteId) {
     if (!clienteId) return;
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
         vm.receptorNif(data.nif);
         vm.receptorNombre(data.nombreComercial);
         vm.receptorDireccion(data.direccion);
@@ -1464,7 +1469,7 @@ var initAutoCliente = function () {
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.clienteId
                     };
                     r.push(v);

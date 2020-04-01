@@ -1833,7 +1833,7 @@ var initAutoProveedor = function () {
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.proveedorId
                     };
                     r.push(v);
