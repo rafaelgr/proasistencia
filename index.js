@@ -23,7 +23,7 @@ var empresas_router = require('./lib/empresas/empresas_controller');
 var clientes_router = require('./lib/clientes/clientes_controller');
 var proveedores_router = require('./lib/proveedores/proveedores_controller');
 var comerciales_router = require('./lib/comerciales/comerciales_controller');
-var sqlany_router = require('./lib/sqlany/sqlany_controller');
+// var sqlany_router = require('./lib/sqlany/sqlany_controller');
 var tipos_comerciales_router = require('./lib/tipos_comerciales/tipos_comerciales_controller');
 var tipos_mantenimientos_router = require('./lib/tipos_mantenimientos/tipos_mantenimientos_controller');
 var tipos_clientes_router = require('./lib/tipos_clientes/tipos_clientes_controller');
@@ -88,7 +88,7 @@ var estados_parte_profesional_router = require('./lib/estados_parte_profesional/
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 var partes_router = require('./lib/partes/partes_controller');
-
+var report_router = require('./lib/report-controller/reportdb')
 
 
 var pack = require('./package.json');
@@ -150,7 +150,7 @@ app.use('/api/empresas', empresas_router);
 app.use('/api/clientes', clientes_router);
 app.use('/api/proveedores', proveedores_router);
 app.use('/api/comerciales', comerciales_router);
-app.use('/api/sqlany', sqlany_router);
+// app.use('/api/sqlany', sqlany_router);
 app.use('/api/tipos_comerciales', tipos_comerciales_router);
 app.use('/api/tipos_mantenimientos', tipos_mantenimientos_router);
 app.use('/api/tipos_clientes', tipos_clientes_router);
@@ -182,7 +182,7 @@ app.use('/api/contratos', contratos_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/tipos_profesional', tipos_profesional_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
-app.use('/api/streport', require('./report-controller/reportdb'));
+app.use('/api/streport', report_router);
 app.use('/api/correoElectronico', correoElectronico);
 app.use('/api/plantillas_correo_facturas', plantillas_correo);
 app.use('/api/upload', upload);
