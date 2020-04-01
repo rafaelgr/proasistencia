@@ -555,6 +555,8 @@ function cambioCliente(clienteId) {
     if (!clienteId) return;
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
         vm.receptorNif(data.nif);
         vm.receptorNombre(data.nombreComercial);
         vm.receptorDireccion(data.direccion);
@@ -1176,7 +1178,7 @@ var initAutoCliente = function () {
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.clienteId
                     };
                     r.push(v);
