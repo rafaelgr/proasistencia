@@ -138,8 +138,9 @@ function initForm() {
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
 
-    $('#txtPrecio').focus( function () {
-        $('#txtPrecio').val('');
+    
+    $('#txtTotalConIva').focus( function () {
+        $('#txtTotalConIva').val('');
     })
 
     $("#cmbUnidades").select2(select2Spanish());
@@ -802,6 +803,8 @@ function cambioProveedor(proveedorId) {
     llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
         if (err) return;
         vm.emisorNif(data.nif);
+        $('#txtProveedor').val(data.nombre);
+        vm.sproveedorId(data.proveedorId);
         vm.emisorNombre(data.nombre);
         vm.emisorDireccion(data.direccion);
         vm.emisorCodPostal(data.codPostal);
@@ -1658,7 +1661,7 @@ var initAutoProveedor = function () {
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.proveedorId
                     };
                     r.push(v);

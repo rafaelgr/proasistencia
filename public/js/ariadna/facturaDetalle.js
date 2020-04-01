@@ -18,6 +18,7 @@ var dataCobros;
 var dataAnticipos;
 var usuario;
 var usaCalculadora;
+var usaContrato = true;//por defecto se usa contrato
 var numLineas = 0;
 var cont = 0;
 var importeSuplido = 0;
@@ -48,6 +49,7 @@ function initForm() {
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
+   
     
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
@@ -81,6 +83,13 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioEmpresa(e.added.id);
     });
+
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) loadDepartamento(e.added.id);
+    });
+     loadDepartamentos();
+
 
     // Ahora cliente en autocomplete
     initAutoCliente();
@@ -153,11 +162,14 @@ function initForm() {
             $('#txtFecha').prop('disabled', true);
             
         })
-    } else {
+    } else { 
         // caso alta
         vm.facturaId(0);
         vm.porcentajeRetencion(0);
         vm.importeRetencion(0);
+        vm.sempresaId(0);
+        vm.sclienteId(0);
+        vm.sdepartamentoId(0)
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -177,7 +189,6 @@ function admData() {
     self.contratoId = ko.observable();
     self.tipoContratoId = ko.observable();
     self.departamento = ko.observable();
-    self.departamentoId = ko.observable()
     self.importeAnticipo = ko.observable();
     self.restoCobrar = ko.observable();
     self.tipoProyectoId = ko.observable();
@@ -225,6 +236,12 @@ function admData() {
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
     self.observacionesPago = ko.observable();
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 
 
     //
@@ -334,7 +351,7 @@ function loadData(data, desdeLinea) {
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
-    loadDepartamento(data.departamentoId);
+    loadDepartamentos(data.departamentoId);
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
     vm.observaciones(data.observaciones);
     vm.observacionesPago(data.observacionesPago);
@@ -355,7 +372,7 @@ function loadData(data, desdeLinea) {
         mostrarMensajeFacturaNueva();
         cmd == ""
         //comprovamos si hay anticipos
-        llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId(),null, function (err, data) {
+        llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
             if (err) return;
             if(data) {
                 if(data.length > 0) {
@@ -552,7 +569,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato;
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -571,6 +588,8 @@ function cambioCliente(clienteId) {
     if (!clienteId) return;
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
         vm.receptorNif(data.nif);
         vm.receptorNombre(data.nombreComercial);
         vm.receptorDireccion(data.direccion);
@@ -609,7 +628,7 @@ function obtenerDepartamentoContrato(contratoId) {
         if(data) {
             //vm.departamento(data.nombre);
             vm.departamentoId(data.departamentoId);
-            loadDepartamento(data.departamentoId);
+            loadDepartamentos(data.departamentoId);
         }
     });
 }
@@ -620,19 +639,31 @@ function loadDepartamento(departamentoId) {
             if (err) return;
             if(data) {
                 usaCalculadora = data.usaCalculadora;
-                vm.departamento(data.nombre);
-                if(data.departamentoId == 7) $('#contrato').hide();
-                if(!data.usaCalculadora) {
+                usaContrato = data.usaContrato;
+                if(!usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
                     obtenerDepartamentoContrato();
                 }
+                    loadContratos();
             }
 
         });
 }
 
+
+function loadDepartamentos(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+        }
+        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
+    });
+}
 
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de facturas
@@ -1438,7 +1469,7 @@ var initAutoCliente = function () {
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.clienteId
                     };
                     r.push(v);
@@ -1674,6 +1705,8 @@ function initTablaAnticipos() {
             }
         }, {
             data: "vNum"
+        },{
+            data: "conceptoAnticipo"
         }, {
             data: "emisorNombre"
         }, {
@@ -1692,7 +1725,7 @@ function initTablaAnticipos() {
 }
 
 function cargaTablaAnticipos(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId(),null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/no/vinculados/" + vm.clienteId() + "/" + vm.contratoId(),null, function (err, data) {
         if (err) return;
         if(data) {
             if(cont != 1) {
@@ -1749,7 +1782,7 @@ function vinculaAnticipo() {
             llamadaAjax("POST", "/api/anticiposClientes/vincula/varios/", datosArrayAnt, function (err, data) {
                 if (err) return;
                 $('#modalAnticipo').modal('hide');
-                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId()  + "/" + facturaId, null, function (err, anticipos) {
+                llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" + vm.contratoId()  + "/" + facturaId, null, function (err, anticipos) {
                     if (err) return;
                     //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
                 anticipos.forEach(function(a) {
@@ -1826,6 +1859,8 @@ function initTablaAnticiposAsociados() {
         }, {
             data: "vNum"
         }, {
+            data: "conceptoAnticipo"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -1851,7 +1886,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() + "/" +facturaId, null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() +  "/" + vm.contratoId() + "/" +facturaId, null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
@@ -1873,7 +1908,7 @@ function desvinculaAnticipo(anticipoId) {
     llamadaAjax("DELETE", "/api/anticiposClientes/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
-        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() +  "/" + facturaId, null, function (err, anticipos) {
+        llamadaAjax("GET", "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId()  + "/" + vm.contratoId() +  "/" + facturaId, null, function (err, anticipos) {
             if (err) return;
 
             //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
