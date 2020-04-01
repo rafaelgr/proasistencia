@@ -53,13 +53,14 @@ function admData() {
     self.departamentoId = ko.observable();
     self.nombre = ko.observable();
     self.usaCalculadora = ko.observable();
-   
+    self.usaContrato = ko.observable();
 }
 
 function loadData(data) {
     vm.departamentoId(data.departamentoId);
     vm.nombre(data.nombre);
     vm.usaCalculadora(data.usaCalculadora);
+    vm.usaContrato(data.usaContrato);
 }
 
 function datosOK() {
@@ -93,7 +94,8 @@ function aceptar() {
             departamento: {
                 "departamentoId": vm.departamentoId(),
                 "nombre": vm.nombre(),
-                "usaCalculadora": vm.usaCalculadora()
+                "usaCalculadora": vm.usaCalculadora(),
+                "usaContrato": vm.usaContrato()
             }
         };
         if (adminId == 0) {
