@@ -327,6 +327,7 @@ function loadData(data) {
 
     loadContratos(data.contratoId);
     loadDepartamentos(data.departamentoId);
+    compruebaCalculadora(data.departamentoId);
     if(!data.contratoId) {
         obtenerDepartamentoContrato(null);
     } else {
@@ -527,6 +528,23 @@ function loadDepartamento(departamentoId) {
                     loadContratos();
             }
 
+        });
+}
+
+function compruebaCalculadora(departamentoId) {
+    if(!departamentoId) return;
+        llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                usaCalculadora = data.usaCalculadora;
+                usaContrato = data.usaContrato;
+                if(!usaCalculadora) {
+                    $('#calculadora').hide();
+                    vm.porcentajeAgente(0);
+                    vm.porcentajeBeneficio(0);
+                    obtenerDepartamentoContrato();
+                }
+            }
         });
 }
 
