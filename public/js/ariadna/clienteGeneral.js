@@ -43,12 +43,12 @@ function initForm() {
     var bus = getCookie("buscador_clientes");
     $('#chkTodos').change(function () {
         if(bus) {
-        b = JSON.parse(bus);
+        /* b = JSON.parse(bus);
         vm.bCodigo(b.Codigo);
         vm.bNif(b.Nif);
         vm.bNombre(b.Nombre);
         vm.bTelefono(b.Telefono);
-        vm.bDireccion(b.Direccion);
+        vm.bDireccion(b.Direccion); */
         buscarClientes()();
         }
     })
@@ -59,6 +59,7 @@ function initForm() {
         vm.bNombre(b.Nombre);
         vm.bTelefono(b.Telefono);
         vm.bDireccion(b.Direccion);
+        vm.bCuenta(b.cuentaContable);
         buscarClientes()();
     } else {
         if (clienteId !== '') {
@@ -94,6 +95,7 @@ function admData() {
     self.bNif = ko.observable();
     self.bDireccion = ko.observable();
     self.bTelefono = ko.observable();
+    self.bCuenta = ko.observable();
 }
 
 function initTablaClientes() {
@@ -145,6 +147,8 @@ function initTablaClientes() {
             data: "proId"
         }, {
             data: "nombre"
+        },  {
+            data: "nomcom"
         }, {
             data: "direccion2"
         }, {
@@ -209,12 +213,14 @@ function buscarClientes() {
         if (vm.bDireccion()) aBuscar += "&Direccion=" + vm.bDireccion();
         if (vm.bTelefono()) aBuscar += "&Telefono=" + vm.bTelefono();
         if (vm.bCodigo()) aBuscar += "&Codigo=" + vm.bCodigo();
+        if (vm.bCuenta()) aBuscar += "&Cuenta=" + vm.bCuenta();
         b = {
             Codigo: vm.bCodigo(),
             Nombre: vm.bNombre(),
             Nif: vm.bNif(),
             Direccion: vm.bDireccion(),
-            Telefono: vm.bTelefono()
+            Telefono: vm.bTelefono(),
+            cuentaContable: vm.bCuenta()
         };
         setCookie("buscador_clientes", JSON.stringify(b), 1);
         if($('#chkTodos').prop('checked')) {
@@ -268,6 +274,7 @@ function borrar() {
         vm.bNombre(null);
         vm.bTelefono(null);
         vm.bDireccion(null);
+        vm.bCuenta(null);
         deleteCookie("buscador_clientes");
         loadTablaClientes(null);
     };

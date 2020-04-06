@@ -226,7 +226,7 @@ function setCookie(c_name, value, exdays) {
     }
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString())+";path=[/];";
     document.cookie = c_name + "=" + c_value;
 }
 
@@ -234,7 +234,7 @@ function deleteCookie(c_name) {
     if (!are_cookies_enabled()) {
         alert("NO COOKIES");
     }
-    document.cookie = c_name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = c_name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=[/];';
 }
 
 function getCookie(c_name) {

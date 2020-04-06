@@ -197,6 +197,7 @@ function admData() {
     self.fax = ko.observable();
     self.email = ko.observable();
     self.email2 = ko.observable();
+    self.emailFacturas = ko.observable();
     self.observaciones = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
@@ -274,6 +275,7 @@ function loadData(data, desdeLoad) {
     vm.fax(data.fax);
     vm.email(data.email);
     vm.email2(data.email2);
+    vm.emailFacturas(data.emailFacturas);
     vm.observaciones(data.observaciones);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
@@ -322,6 +324,9 @@ function datosOK() {
             txtEmail2: {
                 email: true
             },
+            txtEmailFacturas: {
+                email: true
+            },
             cmbTiposComerciales: {
                 required: true
             },
@@ -341,6 +346,9 @@ function datosOK() {
                 email: 'Debe usar un correo válido'
             },
             txtEmail2: {
+                email: 'Debe usar un correo válido'
+            },
+            txtEmailFacturas: {
                 email: 'Debe usar un correo válido'
             },
             cmbTiposComerciales: {
@@ -426,6 +434,7 @@ function aceptar() {
                 "fax": vm.fax(),
                 "email": vm.email(),
                 "email2": vm.email2(),
+                "emailFacturas": vm.emailFacturas(),
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
@@ -539,11 +548,13 @@ function actualizaClientes() {
                 telefono1: vm.telefono1(),
                 fax: vm.fax(),
                 email: vm.email(),
+                email2: vm.email2(),
+                emailFacturas: vm.emailFacturas(),
                 colaboradorId: vm.sascComercialId(),
                 tarifaId: vm.starifaClienteId()
             }
-        };            
-        
+        };
+       
         $.ajax({
             type: "PUT",
             url: url,
