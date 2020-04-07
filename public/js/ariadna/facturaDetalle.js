@@ -721,8 +721,14 @@ function limpiaDataLinea(data) {
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/" + contratoId, null, function (err, data) {
         if (err) return;
-        vm.porcentajeBeneficio(data.porcentajeBeneficio);
-        vm.porcentajeAgente(data.porcentajeAgente);
+        if(!usaCalculadora) {
+            vm.porcentajeBeneficio(0);
+            vm.porcentajeAgente(0);
+            return;
+        } else {
+            vm.porcentajeBeneficio(data.porcentajeBeneficio);
+            vm.porcentajeAgente(data.porcentajeAgente);
+        }
         if (!vm.coste()) vm.coste(0);
         vm.contratoId(data.contratoId);
         vm.empresaId(data.empresaId);
@@ -1482,7 +1488,7 @@ var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("GET", "/api/clientes/activos/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {

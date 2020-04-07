@@ -671,7 +671,7 @@ function aceptar() {
     var mf = function () {
         if($('#chkActiva').prop('checked')) {
             if (!datosOK()) return;
-            if(vm.cuentaContable() == null || vm.cuentaContable == "") {
+            if(vm.cuentaContable() == null || vm.cuentaContable() == "") {
                 mensError('El Campo cuenta contable es obligatorio');
                 return;
             }
@@ -1032,13 +1032,20 @@ function compruebaCuentaContable(cuentaContable) {
         contentType: "application/json",
         data:null,
         success: function (data, status) {
-            if(data && data.clienteId != vm.clienteId()) {
-               mensError('Ya existe un cliente con esta cuenta contable');
-               //$('#txtCuentaContable').val("");
-               vm.cuentaContable(null);
-               //$('#txtCodigo').val("");
+            if(data.length == 1) {
+                if(data && data.clienteId != vm.clienteId()) {
+                    mensError('Ya existe un cliente con esta cuenta contable');
+                    //$('#txtCuentaContable').val("");
+                    vm.cuentaContable(null);
+                    //$('#txtCodigo').val("");
+                 } else {
+                     vm.cuentaContable(cuentaContable);
+                 }
             } else {
-                vm.cuentaContable(cuentaContable);
+                mensError('Ya existe un cliente con esta cuenta contable');
+                //$('#txtCuentaContable').val("");
+                vm.cuentaContable(null);
+                vm.codigo(null);
             }
         },
         error: function (err) {

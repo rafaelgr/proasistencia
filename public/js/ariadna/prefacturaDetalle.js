@@ -1191,7 +1191,7 @@ var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("GET", "/api/clientes/activos/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
