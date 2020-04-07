@@ -1,0 +1,4 @@
+serie;factura;fecha;cuenta_cli;fpago;tipo_operacion;cuenta_ret;imp_ret;tipo_ret;cuenta_ventas;centro_coste;imp_venta;por_iva;imp_iva;por_rec;imp_rec;total_factura;integracion;iban;observacion
+PM;2017000039;31/07/17;430003741;1;0;;;;700000001;;112.66;21;23.66;;;136.32;0;null;
+PM;2017000040;31/07/17;430003741;1;0;;;;700000001;;83.59;21;17.55;;;101.14;0;null;
+PM;2017000041;31/07/17;430003741;1;0;;;;700000001;;88.97;21;18.68;;;107.65;0;null;

@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "aritel",
+    "database": "proasistencia",
+    "port": 3306
+}

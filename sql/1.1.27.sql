@@ -1,4 +1,4 @@
-ALTER TABLE `proasistencia`.`prefacturas`   
+ALTER TABLE `prefacturas`   
   ADD COLUMN `sel` BOOLEAN DEFAULT FALSE  NULL AFTER `observaciones`;
 
 # Crear la tabla de facturas
@@ -76,15 +76,15 @@ CREATE TABLE `facturas_bases` (
 ) ENGINE=INNODB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
 
 # Enlace de prefacturas a facturas
-ALTER TABLE `proasistencia`.`prefacturas`   
+ALTER TABLE `prefacturas`   
   ADD COLUMN `facturaId` INT(11) NULL AFTER `sel`,
-  ADD CONSTRAINT `pref_facturas` FOREIGN KEY (`facturaId`) REFERENCES `proasistencia`.`facturas`(`facturaId`);
+  ADD CONSTRAINT `pref_facturas` FOREIGN KEY (`facturaId`) REFERENCES `facturas`(`facturaId`);
 
 # referencia factura --> prefactura
-ALTER TABLE `proasistencia`.`facturas`   
+ALTER TABLE `facturas`   
   ADD COLUMN `prefacturaId` INT(11) NULL AFTER `sel`,
-  ADD CONSTRAINT `fact_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `proasistencia`.`prefacturas`(`prefacturaId`);
+  ADD CONSTRAINT `fact_prefacturas` FOREIGN KEY (`prefacturaId`) REFERENCES `prefacturas`(`prefacturaId`);
 
 #referencia de contabilización en factura
-ALTER TABLE `proasistencia`.`facturas`   
+ALTER TABLE `facturas`   
   ADD COLUMN `contafich` VARCHAR(255)  NULL AFTER `prefacturaId`;

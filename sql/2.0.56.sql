@@ -13,3 +13,4 @@ CREATE TABLE `proveedores` (
   KEY `proveedores_tipoVia` (`tipoViaId`),
   CONSTRAINT `proveedores_tipoVia` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via` (`tipoViaId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+

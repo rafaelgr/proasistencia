@@ -1514,6 +1514,7 @@ function guardaClienteAgente() {
                     "formaPagoId": vm.sformaPagoId(),
                     "motivoBajaId": vm.smotivoBajaId(),
                     "cuentaContable": vm.cuentaContable(),
+                    "antCuentaContable": vm.antCuentaContable(),
                     "iban": vm.iban(),
                     "comercialId": vm.sagenteId(),
                     "codigo": vm.codigo(),
