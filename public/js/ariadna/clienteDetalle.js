@@ -1032,21 +1032,24 @@ function compruebaCuentaContable(cuentaContable) {
         contentType: "application/json",
         data:null,
         success: function (data, status) {
-            if(data.length == 1) {
-                if(data && data.clienteId != vm.clienteId()) {
+            if(data) {
+                if(data.length == 1) {
+                    if(data && data.clienteId != vm.clienteId()) {
+                        mensError('Ya existe un cliente con esta cuenta contable');
+                        //$('#txtCuentaContable').val("");
+                        vm.cuentaContable(null);
+                        //$('#txtCodigo').val("");
+                     } else {
+                         vm.cuentaContable(cuentaContable);
+                     }
+                } else {
                     mensError('Ya existe un cliente con esta cuenta contable');
                     //$('#txtCuentaContable').val("");
                     vm.cuentaContable(null);
-                    //$('#txtCodigo').val("");
-                 } else {
-                     vm.cuentaContable(cuentaContable);
-                 }
-            } else {
-                mensError('Ya existe un cliente con esta cuenta contable');
-                //$('#txtCuentaContable').val("");
-                vm.cuentaContable(null);
-                vm.codigo(null);
+                    vm.codigo(null);
+                }
             }
+            
         },
         error: function (err) {
             mensErrorAjax(err);
