@@ -31,7 +31,7 @@
     "dotenv": "^6.2.0",
     "edge-js": "^13.0.1",
     "express": "^4.13.3",
-    "formidable": "^1.1.1",
+    "formidable": "^1.2.2",
     "glob": "^7.1.2",
     "moment": "^2.24.0",
     "multer": "^1.1.0",
