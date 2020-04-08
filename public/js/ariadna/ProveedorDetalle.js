@@ -4,6 +4,7 @@ Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
 
+
 var numDigitos = 0; // número de digitos de cuenta contable
 
 var intentos = 0;
