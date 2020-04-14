@@ -286,6 +286,7 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
+            vm.stipoOperacionId(data.tipoOperacionId);
             loadData(data);
             loadLineasFactura(data.facproveId);
             loadBasesFacprove(data.facproveId);
@@ -520,6 +521,7 @@ function admData() {
 }
 
 function loadData(data) {
+    vm.tipoOperacionId(data.tipoOperacionId);
     vm.facproveId(data.facproveId);
     vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
@@ -539,7 +541,6 @@ function loadData(data) {
     vm.emisorIban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.restoPagar(data.restoPagar);
-    vm.tipoOperacionId(data.tipoOperacionId);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -1673,6 +1674,7 @@ function loadBasesFacprove(facproveId) {
         for (var i = 0; i < data.length; i++) {
             t1 += data[i].base;
             t3 += data[i].cuota;
+            var tipiOpera =  vm.stipoOperacionId();
             if(vm.stipoOperacionId() == 2) {
                 t2 += data[i].base;
             } else {
