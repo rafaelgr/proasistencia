@@ -1426,8 +1426,10 @@ function realizarCambioAgente(data) {
     vm.codComercial(data.proId);
     if (data) {
         loadComerciales(data.ascComercialId);
+        loadTarifas(data.tarifaId);
     }
 }
+
 
 function limpiaModalClientesAgentes() {
     $.ajax({

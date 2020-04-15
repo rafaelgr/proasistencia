@@ -36,6 +36,7 @@ function initForm() {
     initTablaProveedores();
     // comprobamos parámetros
     proveedorId = gup('ProveedorId');
+    
     if (proveedorId !== '') {
         // cargar la tabla con un único valor que es el que corresponde.
         var data = {
@@ -144,6 +145,10 @@ function initTablaProveedores() {
         }, {
             data: "nif"
         }, {
+            data: "profesion"
+        }, {
+            data: "departamento"
+        }, {
             data: "cuentaContable"
         },{
             data: "proveedorId",
@@ -232,7 +237,7 @@ function buscarProveedores(exito) {
 function crearProveedor() {
     var mf = function () {
         var url = "ProveedorDetalle.html?ProveedorId=0";
-        window.open(url, '_self');
+        window.open(url, '_new');
     };
     return mf;
 }
@@ -276,7 +281,7 @@ function editProveedor(id) {
     // hay que abrir la página de detalle de Proveedor
     // pasando en la url ese ID
     var url = "ProveedorDetalle.html?ProveedorId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_new');
 }
 
 
