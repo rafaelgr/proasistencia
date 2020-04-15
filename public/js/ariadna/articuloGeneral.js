@@ -224,7 +224,7 @@ function buscarArticulos() {
 function crearArticulo() {
     var mf = function () {
         var url = "ArticuloDetalle.html?ArticuloId=0";
-        window.open(url, '_self');
+        window.open(url, '_new');
     };
     return mf;
 }
@@ -268,7 +268,7 @@ function editArticulo(id) {
     // hay que abrir la página de detalle de articulo
     // pasando en la url ese ID
     var url = "ArticuloDetalle.html?ArticuloId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_new');
 }
 
 buscarTodos = function() {

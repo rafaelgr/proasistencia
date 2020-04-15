@@ -825,7 +825,7 @@
               <Type>Totals</Type>
             </Text30>
           </Components>
-          <Condition>{libCli.porcentaje}</Condition>
+          <Condition>{libCli.tipoIva}</Condition>
           <Conditions isList="true" count="0" />
           <Name>GroupHeaderBand1</Name>
           <Page isRef="2" />
@@ -875,10 +875,10 @@
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>2/6/2020 1:28:24 PM</ReportChanged>
+  <ReportChanged>4/14/2020 9:08:25 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>4940f4457aed43d4b0318325439baae7</ReportGuid>
+  <ReportFile />
+  <ReportGuid>0378289451654ffe8243c9df6f596f35</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

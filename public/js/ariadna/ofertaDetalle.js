@@ -39,7 +39,14 @@ function initForm() {
     //Evento de cambio de departamento
     $("#cmbDepartamentos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if (e.added) cambioDepartamento(e.added.id);
+        if (e.added) {
+            cambioDepartamento(e.added.id);
+            if(e.added.id == 7) {
+                $('#btnGenerarContrato').hide();
+            } else {
+                $('#btnGenerarContrato').show();
+            }
+        }
     });
 
     // Eventos de la calculadora de costes
@@ -361,6 +368,12 @@ function loadData(data) {
 
     loadConceptosLineas(data.contratoId);
     loadGrupoArticulos();
+
+    if(data.tipoOfertaId == 7) {
+        $('#btnGenerarContrato').hide()
+    } else {
+        $('#btnGenerarContrato').show()
+    }
 }
 
 function datosOK() {
