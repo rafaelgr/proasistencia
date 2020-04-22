@@ -108,9 +108,7 @@ function initForm() {
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        
-    });
-    //
+         //
     initAutoCliente(); 
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -120,10 +118,13 @@ function initForm() {
         var url = myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId();
         llamadaAjax(verb, url, null, function (err, data) {
             vm.sempresaId(data.empresaId);
-            obtainReport();
+            obtainReport(true);
             $('#selector').hide();
         });
     }
+        
+    });
+   
 }
 
 function obtainKey() {
@@ -160,8 +161,10 @@ function admData() {
     self.elegidosDepartamentos = ko.observableArray([]);
 };
 
-var obtainReport = function () {
-    if (!datosOK()) return;
+var obtainReport = function (carga) {
+    if(!carga) {
+        if (!datosOK()) return;
+    }
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
@@ -174,6 +177,9 @@ var obtainReport = function () {
     llamadaAjax(verb, url, null, function (err, data) {
         var infPreFacturas = data.infPreFacturas;
         file = "../reports/" + infPreFacturas + ".mrt";
+        if(vm.sdepartamentoId() == 7) {
+            file = "../reports/prefactura_reparaciones.mrt";
+        } 
         var rpt = gup("report");
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
