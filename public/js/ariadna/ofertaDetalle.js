@@ -41,11 +41,6 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) {
             cambioDepartamento(e.added.id);
-            if(e.added.id == 7) {
-                $('#btnGenerarContrato').hide();
-            } else {
-                $('#btnGenerarContrato').show();
-            }
         }
     });
 
@@ -366,14 +361,8 @@ function loadData(data) {
     cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
 
-    loadConceptosLineas(data.contratoId);
+    loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
-
-    if(data.tipoOfertaId == 7) {
-        $('#btnGenerarContrato').hide()
-    } else {
-        $('#btnGenerarContrato').show()
-    }
 }
 
 function datosOK() {

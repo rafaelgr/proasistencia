@@ -117,6 +117,7 @@ function initForm() {
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioTipoContrato(e.added);
+        loadDepartamento(e.added.id);
     });
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
@@ -482,6 +483,7 @@ function loadData(data) {
     vm.porcentajeRetencion(data.porcentajeRetencion);
 
     loadConceptosLineas(data.contratoId);
+    loadDepartamento(data.tipoContratoId);
 }
 
 
@@ -793,6 +795,24 @@ function cambioTipoContrato(data) {
         $("#cmbTipoProyecto").val([0]).trigger('change');
     });
 }
+
+function loadDepartamento(departamentoId) {
+    if(!departamentoId) return;
+        llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                if(!data.usaCalculadora) {
+                    $('#calculadora').hide();
+                    vm.porcentajeAgente(0);
+                    vm.porcentajeBeneficio(0);
+                } else {
+                    $('#calculadora').show();
+                }
+            }
+
+        });
+}
+
 
 function cambioTextosPredeterminados(data) {
     //
