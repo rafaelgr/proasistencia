@@ -41,7 +41,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) {
             cambioDepartamento(e.added.id); 
-            if(e.added.id == 7 && OfertaId != 0) {
+            if(e.added.id == 7 && ofertaId != 0) {
                 if(!vm.servicioId()) {
                     $('#btnGenerarContrato').hide();
                 } else {
