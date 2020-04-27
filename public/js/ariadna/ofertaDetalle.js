@@ -41,14 +41,14 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) {
             cambioDepartamento(e.added.id); 
-            if(vm.departamentoId() == 7) {
+            if(e.added.id == 7 && OfertaId != 0) {
                 if(!vm.servicioId()) {
                     $('#btnGenerarContrato').hide();
                 } else {
                     $('#btnGenerarContrato').show();
                 }
             } else {
-                $('#btnGenerarContrato').show();
+                if(ofertaId != 0)  $('#btnGenerarContrato').show();
             }
         }
     });
@@ -349,7 +349,8 @@ function admData() {
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
     vm.servicioId(data.servicioId);
-    vm.tipoOfertaId(data.tipoOfertaId)
+    vm.tipoOfertaId(data.tipoOfertaId);
+    vm.stipoOfertaId(data.tipoOfertaId);
     loadDepartamentosUsuario(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
