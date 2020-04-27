@@ -23,6 +23,7 @@ var usuario;
 var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
+var numPrefacturas = 0;
 
 
 var breakpointDefinition = {
@@ -2534,12 +2535,30 @@ function loadPrefacturasDelContrato(contratoId) {
 }
 
 function loadTablaPrefacturas(data) {
+    
     var dt = $('#dt_prefactura').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
     dt.fnClearTable();
-    if (data != null) dt.fnAddData(data);
+    if (data != null) {
+        dt.fnAddData(data);
+        numPrefacturas = data.length;
+        if(numPrefacturas > 0) {
+            $('#cmbEmpresas').prop('disabled', true);
+            $('#cmbTiposContrato').prop('disabled', true);
+            $('#cmbTipoProyecto').prop('disabled', true);
+        } else {
+            $('#cmbEmpresas').prop('disabled', false);
+            $('#cmbTiposContrato').prop('disabled', false);
+            $('#cmbTipoProyecto').prop('disabled', false);
+        }
+    } else {
+        numPrefacturas = 0;
+        $('#cmbEmpresas').prop('disabled', false);
+        $('#cmbTiposContrato').prop('disabled', false);
+        $('#cmbTipoProyecto').prop('disabled', false);
+    }
     dt.fnDraw();
 }
 
