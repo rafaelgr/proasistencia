@@ -23,6 +23,7 @@ var usuario;
 var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
+var numPrefacturas = 0;
 
 
 var breakpointDefinition = {
@@ -116,8 +117,10 @@ function initForm() {
     loadTiposContrato();
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioTipoContrato(e.added);
-        loadDepartamento(e.added.id);
+        if(e.added) {
+            cambioTipoContrato(e.added);
+            loadDepartamento(e.added.id);
+        }
     });
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
@@ -288,6 +291,7 @@ function admData() {
     self.agenteId = ko.observable();
     self.fechaContrato = ko.observable();
     self.empresaId = ko.observable();
+    self.servicioId = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -445,6 +449,7 @@ function admData() {
 
 function loadData(data) {
     vm.contratoId(data.contratoId);
+    vm.tipoContratoId(data.tipoContratoId);
     loadTipoProyecto(data.tipoProyectoId);
     loadTiposContrato(data.tipoContratoId);
     vm.referencia(data.referencia);
@@ -481,6 +486,7 @@ function loadData(data) {
     loadTiposVia(data.tipoViaId);
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
+    vm.servicioId(data.servicioId);
 
     loadConceptosLineas(data.contratoId);
     loadDepartamento(data.tipoContratoId);
@@ -2004,7 +2010,6 @@ var loadPeriodosPagos = function (periodoPagoId) {
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
 }
 
-
 var generarPrefacturas = function () {
     if(numConceptos > 0) {
         modificaFormulario(true);
@@ -2530,12 +2535,30 @@ function loadPrefacturasDelContrato(contratoId) {
 }
 
 function loadTablaPrefacturas(data) {
+    
     var dt = $('#dt_prefactura').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
     dt.fnClearTable();
-    if (data != null) dt.fnAddData(data);
+    if (data != null) {
+        dt.fnAddData(data);
+        numPrefacturas = data.length;
+        if(numPrefacturas > 0) {
+            $('#cmbEmpresas').prop('disabled', true);
+            $('#cmbTiposContrato').prop('disabled', true);
+            $('#cmbTipoProyecto').prop('disabled', true);
+        } else {
+            $('#cmbEmpresas').prop('disabled', false);
+            $('#cmbTiposContrato').prop('disabled', false);
+            $('#cmbTipoProyecto').prop('disabled', false);
+        }
+    } else {
+        numPrefacturas = 0;
+        $('#cmbEmpresas').prop('disabled', false);
+        $('#cmbTiposContrato').prop('disabled', false);
+        $('#cmbTipoProyecto').prop('disabled', false);
+    }
     dt.fnDraw();
 }
 

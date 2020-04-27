@@ -40,7 +40,16 @@ function initForm() {
     $("#cmbDepartamentos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if (e.added) {
-            cambioDepartamento(e.added.id);
+            cambioDepartamento(e.added.id); 
+            if(e.added.id == 7 && ofertaId != 0) {
+                if(!vm.servicioId()) {
+                    $('#btnGenerarContrato').hide();
+                } else {
+                    $('#btnGenerarContrato').show();
+                }
+            } else {
+                if(ofertaId != 0)  $('#btnGenerarContrato').show();
+            }
         }
     });
 
@@ -211,6 +220,7 @@ function admData() {
     self.agenteId = ko.observable();
     self.fechaOferta = ko.observable();
     self.empresaId = ko.observable();
+    self.servicioId = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -338,7 +348,9 @@ function admData() {
 
 function loadData(data) {
     vm.ofertaId(data.ofertaId);
-    vm.tipoOfertaId(data.tipoOfertaId)
+    vm.servicioId(data.servicioId);
+    vm.tipoOfertaId(data.tipoOfertaId);
+    vm.stipoOfertaId(data.tipoOfertaId);
     loadDepartamentosUsuario(data.tipoOfertaId);
     loadTipoProyecto(data.tipoProyectoId);
     vm.referencia(data.referencia);
@@ -363,6 +375,12 @@ function loadData(data) {
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
+
+    if(!vm.servicioId()) {
+        $('#btnGenerarContrato').hide()
+    } else {
+        $('#btnGenerarContrato').show()
+    }
 }
 
 function datosOK() {
