@@ -734,6 +734,9 @@
                                                         CANTIDAD
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
+                                                        DESCUENTO
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
                                                         TOTAL CLIENTE
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
@@ -741,6 +744,9 @@
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
                                                         COSTE/UD. PROVEEDOR
+                                                    </th>
+                                                    <th data-hide="phone" class="text-right">
+                                                        DESCUENTO PROVEEDOR
                                                     </th>
                                                     <th data-hide="phone" class="text-right">
                                                         TOTAL PROVEEDOR
@@ -933,7 +939,7 @@
                                             <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label class="label">Unidad constructiva</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
@@ -945,10 +951,16 @@
                                             <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'abrev', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
-                                    <div class="col col-md-2">
+                                    <div class="col col-md-1">
                                         <label class="label">Cantidad</label>
                                         <label class="input">
                                             <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
                                         </label>
                                     </div>
                                 </div>
@@ -968,13 +980,10 @@
                                 <h3> Importes del cliente</h3>
                                 <div class="row">
                                     <section class="col col-md-4">
-                                        <!--
-                                        <label class="label">Importe</label>
-                                        <label class="input">
-                                            <input id="txtTotalLinea" name="txtTotalLinea" type="text" data-bind="value: totalLinea" disabled />
-                                        </label>
-                                        -->
                                     </section>
+                                   
+                                </div>
+                                <div class="row">
                                     <section class="col col-md-2">
                                         <label class="label">Tipo IVA</label>
                                         <label style="width:100%;">
@@ -984,10 +993,23 @@
                                     <section class="col col-md-2">
                                         <label class="label">Coste / Ud</label>
                                         <label class="input">
-                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: importe" />
+                                            <input id="txtImpUni" name="txtImpUni" type="text" data-bind="value: importe" />
                                         </label>
                                     </section>
-                                    <section class="col col-md-4">
+                                    <section class="col col-md-2">
+                                        <label class="label">Precio</label>
+                                        <label class="input">
+                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" disabled/>
+                                        </label>
+                                    </section>
+                                    
+                                    <section class="col col-md-3">
+                                        <label class="label">Importe descuento</label>
+                                        <label class="input">
+                                            <input id="txtImpDescuento" name="txtImpDescuento" type="text" data-bind="value: dto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
                                         <label class="label">Total coste</label>
                                         <label class="input">
                                             <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
@@ -1000,7 +1022,7 @@
                             <section>
                                 <h3> Importes del proveedor</h3>
                                 <div class="row">
-                                    <section class="col col-md-4">
+                                    <section class="col col-md-2">
                                         <label class="label">Proveedor</label>
                                         <label style="width:100%; height:50px;">
                                             <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
@@ -1019,7 +1041,19 @@
                                             <input id="txtPrecioProveedor" name="txtPrecioProveedor" type="text" data-bind="value: importeProveedor" />
                                         </label>
                                     </section>
-                                    <section class="col col-md-4">
+                                    <section class="col col-md-2">
+                                        <label class="label">Precio</label>
+                                        <label class="input">
+                                            <input id="txtPrecioPro" name="txtPrecioPro" type="text" data-bind="value: precioProveedor" disabled/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Importe descuento</label>
+                                        <label class="input">
+                                            <input id="txtImpDescuentoPro" name="txtImpDescuentoPro" type="text" data-bind="value: dtoProveedor"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
                                         <label class="label">Total coste</label>
                                         <label class="input">
                                             <input id="txtCosteLineaProveedor" name="txtCosteLineaProveedor" type="text" data-bind="value: costeLineaProveedor" disabled />

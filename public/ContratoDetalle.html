@@ -514,7 +514,7 @@
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">REFERENCIA</label>
                                                                                     <label class="input">
-                                                                                        <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" disabled/>
+                                                                                        <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
@@ -910,6 +910,12 @@
                                                                                     </th>
                                                                                     <th  class="text-left">
                                                                                         Porcentaje
+                                                                                    </th>
+                                                                                    <th  class="text-left">
+                                                                                        Importe
+                                                                                    </th>
+                                                                                    <th  class="text-left">
+                                                                                        Forma pago
                                                                                     </th>
                                                                                     <th>
                                                                                     </th>
@@ -1824,6 +1830,18 @@
                                         <label class="label">Fecha concepto</label>
                                         <label class="input">
                                             <input id="txtFechaConcepto" name="txtFechaConcepto" data-bind="value: fechaConcepto" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">importe</label>
+                                        <label class="input">
+                                            <input id="txtImporteCalculado" name="txtImporteCalculado" type="text" data-bind="value: importeCalculado" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="label">Forma de pago</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
                                         </label>
                                     </section>
                                 </div>

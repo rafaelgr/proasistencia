@@ -101,7 +101,8 @@ function initForm() {
         $('#txtPorcentajeCobro').val(null);
     });
 
-    
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
@@ -142,7 +143,7 @@ function initForm() {
 
 
     $("#cmbFormasPago").select2(select2Spanish());
-    loadFormasPago();
+    loadFormasPagoLinea();
 
 
     $("#cmbGrupoArticulos").select2(select2Spanish());
@@ -445,6 +446,10 @@ function admData() {
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
     self.fechaConcepto = ko.observable();
+    //
+    self.sformaPagoIdLinea = ko.observable();
+    self.posiblesFormasPagoLinea = ko.observableArray([]);
+    self.elegidosFormasPagoLinea = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -706,6 +711,18 @@ function loadTextosPredeterminados2(id) {
 }
 
 function loadFormasPago(id) {
+    llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
+        if (err) return;
+        var formasPago = [{
+            formaPagoId: 0,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([id]).trigger('change');
+    });
+}
+
+function loadFormasPagoLinea(id) {
     llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
         if (err) return;
         var formasPago = [{
@@ -2548,16 +2565,19 @@ function loadTablaPrefacturas(data) {
             $('#cmbEmpresas').prop('disabled', true);
             $('#cmbTiposContrato').prop('disabled', true);
             $('#cmbTipoProyecto').prop('disabled', true);
+            $('#txtReferencia').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
             $('#cmbTipoProyecto').prop('disabled', false);
+            $('#txtReferencia').prop('disabled', false);
         }
     } else {
         numPrefacturas = 0;
         $('#cmbEmpresas').prop('disabled', false);
         $('#cmbTiposContrato').prop('disabled', false);
         $('#cmbTipoProyecto').prop('disabled', false);
+        $('#txtReferencia').prop('disabled', false);
     }
     dt.fnDraw();
 }
@@ -3488,6 +3508,15 @@ function initTablaConceptosLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },{
+            data: "importe",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "Forma pago",
+            
         }, {
             data: "contratoPorcenId",
             render: function (data, type, row) {
@@ -3587,6 +3616,8 @@ function loadDataLineaConcepto(data) {
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
     vm.fechaConcepto(spanishDate(data.fecha));
+    vm.importeCalculado(data.importe);
+    vm.sformaPagoIdLinea(data.formaPagoId);
     
 }
 
