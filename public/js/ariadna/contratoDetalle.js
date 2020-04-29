@@ -142,7 +142,7 @@ function initForm() {
     initAutoAgente();
 
 
-    $("#cmbFormasPago").select2(select2Spanish());
+    $("#cmbFormasPagoLinea").select2(select2Spanish());
     loadFormasPagoLinea();
 
 
@@ -446,6 +446,7 @@ function admData() {
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
     self.fechaConcepto = ko.observable();
+    self.importeCalculado = ko.observable();
     //
     self.sformaPagoIdLinea = ko.observable();
     self.posiblesFormasPagoLinea = ko.observableArray([]);
@@ -726,11 +727,12 @@ function loadFormasPagoLinea(id) {
     llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
         if (err) return;
         var formasPago = [{
-            formaPagoId: 0,
+            formaPagoId: null,
             nombre: ""
         }].concat(data);
-        vm.posiblesFormasPago(formasPago);
-        $("#cmbFormasPago").val([id]).trigger('change');
+        vm.posiblesFormasPagoLinea(formasPago);
+        vm.sformaPagoIdLinea(id);
+        $("#cmbFormasPagoLinea").val([id]).trigger('change');
     });
 }
 
@@ -3515,7 +3517,7 @@ function initTablaConceptosLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "Forma pago",
+            data: "formaPagoNombre",
             
         }, {
             data: "contratoPorcenId",
@@ -3574,6 +3576,9 @@ function limpiaDataLineaConcepto() {
     vm.conceptoCobro('');
     vm.porcentajeCobro(0);
     vm.fechaConcepto(vm.fechaInicio());
+    vm.importeCalculado(0);
+    vm.sformaPagoIdLinea(null);
+
 }
 
 
@@ -3587,6 +3592,8 @@ function aceptarLineaConcepto() {
             concepto: vm.conceptoCobro(),
             porcentaje: vm.porcentajeCobro(),
             fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
         }
     }
                 var verbo = "POST";
@@ -3617,7 +3624,7 @@ function loadDataLineaConcepto(data) {
     vm.porcentajeCobro(data.porcentaje);
     vm.fechaConcepto(spanishDate(data.fecha));
     vm.importeCalculado(data.importe);
-    vm.sformaPagoIdLinea(data.formaPagoId);
+    loadFormasPagoLinea(data.formaPagoId);
     
 }
 
