@@ -1827,15 +1827,15 @@
                                         </label>
                                     </section>
                                     <section class="col col-md-2">
-                                        <label class="label">Fecha concepto</label>
-                                        <label class="input">
-                                            <input id="txtFechaConcepto" name="txtFechaConcepto" data-bind="value: fechaConcepto" class="datepicker" data-dateformat="dd/mm/yy" />
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
                                         <label class="label">importe</label>
                                         <label class="input">
                                             <input id="txtImporteCalculado" name="txtImporteCalculado" type="text" data-bind="value: importeCalculado" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Fecha concepto</label>
+                                        <label class="input">
+                                            <input id="txtFechaConcepto" name="txtFechaConcepto" data-bind="value: fechaConcepto" class="datepicker" data-dateformat="dd/mm/yy" />
                                         </label>
                                     </section>
                                     <section class="col col-md-2">
@@ -1847,6 +1847,9 @@
                                 </div>
                         </fieldset>
                         <footer>
+                            <button id="btnAceptarPrefactura" class="btn btn-primary" onclick="aceptarLineaConceptoPrefactura()">
+                                Crear prefactura
+                            </button>
                             <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaConcepto()">
                                 Aceptar
                             </button>
