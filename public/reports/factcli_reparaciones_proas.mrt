@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "28ac45b719ad4d7ab0f51712f5a24702",
+  "ReportGuid": "539b7f78a28e4790a3af73c6fff51f02",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1588156779208+0200)/",
+  "ReportChanged": "/Date(1588167332454+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -765,7 +765,7 @@
               "Name": "Text7",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.16,18.4,0.4",
+              "ClientRectangle": "0.2,0.16,18.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -823,7 +823,7 @@
               "Guid": "5101272c6dd6433e9c82618d43e22889",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.6,1.02,18,1.6",
+              "ClientRectangle": "0.2,1.02,18.6,1.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -831,7 +831,7 @@
                 "Value": "Le informamos que los datos personales de esta factura, están incorporados en un fichero bajo nuestra responsabilidad, para el tratamiento de datos de carácter personal, con la finalidad de\r\nmantenerle informado sobre los servicios que ofrece PROASISTENCIA, S.L Usted como interesado directo, tiene derecho de Acceso, Rectificación, Cancelación y Oposición al tratamiento de la\r\ninformación que le concierne y autoriza a que pase a formar parte del mencionado fichero, así como a recibir información y publicidad de productos y servicios de PROASISTENCIA, S.L. Si no\r\ndesea ser informado de nuestros productos y servicios mándenos un email o carta.\r\nLos derechos precitados podrán hacerse efectivos ante: PROASISTENCIA, S.L, C/ Camino de Rejas, 1 Coslada 28821 de Madrid o enviando un email: proasistencia@proasistencia.es (Ley\r\norgánica 15/1999 de 13 de diciembre de protección de datos de carácter personal)"
               },
               "HorAlignment": "Center",
-              "Font": "Arial Narrow;6.75;Bold, Italic;",
+              "Font": ";6.75;Italic;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1333,7 +1333,8 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,10.4,19,0.4",
+          "CanShrink": true,
+          "ClientRectangle": "0,10.4,19,2.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1343,7 +1344,6 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text23",
-              "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
               "MinSize": "0,0",
@@ -1366,6 +1366,8 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text27",
+              "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "16.8,0,1.8,0.4",
@@ -1379,6 +1381,9 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "NegativePattern": 8,
@@ -1394,6 +1399,7 @@
               "Name": "Text15",
               "Guid": "3667a2da2f8b4ff680ed17fe44b07d15",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "0.4,0,2,0.4",
@@ -1416,6 +1422,7 @@
               "Name": "Text47",
               "Guid": "6f0beabed77a410ca7fb20aedfaa79a0",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "2.6,0,1.2,0.4",
@@ -1438,6 +1445,7 @@
               "Name": "Text48",
               "Guid": "8df59ea99082446b9aa804e2283de55b",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "4,0,1,0.4",
@@ -1460,6 +1468,7 @@
               "Name": "Text49",
               "Guid": "667db861191343f8bfe98cd864709225",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "5.2,0,0.8,0.4",
@@ -1482,6 +1491,7 @@
               "Name": "Text50",
               "Guid": "4c1939e4a05b4ec2821691db913b5bda",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "13.8,0,0.8,0.4",
@@ -1512,6 +1522,7 @@
               "Name": "Text51",
               "Guid": "a6d23a9c29424430b7bf84249dbfca4d",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "14.8,0,1.8,0.4",
@@ -1538,6 +1549,9 @@
               }
             }
           },
+          "CanGrow": false,
+          "MinHeight": 1.5,
+          "MaxHeight": 2.6,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
@@ -1549,7 +1563,7 @@
         "6": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,11.6,19,0",
+          "ClientRectangle": "0,13.8,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1563,7 +1577,7 @@
         "7": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,12.4,19,0.8",
+          "ClientRectangle": "0,14.6,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1716,7 +1730,7 @@
         "8": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,14,19,0.4",
+          "ClientRectangle": "0,16.2,19,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1946,7 +1960,7 @@
         "9": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,15.2,19,2.4",
+          "ClientRectangle": "0,17.4,19,2.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
