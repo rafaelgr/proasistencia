@@ -16,3 +16,13 @@ ALTER TABLE `ofertas_lineas`
   ALTER TABLE `prefacturas`   
   ADD COLUMN `contratoPorcenId` INT(11) NULL AFTER `observacionesPago`,
   ADD CONSTRAINT `pref_conceptoPorcen` FOREIGN KEY (`contratoPorcenId`) REFERENCES `contrato_porcentajes`(`contratoPorcenId`) ON DELETE CASCADE;
+
+  ALTER TABLE `empresas_cuentaspago`   
+  ADD COLUMN `cuentacobro` VARCHAR(255) NULL AFTER `cuentapago`;
+
+  UPDATE `empresas_cuentaspago` SET `cuentacobro` = `cuentapago`;
+
+  ALTER TABLE `contratos`   
+  ADD COLUMN `intereses` DECIMAL(12,2) NULL AFTER `servicioId`;
+
+

@@ -236,7 +236,7 @@ function admData() {
 
     self.empresaCuentapagoId = ko.observable(),
     self.cuentapago = ko.observable();
-    //self.cuentaCobro = ko.observable();
+    self.cuentacobro = ko.observable();
     //
     self.tipoFormaPagoId = ko.observable();
     self.stipoFormaPagoId = ko.observable();
@@ -881,6 +881,7 @@ function nuevaLinea() {
 function limpiaDataLinea(data) {
     vm.empresaCuentapagoId (0);
     vm.cuentapago(null);
+    vm.cuentacobro(null);
     //
     loadTiposFormaPago();
 }
@@ -890,20 +891,27 @@ function comprobarCuenta() {
         return;
     }
     var codmacta = $('#txtCuentaPago').val();
-    llamadaAjax("GET", "/api/empresas/empresaCuentas/cuenta/pago/comprueba/existe/" + vm.contabilidad() +  "/" + codmacta, null, function (err, data) {
+    var codmacta2 = $('#txtCuentaCobro').val();
+    var data = [];
+    data.push(codmacta);
+    data.push(codmacta2);
+    
+    llamadaAjax("POST", "/api/empresas/empresaCuentas/cuenta/pago/comprueba/existe/" + vm.contabilidad(), data, function (err, data) {
         if (err) return;
-        if (!data) {
-            mostrarMensaje();
+        if (data.length > 0) {
+            mostrarMensaje(data);
         } else {
             aceptarLinea();
         }
     });
 }
 
-function mostrarMensaje() {
+function mostrarMensaje(data) {
+    var mens = 'La cuenta Contable ' + data + ' no existe en la contabilidad de la empresa, ¿ desea continuar ?';
+    if (data.length > 1) mens = 'Las cuentas Contables ' + data + ' no existen en la contabilidad de la empresa, ¿ desea continuar ?';
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
-        content: 'La cuenta Contable no existe en la contabilidad de la empresa, ¿ desea continuar ?',
+        content: mens,
         buttons: '[Cancelar][Aceptar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
@@ -922,7 +930,7 @@ function aceptarLinea() {
             empresaId: vm.empresaId(),
             tipoFormaPagoId: vm.stipoFormaPagoId(),
             cuentapago: vm.cuentapago(),
-            //cuentaCobro: vm.cuentaCobro()
+            cuentacobro: vm.cuentacobro()
         }
     }
     var verbo = "POST";
@@ -971,6 +979,11 @@ function datosOKLineas() {
                 required: true,
                 minlength: 9,
                 maxlength: 9
+            },
+            txtCuentaCobro: {
+                required: true,
+                minlength: 9,
+                maxlength: 9
             }
         },
         // Messages for form validation
@@ -979,7 +992,12 @@ function datosOKLineas() {
                 required: "Debe introducir un tipo de forma de pago"
             },
             txtCuentaPago: {
-                required: "Debe introducir una cuanta contable",
+                required: "Debe introducir una cuenta contable",
+                minlength: "La cuenta debe tener 9 digitos",
+                maxlength: "La cuenta debe tener 9 digitos"
+            },
+            txtCuentaCobro: {
+                required: "Debe introducir una cuenta contable",
                 minlength: "La cuenta debe tener 9 digitos",
                 maxlength: "La cuenta debe tener 9 digitos"
             },
@@ -1050,6 +1068,9 @@ function initTablaCuentasLineas() {
             data: "cuentapago",
            
         }, {
+            data: "cuentacobro",
+           
+        }, {
             data: "empresaCuentapagoId",
             render: function (data, type, row) {
                 var html = "";
@@ -1067,7 +1088,7 @@ function initTablaCuentasLineas() {
 function loadDataLinea(data) {
     vm.empresaCuentapagoId(data.empresaCuentapagoId),
     vm.cuentapago(data.cuentapago),
-    //vm.cuentaCobro(data.cuentaCobro)
+    vm.cuentacobro(data.cuentacobro);
     loadTiposFormaPago(data.tipoFormaPagoId);
 }
 

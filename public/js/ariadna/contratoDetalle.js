@@ -170,6 +170,7 @@ function initForm() {
         vm.porcentajeCobro(roundToTwo(porcentaje));
     });
 
+
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
     $("#cmbTextosPredeterminados").select2().on('change', function (e) {
@@ -519,6 +520,7 @@ function loadData(data) {
     vm.importeBeneficio(data.importeBeneficio);
     vm.observaciones(data.observaciones);
     vm.obsFactura(data.obsFactura);
+    vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
@@ -2076,12 +2078,12 @@ var loadPeriodosPagos = function (periodoPagoId) {
 }
 
 var generarPrefacturas = function () {
-    if(importePrefacturas == vm.importeCliente() || importePrefacturas > vm.importeCliente()) {
+   /*  if(importePrefacturas > vm.importeCliente()) {
         mensError("Ya se ha prefacturado el total del contrato");
         setTimeout(function(){ $('#modalGenerarPrefacturas').modal('hide');; }, 100);
         return;
     }
-
+ */
     var resto = 0;
     if(numConceptos > 0 && importePrefacturas == 0) {
         modificaFormulario(true);
@@ -3547,8 +3549,14 @@ function loadContratosCobros(id) {
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
-        order: [[ 0, "asc" ]], //or asc,
-       
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -3587,6 +3595,9 @@ function initTablaConceptosLineas() {
         },
         data: dataConceptosLineas,
         columns: [  {
+            data: "fecha",
+            
+        },{
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -3667,7 +3678,7 @@ function limpiaDataLineaConcepto() {
     vm.porcentajeCobro(0);
     vm.fechaConcepto(vm.fechaInicio());
     vm.importeCalculado(0);
-    vm.sformaPagoIdLinea(null);
+    loadFormasPagoLinea(vm.formaPagoId())
 
 }
 
@@ -3705,7 +3716,7 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
-    if(importePrefacturas == vm.importeCliente() || importePrefacturas > vm.importeCliente()) {
+    if(importePrefacturas > vm.importeCliente()) {
         mensError("Ya se ha prefacturado el total del contrato");
         return;
     }
