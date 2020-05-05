@@ -12,3 +12,7 @@ ALTER TABLE `ofertas_lineas`
   ADD COLUMN `importe` DECIMAL(12,2) NULL AFTER `fecha`,
   ADD COLUMN `formaPagoId` INT(11) NULL AFTER `importe`,
   ADD CONSTRAINT `formaPago_porcentajes` FOREIGN KEY (`formaPagoId`) REFERENCES `proasistencia`.`formas_pago`(`formaPagoId`);
+
+  ALTER TABLE `prefacturas`   
+  ADD COLUMN `contratoPorcenId` INT(11) NULL AFTER `observacionesPago`,
+  ADD CONSTRAINT `pref_conceptoPorcen` FOREIGN KEY (`contratoPorcenId`) REFERENCES `contrato_porcentajes`(`contratoPorcenId`) ON DELETE CASCADE;
