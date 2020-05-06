@@ -25,4 +25,9 @@ ALTER TABLE `ofertas_lineas`
   ALTER TABLE `contratos`   
   ADD COLUMN `intereses` DECIMAL(12,2) NULL AFTER `servicioId`;
 
+  ALTER TABLE `oferta_porcentajes`   
+  ADD COLUMN `importe` DECIMAL(12,2) NULL AFTER `fecha`,
+  ADD COLUMN `formaPagoId` INT(11) NULL AFTER `importe`,
+  ADD CONSTRAINT `oferta_forpaConcepto` FOREIGN KEY (`formaPagoId`) REFERENCES `proasistencia`.`formas_pago`(`formaPagoId`);
+
 

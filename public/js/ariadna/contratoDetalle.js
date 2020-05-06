@@ -25,6 +25,7 @@ var numConceptos = 0;
 var dataConceptos; 
 var numPrefacturas = 0;
 var importePrefacturas = 0;
+var importePrefacturasConcepto = 0;
 
 
 var breakpointDefinition = {
@@ -134,37 +135,45 @@ function initForm() {
         var porcentaje = parseFloat($("#txtPorcentajeCobro").val());
         var restoPorcentaje = 0;
         var restoContraro = 0;
+        var importePorcentaje = 0;
         if(isNaN(porcentaje)) return;
 
-        if(importePrefacturas > 0) {
-            restoContraro = totalContrato - importePrefacturas
+        if(importePrefacturasConcepto > 0) {
+            restoContraro = totalContrato - importePrefacturasConcepto
             restoPorcentaje = restoContraro / totalContrato * 100//nuevo porcentaje sobre el resto
             porcentaje = ((porcentaje/100)/(restoPorcentaje/100)) * 100
              
         } else {
             restoContraro = totalContrato;
         }
+
         porcentaje = porcentaje / 100;
-        var importePorcentaje = porcentaje * restoContraro;
-        if((importePrefacturas + importePorcentaje) > totalContrato) {
+        importePorcentaje = porcentaje * restoContraro;
+
+        if(restoContraro == 0 || restoContraro < 0) {
+            mensError("Se ha superado el total del contrato");
+           //vm.importeCalculado(null);
+        } else {
+            vm.importeCalculado(roundToTwo(importePorcentaje));
+        }
+        
+        if((importePrefacturasConcepto + importePorcentaje) > totalContrato) {
             mensError("Se ha superado el total del contrato");
             //vm.importeCalculado(null);
             //vm.porcentajeCobro(null);
             //return;
         }
-        vm.importeCalculado(roundToTwo(importePorcentaje));
     });
 
     $("#txtImporteCalculado").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculado").val());
         if(isNaN(importeCalculado)) return;
-        if(importeCalculado+importePrefacturas > totalContrato) {
+        if(importeCalculado+importePrefacturasConcepto > totalContrato) {
             mensError("Se ha superado el total del contrato");
-            //vm.importeCalculado(null);
             //vm.porcentajeCobro(null);
-            //return;
-        }
+            return;
+        } 
 
         var porcentaje = (importeCalculado * 100) / totalContrato;
         vm.porcentajeCobro(roundToTwo(porcentaje));
@@ -2642,8 +2651,10 @@ function loadTablaPrefacturas(data) {
         dt.fnAddData(data);
         numPrefacturas = data.length;
         importePrefacturas = 0;
+        importePrefacturasConcepto = 0
         for( var i = 0; i < data.length; i++) {
             importePrefacturas = importePrefacturas + data[i].total;
+            if(data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
         }
         if(numPrefacturas > 0) {
             $('#cmbEmpresas').prop('disabled', true);
@@ -2659,6 +2670,7 @@ function loadTablaPrefacturas(data) {
     } else {
         importePrefacturas = 0;
         numPrefacturas = 0;
+        importePrefacturasConcepto = 0
         $('#cmbEmpresas').prop('disabled', false);
         $('#cmbTiposContrato').prop('disabled', false);
         $('#cmbTipoProyecto').prop('disabled', false);
@@ -3278,6 +3290,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var import22 = importeCoste - import12;
     var pagos = [];
     var nPagos = numPagos;
+    if(importe == 0 || importe < 0) return pagos;
     if (vm.facturaParcial()) {
         nPagos++
     }
@@ -3627,6 +3640,7 @@ function initTablaConceptosLineas() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(row.prefacturaId) html = "<div class='pull-right'></div>";
                 return html;
             }
         }]
@@ -3716,10 +3730,10 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
-    if(importePrefacturas > vm.importeCliente()) {
+    /* if(importePrefacturas > vm.importeCliente()) {
         mensError("Ya se ha prefacturado el total del contrato");
         return;
-    }
+    } */
     var data = {
         cobroPorcen: {
             contratoId: vm.contratoId(),
@@ -3854,6 +3868,10 @@ function datosOKLineasConceptos() {
                 required: true,
                 number:true
             },
+            txtImporteCalculado: {
+                required: true,
+                number:true
+            },
             txtFechaConcepto: {
                 required: true,
                 greaterThan: '#txtFechaInicio',
@@ -3868,6 +3886,10 @@ function datosOKLineasConceptos() {
             txtPorcentajeCobro: {
                 required: "Debe proporcionar un porcentaje",
                 number: "Se tiene que introducir un numero válido"
+            },
+            txtImporteCalculado: {
+                required: true,
+                number:true
             },
             txtFechaConcepto: {
                 required: "Debe proporcionar una fecha de factura",

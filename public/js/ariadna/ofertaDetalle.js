@@ -171,9 +171,10 @@ function initForm() {
 
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
-    //$("#txtPrecio").blur(cambioPrecioCantidad);
+    $("#txtImpUni").blur(cambioPrecioCantidad);
     $("#txtPorDescuento").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
+    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null)});
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -791,6 +792,9 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
+            },
+            txtPorDescuento: {
+                required: true
             }
         },
         // Messages for form validation
@@ -818,6 +822,9 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: 'Necesita un precio'
+            },
+            txtPorDescuento: {
+                required: "introduzca una cantidad, puede ser cero"
             }
         },
         // Do not change code below
@@ -1806,7 +1813,14 @@ var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, ti
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
-        order: [[ 0, "asc" ]], //or asc,
+        order: [[ 0, "asc" ]],
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1847,6 +1861,9 @@ function initTablaConceptosLineas() {
         data: dataConceptosLineas,
         columns: [  {
             data: "fecha",
+            
+        },{
+            data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -1859,7 +1876,16 @@ function initTablaConceptosLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },{
+            data: "importe",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
+            data: "formaPagoNombre",
+            
+        },  {
             data: "ofertaPorcenId",
             render: function (data, type, row) {
                 var html = "";
