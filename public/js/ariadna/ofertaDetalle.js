@@ -52,6 +52,31 @@ function initForm() {
             }
         }
     });
+    //eventos de las lineas de conceptos / porcentajes
+    $("#txtPorcentajeCobro").on('blur', function (e) {
+        var totalOferta = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajeCobro").val());
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if(isNaN(porcentaje)) return;
+
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * totalOferta;
+
+        vm.importeCalculado(roundToTwo(importePorcentaje));
+        
+        
+    });
+
+    $("#txtImporteCalculado").on('blur', function (e) {
+        var totalOferta = vm.importeCliente();
+        var importeCalculado = parseFloat($("#txtImporteCalculado").val());
+        if(isNaN(importeCalculado)) return;
+        
+
+        var porcentaje = (importeCalculado * 100) / totalOferta;
+        vm.porcentajeCobro(roundToTwo(porcentaje));
+    });
 
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
@@ -133,6 +158,9 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
 
+
+    $("#cmbFormasPagoLinea").select2(select2Spanish());
+    loadFormasPagoLinea();
 
     $("#cmbGrupoArticulos").select2(select2Spanish());
     loadGrupoArticulos();
@@ -352,6 +380,11 @@ function admData() {
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
     self.fechaConcepto = ko.observable();
+    self.importeCalculado = ko.observable();
+     //
+     self.sformaPagoIdLinea = ko.observable();
+     self.posiblesFormasPagoLinea = ko.observableArray([]);
+     self.elegidosFormasPagoLinea = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -374,6 +407,7 @@ function loadData(data) {
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
+    vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
@@ -582,6 +616,19 @@ function loadContratos(id) {
                 $("#cmbContratos").val([id]).trigger('change');
             });
     }
+}
+
+function loadFormasPagoLinea(id) {
+    llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
+        if (err) return;
+        var formasPago = [{
+            formaPagoId: null,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesFormasPagoLinea(formasPago);
+        vm.sformaPagoIdLinea(id);
+        $("#cmbFormasPagoLinea").val([id]).trigger('change');
+    });
 }
 
 function cambioDepartamento(departamentoId) {
@@ -1942,6 +1989,8 @@ function limpiaDataLineaConcepto() {
     vm.conceptoCobro('');
     vm.porcentajeCobro(0);
     vm.fechaConcepto(vm.fechaOferta());
+    vm.importeCalculado(0);
+    loadFormasPagoLinea(vm.formaPagoId())
 }
 
 
@@ -1955,6 +2004,8 @@ function aceptarLineaConcepto() {
             concepto: vm.conceptoCobro(),
             porcentaje: vm.porcentajeCobro(),
             fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
         }
     }
                 var verbo = "POST";
@@ -1984,6 +2035,8 @@ function loadDataLineaConcepto(data) {
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
     vm.fechaConcepto(spanishDate(data.fecha));
+    vm.importeCalculado(data.importe);
+    loadFormasPagoLinea(data.formaPagoId);
     
 }
 
