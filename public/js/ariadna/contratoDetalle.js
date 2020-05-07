@@ -57,6 +57,9 @@ function initForm() {
     $("#btnAceptar").click(clicAceptar);
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
+    $('#txtPrecio').focus( function () {
+        $('#txtPrecio').val(null);
+    })
     $("#frmContrato").submit(function () {
         return false;
     });
@@ -3740,14 +3743,14 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
-    var imp = parseFloat(vm.importeCalculado());
+   var imp = parseFloat(vm.importeCalculado());
     if(importePrefacturasConcepto > vm.importeCliente()) {
         mensError("Se está sobrepasando el total del contrato");
         return;
     } else if(importePrefacturasConcepto + imp > vm.importeCliente()) {
         mensError("Se está sobrepasando el total del contrato");
         return;
-    }
+    } 
     var data = {
         cobroPorcen: {
             contratoId: vm.contratoId(),
