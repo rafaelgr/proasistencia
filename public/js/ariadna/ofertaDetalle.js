@@ -39,18 +39,7 @@ function initForm() {
     //Evento de cambio de departamento
     $("#cmbDepartamentos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if (e.added) {
-            cambioDepartamento(e.added.id); 
-            if(e.added.id == 7 && ofertaId != 0) {
-                if(!vm.servicioId()) {
-                    $('#btnGenerarContrato').hide();
-                } else {
-                    $('#btnGenerarContrato').show();
-                }
-            } else {
-                if(ofertaId != 0)  $('#btnGenerarContrato').show();
-            }
-        }
+        if (e.added) cambioDepartamento(e.added.id); 
     });
     //eventos de las lineas de conceptos / porcentajes
     $("#txtPorcentajeCobro").on('blur', function (e) {
@@ -224,6 +213,7 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        $('#btnGenerarContrato').hide();
         //
         document.title = "NUEVA OFERTA";
     }
@@ -376,6 +366,7 @@ function admData() {
     self.preaviso = ko.observable();
     
     //CONCEPTOS
+    self.ofertaPorcenId = ko.observable();
     self.conceptoCobro = ko.observable();
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
@@ -417,12 +408,6 @@ function loadData(data) {
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
-
-    if(!vm.servicioId()) {
-        $('#btnGenerarContrato').hide()
-    } else {
-        $('#btnGenerarContrato').show()
-    }
 }
 
 function datosOK() {

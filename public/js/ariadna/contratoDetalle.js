@@ -3730,10 +3730,14 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
-    /* if(importePrefacturas > vm.importeCliente()) {
-        mensError("Ya se ha prefacturado el total del contrato");
+    var imp = parseFloat(vm.importeCalculado());
+    if(importePrefacturasConcepto > vm.importeCliente()) {
+        mensError("Se está sobrepasando el total del contrato");
         return;
-    } */
+    } else if(importePrefacturasConcepto + imp > vm.importeCliente()) {
+        mensError("Se está sobrepasando el total del contrato");
+        return;
+    }
     var data = {
         cobroPorcen: {
             contratoId: vm.contratoId(),
