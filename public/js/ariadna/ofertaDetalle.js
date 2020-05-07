@@ -39,18 +39,32 @@ function initForm() {
     //Evento de cambio de departamento
     $("#cmbDepartamentos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if (e.added) {
-            cambioDepartamento(e.added.id); 
-            if(e.added.id == 7 && ofertaId != 0) {
-                if(!vm.servicioId()) {
-                    $('#btnGenerarContrato').hide();
-                } else {
-                    $('#btnGenerarContrato').show();
-                }
-            } else {
-                if(ofertaId != 0)  $('#btnGenerarContrato').show();
-            }
-        }
+        if (e.added) cambioDepartamento(e.added.id); 
+    });
+    //eventos de las lineas de conceptos / porcentajes
+    $("#txtPorcentajeCobro").on('blur', function (e) {
+        var totalOferta = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajeCobro").val());
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if(isNaN(porcentaje)) return;
+
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * totalOferta;
+
+        vm.importeCalculado(roundToTwo(importePorcentaje));
+        
+        
+    });
+
+    $("#txtImporteCalculado").on('blur', function (e) {
+        var totalOferta = vm.importeCliente();
+        var importeCalculado = parseFloat($("#txtImporteCalculado").val());
+        if(isNaN(importeCalculado)) return;
+        
+
+        var porcentaje = (importeCalculado * 100) / totalOferta;
+        vm.porcentajeCobro(roundToTwo(porcentaje));
     });
 
     // Eventos de la calculadora de costes
@@ -134,6 +148,9 @@ function initForm() {
     loadFormasPago();
 
 
+    $("#cmbFormasPagoLinea").select2(select2Spanish());
+    loadFormasPagoLinea();
+
     $("#cmbGrupoArticulos").select2(select2Spanish());
     loadGrupoArticulos();
     $("#cmbGrupoArticulos").select2().on('change', function (e) {
@@ -171,8 +188,10 @@ function initForm() {
 
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
-    $("#txtPrecio").blur(cambioPrecioCantidad);
+    $("#txtImpUni").blur(cambioPrecioCantidad);
+    $("#txtPorDescuento").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
+    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null)});
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -194,6 +213,7 @@ function initForm() {
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
+        $('#btnGenerarContrato').hide();
         //
         document.title = "NUEVA OFERTA";
     }
@@ -230,6 +250,12 @@ function admData() {
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
     self.importeMantenedor = ko.observable();
+    // descuentos
+    self.precio = ko.observable();
+    self.perdto = ko.observable();
+    self.dto = ko.observable();
+    self.precioProveedor = ko.observable();
+    self.dtoProveedor = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -340,10 +366,16 @@ function admData() {
     self.preaviso = ko.observable();
     
     //CONCEPTOS
+    self.ofertaPorcenId = ko.observable();
     self.conceptoCobro = ko.observable();
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
     self.fechaConcepto = ko.observable();
+    self.importeCalculado = ko.observable();
+     //
+     self.sformaPagoIdLinea = ko.observable();
+     self.posiblesFormasPagoLinea = ko.observableArray([]);
+     self.elegidosFormasPagoLinea = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -366,6 +398,7 @@ function loadData(data) {
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
+    vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
@@ -375,12 +408,6 @@ function loadData(data) {
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
-
-    if(!vm.servicioId()) {
-        $('#btnGenerarContrato').hide()
-    } else {
-        $('#btnGenerarContrato').show()
-    }
 }
 
 function datosOK() {
@@ -576,6 +603,19 @@ function loadContratos(id) {
     }
 }
 
+function loadFormasPagoLinea(id) {
+    llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
+        if (err) return;
+        var formasPago = [{
+            formaPagoId: null,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesFormasPagoLinea(formasPago);
+        vm.sformaPagoIdLinea(id);
+        $("#cmbFormasPagoLinea").val([id]).trigger('change');
+    });
+}
+
 function cambioDepartamento(departamentoId) {
     if(!departamentoId) return;
     llamadaAjax('GET', "/api/departamentos/" + departamentoId, null, function (err, data) {
@@ -684,6 +724,13 @@ function limpiaDataLinea(data) {
     vm.porcentajeProveedor(null)
     vm.proveedorId(null);
     //
+    vm.precio(null);
+    vm.precioProveedor(null);
+    vm.perdto(0);
+    vm.dto(0);
+    vm.dtoProveedor(0);
+
+    //
     //
     loadGrupoArticulos();
     // loadArticulos();
@@ -722,7 +769,13 @@ var guardarLinea = function () {
             costeLineaProveedor: vm.costeLineaProveedor(),
             tipoIvaProveedorId: vm.stipoIvaProveedorId(),
             porcentajeProveedor: vm.porcentajeProveedor(),
-            proveedorId: vm.sproveedorId()
+            proveedorId: vm.sproveedorId(),
+            precio: vm.precio(),
+            perdto: vm.perdto(),
+            dto: vm.dto(),
+            precioProveedor: vm.precioProveedor(),
+            dtoProveedor: vm.dtoProveedor()
+            //
         }
     }
     var verboAjax = '';
@@ -771,6 +824,9 @@ function datosOKLineas() {
             },
             txtTotalLinea: {
                 required: true
+            },
+            txtPorDescuento: {
+                required: true
             }
         },
         // Messages for form validation
@@ -798,6 +854,9 @@ function datosOKLineas() {
             },
             txtPrecio: {
                 required: 'Necesita un precio'
+            },
+            txtPorDescuento: {
+                required: "introduzca una cantidad, puede ser cero"
             }
         },
         // Do not change code below
@@ -883,6 +942,12 @@ function initTablaOfertasLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
+            data: "dto",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
             data: "costeLinea",
             className: "text-right",
             render: function (data, type, row) {
@@ -896,7 +961,13 @@ function initTablaOfertasLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
+        },{
+            data: "dtoProveedor",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        },  {
             data: "costeLineaProveedor",
             className: "text-right",
             render: function (data, type, row) {
@@ -944,6 +1015,15 @@ function loadDataLinea(data) {
     loadTiposIvaProveedor(data.tipoIvaProveedorId);
     loadProveedores(data.proveedorId)
     //
+    //descuento cliente
+    vm.precio(data.precio);
+    vm.perdto(data.perdto);
+    vm.dto(data.dto);
+    //
+    //descuento del proveedor
+    vm.precioProveedor(data.precioProveedor);
+    vm.dtoProveedor(data.dtoProveedor);
+
 }
 
 
@@ -1171,13 +1251,40 @@ function cambioProveedor(proveedorId) {
 }
 
 var cambioPrecioCantidad = function () {
+    vm.precio(vm.cantidad() * vm.importe());
     vm.costeLinea(vm.cantidad() * vm.importe());
+    vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
+    vm.costeLinea(vm.cantidad() * vm.importeProveedor());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 
-    //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
-    vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
-    vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+     //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
+     vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
+     vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+
+     //calculo en caso de descuento
+    if(vm.perdto() > 0 || vm.perdto() != '') {
+        var precio = parseFloat(vm.precio());
+        var precioProveedor =  parseFloat(vm.precioProveedor());
+        var porcen = parseFloat(vm.perdto());
+        porcen = porcen / 100;
+        var descuento = precio * porcen;
+        var descuentoProveedor = precioProveedor * porcen;
+        //se calcula el descuento cliente
+        vm.dto(roundToTwo(descuento));
+        var resultado = parseFloat(precio-descuento);
+        vm.costeLinea(roundToTwo(resultado));
+        //se calcula el descuento proveedor
+        vm.dtoProveedor(roundToTwo(descuentoProveedor));
+        var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
+        vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
+
+        recalcularCostesImportesDesdeCoste();
+        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+
+        vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+
+    }
 }
 
 function editOfertaLinea(id) {
@@ -1738,7 +1845,14 @@ var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, ti
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
-        order: [[ 0, "asc" ]], //or asc,
+        order: [[ 0, "asc" ]],
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1779,6 +1893,9 @@ function initTablaConceptosLineas() {
         data: dataConceptosLineas,
         columns: [  {
             data: "fecha",
+            
+        },{
+            data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -1791,7 +1908,16 @@ function initTablaConceptosLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },{
+            data: "importe",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
+            data: "formaPagoNombre",
+            
+        },  {
             data: "ofertaPorcenId",
             render: function (data, type, row) {
                 var html = "";
@@ -1848,6 +1974,8 @@ function limpiaDataLineaConcepto() {
     vm.conceptoCobro('');
     vm.porcentajeCobro(0);
     vm.fechaConcepto(vm.fechaOferta());
+    vm.importeCalculado(0);
+    loadFormasPagoLinea(vm.formaPagoId())
 }
 
 
@@ -1861,6 +1989,8 @@ function aceptarLineaConcepto() {
             concepto: vm.conceptoCobro(),
             porcentaje: vm.porcentajeCobro(),
             fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
         }
     }
                 var verbo = "POST";
@@ -1890,6 +2020,8 @@ function loadDataLineaConcepto(data) {
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
     vm.fechaConcepto(spanishDate(data.fecha));
+    vm.importeCalculado(data.importe);
+    loadFormasPagoLinea(data.formaPagoId);
     
 }
 

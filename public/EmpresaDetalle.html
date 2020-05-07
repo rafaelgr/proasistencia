@@ -957,11 +957,14 @@
                                             <thead>
                                                 <tr>
                                                     <th data-hide="phone">
-                                                        Tipo de Forma de pago
+                                                        Tipo de forma de pago
                                                     </th>
                                                     <th data-hide="phone">
                                                        Cuenta de Pago
                                                     </th>
+                                                    <th data-hide="phone">
+                                                        Cuenta de cobro
+                                                     </th>
                                                     <th>
                                                     </th>
                                                 </tr>
@@ -1058,16 +1061,23 @@
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <section  class="col col-md-8">
+                                    <section  class="col col-md-6">
                                         <label class="label">Tipo de forma de pago</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbTiposFormaPago" name="cmbTiposFormaPago" data-bind="options: posiblesTiposFormaPago, optionsText: 'nombre', optionsValue: 'tipoFormaPagoId', value: stipoFormaPagoId, valueAllowUnset: true, selectedOptions: elegidosTiposFormaPago, selected2:{}"></select><i></i>
                                         </label>
                                     </section>
-                                    <section class="col col-md-4">
+                                    <section class="col col-md-3">
                                         <label class="label">Cuenta de pago</label>
                                         <label class="input">
                                             <input id="txtCuentaPago" name="txtCuentaPago"  data-bind="value: cuentapago">
+                                            
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Cuenta de cobro</label>
+                                        <label class="input">
+                                            <input id="txtCuentaCobro" name="txtCuentaCobro"  data-bind="value: cuentacobro">
                                             
                                         </label>
                                     </section>

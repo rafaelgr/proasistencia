@@ -24,6 +24,8 @@ var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
 var numPrefacturas = 0;
+var importePrefacturas = 0;
+var importePrefacturasConcepto = 0;
 
 
 var breakpointDefinition = {
@@ -100,8 +102,13 @@ function initForm() {
     $("#txtPorcentajeCobro").focus(function () {
         $('#txtPorcentajeCobro').val(null);
     });
+    $("#txtImporteCalculado").focus(function () {
+        var imp =  $('#txtImporteCalculado').val();
+        if(imp == 0) $('#txtImporteCalculado').val(null);
+    });
 
-    
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
@@ -123,6 +130,56 @@ function initForm() {
         }
     });
 
+    $("#txtPorcentajeCobro").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajeCobro").val());
+        var restoPorcentaje = 0;
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if(isNaN(porcentaje)) return;
+
+        if(importePrefacturasConcepto > 0) {
+            restoContraro = totalContrato - importePrefacturasConcepto
+            restoPorcentaje = restoContraro / totalContrato * 100//nuevo porcentaje sobre el resto
+            porcentaje = ((porcentaje/100)/(restoPorcentaje/100)) * 100
+             
+        } else {
+            restoContraro = totalContrato;
+        }
+
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * restoContraro;
+
+        if(restoContraro == 0 || restoContraro < 0) {
+            mensError("Se ha superado el total del contrato");
+           //vm.importeCalculado(null);
+        } else {
+            vm.importeCalculado(roundToTwo(importePorcentaje));
+        }
+        
+        if((importePrefacturasConcepto + importePorcentaje) > totalContrato) {
+            mensError("Se ha superado el total del contrato");
+            //vm.importeCalculado(null);
+            //vm.porcentajeCobro(null);
+            //return;
+        }
+    });
+
+    $("#txtImporteCalculado").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var importeCalculado = parseFloat($("#txtImporteCalculado").val());
+        if(isNaN(importeCalculado)) return;
+        if(importeCalculado+importePrefacturasConcepto > totalContrato) {
+            mensError("Se ha superado el total del contrato");
+            //vm.porcentajeCobro(null);
+            return;
+        } 
+
+        var porcentaje = (importeCalculado * 100) / totalContrato;
+        vm.porcentajeCobro(roundToTwo(porcentaje));
+    });
+
+
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
     $("#cmbTextosPredeterminados").select2().on('change', function (e) {
@@ -141,8 +198,8 @@ function initForm() {
     initAutoAgente();
 
 
-    $("#cmbFormasPago").select2(select2Spanish());
-    loadFormasPago();
+    $("#cmbFormasPagoLinea").select2(select2Spanish());
+    loadFormasPagoLinea();
 
 
     $("#cmbGrupoArticulos").select2(select2Spanish());
@@ -445,6 +502,11 @@ function admData() {
     self.porcentajeCobro = ko.observable();
     self.contratoPorcenId = ko.observable();
     self.fechaConcepto = ko.observable();
+    self.importeCalculado = ko.observable();
+    //
+    self.sformaPagoIdLinea = ko.observable();
+    self.posiblesFormasPagoLinea = ko.observableArray([]);
+    self.elegidosFormasPagoLinea = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -467,6 +529,7 @@ function loadData(data) {
     vm.importeBeneficio(data.importeBeneficio);
     vm.observaciones(data.observaciones);
     vm.obsFactura(data.obsFactura);
+    vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
@@ -714,6 +777,19 @@ function loadFormasPago(id) {
         }].concat(data);
         vm.posiblesFormasPago(formasPago);
         $("#cmbFormasPago").val([id]).trigger('change');
+    });
+}
+
+function loadFormasPagoLinea(id) {
+    llamadaAjax('GET', '/api/formas_pago', null, function (err, data) {
+        if (err) return;
+        var formasPago = [{
+            formaPagoId: null,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesFormasPagoLinea(formasPago);
+        vm.sformaPagoIdLinea(id);
+        $("#cmbFormasPagoLinea").val([id]).trigger('change');
     });
 }
 
@@ -2011,7 +2087,14 @@ var loadPeriodosPagos = function (periodoPagoId) {
 }
 
 var generarPrefacturas = function () {
-    if(numConceptos > 0) {
+   /*  if(importePrefacturas > vm.importeCliente()) {
+        mensError("Ya se ha prefacturado el total del contrato");
+        setTimeout(function(){ $('#modalGenerarPrefacturas').modal('hide');; }, 100);
+        return;
+    }
+ */
+    var resto = 0;
+    if(numConceptos > 0 && importePrefacturas == 0) {
         modificaFormulario(true);
     } else {
         modificaFormulario(false);
@@ -2022,9 +2105,13 @@ var generarPrefacturas = function () {
         cambioPeriodosPagos(e.added);
     });
     if (vm.mantenedorId()) {
-        vm.importeAFacturar(vm.importeMantenedor());
+        var importeMantenedor = vm.importeMantenedor();
+        resto = importeMantenedor - importePrefacturas;
+        vm.importeAFacturar(roundToTwo(resto));
     } else {
-        vm.importeAFacturar(vm.importeCliente());
+        var importeCliente = vm.importeCliente();
+        resto = importeCliente - importePrefacturas;
+        vm.importeAFacturar(roundToTwo(resto));
     }
     $("#generar-prefacturas-form").submit(function () {
         return false;
@@ -2070,7 +2157,7 @@ var obtenerDivisor = function () {
 
 var verPrefacturasAGenerar = function () {
     if (!generarPrefacturasOK()) return;
-
+    
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeCliente(); // importe real de la factura;
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
@@ -2084,10 +2171,10 @@ var verPrefacturasAGenerar = function () {
         cliente = $("#txtMantenedor").val();
     }
     // var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
-    if(numConceptos > 0) {
-        var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente);
+    if(numConceptos > 0 && importePrefacturas == 0) {
+        var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
-        var prefacturas = crearPrefacturas2(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+        var prefacturas = crearPrefacturas2(importe - importePrefacturas, importeAlCliente - importePrefacturas, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
@@ -2101,7 +2188,13 @@ var aceptarGenerarPrefacturas = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar()
     };
-    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+        if (err) return;
+        mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+        $('#modalGenerarPrefacturas').modal('hide');
+        loadPrefacturasDelContrato(vm.contratoId());
+    });
+    /* controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
         if (err) return;
         if (!result) {
             $('#modalGenerarPrefacturas').modal('hide');
@@ -2112,6 +2205,19 @@ var aceptarGenerarPrefacturas = function () {
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturas').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
+        });
+    }); */
+}
+
+var aceptarModificarPrefacturas = function () {
+    //primero borramos la prefactura
+    llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefactura/concepto/" + vm.contratoPorcenId(), null, function (err) {
+        if (err) return;
+        //una vez borrada borramos todas las prefacturas del contrato no generadas mediante conceptos y porcentajes
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
+            if (err) return;
+            //una vez borrada la volvemos a crear con los parametros modificados
+            aceptarGenerarPrefacturas();
         });
     });
 }
@@ -2544,20 +2650,31 @@ function loadTablaPrefacturas(data) {
     if (data != null) {
         dt.fnAddData(data);
         numPrefacturas = data.length;
+        importePrefacturas = 0;
+        importePrefacturasConcepto = 0
+        for( var i = 0; i < data.length; i++) {
+            importePrefacturas = importePrefacturas + data[i].total;
+            if(data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
+        }
         if(numPrefacturas > 0) {
             $('#cmbEmpresas').prop('disabled', true);
             $('#cmbTiposContrato').prop('disabled', true);
             $('#cmbTipoProyecto').prop('disabled', true);
+            $('#txtReferencia').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
             $('#cmbTipoProyecto').prop('disabled', false);
+            $('#txtReferencia').prop('disabled', false);
         }
     } else {
+        importePrefacturas = 0;
         numPrefacturas = 0;
+        importePrefacturasConcepto = 0
         $('#cmbEmpresas').prop('disabled', false);
         $('#cmbTiposContrato').prop('disabled', false);
         $('#cmbTipoProyecto').prop('disabled', false);
+        $('#txtReferencia').prop('disabled', false);
     }
     dt.fnDraw();
 }
@@ -3173,6 +3290,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var import22 = importeCoste - import12;
     var pagos = [];
     var nPagos = numPagos;
+    if(importe == 0 || importe < 0) return pagos;
     if (vm.facturaParcial()) {
         nPagos++
     }
@@ -3226,8 +3344,13 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     return pagos;
 }
 
-function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
+function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente, data) {
     var divisor = dataConceptos.length
+    if(data) {
+        dataConceptos = [];
+        dataConceptos.push(data);
+        divisor = 1;
+    }
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
     var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
@@ -3240,14 +3363,16 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     for (var j =0; j< nPagos; j++) {
         acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
     }
-    if( acumulado < (importe - 0.01)  || acumulado  > importe + 0.01) {
+    /* if( acumulado < (importe - 0.01)  || acumulado  > importe + 0.01) {
         mensError('Revise los conceptos, la suma de los importes de las facturas no se corresponden con el total del contrato');
         return;
-    }
+    } */
     for (var i = 0; i < nPagos; i++) {
         var importePago = roundToTwo((importe * dataConceptos[i].porcentaje) / 100) ;
         var importePagoCliente = roundToTwo((importeAlCliente * dataConceptos[i].porcentaje) / 100);
         var importeCoste = roundToTwo((coste* dataConceptos[i].porcentaje) / 100);
+        var contratoPorcenId = dataConceptos[i].contratoPorcenId;
+        var formaPagoId = dataConceptos[i].formaPagoId;
         // sucesivas fechas de factura
         var f = moment(dataConceptos[i].fecha).format('DD/MM/YYYY');
         // inicio de periodo
@@ -3265,7 +3390,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         }
         //completamos el compo observacionesPago
         var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
-        var campoDestacado = copiaDataConceptos[i].concepto + " " + copiaDataConceptos[i].porcentaje+"\n";
+        var campoDestacado = copiaDataConceptos[i].concepto + " " + copiaDataConceptos[i].porcentaje+"%\n";
         var cabOtrosConceptos = '\nOTROSCONCEPTOS';
         var otrosConceptos = ''
         copiaDataConceptos.splice(i, 1);
@@ -3285,7 +3410,9 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
-            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
+            contratoPorcenId: contratoPorcenId,
+            formaPagoId: formaPagoId
         };
         /*if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -3435,8 +3562,14 @@ function loadContratosCobros(id) {
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
-        order: [[ 0, "asc" ]], //or asc,
-       
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -3476,6 +3609,9 @@ function initTablaConceptosLineas() {
         data: dataConceptosLineas,
         columns: [  {
             data: "fecha",
+            
+        },{
+            data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -3488,6 +3624,15 @@ function initTablaConceptosLineas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
+        },{
+            data: "importe",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "formaPagoNombre",
+            
         }, {
             data: "contratoPorcenId",
             render: function (data, type, row) {
@@ -3495,6 +3640,7 @@ function initTablaConceptosLineas() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(row.prefacturaId) html = "<div class='pull-right'></div>";
                 return html;
             }
         }]
@@ -3545,6 +3691,9 @@ function limpiaDataLineaConcepto() {
     vm.conceptoCobro('');
     vm.porcentajeCobro(0);
     vm.fechaConcepto(vm.fechaInicio());
+    vm.importeCalculado(0);
+    loadFormasPagoLinea(vm.formaPagoId())
+
 }
 
 
@@ -3558,6 +3707,8 @@ function aceptarLineaConcepto() {
             concepto: vm.conceptoCobro(),
             porcentaje: vm.porcentajeCobro(),
             fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
         }
     }
                 var verbo = "POST";
@@ -3575,6 +3726,103 @@ function aceptarLineaConcepto() {
                 });
 }
 
+function aceptarLineaConceptoPrefactura() {
+    if (!datosOKLineasConceptos()) {
+        return;
+    }
+    var imp = parseFloat(vm.importeCalculado());
+    if(importePrefacturasConcepto > vm.importeCliente()) {
+        mensError("Se está sobrepasando el total del contrato");
+        return;
+    } else if(importePrefacturasConcepto + imp > vm.importeCliente()) {
+        mensError("Se está sobrepasando el total del contrato");
+        return;
+    }
+    var data = {
+        cobroPorcen: {
+            contratoId: vm.contratoId(),
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro(),
+            fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
+            contratoPorcenId: null
+        }
+    }
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/contratos/concepto";
+                if (lineaEnEdicion) {
+                    data.cobroPorcen.contratoPorcenId = vm.contratoPorcenId();
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
+                }
+                if(verbo == "PUT") {
+                    mens = "<ul>"
+                    mens += "<li><strong>¡¡ Atención !! Al modificar El concepto se borrarán las prefacturas  que no se hayan generado mediante conceptos / porcentajes, las puede volver a generar</strong></li>";
+                    mens += "<li>¿Desea continuar?</li>";
+                    mens += "</ul>"
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Cancelar][Modificar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Modificar") {
+                            llamadaAjax(verbo, url, data, function (err, dato) {
+                                if (err) return;
+                    
+                                $('#modalConcepto').modal('hide');
+                                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                                    loadTablaConceptosLineas(data2);
+                                    // comprobamos si es de mantenedor o cliente final.
+                                    var importe = vm.importeCliente(); // importe real de la factura;
+                                    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                                    var clienteId = vm.clienteId();
+                                    var cliente = $("#txtCliente").val();
+                                    var empresa = $("#cmbEmpresas").select2('data').text;
+                                    // si es un mantenedor su importe de factura es el calculado para él.
+                                    if (vm.mantenedorId()) {
+                                        importe = vm.importeMantenedor();
+                                        clienteId = vm.mantenedorId();
+                                        cliente = $("#txtMantenedor").val();
+                                    }
+                                    var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
+                                    vm.prefacturasAGenerar(prefacturas);
+                                    aceptarModificarPrefacturas();
+                                });
+                            });
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            // no hacemos nada (no quiere borrar)
+                            return;
+                        }
+                    });
+                } else {
+                    llamadaAjax(verbo, url, data, function (err, dato) {
+                        if (err) return;
+            
+                        $('#modalConcepto').modal('hide');
+                        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                            loadTablaConceptosLineas(data2);
+                            // comprobamos si es de mantenedor o cliente final.
+                            var importe = vm.importeCliente(); // importe real de la factura;
+                            var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                            var clienteId = vm.clienteId();
+                            var cliente = $("#txtCliente").val();
+                            var empresa = $("#cmbEmpresas").select2('data').text;
+                            // si es un mantenedor su importe de factura es el calculado para él.
+                            if (vm.mantenedorId()) {
+                                importe = vm.importeMantenedor();
+                                clienteId = vm.mantenedorId();
+                                cliente = $("#txtMantenedor").val();
+                            }
+                            var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
+                            vm.prefacturasAGenerar(prefacturas);
+                            aceptarGenerarPrefacturas();
+                        });
+                    });
+                }
+}
+
 function editFprmaPagoLineaConcepto(id) {
     lineaEnEdicion = true;
     llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
@@ -3587,20 +3835,27 @@ function loadDataLineaConcepto(data) {
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
     vm.fechaConcepto(spanishDate(data.fecha));
+    vm.importeCalculado(data.importe);
+    loadFormasPagoLinea(data.formaPagoId);
     
 }
 
 function deleteConceptosLinea(contratoPorcenId) {
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    var mens = "¿Realmente desea borrar este registro, se borrarán además todas las prefacturas generadas que no se han generado atraves de conceptos / porcentajes ?";
     mensajeAceptarCancelar(mens, function () {
-       
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/concepto/" + contratoPorcenId, null, function (err, data) {
             if (err) return;
+            //una vez borrada borramos todas las prefacturas del contrato no generadas mediante conceptos y porcentajes
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
+                if (err) return;
                 $('#modalConcepto').modal('hide');
                 llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
                     loadTablaConceptosLineas(data);
+                    loadPrefacturasDelContrato(vm.contratoId());
                 });
+                
+            });
         });
     }, function () {
         // cancelar no hace nada
@@ -3614,6 +3869,10 @@ function datosOKLineasConceptos() {
                 required: true
             },
             txtPorcentajeCobro: {
+                required: true,
+                number:true
+            },
+            txtImporteCalculado: {
                 required: true,
                 number:true
             },
@@ -3631,6 +3890,10 @@ function datosOKLineasConceptos() {
             txtPorcentajeCobro: {
                 required: "Debe proporcionar un porcentaje",
                 number: "Se tiene que introducir un numero válido"
+            },
+            txtImporteCalculado: {
+                required: true,
+                number:true
             },
             txtFechaConcepto: {
                 required: "Debe proporcionar una fecha de factura",
