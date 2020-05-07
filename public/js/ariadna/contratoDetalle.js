@@ -889,8 +889,11 @@ function loadDepartamento(departamentoId) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
+                    vm.importeAgente(0);
+                    vm.importeBeneficio(0);
                 } else {
                     $('#calculadora').show();
+                    vm.porcentajeBeneficio(15);
                 }
             }
 
@@ -1632,6 +1635,7 @@ var initAutoAgente = function () {
             obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
                 if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
+                if(!usaCalculadora) vm.porcentajeAgente(0);
                 recalcularCostesImportesDesdeCoste();
             });
         }
@@ -1665,7 +1669,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
-    if(!usaCalculadora) vm.porcentajeAgente(0);
+    //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
