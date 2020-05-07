@@ -1665,6 +1665,7 @@ var recalcularCostesImportesDesdeCoste = function () {
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
+    if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
