@@ -26,6 +26,7 @@ var dataConceptos;
 var numPrefacturas = 0;
 var importePrefacturas = 0;
 var importePrefacturasConcepto = 0;
+var usaCalculadora;
 
 
 var breakpointDefinition = {
@@ -883,6 +884,7 @@ function loadDepartamento(departamentoId) {
         llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
             if (err) return;
             if(data) {
+                usaCalculadora = data.usaCalculadora;
                 if(!data.usaCalculadora) {
                     $('#calculadora').hide();
                     vm.porcentajeAgente(0);
@@ -1536,6 +1538,7 @@ var cargaAgente = function (id) {
             var por = vm.porcentajeAgente()
             if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
             if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
+            if(!usaCalculadora) vm.porcentajeAgente(0);
             if(contratoId != 0) {
                 
             } else {
@@ -1662,10 +1665,11 @@ var recalcularCostesImportesDesdeCoste = function () {
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
-    if (vm.porcentajeAgente() != null) {
+    if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
         vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
     }
+    //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     if (vm.mantenedorId()) {
         vm.importeMantenedor(roundToTwo(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio()));
@@ -1703,6 +1707,7 @@ var ocultarCamposContratosGeneradas = function () {
 }
 
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
+    if(usaCalculadora == 0) return coste;
     var importeBeneficio = 0;
     var ventaNeta = 0;
     var importeCliente = 0;

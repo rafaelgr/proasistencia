@@ -1254,7 +1254,7 @@ var cambioPrecioCantidad = function () {
     vm.precio(vm.cantidad() * vm.importe());
     vm.costeLinea(vm.cantidad() * vm.importe());
     vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
-    vm.costeLinea(vm.cantidad() * vm.importeProveedor());
+    vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 
