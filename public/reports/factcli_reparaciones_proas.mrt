@@ -1,19 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-<<<<<<< HEAD
-  "ReportGuid": "2a172e1a5e4348debf63dcd1d4c6b19a",
-=======
-  "ReportGuid": "864e489564ee44f5900538f92b7f0c77",
->>>>>>> feature/descuentos-ofertas
+  "ReportGuid": "a9ce117d4fd04a059d24023a51ce8a9a",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-<<<<<<< HEAD
-  "ReportChanged": "/Date(1588231146063+0200)/",
-=======
-  "ReportChanged": "/Date(1588837987745+0200)/",
->>>>>>> feature/descuentos-ofertas
+  "ReportChanged": "/Date(1588931644006+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -74,7 +66,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "6": {
             "Name": "empresaId",
@@ -411,21 +403,10 @@
             "NameInSource": "agenteTipoVia",
             "Alias": "agenteTipoVia",
             "Type": "System.String"
-          },
-          "54": {
-            "Name": "observacionesPago",
-            "Index": -1,
-            "NameInSource": "observacionesPago",
-            "Alias": "observacionesPago",
-            "Type": "System.String"
           }
         },
         "NameInSource": "PROA_REPORT",
-<<<<<<< HEAD
-        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n\r\n",
-=======
-        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia,  pf.observacionesPago\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n",
->>>>>>> feature/descuentos-ofertas
+        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n",
         "Parameters": {
           "0": {
             "Name": "Parámetro",
@@ -784,7 +765,7 @@
               "Name": "Text7",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.16,18.6,0.4",
+              "ClientRectangle": "0.4,0.16,18.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -842,15 +823,15 @@
               "Guid": "5101272c6dd6433e9c82618d43e22889",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,1.02,18,1.4",
+              "ClientRectangle": "0.6,1.02,18,1.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Le informamos que los datos personales de esta factura, están incorporados en un fichero bajo nuestra responsabilidad, para el tratamiento de datos de carácter personal, con la finalidad \r\nde mantenerle informado sobre los servicios que ofrece PROASISTENCIA, S.L Usted como interesado directo, tiene derecho de Acceso, Rectificación, Cancelación y Oposición al tratamiento \r\nde la información que le concierne y autoriza a que pase a formar parte del mencionado fichero, así como a recibir información y publicidad de productos y servicios de PROASISTENCIA, S.L. \r\nSi no desea ser informado de nuestros productos y servicios mándenos un email o carta. Los derechos precitados podrán hacerse efectivos ante: PROASISTENCIA, S.L, C/ Camino de Rejas, 1 \r\nCoslada 28821 de Madrid o enviando un email: proasistencia@proasistencia.es (Ley orgánica 15/1999 de 13 de diciembre de protección de datos de carácter personal)"
+                "Value": "Le informamos que los datos personales de esta factura, están incorporados en un fichero bajo nuestra responsabilidad, para el tratamiento de datos de carácter personal, con la finalidad de\r\nmantenerle informado sobre los servicios que ofrece PROASISTENCIA, S.L Usted como interesado directo, tiene derecho de Acceso, Rectificación, Cancelación y Oposición al tratamiento de la\r\ninformación que le concierne y autoriza a que pase a formar parte del mencionado fichero, así como a recibir información y publicidad de productos y servicios de PROASISTENCIA, S.L. Si no\r\ndesea ser informado de nuestros productos y servicios mándenos un email o carta.\r\nLos derechos precitados podrán hacerse efectivos ante: PROASISTENCIA, S.L, C/ Camino de Rejas, 1 Coslada 28821 de Madrid o enviando un email: proasistencia@proasistencia.es (Ley\r\norgánica 15/1999 de 13 de diciembre de protección de datos de carácter personal)"
               },
-              "HorAlignment": "Width",
-              "Font": ";6;Italic;",
+              "HorAlignment": "Center",
+              "Font": "Arial Narrow;6.75;Bold, Italic;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1353,7 +1334,7 @@
           "Ident": "StiDataBand",
           "Name": "Datalineas",
           "CanShrink": true,
-          "ClientRectangle": "0,10.4,19,2.6",
+          "ClientRectangle": "0,10.4,19,2.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1385,8 +1366,6 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text27",
-              "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "16.8,0,1.8,0.4",
@@ -1400,9 +1379,6 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "NegativePattern": 8,
@@ -1418,7 +1394,6 @@
               "Name": "Text15",
               "Guid": "3667a2da2f8b4ff680ed17fe44b07d15",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "0.4,0,2,0.4",
@@ -1441,7 +1416,6 @@
               "Name": "Text47",
               "Guid": "6f0beabed77a410ca7fb20aedfaa79a0",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "2.6,0,1.2,0.4",
@@ -1464,7 +1438,6 @@
               "Name": "Text48",
               "Guid": "8df59ea99082446b9aa804e2283de55b",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "4,0,1,0.4",
@@ -1487,7 +1460,6 @@
               "Name": "Text49",
               "Guid": "667db861191343f8bfe98cd864709225",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "5.2,0,0.8,0.4",
@@ -1510,7 +1482,6 @@
               "Name": "Text50",
               "Guid": "4c1939e4a05b4ec2821691db913b5bda",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "13.8,0,0.8,0.4",
@@ -1541,7 +1512,6 @@
               "Name": "Text51",
               "Guid": "a6d23a9c29424430b7bf84249dbfca4d",
               "CanGrow": true,
-              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "14.8,0,1.8,0.4",
@@ -1568,9 +1538,8 @@
               }
             }
           },
-          "CanGrow": false,
           "MinHeight": 1.5,
-          "MaxHeight": 2.6,
+          "MaxHeight": 2.4,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
@@ -1580,10 +1549,9 @@
           }
         },
         "6": {
-<<<<<<< HEAD
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,13.8,19,0",
+          "ClientRectangle": "0,13.6,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1597,13 +1565,7 @@
         "7": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,14.6,19,0.8",
-=======
-          "Ident": "StiHeaderBand",
-          "Name": "HeaderBand2",
-          "Guid": "7fe4a7874f524d748729b96af9b5dfb1",
-          "ClientRectangle": "0,11.6,19,2.2",
->>>>>>> feature/descuentos-ofertas
+          "ClientRectangle": "0,14.4,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1613,10 +1575,10 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text38",
-              "Guid": "2f3fca02350f41b19da9a8cb5eea357c",
+              "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.4,1.6,2.6,0.4",
+              "ClientRectangle": "0.4,0.4,2.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1633,10 +1595,10 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text28",
-              "Guid": "5e53cbd0da15435cb282be59df3d8eb3",
+              "Guid": "3a74650a721540c9926cb294494cf381",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "3,1.6,1.8,0.4",
+              "ClientRectangle": "3,0.4,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1653,10 +1615,10 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text29",
-              "Guid": "cfe23d33a6c743c98e0c4bee75494e8b",
+              "Guid": "62aa3f1d2f1e4b70a1418b5a6f4a0df0",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "4.8,1.6,1.8,0.4",
+              "ClientRectangle": "4.8,0.4,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1673,10 +1635,10 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text41",
-              "Guid": "ebc128c2b391488691bda9858b553a4f",
+              "Guid": "55df3c09bcab4dcdb2e379ec1801fd58",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "6.6,1.6,1.8,0.4",
+              "ClientRectangle": "6.6,0.4,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1693,10 +1655,10 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text55",
-              "Guid": "ac34722ff5b54884bed464acccbe8889",
+              "Guid": "fd7acf0e70864ac5b6249b824d058710",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "8.4,1.6,3.6,0.4",
+              "ClientRectangle": "8.4,0.4,3.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1713,10 +1675,10 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text53",
-              "Guid": "a5d5d930c94348519629efc8135d5034",
+              "Guid": "f8622b2c85674789a3e403a88af3a517",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12,1.6,3.2,0.4",
+              "ClientRectangle": "12,0.4,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1733,10 +1695,10 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text54",
-              "Guid": "2ed3abf6bb5045ecb1d43016394c2128",
+              "Guid": "daaa44d146184bd0af4a52be3093c7d7",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "15.2,1.6,3.4,0.4",
+              "ClientRectangle": "15.2,0.4,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1749,74 +1711,14 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
-            },
-            "7": {
-              "Ident": "StiText",
-              "Name": "Text24",
-              "Guid": "01c622d228744c2dbdb719ed6b6b7187",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0,16,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Observaciones Pago"
-              },
-              "Font": ";8.25;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "8": {
-              "Ident": "StiText",
-              "Name": "Text25",
-              "Guid": "0b594c2aeadb48799f415d68d6842fd3",
-              "CanGrow": true,
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.6,16,0.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.observacionesPago}"
-              },
-              "Font": ";8.25;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
             }
           },
           "PrintAtBottom": true
         },
-        "7": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,14.6,19,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "PrintAtBottom": true,
-          "Condition": {
-            "Value": "{bases.tipoIva}"
-          }
-        },
         "8": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-<<<<<<< HEAD
-          "ClientRectangle": "0,16.2,19,0.4",
-=======
-          "ClientRectangle": "0,15.4,19,0.4",
->>>>>>> feature/descuentos-ofertas
+          "ClientRectangle": "0,16,19,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -2046,11 +1948,7 @@
         "9": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-<<<<<<< HEAD
-          "ClientRectangle": "0,17.4,19,2.4",
-=======
-          "ClientRectangle": "0,16.6,19,2",
->>>>>>> feature/descuentos-ofertas
+          "ClientRectangle": "0,17.2,19,2.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -2128,7 +2026,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  {cabecera.formaPago}  IBAN: {cabecera.cuenta}"
+                "Value": "{cabecera.formaPago}  IBAN: {cabecera.cuenta}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
