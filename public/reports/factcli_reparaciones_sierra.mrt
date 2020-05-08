@@ -724,7 +724,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,26.7,19,1",
+          "ClientRectangle": "0,32.24,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
