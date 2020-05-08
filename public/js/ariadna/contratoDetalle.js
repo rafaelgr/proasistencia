@@ -2007,31 +2007,36 @@ function buscaComisionistas(id) {
     var encontrado = false;
     llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data1) {
         if (err) return;
+        if(data1) {
             llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId(), null, function (err, data2) {
                 if (err) return;
-            
+                if(data2) {
                     for(var i = 0; i< data1.length; i++){
                         if(data1[i].comercialId == data2[0].ascComercialId){
                             encontrado = true;
                         }
                     }
-                
-                if(!encontrado && cmd == "NEW" && data2[0].ascComercialId){
-                    var data = {
-                        contratoComisionista: {
-                            contratoId: vm.contratoId(),
-                            comercialId: data2[0].ascComercialId,
-                            porcentajeComision: data2[0].porcomer,
+                    
+                    if(!encontrado && cmd == "NEW" && data2[0]){
+                        if(data2[0].ascComercialId) {
+                            var data = {
+                                contratoComisionista: {
+                                    contratoId: vm.contratoId(),
+                                    comercialId: data2[0].ascComercialId,
+                                    porcentajeComision: data2[0].porcomer,
+                                }
+                            }
+                            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista" , data, function (err, data) {
+                                if (err) return;
+                                loadComisionistas(vm.contratoId());
+                            });
                         }
-                    }
-                    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista" , data, function (err, data) {
-                        if (err) return;
+                    }else {
                         loadComisionistas(vm.contratoId());
-                    });
-                }else {
-                    loadComisionistas(vm.contratoId());
+                    }
                 }
             });
+        }
     });
 }
 
