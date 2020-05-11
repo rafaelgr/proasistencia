@@ -1040,7 +1040,7 @@ function loadTablaOfertaLineas(data) {
 
 
 function loadLineasOferta(id) {
-    llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false, null, function (err, data) {
+    llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false + "/" +  false, null, function (err, data) {
         if (err) return;
         var totalCoste = 0;
         data.forEach(function (linea) {
