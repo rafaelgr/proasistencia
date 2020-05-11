@@ -896,7 +896,6 @@ function loadDepartamento(departamentoId) {
                     vm.importeBeneficio(0);
                 } else {
                     $('#calculadora').show();
-                    vm.porcentajeBeneficio(15);
                 }
             }
 
