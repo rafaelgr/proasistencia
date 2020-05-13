@@ -183,7 +183,8 @@ function initForm() {
     });
 
     $("#cmbTiposIvaProveedor").select2().on('change', function (e) {
-        cambioTiposIvaProveedor(e.added);
+        if(e.added)
+            cambioTiposIvaProveedor(e.added.id);
     });
 
 
@@ -1231,9 +1232,9 @@ function cambioTiposIva(data) {
     });
 }
 
-function cambioTiposIvaProveedor(data) {
-    if (!data) return;
-    var tipoIvaId = data.id;
+function cambioTiposIvaProveedor(tipoIvaId) {
+    if (!tipoIvaId) return;
+    //if(!tipoivaId)   tipoIvaId = data.tipoIvaId;
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
         vm.stipoIvaProveedorId(data.tipoIvaId);
@@ -1247,6 +1248,7 @@ function cambioProveedor(proveedorId) {
         if (err) return;
         vm.proveedorId(proveedorId);
         loadTiposIvaProveedor(data.tipoIvaId);
+        cambioTiposIvaProveedor(data.tipoIvaId)
     });
 }
 
