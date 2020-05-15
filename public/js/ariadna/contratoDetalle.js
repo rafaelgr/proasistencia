@@ -2123,11 +2123,11 @@ var generarPrefacturas = function () {
     });
     if (vm.mantenedorId()) {
         var importeMantenedor = vm.importeMantenedor();
-        resto = importeMantenedor - importePrefacturas;
+        resto = importeMantenedor - importePrefacturasConcepto;
         vm.importeAFacturar(roundToTwo(resto));
     } else {
         var importeCliente = vm.importeCliente();
-        resto = importeCliente - importePrefacturas;
+        resto = importeCliente - importePrefacturasConcepto;
         vm.importeAFacturar(roundToTwo(resto));
     }
     $("#generar-prefacturas-form").submit(function () {
@@ -2191,7 +2191,7 @@ var verPrefacturasAGenerar = function () {
     if(numConceptos > 0 && importePrefacturas == 0) {
         var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
-        var prefacturas = crearPrefacturas2(importe - importePrefacturas, importeAlCliente - importePrefacturas, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+        var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
