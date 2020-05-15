@@ -2205,12 +2205,6 @@ var aceptarGenerarPrefacturas = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar()
     };
-    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-        if (err) return;
-        mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-        $('#modalGenerarPrefacturas').modal('hide');
-        loadPrefacturasDelContrato(vm.contratoId());
-    });
     controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
         if (err) return;
         if (!result) {
@@ -2225,6 +2219,7 @@ var aceptarGenerarPrefacturas = function () {
         });
     });
 }
+
 
 var aceptarModificarPrefacturas = function () {
     //primero borramos la prefactura
