@@ -2211,7 +2211,7 @@ var aceptarGenerarPrefacturas = function () {
         $('#modalGenerarPrefacturas').modal('hide');
         loadPrefacturasDelContrato(vm.contratoId());
     });
-    /* controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
         if (err) return;
         if (!result) {
             $('#modalGenerarPrefacturas').modal('hide');
@@ -2223,7 +2223,7 @@ var aceptarGenerarPrefacturas = function () {
             $('#modalGenerarPrefacturas').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
         });
-    }); */
+    });
 }
 
 var aceptarModificarPrefacturas = function () {
