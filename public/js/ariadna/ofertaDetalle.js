@@ -18,6 +18,7 @@ var usaCalculadora;
 var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
+var dataProveedores;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -197,6 +198,7 @@ function initForm() {
     initTablaOfertasLineas();
     initTablaBases();
     initTablaConceptosLineas();
+    initTablaProveedores();
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
@@ -409,6 +411,8 @@ function loadData(data) {
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
+
+    cargaTablaProveedores()
 }
 
 function datosOK() {
@@ -1646,8 +1650,20 @@ var imprimir = function () {
     })
 }
 
+var imprimirProveedor = function (id) {
+    guardarOferta(function (err) {
+        if (err) return;
+        printOfertaProveedor(id);
+    })
+}
+
 function printOferta2(id) {
     var url = "InfOfertas.html?ofertaId=" + id;
+    window.open(url, "_new");
+}
+
+function printOfertaProveedor(id) {
+    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id;
     window.open(url, "_new");
 }
 
@@ -2079,4 +2095,76 @@ function datosOKLineasConceptos() {
     });
     return $('#concepto-form').valid();
 }
+
+// FUNCIONES RELACIONADAS CON LOS PROVEEDORES
+
+function initTablaProveedores() {
+    tablaProveedores = $('#dt_proveedoresAsociados').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataProveedores,
+        columns: [{
+            data: "proveedornombre",
+            render: function (data, type, row) {
+                if(!data) return row.totalLinea;
+                return data;
+            }
+        }, {
+            data: "totalProveedor",
+            render: function (data, type, row) {
+                if(!row.proveedornombre) return "";
+                return data;
+            }
+        },{
+            data: "proveedorId",
+            render: function (data, type, row) {
+                console.log(type +" "+ row);
+                var bt = "<button class='btn btn-circle btn-success' onclick='imprimirProveedor(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function cargaTablaProveedores(){
+    llamadaAjax("GET",  "/api/ofertas/proveedores/lineas/totales/"  + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        if(data) loadTablaProveedores(data);
+    });
+}
+
+function loadTablaProveedores(data) {
+    var dt = $('#dt_proveedoresAsociados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
 
