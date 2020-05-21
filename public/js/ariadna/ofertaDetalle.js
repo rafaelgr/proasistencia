@@ -54,8 +54,6 @@ function initForm() {
         importePorcentaje = porcentaje * totalOferta;
 
         vm.importeCalculado(roundToTwo(importePorcentaje));
-        
-        
     });
 
     $("#txtImporteCalculado").on('blur', function (e) {
@@ -192,8 +190,10 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtImpUni").blur(cambioPrecioCantidad);
     $("#txtPorDescuento").blur(cambioPrecioCantidad);
+    $("#txtPorDescuentoProveedor").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
-    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null)});
+    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
+    $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -256,6 +256,7 @@ function admData() {
     // descuentos
     self.precio = ko.observable();
     self.perdto = ko.observable();
+    self.perdtoProveedor = ko.observable();
     self.dto = ko.observable();
     self.precioProveedor = ko.observable();
     self.dtoProveedor = ko.observable();
@@ -732,6 +733,7 @@ function limpiaDataLinea(data) {
     vm.precio(null);
     vm.precioProveedor(null);
     vm.perdto(0);
+    vm.perdtoProveedor(0);
     vm.dto(0);
     vm.dtoProveedor(0);
 
@@ -749,7 +751,13 @@ function limpiaDataLinea(data) {
 }
 
 var guardarLinea = function () {
+    var costeCliente = vm.costeLinea();
+    var costeProveedor = vm.costeLineaProveedor();
     if (!datosOKLineas()) {
+        return;
+    }
+    if(costeProveedor > costeCliente) {
+        mensError("El total del proveedor no puede ser mayor que el total del cliente");
         return;
     }
     var data = {
@@ -777,6 +785,7 @@ var guardarLinea = function () {
             proveedorId: vm.sproveedorId(),
             precio: vm.precio(),
             perdto: vm.perdto(),
+            perdtoProveedor: vm.perdtoProveedor(),
             dto: vm.dto(),
             precioProveedor: vm.precioProveedor(),
             dtoProveedor: vm.dtoProveedor()
@@ -832,6 +841,9 @@ function datosOKLineas() {
             },
             txtPorDescuento: {
                 required: true
+            },
+            txtPorDescuentoProveedor: {
+                required: true
             }
         },
         // Messages for form validation
@@ -861,6 +873,9 @@ function datosOKLineas() {
                 required: 'Necesita un precio'
             },
             txtPorDescuento: {
+                required: "introduzca una cantidad, puede ser cero"
+            },
+            txtPorDescuentoProveedor: {
                 required: "introduzca una cantidad, puede ser cero"
             }
         },
@@ -1026,6 +1041,7 @@ function loadDataLinea(data) {
     vm.dto(data.dto);
     //
     //descuento del proveedor
+    vm.perdtoProveedor(data.perdtoProveedor);
     vm.precioProveedor(data.precioProveedor);
     vm.dtoProveedor(data.dtoProveedor);
 
@@ -1268,26 +1284,36 @@ var cambioPrecioCantidad = function () {
      vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
      vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
 
-     //calculo en caso de descuento
+     if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
+                                                                                                 //descuennto en el proveedor cargamos el del cliente
+     //calculo en caso de descuento cliente
     if(vm.perdto() > 0 || vm.perdto() != '') {
         var precio = parseFloat(vm.precio());
-        var precioProveedor =  parseFloat(vm.precioProveedor());
         var porcen = parseFloat(vm.perdto());
         porcen = porcen / 100;
         var descuento = precio * porcen;
-        var descuentoProveedor = precioProveedor * porcen;
         //se calcula el descuento cliente
         vm.dto(roundToTwo(descuento));
         var resultado = parseFloat(precio-descuento);
         vm.costeLinea(roundToTwo(resultado));
+        
+        recalcularCostesImportesDesdeCoste();
+        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    }
+
+    //calculo en caso de descuento proveedor
+    if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+        var precioProveedor =  parseFloat(vm.precioProveedor());
+        var porcen = parseFloat(vm.perdtoProveedor());
+        porcen = porcen / 100;
+        var descuentoProveedor = precioProveedor * porcen;
+        
         //se calcula el descuento proveedor
         vm.dtoProveedor(roundToTwo(descuentoProveedor));
         var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
         vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
 
         recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-
         vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
 
     }
