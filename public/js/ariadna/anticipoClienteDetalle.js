@@ -19,6 +19,9 @@ var usuario;
 var usaCalculadora;
 var usaContrato = true;//por defecto se usa contrato
 var antSerie = null;
+var servicioId 
+var EmpresaId 
+var ClienteId 
 
 
 var breakpointDefinition = {
@@ -89,6 +92,9 @@ function initForm() {
     });
     
     antClienId = gup('AntClienId');
+    servicioId = gup('ServicioId');
+    EmpresaId = gup('EmpresaId');
+    ClienteId = gup('ClienteId');
     cmd = gup("cmd");
 
     if (antClienId != 0) {
@@ -102,6 +108,15 @@ function initForm() {
     } else {
         // caso alta
         vm.antClienId(0);
+        if(servicioId && servicioId != '') vm.servicioId(servicioId);
+        if (EmpresaId != 0 && EmpresaId != 0) {
+            loadEmpresas(EmpresaId);
+            cambioEmpresa(EmpresaId);
+        }
+        if(ClienteId != 0 && ClienteId != "") {
+            vm.sclienteId(ClienteId);
+            cambioCliente(ClienteId);
+        }
         $("#btnImprimir").hide();
         document.title = "NUEVO ANTICIPO";
     }
@@ -122,6 +137,7 @@ function admData() {
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.noContabilizar = ko.observable();
+    self.servicioId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -193,6 +209,7 @@ function loadData(data) {
     vm.serie(data.serie);
     vm.ano(data.ano);
     vm.numero(data.numero);
+    vm.servicioId(data.servicioId);
     antSerie = vm.serie();
     //
     vm.emisorNif(data.emisorNif);
@@ -352,7 +369,8 @@ var generarAntClienDb = function () {
             "departamentoId": vm.sdepartamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "serie": vm.serie(),
-            "noContabilizar": vm.noContabilizar()
+            "noContabilizar": vm.noContabilizar(),
+            "servicioId": vm.servicioId()
         }
     };
     return data;

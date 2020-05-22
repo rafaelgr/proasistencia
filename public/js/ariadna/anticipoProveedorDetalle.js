@@ -188,8 +188,8 @@ function initForm() {
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
     desdeContrato = gup("desdeContrato");
-    proveedores = gup('proveedores');
-    servicioId = gup('servicioId');
+    proveedores = gup('Proveedores');
+    servicioId = gup('ServicioId');
     proveedores = proveedores.split(',');
     if(proveedores.length == 1 && proveedores[0] == "") proveedores = null;
     datosPro = {proveedores: proveedores}
