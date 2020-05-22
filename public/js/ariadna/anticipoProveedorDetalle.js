@@ -18,6 +18,9 @@ var acumulado = 0;
 var tot;
 var numServiciadas;
 var importeModificar = 0;
+var proveedores;
+var datosPro;
+var servicioId;
 
 var dataServiciadas;
 var dataLineas;
@@ -185,6 +188,11 @@ function initForm() {
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
     desdeContrato = gup("desdeContrato");
+    proveedores = gup('proveedores');
+    servicioId = gup('servicioId');
+    proveedores = proveedores.split(',');
+    if(proveedores.length == 1 && proveedores[0] == "") proveedores = null;
+    datosPro = {proveedores: proveedores}
 
     
 
@@ -295,6 +303,7 @@ function initForm() {
             cargaProveedor(ProveedorId);
             cambioProveedor(ProveedorId);
         }
+        if(servicioId && servicioId != '') vm.servicioId(servicioId);
         /*if (ContratoId != 0) {
             loadContratos(ContratoId);
             cambioContrato(ContratoId);
@@ -338,6 +347,7 @@ function admData() {
     self.conceptoAnticipo = ko.observable();
     self.completo = ko.observable();
     self.emisorIban = ko.observable();
+    self.servicioId = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -504,6 +514,7 @@ function loadData(data) {
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.antproveServiciadoId(0);
     vm.importeServiciada(0);
+    vm.servicioId(data.servicioId);
     
 
     //
@@ -719,7 +730,8 @@ var generarAnticipoDb = function () {
             "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.sdepartamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
-            "completo": vm.completo()
+            "completo": vm.completo(),
+            "servicioId": vm.servicioId()
 
         }
     };
@@ -1656,7 +1668,7 @@ var initAutoProveedor = function () {
     $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("GET", "/api/proveedores/activos/proveedores/todos/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/?nombre=" + request.term, datosPro, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
