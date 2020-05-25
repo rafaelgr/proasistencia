@@ -304,11 +304,6 @@ function initForm() {
             cambioProveedor(ProveedorId);
         }
         if(servicioId && servicioId != '') vm.servicioId(servicioId);
-        /*if (ContratoId != 0) {
-            loadContratos(ContratoId);
-            cambioContrato(ContratoId);
-        }*/
-
     }
 
     //Evento asociado al checkbox
