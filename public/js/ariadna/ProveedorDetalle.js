@@ -15,7 +15,6 @@ var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var idUsuario;
 var numfactu = 0;
 
-
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
@@ -301,6 +300,7 @@ function admData() {
     self.tipoProOriginalId = ko.observable();
     self.codigoOriginal = ko.observable();
     self.observaciones = ko.observable();
+    self.emitirFacturas = ko.observable();
     //DATOS DE LA FIANZA
     self.fianza = ko.observable('0.00');
     self.fianzaAcumulada = ko.observable('0.00');
@@ -405,6 +405,7 @@ function loadData(data) {
     vm.codigoProfesional(data.codigoProfesional);
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
+    vm.emitirFacturas(data.emitirFacturas);
     
     antNif = data.nif;
     // split iban
@@ -581,7 +582,8 @@ function aceptar() {
                 "tarifaId": vm.starifaProveedorId(),
                 "codigoRetencion": vm.scodigoRetencion(),
                 "observaciones": vm.observaciones(),
-                "paisId": vm.spaisId()
+                "paisId": vm.spaisId(),
+                "emitirFacturas": vm.emitirFacturas()
 
             },
             departamentos: {

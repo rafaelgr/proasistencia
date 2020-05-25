@@ -183,6 +183,7 @@ function initTablaFacturas() {
         }, {
             data: "fecha_recepcion",
             render: function (data, type, row) {
+                if(!data) return "";
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {

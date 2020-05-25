@@ -128,6 +128,11 @@ function initForm() {
         if (e.added) cambioEmpresa(e.added.id);
     });
 
+
+    $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
+        if (e.added) loadDepartamentos(e.added.id);
+    });
+
     $("#cmbTiposOperacion").select2(select2Spanish());
     loadTiposOperacion();
 
@@ -381,6 +386,10 @@ function admData() {
     self.conceptoAnticipo = ko.observable();
     self.emisorIban = ko.observable();
     self.fianza = ko.observable();
+
+
+    self.numero2 = ko.observable();
+    self.fechaRecepcion2 = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -525,9 +534,11 @@ function loadData(data) {
     vm.facproveId(data.facproveId);
     vm.ref(data.ref);
     vm.numero(data.numeroFacturaProveedor);
+    vm.numero2(data.numeroFacturaProveedor2)
     vm.numregis(data.numregisconta);
     vm.fecha(spanishDate(data.fecha));
     vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
+    vm.fechaRecepcion2(spanishDate(data.fecha_recepcion2));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
@@ -648,7 +659,8 @@ function datosOK() {
                 required: true
             },
             txtFechaRecepcion: {
-                greaterThan: "#txtFecha"
+                greaterThan: "#txtFecha",
+                required: true
             },
             cmbFormasPago: {
                 required: true
@@ -677,6 +689,9 @@ function datosOK() {
             },
             txtFecha: {
                 required: 'Debe elegir una fecha'
+            },
+            txtFechaRecepcion: {
+                required: 'Debe elegir una fecha de recepción'
             },
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
@@ -771,9 +786,11 @@ var generarFacturaDb = function () {
         facprove: {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
+            "numeroFacturaProveedor2": vm.numero2(),
             "numero": vm.numeroRef(),
             "fecha": spanishDbDate(vm.fecha()),
             "fecha_recepcion": spanishDbDate(vm.fechaRecepcion()),
+            "fecha_recepcion2": spanishDbDate(vm.fechaRecepcion2()),
             "empresaId": vm.sempresaId(),
             "empresaId2": vm.sempresaServiciadaId(),
             "proveedorId": vm.sproveedorId(),
@@ -896,6 +913,11 @@ function loadDepartamentos(departamentoId) {
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
             vm.departamentoId(departamentoId);
+            if(departamentoId == 7) {
+                $('#prefacturas').show();
+            } else {
+                $('#prefacturas').hide();
+            }
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
