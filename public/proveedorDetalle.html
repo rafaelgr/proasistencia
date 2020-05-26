@@ -736,14 +736,12 @@
                                                                                                         </header>
                                                                                                         <fieldset>
                                                                                                             <div class="row">
-                                                                                                               
                                                                                                                 <section class="col col-md-5">
                                                                                                                         <label class="label">IBAN</label>
                                                                                                                         <label class="input">
                                                                                                                             <input id="txtIban" name="txtIban" type="text" data-bind="value: iban" />
                                                                                                                         </label>
                                                                                                                 </section>
-                                                                                                                
                                                                                                                 <section class="col col-md-7">
                                                                                                                     <label class="label">Forma de pago</label>
                                                                                                                     <label style="width:100%;">
@@ -815,10 +813,17 @@
                                                                                                                 </section>
                                                                                                             </div>
                                                                                                             <div class="row">
-                                                                                                                <section class="col col-md-2">
+                                                                                                                <section class="col col-md-2" style="padding-top: 2%;">
                                                                                                                     <input id="chkEmitirFacturas" type="checkbox" data-bind="checked: emitirFacturas" /> Emitir facturas
                                                                                                                 </section>
-                                                                                                                <section class="col col-md-10"></section>
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label class="label">Empresa de facturación</label>
+                                                                                                                    <label style="width:100%; height:50px;">
+                                                                                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                                                                                                        <i></i>
+                                                                                                                    </label>
+                                                                                                                </div>
+                                                                                                                <section class="col col-md-6"></section>
                                                                                                             </div>
                                                                                                         </fieldset>
                                                                                                         <header>

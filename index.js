@@ -233,3 +233,4 @@ console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
 console.log(' PORT: ' + process.env.API_PORT);
 console.log("-------------------------------------------");
+console.log(process.memoryUsage());

@@ -20,3 +20,8 @@ ALTER TABLE `facprove`
   ADD COLUMN `numeroFacturaProveedor2` VARCHAR(255) NULL AFTER `numeroFacturaProveedor`,
   ADD COLUMN `fecha_recepcion2` DATE NULL AFTER `fecha_recepcion`;
 
+
+ALTER TABLE `proveedores`   
+  ADD COLUMN `empresaId` INT(11) NULL AFTER `emitirFacturas`,
+  ADD CONSTRAINT `proveedores_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`);
+

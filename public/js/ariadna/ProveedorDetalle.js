@@ -61,6 +61,8 @@ function initForm() {
     loadDepartamentos();
     $("#cmbPaises").select2(select2Spanish());
     loadPaises();
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
    
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -372,6 +374,14 @@ function admData() {
     //
     self.posiblesPaises = ko.observableArray([]);
     self.elegidosPaises = ko.observableArray([]);
+
+    //COMBO EMPRESA
+    //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
     
 }
 
@@ -406,6 +416,8 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
+    vm.empresaId(data.empresaId);
+    
     
     antNif = data.nif;
     // split iban
@@ -427,7 +439,8 @@ function loadData(data) {
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
     loadTiposRetencion(data.codigoRetencion);
-    loadPaises(data.paisId)
+    loadPaises(data.paisId);
+    loadEmpresas(data.empresaId);
     buscaDepartamentos();
     //loadDepartamentos(data.departamentoId)
 }
@@ -545,6 +558,7 @@ function aceptar() {
         if (!datosOK()) return;
         if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
         if(vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
+        if(vm.sempresaId() == 0) vm.sempresaId(null);
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
@@ -583,7 +597,8 @@ function aceptar() {
                 "codigoRetencion": vm.scodigoRetencion(),
                 "observaciones": vm.observaciones(),
                 "paisId": vm.spaisId(),
-                "emitirFacturas": vm.emitirFacturas()
+                "emitirFacturas": vm.emitirFacturas(),
+                "empresaId": vm.sempresaId()
 
             },
             departamentos: {
@@ -659,6 +674,15 @@ function loadTiposVia(id) {
     });
 }
 
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
+        if(empresaId) vm.sempresaId(empresaId);
+    });
+}
 
 function loadTiposIva(id) {
     llamadaAjax("GET", "/api/tipos_iva", null, function (err, data) {
