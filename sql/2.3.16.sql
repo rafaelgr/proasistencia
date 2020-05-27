@@ -25,3 +25,7 @@ ALTER TABLE `proveedores`
   ADD COLUMN `empresaId` INT(11) NULL AFTER `emitirFacturas`,
   ADD CONSTRAINT `proveedores_empresa` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`);
 
+  ALTER TABLE `facprove`   
+  ADD COLUMN `enviadaCorreo` TINYINT(1) DEFAULT 0 NULL AFTER `tipoOperacionId`;
+
+
