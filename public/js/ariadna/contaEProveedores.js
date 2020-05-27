@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
 facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+Funciones js par la página FacproveGeneral.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,10 +8,9 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facturaId;
+var dataFacproves;
+var facproveId;
 var proveedorId = 0;
-var comercialId = 0;
 var empresaId = 0;
 var departamentoId = 0;
 var usuario;
@@ -37,9 +36,7 @@ function initForm() {
     
     initAutoProveedor();
 
-    $('#cmbAgentes').select2();
-    loadComerciales();
-
+   
     $('#cmbEmpresas').select2();
     loadEmpresas();
 
@@ -68,7 +65,7 @@ function initForm() {
         
     });
     //
-    $('#btnBuscar').click(buscarFacturas());
+    $('#btnBuscar').click(buscarFacproves());
     $('#btnAlta').click(enviarCorreos());
     $('#btnDownload').click(buscarFicheros());
     $('#frmBuscar').submit(function () {
@@ -77,9 +74,9 @@ function initForm() {
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
-    initTablaFacturas();
+    initTablaFacproves();
     // comprobamos parámetros
-    facturaId = gup('FacturaId');
+    facproveId = gup('FacproveId');
     //
     var socket = io.connect('/');
     socket.on('message', function (data) {
@@ -114,10 +111,6 @@ function admData() {
     self.totalReg = ko.observable();
     self.proveedor = ko.observable();
 
-    self.posiblesComerciales = ko.observableArray([]);
-    self.elegidosComerciales = ko.observableArray([]);
-    self.sComercialId = ko.observable();
-
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidasEmpresas = ko.observableArray([]);
     self.sEmpresaId = ko.observable();
@@ -131,14 +124,14 @@ function admData() {
     
 }
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaFacproves() {
+    tablaCarro = $('#dt_facprove').dataTable({
         autoWidth: true,
         paging: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facprove'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -167,9 +160,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataFacproves,
         columns: [{
-            data: "facturaId",
+            data: "facproveId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -182,8 +175,6 @@ function initTablaFacturas() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
-            data: "dirTrabajo"
         }, {
             data: "vNum"
         }, {
@@ -200,11 +191,11 @@ function initTablaFacturas() {
         }, {
             data: "observaciones"
         }, {
-            data: "facturaId",
+            data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFacprove(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
             }
@@ -277,17 +268,6 @@ var initAutoProveedor = function () {
     }, "Debe seleccionar un Proveedor válido");
 };
 
-function loadComerciales(id){
-    llamadaAjax('GET', "/api/comerciales", null, function (err, data) {
-        if (err) return
-        var comerciales = [{
-            comercialId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesComerciales(comerciales);
-        $("#cmbComerciales").val([id]).trigger('change');
-    });
-}
 
 function loadEmpresas(id){
     llamadaAjax('GET', "/api/empresas", null, function (err, data) {
@@ -314,8 +294,8 @@ function loadEmpresas(id){
 }*/
 
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaFacproves(data) {
+    var dt = $('#dt_facprove').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -323,15 +303,15 @@ function loadTablaFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
+        var field = "#chk" + v.facproveId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                factura: {
-                    facturaId: v.facturaId,
+                facprove: {
+                    facproveId: v.facproveId,
                     empresaId: v.empresaId,
                     proveedorId: v.proveedorId,
                     fecha: moment(v.fecha).format('YYYY-MM-DD'),
@@ -339,17 +319,19 @@ function loadTablaFacturas(data) {
                 }
             };
             if (this.checked) {
-                data.factura.sel = 1;
+                data.facprove.sel = 1;
             }
+            var datosArray = [];
+            datosArray.push(data)
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+            var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
             $.ajax({
                 type: type,
                 url: url,
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(datosArray),
                 success: function (data, status) {
 
                 },
@@ -378,20 +360,19 @@ function buscarProveedores(done){
     });
 }
 
-function buscarFacturas() {
+function buscarFacproves() {
     var mf = function () {
         if (!datosOK()) return;
-        comercialId = vm.sComercialId();
         empresaId = vm.sEmpresaId();
         departamentoId = vm.sdepartamentoId();
 
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/" + comercialId  +  "/" + empresaId + "/" + departamentoId + "/" + usuario,
+            url: myconfig.apiUrl + "/api/facturasProveedores/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/"  + empresaId + "/" + departamentoId + "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacturas(data);
+                loadTablaFacproves(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
             },
@@ -412,13 +393,13 @@ function buscarFicheros() {
     return mf;
 }
 
-function contabilizarFacturas() {
+function contabilizarFacproves() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/facturasProveedores/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -427,7 +408,7 @@ function contabilizarFacturas() {
                 mensNormal('El fichero ' + data + ' para contabilización ya está preparado');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
-                loadTablaFacturas(null);
+                loadTablaFacproves(null);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -442,13 +423,13 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/" +comercialId +  "/" + empresaId + "/" + departamentoId + "/" + usuario;
+        var url = myconfig.apiUrl + "/api/facturasProveedores/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/"  + empresaId + "/" + departamentoId + "/" + usuario;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            url = myconfig.apiUrl + "/api/facturasProveedores/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     $('#progress').hide();
@@ -458,7 +439,7 @@ function enviarCorreos() {
                 $('#progress').hide();
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
-                // mensNormal('Las facturas se han enviado por correo');
+                // mensNormal('Las facturasProveedores se han enviado por correo');
             });
 
         });
@@ -466,7 +447,7 @@ function enviarCorreos() {
     return mf;
 }
 
-function deleteFactura(id) {
+function deleteFacprove(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -476,16 +457,16 @@ function deleteFactura(id) {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             var data = {
-                facturaId: id
+                facproveId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
+                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacturas();
+                    var fn = buscarFacproves();
                     fn();
                 },
                 error: function (err) {
@@ -500,28 +481,28 @@ function deleteFactura(id) {
     });
 }
 
-function editFactura(id) {
+function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    var url = "FacproveDetalle.html?FacproveId=" + id;
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
+function cargarFacproves() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: facproveId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                url: myconfig.apiUrl + "/api/facturasProveedores/" + facproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaFacproves(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -531,12 +512,12 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas",
+                url: myconfig.apiUrl + "/api/facturasProveedores",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaFacproves(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -548,10 +529,10 @@ function cargarFacturas() {
     return mf;
 }
 
-function printFactura(id) {
+function printFacprove(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/facturasProveedores/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
