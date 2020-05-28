@@ -184,7 +184,6 @@ function admData() {
     self.numero = ko.observable();
     self.serie = ko.observable();
     self.fecha = ko.observable();
-    self.empresaId = ko.observable();
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
     self.tipoContratoId = ko.observable();

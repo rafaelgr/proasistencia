@@ -472,443 +472,532 @@
                 You do not need to use widgets if you dont want to. Simply remove 
                 the <section></section> and you can use wells or panels instead 
                 -->
-            <!-- widget grid CABECERA-->
-            <section id="widget-grid" class="">
-                <!-- row -->
-                <div class="row">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>CABECERA</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmOferta" class="smart-form">
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-2">
-                                                    <label class="label">REFERENCIA</label>
-                                                    <label class="input">
-                                                        <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Empresa</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Fecha </label>
-                                                    <label class="input">
-                                                        <input id="txtFechaOferta" name="txtFechaOferta" data-bind="value: fechaOferta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Departamento</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" data-bind="options: posiblesTiposOferta, optionsText: 'nombre', optionsValue: 'departamentoId', value: stipoOfertaId, valueAllowUnset: true, selectedOptions: elegidosTiposOferta, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>                                                
-                                                <section class="col col-md-3">
-                                                    <label class="label">Tipo Proyecto</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>                                                
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-4">
-                                                    <label class="label">Cliente</label>
-                                                    <label class="input">
-                                                        <input id="txtCliente" name="txtCliente" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Mantenedor</label>
-                                                    <label class="input">
-                                                        <input id="txtMantenedor" name="txtMantenedor" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Agente</label>
-                                                    <label class="input">
-                                                        <input id="txtAgente" name="txtAgente" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-4">
-                                                    <label class="label">Forma de pago</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4"></section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Importe Cliente</label>
-                                                    <label class="input">
-                                                        <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeCliente" disabled/>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-2">
-                                                    <label class="label">Importe Mantenedor</label>
-                                                    <label class="input">
-                                                        <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-md-12">
-                                                    <label class="label">Observaciones <i class="fa fa-lg fa-book"></i>
-                                                        <select id="cmbTextosPredeterminados" style="min-width: 150px;" name="cmbTextosPredeterminados" data-bind="options: posiblesTextosPredeterminados, optionsText: 'abrev', optionsValue: 'textoPredeterminadoId', value: stextoPredeterminadoId, valueAllowUnset: true, selectedOptions: elegidosTextosPredeterminados, selected2:{}"></select>
-                                                    </label>
-                                                    <label class="textarea textarea-resizable">
-                                                        <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <!-- Calculadoras de importes -->
-                                           
-                                            <div class="row" id="calculadora">
-                                                <header>(Calculadora importes)</header>
-                                                <section class="col col-md-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="text-align:center;">COSTE</th>
-                                                                    <th colspan="2" style="text-align:center;">BENEFICIO</th>
-                                                                    <th style="text-align:center;">VENTA NETA</th>
-                                                                    <th colspan="2" style="text-align:center;">AGENTE</th>
-                                                                    <th style="text-align:center;">IMPORTE CLIENTE</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td style="text-align:center;">%</td>
-                                                                    <td style="text-align:center;">IMPORTE</td>
-                                                                    <td></td>
-                                                                    <td style="text-align:center;">%</td>
-                                                                    <td style="text-align:center;">IMPORTE</td>
-                                                                    <td></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
-                                                                        </label>
-                                                                    </td>
-                                                                    <td style="text-align:center;">
-                                                                        <label class="input">
-                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
-                                                                        </label </td>
-                                                                        <td style="text-align:center;">
+                <section id="widget-grid0">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget" id="wid-id-12" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                    <h2>Información de la oferta</h2>
+                                    <ul class="nav nav-tabs pull-right in" id="myTab">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#s1"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Datos</span></a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#s2"><i class="fa fa-user"></i> <span class="hidden-mobile hidden-tablet">Lineas proveedores</span></a>
+                                        </li>                                                                                 
+                                    </ul>
+                                </header>
+                                <div id="myTabContent" class="tab-content">
+                                    <!--PRIMER TAB-->
+                                    <div class="tab-pane fade active in padding-10 no-padding-bottom" id="s1">
+                                    <!-- widget grid CABECERA-->
+                                    <section id="widget-grid" class="">
+                                        <!-- row -->
+                                        <div class="row">
+                                            <!-- NEW WIDGET START -->
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>CABECERA</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <form id="frmOferta" class="smart-form">
+                                                                <fieldset>
+                                                                    <div class="row">
+                                                                        <section class="col col-md-2">
+                                                                            <label class="label">REFERENCIA</label>
                                                                             <label class="input">
-                                                                                <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
+                                                                                <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
                                                                             </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
+                                                                        </section>
+                                                                        <section class="col col-md-2">
+                                                                            <label class="label">Empresa</label>
+                                                                            <label style="width:100%; height:50px;">
+                                                                                <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                                            </label>
+                                                                        </section>
+                                                                        <section class="col col-md-2">
+                                                                            <label class="label">Fecha </label>
                                                                             <label class="input">
-                                                                                <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
+                                                                                <input id="txtFechaOferta" name="txtFechaOferta" data-bind="value: fechaOferta" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                             </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
+                                                                        </section>
+                                                                        <section class="col col-md-3">
+                                                                            <label class="label">Departamento</label>
+                                                                            <label style="width:100%; height:50px;">
+                                                                                <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" data-bind="options: posiblesTiposOferta, optionsText: 'nombre', optionsValue: 'departamentoId', value: stipoOfertaId, valueAllowUnset: true, selectedOptions: elegidosTiposOferta, selected2:{}"></select><i></i>
+                                                                            </label>
+                                                                        </section>                                                
+                                                                        <section class="col col-md-3">
+                                                                            <label class="label">Tipo Proyecto</label>
+                                                                            <label style="width:100%; height:50px;">
+                                                                                <select style="width:100%" id="cmbTipoProyecto" name="cmbTipoProyecto" data-bind="options: posiblesTipoProyecto, optionsText: 'nombre', optionsValue: 'tipoProyectoId', value: stipoProyectoId, valueAllowUnset: true, selectedOptions: elegidosTipoProyecto, selected2:{}"></select><i></i>
+                                                                            </label>
+                                                                        </section>                                                
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-md-4">
+                                                                            <label class="label">Cliente</label>
                                                                             <label class="input">
-                                                                                <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
+                                                                                <input id="txtCliente" name="txtCliente" />
                                                                             </label>
-                                                                        </td>
-                                                                        <td style="text-align:center;">
+                                                                        </section>
+                                                                        <section class="col col-md-4">
+                                                                            <label class="label">Mantenedor</label>
                                                                             <label class="input">
-                                                                                <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeCliente" disabled/>
+                                                                                <input id="txtMantenedor" name="txtMantenedor" />
                                                                             </label>
-                                                                        </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                                        </section>
+                                                                        <section class="col col-md-4">
+                                                                            <label class="label">Agente</label>
+                                                                            <label class="input">
+                                                                                <input id="txtAgente" name="txtAgente" />
+                                                                            </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-md-4">
+                                                                            <label class="label">Forma de pago</label>
+                                                                            <label style="width:100%; height:50px;">
+                                                                                <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                                            </label>
+                                                                        </section>
+                                                                        <section class="col col-md-4"></section>
+                                                                        <section class="col col-md-2">
+                                                                            <label class="label">Importe Cliente</label>
+                                                                            <label class="input">
+                                                                                <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeCliente" disabled/>
+                                                                            </label>
+                                                                        </section>
+                                                                        <section class="col col-md-2">
+                                                                            <label class="label">Importe Mantenedor</label>
+                                                                            <label class="input">
+                                                                                <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
+                                                                            </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-md-12">
+                                                                            <label class="label">Observaciones <i class="fa fa-lg fa-book"></i>
+                                                                                <select id="cmbTextosPredeterminados" style="min-width: 150px;" name="cmbTextosPredeterminados" data-bind="options: posiblesTextosPredeterminados, optionsText: 'abrev', optionsValue: 'textoPredeterminadoId', value: stextoPredeterminadoId, valueAllowUnset: true, selectedOptions: elegidosTextosPredeterminados, selected2:{}"></select>
+                                                                            </label>
+                                                                            <label class="textarea textarea-resizable">
+                                                                                <textarea id="txtObservaciones" rows="3" class="custom-scroll" data-bind="value:observaciones"></textarea>
+                                                                            </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <!-- Calculadoras de importes -->
+                                                                   
+                                                                    <div class="row" id="calculadora">
+                                                                        <header>(Calculadora importes)</header>
+                                                                        <section class="col col-md-12">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="text-align:center;">COSTE</th>
+                                                                                            <th colspan="2" style="text-align:center;">BENEFICIO</th>
+                                                                                            <th style="text-align:center;">VENTA NETA</th>
+                                                                                            <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                                                            <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td style="text-align:center;">%</td>
+                                                                                            <td style="text-align:center;">IMPORTE</td>
+                                                                                            <td></td>
+                                                                                            <td style="text-align:center;">%</td>
+                                                                                            <td style="text-align:center;">IMPORTE</td>
+                                                                                            <td></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtPorcentajeBeneficio" name="txtPorcentajeBeneficio" data-bind="value:porcentajeBeneficio" />
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            <td style="text-align:center;">
+                                                                                                <label class="input">
+                                                                                                    <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
+                                                                                                </label </td>
+                                                                                                <td style="text-align:center;">
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                <td style="text-align:center;">
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" />
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                <td style="text-align:center;">
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                <td style="text-align:center;">
+                                                                                                    <label class="input">
+                                                                                                        <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeCliente" disabled/>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </section>
+                                                                    </div>
+                                                                </fieldset>
+                                                                <fieldset>
+                                                                    <div class="pull-right">
+                                                                        <button id="btnGenerarContrato" title="Generar contrato" data-toggle="modal" data-target="#modalContrato" onclick="generarContrato()" class="btn btn-primary btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-file-text-o"></i>
+                                                                        </button>
+                                                                        <button id="btnImprimir" title="Imprimir oferta" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-print"></i>
+                                                                        </button>
+                                                                        <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-sign-out"></i>
+                                                                        </button>
+                                                                        <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-check"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+                                                            <hr/>
+                                                        </div>
+                                                        <!-- end widget content -->
                                                     </div>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnGenerarContrato" title="Generar contrato" data-toggle="modal" data-target="#modalContrato" onclick="generarContrato()" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-file-text-o"></i>
-                                                </button>
-                                                <button id="btnImprimir" title="Imprimir oferta" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-print"></i>
-                                                </button>
-                                                <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-sign-out"></i>
-                                                </button>
-                                                <button id="btnAceptar" title="Guardar y salir" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <hr/>
-                                </div>
-                                <!-- end widget content -->
-                            </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div>
-                <!-- end row -->
-                <!-- row -->
-                <div class="row" id="lineasfactura">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>LINEAS DE LA OFERTA</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmLinea">
-                                        <fieldset>
-                                            <div class="pull-left">
-                                                <strong>Total: </strong><span data-bind="text: total"></span>
-                                                <br/>
-                                                <strong> Total (+IVA): </strong><span data-bind="text: totalConIva"></span>
-                                            </div>
-                                            <div class="pull-right">
-                                                <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <hr/>
-                                    <div id="tbLineas">
-                                        <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>LINEA
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        UD.
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        CONCEPTO
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        COSTE/UD. CLIENTE
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        CANTIDAD
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        DESCUENTO
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        TOTAL CLIENTE
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        PROVEEDOR
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        COSTE/UD. PROVEEDOR
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        DESCUENTO PROVEEDOR
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        TOTAL PROVEEDOR
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
+                                        <!-- end row -->
+                                        <!-- row -->
+                                        <div class="row" id="lineasfactura">
+                                            <!-- NEW WIDGET START -->
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>LINEAS DE LA OFERTA</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <form id="frmLinea">
+                                                                <fieldset>
+                                                                    <div class="pull-left">
+                                                                        <strong>Total: </strong><span data-bind="text: total"></span>
+                                                                        <br/>
+                                                                        <strong> Total (+IVA): </strong><span data-bind="text: totalConIva"></span>
+                                                                    </div>
+                                                                    <div class="pull-right">
+                                                                        <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+                                                            <hr/>
+                                                            <div id="tbLineas">
+                                                                <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th data-class="expand">
+                                                                                <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>LINEA
+                                                                            </th>
+                                                                            <th data-hide="phone">
+                                                                            </th>
+                                                                            <th data-hide="phone">
+                                                                                UD.
+                                                                            </th>
+                                                                            <th data-hide="phone">
+                                                                                CONCEPTO
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                COSTE/UD. CLIENTE
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                CANTIDAD
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                DESCUENTO
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                TOTAL CLIENTE
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                PROVEEDOR
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                COSTE/UD. PROVEEDOR
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                DESCUENTO PROVEEDOR
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                TOTAL PROVEEDOR
+                                                                            </th>
+                                                                            <th>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                            <hr/>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
+                                        <!-- end row -->
+                                        <div class="row" id="lineasPago">
+                                            <!-- NEW WIDGET START -->
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon">
+                                                            <i class="fa fa-edit"></i>
+                                                        </span>
+                                                        <h2>CONCEPTOS Y PORCENTAJES</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <form id="frmLineaConceptos">
+                                                                <fieldset>
+                                                                    <div class="pull-right">
+                                                                        <button id="btnNuevaLineaConcepto" title="Nueva línea" data-toggle="modal" data-target="#modalConcepto" onclick="nuevaLineaConcepto()" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+                                                            <hr/>
+                                                            <div id="tbLineasConcepto">
+                                                                <table id="dt_lineasConcepto" class="table table-striped table-bordered table-hover" width="100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th  class="text-left">
+                                                                                Fecha
+                                                                            </th>
+                                                                            <th  class="text-left">
+                                                                                Fecha factura
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-left">
+                                                                                Concepto
+                                                                            </th>
+                                                                            <th  class="text-left">
+                                                                                Porcentaje
+                                                                            </th>
+                                                                            <th  class="text-left">
+                                                                                Importe
+                                                                            </th>
+                                                                            <th  class="text-left">
+                                                                                Forma pago
+                                                                            </th>
+                                                                            <th>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                            <hr/>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div> 
+                                        <!-- end row -->
+                                        <!-- row -->
+                                        <div class="row" id="basesycuotas">
+                                            <!-- NEW WIDGET START -->
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <!-- widget options:
+                                                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                                                            
+                                                        data-widget-colorbutton="false" 
+                                                        data-widget-editbutton="false"
+                                                        data-widget-togglebutton="false"
+                                                        data-widget-deletebutton="false"
+                                                        data-widget-fullscreenbutton="false"
+                                                        data-widget-custombutton="false"
+                                                        data-widget-collapsed="true" 
+                                                        data-widget-sortable="false"
+                                                            
+                                                        -->
+                                                    <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>BASES Y CUOTAS</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <h2>
+                                                                Bases y Cuotas
+                                                            </h2>
+                                                            <hr/>
+                                                            <div id="tbBases">
+                                                                <table id="dt_bases" class="table table-striped table-bordered table-hover" width="100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th data-class="expand">
+                                                                                <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Tipo
+                                                                            </th>
+                                                                            <th data-hide="phone">
+                                                                                Porcentaje
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                Base
+                                                                            </th>
+                                                                            <th data-hide="phone" class="text-right">
+                                                                                Cuota
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
+                                        <!-- end row -->
+                                    </section>
+                                    <!-- end widget grid -->
                                     </div>
-                                    <hr/>
-                                </div>
-                                <!-- end widget content -->
-                            </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div>
-                <!-- end row -->
-                <div class="row" id="lineasPago">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon">
-                                    <i class="fa fa-edit"></i>
-                                </span>
-                                <h2>CONCEPTOS Y PORCENTAJES</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <form id="frmLineaConceptos">
-                                        <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnNuevaLineaConcepto" title="Nueva línea" data-toggle="modal" data-target="#modalConcepto" onclick="nuevaLineaConcepto()" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                    <hr/>
-                                    <div id="tbLineasConcepto">
-                                        <table id="dt_lineasConcepto" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th  class="text-left">
-                                                        Fecha
-                                                    </th>
-                                                    <th  class="text-left">
-                                                        Fecha factura
-                                                    </th>
-                                                    <th data-hide="phone" class="text-left">
-                                                        Concepto
-                                                    </th>
-                                                    <th  class="text-left">
-                                                        Porcentaje
-                                                    </th>
-                                                    <th  class="text-left">
-                                                        Importe
-                                                    </th>
-                                                    <th  class="text-left">
-                                                        Forma pago
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                                    <!--SEGUNDO TAB-->
+                                    <div class="tab-pane fade" id="s2">
+                                        <!-- SEGUNDO TAB (PROVEEDORES) -->
+                                        <div class="row" id="lineasProveedores">
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>PROVEEDORES</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <header>
+                                                                Proveedores asociados a la oferta
+                                                            </header>
+                                                            <form id="frmVinculaProveedores">
+                                                                <fieldset>
+                                                                    <div class="pull-right">
+                                                                            <button id="btnVincularAnticipo" title="Vincular anticipo" data-toggle="modal"  data-target="#modalAnticipo" onclick="cargaTablaProveedores()" class="btn btn-primary btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-repeat"></i>
+                                                                            </button>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+                                                            <hr/>
+                                                            <div id="tbProveedoresAsociados" class="table-responsive">
+                                                                    <table id="dt_proveedoresAsociados" class="table table-striped table-bordered table-hover responsive" width="100%">
+                                                                        <thead>
+                                                                            
+                                                                            <tr>
+                                                                                <th data-class="phone">
+                                                                                    Proveedor
+                                                                                </th>
+                                                                                <th data-class="phone">
+                                                                                    Importe
+                                                                                </th>
+                                                                                <th style="width:10%; text-align: center;">
+                                                                                    <i class="fa fa-fw fa-gears">
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
                                     </div>
-                                    <hr/>
+                                    <!--FIN SEGUNDO TAB-->
                                 </div>
-                                <!-- end widget content -->
                             </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div> 
-                <!-- end row -->
-                <!-- row -->
-                <div class="row" id="basesycuotas">
-                    <!-- NEW WIDGET START -->
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
-                            <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-                                    
-                                data-widget-colorbutton="false" 
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true" 
-                                data-widget-sortable="false"
-                                    
-                                -->
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>BASES Y CUOTAS</h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                    <input class="form-control" type="text">
-                                </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
-                                <div class="widget-body">
-                                    <!-- this is what the user will see -->
-                                    <h2>
-                                        Bases y Cuotas
-                                    </h2>
-                                    <hr/>
-                                    <div id="tbBases">
-                                        <table id="dt_bases" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Tipo
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Porcentaje
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        Base
-                                                    </th>
-                                                    <th data-hide="phone" class="text-right">
-                                                        Cuota
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- end widget content -->
-                            </div>
-                            <!-- end widget div -->
-                        </div>
-                        <!-- end widget -->
-                    </article>
-                    <!-- WIDGET END -->
-                </div>
-                <!-- end row -->
-            </section>
-            <!-- end widget grid -->
+                        </article>
+                    </div>
+                </section>
         </div>
         <!-- END MAIN CONTENT -->
     </div>
@@ -942,13 +1031,13 @@
                                             <input id="txtLinea" name="txtLinea" type="text" data-bind="value: linea" />
                                         </label>
                                     </section>
-                                    <div class="col col-md-3">
+                                    <div class="col col-md-4">
                                         <label class="label">Capítulo</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
                                         </label>
                                     </div>
-                                    <div class="col col-md-3">
+                                    <div class="col col-md-4">
                                         <label class="label">Unidad constructiva</label>
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
@@ -964,12 +1053,6 @@
                                         <label class="label">Cantidad</label>
                                         <label class="input">
                                             <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
-                                        </label>
-                                    </div>
-                                    <div class="col col-md-2">
-                                        <label class="label">% Descuento</label>
-                                        <label class="input">
-                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
                                         </label>
                                     </div>
                                 </div>
@@ -988,11 +1071,6 @@
                             <section>
                                 <h3> Importes del cliente</h3>
                                 <div class="row">
-                                    <section class="col col-md-4">
-                                    </section>
-                                   
-                                </div>
-                                <div class="row">
                                     <section class="col col-md-2">
                                         <label class="label">Tipo IVA</label>
                                         <label style="width:100%;">
@@ -1006,19 +1084,24 @@
                                         </label>
                                     </section>
                                     <section class="col col-md-2">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
                                         <label class="label">Precio</label>
                                         <label class="input">
                                             <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" disabled/>
                                         </label>
                                     </section>
-                                    
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
                                         <label class="label">Importe descuento</label>
                                         <label class="input">
                                             <input id="txtImpDescuento" name="txtImpDescuento" type="text" data-bind="value: dto"/>
                                         </label>
                                     </section>
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-2">
                                         <label class="label">Total coste</label>
                                         <label class="input">
                                             <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
@@ -1031,7 +1114,7 @@
                             <section>
                                 <h3> Importes del proveedor</h3>
                                 <div class="row">  
-                                    <section class="col col-md-2">
+                                    <section class="col col-md-6">
                                         <label class="label">Proveedor</label>
                                         <label style="width:100%; height:50px;">
                                             <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
@@ -1043,26 +1126,34 @@
                                         <label style="width:100%;">
                                             <select style="width:100%" id="cmbTiposIvaProveedor" name="cmbTiposIvaProveedor" data-bind="options: posiblesTiposIvaProveedor, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposIvaProveedor, selected2:{}"></select><i></i>
                                         </label>
-                                    </section>                                         
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuentoProveedor" name="txtPorDescuentoProveedor" type="text" data-bind="value: perdtoProveedor"/>
+                                        </label>
+                                    </section>   
                                     <section class="col col-md-2">
                                         <label class="label">Coste / Ud</label>
                                         <label class="input">
                                             <input id="txtPrecioProveedor" name="txtPrecioProveedor" type="text" data-bind="value: importeProveedor" />
                                         </label>
-                                    </section>
-                                    <section class="col col-md-2">
+                                    </section>                                      
+                                </div>
+                                <div class="row"> 
+                                    <section class="col col-md-4">
                                         <label class="label">Precio</label>
                                         <label class="input">
                                             <input id="txtPrecioPro" name="txtPrecioPro" type="text" data-bind="value: precioProveedor" disabled/>
                                         </label>
                                     </section>
-                                    <section class="col col-md-2">
+                                    <section class="col col-md-4">
                                         <label class="label">Importe descuento</label>
                                         <label class="input">
                                             <input id="txtImpDescuentoPro" name="txtImpDescuentoPro" type="text" data-bind="value: dtoProveedor"/>
                                         </label>
                                     </section>
-                                    <section class="col col-md-2">
+                                    <section class="col col-md-4">
                                         <label class="label">Total coste</label>
                                         <label class="input">
                                             <input id="txtCosteLineaProveedor" name="txtCosteLineaProveedor" type="text" data-bind="value: costeLineaProveedor" disabled />

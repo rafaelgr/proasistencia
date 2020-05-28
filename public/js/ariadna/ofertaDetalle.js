@@ -18,6 +18,7 @@ var usaCalculadora;
 var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
+var dataProveedores;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -53,8 +54,6 @@ function initForm() {
         importePorcentaje = porcentaje * totalOferta;
 
         vm.importeCalculado(roundToTwo(importePorcentaje));
-        
-        
     });
 
     $("#txtImporteCalculado").on('blur', function (e) {
@@ -191,12 +190,15 @@ function initForm() {
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtImpUni").blur(cambioPrecioCantidad);
     $("#txtPorDescuento").blur(cambioPrecioCantidad);
+    $("#txtPorDescuentoProveedor").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
-    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null)});
+    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
+    $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
     initTablaOfertasLineas();
     initTablaBases();
     initTablaConceptosLineas();
+    initTablaProveedores();
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
@@ -254,6 +256,7 @@ function admData() {
     // descuentos
     self.precio = ko.observable();
     self.perdto = ko.observable();
+    self.perdtoProveedor = ko.observable();
     self.dto = ko.observable();
     self.precioProveedor = ko.observable();
     self.dtoProveedor = ko.observable();
@@ -409,6 +412,8 @@ function loadData(data) {
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
+
+    cargaTablaProveedores()
 }
 
 function datosOK() {
@@ -728,6 +733,7 @@ function limpiaDataLinea(data) {
     vm.precio(null);
     vm.precioProveedor(null);
     vm.perdto(0);
+    vm.perdtoProveedor(0);
     vm.dto(0);
     vm.dtoProveedor(0);
 
@@ -745,7 +751,13 @@ function limpiaDataLinea(data) {
 }
 
 var guardarLinea = function () {
+    var costeCliente = vm.costeLinea();
+    var costeProveedor = vm.costeLineaProveedor();
     if (!datosOKLineas()) {
+        return;
+    }
+    if(costeProveedor > costeCliente) {
+        mensError("El total del proveedor no puede ser mayor que el total del cliente");
         return;
     }
     var data = {
@@ -773,6 +785,7 @@ var guardarLinea = function () {
             proveedorId: vm.sproveedorId(),
             precio: vm.precio(),
             perdto: vm.perdto(),
+            perdtoProveedor: vm.perdtoProveedor(),
             dto: vm.dto(),
             precioProveedor: vm.precioProveedor(),
             dtoProveedor: vm.dtoProveedor()
@@ -828,6 +841,9 @@ function datosOKLineas() {
             },
             txtPorDescuento: {
                 required: true
+            },
+            txtPorDescuentoProveedor: {
+                required: true
             }
         },
         // Messages for form validation
@@ -857,6 +873,9 @@ function datosOKLineas() {
                 required: 'Necesita un precio'
             },
             txtPorDescuento: {
+                required: "introduzca una cantidad, puede ser cero"
+            },
+            txtPorDescuentoProveedor: {
                 required: "introduzca una cantidad, puede ser cero"
             }
         },
@@ -1022,6 +1041,7 @@ function loadDataLinea(data) {
     vm.dto(data.dto);
     //
     //descuento del proveedor
+    vm.perdtoProveedor(data.perdtoProveedor);
     vm.precioProveedor(data.precioProveedor);
     vm.dtoProveedor(data.dtoProveedor);
 
@@ -1264,26 +1284,36 @@ var cambioPrecioCantidad = function () {
      vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
      vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
 
-     //calculo en caso de descuento
+     if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
+                                                                                                 //descuennto en el proveedor cargamos el del cliente
+     //calculo en caso de descuento cliente
     if(vm.perdto() > 0 || vm.perdto() != '') {
         var precio = parseFloat(vm.precio());
-        var precioProveedor =  parseFloat(vm.precioProveedor());
         var porcen = parseFloat(vm.perdto());
         porcen = porcen / 100;
         var descuento = precio * porcen;
-        var descuentoProveedor = precioProveedor * porcen;
         //se calcula el descuento cliente
         vm.dto(roundToTwo(descuento));
         var resultado = parseFloat(precio-descuento);
         vm.costeLinea(roundToTwo(resultado));
+        
+        recalcularCostesImportesDesdeCoste();
+        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    }
+
+    //calculo en caso de descuento proveedor
+    if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+        var precioProveedor =  parseFloat(vm.precioProveedor());
+        var porcen = parseFloat(vm.perdtoProveedor());
+        porcen = porcen / 100;
+        var descuentoProveedor = precioProveedor * porcen;
+        
         //se calcula el descuento proveedor
         vm.dtoProveedor(roundToTwo(descuentoProveedor));
         var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
         vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
 
         recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-
         vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
 
     }
@@ -1646,8 +1676,20 @@ var imprimir = function () {
     })
 }
 
+var imprimirProveedor = function (id) {
+    guardarOferta(function (err) {
+        if (err) return;
+        printOfertaProveedor(id);
+    })
+}
+
 function printOferta2(id) {
     var url = "InfOfertas.html?ofertaId=" + id;
+    window.open(url, "_new");
+}
+
+function printOfertaProveedor(id) {
+    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id;
     window.open(url, "_new");
 }
 
@@ -2079,4 +2121,77 @@ function datosOKLineasConceptos() {
     });
     return $('#concepto-form').valid();
 }
+
+// FUNCIONES RELACIONADAS CON LOS PROVEEDORES
+
+function initTablaProveedores() {
+    tablaProveedores = $('#dt_proveedoresAsociados').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataProveedores,
+        columns: [{
+            data: "proveedornombre",
+            render: function (data, type, row) {
+                if(!data) return row.totalLinea;
+                return data;
+            }
+        }, {
+            data: "totalProveedor",
+            render: function (data, type, row) {
+                if(!row.proveedornombre) return "";
+                return data;
+            }
+        },{
+            data: "proveedorId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt = "<button class='btn btn-circle btn-success' onclick='imprimirProveedor(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                if(!row.proveedorId) return html;
+                return html = "<div class='pull-right'>" + bt + "</div>";
+                
+            }
+        }]
+    });
+}
+
+function cargaTablaProveedores(){
+    llamadaAjax("GET",  "/api/ofertas/proveedores/lineas/totales/"  + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        if(data) loadTablaProveedores(data);
+    });
+}
+
+function loadTablaProveedores(data) {
+    var dt = $('#dt_proveedoresAsociados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
 
