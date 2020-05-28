@@ -404,6 +404,7 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
+    if(!contratoId) return;
     var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato;    
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {

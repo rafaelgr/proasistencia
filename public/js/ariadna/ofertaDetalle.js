@@ -2166,10 +2166,11 @@ function initTablaProveedores() {
         },{
             data: "proveedorId",
             render: function (data, type, row) {
-                console.log(type +" "+ row);
+                var html = "";
                 var bt = "<button class='btn btn-circle btn-success' onclick='imprimirProveedor(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt + "</div>";
-                return html;
+                if(!row.proveedorId) return html;
+                return html = "<div class='pull-right'>" + bt + "</div>";
+                
             }
         }]
     });

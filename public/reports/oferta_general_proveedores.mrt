@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "b15c6c5e594043c0a7c932ae788586ee",
+  "ReportGuid": "a32db7c0b4db42e29ff70fc25c062edb",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1589977489564+0200)/",
+  "ReportChanged": "/Date(1590652681335+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -378,10 +378,17 @@
             "NameInSource": "formaPagoId",
             "Alias": "formaPagoId",
             "Type": "System.Int32"
+          },
+          "7": {
+            "Name": "porcen",
+            "Index": -1,
+            "NameInSource": "porcen",
+            "Alias": "porcen",
+            "Type": "System.Decimal"
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT op.* FROM oferta_porcentajes AS op"
+        "SqlCommand": "SELECT op.*, op.porcentaje/100 as porcen FROM oferta_porcentajes AS op"
       }
     },
     "Databases": {
@@ -449,14 +456,15 @@
               "Name": "Text19",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2,1.8,0.6",
+              "ClientRectangle": "0.2,2,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Referencia: "
               },
-              "Font": ";10;;",
+              "VertAlignment": "Center",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -467,14 +475,14 @@
               "Name": "Text20",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.6,1.6,0.6",
+              "ClientRectangle": "0.2,2.6,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Fecha:"
               },
-              "Font": ";10;;",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -485,15 +493,14 @@
               "Name": "Text21",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,0.2,6,0.8",
+              "ClientRectangle": "11.4,0.2,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "CARTA DE PEDIDO"
               },
-              "HorAlignment": "Right",
-              "Font": ";18;;",
+              "Font": "Arial Narrow;15.75;Bold, Italic;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -504,7 +511,7 @@
               "Name": "Text39",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2,2.6,6.2,0.6",
+              "ClientRectangle": "2.4,2.6,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -521,13 +528,14 @@
               "Name": "Text1",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,3.4,1.6,0.4",
+              "ClientRectangle": "0.2,3,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Dirección:"
               },
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -539,7 +547,7 @@
               "Guid": "578d228b0042438393737819fce6cc65",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2,3.4,8.4,0.6",
+              "ClientRectangle": "2.4,3,8.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -558,7 +566,7 @@
               "Guid": "e06391e2103d4ac4aa0b5765075aa7e2",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2,4,8.4,0.6",
+              "ClientRectangle": "2.4,3.4,8.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -578,7 +586,7 @@
               "Guid": "e5fe103418e444379ab475e6025728c3",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2,4.6,8.4,0.6",
+              "ClientRectangle": "2.4,3.8,8.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -596,13 +604,15 @@
               "Name": "Text3",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2.6,2,5,0.4",
+              "ClientRectangle": "2.4,2,5,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{ofertas.referencia}"
               },
+              "VertAlignment": "Bottom",
+              "Font": ";9.75;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -614,15 +624,14 @@
               "Guid": "ac3f1b7314c74b3e9e1dccdc38a8498a",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,1,5.2,0.8",
+              "ClientRectangle": "11.4,1.8,5,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Empresa adjudicataria"
               },
-              "HorAlignment": "Right",
-              "Font": ";14.25;Italic;",
+              "Font": "Arial Narrow;12;Bold, Italic;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -634,7 +643,7 @@
               "Guid": "24df406d77494171bf728278716febde",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,3.4,7.2,0.6",
+              "ClientRectangle": "11.4,2.6,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -653,7 +662,7 @@
               "Guid": "a27494228a3a4934a4d62c7de4fe7a0b",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,4,7.2,0.6",
+              "ClientRectangle": "11.4,3,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -672,7 +681,7 @@
               "Guid": "a0d07f1c527c444dac312520401e644a",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,4.6,7.2,0.6",
+              "ClientRectangle": "11.4,3.4,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -691,7 +700,7 @@
               "Guid": "e4b4467f2e5e4149b10858198930d57b",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.8,5.2,7.2,0.6",
+              "ClientRectangle": "11.4,3.8,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -709,13 +718,14 @@
               "Name": "Text47",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,6,13.2,0.6",
+              "ClientRectangle": "0.2,5.8,15.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Muy Sr. Nuestro por la presente le informamos de los trabajos adjudicados a su empresasegún detalle"
               },
+              "Font": ";9.75;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -727,7 +737,7 @@
               "Guid": "0eba3966e6c74334969314d157a49865",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.2,3.8,1.4",
+              "ClientRectangle": "0.2,0.2,5,1.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1343,17 +1353,20 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas_bases.porcentaje}"
+                "Value": "{ofertas_bases.porcen}"
               },
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Type": "DataColumn",
+              "Type": "Expression",
               "TextFormat": {
-                "Ident": "StiNumberFormatService",
+                "Ident": "StiPercentageFormatService",
                 "NegativePattern": 1,
-                "GroupSeparator": ",",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, PercentageSymbol",
+                "PositivePattern": 1,
+                "Symbol": "%"
               }
             },
             "1": {
@@ -1416,7 +1429,7 @@
         "10": {
           "Ident": "StiFooterBand",
           "Name": "PieOferta",
-          "ClientRectangle": "0,20.2,19,5.2",
+          "ClientRectangle": "0,20.2,19,5.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1430,12 +1443,12 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.2,18.6,0.6",
+              "ClientRectangle": "0.2,0.2,18.6,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "NOTAS:\r\n{ofertas.observaciones}"
+                "Value": "{ofertas.observaciones}"
               },
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
