@@ -1,3 +1,5 @@
+
+
 /*-------------------------------------------------------------------------- 
 facturaGeneral.js
 Funciones js par la página FacproveGeneral.html
@@ -40,9 +42,10 @@ function initForm() {
     $('#cmbEmpresas').select2();
     loadEmpresas();
 
-    $('#cmbDepartamentosTrabajo').select2();
-    //loadDepartamentos();
-
+    $('#cmbDepartamentosTrabajo').select2().on('change', function (e) {
+        if (e.added) cambioDepartamento(e.added.id);
+    });
+   
    
     //
     $.validator.addMethod("greaterThan",
@@ -62,6 +65,8 @@ function initForm() {
      //Recuperamos el departamento de trabajo
      recuperaDepartamento(function(err, data) {
         if(err) return;
+        var dep = vm.sdepartamentoId();
+        if(dep != 7) $('#btnBuscar').hide();
         
     });
     //
@@ -98,6 +103,7 @@ function initForm() {
         }
     });
 
+    
 }
 
 // tratamiento knockout
@@ -256,16 +262,10 @@ var initAutoProveedor = function () {
         },
         minLength: 2,
         select: function (event, ui) {
-            vm.sproveedorId(ui.item.id);
-            cambioProveedor(ui.item.id);
+            vm.proveedor(ui.item.value);
+            proveedorId = ui.item.id;
         }
     });
-    // regla de validación para el control inicializado
-    jQuery.validator.addMethod("proveedorNecesario", function (value, element) {
-        var r = false;
-        if (vm.sproveedorId()) r = true;
-        return r;
-    }, "Debe seleccionar un Proveedor válido");
 };
 
 
@@ -383,6 +383,14 @@ function buscarFacproves() {
         });
     };
     return mf;
+}
+
+function cambioDepartamento(id) {
+    if(id == 7) {
+        $('#btnBuscar').show();
+    } else {
+        $('#btnBuscar').hide();
+    }
 }
 
 function buscarFicheros() {
