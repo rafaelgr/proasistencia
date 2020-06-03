@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "debb8907726e48958665571f01322276",
+  "ReportGuid": "7be7ddfac3b3478ba0b1b3823843530b",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1590995136101+0200)/",
+  "ReportChanged": "/Date(1591182550160+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -441,7 +441,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.*, \r\nIF(!pf.fecha_recepcion, DATE_FORMAT(pf.fecha_recepcion2, '%d-%m-%Y'), DATE_FORMAT(pf.fecha_recepcion, '%d-%m-%Y')) AS fechaFormat,\r\nIF(!pf.numeroFacturaProveedor, pf.numeroFacturaProveedor2, pf.numeroFacturaProveedor ) AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
+        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha_recepcion, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -622,10 +622,17 @@
             "NameInSource": "codigoArticulo",
             "Alias": "codigoArticulo",
             "Type": "System.String"
+          },
+          "25": {
+            "Name": "articuloNombre",
+            "Index": -1,
+            "NameInSource": "articuloNombre",
+            "Alias": "articuloNombre",
+            "Type": "System.String"
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo\r\nFROM facprove_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facproveLineaId` = pfl.`facproveLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
+        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, a.nombre As articuloNombre\r\nFROM facprove_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facproveLineaId` = pfl.`facproveLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -1295,14 +1302,15 @@
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5.6,0,7.2,0.4",
+              "ClientRectangle": "5.6,0,7.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{lineas.descripcion}"
+                "Value": "{lineas.articuloNombre}"
               },
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
@@ -1531,6 +1539,9 @@
               "Type": "Expression"
             }
           },
+          "CanGrow": false,
+          "MinHeight": 0.4,
+          "MaxHeight": 0.6,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
