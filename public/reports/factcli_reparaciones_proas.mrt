@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "69bfc521896c445fa0ab5c4b0da08692",
+  "ReportGuid": "99e9d6e2e68245d48403466ed01f236a",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1588931708007+0200)/",
+  "ReportChanged": "/Date(1591270520343+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1154,7 +1154,7 @@
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
           "Condition": {
-            "Value": "{lineas.capituloLinea}"
+            "Value": "{lineas.numservicio}"
           }
         },
         "4": {
@@ -1545,7 +1545,11 @@
           "MasterComponent": "Datacabecera",
           "Sort": {
             "0": "ASC",
-            "1": "linea"
+            "1": "numparte",
+            "2": "ASC",
+            "3": "codigoArticulo",
+            "4": "ASC",
+            "5": "abrev"
           }
         },
         "6": {
