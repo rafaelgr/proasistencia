@@ -201,8 +201,8 @@ function initTablaFacproves() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFacprove(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+               /*  var bt3 = "<button class='btn btn-circle btn-success' onclick='printFacprove(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>"; */
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
                 return html;
             }
         }]
@@ -492,7 +492,7 @@ function deleteFacprove(id) {
 function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacproveDetalle.html?FacproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
     window.open(url, '_new');
 }
 
