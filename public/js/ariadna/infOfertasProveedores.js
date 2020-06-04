@@ -226,28 +226,11 @@ var initAutoCliente = function () {
 var rptOfertaParametros = function (sql) {
     var ofertaId = vm.ofertaId();
     var proveedorId = vm.proveedorId();
-    var clienteId = vm.sclienteId();
-    var empresaId = vm.sempresaId();
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
     sql += " WHERE TRUE"
     if (ofertaId) {
         sql += " AND o.ofertaId IN (" + ofertaId + ") AND ol.proveedorId = " + proveedorId;
-    } else {
-        if (clienteId) {
-            sql += " AND o.clienteId IN (" + clienteId + ")";
-        }
-        if (empresaId) {
-            sql += " AND o.empresaId IN (" + empresaId + ")";
-        }
-        if (dFecha) {
-            sql += " AND o.fechaOferta >= '" + dFecha + " 00:00:00'";
-        }
-        if (hFecha) {
-            sql += " AND o.fechaOferta <= '" + hFecha + " 23:59:59'";
-        }
-
-    }
+        sql += " GROUP BY ol.proveedorId"
+    } 
     return sql;
 }
 
