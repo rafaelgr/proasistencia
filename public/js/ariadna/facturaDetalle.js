@@ -318,7 +318,9 @@ function loadData(data, desdeLinea) {
     vm.serie(data.serie);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
+    vm.sempresaId(data.empresaId);
     vm.clienteId(data.clienteId);
+    vm.sclienteId(data.clienteId);
     vm.contratoId(data.contratoId);
     vm.generada(data.generada);
     vm.coste(data.coste);
@@ -326,6 +328,7 @@ function loadData(data, desdeLinea) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
+    vm.sdepartamentoId(data.departamentoId);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
     recalcularCostesImportesDesdeCoste();
@@ -349,7 +352,7 @@ function loadData(data, desdeLinea) {
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     loadFormasPago(data.formaPagoId);
-    loadContratos(data.contratoId);
+    
     loadDepartamentos(data.departamentoId);
     compruebaCalculadora(data.departamentoId);
     if(!data.contratoId)  obtenerDepartamentoContrato(null);
@@ -360,6 +363,7 @@ function loadData(data, desdeLinea) {
     vm.importeRetencion(data.importeRetencion);
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
     vm.devuelta(data.devuelta);
+    loadContratos(data.contratoId);
     //
     
     //
@@ -659,7 +663,7 @@ function loadDepartamentos(departamentoId) {
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
-            vm.departamentoId(departamentoId);
+            vm.sdepartamentoId(departamentoId);
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
