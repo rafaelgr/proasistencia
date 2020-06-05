@@ -573,7 +573,9 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato;
+    var fecha = null;
+    if(vm.fecha()) fecha = spanishDbDate(vm.fecha());
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" +  fecha;
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
