@@ -104,6 +104,17 @@ function initForm() {
     });
 
     
+        $('#checkMain').click(
+            function(e){
+                if($('#checkMain').prop('checked')) {
+                    $('.checkAll').prop('checked', true);
+                } else {
+                    $('.checkAll').prop('checked', false);
+                }
+                //$('.checkAll').attr('checked',($(this).is(':checked')) ? true:false);
+            }
+        );
+    
 }
 
 // tratamiento knockout
@@ -172,7 +183,7 @@ function initTablaFacproves() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -372,9 +383,12 @@ function buscarFacproves() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacproves(data);
-                // mostramos el botén de alta
-                $("#btnAlta").show();
+                if(data.length > 0) {
+                    loadTablaFacproves(data);
+                    // mostramos el botén de alta
+                    $("#btnAlta").show();
+                    $('#checkMain').prop('checked', true)
+                }
             },
             error: function (err) {
                 mensErrorAjax(err);

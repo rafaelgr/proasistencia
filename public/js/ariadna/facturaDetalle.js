@@ -491,11 +491,13 @@ var aceptarFactura = function () {
 
 var generarFacturaDb = function () {
     var serie;
+    var contratoId =  vm.scontratoId();
     if(vm.sserieId()) {
         serie = vm.sserieId();
     }else {
         serie =  vm.serie()
     }
+    if(contratoId ==  0) vm.scontratoId(null);
     var data = {
         factura: {
             "facturaId": vm.facturaId(),
