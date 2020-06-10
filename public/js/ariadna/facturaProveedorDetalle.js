@@ -134,7 +134,7 @@ function initForm() {
     });
 
     $("#cmbTiposOperacion").select2(select2Spanish());
-    loadTiposOperacion();
+    loadTiposOperacion(1);
 
     $("#txtNumero").on('change', function (e) {
         var numeroFact = $("#txtNumero").val();
