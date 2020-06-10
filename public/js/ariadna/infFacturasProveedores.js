@@ -351,9 +351,12 @@ var exportarPDF = function () {
     $("#mensajeEspera").show();
     var proveedorId = vm.sproveedorId();
     var empresaId = vm.sempresaId();
+    var departamentoId = vm.sdepartamentoId();
 
     if (!empresaId) empresaId = 0;
     if (!proveedorId) proveedorId = 0;
+    if (!departamentoId) departamentoId = 0;
+
 
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -363,6 +366,8 @@ var exportarPDF = function () {
     var url = "/api/facturasProveedores/facpdf/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + proveedorId;
+    url += "/" + departamentoId;
+    url += "/" + usuario;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) {
             // hay que informar de error durante la exportación
