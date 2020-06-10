@@ -11,6 +11,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacproves;
+var facproves;
 var facproveId;
 var proveedorId = 0;
 var empresaId = 0;
@@ -103,17 +104,18 @@ function initForm() {
         }
     });
 
-    
-        $('#checkMain').click(
-            function(e){
-                if($('#checkMain').prop('checked')) {
-                    $('.checkAll').prop('checked', true);
-                } else {
-                    $('.checkAll').prop('checked', false);
-                }
-                //$('.checkAll').attr('checked',($(this).is(':checked')) ? true:false);
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
             }
-        );
+        }
+    );
     
 }
 
@@ -292,6 +294,44 @@ function loadEmpresas(id){
     });
 }
 
+function updateAll(opcion) {
+    var sel = 0;
+    if(opcion) sel = 1
+    if(facproves) {
+        facproves.forEach(function (v) {
+                var data = {
+                    facprove: {
+                        facproveId: v.facproveId,
+                        empresaId: v.empresaId,
+                        proveedorId: v.proveedorId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: sel
+                    }
+                };
+                
+                var datosArray = [];
+                datosArray.push(data)
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(datosArray),
+                    success: function (data, status) {
+    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+        });
+    
+    }
+}
+
 /*function loadDepartamentos(id){
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return
@@ -310,6 +350,7 @@ function loadTablaFacproves(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+    facproves = data;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -387,7 +428,7 @@ function buscarFacproves() {
                     loadTablaFacproves(data);
                     // mostramos el botén de alta
                     $("#btnAlta").show();
-                    $('#checkMain').prop('checked', true)
+                    $('#checkMain').prop('checked', true);
                 }
             },
             error: function (err) {

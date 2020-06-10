@@ -17,6 +17,7 @@ var contratoId = 0;
 var empresaId = 0;
 var departamentoId = 0;
 var usuario;
+var facturas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -114,6 +115,20 @@ function initForm() {
         }
     });
 
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
+    
+
 }
 
 // tratamiento knockout
@@ -194,7 +209,7 @@ function initTablaFacturas() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -344,6 +359,43 @@ function loadEmpresas(id){
     });
 }
 
+function updateAll(opcion) {
+    var sel = 0;
+    if(opcion) sel = 1
+    if(facturas) {
+        facturas.forEach(function (v) {
+            var data = {
+                factura: {
+                    facturaId: v.facturaId,
+                    empresaId: v.empresaId,
+                    clienteId: v.clienteId,
+                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        });
+    
+    }
+}
+
 /*function loadDepartamentos(id){
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return
@@ -359,6 +411,7 @@ function loadEmpresas(id){
 
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
+    facturas = data;
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -439,6 +492,7 @@ function buscarFacturas() {
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
+                $('#checkMain').prop('checked', true);
             },
             error: function (err) {
                 mensErrorAjax(err);
