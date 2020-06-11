@@ -58,7 +58,7 @@
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/infLibroFacturasClientes.js"></script>
+    <script src="js/ariadna/infLibroPrefacturasClientes.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
 </head>
 
@@ -66,7 +66,7 @@
     <div style="margin: 0px 5px; padding:10px;">
         <div style="padding:10px;" id="selector">
             <div class="row">
-                <h2><i class="fa fa-bar-chart"></i> Informe de facturas</h2>
+                <h2><i class="fa fa-bar-chart"></i> Informe de prefacturas</h2>
             </div>
             <div class="row" style="background-color:darkorange; border:solid 1px;">
                 <form id="frmRptOfertas" class="smart-form">
@@ -110,12 +110,13 @@
                                 </label>
                             </div>
                             <section class="col col-md-2">
-                                <label class="label">Contabilizadas</label>
+                                <label class="label">Facturadas</label>
                                 <label style="width:100%;">
-                                    <select style="width:100%" id="cmbConta" name="cmbConta"  data-bind="options: optionsConta, optionsText: 'nombreConta', optionsValue: 'valorConta', 
-                                    value: sconta, valueAllowUnset: true, selectedOptions: selectedContas, selected2:{}"></select><i></i>
+                                    <select style="width:100%" id="cmbFactu" name="cmbFactu"  data-bind="options: optionsFactu, optionsText: 'nombreFactu', optionsValue: 'valorFactu', 
+                                    value: sfactu, valueAllowUnset: true, selectedOptions: selectedFactus, selected2:{}"></select><i></i>
                                 </label>
-                            </section><section class="col col-md-2">
+                            </section>
+                            <section class="col col-md-2">
                                 <label class="label">Ordenar por</label>
                                 <label style="width:100%;">
                                     <select style="width:100%" id="cmbOrden" name="cmbOrden"  data-bind="options: optionsOrden, optionsText: 'nombreOrden', optionsValue: 'valorOrden', 
