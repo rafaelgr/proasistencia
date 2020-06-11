@@ -117,7 +117,11 @@ function initForm() {
         if(err) return;
         
     });
-    initAutoProveedor();
+
+    $('#cmbDepartamentosTrabajo').select2().on('change', function (e) {
+        if (e.added) cambioDepartamento(e.added.id);
+    });
+
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
     if (gup('facproveId') != "") {
@@ -311,6 +315,14 @@ function loadProveedores(proveedorId) {
         vm.posiblesProveedores(proveedores);
         $("#cmbProveedores").val([proveedorId]).trigger('change');
     });
+}
+
+function cambioDepartamento(id) {
+    if(id == 7) {
+        $('#btnImprimir').show();
+    } else {
+        $('#btnImprimir').hide();
+    }
 }
 
 var rptFacturaParametros = function (sql) {
