@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "7be7ddfac3b3478ba0b1b3823843530b",
+  "ReportGuid": "ffc13524a2d549a78649521d3879854c",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1591182550160+0200)/",
+  "ReportChanged": "/Date(1591859585137+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -441,7 +441,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha_recepcion, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
+        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha_recepcion, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar\r\nFROM facprove AS pf\r\nLEFT JOIN empresas AS e ON e.empresaId = pf.empresaId\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
