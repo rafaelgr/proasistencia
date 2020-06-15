@@ -728,6 +728,7 @@ function limpiaDataLinea(data) {
     vm.costeLineaProveedor(null);
     vm.importeProveedor(null);
     vm.totalLineaProveedor(null);
+    vm.totalLineaProveedorIva(null);
     vm.porcentajeProveedor(null)
     vm.proveedorId(null);
     //
@@ -737,6 +738,7 @@ function limpiaDataLinea(data) {
     vm.perdtoProveedor(0);
     vm.dto(0);
     vm.dtoProveedor(0);
+    
 
     //
     //

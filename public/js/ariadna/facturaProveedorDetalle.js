@@ -386,6 +386,7 @@ function admData() {
     self.conceptoAnticipo = ko.observable();
     self.emisorIban = ko.observable();
     self.fianza = ko.observable();
+    self.enviadaCorreo = ko.observable();
 
 
     self.numero2 = ko.observable();
@@ -552,6 +553,7 @@ function loadData(data) {
     vm.emisorIban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.restoPagar(data.restoPagar);
+    vm.enviadaCorreo(data.enviadaCorreo);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -659,8 +661,7 @@ function datosOK() {
                 required: true
             },
             txtFechaRecepcion: {
-                greaterThan: "#txtFecha",
-                required: true
+                greaterThan: "#txtFecha"
             },
             cmbFormasPago: {
                 required: true
@@ -669,7 +670,6 @@ function datosOK() {
                 required: true
             },
             txtNumero: {
-                required: true,
                 rangelength: [1, 20]
             },
             cmbTiposOperacion: {
@@ -690,9 +690,7 @@ function datosOK() {
             txtFecha: {
                 required: 'Debe elegir una fecha'
             },
-            txtFechaRecepcion: {
-                required: 'Debe elegir una fecha de recepción'
-            },
+           
             cmbFormasPago: {
                 required: "Debe elegir una forma de pago"
             },
@@ -700,7 +698,6 @@ function datosOK() {
                 required: "Debe elegir un contrato asociado"
             },
             txtNumero: {
-                required: "Debe introducir un número de factura",
                 rangelength: "El rango de digitos debe estar entre 1 y 20"
             },
             cmbTiposOperacion: {
@@ -823,7 +820,8 @@ var generarFacturaDb = function () {
             "departamentoId": vm.sdepartamentoId(),
             "restoPagar": numeroDbf(vm.restoPagar()),
             "conceptoAnticipo": vm.conceptoAnticipo(),
-            "tipoOperacionId": vm.stipoOperacionId()
+            "tipoOperacionId": vm.stipoOperacionId(),
+            "enviadaCorreo": vm.enviadaCorreo()
 
         }
     };
