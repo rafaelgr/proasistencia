@@ -321,6 +321,7 @@ function buscarPrefacturas() {
 function crearFactura() {
     var mf = function () {
         if (!datosOK()) return;
+        $('#btnAlta').prop('disabled', true);
         if($('#chkRectificativas').prop("checked")) {
             vm.rectificativas(1);
         } else {
@@ -333,6 +334,7 @@ function crearFactura() {
         if(vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0";      
         url += "/" + vm.rectificativas()
         llamadaAjax("POST", url, null, function (err, data) {
+            $('#btnAlta').prop('disabled', false);
             if (err) return;
             $("#btnAlta").hide();
             mensNormal('Facturas dadas de alta correctamente');
