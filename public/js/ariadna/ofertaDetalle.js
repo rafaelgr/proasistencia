@@ -319,6 +319,7 @@ function admData() {
     self.importeProveedor = ko.observable();
     self.costeLineaProveedor = ko.observable();
     self.totalLineaProveedor = ko.observable();
+    self.totalLineaProveedorIva = ko.observable();
     self.porcentajeProveedor = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
@@ -727,6 +728,7 @@ function limpiaDataLinea(data) {
     vm.costeLineaProveedor(null);
     vm.importeProveedor(null);
     vm.totalLineaProveedor(null);
+    vm.totalLineaProveedorIva(null);
     vm.porcentajeProveedor(null)
     vm.proveedorId(null);
     //
@@ -736,6 +738,7 @@ function limpiaDataLinea(data) {
     vm.perdtoProveedor(0);
     vm.dto(0);
     vm.dtoProveedor(0);
+    
 
     //
     //
@@ -759,6 +762,12 @@ var guardarLinea = function () {
     if(costeProveedor > costeCliente) {
         mensError("El total del proveedor no puede ser mayor que el total del cliente");
         return;
+    }
+    if(vm.proveedorId()) {
+        if(!vm.stipoIvaProveedorId()) {
+            mensError("Se tiene que introducir un tipo de iva");
+            return;
+        }
     }
     var data = {
         ofertaLinea: {
@@ -788,7 +797,8 @@ var guardarLinea = function () {
             perdtoProveedor: vm.perdtoProveedor(),
             dto: vm.dto(),
             precioProveedor: vm.precioProveedor(),
-            dtoProveedor: vm.dtoProveedor()
+            dtoProveedor: vm.dtoProveedor(),
+            totalLineaProveedorIva: vm.totalLineaProveedorIva()
             //
         }
     }
@@ -1027,6 +1037,7 @@ function loadDataLinea(data) {
     vm.totalLineaProveedor(data.totalLineaProveedor);
     vm.costeLineaProveedor(data.costeLineaProveedor);
     vm.porcentajeProveedor(data.porcentajeProveedor);
+    vm.totalLineaProveedorIva(data.totalLineaProveedorIva);
     //
     loadGrupoArticulos(data.grupoArticuloId);
     loadUnidades(data.unidadId);
@@ -1131,18 +1142,7 @@ function loadTiposIva(id) {
     });
 }
 
-function loadTiposIvaProveedor(id) {
-    llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
-        if (err) return;
-        var tiposIva = [{ tipoIvaId: null, nombre: "" }].concat(data);
-        vm.posiblesTiposIvaProveedor(tiposIva);
-        if (id) {
-            $("#cmbTiposIvaProveedor").val([id]).trigger('change');
-        } else {
-            $("#cmbTiposIvaProveedor").val([0]).trigger('change');
-        }
-    });
-}
+
 
 function loadProveedores(proveedorId) {
     llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
@@ -1253,12 +1253,29 @@ function cambioTiposIva(data) {
 }
 
 function cambioTiposIvaProveedor(tipoIvaId) {
-    if (!tipoIvaId) return;
-    //if(!tipoivaId)   tipoIvaId = data.tipoIvaId;
+    if (!tipoIvaId) {
+        vm.stipoIvaProveedorId(null);
+        vm.porcentajeProveedor(null);
+        return;
+    }
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
         vm.stipoIvaProveedorId(data.tipoIvaId);
         vm.porcentajeProveedor(data.porcentaje);
+        cambioPrecioCantidad();
+    });
+}
+
+function loadTiposIvaProveedor(id) {
+    llamadaAjax('GET', "/api/tipos_iva", null, function (err, data) {
+        if (err) return;
+        var tiposIva = [{ tipoIvaId: null, nombre: "" }].concat(data);
+        vm.posiblesTiposIvaProveedor(tiposIva);
+        if (id) {
+            $("#cmbTiposIvaProveedor").val([id]).trigger('change');
+        } else {
+            $("#cmbTiposIvaProveedor").val([0]).trigger('change');
+        }
     });
 }
 
@@ -1268,21 +1285,30 @@ function cambioProveedor(proveedorId) {
         if (err) return;
         vm.proveedorId(proveedorId);
         loadTiposIvaProveedor(data.tipoIvaId);
-        cambioTiposIvaProveedor(data.tipoIvaId)
+        cambioTiposIvaProveedor(data.tipoIvaId);
+        cambioPrecioCantidad();
     });
 }
 
 var cambioPrecioCantidad = function () {
+    var totalProIva;
+    var porIva;
+    var porPro = vm.porcentajeProveedor();
     vm.precio(vm.cantidad() * vm.importe());
     vm.costeLinea(vm.cantidad() * vm.importe());
-    vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
-    vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 
      //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
+     vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
      vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
      vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+     vm.totalLineaProveedorIva(vm.totalLineaProveedor());
+     if(porPro !== null) {
+        porIva = vm.porcentajeProveedor() / 100;
+        totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+        vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+     }
 
      if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
                                                                                                  //descuennto en el proveedor cargamos el del cliente
@@ -1315,6 +1341,11 @@ var cambioPrecioCantidad = function () {
 
         recalcularCostesImportesDesdeCoste();
         vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+        if(porPro !== null) {
+            porIva = vm.porcentajeProveedor() / 100;
+            totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+            vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+         }
 
     }
 }
@@ -2159,6 +2190,12 @@ function initTablaProveedores() {
             }
         }, {
             data: "totalProveedor",
+            render: function (data, type, row) {
+                if(!row.proveedornombre) return "";
+                return data;
+            }
+        },{
+            data: "totalProveedorIva",
             render: function (data, type, row) {
                 if(!row.proveedornombre) return "";
                 return data;

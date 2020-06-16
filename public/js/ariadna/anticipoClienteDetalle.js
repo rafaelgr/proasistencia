@@ -90,6 +90,10 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
+
+    $('#txtFecha').change(function() {
+        loadContratos();
+    });
     
     antClienId = gup('AntClienId');
     servicioId = gup('ServicioId');
@@ -108,7 +112,11 @@ function initForm() {
     } else {
         // caso alta
         vm.antClienId(0);
-        if(servicioId && servicioId != '') vm.servicioId(servicioId);
+        vm.fecha(spanishDate(new Date()));//fecha de recepcion ofertada
+        if(servicioId && servicioId != '') {
+            vm.servicioId(servicioId);
+            loadDepartamentos(7)
+        }
         if (EmpresaId != 0 && EmpresaId != 0) {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
