@@ -3380,9 +3380,9 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         return;
     } */
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToTwo((importe * dataConceptos[i].porcentaje) / 100) ;
-        var importePagoCliente = roundToTwo((importeAlCliente * dataConceptos[i].porcentaje) / 100);
-        var importeCoste = roundToTwo((coste* dataConceptos[i].porcentaje) / 100);
+        var importePago = roundToTwo(dataConceptos[i].importe);
+        var importePagoCliente = roundToTwo(dataConceptos[i].importe);
+        var importeCoste = roundToTwo(dataConceptos[i].importe);
         var contratoPorcenId = dataConceptos[i].contratoPorcenId;
         var formaPagoId = dataConceptos[i].formaPagoId;
         // sucesivas fechas de factura

@@ -113,6 +113,9 @@ function initForm() {
         // caso alta
         vm.antClienId(0);
         vm.fecha(spanishDate(new Date()));//fecha de recepcion ofertada
+        vm.sempresaId(null);
+        vm.sclienteId(null);
+        vm.sdepartamentoId(null);
         if(servicioId && servicioId != '') {
             vm.servicioId(servicioId);
             loadDepartamentos(7)
@@ -415,7 +418,12 @@ var loadContratos = function (contratoId) {
     var fecha = null;
     if(vm.fecha()) fecha = spanishDbDate(vm.fecha());
     var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" + fecha;    
-    if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
+    if (contratoId) {
+        url = "/api/contratos/uno/campo/departamento/" + contratoId;
+    } else {
+        if(!vm.sempresaId() || !vm.sclienteId() || !vm.sdepartamentoId()) return;
+
+    }
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
