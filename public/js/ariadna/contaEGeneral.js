@@ -95,7 +95,7 @@ function initForm() {
     // comprobamos parámetros
     facturaId = gup('FacturaId');
     //
-    var socket = io.connect('/');
+    /* var socket = io.connect('/');
     socket.on('message', function (data) {
         alert(data);
     });
@@ -113,7 +113,7 @@ function initForm() {
         if (percentComplete === 100) {
             $('.progress-bar').html('Proceso terminado');
         }
-    });
+    }); */
 
     //Evento de marcar/desmarcar todos los checks
     $('#checkMain').click(
