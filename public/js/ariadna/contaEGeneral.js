@@ -58,7 +58,7 @@ function initForm() {
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        loadContratosActivos(e.added.id);
+        if (e.added) loadContratosActivos(e.added.id);
     });
    
     //
