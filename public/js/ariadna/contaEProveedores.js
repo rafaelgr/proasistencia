@@ -297,14 +297,19 @@ function loadEmpresas(id){
 function updateAll(opcion) {
     var sel = 0;
     if(opcion) sel = 1
-    if(facproves) {
+    var tb = $('#dt_facprove').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    var length = datos.length;
+    if(opcion) sel = 1
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
         facproves.forEach(function (v) {
                 var data = {
                     facprove: {
-                        facproveId: v.facproveId,
-                        empresaId: v.empresaId,
-                        proveedorId: v.proveedorId,
-                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        facproveId: datos[i].facproveId,
+                        empresaId: datos[i].empresaId,
+                        proveedorId: datos[i].proveedorId,
+                        fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
                         sel: sel
                     }
                 };
@@ -314,7 +319,7 @@ function updateAll(opcion) {
                 var url = "", type = "";
                 // updating record
                 var type = "PUT";
-                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
+                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
                 $.ajax({
                     type: type,
                     url: url,
@@ -329,21 +334,9 @@ function updateAll(opcion) {
                 });
         });
     
+        }
     }
 }
-
-/*function loadDepartamentos(id){
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
-        if (err) return
-        var departamentos = [{
-            departamentoId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
-    });
-}*/
-
 
 function loadTablaFacproves(data) {
     var dt = $('#dt_facprove').dataTable();
@@ -428,7 +421,7 @@ function buscarFacproves() {
                     loadTablaFacproves(data);
                     // mostramos el botén de alta
                     $("#btnAlta").show();
-                    $('#checkMain').prop('checked', true);
+                    $('#checkMain').prop('checked', false);
                 }
             },
             error: function (err) {

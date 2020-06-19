@@ -58,7 +58,7 @@ function initForm() {
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        loadContratosActivos(e.added.id);
+        if (e.added) loadContratosActivos(e.added.id);
     });
    
     //
@@ -364,16 +364,19 @@ function loadEmpresas(id){
 }
 
 function updateAll(opcion) {
+    var datos = null;
     var sel = 0;
+    var tb = $('#dt_factura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
     if(opcion) sel = 1
-    if(facturas) {
-        facturas.forEach(function (v) {
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
             var data = {
                 factura: {
-                    facturaId: v.facturaId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    facturaId: datos[i].facturaId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
                     sel: sel
             }
         };
@@ -382,7 +385,7 @@ function updateAll(opcion) {
         var url = "", type = "";
          // updating record
          var type = "PUT";
-         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
             $.ajax({
                 type: type,
                 url: url,
@@ -395,8 +398,7 @@ function updateAll(opcion) {
                     mensErrorAjax(err);
                 }
             });
-        });
-    
+        }
     }
 }
 
@@ -496,7 +498,7 @@ function buscarFacturas() {
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
-                $('#checkMain').prop('checked', true);
+                $('#checkMain').prop('checked', false);
             },
             error: function (err) {
                 mensErrorAjax(err);
