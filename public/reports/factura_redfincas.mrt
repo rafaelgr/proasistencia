@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "c9c9ba703cab41eba681fc68a6934f4c",
+  "ReportGuid": "3c9da7f7731843f3a8730e2960c117a7",
   "ReportName": "FacturaRedFincas",
   "ReportAlias": "FacturaRedFincas",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(3600000+0100)/",
-  "ReportChanged": "/Date(1593072682817+0200)/",
+  "ReportChanged": "/Date(1593079635511+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProyecta : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProyecta()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
