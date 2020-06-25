@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "912b5aca7f124d6296d44251065b229b",
+  "ReportGuid": "ad7843f3d2e2496a8cda17f2bc435e14",
   "ReportName": "factura_fondogar",
   "ReportAlias": "factura_fondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
-  "ReportChanged": "/Date(1574847425118+0100)/",
+  "ReportChanged": "/Date(1593072035943+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class factura_fondogar : Stimulsoft.Report.StiReport\r\n    {\r\n        public factura_fondogar()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -124,7 +124,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "6": {
             "Name": "empresaId",
@@ -604,7 +604,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,32.24,19,1",
+          "ClientRectangle": "0,37.78,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
