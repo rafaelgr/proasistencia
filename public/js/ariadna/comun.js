@@ -500,7 +500,8 @@ var llamadaAjax = function (verbo, url, datos, fretorno) {
         error: function (err) {
             mensErrorAjax(err);
             fretorno(err);
-        }
+        },
+        timeout: 600000
     };
     if (datos) {
         opciones.data = JSON.stringify(datos);
