@@ -803,7 +803,7 @@
             </Text28>
             <Text30 Ref="61" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>12.8,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.tipoIva,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
@@ -873,14 +873,14 @@
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionGeneral</ReportAlias>
+  <ReportAlias>PrefacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/11/2020 1:37:24 PM</ReportChanged>
+  <ReportChanged>6/26/2020 11:21:57 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_prefacturas_clientes.mrt</ReportFile>
-  <ReportGuid>ebf659dbfd4d4ae6935ce3e779fa245c</ReportGuid>
+  <ReportGuid>e4c72371853d41bd94d09f14d1076ecf</ReportGuid>
   <ReportImage isNull="true" />
-  <ReportName>LiquidacionGeneral</ReportName>
+  <ReportName>PrefacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2017.1.10.0</ReportVersion>
   <Script>using System;

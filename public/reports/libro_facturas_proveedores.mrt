@@ -924,14 +924,14 @@
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionGeneral</ReportAlias>
+  <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
   <ReportChanged>4/14/2020 9:00:16 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
   <ReportGuid>9aeb424dd6714c939d9d93ce3c873f46</ReportGuid>
   <ReportImage isNull="true" />
-  <ReportName>LiquidacionGeneral</ReportName>
+  <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2017.1.10.0</ReportVersion>
   <Script>using System;

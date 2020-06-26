@@ -873,14 +873,14 @@
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionGeneral</ReportAlias>
+  <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
   <ReportChanged>6/11/2020 1:04:07 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
   <ReportGuid>757751bc70744a5593db7d37f82f466a</ReportGuid>
   <ReportImage isNull="true" />
-  <ReportName>LiquidacionGeneral</ReportName>
+  <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2017.1.10.0</ReportVersion>
   <Script>using System;
