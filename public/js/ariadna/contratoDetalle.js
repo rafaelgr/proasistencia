@@ -183,6 +183,12 @@ function initForm() {
         vm.porcentajeCobro(roundToTwo(porcentaje));
     });
 
+    $('#chkContratoCerrado').change(function() {
+        if ($(this).is(':checked')) {
+            borrarPrefacturas();
+        }
+    });
+    
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
     loadTextosPredeterminados();
@@ -2696,6 +2702,37 @@ function loadTablaPrefacturas(data) {
 printPrefactura = function(id){
     var url = "InfPrefacturas.html?prefacturaId=" + id;
     window.open(url, '_blank');
+}
+
+
+function borrarPrefacturas() {
+    // mensaje de confirmación
+    var mens = "Al cerrar El contrato se borrarán las prefacturas que no esten facturadas, ¿ desea continuar ?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/prefacturas/contrato/sin/facturar/" + vm.contratoId(),
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadPrefacturasDelContrato(vm.contratoId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            $('#chkContratoCerrado').prop('checked', false);
+        }
+    });
 }
 
 //---- Solapa facturas
