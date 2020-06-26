@@ -419,10 +419,15 @@ var exportarPDF = function () {
             // hay que informar de error durante la exportación
             return;
         }
-        $("#mensajeEspera").hide();
-        $("#mensajeExportacion").show();
-        $('#modalExportar').modal('hide');
-        var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
-        mensNormal(mens);
+        if(data == "Se ha enviado") {
+
+        } else {
+            $("#mensajeEspera").hide();
+            $("#mensajeExportacion").show();
+            $('#modalExportar').modal('hide');
+            var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
+            mensNormal(mens);
+        }
+        
     });
 }
