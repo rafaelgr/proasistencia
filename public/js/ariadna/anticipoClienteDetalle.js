@@ -118,6 +118,7 @@ function initForm() {
         vm.sdepartamentoId(null);
         if(servicioId && servicioId != '') {
             vm.servicioId(servicioId);
+            vm.sdepartamentoId(7)
             loadDepartamentos(7)
         }
         if (EmpresaId != 0 && EmpresaId != 0) {
