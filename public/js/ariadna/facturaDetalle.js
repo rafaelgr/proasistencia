@@ -731,7 +731,6 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
         if(!usaCalculadora) {
             vm.porcentajeBeneficio(0);
             vm.porcentajeAgente(0);
-            return;
         } else {
             vm.porcentajeBeneficio(data.porcentajeBeneficio);
             vm.porcentajeAgente(data.porcentajeAgente);
