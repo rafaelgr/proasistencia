@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "bd844ee3fc0a407984a1a9d55dd83ab3",
+  "ReportGuid": "e5b84c5d87414d2bb3b8876595b7ccac",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1593073856031+0200)/",
+  "ReportChanged": "/Date(1593430586673+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -455,7 +455,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha_recepcion, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.IBAN, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar, CONCAT(SUBSTR( pro.IBAN,1,20), \"****\")  AS cuenta\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
+        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.IBAN, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar, CONCAT(SUBSTR( pro.IBAN,1,20), \"****\")  AS cuenta\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -796,7 +796,7 @@
               "Name": "Text11",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "4.2,0.4,1.8,0.4",
+              "ClientRectangle": "4.6,0.4,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -837,7 +837,7 @@
               "Name": "Text31",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2.8,0.4,1.4,0.4",
+              "ClientRectangle": "2.8,0.4,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
