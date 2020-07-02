@@ -12,6 +12,7 @@ var ContratoId = 0;
 var EmpresaId = 0;
 var ClienteId = 0;
 var usuario;
+var desdeContrato;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -133,6 +134,7 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ClienteId = gup("ClienteId");
+    desdeContrato = gup("desdeContrato");
     if (prefacturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
@@ -479,7 +481,11 @@ var generarPrefacturaDb = function () {
 function salir() {
     var mf = function () {
         var url = "PrefacturaGeneral.html";
-        window.open(url, '_self');
+        if(EmpresaId != "" || desdeContrato == "true"){
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+        } else {
+            window.open(url, '_self');
+        }
     }
     return mf;
 }
