@@ -12,6 +12,7 @@ var ContratoId = 0;
 var EmpresaId = 0;
 var ClienteId = 0;
 var usuario;
+var desdeContrato;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -133,6 +134,7 @@ function initForm() {
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
     ClienteId = gup("ClienteId");
+    desdeContrato = gup("desdeContrato");
     if (prefacturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
@@ -417,7 +419,7 @@ var aceptarPrefactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&PrefacturaId=";
+    var returnUrl = "PrefacturaDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&PrefacturaId=";
     // caso modificación
     if (prefacturaId != 0) {
         verb = "PUT";
@@ -428,7 +430,12 @@ var aceptarPrefactura = function () {
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.prefacturaId();
-        window.open(returnUrl, '_self');
+        if(desdeContrato == "true" && prefacturaId != 0){
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+        }
+        else{
+            window.open(returnUrl, '_self');
+        }
     });
 }
 
@@ -479,7 +486,11 @@ var generarPrefacturaDb = function () {
 function salir() {
     var mf = function () {
         var url = "PrefacturaGeneral.html";
-        window.open(url, '_self');
+        if(EmpresaId != "" || desdeContrato == "true"){
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+        } else {
+            window.open(url, '_self');
+        }
     }
     return mf;
 }

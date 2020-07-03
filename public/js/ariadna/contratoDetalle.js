@@ -307,6 +307,10 @@ function initForm() {
      if (gup('doc') != "") {
         $('.nav-tabs a[href="#s5"]').tab('show');
     } 
+    //abrir en pestaña de facturas de prefacturas
+    if (gup('docPre') != "") {
+        $('.nav-tabs a[href="#s3"]').tab('show');
+    } 
 
     //metodo de validacion de fechas
     $.validator.addMethod("greaterThan",
@@ -3241,12 +3245,12 @@ var nuevoContratoOK = function () {
 }
 
 var editPrefactura = function (id) {
-    var url = "PrefacturaDetalle.html?PrefacturaId=" + id;
+    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=" + id + "&ContratoId="+ contratoId;
     window.open(url, '_new');
 }
 
 var nuevaPrefactura = function () {
-    var url = "PrefacturaDetalle.html?PrefacturaId=0";
+    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=0";
     url += "&EmpresaId=" + vm.sempresaId();
     if (vm.mantenedorId()) {
         url += "&ClienteId=" + vm.mantenedorId();
