@@ -419,7 +419,7 @@ var aceptarPrefactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?cmd=nueva&PrefacturaId=";
+    var returnUrl = "PrefacturaDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&PrefacturaId=";
     // caso modificación
     if (prefacturaId != 0) {
         verb = "PUT";
@@ -430,7 +430,12 @@ var aceptarPrefactura = function () {
     llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.prefacturaId();
-        window.open(returnUrl, '_self');
+        if(desdeContrato == "true" && prefacturaId != 0){
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+        }
+        else{
+            window.open(returnUrl, '_self');
+        }
     });
 }
 

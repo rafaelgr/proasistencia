@@ -3250,7 +3250,7 @@ var editPrefactura = function (id) {
 }
 
 var nuevaPrefactura = function () {
-    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=0&ContratoId="+ contratoId
+    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=0";
     url += "&EmpresaId=" + vm.sempresaId();
     if (vm.mantenedorId()) {
         url += "&ClienteId=" + vm.mantenedorId();
