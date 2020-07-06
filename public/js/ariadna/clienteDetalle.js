@@ -337,7 +337,6 @@ function admData() {
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
     self.limiteCredito = ko.observable();
-    //self.colaborador = ko.observable();
     self.direccion2 = ko.observable();
     self.codPostal2 = ko.observable();
     self.poblacion2 = ko.observable();
@@ -349,9 +348,11 @@ function admData() {
     self.codComercial = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
-    self.facturarPorEmail = ko.observable();
+    self.facturarPorEmail = ko.observable();ko.observable();
     self.emailFacturas = ko.observable();
     self.antCuentaContable = ko.observable();
+    self.loginWeb = ko.observable();
+    self.passWeb = 
     //
     self.formaPagoId = ko.observable();
     self.sformaPagoId = ko.observable();
@@ -479,6 +480,8 @@ function loadData(data, desdeLoad, importacion) {
     vm.facturarPorEmail(data.facturarPorEmail);
     vm.limiteCredito(data.limiteCredito);
     vm.emailFacturas(data.emailFacturas);
+    vm.loginWeb(data.loginWeb);
+    vm.passWeb(data.passWeb);
 
     if(importacion) {
         vm.direccion2(data.direccion);
@@ -725,7 +728,9 @@ function aceptar() {
                 "tipoIvaId": vm.stipoIvaId(),
                 "facturarPorEmail": vm.facturarPorEmail(),
                 "limiteCredito": vm.limiteCredito(),
-                "emailFacturas": vm.emailFacturas()
+                "emailFacturas": vm.emailFacturas(),
+                "loginWeb": vm.loginWeb(),
+                "passWeb": vm.passWeb()
             } 
         };
         
