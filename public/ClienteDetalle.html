@@ -901,13 +901,34 @@
                                                                         </div>
                                                                         
                                                                         <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="checkbox">
+                                                                                    <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                                                    <i></i>El cliente está activo
+                                                                                </label>
+                                                                            </section>
                                                                             <section class="col col-md-2">
                                                                                 <label class="label">Fecha alta</label>
                                                                                 <label class="input">
                                                                                     <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-4">
+                                                                            <section class="col col-md-2">
+                                                                                <label class="label">Fecha baja</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-5">
+                                                                                <label class="label">Motivo de baja</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select>
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-5">
                                                                                 <label class="label">Forma de pago</label>
                                                                                 <label style="width:100%;">
                                                                                     <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select>
@@ -922,31 +943,10 @@
                                                                                 </label>
                                                                             </section>
                                                                             
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-4">
                                                                                 <label class="label">Limite de credito</label>
                                                                                 <label class="input">
                                                                                     <input id="txtLimiteCredito" name="txtLimiteCredito" type="text" data-bind="value: limiteCredito" />
-                                                                                </label>
-                                                                            </section>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <section class="col col-md-3">
-                                                                                <label class="checkbox">
-                                                                                    <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                                                        <i></i>El cliente está activo
-                                                                                        </label>
-                                                                                </section>
-                                                                            <section class="col col-md-2">
-                                                                                <label class="label">Fecha baja</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                </label>
-                                                                            </section>
-                                                                            <section class="col col-md-7">
-                                                                                <label class="label">Motivo de baja</label>
-                                                                                <label style="width:100%;">
-                                                                                    <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select>
-                                                                                    <i></i>
                                                                                 </label>
                                                                             </section>
                                                                         </div>
@@ -998,16 +998,28 @@
                                                                             
                                                                         </div>
                                                                         <div class="row">
-                                                                            <section class="col col-md-6">
+                                                                            <section class="col col-md-2">
                                                                                 <label class="checkbox">
                                                                                     <input id="chkEmail" type="checkbox" name="chkEmail" data-bind="checked: facturarPorEmail">
                                                                                     <i></i>Enviar factura por Email
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-6">
+                                                                            <section class="col col-md-4">
                                                                                 <label class="label">Correo electrónico facturas</label>
                                                                                 <label class="input">
                                                                                     <input id="txtEmailFacturas" name="txtEmailFacturas" data-bind="value: emailFacturas" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Login de la web</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtLoginWeb" name="txtLoginWeb" data-bind="value: loginWeb" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Password de la web</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtPassWeb" name="txtPassWeb" data-bind="value: passWeb" />
                                                                                 </label>
                                                                             </section>
                                                                         </div>
