@@ -252,11 +252,7 @@ var obtainReportJson = function (obj) {
 
         viewer.report = report;
 
-        var resultado = JSON.stringify(obj);
-        /*fs.writeFile(process.env.JSON_DIR + "\\FGAS_castelduc.json", resultado, function(err) {
-            if(err) return callback(err);
-            return callback(null, true);
-        });*/
+        
 
         /* report.renderAsync(function (err, data2) {
             // Creating export settings
