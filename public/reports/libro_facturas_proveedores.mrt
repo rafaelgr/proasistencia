@@ -206,7 +206,7 @@
             <Headerliqgen_totComision Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8,0,9.2,0.8</ClientRectangle>
+              <ClientRectangle>8.2,0,9,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
@@ -222,7 +222,7 @@
             <Text2 Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,0,2.2,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>5f9d8395047710e9b5d2c08fdc1a698b</Guid>
@@ -363,7 +363,9 @@
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,0.8,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <Conditions isList="true" count="1">
+                <value>libPro.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <HideZeros>True</HideZeros>
@@ -388,8 +390,10 @@
             <Dataliqgen_totComision Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>8,0,9.2,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <ClientRectangle>8.2,0,9,0.2</ClientRectangle>
+              <Conditions isList="true" count="1">
+                <value>libPro.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -412,7 +416,7 @@
             <Text1 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.6,0,2.2,0.2</ClientRectangle>
+              <ClientRectangle>5.6,0,2.4,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -456,7 +460,9 @@
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>1,0,2.4,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <Conditions isList="true" count="1">
+                <value>libPro.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -473,7 +479,9 @@
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>25,0,2.2,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <Conditions isList="true" count="1">
+                <value>libPro.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>fa906f2177c440e189c84e0ae44f2fd7</Guid>
@@ -482,7 +490,6 @@
               <Name>Text15</Name>
               <Page isRef="2" />
               <Parent isRef="20" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Text>{libPro.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="36" type="NumberFormat" isKey="true">
@@ -522,8 +529,10 @@
             </Text33>
             <Text35 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,0,1.8,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
+              <ClientRectangle>3.6,0,1.5,0.4</ClientRectangle>
+              <Conditions isList="true" count="1">
+                <value>libPro.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text35</Name>
@@ -926,10 +935,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>4/14/2020 9:00:16 PM</ReportChanged>
+  <ReportChanged>7/9/2020 10:58:26 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>9aeb424dd6714c939d9d93ce3c873f46</ReportGuid>
+  <ReportGuid>a5bbe67f68594cda9b2b2b1363069fef</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
