@@ -59,7 +59,7 @@
         </PageHeaderBand1>
         <PageFooterBand1 Ref="6" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
+          <ClientRectangle>0,22,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
             <Text5 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -342,7 +342,6 @@
               <Name>Text11</Name>
               <Page isRef="2" />
               <Parent isRef="22" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libCli.importeRetencion}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="26" type="NumberFormat" isKey="true">
@@ -523,7 +522,6 @@
               <Name>Text23</Name>
               <Page isRef="2" />
               <Parent isRef="22" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libCli.suplidos}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="39" type="NumberFormat" isKey="true">
@@ -915,10 +913,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/9/2020 10:41:17 AM</ReportChanged>
+  <ReportChanged>7/10/2020 10:04:03 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>3aa364c43097415db617d0247d68b96d</ReportGuid>
+  <ReportGuid>efcb5bb0efee4e299b9c7f7cb5fcdba8</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
