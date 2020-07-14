@@ -118,12 +118,25 @@ function admData() {
     self.elegidosDefect = ko.observableArray([]);
     //
     self.cuentaretencion = ko.observable();
+
+    //S3
+    self.bucket = ko.observable();
+    self.bucketRegion = ko.observable();
+    self.bucketFolder = ko.observable();
+    self.indentityPool = ko.observable();
+    self.raizUrl = ko.observable();
+
 }
 
 function loadData(data) {
     vm.parametroId(data.parametroId);
     vm.articuloMantenimiento(data.articuloMantenimiento);
     vm.margenMantenimiento(data.margenMantenimiento);
+    vm.bucket(data.bucket);
+    vm.bucketRegion(data.bucket_region);
+    vm.bucketFolder(data.bucket_folder);
+    vm.indentityPool(data.indentity_pool);
+    vm.raizUrl(data.raiz_url);
 
     loadArtMan(data.articuloMantenimiento);
     loadArtManGas(data.articuloMantenimientoParaGastos);
@@ -168,7 +181,13 @@ function aceptar() {
                 "articuloMantenimiento": vm.sartManId(),
                 "margenMantenimiento": vm.margenMantenimiento(),
                 "articuloMantenimientoParaGastos": vm.sdefectId(),
-                "cuentaretencion": vm.cuentaretencion()
+                "cuentaretencion": vm.cuentaretencion(),
+                "bucket":  vm.bucket(),
+                "bucket_region":  vm.bucketRegion(),
+                "bucket_folder":  vm.bucketFolder(),
+                "indentity_pool": vm.indentityPool(),
+                "raiz_url": vm.raizUrl(),
+            
             }
         };
 
