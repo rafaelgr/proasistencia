@@ -8,3 +8,6 @@ ALTER TABLE `parametros`
   ADD COLUMN `indentity_pool` VARCHAR(255) NULL AFTER `bucket_folder`;
   ADD COLUMN `raiz_url` VARCHAR(255) NULL AFTER `indentity_pool`;
 
+ 
+
+

@@ -123,7 +123,7 @@ function admData() {
     self.bucket = ko.observable();
     self.bucketRegion = ko.observable();
     self.bucketFolder = ko.observable();
-    self.indentityPool = ko.observable();
+    self.identityPool = ko.observable();
     self.raizUrl = ko.observable();
 
 }
@@ -135,7 +135,7 @@ function loadData(data) {
     vm.bucket(data.bucket);
     vm.bucketRegion(data.bucket_region);
     vm.bucketFolder(data.bucket_folder);
-    vm.indentityPool(data.indentity_pool);
+    vm.identityPool(data.identity_pool);
     vm.raizUrl(data.raiz_url);
 
     loadArtMan(data.articuloMantenimiento);
@@ -185,7 +185,7 @@ function aceptar() {
                 "bucket":  vm.bucket(),
                 "bucket_region":  vm.bucketRegion(),
                 "bucket_folder":  vm.bucketFolder(),
-                "indentity_pool": vm.indentityPool(),
+                "identity_pool": vm.identityPool(),
                 "raiz_url": vm.raizUrl(),
             
             }
