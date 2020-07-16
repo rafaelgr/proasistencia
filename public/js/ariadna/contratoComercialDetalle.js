@@ -127,6 +127,27 @@ function admData() {
     self.arqComercial = ko.observable();
     self.arqComision = ko.observable();    
     //
+    self.repComisAgente = ko.observable();
+    self.repPorImpCliente = ko.observable();
+    self.repPorImpClienteAgente = ko.observable();
+    self.repPorCostes = ko.observable();
+    self.repCostes = ko.observable();
+    self.repJefeObra = ko.observable();
+    self.repOficinaTecnica = ko.observable();
+    self.repAsesorTecnico = ko.observable();
+    self.repComercial = ko.observable();
+    self.repComision = ko.observable();    
+    //
+    self.obrComisAgente = ko.observable();
+    self.obrPorImpCliente = ko.observable();
+    self.obrPorImpClienteAgente = ko.observable();
+    self.obrPorCostes = ko.observable();
+    self.obrCostes = ko.observable();
+    self.obrJefeObra = ko.observable();
+    self.obrOficinaTecnica = ko.observable();
+    self.obrAsesorTecnico = ko.observable();
+    self.obrComercial = ko.observable();
+    self.obrComision = ko.observable();    
     //
     self.sempresaId = ko.observable();
     //
@@ -205,6 +226,27 @@ function loadData(data) {
     vm.arqComercial(data.arqComercial);
     vm.arqComision(data.arqComision);
     //
+    vm.repComisAgente(data.repComisAgente);
+    vm.repPorImpCliente(data.repPorImpCliente);
+    vm.repPorImpClienteAgente(data.repPorImpClienteAgente);
+    vm.repPorCostes(data.repPorCostes);
+    vm.repCostes(data.repCostes);
+    vm.repJefeObra(data.repJefeObra);
+    vm.repOficinaTecnica(data.repOficinaTecnica);
+    vm.repAsesorTecnico(data.repAsesorTecnico);
+    vm.repComercial(data.repComercial);
+    vm.repComision(data.repComision);
+     //
+     vm.obrComisAgente(data.obrComisAgente);
+     vm.obrPorImpCliente(data.obrPorImpCliente);
+     vm.obrPorImpClienteAgente(data.obrPorImpClienteAgente);
+     vm.obrPorCostes(data.obrPorCostes);
+     vm.obrCostes(data.obrCostes);
+     vm.obrJefeObra(data.obrJefeObra);
+     vm.obrOficinaTecnica(data.obrOficinaTecnica);
+     vm.obrAsesorTecnico(data.obrAsesorTecnico);
+     vm.obrComercial(data.obrComercial);
+     vm.obrComision(data.obrComision);
 
     vm.comision(data.comision);
 
@@ -224,6 +266,13 @@ function loadData(data) {
     if (data.arqPorImpClienteAgente > 0) $('#chkArqPorImpClienteAgente').attr('checked', 'true');
     if (data.arqPorCostes > 0) $('#chkArqPorCostes').attr('checked', 'true');    
     //    
+    if (data.repPorImpCliente > 0) $('#chkRepPorImpCliente').attr('checked', 'true');
+    if (data.repPorImpClienteAgente > 0) $('#chkRepPorImpClienteAgente').attr('checked', 'true');
+    if (data.repPorCostes > 0) $('#chkRepPorCostes').attr('checked', 'true');    
+    //    
+    if (data.obrPorImpCliente > 0) $('#chkObrPorImpCliente').attr('checked', 'true');
+    if (data.obrPorImpClienteAgente > 0) $('#chkObrPorImpClienteAgente').attr('checked', 'true');
+    if (data.obrPorCostes > 0) $('#chkObrPorCostes').attr('checked', 'true');    
     loadEmpresas(data.empresaId);
     loadComerciales(data.comercialId);
     loadTiposPagos(data.tipoPago);
@@ -343,7 +392,29 @@ function aceptar() {
                 "arqOficinaTecnica": vm.arqOficinaTecnica(),
                 "arqAsesorTecnico": vm.arqAsesorTecnico(),
                 "arqComercial": vm.arqComercial(),
-                "arqComision": vm.arqComision()
+                "arqComision": vm.arqComision(),
+
+                "repComisAgente": vm.repComisAgente(),
+                "repPorImpCliente": vm.repPorImpCliente(),
+                "repPorImpClienteAgente": vm.repPorImpClienteAgente(),
+                "repPorCostes": vm.repPorCostes(),
+                "repCostes": vm.repCostes(),
+                "repJefeObra": vm.repJefeObra(),
+                "repOficinaTecnica": vm.repOficinaTecnica(),
+                "repAsesorTecnico": vm.repAsesorTecnico(),
+                "repComercial": vm.repComercial(),
+                "repComision": vm.repComision(),
+
+                "obrComisAgente": vm.obrComisAgente(),
+                "obrPorImpCliente": vm.obrPorImpCliente(),
+                "obrPorImpClienteAgente": vm.obrPorImpClienteAgente(),
+                "obrPorCostes": vm.obrPorCostes(),
+                "obrCostes": vm.obrCostes(),
+                "obrJefeObra": vm.obrJefeObra(),
+                "obrOficinaTecnica": vm.obrOficinaTecnica(),
+                "obrAsesorTecnico": vm.obrAsesorTecnico(),
+                "obrComercial": vm.obrComercial(),
+                "obrComision": vm.obrComision()
             }
         };
         var url = "";

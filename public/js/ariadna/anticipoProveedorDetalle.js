@@ -87,6 +87,13 @@ function initForm() {
     $("#frmServiciadas").submit(function () {
         return false;
     });
+
+    $("#txtPrecio").focus(function () {
+        var val = $('#txtPrecio').val();
+        if(!val || val == '') return; 
+        $('#txtPrecio').val(null);
+    });
+
     
 
     //evento de foco en el modal
@@ -479,6 +486,8 @@ function loadData(data) {
     vm.numero(data.numeroAnticipoProveedor);
     vm.fecha(spanishDate(data.fecha));
     vm.empresaId(data.empresaId);
+    vm.departamentoId(data.departamentoId);
+    vm.sdepartamentoId(data.departamentoId);
     vm.proveedorId(data.proveedorId);
     vm.contratoId(data.contratoId);
     vm.generada(data.generada);
@@ -1249,7 +1258,8 @@ function loadArticulos(id) {
 }
 
 function loadGrupoArticulos(id) {
-    llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
+    llamadaAjax("GET", "/api/grupo_articulo/departamento/" + vm.departamentoId(), null, function (err, data) {
+        if(err) return;
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
@@ -1315,7 +1325,10 @@ function cambioArticulo(articuloId) {
             vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
         vm.cantidad(1);
-        vm.importe(data.precioUnitario);
+        if(data.precioUnitario) {
+            vm.importe(data.precioUnitario);
+        }
+        
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data.tipoIvaId);

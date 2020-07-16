@@ -162,7 +162,7 @@
                             <!--<a href="ParametroDetalle.html">
                                         <i class="fa fa-cog"></i> Parámetros
                             </a>-->
-                            <a href="http://10.0.0.3:8082/#!/login" target='_blank'>
+                            <a href="ParametroDetalle.html" target='_blank'>
                                 <i class="fa fa-cog"></i> Parámetros
                             </a>
                         </li>
@@ -403,9 +403,11 @@
                     </ul>                    
                 </li>
         <li id="servicios">
-                <a href="http://10.0.0.3:8089/#!/login" target="_blank">
-                    <i class="fa fa-fw fa-wrench"></i> <span class="menu-item-parent">SERVICIOS</span>
-                </a>
+                <li id="servicios">
+                    <a href="https://rep.comercializa.net" target="_blank">
+                        <i class="fa fa-fw fa-wrench"></i> <span class="menu-item-parent">SERVICIOS</span>
+                    </a>
+                </li>
             </li>
          </ul> 
         </nav>
@@ -548,6 +550,43 @@
                                                         <input id="txtCuentaRetencion" name="txtCuentaRetencion" data-bind="value: cuentaretencion" />
                                                     </label>
                                                 </section>                              
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <header>
+                                                Datos de S3
+                                            </header>
+                                            <div class="row">
+                                                <section class="col col-md-2">
+                                                    <label class="label">Bucket</label>
+                                                    <label class="input">
+                                                        <input id="txtBucket" name="txtBucket" data-bind="value: bucket" />
+                                                    </label>
+                                                </section>     
+                                                <section class="col col-md-2">
+                                                    <label class="label">Bucket region</label>
+                                                    <label class="input">
+                                                        <input id="txtBucketRegion" name="txtBucketRegion" data-bind="value: bucketRegion" />
+                                                    </label>
+                                                </section>     
+                                                <section class="col col-md-2">
+                                                    <label class="label">Bucket folder</label>
+                                                    <label class="input">
+                                                        <input id="txtBucketFolder" name="txtBucketFolder" data-bind="value: bucketFolder" />
+                                                    </label>
+                                                </section>     
+                                                <section class="col col-md-2">
+                                                    <label class="label">Identity pool</label>
+                                                    <label class="input">
+                                                        <input id="txtIdentityPool" name="txtIdentityPool" data-bind="value: identityPool" />
+                                                    </label>
+                                                </section>     
+                                                <section class="col col-md-3">
+                                                    <label class="label">Raiz URL</label>
+                                                    <label class="input">
+                                                        <input id="txtRaizUrl" name="txtRaizUrl" data-bind="value: raizUrl" />
+                                                    </label>
+                                                </section>     
                                             </div>
                                         </fieldset>
                                         <fieldset>
