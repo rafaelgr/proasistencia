@@ -1120,8 +1120,271 @@
                                                                 </section>
                                                             </div>
                                                         </section>
-                                                        <section class="col col-md-4"></section>
-                                                        <section class="col col-md-4"></section>
+                                                        <section class="col col-md-4">
+                                                            <header>
+                                                                Condiciones generales reparaciones
+                                                            </header>
+                                                            <div class="row">
+                                                                <section class="col col-md-8"></section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="label">COMISION</label>
+                                                                    <label class="input">
+                                                                        <input id="txtRepComision" name="txtRepComision" data-bind="value: repComision" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-8">
+                                                                    DEDUCCIONES IMPORTE AL CLIENTE
+                                                                    <hr/>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    PORCENTAJES
+                                                                    <hr/>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Comisión del agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepComisAgente" type="checkbox" name="chkRepComisAgente" data-bind="checked: repComisAgente">
+                                                                        <i></i> Importe comisión del agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepPorImpCliente" type="checkbox" name="chkRepPorImpCliente">
+                                                                        <i></i>% Sobre importe al cliente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtRepPorImpCliente" name="txtRepPorImpCliente" data-bind="value: repPorImpCliente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente - comis agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepPorImpClienteAgente" type="checkbox" name="chkRepPorImpClienteAgente">
+                                                                        <i></i>% Sobre importe al cliente menos comisión agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtRepPorImpClienteAgente" name="txtRepPorImpClienteAgente" data-bind="value: repPorImpClienteAgente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Porcentaje sobre costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepPorCostes" type="checkbox" name="chkRepPorCostes">
+                                                                        <i></i>% Sobre los costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtRepPorCostes" name="txtRepPorCostes" data-bind="value: repPorCostes" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepCostes" type="checkbox" name="chkRepCostes" data-bind="checked: repCostes">
+                                                                        <i></i> Importe costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- jefe de obra -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepJefeObra" type="checkbox" name="chkRepJefeObra" data-bind="checked: repJefeObra">
+                                                                        <i></i> Importe Jefe Obra
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- oficina técnica -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepOficinaTecnica" type="checkbox" name="chkRepOficinaTecnica" data-bind="checked: repOficinaTecnica">
+                                                                        <i></i> Importe Oficina Técnica
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- asesor técnico -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepAsesorTecnico" type="checkbox" name="chkRepAsesorTecnico" data-bind="checked: repAsesorTecnico">
+                                                                        <i></i> Importe Asesor Técnico
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- comercial -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkRepComercial" type="checkbox" name="chkRepComercial" data-bind="checked: repComercial">
+                                                                        <i></i> Importe Comercial
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-md-4">
+                                                            <header>
+                                                                Condiciones generales obras
+                                                            </header>
+                                                            <div class="row">
+                                                                <section class="col col-md-8"></section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="label">COMISION</label>
+                                                                    <label class="input">
+                                                                        <input id="txtObrComision" name="txtObrComision" data-bind="value: obrComision" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-8">
+                                                                    DEDUCCIONES IMPORTE AL CLIENTE
+                                                                    <hr/>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    PORCENTAJES
+                                                                    <hr/>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Comisión del agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrComisAgente" type="checkbox" name="chkObrComisAgente" data-bind="checked: obrComisAgente">
+                                                                        <i></i> Importe comisión del agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrPorImpCliente" type="checkbox" name="chkObrPorImpCliente">
+                                                                        <i></i>% Sobre importe al cliente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtObrPorImpCliente" name="txtObrPorImpCliente" data-bind="value: obrPorImpCliente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- % Sobre importe al cliente - comis agente -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrPorImpClienteAgente" type="checkbox" name="chkObrPorImpClienteAgente">
+                                                                        <i></i>% Sobre importe al cliente menos comisión agente
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtObrPorImpClienteAgente" name="txtObrPorImpClienteAgente" data-bind="value: obrPorImpClienteAgente" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- Porcentaje sobre costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrPorCostes" type="checkbox" name="chkObrPorCostes">
+                                                                        <i></i>% Sobre los costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <label class="input">
+                                                                        <input id="txtObrPorCostes" name="txtObrPorCostes" data-bind="value: obrPorCostes" />
+                                                                    </label>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- costes -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrCostes" type="checkbox" name="chkObrCostes" data-bind="checked: obrCostes">
+                                                                        <i></i> Importe costes
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- jefe de obra -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrJefeObra" type="checkbox" name="chkObrJefeObra" data-bind="checked: obrJefeObra">
+                                                                        <i></i> Importe Jefe Obra
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- oficina técnica -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrOficinaTecnica" type="checkbox" name="chkObrOficinaTecnica" data-bind="checked: obrOficinaTecnica">
+                                                                        <i></i> Importe Oficina Técnica
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- asesor técnico -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrAsesorTecnico" type="checkbox" name="chkObrAsesorTecnico" data-bind="checked: obrAsesorTecnico">
+                                                                        <i></i> Importe Asesor Técnico
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- comercial -->
+                                                                <section class="col col-md-8">
+                                                                    <label class="checkbox">
+                                                                        <input id="chkObrComercial" type="checkbox" name="chkObrComercial" data-bind="checked: obrComercial">
+                                                                        <i></i> Importe Comercial
+                                                                    </label>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                </section>
+                                                            </div>
+                                                        </section>
+                                                </div>
                                             </fieldset>
                                             <fieldset>
                                                 <header>
