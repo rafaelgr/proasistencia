@@ -1931,6 +1931,7 @@ function compruebaFacturasAnticipos(id) {
         if (err) return;
         llamadaAjax('GET', "/api/anticiposClientes/cliente/recupera/todos/" + id, null, function (err, data2) {
             if (err) return;
+            if(!vm.codigo()) return; // si no hay codigo contable permityimos la edición aunque tenga facturas o anticipos
             if(data.length > 0 || data2.length > 0) {
                 $( "#txtNif" ).prop( "disabled", true );
                 $( "#txtCodigo" ).prop( "disabled", true );
