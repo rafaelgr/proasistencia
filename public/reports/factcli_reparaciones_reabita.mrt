@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "0146e28e12694540832e7fbccd9e7d29",
+  "ReportGuid": "783b588b71194956b53e2b899b27cc19",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1595238650791+0200)/",
+  "ReportChanged": "/Date(1595328445967+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -628,6 +628,29 @@
         },
         "NameInSource": "PROA_REPORT",
         "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, ser.direccionTrabajo\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facturaLineaId` = pfl.`facturaLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
+      },
+      "3": {
+        "Ident": "StiMySqlSource",
+        "Name": "imagen",
+        "Alias": "imagen",
+        "Columns": {
+          "0": {
+            "Name": "imagen",
+            "Index": -1,
+            "NameInSource": "imagen",
+            "Alias": "imagen",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "facturaId",
+            "Index": -1,
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Int32"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT imagen, facturaId FROM partes WHERE NOT imagen IS NULL"
       }
     },
     "Databases": {
@@ -664,6 +687,19 @@
         "Alias": "cabecera_bases",
         "ParentSource": "cabecera",
         "ChildSource": "bases"
+      },
+      "2": {
+        "Name": "cabecera-imagen",
+        "ChildColumns": {
+          "0": "facturaId"
+        },
+        "ParentColumns": {
+          "0": "facturaId"
+        },
+        "NameInSource": "Relación",
+        "Alias": "cabecera-imagen",
+        "ParentSource": "cabecera",
+        "ChildSource": "imagen"
       }
     }
   },
@@ -747,7 +783,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,30.64,19,2.6",
+          "ClientRectangle": "0,52.8,19,2.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1650,6 +1686,42 @@
           "NewPageAfter": true
         },
         "10": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand1",
+          "Guid": "357f639741b74faba0684e9a3f63f10d",
+          "ClientRectangle": "0,20.4,19,21.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiImage",
+              "Name": "Image2",
+              "Guid": "81f2502e5e1d4a36b37bb528f17174a4",
+              "CanShrink": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "3,0.4,15.6,20",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "AspectRatio": true,
+              "ImageURL": {
+                "Value": "{imagen.imagen}"
+              },
+              "Image": ""
+            }
+          },
+          "DataSourceName": "imagen",
+          "DataRelationName": "Relación",
+          "MasterComponent": "Datacabecera"
+        },
+        "11": {
           "Ident": "StiRoundedRectanglePrimitive",
           "Name": "RoundedRectanglePrimitive1",
           "Guid": "bb40ffc7818b42f2a1eec56cd750a22b",
@@ -1660,7 +1732,7 @@
             "Ident": "StiInteraction"
           }
         },
-        "11": {
+        "12": {
           "Ident": "StiRoundedRectanglePrimitive",
           "Name": "RoundedRectanglePrimitive3",
           "Guid": "f59685edc2684a0585c566394898d7b6",
