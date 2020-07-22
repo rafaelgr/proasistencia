@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "b0fb1f2e37f84b048fb42667ce484d70",
+  "ReportGuid": "089bf8a489f243b7b385440ba0c99b04",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1595324477091+0200)/",
+  "ReportChanged": "/Date(1595407671734+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1127,6 +1127,7 @@
               "Ident": "StiText",
               "Name": "Text4",
               "Guid": "ec5e6c43573a4bd9a66cff2ec0e20a80",
+              "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "11.4,1.2,7.2,0.6",
@@ -1140,6 +1141,9 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             },
             "12": {
@@ -1148,7 +1152,7 @@
               "Guid": "d2306050135a4b8784a9056592155654",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "11.4,2.4,7.2,0.6",
+              "ClientRectangle": "11.4,2.6,7.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1167,7 +1171,7 @@
               "Guid": "f7d1f69149f547b2b02d05923f0d09b9",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "11.4,1.8,7.2,0.6",
+              "ClientRectangle": "11.4,2,7.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1216,7 +1220,7 @@
               "Guid": "8730f39cdfba52873bd9d8d20dd3762f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5.2,0,0.8,0.4",
+              "ClientRectangle": "4.6,0,0.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1256,7 +1260,7 @@
               "Guid": "e853a774504245da9ed90faa4c84f2a0",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0,2,0.4",
+              "ClientRectangle": "0.4,0,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1276,7 +1280,7 @@
               "Guid": "0fd752622e864643b492d99ff0577d0f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2.6,0,1.2,0.4",
+              "ClientRectangle": "2,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1296,7 +1300,7 @@
               "Guid": "bcda5f7a71834d94898679b11c6c46d4",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "4,0,1,0.4",
+              "ClientRectangle": "3.4,0,1,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1316,7 +1320,7 @@
               "Guid": "e75a5f985166476a9b0e1cfbc467159e",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "6.2,0,7.4,0.4",
+              "ClientRectangle": "5.6,0,8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1388,9 +1392,9 @@
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
-              "MinSize": "7.4,1",
-              "MaxSize": "7.4,4",
-              "ClientRectangle": "6.2,0,7.4,1",
+              "MinSize": "0.4,1",
+              "MaxSize": "8.4,4",
+              "ClientRectangle": "5.6,0,8,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1439,9 +1443,9 @@
               "Guid": "3667a2da2f8b4ff680ed17fe44b07d15",
               "CanGrow": true,
               "GrowToHeight": true,
-              "MinSize": "2,0.6",
-              "MaxSize": "2,5.4",
-              "ClientRectangle": "0.4,0,2,0.6",
+              "MinSize": "0,0.6",
+              "MaxSize": "0,5.4",
+              "ClientRectangle": "0.4,0,1.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1464,7 +1468,7 @@
               "GrowToHeight": true,
               "MinSize": "1.2,0.6",
               "MaxSize": "1.2,5.4",
-              "ClientRectangle": "2.6,0,1.2,0.6",
+              "ClientRectangle": "2,0,1.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1487,7 +1491,7 @@
               "GrowToHeight": true,
               "MinSize": "1,0.6",
               "MaxSize": "1,5.4",
-              "ClientRectangle": "4,0,1,0.6",
+              "ClientRectangle": "3.4,0,1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1510,7 +1514,7 @@
               "GrowToHeight": true,
               "MinSize": "0.8,0.6",
               "MaxSize": "0.8,5.4",
-              "ClientRectangle": "5.2,0,0.8,0.6",
+              "ClientRectangle": "4.6,0,0.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
