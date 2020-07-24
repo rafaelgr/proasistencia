@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.3.34",
+  "version": "2.3.35",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
