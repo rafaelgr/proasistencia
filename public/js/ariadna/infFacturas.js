@@ -187,12 +187,12 @@ var obtainReport = function (carga) {
     llamadaAjax(verb, url, null, function (err, data) {
         var infFacturas;
         if(vm.sdepartamentoId() == 7) {
-            infFacturas = data.infFacCliRep;
+            infFacturas = data.infFacCliRep + "_sin_imagen";
         } else {
             infFacturas = data.infFacturas;
         }
         
-        file = "../reports/" + infFacturas + "_sin_imagen.mrt";
+        file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
