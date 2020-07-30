@@ -192,7 +192,7 @@ var obtainReport = function (carga) {
             infFacturas = data.infFacturas;
         }
         
-        file = "../reports/" + infFacturas + ".mrt";
+        file = "../reports/" + infFacturas + "_sin_imagen.mrt";
         var rpt = gup("report");
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
