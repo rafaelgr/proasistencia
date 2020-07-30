@@ -279,12 +279,13 @@ function initForm() {
             loadData(data);
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
-            buscaComisionistas(data.contratoId);
+           
             //loadComisionistas(data.contratoId);
             loadPrefacturasDelContrato(data.contratoId);
             loadFacturasDelContrato(data.contratoId);
             loadFacproveDelContrato(data.contratoId);
             loadContratosCobros(data.contratoId);
+            buscaComisionistas(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -2019,7 +2020,7 @@ function buscaComisionistas(id) {
         if(data1) {
             llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId(), null, function (err, data2) {
                 if (err) return;
-                if(data2) {
+                if(data2.length  > 0) {
                     for(var i = 0; i< data1.length; i++){
                         if(data1[i].comercialId == data2[0].ascComercialId){
                             encontrado = true;
@@ -2043,6 +2044,8 @@ function buscaComisionistas(id) {
                     }else {
                         loadComisionistas(vm.contratoId());
                     }
+                } else {
+                    loadComisionistas(vm.contratoId());
                 }
             });
         }
