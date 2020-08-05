@@ -3393,12 +3393,12 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     }
     if (pagos.length > 1) {
         // en la última factura ponemos los restos
-        // pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
-        // pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
-        // pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
-        pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
-        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1));
+        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
     }
     return pagos;
 }
