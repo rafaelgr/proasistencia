@@ -2215,6 +2215,7 @@ var aceptarGenerarPrefacturas = function () {
     if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
+    $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar()
     };
@@ -2225,7 +2226,11 @@ var aceptarGenerarPrefacturas = function () {
             return;
         }
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-            if (err) return;
+            if (err){
+                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                return;
+            }
+            $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturas').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
@@ -3396,6 +3401,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
+        pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
+        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
     }
     return pagos;
 }
