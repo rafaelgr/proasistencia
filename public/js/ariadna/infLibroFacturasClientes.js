@@ -69,6 +69,11 @@ function initForm() {
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
+    $("#cmbEmpresas").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if(e.added.id) loadSeriesFact(e.added.id);
+    });
+
 
 
     $("#cmbTiposIva").select2(select2Spanish());
@@ -79,7 +84,9 @@ function initForm() {
 
     $('#cmbOrden').select2();
     loadComboOrden();
-    
+
+    $("#cmbSerieFac").select2(select2Spanish());
+
     $('.datepicker').datepicker({
         closeText: 'Cerrar',
         prevText: '<i class="fa fa-chevron-left"></i>',
@@ -160,6 +167,14 @@ function admData() {
     //
     self.posiblesTiposIva = ko.observableArray([]);
     self.elegidosTiposIva = ko.observableArray([]);
+
+    //SERIES
+    //
+    self.tiporegi = ko.observable();
+    self.stiporegi = ko.observable();
+    //
+    self.posiblesTiposRegis = ko.observableArray([]);
+    self.elegidosTiposRegis = ko.observableArray([]);
 
     //Combo option conta
 
@@ -441,6 +456,28 @@ function loadComboOrden(){
     $("#cmbOrden option[value='f.fecha']").attr("selected",true).trigger('change');    
 }
 
+function loadSeriesFact(empresaId) {
+    llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
+        if (err) return;
+        $.ajax({
+            type: "GET",
+            url: "/api/empresas/series/" + data.contabilidad,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                var series = [{tiporegi: 100, nomregis: ''}].concat(data);
+                vm.posiblesTiposRegis(series);
+                //$("#cmbSerieFac").val(null).trigger('change');
+                return;
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    });
+}
+
 
 var rptFacturaParametros = function () {
     var clienteId = vm.sclienteId();
@@ -451,9 +488,11 @@ var rptFacturaParametros = function () {
     var tipoIvaId = vm.stipoIvaId();
     var conta = vm.sconta();
     var orden = vm.sorden();
+    var serie = vm.elegidosTiposRegis();
+    if(serie.length == 0) serie = 100;
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
-    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden
+    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;

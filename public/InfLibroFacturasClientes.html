@@ -97,7 +97,7 @@
                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
                             </section>
-                            <section class="col col-md-3">
+                            <section class="col col-md-2">
                                 <label class="label">Cliente</label>
                                 <label class="input">
                                     <input id="txtCliente" name="txtCliente" />
@@ -109,6 +109,13 @@
                                     <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
                                 </label>
                             </div>
+                            <section class="col col-md-2">
+                                <label class="label">Serie Facturas</label>
+                                <label style="width:100%;">
+                                    <select style="width:100%" id="cmbSerieFac" name="cmbSerieFac" data-bind="options: posiblesTiposRegis, optionsText: 'nombre', optionsValue: 'tiporegi', value: stiporegi, valueAllowUnset: true, selectedOptions: elegidosTiposRegis, selected2:{}"></select>
+                                    <i></i>
+                                </label>
+                            </section>
                             <section class="col col-md-2">
                                 <label class="label">Contabilizadas</label>
                                 <label style="width:100%;">

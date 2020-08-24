@@ -210,6 +210,7 @@ function admData() {
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
     self.conceptoAnticipo = ko.observable();
+    self.noContabilizar = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -399,6 +400,12 @@ function loadData(data, desdeLinea) {
         });
     }
     vm.enviadaCorreo(data.enviadaCorreo);
+    
+    if(data.noContabilizar == 1){
+        $('#chkNoContabilizar').prop("checked", true);
+    } else {
+        $('#chkNoContabilizar').prop("checked", false);
+    }
     //
     document.title = "FACTURA: " + vm.serie() + "-" + vm.ano() + "-" + vm.numero();
 
@@ -498,6 +505,12 @@ var generarFacturaDb = function () {
         serie =  vm.serie()
     }
     if(contratoId ==  0) vm.scontratoId(null);
+
+    if($('#chkNoContabilizar').prop("checked")) {
+        vm.noContabilizar(true);
+    } else {
+        vm.noContabilizar(false);
+    }
     var data = {
         factura: {
             "facturaId": vm.facturaId(),
@@ -537,6 +550,7 @@ var generarFacturaDb = function () {
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "devuelta": vm.devuelta(),
             "enviadaCorreo": vm.enviadaCorreo(),
+            "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.departamentoId(),
             "observacionesPago": vm.observacionesPago(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
