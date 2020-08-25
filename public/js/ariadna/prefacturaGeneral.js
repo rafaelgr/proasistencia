@@ -75,11 +75,25 @@ function initForm() {
         } else {
             cargarPrefacturas2();
         }
-    })
+    });
+
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
 }
 
 function admData() {
     var self = this;
+    self.desdeFecha = ko.observable();
+    self.hastaFecha = ko.observable();
     
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -189,9 +203,17 @@ function initTablaPrefacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "vFac"
         }, {
@@ -230,7 +252,9 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
-
+            txtHastaFecha: {
+                greaterThan: "#txtDesdeFecha"
+            }
         },
         // Messages for form validation
         messages: {
@@ -256,6 +280,7 @@ function loadTablaPrefacturas(data) {
 
 function buscarPrefacturas() {
     var mf = function () {
+        if (!datosOK()) return;
         cargarPrefacturas()();
     };
     return mf;
@@ -310,46 +335,6 @@ function editPrefactura(id) {
     window.open(url, '_new');
 }
 
-function cargarPrefacturas() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: prefacturaId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/" + prefacturaId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaPrefacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario+ "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaPrefacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
 
 function printPrefactura(id) {
     $.ajax({
@@ -405,10 +390,68 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
+function cargarPrefacturas() {
+    var mf = function (id) {
+        if (id) {
+            var data = {
+                id: prefacturaId
+            }
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/prefacturas/" + prefacturaId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadTablaPrefacturas(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        } else {
+            var desdeFecha = null;
+            var hastaFecha = null;
+            if(vm.desdeFecha() && vm.hastaFecha()) {
+                desdeFecha = spanishDbDate(vm.desdeFecha());
+                hastaFecha = spanishDbDate(vm.hastaFecha());
+            }
+            var url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
+            if( $('#chkTodos').prop('checked'))  url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadTablaPrefacturas(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+    };
+    return mf;
+}
+
+
 function cargarPrefacturas2() {
+    var desdeFecha = null;
+    var hastaFecha = null;
+
+    if(!datosOK()) return;
+    if(vm.desdeFecha() && vm.hastaFecha()) {
+        desdeFecha = spanishDbDate(vm.desdeFecha());
+        hastaFecha = spanishDbDate(vm.hastaFecha());
+    }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -422,9 +465,17 @@ function cargarPrefacturas2() {
 }
 
 function cargarPrefacturas2All() {
+    var desdeFecha = null;
+    var hastaFecha = null;
+
+    if(!datosOK()) return;
+    if(vm.desdeFecha() && vm.hastaFecha()) {
+        desdeFecha = spanishDbDate(vm.desdeFecha());
+        hastaFecha = spanishDbDate(vm.hastaFecha());
+    }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario+ "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario+ "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

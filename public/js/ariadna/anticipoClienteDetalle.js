@@ -331,10 +331,6 @@ var aceptarAntClien = function () {
     if (antClienId != 0) {
         verb = "PUT";
         url = myconfig.apiUrl + "/api/anticiposClientes/" + antClienId;
-        var serie = vm.serie();
-        if(antSerie == serie) {
-            data.antClien.serie = null;
-        }
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
@@ -382,7 +378,8 @@ var generarAntClienDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "serie": vm.serie(),
             "noContabilizar": vm.noContabilizar(),
-            "servicioId": vm.servicioId()
+            "servicioId": vm.servicioId(),
+            "serie": 'ANT'
         }
     };
     return data;
