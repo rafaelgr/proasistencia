@@ -205,6 +205,14 @@ function initTablaAntcliens() {
             }
         }]
     });
+
+    // Apply the filter
+    $("#dt_antclien thead th input[type=text]").on('keyup change', function () {
+        tablaAntcliens
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
 }
 
 function datosOK() {

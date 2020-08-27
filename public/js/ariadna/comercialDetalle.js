@@ -209,7 +209,6 @@ function admData() {
     self.iban5 = ko.observable();
     self.iban6 = ko.observable();
     self.codigo = ko.observable();
-    self.porComer = ko.observable();
     self.loginWeb = ko.observable();
     self.passWeb = ko.observable();
     self.ascComercialId = ko.observable();
@@ -290,7 +289,6 @@ function loadData(data, desdeLoad) {
     loadAscComerciales(data.ascComercialId);
 
     vm.iban(data.iban);
-    vm.porComer(data.porComer);
     loadMotivosBaja(data.motivoBajaId);    
     // split iban
     if (vm.iban()) {
@@ -329,9 +327,6 @@ function datosOK() {
             },
             cmbTiposComerciales: {
                 required: true
-            },
-            txtPorComer: {
-                number: true
             }
         },
         // Messages for form validation
@@ -353,9 +348,6 @@ function datosOK() {
             },
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
-            },
-            txtPorComer: {
-                number: "Debe ser un número valido"
             }
         },
         // Do not change code below
@@ -442,7 +434,6 @@ function aceptar() {
                 "ascComercialId": vm.sascComercialId(),
                 "formaPagoId": vm.sformaPagoId(),
                 "iban": vm.iban(),
-                "porComer": vm.porComer(),
                 "tipoViaId": vm.stipoViaId(),
                 "motivoBajaId": vm.smotivoBajaId(),
                 "loginWeb": vm.loginWeb(),
@@ -947,7 +938,6 @@ function guardaAgenteColaborador() {
                     "ascComercialId": vm.sascComercialId(),
                     "formaPagoId": vm.sformaPagoId(),
                     "iban": vm.iban(),
-                    "porComer": vm.porComer(),
                     "tipoViaId": vm.stipoViaId(),
                     "motivoBajaId": vm.smotivoBajaId(),
                     "loginWeb": vm.loginWeb(),
