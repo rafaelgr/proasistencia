@@ -172,9 +172,17 @@ function initTablaAnticipos() {
                 return moment(data).format('DD/MM/YYYY');
             }
         },{
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "formaPago"
         }, {
@@ -461,7 +469,7 @@ function editAnticipo(id) {
     // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
     var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
-    window.open(url, 'new');
+    window.open(url, '_blank');
 }
 
 
@@ -545,6 +553,6 @@ var printGeneral = function () {
           vis = 1
         }
          var url = "InfVisadosGeneral.html?visadas=" + vis;
-         window.open(url, '_new');
+         window.open(url, '_blank');
     }
 }

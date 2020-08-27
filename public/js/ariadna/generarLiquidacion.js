@@ -160,9 +160,17 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "formaPago"
         }, {
@@ -412,7 +420,7 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaDetalle.html?FacturaId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function cargarFacturas() {

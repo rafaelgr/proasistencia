@@ -160,7 +160,11 @@ function initTablaContratos() {
         }, {
             data: "nombreCliente"
         },  {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "observaciones"
         }, {
@@ -408,7 +412,7 @@ function editContrato(id) {
     // hay que abrir la página de detalle del contrato
     // pasando en la url ese ID
     var url = "ContratoDetalle.html?ContratoId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function cargarContratos() {

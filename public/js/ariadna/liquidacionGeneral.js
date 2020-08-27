@@ -117,11 +117,23 @@ function initTablaLiquidaciones() {
         }, {
             data: "tipo"
         }, {
-            data: "totFactura"
+            data: "totFactura",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totBase"
+            data: "totBase",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totComision"
+            data: "totComision",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "comercialId",
             render: function (data, type, row) {
@@ -208,13 +220,13 @@ function editLiquidacion(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "LiquidacionDetalle.html?comercialId=" + id + "&dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) +"&tipoColaborador=1";
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 
 function printLiquidacion(id) {
     var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id  +"&tipoColaborador=1&liqGeneral=true";
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function informePDF(data) {
@@ -256,7 +268,7 @@ var printGeneral = function () {
     
     if (vm.sContratoId()) contratoId = vm.sContratoId();
     var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId + "&liqGeneral=true";
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 

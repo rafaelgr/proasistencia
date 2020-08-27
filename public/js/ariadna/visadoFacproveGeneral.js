@@ -153,12 +153,21 @@ function initTablaFacturas() {
         }, {
             data: "fecha_recepcion",
             render: function (data, type, row) {
+                if(!data) return "";
                 return moment(data).format('DD/MM/YYYY');
             }
         },{
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "formaPago"
         },{
@@ -168,8 +177,8 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
                 return html;
             }
         }]
@@ -447,7 +456,7 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, 'new');
+    window.open(url, '_blank');
 }
 
 
@@ -531,6 +540,6 @@ var printGeneral = function () {
           vis = 1
         }
          var url = "InfVisadosGeneral.html?visadas=" + vis + '&departamentoId='+vm.sdepartamentoId();
-         window.open(url, '_new');
+         window.open(url, '_blank');
     }
 }

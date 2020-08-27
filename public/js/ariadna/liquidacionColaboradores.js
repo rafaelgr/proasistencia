@@ -123,11 +123,23 @@ function initTablaLiquidaciones() {
         }, {
             data: "tipo"
         }, {
-            data: "totFactura"
+            data: "totFactura",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totBase"
+            data: "totBase",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totComision"
+            data: "totComision",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "comercialId",
             render: function (data, type, row) {
@@ -216,7 +228,7 @@ function editLiquidacion(id) {
     // pasando en la url ese ID
     
     var url = "LiquidacionComercialDetalle.html?comercialId=" + id + "&contratoId=" + vm.scontratoId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 
@@ -224,7 +236,7 @@ function printLiquidacion(id) {
     var contratoId = vm.scontratoId();
     if (contratoId == "undefined") contratoId = 0
     var url = "infLiquidacionesColaboradorDetalle.html?comercialId=" + id + "&contratoId=" + vm.scontratoId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function informePDF(data) {
@@ -266,7 +278,7 @@ var printGeneral = function () {
     if (vm.scomercialId()) comercialId = vm.scomercialId();
     if (vm.scontratoId()) contratoId = vm.scontratoId();
     var url = "infLiquidacionesColaboradorGeneral.html?comercialId=" + comercialId + "&contratoId=" + contratoId;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function loadComerciales(id) {
