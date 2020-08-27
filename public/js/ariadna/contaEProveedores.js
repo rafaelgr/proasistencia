@@ -202,9 +202,17 @@ function initTablaFacproves() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0.00');
+                return string;
+            }
         }, {
             data: "formaPago"
         }, {
@@ -444,7 +452,7 @@ function cambioDepartamento(id) {
 function buscarFicheros() {
     var mf = function () {
         var url = "ficheros/contabilidad";
-        window.open(url, '_new');
+        window.open(url, '_blank');
     };
     return mf;
 }
@@ -541,7 +549,7 @@ function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function cargarFacproves() {
