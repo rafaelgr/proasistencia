@@ -191,6 +191,9 @@ var obtainReport = function (carga) {
         } else {
             infFacturas = data.infFacturas;
         }
+        if(vm.sdepartamentoId() == 8) {
+            infFacturas = data.infFacCliObr;
+        }
         
         file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
