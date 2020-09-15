@@ -188,10 +188,12 @@ var obtainReport = function (carga) {
         var infFacturas;
         if(vm.sdepartamentoId() == 7) {
             infFacturas = data.infFacCliRep + "_sin_imagen";
-        } else {
-            infFacturas = data.infFacturas;
-        }
-        
+        }else if (vm.sdepartamentoId() == 8) {
+            infFacturas = data.infFacCliObr;
+         } else {
+                infFacturas = data.infFacturas;
+            }
+    
         file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
         report.loadFile(file);

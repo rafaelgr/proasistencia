@@ -176,7 +176,6 @@ function initForm() {
         if(importeCalculado+importePrefacturasConcepto > totalContrato) {
             mensError("Se ha superado el total del contrato");
             //vm.porcentajeCobro(null);
-            return;
         } 
 
         var porcentaje = (importeCalculado * 100) / totalContrato;
