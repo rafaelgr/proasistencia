@@ -160,7 +160,10 @@ function initForm() {
         }
         vm.importeCalculado(roundToTwo(importePorcentaje));
         if((importePrefacturasConcepto + importePorcentaje) > totalContrato) {
-            mensError("Se ha superado el total del contrato");
+            mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
+            vm.importeCalculado(totalContrato - importePrefacturasConcepto);
+            var porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
+            vm.porcentajeCobro(roundToTwo(porcentaje));
             //vm.importeCalculado(null);
             //vm.porcentajeCobro(null);
             //return;
@@ -170,14 +173,17 @@ function initForm() {
     $("#txtImporteCalculado").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculado").val());
+        var porcentaje = 0;
         if(isNaN(importeCalculado)) return;
         if(importeCalculado+importePrefacturasConcepto > totalContrato) {
-            mensError("Se ha superado el total del contrato");
-            //vm.porcentajeCobro(null);
-        } 
-
-        var porcentaje = (importeCalculado * 100) / totalContrato;
-        vm.porcentajeCobro(roundToTwo(porcentaje));
+            mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
+            vm.importeCalculado(totalContrato - importePrefacturasConcepto);
+            porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
+            vm.porcentajeCobro(roundToTwo(porcentaje));
+        } else {
+            porcentaje = (importeCalculado * 100) / totalContrato;
+            vm.porcentajeCobro(roundToTwo(porcentaje));
+        }
     });
 
     $('#chkContratoCerrado').change(function() {
@@ -3793,10 +3799,10 @@ function aceptarLineaConceptoPrefactura() {
     }
    var  impCli = parseFloat(vm.importeCliente());
    var imp = parseFloat(vm.importeCalculado());
-    if(importePrefacturasConcepto > impCli + 0.02) {
+    if(importePrefacturasConcepto > impCli) {
         mensError("Se está sobrepasando el total del contrato");
         return;
-    } else if(importePrefacturasConcepto + imp > impCli + 0.02) {
+    } else if(importePrefacturasConcepto + imp > impCli) {
         mensError("Se está sobrepasando el total del contrato");
         return;
     } 
