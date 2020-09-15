@@ -157,10 +157,8 @@ function initForm() {
         if(restoContraro == 0 || restoContraro < 0) {
             mensError("Se ha superado el total del contrato");
            //vm.importeCalculado(null);
-        } else {
-            vm.importeCalculado(roundToTwo(importePorcentaje));
         }
-        
+        vm.importeCalculado(roundToTwo(importePorcentaje));
         if((importePrefacturasConcepto + importePorcentaje) > totalContrato) {
             mensError("Se ha superado el total del contrato");
             //vm.importeCalculado(null);
@@ -3793,11 +3791,12 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
+   var  impCli = parseFloat(vm.importeCliente());
    var imp = parseFloat(vm.importeCalculado());
-    if(importePrefacturasConcepto > vm.importeCliente()) {
+    if(importePrefacturasConcepto > impCli + 0.02) {
         mensError("Se está sobrepasando el total del contrato");
         return;
-    } else if(importePrefacturasConcepto + imp > vm.importeCliente()) {
+    } else if(importePrefacturasConcepto + imp > impCli + 0.02) {
         mensError("Se está sobrepasando el total del contrato");
         return;
     } 
