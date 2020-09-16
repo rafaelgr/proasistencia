@@ -159,7 +159,7 @@ function initForm() {
            //vm.importeCalculado(null);
         }
         vm.importeCalculado(roundToTwo(importePorcentaje));
-        if((importePrefacturasConcepto + importePorcentaje) > totalContrato) {
+        if((importePrefacturasConcepto +  vm.importeCalculado()) > totalContrato) {
             mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
             vm.importeCalculado(totalContrato - importePrefacturasConcepto);
             var porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
@@ -2644,7 +2644,10 @@ function initTablaPrefacturas() {
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!row.contratoPorcenId) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
