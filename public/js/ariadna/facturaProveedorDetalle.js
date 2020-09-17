@@ -1735,7 +1735,7 @@ function recalculaRestoPagar() {
             "proveedorId": vm.proveedorId(),
             "fecha": spanishDbDate(vm.fecha()),
             "importeAnticipo": importeAnticipo,
-            "restoPagar": totalSinFian,
+            "restoPagar": totalSinContado,
             "conceptoAnticipo": vm.conceptoAnticipo()
         }
     };
@@ -2690,6 +2690,7 @@ function vinculaAnticiposIncompletos() {
     var impAnticipo = 0;
     var selected;
     var impFianza = parseFloat(vm.fianza());
+    var impContado = parseFloat(vm.contado());
     var result = numeroDbf(vm.totalConIva());
     var id = []
     $('#dt_anticipos input[type=checkbox]').each(function(){
@@ -2732,6 +2733,9 @@ function vinculaAnticiposIncompletos() {
             }
             if(impFianza > 0) {
                 result = result - impFianza;
+            }
+            if(impContado > 0) {
+                result = result - impContado
             }
             //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
             var data = {
