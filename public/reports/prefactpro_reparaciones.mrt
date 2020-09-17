@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "668fa07c6e474682ac05df6360dcaf2d",
+  "ReportGuid": "71903c08fb9648969be85ca00fcca028",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1593430586673+0200)/",
+  "ReportChanged": "/Date(1600329119443+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -370,83 +370,90 @@
             "Type": "System.Decimal"
           },
           "49": {
+            "Name": "contado",
+            "Index": -1,
+            "NameInSource": "contado",
+            "Alias": "contado",
+            "Type": "System.Decimal"
+          },
+          "50": {
             "Name": "restoPagar",
             "Index": -1,
             "NameInSource": "restoPagar",
             "Alias": "restoPagar",
             "Type": "System.Decimal"
           },
-          "50": {
+          "51": {
             "Name": "conceptoAnticipo",
             "Index": -1,
             "NameInSource": "conceptoAnticipo",
             "Alias": "conceptoAnticipo",
             "Type": "System.String"
           },
-          "51": {
+          "52": {
             "Name": "tipoOperacionId",
             "Index": -1,
             "NameInSource": "tipoOperacionId",
             "Alias": "tipoOperacionId",
             "Type": "System.Int32"
           },
-          "52": {
+          "53": {
             "Name": "enviadaCorreo",
             "Index": -1,
             "NameInSource": "enviadaCorreo",
             "Alias": "enviadaCorreo",
             "Type": "System.Int16"
           },
-          "53": {
+          "54": {
             "Name": "fechaFormat",
             "Index": -1,
             "NameInSource": "fechaFormat",
             "Alias": "fechaFormat",
-            "Type": "System.String"
+            "Type": "System.Byte[]"
           },
-          "54": {
+          "55": {
             "Name": "vnum",
             "Index": -1,
             "NameInSource": "vnum",
             "Alias": "vnum",
             "Type": "System.String"
           },
-          "55": {
+          "56": {
             "Name": "formaPagoNombre",
             "Index": -1,
             "NameInSource": "formaPagoNombre",
             "Alias": "formaPagoNombre",
             "Type": "System.String"
           },
-          "56": {
+          "57": {
             "Name": "IBAN",
             "Index": -1,
             "NameInSource": "IBAN",
             "Alias": "IBAN",
             "Type": "System.String"
           },
-          "57": {
+          "58": {
             "Name": "fianzaAcumulada",
             "Index": -1,
             "NameInSource": "fianzaAcumulada",
             "Alias": "fianzaAcumulada",
             "Type": "System.Decimal"
           },
-          "58": {
+          "59": {
             "Name": "importeAnticipo",
             "Index": -1,
             "NameInSource": "importeAnticipo",
             "Alias": "importeAnticipo",
             "Type": "System.Decimal"
           },
-          "59": {
+          "60": {
             "Name": "restoPagar",
             "Index": -1,
             "NameInSource": "restoPagar",
             "Alias": "restoPagar",
             "Type": "System.Decimal"
           },
-          "60": {
+          "61": {
             "Name": "cuenta",
             "Index": -1,
             "NameInSource": "cuenta",
@@ -1955,7 +1962,7 @@
         "7": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,13.5,19,1.8",
+          "ClientRectangle": "0,13.5,19,2.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -2060,7 +2067,7 @@
               "Guid": "938e7b4e8f914c03895bcd6b6105e6f7",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13.2,1.2,2.2,0.4",
+              "ClientRectangle": "13.2,1.8,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2079,7 +2086,7 @@
               "Guid": "93cb9e034e434cff877aca9f91f1240e",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "15.4,1.2,3.4,0.4",
+              "ClientRectangle": "15.4,1.8,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2106,12 +2113,12 @@
               "Guid": "b1107cfbe824474c9e7147c3d490b6fc",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13.2,0.8,2.2,0.4",
+              "ClientRectangle": "13.2,1.4,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "A cuenta"
+                "Value": "Anticipo"
               },
               "Font": ";9.75;Bold;",
               "Border": "Bottom;;;;;;;solid:Black",
@@ -2125,7 +2132,7 @@
               "Guid": "ecaa7b90f8304b62834af737e4e7f526",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "15.4,0.8,3.4,0.4",
+              "ClientRectangle": "15.4,1.4,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2135,6 +2142,52 @@
               "HorAlignment": "Right",
               "Font": ";9;;",
               "Border": "Bottom;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              }
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "Guid": "0c97817e0a6b4e8c8a446eeabe561c25",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "13.2,0.9,2.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Contado"
+              },
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "Guid": "f03e0852976147149a858c02ee7446c3",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "15.4,0.9,3.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.contado}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression",
