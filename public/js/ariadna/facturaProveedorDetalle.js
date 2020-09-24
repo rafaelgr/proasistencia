@@ -438,6 +438,7 @@ function admData() {
     self.observaciones = ko.observable();
     self.anticipo = ko.observable();
     self.antproveId = ko.observable();
+    self.contado = ko.observable();
 
     // -- Valores para las líneas
     self.facproveLineaId = ko.observable();
@@ -549,6 +550,7 @@ function loadData(data) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
+    vm.contado(numeral(data.contado).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.emisorIban(data.IBAN);
     vm.fianza(numeral(data.fianza).format('0,0.00'));
@@ -1718,10 +1720,12 @@ function loadBasesFacprove(facproveId) {
 function recalculaRestoPagar() {
     var importeAnticipo = numeroDbf(vm.importeAnticipo());
     var importeFianza = numeroDbf(vm.fianza());
+    var contado = numeroDbf(vm.contado());
     var totConIva =  numeroDbf(vm.totalConIva());
     var totSinImporteAnticipo = totConIva-importeAnticipo;
     var totalSinFian = totSinImporteAnticipo-importeFianza;
-    vm.restoPagar(numeral(totalSinFian).format('0,0.00'));
+    var totalSinContado = totalSinFian - contado
+    vm.restoPagar(numeral(totalSinContado).format('0,0.00'));
 
     //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
     var data = {
@@ -1731,7 +1735,7 @@ function recalculaRestoPagar() {
             "proveedorId": vm.proveedorId(),
             "fecha": spanishDbDate(vm.fecha()),
             "importeAnticipo": importeAnticipo,
-            "restoPagar": totalSinFian,
+            "restoPagar": totalSinContado,
             "conceptoAnticipo": vm.conceptoAnticipo()
         }
     };
@@ -2686,6 +2690,7 @@ function vinculaAnticiposIncompletos() {
     var impAnticipo = 0;
     var selected;
     var impFianza = parseFloat(vm.fianza());
+    var impContado = parseFloat(vm.contado());
     var result = numeroDbf(vm.totalConIva());
     var id = []
     $('#dt_anticipos input[type=checkbox]').each(function(){
@@ -2728,6 +2733,9 @@ function vinculaAnticiposIncompletos() {
             }
             if(impFianza > 0) {
                 result = result - impFianza;
+            }
+            if(impContado > 0) {
+                result = result - impContado
             }
             //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
             var data = {

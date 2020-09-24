@@ -851,6 +851,12 @@ var cambioCliente = function (data) {
         cargaAgente(data.comercialId);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
+        //
+        loadTiposVia(data.tipoViaId2);
+        vm.direccion(data.direccion2);
+        vm.codPostal(data.codPostal2);
+        vm.poblacion(data.poblacion2);
+        vm.provincia(data.provincia2);
     });
 }
 
