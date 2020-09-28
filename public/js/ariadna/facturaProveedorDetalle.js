@@ -1016,8 +1016,9 @@ function compruebaRepetido(numeroFact, proveedorId) {
                 if(data) {
                     data.forEach( (f) => {
                         var num = f.numeroFacturaProveedor;
+                        var ano = moment(spanishDbDate(vm.fecha())).year();
                         
-                        if(num == numeroFact && f.facproveId != vm.facproveId()) {
+                        if(num == numeroFact && f.facproveId != vm.facproveId() && ano == f.ano) {
                             mensError('Ya existe una factura con este numero para este proveedor');
                             $('#txtNumero').val(antNumFact);
                             return;
@@ -1034,7 +1035,6 @@ function compruebaRepetido(numeroFact, proveedorId) {
         });
     }
 }
-
 
 
 /*------------------------------------------------------------------
