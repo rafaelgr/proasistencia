@@ -7,12 +7,15 @@ var responsiveHelper_datatable_tabletools = undefined;
  
 var liqGeneral;
 
+
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
 
 var tipo;
+var departamentoId = 0;
+var usuario;
 // License Key
 
 // Create the report viewer with default options
@@ -36,6 +39,7 @@ function initForm() {
     // de smart admin
     //pageSetUp();
     getVersionFooter();
+    usuario = recuperarIdUsuario();
     datePickerSpanish();
     vm = new admData();
     ko.applyBindings(vm);
@@ -116,6 +120,8 @@ function initForm() {
     initAutoCliente();
 
     tipo = gup('tipoColaborador');
+    departamentoId = gup('departamentoId');
+    if(departamentoId == "") departamentoId = 0;
     liqGeneral = gup('liqGeneral');
     vm.stipoComercialId(tipo);
     // verificamos si nos han llamado directamente
@@ -348,6 +354,11 @@ var rptLiquidacionGeneralParametros = function () {
     }
     if (comercialId) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";
+    }
+    if (departamentoId != 0) {
+        sql += " AND f.departamentoId = " + departamentoId;
+    } else {
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
     }
     return sql;
 }

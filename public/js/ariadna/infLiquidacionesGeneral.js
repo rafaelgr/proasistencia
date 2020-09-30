@@ -7,6 +7,8 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var liqGeneral;
 var tipo;
+var departamentoId = 0;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -35,6 +37,7 @@ function initForm() {
     // de smart admin
     //pageSetUp();
     getVersionFooter();
+    usuario = recuperarIdUsuario();
     datePickerSpanish();
     vm = new admData();
     ko.applyBindings(vm);
@@ -114,6 +117,9 @@ function initForm() {
     initAutoCliente();
     liqGeneral = gup('liqGeneral');
     tipo = gup('tipoComercialId');
+    departamentoId = gup('departamentoId');
+    if(departamentoId == "") departamentoId = 0;
+
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
     if (gup('dFecha') != "" && gup('hFecha') != "") {
@@ -349,6 +355,11 @@ var rptLiquidacionGeneralParametros = function () {
     }
     if (contratoId){
        sql += " AND lf.contratoId = "+contratoId;
+    }
+    if (departamentoId != 0) {
+        sql += " AND f.departamentoId = " + departamentoId;
+    } else {
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
     }
     sql += " GROUP BY lf.comercialId";
     return sql;

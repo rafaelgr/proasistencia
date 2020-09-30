@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -27,6 +28,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    usuario = recuperarIdUsuario();
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -34,10 +36,12 @@ function initForm() {
     initTablaliquidaciones();
     // comprobamos parámetros
     var comercialId = gup('comercialId');
+    var departamentoId = gup("departamentoId");
     var dFecha = gup('dFecha');
     var hFecha = gup('hFecha');
     //
     vm.comercialId(comercialId);
+    vm.departamentoId(departamentoId)
     vm.desdeFecha(moment(dFecha).format('DD/MM/YYYY'));
     vm.hastaFecha(moment(hFecha).format('DD/MM/YYYY'));
     //
@@ -58,6 +62,8 @@ function admData() {
     self.comercialId = ko.observable();
     self.tipo = ko.observable();
     self.totalComision = ko.observable();
+    self.departamentoId = ko.observable();
+    self.usuarioId = ko.observable()
 }
 
 function initTablaliquidaciones() {
@@ -152,7 +158,7 @@ function buscarLiquidacionesDetalladas() {
     var mf = function () {
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.comercialId(),
+            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.comercialId() + "/" + vm.departamentoId() + "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
