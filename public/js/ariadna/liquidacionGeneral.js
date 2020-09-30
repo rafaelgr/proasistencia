@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -27,6 +28,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    usuario = recuperarIdUsuario();
     //
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -48,6 +50,9 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+    // ocultamos el botón de alta hasta que se haya producido una búsqueda
+    $("#btnPrint").hide();
    
     $("#cmbDirecciones").select2(select2Spanish());
 
@@ -56,6 +61,16 @@ function initForm() {
     initTablaLiquidaciones();
     // comprobamos parámetros
     facturaId = gup('FacturaId');
+
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+ 
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
 }
 
 // tratamiento knockout
@@ -74,6 +89,12 @@ function admData() {
     //
     self.posiblesDirecciones = ko.observableArray([]);
     self.elegidasDirecciones = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function initTablaLiquidaciones() {
@@ -181,6 +202,7 @@ function loadTablaLiquidaciones(data) {
     var dt = $('#dt_liquidacion').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
+        $("#btnPrint").hide();
     }
     dt.fnClearTable();
     dt.fnAddData(data);
@@ -193,14 +215,17 @@ function buscarLiquidacionesAcumuladas() {
         var tipoComercialId = 1;
         var contratoId = 0;
         if (vm.sContratoId()) contratoId = vm.sContratoId();
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId,
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId  + "/" + departamentoId +  "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 loadTablaLiquidaciones(data);
-                // mostramos el botén de alta
+                // mostramos el botón de imprimir
+                $("#btnPrint").show();
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -219,13 +244,17 @@ function buscarLiquidacionesAcumuladas() {
 function editLiquidacion(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "LiquidacionDetalle.html?comercialId=" + id + "&dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) +"&tipoColaborador=1";
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+    var url = "LiquidacionDetalle.html?comercialId=" + id + "&dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) +"&tipoColaborador=1&departamentoId=" + departamentoId;
     window.open(url, '_blank');
 }
 
 
 function printLiquidacion(id) {
-    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id  +"&tipoColaborador=1&liqGeneral=true";
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + id  +"&tipoColaborador=1&departamentoId=" + departamentoId + "&liqGeneral=true";
     window.open(url, '_blank');
 }
 
@@ -265,9 +294,11 @@ var printGeneral = function () {
     if (!datosOK()) return;
     var tipoComercialId = 1;
     var contratoId = 0;
-    
     if (vm.sContratoId()) contratoId = vm.sContratoId();
-    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId + "&liqGeneral=true";
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+
+    var url = "infLiquidacionesGeneral.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&tipoComercialId=" + tipoComercialId+ "&contratoId=" + contratoId +  "&departamentoId=" + departamentoId + "&liqGeneral=true";
     window.open(url, '_blank');
 }
 
