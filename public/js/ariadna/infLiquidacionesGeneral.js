@@ -356,10 +356,13 @@ var rptLiquidacionGeneralParametros = function () {
     if (contratoId){
        sql += " AND lf.contratoId = "+contratoId;
     }
-    if (departamentoId != 0) {
+    if (departamentoId != 0 && tipoComercialId == 1) {
         sql += " AND f.departamentoId = " + departamentoId;
-    } else {
+    } 
+    else if(departamentoId == 0 && tipoComercialId == 1) {
         sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
+    } else {
+        sql += "";
     }
     sql += " GROUP BY lf.comercialId";
     return sql;
