@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facturaId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -27,6 +28,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    usuario = recuperarIdUsuario();
     //
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -56,6 +58,16 @@ function initForm() {
     initTablaLiquidaciones();
     // comprobamos parámetros
     facturaId = gup('FacturaId');
+
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+ 
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+    });
 }
 
 // tratamiento knockout
@@ -74,6 +86,12 @@ function admData() {
     //
     self.posiblesDirecciones = ko.observableArray([]);
     self.elegidasDirecciones = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function initTablaLiquidaciones() {
@@ -193,9 +211,11 @@ function buscarLiquidacionesAcumuladas() {
         var tipoComercialId = 1;
         var contratoId = 0;
         if (vm.sContratoId()) contratoId = vm.sContratoId();
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId,
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId  + "/" + departamentoId +  "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
