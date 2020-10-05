@@ -239,6 +239,6 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 var printGeneral = function () {
-    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + vm.comercialId() + "&tipoColaborador=1&liqGeneral=true";
+    var url = "infLiquidacionesDetalle.html?dFecha=" + spanishDbDate(vm.desdeFecha()) + "&hFecha=" + spanishDbDate(vm.hastaFecha()) + "&comercialId=" + vm.comercialId() + "&tipoColaborador=1&liqGeneral=true&departamentoId=" + vm.departamentoId();
     window.open(url, '_new');
 }
