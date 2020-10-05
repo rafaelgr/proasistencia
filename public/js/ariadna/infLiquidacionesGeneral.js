@@ -7,7 +7,6 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var liqGeneral;
 var tipo;
-var departamentoId = 0;
 var usuario;
 
 var breakpointDefinition = {
@@ -114,26 +113,36 @@ function initForm() {
     //
     $("#cmbColaboradores").select2(select2Spanish());
     loadColaboradores();
-    initAutoCliente();
-    liqGeneral = gup('liqGeneral');
-    tipo = gup('tipoComercialId');
-    departamentoId = gup('departamentoId');
-    if(departamentoId == "") departamentoId = 0;
 
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    if (gup('dFecha') != "" && gup('hFecha') != "") {
-        vm.dFecha(gup('dFecha'));
-        vm.hFecha(gup('hFecha'));
-        if (gup("tipoComercialId") != "0"){
-            vm.tipoComercialId(gup("tipoComercialId"))
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        //
+        initAutoCliente();
+        liqGeneral = gup('liqGeneral');
+        tipo = gup('tipoComercialId');
+        
+    
+        // verificamos si nos han llamado directamente
+        //     if (id) $('#selector').hide();
+        if (gup('dFecha') != "" && gup('hFecha') != "") {
+            vm.dFecha(gup('dFecha'));
+            vm.hFecha(gup('hFecha'));
+            if (gup("tipoComercialId") != "0"){
+                vm.tipoComercialId(gup("tipoComercialId"))
+            }
+            if (gup("contratoId") != "0"){
+                vm.contratoId(gup("contratoId"))
+            }
+            if(gup("departamentoId") !="") vm.sdepartamentoId(gup("departamentoId"));
+            obtainReport();
+            $('#selector').hide();
         }
-        if (gup("contratoId") != "0"){
-            vm.contratoId(gup("contratoId"))
-        }
-        obtainReport();
-        $('#selector').hide();
-    }
+    
+        
+    });
 }
 
 
@@ -170,6 +179,12 @@ function admData() {
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 };
 
 var obtainReport = function () {
@@ -335,6 +350,7 @@ var rptLiquidacionGeneralParametros = function () {
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     var contratoId = vm.contratoId();
+    var departamentoId = vm.sdepartamentoId();
     sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha";
     sql += " FROM liquidacion_comercial AS lf";
@@ -361,8 +377,11 @@ var rptLiquidacionGeneralParametros = function () {
     } 
     else if(departamentoId == 0 && tipoComercialId == 1) {
         sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
+    } 
+    else if (departamentoId != 0) {
+        sql += " AND cnt.tipoContratoId = " + departamentoId;
     } else {
-        sql += "";
+        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"   
     }
     sql += " GROUP BY lf.comercialId";
     return sql;
