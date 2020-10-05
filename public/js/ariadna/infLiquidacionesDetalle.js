@@ -117,22 +117,31 @@ function initForm() {
     //
     $("#cmbColaboradores").select2(select2Spanish());
 
-    initAutoCliente();
+    
 
-    tipo = gup('tipoColaborador');
-    departamentoId = gup('departamentoId');
-    if(departamentoId == "") departamentoId = 0;
-    liqGeneral = gup('liqGeneral');
-    vm.stipoComercialId(tipo);
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    if (gup('dFecha') != "" && gup('hFecha') != "") {
-        vm.dFecha(gup('dFecha'));
-        vm.hFecha(gup('hFecha'));
-        vm.scomercialId(gup('comercialId'));
-        obtainReport();
-        $('#selector').hide();
-    }
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        //
+        initAutoCliente();
+
+        tipo = gup('tipoColaborador');
+        departamentoId = gup('departamentoId');
+        if(gup("departamentoId") !="") vm.sdepartamentoId(gup("departamentoId"));
+        liqGeneral = gup('liqGeneral');
+        vm.stipoComercialId(tipo);
+        // verificamos si nos han llamado directamente
+        //     if (id) $('#selector').hide();
+        if (gup('dFecha') != "" && gup('hFecha') != "") {
+            vm.dFecha(gup('dFecha'));
+            vm.hFecha(gup('hFecha'));
+            vm.scomercialId(gup('comercialId'));
+            obtainReport();
+            $('#selector').hide();
+        }    
+    });
 }
 
 function obtainKey() {
@@ -166,6 +175,12 @@ function admData() {
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 };
 
 var obtainReport = function () {
@@ -335,6 +350,7 @@ var rptLiquidacionGeneralParametros = function () {
     var tipoComercialId = vm.stipoComercialId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var departamentoId = vm.sdepartamentoId();
     sql = "SELECT c.nombre, tc.nombre AS tipo, lf.*,  lf.base as base2,";
     sql += " CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha,";
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha, 'OPERACIONES PERIODO ACTUAL' AS periodo,";
@@ -360,8 +376,10 @@ var rptLiquidacionGeneralParametros = function () {
     } 
     else if(departamentoId == 0 && tipoComercialId == 1) {
         sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
+    }  else if (departamentoId != 0) {
+        sql += " AND ccm.tipoContratoId = " + departamentoId;
     } else {
-        sql += "";
+        sql += " AND ccm.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"   
     }
     return sql;
 }
