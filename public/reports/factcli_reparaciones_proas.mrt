@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "3479b9186dea4f69842abceac4e25494",
+  "ReportGuid": "fb020aa5a4844f85ad446f2e99c49b23",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1595502726718+0200)/",
+  "ReportChanged": "/Date(1602147253324+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -406,7 +406,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n\r\n",
+        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n\r\n\r\n",
         "Parameters": {
           "0": {
             "Name": "Parámetro",
@@ -1142,7 +1142,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.receptorTipoVia} {cabecera.receptorDireccion}"
+                "Value": "{cabecera.receptorTipoVia} {cabecera.receptorDireccion} {cabecera.receptorProvincia}"
               },
               "Font": ";9.75;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -1159,31 +1159,12 @@
               "Guid": "d2306050135a4b8784a9056592155654",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "11.4,2.6,7.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}"
-              },
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "13": {
-              "Ident": "StiText",
-              "Name": "Text16",
-              "Guid": "f7d1f69149f547b2b02d05923f0d09b9",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
               "ClientRectangle": "11.4,2,7.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.receptorProvincia}"
+                "Value": "({cabecera.receptorCodPostal}) {cabecera.receptorPoblacion}"
               },
               "Font": ";9.75;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -1263,31 +1244,11 @@
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text36",
-              "Guid": "e853a774504245da9ed90faa4c84f2a0",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0,1.4,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "P.Trabajo"
-              },
-              "HorAlignment": "Center",
-              "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
               "Name": "Text42",
               "Guid": "0fd752622e864643b492d99ff0577d0f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2,0,1.2,0.4",
+              "ClientRectangle": "0.4,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1301,7 +1262,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text43",
               "Guid": "bcda5f7a71834d94898679b11c6c46d4",
@@ -1321,7 +1282,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text35",
               "Guid": "e75a5f985166476a9b0e1cfbc467159e",
@@ -1341,7 +1302,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "6": {
+            "5": {
               "Ident": "StiText",
               "Name": "Text44",
               "Guid": "e2a84eab95da48cd9b220f2d52a193a5",
@@ -1361,7 +1322,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "7": {
+            "6": {
               "Ident": "StiText",
               "Name": "Text45",
               "Guid": "20c7b53329794074905f3a5713a37b91",
@@ -1373,6 +1334,26 @@
               },
               "Text": {
                 "Value": "Precio Unid."
+              },
+              "HorAlignment": "Center",
+              "Font": ";8.25;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text36",
+              "Guid": "e853a774504245da9ed90faa4c84f2a0",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1.8,0,1.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "P.Trabajo"
               },
               "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
@@ -1452,7 +1433,7 @@
               "GrowToHeight": true,
               "MinSize": "0,0.6",
               "MaxSize": "0,5.4",
-              "ClientRectangle": "0.4,0,1.4,0.6",
+              "ClientRectangle": "1.8,0,1.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1475,7 +1456,7 @@
               "GrowToHeight": true,
               "MinSize": "1.2,0.6",
               "MaxSize": "1.2,5.4",
-              "ClientRectangle": "2,0,1.2,0.6",
+              "ClientRectangle": "0.4,0,1.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
