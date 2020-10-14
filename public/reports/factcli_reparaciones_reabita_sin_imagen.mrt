@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "87a6515c3c9d49ed88fce10f00ca921f",
+  "ReportGuid": "e5f52eda54d343258a6176e452303d4c",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1602142367640+0200)/",
+  "ReportChanged": "/Date(1602674154007+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1708,7 +1708,7 @@
               "Guid": "8b600783042d44bdbe24449b0a27bea4",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "2.2,0.8,2,0.4",
+              "ClientRectangle": "4.4,0.8,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1727,12 +1727,12 @@
               "Guid": "5c864704df8c496b9e191cbd0d71adca",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,0.8,1.4,0.4",
+              "ClientRectangle": "0.8,0.8,3.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FECHA"
+                "Value": "Fecha vencimiento"
               },
               "Font": ";11.25;Bold;",
               "Border": ";0,0,0,0;;;;;;solid:Black",
