@@ -367,7 +367,7 @@ function select2Spanish() {
 function numeroDbf(n) {
     if(!n) return;
     var m = parseFloat(n);
-    if(!isNaN(m)) return;
+    if(!isNaN(m) && m != 0) return;
     return n.replace('.', '').replace(',', '.');
 }
 
