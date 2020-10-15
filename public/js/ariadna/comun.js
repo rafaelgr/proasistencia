@@ -365,6 +365,9 @@ function select2Spanish() {
 // Toma un número en formato imprimible español y lo pasa
 // a formato guardable en base de datos.
 function numeroDbf(n) {
+    if(!n) return;
+    var m = parseFloat(n);
+    if(!isNaN(m)) return;
     return n.replace('.', '').replace(',', '.');
 }
 

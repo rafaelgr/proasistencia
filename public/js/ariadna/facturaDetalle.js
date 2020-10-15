@@ -1055,6 +1055,7 @@ function initTablaFacturasLineas() {
                     var importeAgente = vm.importeAgente();
                     var ventaNetaLinea = (( row.coste * vm.porcentajeBeneficio() ) / 100) +  row.coste; 
                     var data = roundToTwo((ventaNetaLinea * importeAgente) / ventaNeta);
+                    if(isNaN(data)) data = 0.0;
                     return numeral(data).format('0,0.00');
             }
         }, {
