@@ -410,6 +410,10 @@ var roundToSix = function (num) {
     return +(Math.round(num + "e+6") + "e-6");
 };
 
+var roundToTen = function (num) {
+    return +(Math.round(num + "e+10") + "e-10");
+};
+
 // Returns number of months between two dates
 function monthDiff(d1, d2) {
     var months;
