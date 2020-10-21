@@ -8,3 +8,12 @@ ALTER TABLE `proasistencia`.`contratos`
   CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL,
   CHANGE `importe` `importe` DECIMAL(20,10) NULL
 
+ALTER TABLE `proasistencia`.`prefacturas`   
+  CHANGE `coste` `coste` DECIMAL(20,10) NULL,
+  CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL;
+
+  
+  ALTER TABLE prefacturas_lineas
+  CHANGE `coste` `coste` DECIMAL(20,10) NULL,
+  CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL,
+  CHANGE `importe` `importe` DECIMAL(20,10) NULL
