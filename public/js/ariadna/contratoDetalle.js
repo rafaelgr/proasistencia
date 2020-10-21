@@ -1685,7 +1685,7 @@ var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio())  {
-            vm.importeBeneficio(roundToSix(vm.porcentajeBeneficio() * vm.coste() / 100));
+            vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
         var imp = vm.importeBeneficio();
         if(imp == undefined) vm.importeBeneficio(0);
@@ -1741,7 +1741,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
-            importeBeneficio = roundToSix(vm.porcentajeBeneficio() * coste / 100);
+            importeBeneficio = roundToTwo(vm.porcentajeBeneficio() * coste / 100);
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
