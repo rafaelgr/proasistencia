@@ -17,3 +17,14 @@ ALTER TABLE `proasistencia`.`prefacturas`
   CHANGE `coste` `coste` DECIMAL(20,10) NULL,
   CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL,
   CHANGE `importe` `importe` DECIMAL(20,10) NULL
+
+
+ALTER TABLE facturas
+  CHANGE `coste` `coste` DECIMAL(20,10) NULL,
+  CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL;
+
+  
+  ALTER TABLE facturas_lineas
+  CHANGE `coste` `coste` DECIMAL(20,10) NULL,
+  CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL,
+  CHANGE `importe` `importe` DECIMAL(20,10) NULL
