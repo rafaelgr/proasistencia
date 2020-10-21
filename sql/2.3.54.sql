@@ -6,6 +6,5 @@ ALTER TABLE `proasistencia`.`contratos`
   ALTER TABLE `proasistencia`.`contratos_lineas`   
   CHANGE `coste` `coste` DECIMAL(20,10) NULL,
   CHANGE `porcentajeBeneficio` `porcentajeBeneficio` DECIMAL(13,10) NULL,
-  CHANGE `importe` `importe` DECIMAL(20,10) NULL,
-  CHANGE `totalLinea` `totalLinea` DECIMAL(20,10) NULL;
+  CHANGE `importe` `importe` DECIMAL(20,10) NULL
 
