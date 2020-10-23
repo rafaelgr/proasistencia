@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "f88494f314f041e1af09991f25ee64c8",
+  "ReportGuid": "30178a7b4f12418fa0efd89a8f533d6f",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1602143982355+0200)/",
+  "ReportChanged": "/Date(1603435014707+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -66,7 +66,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "6": {
             "Name": "empresaId",
@@ -740,7 +740,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "Guid": "47028f5f3053448b9437f7f22a74f374",
-          "ClientRectangle": "0,24.3,19,3.4",
+          "ClientRectangle": "0,29.84,19,3.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
