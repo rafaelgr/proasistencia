@@ -746,7 +746,7 @@
                                                                                                     </td>
                                                                                                     <td style="text-align:center;">
                                                                                                         <label class="input">
-                                                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
+                                                                                                            <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" disabled />
                                                                                                         </label> 
                                                                                                     </td>
                                                                                                         <td style="text-align:center;">
@@ -767,6 +767,9 @@
                                                                                                         <td style="text-align:center;">
                                                                                                             <label class="input">
                                                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeCliente" disabled/>
+                                                                                                                <button id="btnCalculoInverso" title="Calcular a la inversa" onclick="calculoInverso()" class="btn btn-primary btn-circle btn-xs">
+                                                                                                                    <i class="glyphicon glyphicon-arrow-left"></i>
+                                                                                                                </button>
                                                                                                             </label>
                                                                                                         </td>
                                                                                                 </tr>

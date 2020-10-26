@@ -50,7 +50,7 @@ function initForm() {
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
+    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
@@ -669,6 +669,7 @@ var clicAceptar = function () {
 var guardarContrato = function (done) {
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
+    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1694,7 +1695,7 @@ var recalcularCostesImportesDesdeCoste = function () {
     //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
-        vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
+        vm.importeAgente(roundToTwo(vm.importeCliente() * (vm.porcentajeAgente() / 100)));
     }
     //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
@@ -1747,7 +1748,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     }
     if (vm.porcentajeAgente()) {
         importeCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
-        importeAgente = roundToTwo(importeCliente - ventaNeta);
+        importeAgente = roundToTwo(importeCliente * (vm.porcentajeAgente() / 100));
     }
     importeCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
     return importeCliente;
