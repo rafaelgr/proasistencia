@@ -530,6 +530,7 @@ function admData() {
 }
 
 function loadData(data) {
+    $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
     vm.tipoContratoId(data.tipoContratoId);
     loadTipoProyecto(data.tipoProyectoId);
@@ -1244,6 +1245,7 @@ function loadDataLinea(data) {
 
 
 function loadTablaContratoLineas(data) {
+    if(vm.calculoInverso() && data.length > 0) $('#btnNuevaLinea').hide(); 
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -1406,10 +1408,13 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     if(!vm.calculoInverso()) {
         recalcularCostesImportesDesdeCoste();
+        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+        $('#btnNuevaLinea').hide();
     } else {
         calcularInverso(false);
+        vm.totalLinea(vm.importeCliente());
     }
-    vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    
 }
 
 function editContratoLinea(id) {
@@ -1765,6 +1770,32 @@ var calcularInverso = function(carga) {
     vm.importeAgente(roundToTwo(vm.importeAgente()));
 }
 
+var calcularInversoLinea = function(coste) {
+        if(!vm.porcentajeAgente()) vm.porcentajeAgente(0);
+    
+        if(!vm.porcentajeBeneficio()) {
+            vm.importeBeneficio(0);
+            vm.porcentajeBeneficio(0);
+        }
+    
+   
+    if  (vm.porcentajeAgente() != null) {
+        vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
+        vm.ventaNeta(vm.importeCliente()-vm.importeAgente());
+    }
+    if (vm.porcentajeBeneficio() != null)  {
+        vm.coste(vm.ventaNeta()/((vm.porcentajeBeneficio()/100)+1));
+        vm.importeBeneficio(vm.ventaNeta()-vm.coste());
+    }
+
+    vm.coste(roundToTwo(vm.coste()));
+    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
+    vm.ventaNeta(roundToTwo(vm.ventaNeta()));
+    vm.importeAgente(roundToTwo(vm.importeAgente()));
+
+    
+}
+
 
 var recalcularCostesImportesDesdeBeneficio = function () {
     if (vm.porcentajeBeneficio() && vm.coste()) {
@@ -1803,17 +1834,24 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
-            importeBeneficio = roundToTwo(vm.porcentajeBeneficio() * coste / 100);
+            importeBeneficio = vm.porcentajeBeneficio() * coste / 100;
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
     if (vm.porcentajeAgente()) {
-        importeCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
-        importeAgente = roundToTwo(importeCliente * (vm.porcentajeAgente() / 100));
+        importeCliente = ventaNeta / ((100 - vm.porcentajeAgente()) / 100);
+        importeAgente = importeCliente * (vm.porcentajeAgente() / 100);
     }
-    importeCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
+    importeCliente = (ventaNeta * 1) + (importeAgente * 1);
+
+    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
+    vm.importeCliente(roundToTwo(vm.importeCliente()));
+    vm.importeAgente(roundToTwo(vm.importeAgente()));
     return importeCliente;
 }
+
+
+
 
 var imprimir = function () {
     guardarContrato(function (err) {

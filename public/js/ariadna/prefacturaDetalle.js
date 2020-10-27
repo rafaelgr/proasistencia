@@ -46,7 +46,7 @@ function initForm() {
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
+    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
     $("#txtPrecio").focus(function () {
@@ -440,6 +440,7 @@ var aceptarPrefactura = function () {
 }
 
 var generarPrefacturaDb = function () {
+    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
     var data = {
         prefactura: {
             "prefacturaId": vm.prefacturaId(),

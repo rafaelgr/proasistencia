@@ -46,7 +46,7 @@ function initForm() {
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
+    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
    
@@ -511,6 +511,7 @@ var generarFacturaDb = function () {
     } else {
         vm.noContabilizar(false);
     }
+    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
     var data = {
         factura: {
             "facturaId": vm.facturaId(),
