@@ -679,13 +679,7 @@ var clicAceptar = function () {
 var guardarContrato = function (done) {
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
-<<<<<<< HEAD
     vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
-=======
-    var impCli = vm.importeCliente();
-    impCli = roundToTwo(impCli);
-    vm.importeCliente(impCli);
->>>>>>> feature/decimales_contrato
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1720,7 +1714,6 @@ var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio())  {
-<<<<<<< HEAD
             vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
         }
         if(!vm.porcentajeBeneficio()) {
@@ -1730,13 +1723,6 @@ var recalcularCostesImportesDesdeCoste = function () {
         var imp = vm.importeBeneficio();
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
-=======
-            vm.importeBeneficio(roundToSix(vm.porcentajeBeneficio() * vm.coste() / 100));
-        }
-        var imp = vm.importeBeneficio();
-        if(imp == undefined) vm.importeBeneficio(0);
-        vm.ventaNeta(roundToSix(vm.coste() * 1 + vm.importeBeneficio() * 1));
->>>>>>> feature/decimales_contrato
     }
     //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
@@ -1828,11 +1814,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
-<<<<<<< HEAD
             importeBeneficio = vm.porcentajeBeneficio() * coste / 100;
-=======
-            importeBeneficio = roundToSix(vm.porcentajeBeneficio() * coste / 100);
->>>>>>> feature/decimales_contrato
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
