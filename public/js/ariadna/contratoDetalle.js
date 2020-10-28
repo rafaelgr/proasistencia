@@ -1764,37 +1764,17 @@ var calcularInverso = function(carga) {
         vm.importeBeneficio(vm.ventaNeta()-vm.coste());
     }
 
-    vm.coste(roundToTwo(vm.coste()));
-    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
-    vm.ventaNeta(roundToTwo(vm.ventaNeta()));
-    vm.importeAgente(roundToTwo(vm.importeAgente()));
-}
-
-var calcularInversoLinea = function(coste) {
-        if(!vm.porcentajeAgente()) vm.porcentajeAgente(0);
-    
-        if(!vm.porcentajeBeneficio()) {
-            vm.importeBeneficio(0);
-            vm.porcentajeBeneficio(0);
-        }
-    
-   
-    if  (vm.porcentajeAgente() != null) {
-        vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
-        vm.ventaNeta(vm.importeCliente()-vm.importeAgente());
-    }
-    if (vm.porcentajeBeneficio() != null)  {
-        vm.coste(vm.ventaNeta()/((vm.porcentajeBeneficio()/100)+1));
-        vm.importeBeneficio(vm.ventaNeta()-vm.coste());
+    if (vm.mantenedorId()) {
+        vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
+        vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
     }
 
     vm.coste(roundToTwo(vm.coste()));
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
-
-    
 }
+
 
 
 var recalcularCostesImportesDesdeBeneficio = function () {
