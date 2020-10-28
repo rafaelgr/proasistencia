@@ -1,6 +1,10 @@
 {
   "name": "proasistencia",
+<<<<<<< HEAD
   "version": "2.3.55",
+=======
+  "version": "2.3.54",
+>>>>>>> feature/decimales_contrato
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {

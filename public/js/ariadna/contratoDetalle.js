@@ -159,12 +159,12 @@ function initForm() {
             mensError("Se ha superado el total del contrato");
            //vm.importeCalculado(null);
         }
-        vm.importeCalculado(roundToTwo(importePorcentaje));
+        vm.importeCalculado(roundToSix(importePorcentaje));
         if((importePrefacturasConcepto +  vm.importeCalculado()) > totalContrato) {
             mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
             vm.importeCalculado(totalContrato - importePrefacturasConcepto);
             var porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
-            vm.porcentajeCobro(roundToTwo(porcentaje));
+            vm.porcentajeCobro(roundToSix(porcentaje));
             //vm.importeCalculado(null);
             //vm.porcentajeCobro(null);
             //return;
@@ -180,10 +180,10 @@ function initForm() {
             mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
             vm.importeCalculado(totalContrato - importePrefacturasConcepto);
             porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
-            vm.porcentajeCobro(roundToTwo(porcentaje));
+            vm.porcentajeCobro(roundToSix(porcentaje));
         } else {
             porcentaje = (importeCalculado * 100) / totalContrato;
-            vm.porcentajeCobro(roundToTwo(porcentaje));
+            vm.porcentajeCobro(roundToSix(porcentaje));
         }
     });
 
@@ -679,7 +679,13 @@ var clicAceptar = function () {
 var guardarContrato = function (done) {
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
+<<<<<<< HEAD
     vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+=======
+    var impCli = vm.importeCliente();
+    impCli = roundToTwo(impCli);
+    vm.importeCliente(impCli);
+>>>>>>> feature/decimales_contrato
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1714,6 +1720,7 @@ var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio())  {
+<<<<<<< HEAD
             vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
         }
         if(!vm.porcentajeBeneficio()) {
@@ -1723,6 +1730,13 @@ var recalcularCostesImportesDesdeCoste = function () {
         var imp = vm.importeBeneficio();
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+=======
+            vm.importeBeneficio(roundToSix(vm.porcentajeBeneficio() * vm.coste() / 100));
+        }
+        var imp = vm.importeBeneficio();
+        if(imp == undefined) vm.importeBeneficio(0);
+        vm.ventaNeta(roundToSix(vm.coste() * 1 + vm.importeBeneficio() * 1));
+>>>>>>> feature/decimales_contrato
     }
     //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
@@ -1814,7 +1828,11 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
+<<<<<<< HEAD
             importeBeneficio = vm.porcentajeBeneficio() * coste / 100;
+=======
+            importeBeneficio = roundToSix(vm.porcentajeBeneficio() * coste / 100);
+>>>>>>> feature/decimales_contrato
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
@@ -2226,11 +2244,11 @@ var generarPrefacturas = function () {
     if (vm.mantenedorId()) {
         var importeMantenedor = vm.importeMantenedor();
         resto = importeMantenedor - importePrefacturasConcepto;
-        vm.importeAFacturar(roundToTwo(resto));
+        vm.importeAFacturar(roundToSix(resto));
     } else {
         var importeCliente = vm.importeCliente();
         resto = importeCliente - importePrefacturasConcepto;
-        vm.importeAFacturar(roundToTwo(resto));
+        vm.importeAFacturar(roundToSix(resto));
     }
     $("#generar-prefacturas-form").submit(function () {
         return false;
@@ -2414,9 +2432,9 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToTwo(importe / numPagos);
-    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
-    var importeCoste = roundToTwo(coste / numPagos);
+    var importePago = roundToSix(importe / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -3426,9 +3444,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToTwo(importe / numPagos);
-    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
-    var importeCoste = roundToTwo(coste / numPagos);
+    var importePago = roundToSix(importe / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -3517,16 +3535,16 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     var acumulado = 0;
     var copiaDataConceptos = dataConceptos.slice();
     for (var j =0; j< nPagos; j++) {
-        acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
+        acumulado += roundToSix((importe * dataConceptos[j].porcentaje) / 100) ;
     }
     /* if( acumulado < (importe - 0.01)  || acumulado  > importe + 0.01) {
         mensError('Revise los conceptos, la suma de los importes de las facturas no se corresponden con el total del contrato');
         return;
     } */
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToTwo(dataConceptos[i].importe);
-        var importePagoCliente = roundToTwo(dataConceptos[i].importe);
-        var importeCoste = roundToTwo(dataConceptos[i].importe);
+        var importePago = roundToSix(dataConceptos[i].importe);
+        var importePagoCliente = roundToSix(dataConceptos[i].importe);
+        var importeCoste = roundToSix(dataConceptos[i].importe);
         var contratoPorcenId = dataConceptos[i].contratoPorcenId;
         var formaPagoId = dataConceptos[i].formaPagoId;
         // sucesivas fechas de factura
