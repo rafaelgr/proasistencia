@@ -679,7 +679,7 @@ var clicAceptar = function () {
 var guardarContrato = function (done) {
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
-    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+    vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1741,6 +1741,7 @@ var recalcularCostesImportesDesdeCoste = function () {
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
 };
 
 var calcularInverso = function(carga) {
@@ -1805,7 +1806,6 @@ var ocultarCamposContratosGeneradas = function () {
     $('#txtImporteBeneficio').prop('disabled', true);
     $('#txtPorcentajeAgente').prop('disabled', true);
 }
-
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
     if(usaCalculadora == 0) return coste;
     var importeBeneficio = 0;
@@ -1819,19 +1819,13 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
     if (vm.porcentajeAgente()) {
-        importeCliente = ventaNeta / ((100 - vm.porcentajeAgente()) / 100);
+        importeCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
         importeAgente = importeCliente * (vm.porcentajeAgente() / 100);
-    }
-    importeCliente = (ventaNeta * 1) + (importeAgente * 1);
+    } 
+    importeCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
 
-    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
-    vm.importeCliente(roundToTwo(vm.importeCliente()));
-    vm.importeAgente(roundToTwo(vm.importeAgente()));
     return importeCliente;
 }
-
-
-
 
 var imprimir = function () {
     guardarContrato(function (err) {
