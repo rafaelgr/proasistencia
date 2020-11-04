@@ -53,6 +53,7 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
+    $('#txtNumPagos').on('blur', verPrefacturasAGenerar2);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
@@ -386,7 +387,6 @@ function admData() {
     self.facturaParcial = ko.observable();
     self.liquidarBase = ko.observable();
     self.contratoCerrado = ko.observable();
-    self.calculoInverso = ko.observable();
     self.preaviso = ko.observable();
     //
     self.formaPagoId = ko.observable();
@@ -560,7 +560,6 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
-    vm.calculoInverso(data.calculoInverso);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -575,11 +574,15 @@ function loadData(data) {
 
     loadConceptosLineas(data.contratoId);
     loadDepartamento(data.tipoContratoId);
-
-    if(!data.calculoInverso) {
-        recalcularCostesImportesDesdeCoste();
+    recalcularCostesImportesDesdeCoste();
+    
+    if(data.tipoContratoId == 8) {
+        $('#txtNumPagos').prop('disabled', false);
+        //$('#txtGFechaInicio').datepicker('disabled', true);
     } else {
-        calcularInverso(true);
+        $('#txtNumPagos').prop('disabled', true);
+        //$('#txtGFechaInicio').datepicker('disabled', false);
+        
     }
 }
 
@@ -716,8 +719,7 @@ var guardarContrato = function (done) {
             "provincia": vm.provincia(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "contratoCerrado": vm.contratoCerrado(),
-            "liquidarBasePrefactura": vm.liquidarBase(),
-            "calculoInverso": vm.calculoInverso()
+            "liquidarBasePrefactura": vm.liquidarBase()
         }
     };
     if (contratoId == 0) {
@@ -1245,7 +1247,6 @@ function loadDataLinea(data) {
 
 
 function loadTablaContratoLineas(data) {
-    if(vm.calculoInverso() && data.length > 0) $('#btnNuevaLinea').hide(); 
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -1406,15 +1407,8 @@ function cambioTiposIva(data) {
 
 var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
-    if(!vm.calculoInverso()) {
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-        $('#btnNuevaLinea').hide();
-    } else {
-        calcularInverso(false);
-        vm.totalLinea(vm.importeCliente());
-    }
-    
+    recalcularCostesImportesDesdeCoste();
+    vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
 function editContratoLinea(id) {
@@ -1452,11 +1446,9 @@ var recargaCabeceraLineasBases = function () {
         loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
-        if(!data.calculoInverso) {
-            recalcularCostesImportesDesdeCoste();
-        } else {
-            calcularInverso(false);
-        }
+        
+        recalcularCostesImportesDesdeCoste();
+        
     });
 }
 
@@ -1770,7 +1762,7 @@ var calcularInverso = function(carga) {
         vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
     }
 
-    vm.coste(roundToTwo(vm.coste()));
+    vm.coste(roundToFour(vm.coste()));
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
@@ -2289,6 +2281,26 @@ var verPrefacturasAGenerar = function () {
     } else {
         var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     }
+    vm.prefacturasAGenerar(prefacturas);
+    loadTablaGenerarPrefacturas(prefacturas);
+}
+
+var verPrefacturasAGenerar2 = function () {
+    if (!generarPrefacturasOK()) return;
+    
+    // comprobamos si es de mantenedor o cliente final.
+    var importe = vm.importeCliente(); // importe real de la factura;
+    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+    var clienteId = vm.clienteId();
+    var cliente = $("#txtCliente").val();
+    var empresa = $("#cmbEmpresas").select2('data').text;
+    // si es un mantenedor su importe de factura es el calculado para él.
+    if (vm.mantenedorId()) {
+        importe = vm.importeMantenedor();
+        clienteId = vm.mantenedorId();
+        cliente = $("#txtMantenedor").val();
+    }
+    var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
@@ -3604,6 +3616,7 @@ var calcularNumPagos = function () {
     var numpagos = 1
     if (divisor != 0) numpagos = parseInt(numMeses / divisor);
     if (numpagos == 0) numpagos = 1; // por lo menos uno
+    $('#txtNumPagos').val(numpagos);
     return numpagos;
 }
 

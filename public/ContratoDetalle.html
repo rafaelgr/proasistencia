@@ -712,12 +712,6 @@
                                                                                 <header>(Calculadora importes)</header>
                                                                             <div class="row" >
                                                                                 <section class="col col-md-12">
-                                                                                    <label class="checkbox">
-                                                                                        <input id="chkCalculoInverso" type="checkbox" name="chkCalculoInverso" data-bind="checked: calculoInverso">
-                                                                                        <i></i>Cálculo inverso
-                                                                                    </label>
-                                                                                </section>
-                                                                                <section class="col col-md-12">
                                                                                     <div class="table-responsive">
                                                                                         <table class="table table-bordered">
                                                                                             <thead>
@@ -773,9 +767,6 @@
                                                                                                         <td style="text-align:center;">
                                                                                                             <label class="input">
                                                                                                                 <input id="txtTotalAlCliente" name="txtTotalAlCliente" data-bind="value:importeCliente"/>
-                                                                                                                <button id="btnCalcularInverso" title="Calcular a la inversa" onclick="calcularInverso()" class="btn btn-primary btn-circle btn-xs">
-                                                                                                                    <i class="glyphicon glyphicon-arrow-left"></i>
-                                                                                                                </button>
                                                                                                             </label>
                                                                                                         </td>
                                                                                                 </tr>
@@ -1709,7 +1700,7 @@
                                     <section class="col col-md-2">
                                         <label class="label">Num.Pagos</label>
                                         <label class="input">
-                                            <input id="txtNumPagos" name="txtNumPagos" data-bind="value:numPagos" disabled/>
+                                            <input id="txtNumPagos" name="txtNumPagos" data-bind="value:numPagos" />
                                         </label>
                                     </section>
                                     <section class="col col-md-2">
