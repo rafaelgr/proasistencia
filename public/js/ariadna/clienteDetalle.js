@@ -1936,10 +1936,12 @@ function compruebaFacturasAnticipos(id) {
                 $( "#txtNif" ).prop( "disabled", true );
                 $( "#txtCodigo" ).prop( "disabled", true );
                 $( "#txtNombreComercial" ).prop( "disabled", true );
+                $('#txtNombre').prop( "disabled", true );
             } else {
                 $( "#txtNif" ).prop( "disabled", false );
                 $( "#txtCodigo" ).prop( "disabled", false );
                 $( "#txtNombreComercial" ).prop( "disabled", false );
+                $('#txtNombre').prop( "disabled", false );
             }
         });
     });
