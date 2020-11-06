@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "339cd37f231145b8890df3346844b81f",
+  "ReportGuid": "a37b52e4d8014a938470ce90e36dbf8e",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1591184014809+0200)/",
+  "ReportChanged": "/Date(1604665910918+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -766,7 +766,7 @@
               "Text": {
                 "Value": "{ofertas.nombreEmpresa} NIF: {ofertas.nifEmpresa} / {ofertas.empresaDireccion} ({ofertas.empresaCodPostal}) {ofertas.empresaPoblacion} [{ofertas.empresaProvincia}]"
               },
-              "HorAlignment": "Center",
+              "Font": "Arial Narrow;8.25;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -785,6 +785,7 @@
                 "Value": "{PageNumber} de {TotalPageCount}"
               },
               "HorAlignment": "Center",
+              "Font": "Arial Narrow;8.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -819,7 +820,7 @@
               "Name": "Text4",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0,0.2,18.8,0.6",
+              "ClientRectangle": "0.2,0.2,18.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -859,6 +860,7 @@
               "Text": {
                 "Value": "Linea"
               },
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -870,13 +872,14 @@
               "Guid": "04288d0701a72bb3616bd3d99ebab435",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "3,0.8,9.6,0.4",
+              "ClientRectangle": "3.4,0.8,9,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Descripcion"
               },
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -888,7 +891,7 @@
               "Guid": "aa7558e953c485ddc9180af60bf3a47e",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12.8,0.8,1.2,0.4",
+              "ClientRectangle": "12.6,0.8,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -896,6 +899,7 @@
                 "Value": "Cantidad"
               },
               "HorAlignment": "Right",
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -915,6 +919,7 @@
                 "Value": "Importe"
               },
               "HorAlignment": "Right",
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -934,6 +939,7 @@
                 "Value": "Precio"
               },
               "HorAlignment": "Right",
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -945,13 +951,14 @@
               "Guid": "f661535940fc440a8cacdf2c7b0eb50a",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1.8,0.8,1,0.4",
+              "ClientRectangle": "1.8,0.8,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Unidad"
               },
+              "Font": ";9.75;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1024,7 +1031,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "3,0.4,9.6,0.4",
+              "ClientRectangle": "3.4,0.4,9,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1045,7 +1052,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12.8,0,1.2,0.4",
+              "ClientRectangle": "12.6,0,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1122,7 +1129,7 @@
               "Guid": "8839c674e0d54f14982c1ace8e0cf55f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1.8,0,1,0.4",
+              "ClientRectangle": "1.8,0,1.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1142,7 +1149,7 @@
               "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "3,0,9.6,0.4",
+              "ClientRectangle": "3.4,0,9.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1464,7 +1471,7 @@
               "Name": "Text16",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1,2.6,3.2,0.4",
+              "ClientRectangle": "0.2,2.6,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1482,7 +1489,7 @@
               "Guid": "8f42dc9271584e309722bc41947d34a7",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12.6,2.6,2.4,0.4",
+              "ClientRectangle": "13.4,2.6,2.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1498,9 +1505,11 @@
               "Ident": "StiText",
               "Name": "Text18",
               "Guid": "e1abb857451f44b6a158615af7fa179e",
+              "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12,4.4,4.4,0.4",
+              "ClientRectangle": "13.4,4.2,4.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1510,6 +1519,9 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             }
           },
