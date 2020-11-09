@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "fa049d307bf44e40bd8a83f9758dfd50",
+  "ReportGuid": "df04fe1e7c8c45b4b17c7f48cdeb640a",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1604666337491+0100)/",
+  "ReportChanged": "/Date(1604668168778+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -44,7 +44,7 @@
             "Index": -1,
             "NameInSource": "fechaOferta",
             "Alias": "fechaOferta",
-            "Type": "System.String"
+            "Type": "System.Byte[]"
           },
           "3": {
             "Name": "nombreEmpresa",
@@ -110,97 +110,104 @@
             "Type": "System.String"
           },
           "12": {
+            "Name": "importeProveedor",
+            "Index": -1,
+            "NameInSource": "importeProveedor",
+            "Alias": "importeProveedor",
+            "Type": "System.Decimal"
+          },
+          "13": {
             "Name": "clienteDireccion",
             "Index": -1,
             "NameInSource": "clienteDireccion",
             "Alias": "clienteDireccion",
             "Type": "System.String"
           },
-          "13": {
+          "14": {
             "Name": "clienteCodPostal",
             "Index": -1,
             "NameInSource": "clienteCodPostal",
             "Alias": "clienteCodPostal",
             "Type": "System.String"
           },
-          "14": {
+          "15": {
             "Name": "clientePoblacion",
             "Index": -1,
             "NameInSource": "clientePoblacion",
             "Alias": "clientePoblacion",
             "Type": "System.String"
           },
-          "15": {
+          "16": {
             "Name": "clienteProvincia",
             "Index": -1,
             "NameInSource": "clienteProvincia",
             "Alias": "clienteProvincia",
             "Type": "System.String"
           },
-          "16": {
+          "17": {
             "Name": "total",
             "Index": -1,
             "NameInSource": "total",
             "Alias": "total",
             "Type": "System.Decimal"
           },
-          "17": {
+          "18": {
             "Name": "totalConIva",
             "Index": -1,
             "NameInSource": "totalConIva",
             "Alias": "totalConIva",
             "Type": "System.Decimal"
           },
-          "18": {
+          "19": {
             "Name": "observaciones",
             "Index": -1,
             "NameInSource": "observaciones",
             "Alias": "observaciones",
             "Type": "System.String"
           },
-          "19": {
+          "20": {
             "Name": "formaPago",
             "Index": -1,
             "NameInSource": "formaPago",
             "Alias": "formaPago",
             "Type": "System.String"
           },
-          "20": {
+          "21": {
             "Name": "proveedorId",
             "Index": -1,
             "NameInSource": "proveedorId",
             "Alias": "proveedorId",
             "Type": "System.Int32"
           },
-          "21": {
+          "22": {
             "Name": "proveedornombre",
             "Index": -1,
             "NameInSource": "proveedornombre",
             "Alias": "proveedornombre",
             "Type": "System.String"
           },
-          "22": {
+          "23": {
             "Name": "proveedorNif",
             "Index": -1,
             "NameInSource": "proveedorNif",
             "Alias": "proveedorNif",
             "Type": "System.String"
           },
-          "23": {
+          "24": {
             "Name": "proveedorCodpostal",
             "Index": -1,
             "NameInSource": "proveedorCodpostal",
             "Alias": "proveedorCodpostal",
             "Type": "System.String"
           },
-          "24": {
+          "25": {
             "Name": "proveedorPoblación",
             "Index": -1,
             "NameInSource": "proveedorPoblación",
             "Alias": "proveedorPoblación",
             "Type": "System.String"
           },
-          "25": {
+          "26": {
             "Name": "proveedorProvincia",
             "Index": -1,
             "NameInSource": "proveedorProvincia",
@@ -209,7 +216,7 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT o.ofertaId, o.referencia, DATE_FORMAT(o.fechaOferta,'%d-%m-%Y') AS fechaOferta,\r\ne.nombre AS nombreEmpresa, e.nif AS nifEmpresa,\r\nTRIM(CONCAT(COALESCE(tv1.nombre, \"\"), \" \" , e.direccion)) AS empresaDireccion, \r\nTRIM(CONCAT(COALESCE(tv3.nombre, \"\"), \" \" , p.direccion)) AS proveedorDireccion, \r\ne.codPostal AS empresaCodPostal, e.poblacion AS empresaPoblacion, e.provincia AS empresaProvincia,\r\nc.nombre AS clienteNombre, c.nif AS clienteNif, \r\nTRIM(CONCAT(COALESCE(tv2.nombre, \"\"), \" \", c.direccion)) AS clienteDireccion, \r\nc.codPostal AS clienteCodPostal, c.poblacion AS clientePoblacion, c.provincia AS clienteProvincia,\r\no.total, o.totalConIva, o.observaciones, \r\nfp.nombre AS formaPago, ol.proveedorId, p.nombre as proveedornombre, p.nif AS proveedorNif, p.codPostal AS proveedorCodpostal, p.poblacion AS proveedorPoblación,\r\np.provincia AS proveedorProvincia\r\nFROM ofertas AS o\r\nLEFT JOIN empresas AS e ON e.empresaId = o.empresaId\r\nLEFT JOIN clientes AS c ON c.clienteId = o.clienteId\r\nLEFT JOIN ofertas_lineas AS ol ON ol.ofertaId = o.ofertaId\r\nLEFT JOIN proveedores AS p ON p.proveedorId = ol.proveedorId\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = o.formaPagoId\r\nLEFT JOIN tipos_via AS tv1 ON tv1.tipoViaId = e.tipoViaId\r\nLEFT JOIN tipos_via AS tv2 ON tv2.tipoViaId = c.tipoViaId\r\nLEFT JOIN tipos_via AS tv3 ON tv3.tipoViaId = p.tipoViaId"
+        "SqlCommand": "SELECT o.ofertaId, o.referencia, DATE_FORMAT(o.fechaOferta,'%d-%m-%Y') AS fechaOferta,\r\ne.nombre AS nombreEmpresa, e.nif AS nifEmpresa,\r\nTRIM(CONCAT(COALESCE(tv1.nombre, \"\"), \" \" , e.direccion)) AS empresaDireccion, \r\nTRIM(CONCAT(COALESCE(tv3.nombre, \"\"), \" \" , p.direccion)) AS proveedorDireccion, \r\ne.codPostal AS empresaCodPostal, e.poblacion AS empresaPoblacion, e.provincia AS empresaProvincia,\r\nc.nombre AS clienteNombre, c.nif AS clienteNif, ol.importeProveedor,\r\nTRIM(CONCAT(COALESCE(tv2.nombre, \"\"), \" \", c.direccion)) AS clienteDireccion, \r\nc.codPostal AS clienteCodPostal, c.poblacion AS clientePoblacion, c.provincia AS clienteProvincia,\r\no.total, o.totalConIva, o.observaciones, \r\nfp.nombre AS formaPago, ol.proveedorId, p.nombre as proveedornombre, p.nif AS proveedorNif, p.codPostal AS proveedorCodpostal, p.poblacion AS proveedorPoblación,\r\np.provincia AS proveedorProvincia\r\nFROM ofertas AS o\r\nLEFT JOIN empresas AS e ON e.empresaId = o.empresaId\r\nLEFT JOIN clientes AS c ON c.clienteId = o.clienteId\r\nLEFT JOIN ofertas_lineas AS ol ON ol.ofertaId = o.ofertaId\r\nLEFT JOIN proveedores AS p ON p.proveedorId = ol.proveedorId\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = o.formaPagoId\r\nLEFT JOIN tipos_via AS tv1 ON tv1.tipoViaId = e.tipoViaId\r\nLEFT JOIN tipos_via AS tv2 ON tv2.tipoViaId = c.tipoViaId\r\nLEFT JOIN tipos_via AS tv3 ON tv3.tipoViaId = p.tipoViaId"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -287,48 +294,55 @@
             "Type": "System.Decimal"
           },
           "10": {
+            "Name": "importeProveedor",
+            "Index": -1,
+            "NameInSource": "importeProveedor",
+            "Alias": "importeProveedor",
+            "Type": "System.Decimal"
+          },
+          "11": {
             "Name": "totalLineaProveedor",
             "Index": -1,
             "NameInSource": "totalLineaProveedor",
             "Alias": "totalLineaProveedor",
             "Type": "System.Decimal"
           },
-          "11": {
+          "12": {
             "Name": "dto",
             "Index": -1,
             "NameInSource": "dto",
             "Alias": "dto",
             "Type": "System.Decimal"
           },
-          "12": {
+          "13": {
             "Name": "dtoProveedor",
             "Index": -1,
             "NameInSource": "dtoProveedor",
             "Alias": "dtoProveedor",
             "Type": "System.Decimal"
           },
-          "13": {
+          "14": {
             "Name": "precioProveedor",
             "Index": -1,
             "NameInSource": "precioProveedor",
             "Alias": "precioProveedor",
             "Type": "System.Decimal"
           },
-          "14": {
+          "15": {
             "Name": "proveedorId",
             "Index": -1,
             "NameInSource": "proveedorId",
             "Alias": "proveedorId",
             "Type": "System.Int32"
           },
-          "15": {
+          "16": {
             "Name": "unidad",
             "Index": -1,
             "NameInSource": "unidad",
             "Alias": "unidad",
             "Type": "System.String"
           },
-          "16": {
+          "17": {
             "Name": "articulo",
             "Index": -1,
             "NameInSource": "articulo",
@@ -337,7 +351,7 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto,\r\nol.totalLineaProveedor, ol.dto, ol.dtoProveedor, ol.precioProveedor, ol.proveedorId, u.abrev as unidad, a.nombre AS articulo\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades as u ON u.unidadId = ol.unidadId \r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 3"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto,  ol.importeProveedor,\r\nol.totalLineaProveedor, ol.dto, ol.dtoProveedor, ol.precioProveedor, ol.proveedorId, u.abrev as unidad, a.nombre AS articulo\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades as u ON u.unidadId = ol.unidadId \r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 3"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -1107,7 +1121,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas_lineas.precioProveedor}"
+                "Value": "{ofertas_lineas.importeProveedor}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:0,0,0",
