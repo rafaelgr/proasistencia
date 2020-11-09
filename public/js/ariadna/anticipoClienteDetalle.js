@@ -450,7 +450,27 @@ function cambioCliente(clienteId) {
         vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         loadContratos();
+        lanzaAviso();
     });
+}
+
+
+function lanzaAviso() {
+    var nif = vm.receptorNif();
+    var nombre = vm.receptorNombre();
+    var direccion = vm.receptorDireccion();
+    var codPostal = vm.receptorCodPostal();
+    var poblacion = vm.receptorPoblacion();
+    var provincia = vm.receptorProvincia();
+    if(nif == "") nif = null;
+    if(nombre == "") nombre = null;
+    if(direccion == "") direccion = null;
+    if(codPostal == "") codPostal = null;
+    if(poblacion == "") poblacion = null;
+    if(provincia == "") provincia = null;
+    if(!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
+        mensAlerta("Faltan campos en el receptor");
+    }
 }
 
 function cambioEmpresa(empresaId) {

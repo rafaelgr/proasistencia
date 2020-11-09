@@ -830,8 +830,28 @@ function cambioProveedor(proveedorId) {
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
         var numeroAnt = $("#txtNumero").val();
         compruebaRepetido(numeroAnt, proveedorId);
+        lanzaAviso();
     });
 }
+
+function lanzaAviso() {
+    var nif = vm.receptorNif();
+    var nombre = vm.emisorNombre();
+    var direccion = vm.emisorDireccion();
+    var codPostal = vm.emisorCodPostal();
+    var poblacion = vm.emisorPoblacion();
+    var provincia = vm.emisorProvincia();
+    if(nif == "") nif = null;
+    if(nombre == "") nombre = null;
+    if(direccion == "") direccion = null;
+    if(codPostal == "") codPostal = null;
+    if(poblacion == "") poblacion = null;
+    if(provincia == "") provincia = null;
+    if(!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
+        mensAlerta("Faltan campos en el emisor");
+    }
+}
+
 
 function cambioEmpresa(empresaId) {
     if (!empresaId) return;

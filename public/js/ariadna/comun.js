@@ -445,6 +445,19 @@ var mensError = function (mens) {
     });
 }
 
+var mensAlerta = function (mens) {
+    // Building html response
+    var html = mens
+    html += sprintf("<div><small>%s</small></div>", "Haga clic en el mensaje para cerrarlo");
+    $.smallBox({
+        title: "ERROR",
+        content: html,
+        color: "#A56E00",
+        iconSmall: "fa fa-warning shake animated",
+    });
+}
+
+
 var mensNormal = function (mens) {
     // Building html response
     var html = mens
