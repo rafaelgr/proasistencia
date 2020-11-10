@@ -98,26 +98,16 @@ function initForm() {
         yearSuffix: ''
     }   
     );
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+    });
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
     // Ahora cliente en autocomplete
     initAutoCliente();
-
-
-   
-    //datePickerSpanish(); // see comun.js
-
-
-    //
-    // $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    //loadDepartamentos();
-    //Recuperamos el departamento de trabajo
-    /*recuperaDepartamento(function(err, data) {
-        if(err) return;
-        
-    });*/
-    //
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    
 }
 
 
@@ -149,11 +139,11 @@ function admData() {
     self.posiblesclientes = ko.observableArray([]);
     self.elegidosclientes = ko.observableArray([])
     //
-    // self.departamentoId = ko.observable();
-    // self.sdepartamentoId = ko.observable();
-    // //
-    // self.posiblesDepartamentos = ko.observableArray([]);
-    // self.elegidosDepartamentos = ko.observableArray([]);
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 
     self.tipoIvaId = ko.observable();
     self.stipoIvaId = ko.observable();
@@ -447,8 +437,9 @@ function loadComboOrden(){
 
 
 var rptFacturaParametros = function () {
+    if(!datosOK()) return
     var clienteId = vm.sclienteId();
-  
+    var departamentoId = vm.sdepartamentoId();
     var empresaId = vm.sempresaId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
@@ -457,7 +448,7 @@ var rptFacturaParametros = function () {
     var orden = vm.sorden();
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
-    var url = myconfig.apiUrl + "/api/prefacturas/prefacturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + factu +"/" + orden
+    var url = myconfig.apiUrl + "/api/prefacturas/prefacturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + factu +"/" + orden + "/" + departamentoId + "/" + usuario
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;

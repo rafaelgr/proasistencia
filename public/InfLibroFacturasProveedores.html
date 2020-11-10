@@ -91,31 +91,40 @@
                                 </section>
                         </div>
                         <div class="row">
-                            <section class="col col-md-3">
+                            <section class="col col-md-5">
                                 <label class="label">Empresa</label>
                                 <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
                             </section>
-                            <section class="col col-md-3">
+                            <section class="col col-md-4">
                                 <label class="label">Proveedor</label>
                                 <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select><i></i>
                                                     </label>
                             </section>
-                            <div class="col col-md-2">
+                            <div class="col col-md-3">
                                 <label class="label">Tipo IVA</label>
                                 <label style="width:100%;">
                                     <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
                                 </label>
                             </div>
-                            <section class="col col-md-2">
+                        </div>
+                        <div class="row">
+                            <section class="col col-md-3">
                                 <label class="label">Contabilizadas</label>
                                 <label style="width:100%;">
                                     <select style="width:100%" id="cmbConta" name="cmbConta"  data-bind="options: optionsConta, optionsText: 'nombreConta', optionsValue: 'valorConta', 
                                     value: sconta, valueAllowUnset: true, selectedOptions: selectedContas, selected2:{}"></select><i></i>
                                 </label>
-                            </section><section class="col col-md-2">
+                            </section>
+                            <section class="col col-md-5">
+                                <label class="label">Departamento</label>
+                                    <label style="width:100%;">
+                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                    </label>
+                            </section>
+                            <section class="col col-md-4">
                                 <label class="label">Ordenar por</label>
                                 <label style="width:100%;">
                                     <select style="width:100%" id="cmbOrden" name="cmbOrden"  data-bind="options: optionsOrden, optionsText: 'nombreOrden', optionsValue: 'valorOrden', 

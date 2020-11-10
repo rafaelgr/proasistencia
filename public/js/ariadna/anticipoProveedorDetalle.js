@@ -835,7 +835,7 @@ function cambioProveedor(proveedorId) {
 }
 
 function lanzaAviso() {
-    var nif = vm.receptorNif();
+    var nif = vm.emisorNif();
     var nombre = vm.emisorNombre();
     var direccion = vm.emisorDireccion();
     var codPostal = vm.emisorCodPostal();

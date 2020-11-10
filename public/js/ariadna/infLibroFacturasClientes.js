@@ -34,22 +34,22 @@ viewer.onEmailReport = function (event) {
 function initForm() {
     comprobarLogin();
     usuario = recuperarIdUsuario();
-    // de smart admin
-    //pageSetUp();
     getVersionFooter();
     
-
+    
     $.validator.addMethod("greaterThan",
-        function (value, element, params) {
-            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
-            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-            if (!/Invalid|NaN/.test(new Date(fv))) {
-                return new Date(fv) >= new Date(fp);
-            } else {
-                // esto es debido a que permitimos que la segunda fecha nula
-                return true;
-            }
-        }, 'La fecha final debe ser mayor que la inicial.');
+    function (value, element, params) {
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha final debe ser mayor que la inicial.');
+
+   
     
     vm = new admData();
     ko.applyBindings(vm);
@@ -70,8 +70,7 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if(e.added.id) loadSeriesFact(e.added.id);
+       if(e.added) loadSeriesFact(e.added.id);
     });
 
 
@@ -105,25 +104,16 @@ function initForm() {
         yearSuffix: ''
     }   
     );
+
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+    });
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
     // Ahora cliente en autocomplete
     initAutoCliente();
-
-
-   
-    //datePickerSpanish(); // see comun.js
-
-
-    //
-    // $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    //loadDepartamentos();
-    //Recuperamos el departamento de trabajo
-    /*recuperaDepartamento(function(err, data) {
-        if(err) return;
-        
-    });*/
-    //
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
     
 }
 
@@ -156,11 +146,11 @@ function admData() {
     self.posiblesclientes = ko.observableArray([]);
     self.elegidosclientes = ko.observableArray([])
     //
-    // self.departamentoId = ko.observable();
-    // self.sdepartamentoId = ko.observable();
-    // //
-    // self.posiblesDepartamentos = ko.observableArray([]);
-    // self.elegidosDepartamentos = ko.observableArray([]);
+     self.departamentoId = ko.observable();
+     self.sdepartamentoId = ko.observable();
+     //
+     self.posiblesDepartamentos = ko.observableArray([]);
+     self.elegidosDepartamentos = ko.observableArray([]);
 
     self.tipoIvaId = ko.observable();
     self.stipoIvaId = ko.observable();
@@ -267,29 +257,6 @@ var obtainReportJson = function (obj) {
 
         viewer.report = report;
 
-        
-
-        /* report.renderAsync(function (err, data2) {
-            // Creating export settings
-            var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
-            // Creating export service
-            var service = new Stimulsoft.Report.Export.StiPdfExportService();
-            // Creating MemoryStream
-            var stream = new Stimulsoft.System.IO.MemoryStream();
-            var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
-            var service = new Stimulsoft.Report.Export.StiPdfExportService();
-            var stream = new Stimulsoft.System.IO.MemoryStream();
-
-            service.exportTo(report, stream, settings);
-
-            var data = stream.toArray();
-
-            /*fs.writeFile(process.env.CLASIF_DIR + "\\" + numfactu + ".pdf", buffer, function(err){
-                if(err) return callback(err, null);
-            });
-            callback(null, data2);
-        });*/
-
 };
 
 var obtainReportPdf = function () {
@@ -375,17 +342,6 @@ function loadEmpresas(empresaId) {
         $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }
-
-
-/*function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
-        if (err) return;
-        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
-        vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
-    });
-}*/
-
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
@@ -480,9 +436,10 @@ function loadSeriesFact(empresaId) {
 
 
 var rptFacturaParametros = function () {
+    if(!datosOK()) return;
     var clienteId = vm.sclienteId();
-  
     var empresaId = vm.sempresaId();
+    var departamentoId = vm.sdepartamentoId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var tipoIvaId = vm.stipoIvaId();
@@ -492,7 +449,7 @@ var rptFacturaParametros = function () {
     if(serie.length == 0) serie = 100;
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
-    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie
+    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie + "/" + departamentoId + "/" + usuario
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;

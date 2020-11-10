@@ -103,20 +103,13 @@ function initForm() {
     );
 
    
-    //datePickerSpanish(); // see comun.js
-
-
-    //
-    // $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    /*recuperaDepartamento(function(err, data) {
+    recuperaDepartamento(function(err, data) {
         if(err) return;
-        
-    });*/
-    //
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
+    });
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
     
 }
 
@@ -148,12 +141,12 @@ function admData() {
     self.posiblesProveedores = ko.observableArray([]);
     self.elegidosProveedores = ko.observableArray([]);
     //
-    // self.departamentoId = ko.observable();
-    // self.sdepartamentoId = ko.observable();
-    // //
-    // self.posiblesDepartamentos = ko.observableArray([]);
-    // self.elegidosDepartamentos = ko.observableArray([]);
-
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+    //
     self.tipoIvaId = ko.observable();
     self.stipoIvaId = ko.observable();
     //
@@ -381,7 +374,10 @@ function loadComboOrden(){
 }
 
 var rptFacturaParametros = function () {
+    if(!datosOK()) return;
+
     var proveedorId = vm.sproveedorId();
+    var departamentoId = vm.sdepartamentoId();
     var empresaId = vm.sempresaId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
@@ -390,11 +386,11 @@ var rptFacturaParametros = function () {
     var orden = vm.sorden();
     if(!tipoIvaId) tipoIvaId = 0;
     if(!proveedorId) proveedorId = 0;
-    var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + proveedorId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden
+    var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + proveedorId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + departamentoId + "/" + usuario
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
-        if(data) {
+         if(data.libPro.length > 0){
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
