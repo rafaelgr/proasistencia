@@ -4071,3 +4071,16 @@ function datosOKLineasConceptos() {
     return $('#concepto-form').valid();
 }
 
+//contrato asociado
+function crearContratoAsociado() {
+    var data = {
+        contrato:{
+            contratoId: vm.contratoId()
+        }
+    }
+    llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/crear/contrato/asociado", data, function (err, result) {
+        if(err) return;
+        window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW", '_new');
+    });
+}
+
