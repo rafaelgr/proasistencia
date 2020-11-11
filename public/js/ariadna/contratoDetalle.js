@@ -584,6 +584,11 @@ function loadData(data) {
         //$('#txtGFechaInicio').datepicker('disabled', false);
         
     }
+    if(data.ascContratoId) {
+        $('#btnContratoAsociado').hide();
+    } else {
+        $('#btnContratoAsociado').show()
+    }
 }
 
 
