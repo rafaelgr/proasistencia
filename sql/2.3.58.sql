@@ -5,3 +5,4 @@ ALTER TABLE `contratos`
   ALTER TABLE `contratos`   
   DROP COLUMN `calculoInverso`;
 
+INSERT INTO `usuarios`.`wtiporeten` (`codigo`, `descripcion`, `tipo`, `porcentajePorDefecto`, `cuentaPorDefecto`) VALUES ('9', 'ACTIVIDAD PROFIONAL 1%', '0', '1.000', '475100003'); 
