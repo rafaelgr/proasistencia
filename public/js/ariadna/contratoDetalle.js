@@ -4248,9 +4248,7 @@ function initTablaAscContratos() {
             data: "mantenedor"
         }, {
             data: "agente"
-        }, {
-            data: "observaciones"
-        }, {
+        },{
             data: "contratoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAscContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
