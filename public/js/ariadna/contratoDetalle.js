@@ -16,6 +16,7 @@ var dataComisionistas;
 var dataGenerarPrefacturas;
 var dataPrefacturas;
 var dataFacturas;
+var dataAscContratos;
 var dataContratosCobros;
 var ContratoId = 0;
 var cmd;
@@ -28,6 +29,8 @@ var importePrefacturas = 0;
 var importePrefacturasConcepto = 0;
 var usaCalculadora;
 var calcInv = false;
+var DesdeContrato
+var AscContratoId;
 
 
 var breakpointDefinition = {
@@ -96,6 +99,9 @@ function initForm() {
     });
     
     $("#frmLineaConceptos").submit(function () {
+        return false;
+    });
+    $("#frmAscContratos").submit(function () {
         return false;
     });
     $("#cmbEmpresas").select2(select2Spanish());
@@ -251,6 +257,7 @@ function initForm() {
     initTablaFacturas();
     initTablaFacproves();
     initTablaContratosCobros();
+    initTablaAscContratos();
 
     initTablaConceptosLineas();
     $("#cmbComerciales").select2(select2Spanish());
@@ -268,6 +275,8 @@ function initForm() {
 
     cmd = gup('CMD');
     ContratoId = gup('ContratoId');
+    DesdeContrato = gup('DesdeContrato');
+    AscContratoId = gup('AscContratoId')
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
@@ -291,6 +300,7 @@ function initForm() {
             loadFacproveDelContrato(data.contratoId);
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
+            loadAscContratos(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -303,6 +313,7 @@ function initForm() {
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
         $('#btnAltaPrefactura').hide();
+        $('#btnContratoAsociado').hide();
         
         //
         document.title = "NUEVO CONTRATO";
@@ -313,9 +324,14 @@ function initForm() {
      if (gup('doc') != "") {
         $('.nav-tabs a[href="#s5"]').tab('show');
     } 
-    //abrir en pestaña de facturas de prefacturas
+    //abrir en pestaña  de prefacturas
     if (gup('docPre') != "") {
         $('.nav-tabs a[href="#s3"]').tab('show');
+    } 
+
+    //abrir en pestaña de contratos vinculados
+    if (gup('docAsc') != "") {
+        $('.nav-tabs a[href="#s7"]').tab('show');
     } 
 
     //metodo de validacion de fechas
@@ -584,6 +600,14 @@ function loadData(data) {
         //$('#txtGFechaInicio').datepicker('disabled', false);
         
     }
+    if(data.ascContratoId) {
+        $("#tabAscContratos").hide();
+    } else {
+        $("#tabAscContratos").show();
+    }
+    if(data.tipoContratoId != 8) {
+        $("#tabAscContratos").hide();
+    }
 }
 
 
@@ -663,6 +687,10 @@ function datosOK() {
 function salir() {
     var mf = function () {
         var url = "ContratoGeneral.html";
+        if(DesdeContrato == "true" && AscContratoId != 0){
+            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true', '_self';
+            window.open(url, '_self');
+        } 
         window.open(url, '_self');
     }
     return mf;
@@ -671,7 +699,12 @@ function salir() {
 var clicAceptar = function () {
     guardarContrato(function (err, tipo) {
         if (err) return;
-        var url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+        var url;
+        if(DesdeContrato == "true" && AscContratoId != 0){
+            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+        } else {
+            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+        }
         if (tipo == 'POST') {
             url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
         }
@@ -4071,3 +4104,219 @@ function datosOKLineasConceptos() {
     return $('#concepto-form').valid();
 }
 
+//contrato asociado
+function crearContratoAsociado() {
+    var data = {
+        contrato:{
+            contratoId: vm.contratoId()
+        }
+    }
+    llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/crear/contrato/asociado", data, function (err, result) {
+        if(err) return;
+        window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW", '_new');
+    });
+}
+
+/*----------------------------------------------------------
+    Funciones relacionadas con las lines de contratos asociados
+ -----------------------------------------------------------*/
+
+
+function aceptarAscContrato() {
+    if (!datosOKAscContratos()) {
+        return;
+    }
+    if (!vm.contratoComisionistaId()) {
+        // es alta
+        vm.contratoComisionistaId(0);
+    }
+    var data = {
+        contratoComisionista: {
+            contratoComisionistaId: vm.contratoComisionistaId(),
+            contratoId: vm.contratoId(),
+            comercialId: vm.scomercialId(),
+            porcentajeComision: vm.porcentajeComision()
+        }
+    }
+    if (!lineaEnEdicion) {
+        data.contratoComisionista.contratoComisionistaId = 0;
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
+            if (err) return;
+            $('#modalComisionista').modal('hide');
+            loadComisionistas(vm.clienteId());
+        });
+    } else {
+        llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/comisionista/" + vm.contratoComisionistaId(), data, function (err, data) {
+            if (err) return;
+            $('#modalComisionista').modal('hide');
+            loadAscContratos(vm.clienteId());
+        });
+    }
+}
+
+function datosOKAscContratos() {
+    $('#comisionista-form').validate({
+        rules: {
+            cmbComerciales: {
+                required: true
+            },
+            txtPorComer: {
+                number: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            cmbComerciales: {
+                required: "Debe elegir un colaborador"
+            },
+            txtPorComer: {
+                number: "Debe ser un número válido"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#comisionista-form").validate().settings;
+    return $('#comisionista-form').valid();
+}
+
+function initTablaAscContratos() {
+    tablaCarro = $('#dt_AscContratos').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_AscContratos'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAscContratos,
+        columns: [{
+            data: "contratoId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                return html;
+            }
+        }, {
+            data: "referencia"
+        }, {
+            data: "tipo"
+        }, {
+            data: "fechaInicio",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "fechaFinal",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
+            data: "empresa"
+        }, {
+            data: "cliente"
+        }, {
+            data: "total"
+        }, {
+            data: "mantenedor"
+        }, {
+            data: "agente"
+        }, {
+            data: "observaciones"
+        }, {
+            data: "contratoId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAscContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAscContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function editAscContrato(id) {
+    lineaEnEdicion = true;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadAscContrato(data);
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function deleteAscContrato(id) {
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        var data = {
+            contratoId: id
+        };
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/" + id, data, function (err, data) {
+            if (err) return;
+            loadAscContratos(vm.contratoId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadAscContrato(data) {
+    var url = "ContratoDetalle.html?DesdeContrato=true&AscContratoId=" + vm.contratoId() + "&ContratoId=" +data.contratoId;
+    window.open(url, '_new');
+}
+
+
+function loadTablaAscContratos(data) {
+    var dt = $('#dt_AscContratos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function loadAscContratos(id) {
+    llamadaAjax('GET', "/api/contratos/vinculados/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        loadTablaAscContratos(data);
+    });
+}

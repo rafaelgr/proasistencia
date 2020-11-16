@@ -209,7 +209,7 @@ function initTablaContratos() {
         },
         data: dataContratos,
         columns: [{
-            data: "facturaId",
+            data: "contratoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 return html;
