@@ -1970,6 +1970,7 @@ function datosOKComisionistas() {
                 required: true
             },
             txtPorComer: {
+                required:true,
                 number: true
             }
         },
@@ -1979,7 +1980,8 @@ function datosOKComisionistas() {
                 required: "Debe elegir un colaborador"
             },
             txtPorComer: {
-                number: "Debe ser un número válido"
+                number: "Debe ser un número válido",
+                required: "Debe elegir un porcentaje, este puede ser 0"
             }
         },
         // Do not change code below
