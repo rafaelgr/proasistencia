@@ -4115,7 +4115,7 @@ function crearContratoAsociado() {
     }
     llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/crear/contrato/asociado", data, function (err, result) {
         if(err) return;
-        window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW", '_new');
+        window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW&AscContratoId=" + vm.contratoId() + '&DesdeContrato=true', '_new');
     });
 }
 
@@ -4123,38 +4123,6 @@ function crearContratoAsociado() {
     Funciones relacionadas con las lines de contratos asociados
  -----------------------------------------------------------*/
 
-
-function aceptarAscContrato() {
-    if (!datosOKAscContratos()) {
-        return;
-    }
-    if (!vm.contratoComisionistaId()) {
-        // es alta
-        vm.contratoComisionistaId(0);
-    }
-    var data = {
-        contratoComisionista: {
-            contratoComisionistaId: vm.contratoComisionistaId(),
-            contratoId: vm.contratoId(),
-            comercialId: vm.scomercialId(),
-            porcentajeComision: vm.porcentajeComision()
-        }
-    }
-    if (!lineaEnEdicion) {
-        data.contratoComisionista.contratoComisionistaId = 0;
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
-            if (err) return;
-            $('#modalComisionista').modal('hide');
-            loadComisionistas(vm.clienteId());
-        });
-    } else {
-        llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/comisionista/" + vm.contratoComisionistaId(), data, function (err, data) {
-            if (err) return;
-            $('#modalComisionista').modal('hide');
-            loadAscContratos(vm.clienteId());
-        });
-    }
-}
 
 function datosOKAscContratos() {
     $('#comisionista-form').validate({
