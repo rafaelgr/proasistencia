@@ -334,7 +334,7 @@ var rptFacturaParametros = function () {
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
   
-    var url = myconfig.apiUrl + "/api/facturas/facturas/reporte/actividad/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId
+    var url = myconfig.apiUrl + "/api/partes/facturas/reporte/actividad/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
