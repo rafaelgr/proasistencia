@@ -250,7 +250,11 @@ function datosOK() {
             cmbEmpresas: {
                 required: true
             },
+            txtDesdeFecha:{
+                required: true
+            },
             txtHastaFecha: {
+                required:true,
                 greaterThan: "#txtDesdeFecha"
             },
         
@@ -259,7 +263,13 @@ function datosOK() {
         messages: {
             cmbEmpresas: {
                 required: "Debe elegir una empresa"
-            }
+            },
+            txtDesdeFecha:{
+                required: "Debe elegir una fecha"
+            },
+            txtHastaFecha: {
+                required: "Debe elegir una fecha"
+            },
         },
         // Do not change code below
         errorPlacement: function (error, element) {
