@@ -56,12 +56,19 @@ function initForm() {
     //
     $("#btnBuscar").click(rptFacturaParametros);
     // avoid form submmit
-    $("#frmRptListado").submit(function () {
+    $("#frmRptOfertas").submit(function () {
         return false;
     });
+    $("#frmExportar").submit(function () {
+        return false;
+    });
+    $("#btnExportar").click(exportarPDF);
+    //
     
-  
     
+    //
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
     
     $('.datepicker').datepicker({
         closeText: 'Cerrar',
@@ -89,7 +96,8 @@ function initForm() {
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
 
-   
+    // Ahora cliente en autocomplete
+    initAutoCliente();
     
 }
 
@@ -109,6 +117,19 @@ function admData() {
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.clienteId = ko.observable();
+    self.sclienteId = ko.observable();
+    self.tipoClienteId = ko.observable();
+    //
+    self.posiblesclientes = ko.observableArray([]);
+    self.elegidosclientes = ko.observableArray([])
+    //
      self.departamentoId = ko.observable();
      self.sdepartamentoId = ko.observable();
      //
@@ -119,7 +140,7 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/reporte_actividad.mrt";
+    var file = "../reports/listado_existencias.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     
@@ -154,7 +175,7 @@ var obtainReport = function () {
 };
 
 var obtainReportJson = function (obj) {
-        var file = "../reports/reporte_actividad.mrt";
+        var file = "../reports/listado_existencias.mrt";
         var report = new Stimulsoft.Report.StiReport();
             
             
@@ -174,14 +195,61 @@ var obtainReportJson = function (obj) {
 
 };
 
+var obtainReportPdf = function () {
+    var file = "../reports/listado_existencias.mrt";
+    // Create a new report instance
+    var report = new Stimulsoft.Report.StiReport();
+    verb = "GET";
+    url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
+    llamadaAjax(verb, url, null, function (err, data) {
+        var infFacturas = data.infFacturas;
+        file = "../reports/" + infFacturas + ".mrt";
+        report.loadFile(file);
+
+        var connectionString = "Server=" + myconfig.report.host + ";";
+        connectionString += "Database=" + myconfig.report.database + ";"
+        connectionString += "UserId=" + myconfig.report.user + ";"
+        connectionString += "Pwd=" + myconfig.report.password + ";";
+        report.dictionary.databases.list[0].connectionString = connectionString;
+       
+        var pos = 0;
+        for (var i = 0; i < report.dataSources.items.length; i++) {
+            var str = report.dataSources.items[i].sqlCommand;
+        }
+        var sql = report.dataSources.items[pos].sqlCommand;
+        report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
+        // Render report
+        report.render();
+        // Create an PDF settings instance. You can change export settings.
+        var settings = new Stimulsoft.Report.Export.StiPdfExportSettings();
+        // Create an PDF service instance.
+        var service = new Stimulsoft.Report.Export.StiPdfExportService();
+
+        // Create a MemoryStream object.
+        var stream = new Stimulsoft.System.IO.MemoryStream();
+        // Export PDF using MemoryStream.
+        service.exportToAsync(function () {
+            // Get PDF data from MemoryStream object
+            var data = stream.toArray();
+            // Get report file name
+            var fileName = String.isNullOrEmpty(report.reportAlias) ? report.reportName : report.reportAlias;
+            // Save data to file
+            Object.saveAs(data, fileName + ".pdf", "application/pdf")
+        }, report, stream, settings);
+    });
+
+};
 
 var printReport = function (url) {
     $("#reportArea").attr('src', url);
 };
 
 function datosOK() {
-    $('#frmRptListado').validate({
+    $('#frmRptOfertas').validate({
         rules: {
+            cmbEmpresas: {
+                required: true
+            },
             txtDesdeFecha:{
                 required: true
             },
@@ -193,6 +261,9 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
+            cmbEmpresas: {
+                required: "Debe elegir una empresa"
+            },
             txtDesdeFecha:{
                 required: "Debe elegir una fecha"
             },
@@ -205,14 +276,22 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmRptListado").validate().settings;
-    return $('#frmRptListado').valid();
+    var opciones = $("#frmRptOfertas").validate().settings;
+    return $('#frmRptOfertas').valid();
 }
 
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas =data;
+        vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
+    });
+}
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
-/* // cargaCliente
+// cargaCliente
 // carga en el campo txtCliente el valor seleccionado
 var cargaCliente = function (id) {
     llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
@@ -256,14 +335,16 @@ var initAutoCliente = function () {
         return r;
     }, "Debe seleccionar un cliente válido");
 };
- */
+
 var rptFacturaParametros = function () {
     if(!datosOK()) return;
+    var clienteId = vm.sclienteId();
+    var empresaId = vm.sempresaId();
     //var departamentoId = vm.sdepartamentoId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
   
-    var url = myconfig.apiUrl + "/api/partes/facturas/reporte/actividad/crea/json/" + dFecha +"/" + hFecha
+    var url = myconfig.apiUrl + "/api/partes/facturas/listado/existencias/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
@@ -275,3 +356,30 @@ var rptFacturaParametros = function () {
     });
 }
 
+var exportarPDF = function () {
+    $("#mensajeExportacion").hide();
+    $("#mensajeEspera").show();
+    var empresaId = vm.sempresaId();
+
+    if (!empresaId) empresaId = 0;
+
+    var dFecha = vm.dFecha();
+    var hFecha = vm.hFecha();
+
+    // (1) Obtener una lista de las facturas implicadas.
+    // la lista debe devolver también el fichero de informe asociado
+    var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
+    url += "/" + empresaId;
+    url += "/" + sclienteId;
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) {
+            // hay que informar de error durante la exportación
+            return;
+        }
+        $("#mensajeEspera").hide();
+        $("#mensajeExportacion").show();
+        $('#modalExportar').modal('hide');
+        var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
+        mensNormal(mens);
+    });
+}
