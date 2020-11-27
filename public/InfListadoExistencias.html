@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>REPORTE DE ACTIVIDAD</title>
+    <title>LISTADO DE EXISTENCIAS</title>
 
     <!-- Report viewer Office2013 style -->
     <link href="../css/streport/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet">
@@ -58,7 +58,7 @@
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/infReporteActividad.js"></script>
+    <script src="js/ariadna/infListadoExistencias.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
 </head>
 
@@ -66,10 +66,10 @@
     <div style="margin: 0px 5px; padding:10px;">
         <div style="padding:10px;" id="selector">
             <div class="row">
-                <h2><i class="fa fa-bar-chart"></i> Reporte de actividad</h2>
+                <h2><i class="fa fa-bar-chart"></i> Listado de existencias</h2>
             </div>
             <div class="row" style="background-color:darkorange; border:solid 1px;">
-                <form id="frmRptListado"  class="smart-form">
+                <form id="frmRptOfertas" class="smart-form">
                     <fieldset>
                         <div class="row">
                                 <section class="col col-md-6">
@@ -85,6 +85,25 @@
                                         </label>
                                     </section>
                         </div>
+                        <div class="row">
+                                <section class="col col-md-12">
+                                       
+                                </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-md-8">
+                                <!-- <label class="label">Cliente</label>
+                                <label class="input">
+                                    <input id="txtCliente" name="txtCliente" />
+                                </label> -->
+                            </section>
+                            <section class="col col-md-4">
+                                <label class="label">Empresa</label>
+                                <label style="width:100%; height:50px;">
+                                    <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                </label>
+                            </section>        
+                        </div>
                     </fieldset>
                     <fieldset>
                         <div class="pull-right">
@@ -92,7 +111,11 @@
                                 <i class="fa fa-lg fa-search"></i>
                             </button>
                         </div>
-                        <div class="row" style="height: 200px;"></div>
+                        <div class="row">
+                                <section class="col col-md-12">
+                                       
+                                </section>
+                        </div>
                     </fieldset>
                 </form>
             </div>
