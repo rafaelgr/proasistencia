@@ -311,7 +311,7 @@ Anterior</Text>
               <Name>Headerliqgen_nombre</Name>
               <Page isRef="2" />
               <Parent isRef="14" />
-              <Text>Cliente</Text>
+              <Text>Direccion de trabajo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -636,7 +636,7 @@ Intervalo</Text>
               <Page isRef="2" />
               <Parent isRef="29" />
               <ProcessingDuplicates>Merge</ProcessingDuplicates>
-              <Text>{libCli.clienteNombre}</Text>
+              <Text>{libCli.direccionTrabajo}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -922,10 +922,10 @@ Intervalo</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>11/26/2020 9:40:18 AM</ReportChanged>
+  <ReportChanged>11/27/2020 10:44:06 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\listado_existencias.mrt</ReportFile>
-  <ReportGuid>49ea3803c8c14ecd906ff5a2f82a4457</ReportGuid>
+  <ReportGuid>937c8933dca9419881cbe70a15a1b854</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

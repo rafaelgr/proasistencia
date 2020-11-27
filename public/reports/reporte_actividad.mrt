@@ -432,7 +432,7 @@ Intervalo</Text>
               <Name>Text9</Name>
               <Page isRef="2" />
               <Parent isRef="29" />
-              <Text>{libCli.pendientePagoCostes}</Text>
+              <Text>{libCli.totalPendienteCostes}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="31" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -547,7 +547,7 @@ Intervalo</Text>
               <Name>Text25</Name>
               <Page isRef="2" />
               <Parent isRef="29" />
-              <Text>{libCli.pendientePagoVentas}</Text>
+              <Text>{libCli.totalPendienteVentas}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="41" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -617,14 +617,9 @@ Intervalo</Text>
               <Parent isRef="29" />
               <Text>{libCli.coCodigo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
               <Type>Expression</Type>
             </Text2>
-            <Dataliqgen_nombre Ref="48" type="Text" isKey="true">
+            <Dataliqgen_nombre Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>1.8,0,12.2,0.4</ClientRectangle>
@@ -641,7 +636,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_nombre>
-            <Text37 Ref="49" type="Text" isKey="true">
+            <Text37 Ref="48" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -655,7 +650,7 @@ Intervalo</Text>
               <Parent isRef="29" />
               <Text>{libCli.existenciasVentas}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="50" type="NumberFormat" isKey="true">
+              <TextFormat Ref="49" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -672,12 +667,12 @@ Intervalo</Text>
           <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DatalibCli>
-        <FooterBand Ref="51" type="FooterBand" isKey="true">
+        <FooterBand Ref="50" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.4,27.7,0.8</ClientRectangle>
           <Components isList="true" count="9">
-            <Text18 Ref="52" type="Text" isKey="true">
+            <Text18 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>22,0,1,0.4</ClientRectangle>
@@ -689,10 +684,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
-              <Text>{Sum(DatalibCli,libCli.pendientePagoCostes)}</Text>
+              <Parent isRef="50" />
+              <Text>{Sum(DatalibCli,libCli.totalPendienteCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="53" type="NumberFormat" isKey="true">
+              <TextFormat Ref="52" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -701,7 +696,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text18>
-            <Text19 Ref="54" type="Text" isKey="true">
+            <Text19 Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>17.2,0,1.4,0.4</ClientRectangle>
@@ -713,10 +708,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.intervaloVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="55" type="NumberFormat" isKey="true">
+              <TextFormat Ref="54" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -724,7 +719,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text19>
-            <Text20 Ref="56" type="Text" isKey="true">
+            <Text20 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>18.8,0,1.4,0.4</ClientRectangle>
@@ -736,10 +731,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.totalVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="57" type="NumberFormat" isKey="true">
+              <TextFormat Ref="56" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -747,7 +742,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text20>
-            <Text21 Ref="58" type="Text" isKey="true">
+            <Text21 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>20.4,0,1.4,0.4</ClientRectangle>
@@ -759,10 +754,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.existenciasCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="59" type="NumberFormat" isKey="true">
+              <TextFormat Ref="58" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -771,7 +766,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text21>
-            <Text22 Ref="60" type="Text" isKey="true">
+            <Text22 Ref="59" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -782,17 +777,17 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
-              <Text>{Sum(DatalibCli,libCli.pendientePagoVentas)}</Text>
+              <Parent isRef="50" />
+              <Text>{Sum(DatalibCli,libCli.totalPendienteVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="61" type="NumberFormat" isKey="true">
+              <TextFormat Ref="60" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
               <Type>Totals</Type>
             </Text22>
-            <Text24 Ref="62" type="Text" isKey="true">
+            <Text24 Ref="61" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>24.8,0,1.4,0.4</ClientRectangle>
@@ -804,10 +799,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text24</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.totalCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="63" type="NumberFormat" isKey="true">
+              <TextFormat Ref="62" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -816,7 +811,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text24>
-            <Text26 Ref="64" type="Text" isKey="true">
+            <Text26 Ref="63" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>26.4,0,1.2,0.4</ClientRectangle>
@@ -828,10 +823,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.bi)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="65" type="NumberFormat" isKey="true">
+              <TextFormat Ref="64" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -840,7 +835,7 @@ Intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text26>
-            <Text27 Ref="66" type="Text" isKey="true">
+            <Text27 Ref="65" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -851,17 +846,17 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.existenciasVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="67" type="NumberFormat" isKey="true">
+              <TextFormat Ref="66" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
               <Type>Totals</Type>
             </Text27>
-            <Text28 Ref="68" type="Text" isKey="true">
+            <Text28 Ref="67" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>23.2,0,1.4,0.4</ClientRectangle>
@@ -873,10 +868,10 @@ Intervalo</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
               <Page isRef="2" />
-              <Parent isRef="51" />
+              <Parent isRef="50" />
               <Text>{Sum(DatalibCli,libCli.intervaloCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="69" type="NumberFormat" isKey="true">
+              <TextFormat Ref="68" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -903,21 +898,21 @@ Intervalo</Text>
       <PageWidth>29.7</PageWidth>
       <PaperSize>A4</PaperSize>
       <Report isRef="0" />
-      <Watermark Ref="70" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="69" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
-    <Page2 Ref="71" type="Page" isKey="true">
+    <Page2 Ref="70" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="19">
-        <PageHeaderBand2 Ref="72" type="PageHeaderBand" isKey="true">
+      <Components isList="true" count="5">
+        <PageHeaderBand2 Ref="71" type="PageHeaderBand" isKey="true">
           <Border>All;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,27.7,2.4</ClientRectangle>
           <Components isList="true" count="6">
-            <Text8 Ref="73" type="Text" isKey="true">
+            <Text8 Ref="72" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>9.2,0.2,8.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -926,13 +921,13 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>{libCli.empresaNombre}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text8>
-            <Text29 Ref="74" type="Text" isKey="true">
+            <Text29 Ref="73" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>9.2,0.8,8.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -941,13 +936,13 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>Reporte de Actividad</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text29>
-            <Text38 Ref="75" type="Text" isKey="true">
+            <Text38 Ref="74" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>13.4,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -956,13 +951,13 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text38</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>hasta fecha </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text38>
-            <Text39 Ref="76" type="Text" isKey="true">
+            <Text39 Ref="75" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -971,16 +966,16 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text39</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>{libCli.finIntervalo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="77" type="DateFormat" isKey="true">
+              <TextFormat Ref="76" type="DateFormat" isKey="true">
                 <StringFormat>dd/MM/yyyy</StringFormat>
               </TextFormat>
               <Type>Expression</Type>
             </Text39>
-            <Text40 Ref="78" type="Text" isKey="true">
+            <Text40 Ref="77" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8.6,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -989,13 +984,13 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text40</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>desde fecha </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text40>
-            <Text41 Ref="79" type="Text" isKey="true">
+            <Text41 Ref="78" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1004,11 +999,11 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
-              <Page isRef="71" />
-              <Parent isRef="72" />
+              <Page isRef="70" />
+              <Parent isRef="71" />
               <Text>{libCli.inicioIntervalo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="80" type="DateFormat" isKey="true">
+              <TextFormat Ref="79" type="DateFormat" isKey="true">
                 <StringFormat>dd/MM/yyyy</StringFormat>
               </TextFormat>
               <Type>Expression</Type>
@@ -1017,14 +1012,14 @@ Intervalo</Text>
           <Conditions isList="true" count="0" />
           <Guid>8430a42a79e54724a6d7b2beaec43fdf</Guid>
           <Name>PageHeaderBand2</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
+          <Page isRef="70" />
+          <Parent isRef="70" />
         </PageHeaderBand2>
-        <PageFooterBand2 Ref="81" type="PageFooterBand" isKey="true">
+        <PageFooterBand2 Ref="80" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text42 Ref="82" type="Text" isKey="true">
+            <Text42 Ref="81" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.1,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1033,8 +1028,8 @@ Intervalo</Text>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
-              <Page isRef="71" />
-              <Parent isRef="81" />
+              <Page isRef="70" />
+              <Parent isRef="80" />
               <Text>Página {PageNumber} de {TotalPageCount}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -1043,626 +1038,395 @@ Intervalo</Text>
           <Conditions isList="true" count="0" />
           <Guid>50f1a1281dce4f66850252b7e97b5a89</Guid>
           <Name>PageFooterBand2</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
+          <Page isRef="70" />
+          <Parent isRef="70" />
         </PageFooterBand2>
-        <Text77 Ref="83" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>9.8,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>c1c1a278dfe8444cbc3191c053690710</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text77</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Existen.
-Anterior</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text77>
-        <Text78 Ref="84" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>6.6,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>9cabcfe4d7924c538df5884d817265af</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text78</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Trabajo
-Intervalo</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text78>
-        <Text79 Ref="85" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>8.2,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>c8feee66ac654227b8b294a005510ff5</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text79</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Total</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text79>
-        <Text81 Ref="86" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>5.2,11.8,1.2,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>d7fd34341b0543a5be064b1fac6dd11a</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text81</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Por
-Pagar</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text81>
-        <Text86 Ref="87" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>14.2,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>6359339522e84114b171675edb09813f</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text86</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Total</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text86>
-        <Text87 Ref="88" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>3.6,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>47a60f93f52446878e50ede4f55152f0</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text87</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Existen.
-Anterior</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text87>
-        <Text88 Ref="89" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>11.4,11.8,1,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>27aff1e43ed74c1d96e993e9fbe7ac50</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text88</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Por 
-pagar</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text88>
-        <Text89 Ref="90" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>12.6,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>778cd2939f124d91a0ecd4e09b9f123b</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text89</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Trabajo
-Intervalo</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text89>
-        <Text91 Ref="91" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;4;Black</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>3.6,11,6,0.6</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,9,Bold,Point,False,0</Font>
-          <Guid>78d1aef61d1d48de87f1bf2a05819d1a</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text91</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>VENTAS</Text>
-          <TextBrush>Black</TextBrush>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text91>
-        <Text92 Ref="92" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;4;Black</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>9.8,11,5.8,0.6</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,9,Bold,Point,False,0</Font>
-          <Guid>c608e2b051e04584b18c330f6266a647</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text92</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>COSTES</Text>
-          <TextBrush>Black</TextBrush>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text92>
-        <Text48 Ref="93" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>23.2,11.2,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>abdef582371844499f92975baf29e7df</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text48</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Existen.
-Anterior</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text48>
-        <Text46 Ref="94" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>25.6,10,1.2,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>7ddf52d7e0894404a9847bc3106bae51</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text46</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Por
-Pagar</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text46>
-        <Text44 Ref="95" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>23,9.6,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>8ccae4f9a23444aaaf4559e21ae4d1d3</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text44</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Trabajo
-Intervalo</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text44>
-        <Text45 Ref="96" type="Text" isKey="true">
-          <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
-          <Brush>Transparent</Brush>
-          <ClientRectangle>21.4,11.8,1.4,0.8</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Font>Arial,8.25,Bold,Point,False,0</Font>
-          <Guid>ff7e9df7c576496b82e6a3d3ea056a00</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text45</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
-          <Text>Total</Text>
-          <TextBrush>Black</TextBrush>
-          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text45>
-        <HeaderlibCli2 Ref="97" type="HeaderBand" isKey="true">
+        <HeaderlibCli2 Ref="82" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,3.6,27.7,2.8</ClientRectangle>
-          <Components isList="true" count="18">
-            <Text50 Ref="98" type="Text" isKey="true">
+          <Components isList="true" count="21">
+            <Text50 Ref="83" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,2,1.6,0.8</ClientRectangle>
+              <ClientRectangle>2.6,2,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>312b040522fa4f3ea7b857d71dd27e63</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text50</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Codigo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text50>
-            <Text51 Ref="99" type="Text" isKey="true">
+            <Text51 Ref="84" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7.6,2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>282b30a9d98248bfbb115163dbb9edd8</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text51</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Anterior</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text51>
-            <Text66 Ref="100" type="Text" isKey="true">
+            <Text66 Ref="85" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.4,2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>6,2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>89a08e6ba3684fdb9e0876f07f31683e</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text66</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Intervalo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text66>
-            <Text80 Ref="101" type="Text" isKey="true">
+            <Text80 Ref="86" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>4.4,2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>5109c0a5633c4e06b84e999381bca132</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text80</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Anterior</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text80>
-            <Text82 Ref="102" type="Text" isKey="true">
+            <Text82 Ref="87" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.6,2,1.4,0.8</ClientRectangle>
+              <ClientRectangle>9.2,2,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>a75e9737e2034cb6908fc1a131439132</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text82</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Intervalo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text82>
-            <Text83 Ref="103" type="Text" isKey="true">
+            <Text83 Ref="88" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0.4,6.2,0.6</ClientRectangle>
+              <ClientRectangle>4.4,0.4,6.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>923f4b85963b439a98684a109f117811</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text83</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>EXISTENCIAS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text83>
-            <Text84 Ref="104" type="Text" isKey="true">
+            <Text84 Ref="89" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,1.2,3,0.6</ClientRectangle>
+              <ClientRectangle>4.4,1.2,3,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>25dc6ca1b27d4feda99acffd8595e3dd</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text84</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>VENTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text84>
-            <Text85 Ref="105" type="Text" isKey="true">
+            <Text85 Ref="90" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,1.2,3,0.6</ClientRectangle>
+              <ClientRectangle>7.6,1.2,3,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>e195822cc1c44ef7b2df1b5a119bea88</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text85</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>COSTE</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text85>
-            <Text90 Ref="106" type="Text" isKey="true">
+            <Text90 Ref="91" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.2,0.4,10.6,0.6</ClientRectangle>
+              <ClientRectangle>10.8,0.4,10.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>2de0d0cea98549f2ba3bd1198192b8f6</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text90</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>PENDIENTE DE PAGO</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text90>
-            <Text93 Ref="107" type="Text" isKey="true">
+            <Text93 Ref="92" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.2,1.2,3.4,0.8</ClientRectangle>
+              <ClientRectangle>10.8,1.2,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>e09f16712eba4576bf4a3d70f7535d80</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text93</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Anterior 
 intervalo</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text93>
-            <Text94 Ref="108" type="Text" isKey="true">
+            <Text94 Ref="93" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,1.2,3.4,0.8</ClientRectangle>
+              <ClientRectangle>14.4,1.2,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>5b270d273a004f8d89e1062346d5d5ac</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text94</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Intervalo</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text94>
-            <Text95 Ref="109" type="Text" isKey="true">
+            <Text95 Ref="94" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.2,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>10.8,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>81fe5fb4920b4084934c83fa4a51cd45</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text95</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>VENTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text95>
-            <Text96 Ref="110" type="Text" isKey="true">
+            <Text96 Ref="95" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>12.6,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>6d0780584ef2447ebf825d72d63f6ee5</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text96</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>COSTE</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text96>
-            <Text97 Ref="111" type="Text" isKey="true">
+            <Text97 Ref="96" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>14.4,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>2bcd7139868849af8a92ba9859eb056a</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text97</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>VENTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text97>
-            <Text98 Ref="112" type="Text" isKey="true">
+            <Text98 Ref="97" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.6,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>16.2,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>62865756f8c145888a0cf2e4baa7fac6</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text98</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>COSTE</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text98>
-            <Text43 Ref="113" type="Text" isKey="true">
+            <Text43 Ref="98" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.4,1.2,3.4,0.8</ClientRectangle>
+              <ClientRectangle>18,1.2,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>a7038b80d9e343eb89ab3491468b135e</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text43</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>Total</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text43>
-            <Text47 Ref="114" type="Text" isKey="true">
+            <Text47 Ref="99" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.4,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>18,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>40967d6bae2e47b6990c0c25d57d1748</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text47</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>VENTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text47>
-            <Text49 Ref="115" type="Text" isKey="true">
+            <Text49 Ref="100" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.2,2.2,1.6,0.6</ClientRectangle>
+              <ClientRectangle>19.8,2.2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>914cb8827b4d422d8eaebdb2a93a5500</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text49</Name>
-              <Page isRef="71" />
-              <Parent isRef="97" />
+              <Page isRef="70" />
+              <Parent isRef="82" />
               <Text>COSTE</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text49>
+            <Text63 Ref="101" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>21.6,1.2,3.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,9,Bold,Point,False,0</Font>
+              <Guid>d86e8224492240f5aec9fc475334355f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text63</Name>
+              <Page isRef="70" />
+              <Parent isRef="82" />
+              <Text>Pagado
+intervalo</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text63>
+            <Text64 Ref="102" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>21.6,2.2,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,9,Bold,Point,False,0</Font>
+              <Guid>9349180105ed40d9bc11c39685980794</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text64</Name>
+              <Page isRef="70" />
+              <Parent isRef="82" />
+              <Text>VENTA</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text64>
+            <Text68 Ref="103" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>23.4,2.2,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,9,Bold,Point,False,0</Font>
+              <Guid>8c153ea9dd7447ba973e357dc474d24d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text68</Name>
+              <Page isRef="70" />
+              <Parent isRef="82" />
+              <Text>COSTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text68>
           </Components>
           <Conditions isList="true" count="0" />
           <Guid>39ec8591ef4e440fa43d5d9249dff3e2</Guid>
           <Name>HeaderlibCli2</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
+          <Page isRef="70" />
+          <Parent isRef="70" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderlibCli2>
-        <DatalibCli2 Ref="116" type="DataBand" isKey="true">
+        <DatalibCli2 Ref="104" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanBreak>True</CanBreak>
           <ClientRectangle>0,7.2,27.7,0.4</ClientRectangle>
-          <Components isList="true" count="10">
-            <Text57 Ref="117" type="Text" isKey="true">
+          <Components isList="true" count="11">
+            <Text58 Ref="105" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>22,0,1,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>b29369319a1d4112810ccb543e21bc94</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text57</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.pendientePagoCostes}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="118" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text57>
-            <Text58 Ref="119" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>23.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>9.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1670,11 +1434,11 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text58</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
+              <Page isRef="70" />
+              <Parent isRef="104" />
               <Text>{libCli.intervaloCostes}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="120" type="NumberFormat" isKey="true">
+              <TextFormat Ref="106" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -1683,10 +1447,10 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text58>
-            <Text59 Ref="121" type="Text" isKey="true">
+            <Text59 Ref="107" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>17.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1694,11 +1458,11 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text59</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
+              <Page isRef="70" />
+              <Parent isRef="104" />
               <Text>{libCli.intervaloVentas}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="122" type="NumberFormat" isKey="true">
+              <TextFormat Ref="108" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -1706,33 +1470,10 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text59>
-            <Text60 Ref="123" type="Text" isKey="true">
+            <Text61 Ref="109" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>18.8,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>eacc01c6b76b40018aa30720ec202d8c</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text60</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.totalVentas}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="124" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text60>
-            <Text61 Ref="125" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>20.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>7.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1740,12 +1481,12 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text61</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
+              <Page isRef="70" />
+              <Parent isRef="104" />
               <Text>{libCli.existenciasCostes}
 </Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="126" type="NumberFormat" isKey="true">
+              <TextFormat Ref="110" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -1754,98 +1495,24 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text61>
-            <Text62 Ref="127" type="Text" isKey="true">
+            <Text65 Ref="111" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>933513b00742494e9e59366a4ae38e88</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text62</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.pendientePagoVentas}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="128" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text62>
-            <Text63 Ref="129" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>24.8,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>bee51add718f4a03816089233cc1992b</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text63</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.totalCostes}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="130" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text63>
-            <Text64 Ref="131" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>26.4,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>0084c260a48644b9bfe7fcf10922e0cc</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text64</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.bi}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="132" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text64>
-            <Text65 Ref="133" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>2.6,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>d5a7d179fe144d52abc135373a3c87eb</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text65</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
-              <Text>{libCli.cliCodigo}</Text>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.coCodigo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="134" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
               <Type>Expression</Type>
             </Text65>
-            <Text67 Ref="135" type="Text" isKey="true">
+            <Text67 Ref="112" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>4.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1853,17 +1520,161 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text67</Name>
-              <Page isRef="71" />
-              <Parent isRef="116" />
+              <Page isRef="70" />
+              <Parent isRef="104" />
               <Text>{libCli.existenciasVentas}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="136" type="NumberFormat" isKey="true">
+              <TextFormat Ref="113" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
               <Type>Expression</Type>
             </Text67>
+            <Text44 Ref="114" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>10.8,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>48080d099f67424480a0370b8c365b97</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.pendientePagoVentas}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="115" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text44>
+            <Text45 Ref="116" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>12.6,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>a801bb18003843089e482ef4fcc8ace6</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.pendientePagoCostes}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="117" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text45>
+            <Text46 Ref="118" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>14.4,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>28bb1844758a438a8a069632a371004d</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.pendientePagoVentasIntervalo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="119" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text46>
+            <Text48 Ref="120" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16.2,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>2a975975104149e5bf1c864e65c3a914</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.pendientePagoCostesIntervalo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="121" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text48>
+            <Text52 Ref="122" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>18,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>b873d47500a542709a7bfb6300b3585a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text52</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.totalPendienteVentas}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="123" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text52>
+            <Text53 Ref="124" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>19.8,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>c8c1c918abed4c79bb090e515157d5b2</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text53</Name>
+              <Page isRef="70" />
+              <Parent isRef="104" />
+              <Text>{libCli.totalPendienteCostes}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="125" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text53>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -1871,43 +1682,19 @@ intervalo</Text>
           <Filters isList="true" count="0" />
           <Guid>d7cdc19b8c5b4a6886539f6d07065054</Guid>
           <Name>DatalibCli2</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
+          <Page isRef="70" />
+          <Parent isRef="70" />
           <Sort isList="true" count="0" />
         </DatalibCli2>
-        <FooterBand2 Ref="137" type="FooterBand" isKey="true">
+        <FooterBand2 Ref="126" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.4,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="9">
-            <Text68 Ref="138" type="Text" isKey="true">
+          <Components isList="true" count="10">
+            <Text69 Ref="127" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>22,0,1,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>2a8bf2ebd69e4775a52b0f3c707a695c</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text68</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
-              <Text>{Sum(DatalibCli,libCli.pendientePagoCostes)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="139" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Totals</Type>
-            </Text68>
-            <Text69 Ref="140" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>17.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1915,11 +1702,11 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text69</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
+              <Page isRef="70" />
+              <Parent isRef="126" />
               <Text>{Sum(DatalibCli,libCli.intervaloVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="141" type="NumberFormat" isKey="true">
+              <TextFormat Ref="128" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -1927,33 +1714,10 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text69>
-            <Text70 Ref="142" type="Text" isKey="true">
+            <Text71 Ref="129" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>18.8,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>5e2145e7e56d474baca53ce8755d7c15</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text70</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
-              <Text>{Sum(DatalibCli,libCli.totalVentas)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="143" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Totals</Type>
-            </Text70>
-            <Text71 Ref="144" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>20.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>7.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -1961,11 +1725,11 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text71</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
+              <Page isRef="70" />
+              <Parent isRef="126" />
               <Text>{Sum(DatalibCli,libCli.existenciasCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="145" type="NumberFormat" isKey="true">
+              <TextFormat Ref="130" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -1974,78 +1738,9 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text71>
-            <Text72 Ref="146" type="Text" isKey="true">
+            <Text75 Ref="131" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>b6ab86f020af49d0a95fa1439e0ab782</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text72</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
-              <Text>{Sum(DatalibCli,libCli.pendientePagoVentas)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="147" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-              </TextFormat>
-              <Type>Totals</Type>
-            </Text72>
-            <Text73 Ref="148" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>24.8,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>753596904c9744b696c6af9044fb5e7f</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text73</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
-              <Text>{Sum(DatalibCli,libCli.totalCostes)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="149" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Totals</Type>
-            </Text73>
-            <Text74 Ref="150" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>26.4,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8.25,Regular,Point,False,0</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>6f2e0cd4db35419684ba0fadf710b36b</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text74</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
-              <Text>{Sum(DatalibCli,libCli.bi)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="151" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Totals</Type>
-            </Text74>
-            <Text75 Ref="152" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>4.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -2053,21 +1748,21 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text75</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
+              <Page isRef="70" />
+              <Parent isRef="126" />
               <Text>{Sum(DatalibCli,libCli.existenciasVentas)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="153" type="NumberFormat" isKey="true">
+              <TextFormat Ref="132" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
               <Type>Totals</Type>
             </Text75>
-            <Text76 Ref="154" type="Text" isKey="true">
+            <Text76 Ref="133" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>23.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>9.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -2075,11 +1770,11 @@ intervalo</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text76</Name>
-              <Page isRef="71" />
-              <Parent isRef="137" />
+              <Page isRef="70" />
+              <Parent isRef="126" />
               <Text>{Sum(DatalibCli,libCli.intervaloCostes)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="155" type="NumberFormat" isKey="true">
+              <TextFormat Ref="134" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -2088,12 +1783,156 @@ intervalo</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Totals</Type>
             </Text76>
+            <Text54 Ref="135" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>10.8,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>759b7a69837446da911d460c959d26ef</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text54</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.pendientePagoVentas)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="136" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text54>
+            <Text55 Ref="137" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>12.6,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>ea7abdad1dc44f5ea85b1a4ebdcdf578</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text55</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.pendientePagoCostes)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="138" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text55>
+            <Text56 Ref="139" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>14.4,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>a0a62e9a325f424fbcd821dd2a6adfef</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text56</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.pendientePagoVentasIntervalo)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="140" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text56>
+            <Text57 Ref="141" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16.2,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>2f3c720d11d64cabb951dfd99a100741</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text57</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.pendientePagoCostesIntervalo)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="142" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text57>
+            <Text60 Ref="143" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>18,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>f5084363b66d4c0c8c3f97b8a7225727</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text60</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.totalPendienteVentas)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="144" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text60>
+            <Text62 Ref="145" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>19.8,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>0d7dc70f26cf4b4ab7ac12fb36bf57d9</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text62</Name>
+              <Page isRef="70" />
+              <Parent isRef="126" />
+              <Text>{Sum(DatalibCli2,libCli.totalPendienteCostes)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="146" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+            </Text62>
           </Components>
           <Conditions isList="true" count="0" />
           <Guid>8c362cd5ca424dc190c4e1a4af76d37e</Guid>
           <Name>FooterBand2</Name>
-          <Page isRef="71" />
-          <Parent isRef="71" />
+          <Page isRef="70" />
+          <Parent isRef="70" />
         </FooterBand2>
       </Components>
       <Conditions isList="true" count="0" />
@@ -2104,13 +1943,13 @@ intervalo</Text>
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="156" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="147" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page2>
   </Pages>
-  <PrinterSettings Ref="157" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="148" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -2123,10 +1962,10 @@ intervalo</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>11/26/2020 12:21:04 PM</ReportChanged>
+  <ReportChanged>11/27/2020 10:17:36 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\reporte_actividad.mrt</ReportFile>
-  <ReportGuid>bc04fcf11bb34780a7935e609b81703a</ReportGuid>
+  <ReportGuid>c87ddccad6d6449ab094d5ab31bc4b22</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
