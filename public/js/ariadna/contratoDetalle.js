@@ -2182,13 +2182,7 @@ function cambioComercial(data) {
     var comercialId = data.id;
     // hay que buscar el porcentaje
     obtenerPorcentajeDelAgenteColaborador(comercialId, vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
-        if (err) return; 
-        if(comision === 0) {
-            mensNormal("La comision por defecto del colaborador es 0");
-            vm.porcentajeComision(0);
-            recalcularCostesImportesDesdeCoste();
-            return;
-        }
+        if (err) return;
         if(!comision) mensError('El colaborador asociado no tiene una comision por defecto');
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
