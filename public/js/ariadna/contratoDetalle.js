@@ -2103,7 +2103,7 @@ function limpiaComisionista(data) {
     vm.contratoComisionistaId(0);
     vm.scomercialId(null);
     vm.porcentajeComision(null);
-    loadComerciales();
+    loadComerciales(0);
 }
 
 function loadTablaComisionistas(data) {
@@ -2183,6 +2183,7 @@ function cambioComercial(data) {
     // hay que buscar el porcentaje
     obtenerPorcentajeDelAgenteColaborador(comercialId, vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
         if (err) return;
+        if(!comision) mensError('El colaborador asociado no tiene una comision por defecto');
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
     });
