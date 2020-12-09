@@ -65,7 +65,7 @@ function initForm() {
     
     //
     $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
+    loadEmpresas(0);
     
     $('.datepicker').datepicker({
         closeText: 'Cerrar',
@@ -236,9 +236,6 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptOfertas').validate({
         rules: {
-            cmbEmpresas: {
-                required: true
-            },
             txtDesdeFecha:{
                 required: true
             },
@@ -250,9 +247,6 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
-            cmbEmpresas: {
-                required: "Debe elegir una empresa"
-            },
             txtDesdeFecha:{
                 required: "Debe elegir una fecha"
             },
@@ -272,8 +266,9 @@ function datosOK() {
 function loadEmpresas(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas =data;
+        var empresas = [{empresaId: 0, nombre: ""}].concat(data);
         vm.posiblesEmpresas(empresas);
+        vm.sempresaId(0);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }

@@ -22,7 +22,7 @@ function recuperaDepartamento(retorno) {
             departamento = data.departamentoTrabajo;
             loadDepartamentos(departamento, function(err, data) {
                 if(err) return;
-                retorno(null, data, status, request);
+                if(data)  retorno(null, data, status, request);
             });
         },
         error: function (xhr, textStatus, errorThrwon) {

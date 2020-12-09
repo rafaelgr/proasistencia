@@ -116,22 +116,23 @@ function initForm() {
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        
+        if(data) {
+            initAutoCliente();
+            // verificamos si nos han llamado directamente
+            //if (id) $('#selector').hide();
+            if (gup('facturaId') != "") {
+                vm.facturaId(gup('facturaId'));
+                verb = "GET";
+                var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
+                llamadaAjax(verb, url, null, function (err, data) {
+                    vm.sempresaId(data.empresaId);
+                    obtainReport(true);
+                    $('#selector').hide();
+                });
+            }
+        }
     });
     //
-    initAutoCliente();
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    if (gup('facturaId') != "") {
-        vm.facturaId(gup('facturaId'));
-        verb = "GET";
-        var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
-        llamadaAjax(verb, url, null, function (err, data) {
-            vm.sempresaId(data.empresaId);
-            obtainReport(true);
-            $('#selector').hide();
-        });
-    }
 }
 
 function obtainKey() {

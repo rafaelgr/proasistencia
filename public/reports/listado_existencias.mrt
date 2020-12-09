@@ -50,7 +50,7 @@
               <Name>Text30</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
-              <Text>Reporte de Actividad</Text>
+              <Text>LISTADO DE EXISTENCIAS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text30>
@@ -657,10 +657,10 @@ Intervalo</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>12/2/2020 12:41:09 PM</ReportChanged>
+  <ReportChanged>12/9/2020 12:36:30 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\listado_existencias.mrt</ReportFile>
-  <ReportGuid>073d1f493b4847a7af82c481886f38b0</ReportGuid>
+  <ReportGuid>87dab0be0cab4352b3831ff1f908aef2</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

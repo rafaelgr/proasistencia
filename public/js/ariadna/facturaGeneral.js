@@ -28,23 +28,22 @@ function initForm() {
     usuario = recuperarIdUsuario();
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        initTablaFacturas();
-        // comprobamos parámetros
-        facturaId = gup('FacturaId');
-        if (facturaId !== '') {
+        if(data) {
+            initTablaFacturas();
+            // comprobamos parámetros
+            facturaId = gup('FacturaId');
+            if (facturaId !== '') {
+                // Si nos pasan una prefafctura determinada esa es
+                // la que mostramos en el grid
+                cargarFacturas()(facturaId);
+            } else {
+                // Por defecto ahora a la entrada se van a cargar todas 
+                // las facturas que tengamos en el sistema. En un futuro este
+                // criterio puede cambiar y habrá que adaptarlo.
+                cargarFacturas()();
+             }
 
-            // Si nos pasan una prefafctura determinada esa es
-            // la que mostramos en el grid
-            cargarFacturas()(facturaId);
-    
-        } else {
-    
-            // Por defecto ahora a la entrada se van a cargar todas 
-            // las facturas que tengamos en el sistema. En un futuro este
-            // criterio puede cambiar y habrá que adaptarlo.
-            cargarFacturas()();
         }
-
     });
 
      //Evento asociado al cambio de departamento
