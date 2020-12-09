@@ -27,7 +27,7 @@
           <Components isList="true" count="5">
             <Text30 Ref="4" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>9.2,0.8,8.4,0.4</ClientRectangle>
+              <ClientRectangle>9.8,0.8,8.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,11.25,Regular,Point,False,0</Font>
               <Guid>b2c27a016a804479aec214c67c7c4bb2</Guid>
@@ -42,7 +42,7 @@
             </Text30>
             <Text12 Ref="5" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,1.4,2.2,0.6</ClientRectangle>
+              <ClientRectangle>14,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,11.25,Regular,Point,False,0</Font>
               <Guid>bf142b095a4e4c9895539e3069377428</Guid>
@@ -57,7 +57,7 @@
             </Text12>
             <Text14 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,1.4,2.2,0.6</ClientRectangle>
+              <ClientRectangle>16.4,1.4,2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,11.25,Regular,Point,False,0</Font>
               <Guid>c181d8cac0c246dd8811e08a1ce4871e</Guid>
@@ -75,7 +75,7 @@
             </Text14>
             <Text15 Ref="8" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.6,1.4,2.2,0.6</ClientRectangle>
+              <ClientRectangle>9.2,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,11.25,Regular,Point,False,0</Font>
               <Guid>8b23c5830ab14a9984af3ba9446e2347</Guid>
@@ -88,22 +88,24 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text15>
-            <Text16 Ref="9" type="Text" isKey="true">
+            <Text3 Ref="9" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11,1.4,2.2,0.6</ClientRectangle>
+              <ClientRectangle>11.6,1.4,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,11.25,Regular,Point,False,0</Font>
-              <Guid>aab664a054124c559301a5ac4c664ac0</Guid>
+              <Guid>dcac9bf7751046d886db3a0ac0f028b7</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text16</Name>
+              <Name>Text3</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
               <Text>{libPro.inicioIntervalo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="10" type="DateFormat" isKey="true" />
+              <TextFormat Ref="10" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
               <Type>Expression</Type>
-            </Text16>
+            </Text3>
           </Components>
           <Conditions isList="true" count="0" />
           <Name>PageHeaderBand1</Name>
@@ -907,10 +909,10 @@ cerradas</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>12/4/2020 11:35:03 AM</ReportChanged>
+  <ReportChanged>12/9/2020 10:47:04 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\pago_profesionales.mrt</ReportFile>
-  <ReportGuid>c376308b282444228476a53a40fdefb2</ReportGuid>
+  <ReportGuid>d076712edf394d75a569f4a6217a8b47</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
