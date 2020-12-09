@@ -2088,10 +2088,10 @@ intervalo</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>12/1/2020 12:09:11 PM</ReportChanged>
+  <ReportChanged>12/9/2020 9:38:31 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\reporte_actividad.mrt</ReportFile>
-  <ReportGuid>0a0fa71b5bd6472ebbc95c9edfd03aff</ReportGuid>
+  <ReportGuid>e173cf0da06f4c35847838d2d194e5d0</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
