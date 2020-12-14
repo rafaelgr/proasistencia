@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "498c4009e37e45c19f7471e0fc3c05c2",
+  "ReportGuid": "d432a1ced611460e902793274129eab0",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1607515699200+0100)/",
+  "ReportChanged": "/Date(1607932596461+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -66,7 +66,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "6": {
             "Name": "empresaId",
@@ -836,7 +836,7 @@
               "Guid": "2746cacc8a36477399b7da1ac092ed00",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,3.6,6.2,0.4",
+              "ClientRectangle": "0.8,3.6,9,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -973,7 +973,7 @@
               "Guid": "b8081b89eaa5499e951d79fa08775242",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,0.8,8.4,0.6",
+              "ClientRectangle": "0.8,0.8,9,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -992,7 +992,7 @@
               "Guid": "269cb97073ec48a6ad5422c099107d9f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,2.2,8.4,0.6",
+              "ClientRectangle": "0.8,2.2,9,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1009,9 +1009,10 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "212f227461954ac6906b530ba49dd890",
+              "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,2.8,8.4,0.6",
+              "ClientRectangle": "0.8,2.8,9,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1022,6 +1023,9 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             },
             "10": {
@@ -1030,7 +1034,7 @@
               "Guid": "7b55eea7e9664f62824736991f649e4c",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,1.6,8.4,0.6",
+              "ClientRectangle": "0.8,1.6,9,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1049,7 +1053,7 @@
               "Guid": "b1d33d9acfda4b058089433af5545ad6",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "12,3.6,5,0.4",
+              "ClientRectangle": "12,3.6,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1066,9 +1070,11 @@
               "Ident": "StiText",
               "Name": "Text6",
               "Guid": "1059b6647040471f80131255a22b384d",
+              "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.8,4.2,7.2,0.6",
+              "ClientRectangle": "0.8,4.2,9,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1079,6 +1085,9 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             }
           },
