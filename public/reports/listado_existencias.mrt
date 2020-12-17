@@ -157,7 +157,7 @@
             <Text6 Ref="15" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,2,2.2,0.8</ClientRectangle>
+              <ClientRectangle>14,2,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>831f3923acd34c74aae0ee984e29f8a0</Guid>
@@ -166,8 +166,7 @@
               <Name>Text6</Name>
               <Page isRef="2" />
               <Parent isRef="14" />
-              <Text>Existen.
-Anterior</Text>
+              <Text>Anterior</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -176,7 +175,7 @@ Anterior</Text>
             <Headerliqgen_tipo Ref="16" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.6,2,2.2,0.8</ClientRectangle>
+              <ClientRectangle>11.6,2,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
@@ -184,8 +183,7 @@ Anterior</Text>
               <Name>Headerliqgen_tipo</Name>
               <Page isRef="2" />
               <Parent isRef="14" />
-              <Text>Trabajo
-Intervalo</Text>
+              <Text>Intervalo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -194,7 +192,7 @@ Intervalo</Text>
             <Text36 Ref="17" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>9,2,2.4,0.8</ClientRectangle>
+              <ClientRectangle>9,2,2.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>befa5a97d60649578ddc41e57aef15a0</Guid>
@@ -203,8 +201,7 @@ Intervalo</Text>
               <Name>Text36</Name>
               <Page isRef="2" />
               <Parent isRef="14" />
-              <Text>Existen.
-Anterior</Text>
+              <Text>Anterior</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -213,7 +210,7 @@ Anterior</Text>
             <Text1 Ref="18" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,2,1.6,0.8</ClientRectangle>
+              <ClientRectangle>0.2,2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>dd01c2ca34224ccfa1e0f4fd465644b8</Guid>
@@ -231,7 +228,7 @@ Anterior</Text>
             <Headerliqgen_nombre Ref="19" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.8,2,5,0.8</ClientRectangle>
+              <ClientRectangle>3.8,2,5,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
@@ -248,7 +245,7 @@ Anterior</Text>
             <Text32 Ref="20" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.6,2,2.2,0.8</ClientRectangle>
+              <ClientRectangle>16.6,2,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>1389f3e572764c928751677416928889</Guid>
@@ -257,8 +254,7 @@ Anterior</Text>
               <Name>Text32</Name>
               <Page isRef="2" />
               <Parent isRef="14" />
-              <Text>Trabajo
-Intervalo</Text>
+              <Text>Intervalo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -318,7 +314,7 @@ Intervalo</Text>
             <Text9 Ref="24" type="Text" isKey="true">
               <Border>All;Black;1;Solid;False;3;[62:60:58]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2,2,1.6,0.8</ClientRectangle>
+              <ClientRectangle>2,2,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
               <Guid>4fd696fe6a93450a8a65192b41ca243b</Guid>
@@ -348,7 +344,7 @@ Intervalo</Text>
           <Components isList="true" count="7">
             <Text13 Ref="26" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.6,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>16.6,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>227b3a69aa40431b9abf50440bba0971</Guid>
@@ -369,7 +365,7 @@ Intervalo</Text>
             </Text13>
             <Dataliqgen_tipo Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.6,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <HorAlignment>Right</HorAlignment>
@@ -388,7 +384,7 @@ Intervalo</Text>
             </Dataliqgen_tipo>
             <Text7 Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>14,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>5592025692a34d09907a5e85ced97093</Guid>
@@ -410,7 +406,7 @@ Intervalo</Text>
             </Text7>
             <Text2 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>0.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -431,7 +427,7 @@ Intervalo</Text>
             <Dataliqgen_nombre Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.8,0,5,0.4</ClientRectangle>
+              <ClientRectangle>4,0,4.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -439,7 +435,6 @@ Intervalo</Text>
               <Name>Dataliqgen_nombre</Name>
               <Page isRef="2" />
               <Parent isRef="25" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Text>{libCli.direccionTrabajo}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -447,7 +442,7 @@ Intervalo</Text>
             </Dataliqgen_nombre>
             <Text37 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>9,0,2.4,0.4</ClientRectangle>
+              <ClientRectangle>9,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>f93a51d69e2e4224a916a4c2bbc17ef3</Guid>
@@ -467,7 +462,7 @@ Intervalo</Text>
             </Text37>
             <Text10 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>2.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -497,7 +492,7 @@ Intervalo</Text>
           <Components isList="true" count="6">
             <Text19 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.6,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>5d7fc3bb5d544939bc54749c72c1cc4f</Guid>
@@ -517,7 +512,7 @@ Intervalo</Text>
             </Text19>
             <Text21 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>14,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>736d4103477e48b683ae814f4b391665</Guid>
@@ -538,7 +533,7 @@ Intervalo</Text>
             </Text21>
             <Text27 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>9,0,2.4,0.4</ClientRectangle>
+              <ClientRectangle>9,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>6f56acbf0fa1433e8a5a4b56acefd02e</Guid>
@@ -558,7 +553,7 @@ Intervalo</Text>
             </Text27>
             <Text28 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.6,0,2.2,0.4</ClientRectangle>
+              <ClientRectangle>16.6,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>0d476c90e2c145a5b6feb2f0aa21c0b7</Guid>
@@ -580,7 +575,7 @@ Intervalo</Text>
             <Text4 Ref="47" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.8,0.6,5,0.4</ClientRectangle>
+              <ClientRectangle>8.8,0.6,4.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -602,7 +597,7 @@ Intervalo</Text>
             <Text8 Ref="49" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0.6,4.8,0.4</ClientRectangle>
+              <ClientRectangle>14,0.6,4.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -657,10 +652,10 @@ Intervalo</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>12/9/2020 12:36:30 PM</ReportChanged>
+  <ReportChanged>12/16/2020 12:32:07 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\listado_existencias.mrt</ReportFile>
-  <ReportGuid>87dab0be0cab4352b3831ff1f908aef2</ReportGuid>
+  <ReportGuid>7f625796e8024210a7915294ce106000</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

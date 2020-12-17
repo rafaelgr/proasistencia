@@ -221,7 +221,7 @@ function initForm() {
 
    
 
-    initTablaComisionistas();
+    //initTablaComisionistas();
     initTablaClientesAgentes();
     initTablaClientesCobros();
 

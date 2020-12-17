@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "4398363de5b54b409ce8d3b70bac84df",
+  "ReportGuid": "13b21d9868424a03a4c42f8e0c3e41ff",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1607515485140+0100)/",
+  "ReportChanged": "/Date(1607936571338+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -66,7 +66,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "6": {
             "Name": "empresaId",
@@ -740,7 +740,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "Guid": "47028f5f3053448b9437f7f22a74f374",
-          "ClientRectangle": "0,29.84,19,3.4",
+          "ClientRectangle": "0,24.3,19,3.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -843,7 +843,6 @@
               "Ident": "StiText",
               "Name": "Text12",
               "Guid": "81cfcdecc907ac3cd1e9b1899f4e428b",
-              "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
               "ClientRectangle": "5.6,1.2,2.4,0.6",
@@ -859,9 +858,6 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "Type": "Expression"
             },
             "1": {
@@ -869,9 +865,10 @@
               "Name": "Text13",
               "Guid": "d91479a04b85019e78ddea8554b914ce",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "11.4,0.6,7.2,0.4",
+              "ClientRectangle": "11.4,0.6,7.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -882,9 +879,6 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "Type": "Expression"
             },
             "2": {
@@ -941,7 +935,7 @@
               "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9.75;Bold;",
-              "Border": "::Solid;::Double;::Solid;::Solid;;;solid:Black",
+              "Border": "::Solid;::;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -962,7 +956,7 @@
               "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9.75;Bold;",
-              "Border": "::Solid;::Double;::Solid;::Solid;;;solid:Black",
+              "Border": "::Solid;::;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -983,7 +977,7 @@
               "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9.75;Bold;",
-              "Border": "::Solid;::Double;::Solid;::Solid;;;solid:Black",
+              "Border": "::Solid;::;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"

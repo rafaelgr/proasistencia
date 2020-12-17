@@ -1923,7 +1923,7 @@ var apiReport = function (verb, url, data) {
 }
 
 /*----------------------------------------------------------
-    Funciones relacionadas con las lines de colaboradores
+    Funciones relacionadas con las lineas de colaboradores
     comisionistas 
  -----------------------------------------------------------*/
 function nuevoComisionista() {

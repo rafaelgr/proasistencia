@@ -115,6 +115,7 @@ function initForm() {
     loadTiposComerciales();
 
     $('#cmbTiposComerciales').change(function(e) {
+        if(!e.added) return;
         loadColaboradores(e.added);
     });
 
@@ -268,25 +269,16 @@ function datosOK() {
 
 function loadColaboradores(e) {
     if(e) {
-        var TipoComercialId = e.id;
-        if(TipoComercialId == 1) {
-            llamadaAjax("GET", "/api/comerciales/agentes/activos", null, function (err, data) {
+        var tipoComercialId = e.id;
+            llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
                 if (err) return;
                 var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
                 vm.posiblesColaboradores(colaboradores);
                 $("#cmbColaboradores").val([0]).trigger('change');
             });
-        } else {
-            llamadaAjax("GET", "/api/comerciales/activos", null, function (err, data) {
-                if (err) return;
-                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-                vm.posiblesColaboradores(colaboradores);
-                $("#cmbColaboradores").val([0]).trigger('change');
-            });
-        }
-        
     }
 }
+
 
 /*function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
