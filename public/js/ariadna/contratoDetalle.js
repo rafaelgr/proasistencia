@@ -194,11 +194,11 @@ function initForm() {
         }
     });
 
-    $('#chkContratoCerrado').change(function() {
+   /*  $('#chkContratoCerrado').change(function() {
         if ($(this).is(':checked')) {
             borrarPrefacturas();
         }
-    });
+    }); */
     
 
     $("#cmbTextosPredeterminados").select2(select2Spanish());
