@@ -642,8 +642,9 @@ function cambioDepartamento(departamentoId) {
     });
 }
 
-function NuevaRefReparaciones(departamentoId, comision) {
+function nuevaRefReparaciones(departamentoId, comision) {
     var fecha = spanishDbDate(vm.fechaOferta());
+    fecha = new Date(fecha);
     var ano = fecha.getFullYear();
     if(!departamentoId && !comision && !ano && !vm.sempresaId()) return;
    
@@ -1636,7 +1637,7 @@ var initAutoAgente = function () {
                 if (err) return;
                 vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
-                NuevaRefReparaciones(vm.stipoProyectoId(), comision);
+                nuevaRefReparaciones(vm.stipoOfertaId(), comision);
             });
         }
     });
