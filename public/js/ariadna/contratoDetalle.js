@@ -3588,12 +3588,12 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         }
         //completamos el compo observacionesPago
         var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
-        var campoDestacado = copiaDataConceptos[i].concepto + " " + copiaDataConceptos[i].porcentaje+"%\n";
-        var cabOtrosConceptos = '\nOTROSCONCEPTOS';
+        var campoDestacado = copiaDataConceptos[i].concepto + " " + Math.round((copiaDataConceptos[i].porcentaje * 100) / 100) + "%\n";
+        var cabOtrosConceptos = '\nOTROS CONCEPTOS';
         var otrosConceptos = ''
         copiaDataConceptos.splice(i, 1);
         for( var k  = 0; k < copiaDataConceptos.length; k++ ) {
-            otrosConceptos += "\n"+copiaDataConceptos[k].concepto + " " + copiaDataConceptos[k].porcentaje;
+            otrosConceptos += "\n"+copiaDataConceptos[k].concepto + " " + Math.round((copiaDataConceptos[i].porcentaje * 100) / 100);
         }
 
         var p = {

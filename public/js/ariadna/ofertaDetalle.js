@@ -644,14 +644,20 @@ function cambioDepartamento(departamentoId) {
 
 function nuevaRefReparaciones(departamentoId, comision) {
     var fecha = spanishDbDate(vm.fechaOferta());
-    fecha = new Date(fecha);
-    var ano = fecha.getFullYear();
-    if(!departamentoId && !comision && !ano && !vm.sempresaId()) return;
+    var ano = null
+    if(fecha) {
+        fecha = new Date(fecha);
+        ano = fecha.getFullYear();
+
+    }
+    if(!comision) comision = 0;
+    if(!departamentoId ||  !ano || !vm.sempresaId()) return;
    
     if(departamentoId == 7) {
         if(vm.sempresaId() == 2 || vm.sempresaId() == 3 || vm.sempresaId() == 7) {
-            llamadaAjax('GET', "/api/ofertas/siguiente_referencia/reparaciones/" + vm.sempresaId() + "/" + comision  + "/" + ano, null, function (err, data) {
+            llamadaAjax('GET', "/api/ofertas/siguiente_referencia/reparaciones/" + vm.sempresaId() + "/" + comision  + "/" + ano, null, function (err, nuevaReferencia) {
                 if (err) return;
+                vm.referencia(nuevaReferencia);
             });
         }
     }
@@ -1548,6 +1554,7 @@ var cargaAgente = function (id, encarga) {
                 var porcenAgen = vm.porcentajeAgente();
                 if (!vm.porcentajeAgente() || porcenAgen == 0) vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
+                nuevaRefReparaciones(vm.stipoOfertaId(), comision);
             });
         }
     });
