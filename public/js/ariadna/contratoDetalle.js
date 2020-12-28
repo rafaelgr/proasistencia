@@ -31,6 +31,7 @@ var usaCalculadora;
 var calcInv = false;
 var DesdeContrato
 var AscContratoId;
+//var numAscContratos = 0;
 
 
 var breakpointDefinition = {
@@ -4274,9 +4275,11 @@ function loadAscContrato(data) {
 
 
 function loadTablaAscContratos(data) {
+    //if (data) numAscContratos = data.length;
     var dt = $('#dt_AscContratos').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
+        //numAscContratos = 0;
     }
     dt.fnClearTable();
     if (data) dt.fnAddData(data);
