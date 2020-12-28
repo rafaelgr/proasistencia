@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "6781cd5f575c4054a25f13eaa1b18fa5",
+  "ReportGuid": "f90f7020bb814b6e8adf0f6c288ffca7",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1609149020002+0100)/",
+  "ReportChanged": "/Date(1609159896808+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -746,25 +746,6 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text8",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "13.6,1,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "24 H 91 361 38 48"
-              },
-              "HorAlignment": "Right",
-              "Font": ";14.25;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
               "Name": "Text9",
               "Guid": "0c9b2f884eb0512c4f5f017fcd4c8806",
               "MinSize": "0,0",
@@ -774,7 +755,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ATENCIÓN TELEFÓNICA"
+                "Value": "ROMÁN ALONSO"
               },
               "HorAlignment": "Right",
               "Font": ";18;Bold;",
@@ -788,7 +769,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,52,19,3.4",
+          "ClientRectangle": "0,54.6,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -797,29 +778,10 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text7",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.16,18.4,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Camino de las Rejas, 1 28821 Coslada (Madrid) - http://www.proasistencia.es - mail: proasistencia@proasistencia.es"
-              },
-              "HorAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
               "Name": "Text46",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.6,2.76,18,0.4",
+              "ClientRectangle": "0.6,0.16,18,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -830,46 +792,6 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text10",
-              "Guid": "9b553d6104824dd762b72af2bd90fe9e",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.6,0.56,18,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "PROASISTENCIA, S.L. Registro Mercantil de Madrid, Tomo 10.223, Sección 8a, Folio 163, Hoja No M . 162970, Inscripción 1a C.I.F. B 81323180"
-              },
-              "HorAlignment": "Center",
-              "Font": ";6.75;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text34",
-              "Guid": "5101272c6dd6433e9c82618d43e22889",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.6,1.02,18,1.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Le informamos que los datos personales de esta factura, están incorporados en un fichero bajo nuestra responsabilidad, para el tratamiento de datos de carácter personal, con la finalidad de\r\nmantenerle informado sobre los servicios que ofrece PROASISTENCIA, S.L Usted como interesado directo, tiene derecho de Acceso, Rectificación, Cancelación y Oposición al tratamiento de la\r\ninformación que le concierne y autoriza a que pase a formar parte del mencionado fichero, así como a recibir información y publicidad de productos y servicios de PROASISTENCIA, S.L. Si no\r\ndesea ser informado de nuestros productos y servicios mándenos un email o carta.\r\nLos derechos precitados podrán hacerse efectivos ante: PROASISTENCIA, S.L, C/ Camino de Rejas, 1 Coslada 28821 de Madrid o enviando un email: proasistencia@proasistencia.es (Ley\r\norgánica 15/1999 de 13 de diciembre de protección de datos de carácter personal)"
-              },
-              "HorAlignment": "Center",
-              "Font": "Arial Narrow;6.75;Bold, Italic;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             }
           },
