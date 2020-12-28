@@ -49,26 +49,38 @@ function initForm() {
      //Recuperamos el departamento de trabajo
      recuperaDepartamento(function(err, data) {
         if(err) return;
-        
+        //
+        $('#btnBuscar').click(buscarFacturas());
+        $('#btnAlta').click(contabilizarFacturas());
+        $('#btnDownload').click(buscarFicheros());
+        $('#frmBuscar').submit(function () {
+            return false
+        });
+        // ocultamos el botón de alta hasta que se haya producido una búsqueda
+        $("#btnAlta").hide();
+
+        initTablaFacturas();
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+
+        // select2 things
+        $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+      
+        //Evento de marcar/desmarcar todos los checks
+        $('#checkMain').click(
+            function(e){
+                if($('#checkMain').prop('checked')) {
+                    $('.checkAll').prop('checked', true);
+                    updateAll(true);
+                } else {
+                    $('.checkAll').prop('checked', false);
+                    updateAll(false);
+                }
+            }
+        );
     });
 
-    //
-    $('#btnBuscar').click(buscarFacturas());
-    $('#btnAlta').click(contabilizarFacturas());
-    $('#btnDownload').click(buscarFicheros());
-    $('#frmBuscar').submit(function () {
-        return false
-    });
-    // ocultamos el botón de alta hasta que se haya producido una búsqueda
-    $("#btnAlta").hide();
-
-    initTablaFacturas();
-    // comprobamos parámetros
-    facturaId = gup('FacturaId');
-
-    // select2 things
-    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    //loadDepartamentos();
+    
 }
 
 // tratamiento knockout
@@ -127,7 +139,7 @@ function initTablaFacturas() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -216,7 +228,7 @@ function loadTablaFacturas(data) {
     data.forEach(function (v) {
         var field = "#chk" + v.facturaId;
         if (v.sel == 1) {
-            $(field).attr('checked', true);
+            $(field).attr('checked', false);
         }
         $(field).change(function () {
             var quantity = 0;
@@ -264,6 +276,7 @@ function buscarFacturas() {
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
+                $('#checkMain').prop('checked', false);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -446,3 +459,42 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function updateAll(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_factura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(opcion) sel = 1
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                factura: {
+                    facturaId: datos[i].facturaId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}

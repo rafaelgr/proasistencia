@@ -640,7 +640,27 @@ function cambioDepartamento(departamentoId) {
             }
         }
     });
+}
 
+function nuevaRefReparaciones(departamentoId, comision) {
+    var fecha = spanishDbDate(vm.fechaOferta());
+    var ano = null
+    if(fecha) {
+        fecha = new Date(fecha);
+        ano = fecha.getFullYear();
+
+    }
+    if(!comision) comision = 0;
+    if(!departamentoId ||  !ano || !vm.sempresaId()) return;
+   
+    if(departamentoId == 7) {
+        if(vm.sempresaId() == 2 || vm.sempresaId() == 3 || vm.sempresaId() == 7) {
+            llamadaAjax('GET', "/api/ofertas/siguiente_referencia/reparaciones/" + vm.sempresaId() + "/" + comision  + "/" + ano, null, function (err, nuevaReferencia) {
+                if (err) return;
+                vm.referencia(nuevaReferencia);
+            });
+        }
+    }
 }
 
 var cambioCliente = function (data) {
@@ -674,13 +694,26 @@ function cambioTipoProyecto(data) {
         return;
     }
     var tipoProyectoId = data.id;
-    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
-        if (err) return;
-        llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+    if(vm.stipoOfertaId() == 7) {
+        if(vm.sempresaId() != 2 && vm.sempresaId() != 3 && vm.sempresaId() != 7) {
+            llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
+                if (err) return;
+                llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+                    if (err) return;
+                    vm.referencia(nuevaReferencia);
+                });
+            });
+        }
+    } 
+    if(vm.stipoOfertaId() != 7) {
+        llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
             if (err) return;
-            vm.referencia(nuevaReferencia);
+            llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+                if (err) return;
+                vm.referencia(nuevaReferencia);
+            });
         });
-    });
+    }
 }
 
 
@@ -1521,6 +1554,7 @@ var cargaAgente = function (id, encarga) {
                 var porcenAgen = vm.porcentajeAgente();
                 if (!vm.porcentajeAgente() || porcenAgen == 0) vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
+                nuevaRefReparaciones(vm.stipoOfertaId(), comision);
             });
         }
     });
@@ -1610,6 +1644,7 @@ var initAutoAgente = function () {
                 if (err) return;
                 vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
+                nuevaRefReparaciones(vm.stipoOfertaId(), comision);
             });
         }
     });
