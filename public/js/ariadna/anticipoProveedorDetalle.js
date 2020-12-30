@@ -89,6 +89,7 @@ function initForm() {
     });
 
     $("#txtPrecio").focus(function () {
+        if(vm.contabilizada()) return;
         var val = $('#txtPrecio').val();
         if(!val || val == '') return; 
         $('#txtPrecio').val(null);
@@ -150,6 +151,7 @@ function initForm() {
 
     
     $('#txtTotalConIva').focus( function () {
+        if(vm.contabilizada()) return;
         $('#txtTotalConIva').val('');
     })
 
@@ -369,6 +371,7 @@ function admData() {
     self.antTotal = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
+    self.contabilizada = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -519,6 +522,7 @@ function loadData(data) {
     vm.antproveServiciadoId(0);
     vm.importeServiciada(0);
     vm.servicioId(data.servicioId);
+    vm.contabilizada(data.contabilizada);
     
 
     //
@@ -563,6 +567,8 @@ function loadData(data) {
         $('#serv').hide();
         $('#txtTotalConIva').prop('disabled', false);
     }
+
+    if (data.contabilizada == 1) bloqueaEdicionCampos();
     //
     document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
 
@@ -1181,6 +1187,7 @@ function initTablaAnticiposLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editAnticipoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(vm.contabilizada()) bt1 = '';
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -2221,6 +2228,25 @@ function buscarServiciadas() {
         loadServiciadasAntprove(antproveId);
     };
     return mf;
+}
+
+function bloqueaEdicionCampos() {
+    $('#cmbSeries').prop('disabled', true);
+    $('#cmbDepartamentosTrabajo').prop('disabled', true);
+    $('#cmbEmpresas').prop('disabled', true);
+    $('#cmbContratos').prop('disabled', true);
+    $('#cmbFormasPago').prop('disabled', true);
+    $("#frmAnticipo :input").prop('readonly', true);
+    $('#btnAceptar').hide();
+    //
+    $('#btnNuevaLinea').hide();
+    $("#linea-form :input").prop('readonly', true);
+    $('#btnAceptarLinea').hide();
+    $('#cmbTiposRetencion').prop('disabled', true);
+    $('#cmbGrupoArticulos').prop('disabled', true);
+    $('#cmbArticulos').prop('disabled', true);
+    $('#cmbUnidades').prop('disabled', true);
+    $('#cmbTiposIva').prop('disabled', true);
 }
 
 

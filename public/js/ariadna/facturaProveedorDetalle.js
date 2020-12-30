@@ -144,6 +144,7 @@ function initForm() {
     
 
     $('#txtPrecio').focus( function () {
+        if(vm.contabilizada()) return;
         $('#txtPrecio').val('');
     })
 
@@ -387,7 +388,7 @@ function admData() {
     self.emisorIban = ko.observable();
     self.fianza = ko.observable();
     self.enviadaCorreo = ko.observable();
-
+    self.contabilizada = ko.observable();
 
     self.numero2 = ko.observable();
     self.fechaRecepcion2 = ko.observable();
@@ -556,6 +557,7 @@ function loadData(data) {
     vm.fianza(numeral(data.fianza).format('0,0.00'));
     vm.restoPagar(data.restoPagar);
     vm.enviadaCorreo(data.enviadaCorreo);
+    vm.contabilizada(data.contabilizada);
     recalcularCostesImportesDesdeCoste();
     //
     vm.receptorNif(data.receptorNif);
@@ -644,6 +646,8 @@ function loadData(data) {
     }
 
     cargaTablaAnticiposAsociados();
+
+    if (data.contabilizada == 1) bloqueaEdicionCampos();
 }
 
 
@@ -1302,6 +1306,7 @@ function initTablaFacturasLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(vm.contabilizada()) bt1 = "";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -2987,6 +2992,7 @@ function initTablaAnticiposAsociados() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                //var brecalculaRestoPagar = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + brecalculaRestoPagar */+ "</div>";
+                if(vm.contabilizada()) html = '';
                 return html;
             }
         }]
@@ -3065,7 +3071,27 @@ function desvinculaAnticipoIncompleto(anticipoId) {
     });
 }
 
-
+function bloqueaEdicionCampos() {
+    $('#cmbSeries').prop('disabled', true);
+    $('#cmbDepartamentosTrabajo').prop('disabled', true);
+    $('#cmbEmpresas').prop('disabled', true);
+    $('#cmbContratos').prop('disabled', true);
+    $('#cmbFormasPago').prop('disabled', true);
+    $("#frmFactura :input").prop('readonly', true);
+    $('#btnAceptar').hide();
+    //
+    $('#btnNuevaLinea').hide();
+    $("#linea-form :input").prop('readonly', true);
+    $('#btnAceptarLinea').hide();
+    $('#cmbTiposRetencion').prop('disabled', true);
+    $('#cmbGrupoArticulos').prop('disabled', true);
+    $('#cmbArticulos').prop('disabled', true);
+    $('#cmbUnidades').prop('disabled', true);
+    $('#cmbTiposIva').prop('disabled', true);
+    // 
+    $('#btnVincularAnticipoIncompletos').hide();
+    $('#btnVincularAnticipo').hide();
+}
 
 
 
