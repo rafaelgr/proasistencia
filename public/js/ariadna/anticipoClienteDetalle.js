@@ -165,6 +165,7 @@ function admData() {
     self.receptorPoblacion = ko.observable();
     self.receptorProvincia = ko.observable();
     self.conceptoAnticipo = ko.observable();
+    self.contabilizada = ko.observable();
     //
     self.totalConIva = ko.observable();
     //
@@ -239,6 +240,7 @@ function loadData(data) {
     vm.receptorDireccion(data.receptorDireccion);
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.totalConIva(data.totalConIva);
+    vm.contabilizada(data.contabilizada);
     //
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
@@ -255,6 +257,7 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", false);
     }
     
+    if(data.contabilizada == 1) bloqueaEdicionCampos()
     //
     document.title = "Anticipo: " + vm.numeroAnticipoCliente();
 }
@@ -656,6 +659,20 @@ function obtenerSerie(empresaId) {
             vm.serie(data.seriePre);
         });
 }
+
+
+function bloqueaEdicionCampos() {
+    $('#cmbSeries').prop('disabled', true);
+    $('#cmbDepartamentosTrabajo').prop('disabled', true);
+    $('#cmbEmpresas').prop('disabled', true);
+    $('#cmbContratos').prop('disabled', true);
+    $('#cmbFormasPago').prop('disabled', true);
+    $("#frmAntClien :input").prop('readonly', true);
+    $('#btnAceptar').hide();
+}
+    
+
+
 
 
 

@@ -59,6 +59,7 @@ function initForm() {
         return false;
     });
     $("#txtPrecio").focus(function () {
+        if(vm.contabilizada()) return;
         $('#txtPrecio').val(null);
     });
 
@@ -191,6 +192,7 @@ function admData() {
     self.importeAnticipo = ko.observable();
     self.restoCobrar = ko.observable();
     self.tipoProyectoId = ko.observable();
+    self.contabilizada = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -332,6 +334,7 @@ function loadData(data, desdeLinea) {
     vm.sdepartamentoId(data.departamentoId);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
+    vm.contabilizada(data.contabilizada)
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -414,6 +417,8 @@ function loadData(data, desdeLinea) {
     }
 
     cargaTablaAnticiposAsociados();
+    //si la factura está contabilizada bloquemos la edicion
+    if(data.contabilizada == 1) bloqueaEdicionCampos();
 }
 
 
@@ -1087,6 +1092,7 @@ function initTablaFacturasLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(vm.contabilizada()) bt1 = "";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -1945,6 +1951,7 @@ function initTablaAnticiposAsociados() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 //var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + bt2 */+ "</div>";
+                if(vm.contabilizada()) html = '';
                 return html;
             }
         }]
@@ -2018,4 +2025,28 @@ function desvinculaAnticipo(anticipoId) {
         });
     });
 }
+
+function bloqueaEdicionCampos() {
+    $('#cmbSeries').prop('disabled', true);
+    $('#cmbDepartamentosTrabajo').prop('disabled', true);
+    $('#cmbEmpresas').prop('disabled', true);
+    $('#cmbContratos').prop('disabled', true);
+    $('#cmbFormasPago').prop('disabled', true);
+    $("#frmFactura :input").prop('readonly', true);
+    $('#btnAceptar').hide();
+    //
+    $('#btnNuevaLinea').hide();
+    $("#linea-form :input").prop('readonly', true);
+    $('#cmbGrupoArticulos').prop('disabled', true);
+    $('#cmbArticulos').prop('disabled', true);
+    $('#cmbUnidades').prop('disabled', true);
+    $('#cmbTiposIva').prop('disabled', true);
+    $('#btnAceptarLinea').hide();
+    //
+    $('#btnVincularAnticipo').hide();
+}
+    
+
+
+
 
