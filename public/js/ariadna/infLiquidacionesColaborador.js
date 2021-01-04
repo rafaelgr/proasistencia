@@ -303,42 +303,189 @@ function loadTiposComerciales(tipoComercialId) {
 // inicializa el control del cliente como un autocomplete
 
 var rptLiquidacionGeneralParametros = function () {
+    var sql= "";
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
     var departamentoId = vm.sdepartamentoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    var sql = "SELECT";
-    sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
-    sql += " com.comercialId, com.nombre AS nomComercial, tpp.nombre AS tipoProyecto,";
-    sql += " cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,";
-    sql += " fac.facturaId, DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero,";
-    sql += " liq.impCliente, liq.base, liq.porComer, liq.comision,";
-    sql += " tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio";
-    sql += " FROM liquidacion_comercial AS liq";
-    sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
-    sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
-    sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
-    sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-    sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
-    sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
-    sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-    if(tipoComercialId != 1) {
-        sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
-    } else {
+    if(departamentoId !=7 && departamentoId > 0) {
+        sql = "SELECT";
+        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
+        sql += " com.comercialId,";
+        sql += " com.nombre AS nomComercial,";
+        sql += " tpp.nombre AS tipoProyecto,";
+        sql += " cli.nombre AS nomCliente,";
+        sql += " cnt.direccion,"
+        sql += " cnt.referencia,";
+        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+        sql += " fac.numero,";
+        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+        sql += " fac.facturaId,";
+        sql += " fac.fecha,";
+        sql += " fac.serie,";
+        sql += " fac.ano,";
+        sql += " liq.impCliente,";
+        sql += " liq.base As baseCalculo,";
+        sql += " liq.porComer, ";
+        sql += " liq.comision,";
+        sql += " tpm.nombre AS departamento,";
+        sql += " tpc.nombre AS tipoColaborador, ";
+        sql += "  DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio";
+        sql += " FROM liquidacion_comercial AS liq";
+        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+        sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
+        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
+        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
+        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+        sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
+        if(tipoComercialId != 1) {
+            sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
+        } else {
+            sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+        }
+        if (comercialId) {
+            sql += " AND liq.comercialId IN (" + comercialId + ")";
+        }
+        if (tipoComercialId) {
+            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+        }
+        if (departamentoId && departamentoId > 0) {
+            sql += " AND cnt.tipoContratoId = " + departamentoId;
+        }else {
+            sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+        }
+    }
+    else if(departamentoId == 7)  {
+        sql = "SELECT";
+        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
+        sql += " "
+        sql += " com.comercialId,"; 
+        sql += " com.nombre AS nomComercial,";
+        sql += " '' AS tipoProyecto,";
+        sql += " cli.nombre AS nomCliente,";
+        sql += " '' AS direccion,";
+        sql += " '' AS referencia";
+        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+        sql += " fac.numero,";
+        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+        sql += " fac.facturaId,"
+        sql += " fac.fecha,";
+        sql += " fac.serie,";
+        sql += " fac.ano,";
+        sql += " liq.impCliente,";
+        sql += " liq.base As baseCalculo,";
+        sql += " liq.porComer, ";
+        sql += " liq.comision,";
+        sql += " tpm.nombre AS departamento,";
+        sql += " tpc.nombre AS tipoColaborador,";
+        sql += " NULL AS fechaInicio ";
+        sql += " FROM liquidacion_comercial AS liq ";
+        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
+        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
+        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
         sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+        if (comercialId) {
+            sql += " AND liq.comercialId IN (" + comercialId + ")";
+        }
+        if (tipoComercialId) {
+            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+        }
+        sql += " AND fac.departamentoId = 7";
     }
-    if (comercialId) {
-        sql += " AND liq.comercialId IN (" + comercialId + ")";
-    }
-    if (tipoComercialId) {
-        sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
-    }
-    if (departamentoId && departamentoId > 0) {
-        sql += " AND cnt.tipoContratoId = " + departamentoId;
-    }else {
+    else {
+        sql = "SELECT";
+        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
+        sql += " com.comercialId,";
+        sql += " com.nombre AS nomComercial,";
+        sql += " tpp.nombre AS tipoProyecto,";
+        sql += " cli.nombre AS nomCliente,";
+        sql += " cnt.direccion,"
+        sql += " cnt.referencia,";
+        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+        sql += " fac.numero,";
+        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+        sql += " fac.facturaId,";
+        sql += " fac.fecha,";
+        sql += " fac.serie,";
+        sql += " fac.ano,";
+        sql += " liq.impCliente,";
+        sql += " liq.base As baseCalculo,";
+        sql += " liq.porComer, ";
+        sql += " liq.comision,";
+        sql += " tpm.nombre AS departamento,";
+        sql += " tpc.nombre AS tipoColaborador, ";
+        sql += "  DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio";
+        sql += " FROM liquidacion_comercial AS liq";
+        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+        sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
+        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
+        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
+        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+        sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
+        if(tipoComercialId != 1) {
+            sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
+        } else {
+            sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+        }
+        if (comercialId) {
+            sql += " AND liq.comercialId IN (" + comercialId + ")";
+        }
+        if (tipoComercialId) {
+            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+        }
         sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+
+        sql += " UNION";
+
+        sql += " SELECT";
+        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
+        sql += " "
+        sql += " com.comercialId,"; 
+        sql += " com.nombre AS nomComercial,";
+        sql += " '' AS tipoProyecto,";
+        sql += " cli.nombre AS nomCliente,";
+        sql += " '' AS direccion,";
+        sql += " '' AS referencia,";
+        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+        sql += " fac.numero,";
+        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+        sql += " fac.facturaId,"
+        sql += " fac.fecha,";
+        sql += " fac.serie,";
+        sql += " fac.ano,";
+        sql += " liq.impCliente,";
+        sql += " liq.base As baseCalculo,";
+        sql += " liq.porComer, ";
+        sql += " liq.comision,";
+        sql += " tpm.nombre AS departamento,";
+        sql += " tpc.nombre AS tipoColaborador,";
+        sql += " NULL AS fechaInicio ";
+        sql += " FROM liquidacion_comercial AS liq ";
+        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
+        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
+        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+        if (comercialId) {
+            sql += " AND liq.comercialId IN (" + comercialId + ")";
+        }
+        if (tipoComercialId) {
+            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+        }
+        sql += " AND fac.departamentoId = 7";
+
     }
+    
     return sql;
 }
 
