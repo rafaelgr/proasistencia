@@ -477,8 +477,9 @@ FACTURA
               <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text7>
@@ -497,8 +498,9 @@ FACTURA
               <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -536,8 +538,9 @@ FACTURA
               <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text13>
@@ -557,8 +560,9 @@ FACTURA
               <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text25>
@@ -578,8 +582,9 @@ FACTURA
               <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -600,8 +605,9 @@ FACTURA
               <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -622,8 +628,9 @@ FACTURA
               <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -693,8 +700,9 @@ FACTURA
               <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Totals</Type>
@@ -752,8 +760,9 @@ FACTURA
               <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Totals</Type>
@@ -804,10 +813,10 @@ FACTURA
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/4/2021 10:10:54 AM</ReportChanged>
+  <ReportChanged>1/4/2021 10:29:27 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente.mrt</ReportFile>
-  <ReportGuid>8c208d477ffe42d2b2cdfb3c26ec51fc</ReportGuid>
+  <ReportGuid>ab927a6be6d94951b865021707f60d6e</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

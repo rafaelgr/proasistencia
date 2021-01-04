@@ -91,7 +91,7 @@ ORDER BY com.nombre, fac.fecha;</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>12.8,2,1.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>de563db9714f4d1794224d69ad5bb0e5</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -109,14 +109,14 @@ CALCULO</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>14.6,2,2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>e05688419664430e86152b729f4c3120</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text50</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>PORCENTAJE
+              <Text>PORCEN.
 %</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -127,7 +127,7 @@ CALCULO</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,2,2.2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>ed76c10d3d5d4913a3a6f0eade5d9fe4</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -135,7 +135,7 @@ CALCULO</Text>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Text>IMPORTE
-LIQUIDACION</Text>
+LIQUI.</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -143,9 +143,9 @@ LIQUIDACION</Text>
             <Text52 Ref="10" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,2,1.6,1</ClientRectangle>
+              <ClientRectangle>0.2,2,1.4,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>3f31ac366ed84860be11efc0c958c31c</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -160,17 +160,17 @@ LIQUIDACION</Text>
             <Text53 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,2,2.4,1</ClientRectangle>
+              <ClientRectangle>3.4,2,2.2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>ec631b0b5f1e4c5498b486a1fe06b940</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text53</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
-              <Text>TOTAL
-FACTURAS
+              <Text>IMPORTE
+FACTURA
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -180,7 +180,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>5.2,2,3.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>1bf10860f5d7439eb3c16c8dffefae5b</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -197,7 +197,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>5.2,2.6,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>a39e71813e95472fa493f704003ff199</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -213,7 +213,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>9,2,3.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>d662160726584163a627404e8db55cf3</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -230,7 +230,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>9,2.6,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>bec7074acd8c4374aa09243caf07fb6c</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -247,7 +247,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>11,2.6,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>df911d9e6f3945a6a2c2526727be76ad</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -264,7 +264,7 @@ FACTURAS
               <Brush>Transparent</Brush>
               <ClientRectangle>7.2,2.6,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>e730b37c4522459f86d2d70c8700f1b7</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -279,9 +279,9 @@ FACTURAS
             <Text1 Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,2,2,1</ClientRectangle>
+              <ClientRectangle>1.6,2,1.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
+              <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="4" />
@@ -446,7 +446,7 @@ FACTURAS
           <Components isList="true" count="10">
             <Text5 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>0.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
@@ -475,8 +475,9 @@ FACTURAS
               <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text7>
@@ -495,8 +496,9 @@ FACTURAS
               <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text9>
@@ -533,8 +535,9 @@ FACTURAS
               <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text13>
@@ -554,8 +557,9 @@ FACTURAS
               <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
             </Text25>
@@ -575,8 +579,9 @@ FACTURAS
               <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -597,8 +602,9 @@ FACTURAS
               <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
@@ -619,15 +625,16 @@ FACTURAS
               <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
             <Text2 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>1.6,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
@@ -680,7 +687,7 @@ FACTURAS
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7fdf7065aaea4de3a24194166a341ea6</Guid>
-              <HorAlignment>Right</HorAlignment>
+              <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
               <Page isRef="4" />
@@ -690,8 +697,9 @@ FACTURAS
               <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Totals</Type>
@@ -739,7 +747,7 @@ FACTURAS
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>822d6cfe96ca4f5a83e91c02e9329d37</Guid>
-              <HorAlignment>Right</HorAlignment>
+              <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
               <Page isRef="4" />
@@ -749,8 +757,9 @@ FACTURAS
               <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Totals</Type>
@@ -760,7 +769,6 @@ FACTURAS
           <Conditions isList="true" count="0" />
           <Guid>98d057adf1fa4624b1eac06af2262e21</Guid>
           <Name>GroupFooterBand3</Name>
-          <NewPageAfter>True</NewPageAfter>
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand3>
@@ -771,6 +779,7 @@ FACTURAS
           <Conditions isList="true" count="0" />
           <Guid>64c156b0e31d47be82e275f4dddc14a9</Guid>
           <Name>GroupFooterBand4</Name>
+          <NewPageAfter>True</NewPageAfter>
           <Page isRef="4" />
           <Parent isRef="4" />
         </GroupFooterBand4>
@@ -801,10 +810,10 @@ FACTURAS
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/26/2018 9:01:48 AM</ReportChanged>
+  <ReportChanged>1/4/2021 10:41:46 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
-  <ReportGuid>44a834ab59e441caaad5913483cdb3d6</ReportGuid>
+  <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
+  <ReportGuid>6f7123055da6411aab86f1282c7aa454</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

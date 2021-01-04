@@ -362,7 +362,6 @@ var rptLiquidacionGeneralParametros = function () {
         sql = "SELECT";
         sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
         sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
-        sql += " "
         sql += " com.comercialId,"; 
         sql += " com.nombre AS nomComercial,";
         sql += " '' AS tipoProyecto,";
