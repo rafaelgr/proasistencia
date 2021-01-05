@@ -42,6 +42,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+    $("#btnImportar").click(importar());
 
     $('#frmProveedor').submit(function () {
         return false;
@@ -383,6 +384,13 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     
+    //COMBO COMERCIALES
+     //
+     self.comercialId = ko.observable();
+     self.scomercialId = ko.observable();
+     //
+     self.posiblesComerciales = ko.observableArray([]);
+     self.elegidosComerciales = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -1165,3 +1173,68 @@ function compruebaAnticipos(id) {
             }
         });
 }
+
+function aceptarImportar() {
+    var mf = function () {
+        if (!datosImportOK())
+            return;
+        $('#btnImportar').addClass('fa-spin');
+        var url = myconfig.apiUrl + "/api/sqlany/comerciales/" + vm.proId();
+        if (vm.stipoComercialId() == 1) {
+            // los agentes se buscan en otro sitio
+            url = myconfig.apiUrl + "/api/sqlany/agentes/" + vm.proId();
+        }
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                $('#btnImportar').removeClass('fa-spin');
+                // la cadena será devuelta como JSON
+                var rData = JSON.parse(data);
+                // comprobamos que no está vacía
+                if (rData.length == 0) {
+                    // mensaje de que no se ha encontrado
+                }
+                data = rData[0];
+                data.comercialId = vm.comercialId(); // Por si es un update
+                // hay que mostrarlo en la zona de datos
+                loadData(data);
+                // volver a cargar  el tipoComercial
+                loadTiposComerciales(vm.stipoComercialId());
+            },
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+        });
+    };
+    return mf;
+    
+}
+
+
+function loadComerciales() {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var comerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(comerciales);
+            if (id) {
+                $("#cmbComerciales").val([id]).trigger('change');
+            } else {
+                $("#cmbComerciales").val([0]).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+

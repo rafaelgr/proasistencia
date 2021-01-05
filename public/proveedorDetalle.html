@@ -557,6 +557,17 @@
                                                                                                         </header>
                                                                                                         <fieldset>
                                                                                                             <div class="row">
+                                                                                                                <section class="col col-md-9"></section>
+                                                                                                                <section class="col col-md-3">
+                                                                                                                    <div class="pull-right">
+                                                                                                                        <button id="btnImportar" data-toggle="modal" data-target="#modalComerciales" onclick="loadComerciales()" title="Importar comercial" class="btn btn-success btn-circle btn-lg">
+                                                                                                                            <i class="fa fa-lg fa-refresh"></i>
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                </section>
+                                                                                                            </div>
+                                                                                                            
+                                                                                                            <div class="row">
                                                                                                                 <section class="col col-md-2">
                                                                                                                     <label class="label">ID</label>
                                                                                                                     <label class="input">
@@ -1013,6 +1024,48 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalComerciales" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> IMPORTAR COMERCIALES</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="comercial-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                
+                                <div class="row">
+                                    <div class="col col-md-2">
+                                        <label class="label">Agente</label>
+                                            <label style="width:100%;">
+                                                <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select>
+                                                <i></i>
+                                            </label>
+                                    </div>
+                                </div> 
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarComercial" class="btn btn-primary" onclick="aceptarImportar()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
