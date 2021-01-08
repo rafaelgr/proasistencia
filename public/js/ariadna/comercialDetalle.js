@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataContratosComerciales;
 var dataClientes;
 var contratoComercialId;
+var dataProveedorAsc;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -20,6 +21,7 @@ var empId = 0;
 var cambColaborador;
 var datosCambioColaborador;
 var dataAgentesColaboradores;
+var nifGuardado;
 
 datePickerSpanish(); // see comun.js
 
@@ -42,10 +44,20 @@ function initForm() {
 
     $('#frmCambioAgente').submit(function () {
         return false;
+    });frmProveedorAsc
+
+    
+    $('#frmProveedorAsc').submit(function () {
+        return false;
+    });ProveedorAsc_form
+
+    $('#ProveedorAsc_form').submit(function () {
+        return false;
     });
 
     initTablaContratosComerciales();
     initTablaClientes();
+    initTablaProveedorAsc();
 
     // select2 things
     $("#cmbTiposComerciales").select2(select2Spanish());
@@ -61,8 +73,11 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    // select2 things
     $("#cmbTarifas").select2(select2Spanish());
     loadTarifas();
+    // select2 things
+    $('#cmbProveedores').select2(select2Spanish());
 
     $("#cmbAscComerciales").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -254,6 +269,14 @@ function admData() {
      //
      self.posiblesTarifas = ko.observableArray([]);
      self.elegidasTarifas = ko.observableArray([]);
+
+     //COMBO PROVEEDORES
+     //
+     self.proveedorId = ko.observable();
+     self.sproveedorId = ko.observable();
+     //
+     self.posiblesProveedores = ko.observableArray([]);
+     self.elegidosProveedores = ko.observableArray([]);
 }
 
 function loadData(data, desdeLoad) {
@@ -261,6 +284,7 @@ function loadData(data, desdeLoad) {
     vm.proId(data.proId);
     vm.nombre(data.nombre);
     vm.nif(data.nif);
+    nifGuardado = data.nif
     vm.fechaAlta(spanishDate(data.fechaAlta));
     vm.fechaBaja(spanishDate(data.fechaBaja));
     vm.activa(data.activa);
@@ -305,6 +329,7 @@ function loadData(data, desdeLoad) {
     loadTiposVia(data.tipoViaId);
     loadTarifas(data.tarifaId);
     cambioAscColaborador(data, desdeLoad);
+    loadProveedorAsc(data.proveedorId);
 }
 
 function datosOK() {
@@ -1186,4 +1211,249 @@ function actualizaColaboradorAsociado(datos) {
          mensErrorAjax(err);
      }
      });
+}
+
+
+function aceptarExportar() {
+    var mf = function () {
+        var proveedorId = vm.sproveedorId();
+        //  URL Y METODO POR DEFECTO
+        var url = "api/comerciales/solo/vincula/proveedor";
+        var method = "PUT";
+        var data = {
+            comercial: {
+                comercialId: vm.comercialId(),
+                nombre: vm.nombre(),
+                nif: vm.nif(),
+                proveedorId: proveedorId
+            }
+        }
+
+        if (!datosImportOK()) return;
+
+        //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
+        if(proveedorId == 0) {
+            url = "api/proveedores/crea-vincula/proveedor";
+            method = "POST";
+            data = preparaObjProveedor();
+        }
+
+        $.ajax({
+            type: method,
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                if(method = "POST") {
+                    method = "PUT";
+                    url =  "api/comerciales/solo/vincula/proveedor";
+                    data = {
+                        comercial: {
+                            comercialId: vm.comercialId(),
+                            nombre: vm.nombre(),
+                            nif: vm.nif(),
+                            proveedorId: data.proveedorId
+                        }
+                    }
+                    $.ajax({
+                        type: method,
+                        url: url,
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data, status) {
+                    
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
+                }
+        
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    };
+    return mf;
+}
+
+
+var preparaObjProveedor = function () {
+    var data = {
+        proveedor: {
+            "proveedorId": 0,
+            "codigo": vm.codigo(),
+            "serie": "A",
+            "proId": vm.proId(),
+            "nombre": vm.nombre(),
+            "nif": vm.nif(),
+            "direccion": vm.direccion(),
+            "poblacion": vm.poblacion(),
+            "provincia": vm.provincia(),
+            "codPostal": vm.codPostal(),
+            "telefono": vm.telefono(),
+            "correo": vm.correo(),
+            "tipoViaId": vm.tipoViaId(),
+            "persona_contacto": vm.contacto(),
+            "tipoProveedor": 2,
+            "tipoProfesionalId": 1,
+            "telefono2": vm.telefono2(),
+            "movil": vm.movil(),
+            "movil2": vm.movil2(),
+            "correo2": vm.correo2(),
+            "fechaAlta": spanishDbDate(vm.fechaAlta()),
+            "fechaBaja": spanishDbDate(vm.fechaBaja()),
+            "motivoBajaId": vm.smotivoBajaId(),
+            "formaPagoId": vm.sformaPagoId(),
+            "IBAN": vm.iban(),
+            "codigoProfesional": vm.codigoProfesional(),
+            "fianza": 0,
+            "tipoIvaId": vm.stipoIvaId(),
+            "fianzaAcumulada": 0,
+            "retencionFianza" : 0,
+            "revisionFianza": null,
+            "tarifaId": 1,
+            "codigoRetencion": 0,
+            "observaciones": vm.observaciones(),
+            "paisId": 66,
+            "emitirFacturas": 0,
+        },
+        departamentos: {
+            "departamentos": [1,2,3,4,5,6,7,8]
+        }
+    };
+    return data;
+}
+
+
+function loadProveedores() {
+    if(!nifGuardado || nifGuardado == '') {
+        mensError("Se requiere el NIF del comercial para poder vincular, este campo está vacio");
+        setTimeout( function() { $('#modalProveedorAsc').modal('hide'); }, 50);
+        return;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/api/proveedores//activos/proveedores/todos/por/nif/?nif=" + nifGuardado,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var comerciales = [{ proveedorId: 0, nombre: "" }].concat(data);
+            vm.posiblesProveedores(comerciales);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function initTablaProveedorAsc() {
+    tablaCarro = $('#dt_ProveedorAsc').dataTable({
+        autoWidth: true,
+        "bPaginate": false,
+        "searching": false,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_ProveedorAsc'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataProveedorAsc,
+        columns: [{
+            data: "nombre"
+        }, {
+            data: "nif"
+        }, {
+            data: "cuentaContable"
+        },{
+            data: "comercialId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-xs' onclick='desvinculaProveedorAsc(" + data + ");' title='Desvincular proveedor'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function loadTablaProveedorAsc(data) {
+    var dt = $('#dt_ProveedorAsc').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+        $('#btnExportar').show();
+    } 
+    else if(!data) {
+        $('#btnExportar').show();
+    }
+    else {
+        $('#btnExportar').hide();
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function loadProveedorAsc(proveedorId) {
+    llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
+        if (err) return;
+        loadTablaProveedorAsc(data);
+    });
+}
+
+function desvinculareProveedorAsc(comercialId) {
+    // mensaje de confirmación
+    var url = myconfig.apiUrl + "/api/comerciles/" + comercialId;
+    var mens = "¿Realmente desea desvincular este proveedor?";
+    mensajeAceptarCancelar(mens, function () {
+        var data = {
+            comercial: {
+                comercialId: vm.comercialId(),
+                nombre: vm.nombre(),
+                nif: vm.nif(),
+                proveedorId: null
+            }
+        }
+        llamadaAjax("PUT", url, data, function (err, data) {
+            if (err) return;
+            llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
+                if (err) return;
+                loadTablaProveedorAsc(null);
+            });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
 }

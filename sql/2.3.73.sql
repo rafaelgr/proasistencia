@@ -1,6 +1,6 @@
-ALTER TABLE `proveedores`   
-  ADD COLUMN `comercialId` INT(11) NULL AFTER `empresaId`,
-  ADD CONSTRAINT `proveedores_comerciales` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`) ON UPDATE CASCADE ON DELETE SET NULL;
+ALTER TABLE `proasistencia`.`comerciales`   
+  ADD COLUMN `proveedorId` INT(11) NULL AFTER `tarifaId`,
+  ADD CONSTRAINT `ref_comercial_proveedor` FOREIGN KEY (`proveedorId`) REFERENCES `proasistencia`.`proveedores`(`proveedorId`);
 
 
 #SE CREA UNA TABLA TEMPORAL
@@ -15,21 +15,10 @@ c.comercialId AS comercialId, c.nombre AS comercialNombre, c.nif AS comercialNif
 #,p.codigo AS codigo, p.cuentaContable AS cuenta
 FROM comerciales AS c
 INNER JOIN proveedores AS p ON p.nif = c.nif AND p.nif <> '000000000'
-WHERE  NOT p.proveedorId IN 
-(
-117,
-413,
-2128,
-2186,
-2192,
-2211,
-2214,
-2577,
-2687,
-2708
-) AND c.activa = 1;
+WHERE  c.activa = 1 OR activa IS NULL;
 
-#SE ACTULIUZAN LOS PROVEEDORES CON EL COMERCIALID DE LA TABLA TEMPORAL
-UPDATE proveedores AS p
-INNER JOIN tmpComerPro AS t ON t.proveedorId = p.proveedorId
-SET p.comercialId = t.comercialId;
+
+#SE ACTULIUZAN LOS COMERCIALES CON EL PROVEEDORID DE LA TABLA TEMPORAL
+UPDATE comerciales AS c
+INNER JOIN tmpComerPro AS t ON t.comercialId = c.comercialId
+SET c.proveedorId = t.proveedorId;
