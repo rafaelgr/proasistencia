@@ -1215,7 +1215,6 @@ function actualizaColaboradorAsociado(datos) {
 
 
 function aceptarExportar() {
-    var mf = function () {
         var proveedorId = vm.sproveedorId();
         //  URL Y METODO POR DEFECTO
         var url = "api/comerciales/solo/vincula/proveedor";
@@ -1229,24 +1228,27 @@ function aceptarExportar() {
             }
         }
 
-        if (!datosImportOK()) return;
+        //if (!datosImportOK()) return;
 
         //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
         if(proveedorId == 0) {
-            url = "api/proveedores/crea-vincula/proveedor";
+            url = "api/proveedores/";
             method = "POST";
             data = preparaObjProveedor();
         }
 
+        //si no hay datos no hacemos nada
+        if (!data) return;
         $.ajax({
             type: method,
             url: url,
             dataType: "json",
+            data: JSON.stringify(data),
             contentType: "application/json",
             success: function (data, status) {
-                if(method = "POST") {
+                if(method == "POST") {
+                    url = "api/comerciales/solo/vincula/proveedor";
                     method = "PUT";
-                    url =  "api/comerciales/solo/vincula/proveedor";
                     data = {
                         comercial: {
                             comercialId: vm.comercialId(),
@@ -1259,6 +1261,7 @@ function aceptarExportar() {
                         type: method,
                         url: url,
                         dataType: "json",
+                        data: JSON.stringify(data),
                         contentType: "application/json",
                         success: function (data, status) {
                     
@@ -1276,56 +1279,86 @@ function aceptarExportar() {
                     // si hay algo más que hacer lo haremos aquí.
             }
         });
-    };
-    return mf;
 }
 
 
 var preparaObjProveedor = function () {
-    var data = {
-        proveedor: {
-            "proveedorId": 0,
-            "codigo": vm.codigo(),
-            "serie": "A",
-            "proId": vm.proId(),
-            "nombre": vm.nombre(),
-            "nif": vm.nif(),
-            "direccion": vm.direccion(),
-            "poblacion": vm.poblacion(),
-            "provincia": vm.provincia(),
-            "codPostal": vm.codPostal(),
-            "telefono": vm.telefono(),
-            "correo": vm.correo(),
-            "tipoViaId": vm.tipoViaId(),
-            "persona_contacto": vm.contacto(),
-            "tipoProveedor": 2,
-            "tipoProfesionalId": 1,
-            "telefono2": vm.telefono2(),
-            "movil": vm.movil(),
-            "movil2": vm.movil2(),
-            "correo2": vm.correo2(),
-            "fechaAlta": spanishDbDate(vm.fechaAlta()),
-            "fechaBaja": spanishDbDate(vm.fechaBaja()),
-            "motivoBajaId": vm.smotivoBajaId(),
-            "formaPagoId": vm.sformaPagoId(),
-            "IBAN": vm.iban(),
-            "codigoProfesional": vm.codigoProfesional(),
-            "fianza": 0,
-            "tipoIvaId": vm.stipoIvaId(),
-            "fianzaAcumulada": 0,
-            "retencionFianza" : 0,
-            "revisionFianza": null,
-            "tarifaId": 1,
-            "codigoRetencion": 0,
-            "observaciones": vm.observaciones(),
-            "paisId": 66,
-            "emitirFacturas": 0,
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            numDigitos = data.numDigitos
+            // contador de código
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    var codigo = data.codigo;
+                    var codmacta = montarCuentaContable('410', codigo, numDigitos); 
+                    var data = {
+                        proveedor: {
+                            "proveedorId": 0,
+                            "codigo": codigo,
+                            "cuentaContable": codmacta,
+                            "serie": "A",
+                            "nombre": vm.nombre(),
+                            "nif": vm.nif(),
+                            "direccion": vm.direccion(),
+                            "poblacion": vm.poblacion(),
+                            "provincia": vm.provincia(),
+                            "codPostal": vm.codPostal(),
+                            "telefono": vm.telefono1(),
+                            "telefono2": vm.telefono2(),
+                            "tipoViaId": vm.tipoViaId(),
+                            "persona_contacto": vm.contacto1(),
+                            "tipoProveedor": 2,
+                            "tipoProfesionalId": 1,
+                            "correo": vm.email(),
+                            "correo2": vm.email2(),
+                            "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                            "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                            "motivoBajaId": vm.smotivoBajaId(),
+                            "formaPagoId": vm.formaPagoId(),
+                            "IBAN": vm.iban(),
+                            "codigoProfesional": '0000',
+                            "fianza": 0,
+                            "tipoIvaId": 3,
+                            "fianzaAcumulada": 0,
+                            "retencionFianza" : 0,
+                            "revisionFianza": null,
+                            "tarifaId": 1,
+                            "codigoRetencion": 0,
+                            "observaciones": vm.observaciones(),
+                            "paisId": 66,
+                            "emitirFacturas": 0,
+                        },
+                        departamentos: {
+                            "departamentos": [1,2,3,4,5,6,7,8]
+                        }
+                    };
+                    return data;
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    data = null;
+                    return data;
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+   
         },
-        departamentos: {
-            "departamentos": [1,2,3,4,5,6,7,8]
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
         }
-    };
-    return data;
+    });
 }
 
 
@@ -1343,6 +1376,7 @@ function loadProveedores() {
         success: function (data, status) {
             var comerciales = [{ proveedorId: 0, nombre: "" }].concat(data);
             vm.posiblesProveedores(comerciales);
+            $("#cmbProveedores").val([0]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
