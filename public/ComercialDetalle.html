@@ -1087,17 +1087,21 @@
                     <h4 class="modal-title">VINCULAR PROVEEDOR</h4>
                 </div>
                 <div class="modal-body no-padding">
+                    <div class="row" style="padding-left: 2%;">
+                        <div class="col col-md-12">
+                            <h5>Elija el proveedor a vincular o vacio para crear uno nuevo.</h5>
+                        </div>
+                    </div>
                     <form id="ProveedorAsc_form" class="smart-form">
                         <fieldset>
                             <section>
-                                
                                 <div class="row">
                                     <div class="col col-md-9">
                                         <label class="label">Proveedores</label>
                                             <label style="width:100%;">
                                                 <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
                                                 <i></i>
-                                            </label>
+                                        </label>
                                     </div>
                                     <div class="col col-md-3"></div>
                                 </div> 

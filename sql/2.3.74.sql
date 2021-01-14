@@ -1,6 +1,6 @@
-ALTER TABLE `proasistencia`.`comerciales`   
+ALTER TABLE `comerciales`   
   ADD COLUMN `proveedorId` INT(11) NULL AFTER `tarifaId`,
-  ADD CONSTRAINT `ref_comercial_proveedor` FOREIGN KEY (`proveedorId`) REFERENCES `proasistencia`.`proveedores`(`proveedorId`);
+  ADD CONSTRAINT `ref_comercial_proveedor` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`);
 
 
 #SE CREA UNA TABLA TEMPORAL

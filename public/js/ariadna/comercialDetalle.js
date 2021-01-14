@@ -1217,9 +1217,9 @@ function actualizaColaboradorAsociado(datos) {
 function aceptarExportar() {
         var proveedorId = vm.sproveedorId();
         //  URL Y METODO POR DEFECTO
-        var url = "api/comerciales/solo/vincula/proveedor";
+        var url = myconfig.apiUrl + "api/comerciales/" +  vm.comercialId();
         var method = "PUT";
-        var data = {
+        var datos = {
             comercial: {
                 comercialId: vm.comercialId(),
                 nombre: vm.nombre(),
@@ -1228,139 +1228,141 @@ function aceptarExportar() {
             }
         }
 
-        //if (!datosImportOK()) return;
-
-        //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
-        if(proveedorId == 0) {
-            url = "api/proveedores/";
-            method = "POST";
-            data = preparaObjProveedor();
-        }
-
-        //si no hay datos no hacemos nada
-        if (!data) return;
+        // obtener el número de digitos de la contabilidad
+        // para controlar la cuenta contable.
         $.ajax({
-            type: method,
-            url: url,
+            type: "GET",
+            url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
             dataType: "json",
-            data: JSON.stringify(data),
             contentType: "application/json",
             success: function (data, status) {
-                if(method == "POST") {
-                    url = "api/comerciales/solo/vincula/proveedor";
-                    method = "PUT";
-                    data = {
-                        comercial: {
-                            comercialId: vm.comercialId(),
-                            nombre: vm.nombre(),
-                            nif: vm.nif(),
-                            proveedorId: data.proveedorId
+                numDigitos = data.numDigitos
+                // contador de código
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        var codigo = data.codigo;
+                        var codmacta = montarCuentaContable('410', codigo, numDigitos); 
+                        //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
+                        if(proveedorId == 0) {
+                            url = myconfig.apiUrl + "api/proveedores/";
+                            method = "POST";
+                            datos = preparaObjProveedor(codigo, codmacta);
                         }
+
+                        $.ajax({
+                            type: method,
+                            url: url,
+                            dataType: "json",
+                            data: JSON.stringify(datos),
+                            contentType: "application/json",
+                            success: function (data, status) {
+                                if(method == "POST") {
+                                    url = myconfig.apiUrl + "api/comerciales/" +  vm.comercialId();
+                                    method = "PUT";
+                                    data = {
+                                        comercial: {
+                                            comercialId: vm.comercialId(),
+                                            nombre: vm.nombre(),
+                                            nif: vm.nif(),
+                                            proveedorId: data.proveedorId
+                                        }
+                                    }
+                                    $.ajax({
+                                        type: method,
+                                        url: url,
+                                        dataType: "json",
+                                        data: JSON.stringify(data),
+                                        contentType: "application/json",
+                                        success: function (data, status) {
+                                            $('#modalProveedorAsc').modal('hide'); 
+                                            loadProveedorAsc(data.proveedorId);
+                                            mensNormal("Puede comprobar los datos del nuevo proveedor creado en la nueva pestaña que se ha abierto")
+                                            var nuevo = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
+                                            window.open(nuevo, '_new');
+                                        },
+                                        error: function (err) {
+                                            mensErrorAjax(err);
+                                                // si hay algo más que hacer lo haremos aquí.
+                                        }
+                                    });
+                                } else {
+                                    $('#modalProveedorAsc').modal('hide'); 
+                                    loadProveedorAsc(proveedorId);
+                                }
+                        
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                    // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                        
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                
+                        // si hay algo más que hacer lo haremos aquí.
                     }
-                    $.ajax({
-                        type: method,
-                        url: url,
-                        dataType: "json",
-                        data: JSON.stringify(data),
-                        contentType: "application/json",
-                        success: function (data, status) {
-                    
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                                // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                }
-        
+                });
+       
             },
             error: function (err) {
                 mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                // si hay algo más que hacer lo haremos aquí.
             }
         });
 }
 
 
-var preparaObjProveedor = function () {
-    // obtener el número de digitos de la contabilidad
-    // para controlar la cuenta contable.
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            numDigitos = data.numDigitos
-            // contador de código
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor",
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    var codigo = data.codigo;
-                    var codmacta = montarCuentaContable('410', codigo, numDigitos); 
-                    var data = {
-                        proveedor: {
-                            "proveedorId": 0,
-                            "codigo": codigo,
-                            "cuentaContable": codmacta,
-                            "serie": "A",
-                            "nombre": vm.nombre(),
-                            "nif": vm.nif(),
-                            "direccion": vm.direccion(),
-                            "poblacion": vm.poblacion(),
-                            "provincia": vm.provincia(),
-                            "codPostal": vm.codPostal(),
-                            "telefono": vm.telefono1(),
-                            "telefono2": vm.telefono2(),
-                            "tipoViaId": vm.tipoViaId(),
-                            "persona_contacto": vm.contacto1(),
-                            "tipoProveedor": 2,
-                            "tipoProfesionalId": 1,
-                            "correo": vm.email(),
-                            "correo2": vm.email2(),
-                            "fechaAlta": spanishDbDate(vm.fechaAlta()),
-                            "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                            "motivoBajaId": vm.smotivoBajaId(),
-                            "formaPagoId": vm.formaPagoId(),
-                            "IBAN": vm.iban(),
-                            "codigoProfesional": '0000',
-                            "fianza": 0,
-                            "tipoIvaId": 3,
-                            "fianzaAcumulada": 0,
-                            "retencionFianza" : 0,
-                            "revisionFianza": null,
-                            "tarifaId": 1,
-                            "codigoRetencion": 0,
-                            "observaciones": vm.observaciones(),
-                            "paisId": 66,
-                            "emitirFacturas": 0,
-                        },
-                        departamentos: {
-                            "departamentos": [1,2,3,4,5,6,7,8]
-                        }
-                    };
-                    return data;
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    data = null;
-                    return data;
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-   
+function preparaObjProveedor (codigo, codmacta) {
+    var data = {
+        proveedor: {
+            "proveedorId": 0,
+            "codigo": codigo,
+            "cuentaContable": codmacta,
+            "serie": "A",
+            "nombre": vm.nombre(),
+            "nif": vm.nif(),
+            "direccion": vm.direccion(),
+            "poblacion": vm.poblacion(),
+            "provincia": vm.provincia(),
+            "codPostal": vm.codPostal(),
+            "telefono": vm.telefono1(),
+            "telefono2": vm.telefono2(),
+            "formaPagoId": vm.sformaPagoId(),
+            "tipoViaId": vm.tipoViaId(),
+            "persona_contacto": vm.contacto1(),
+            "tipoProveedor": 2,
+            "tipoProfesionalId": 1,
+            "correo": vm.email(),
+            "correo2": vm.email2(),
+            "fechaAlta": spanishDbDate(vm.fechaAlta()),
+            "fechaBaja": spanishDbDate(vm.fechaBaja()),
+            "motivoBajaId": vm.smotivoBajaId(),
+            "IBAN": vm.iban(),
+            "codigoProfesional": '0000',
+            "fianza": 0,
+            "tipoIvaId": 3,
+            "fianzaAcumulada": 0,
+            "retencionFianza" : 0,
+            "revisionFianza": null,
+            "tarifaId": 1,
+            "codigoRetencion": 0,
+            "observaciones": vm.observaciones(),
+            "paisId": 66,
+            "emitirFacturas": 0,
         },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+        departamentos: {
+            "departamentos": [1,2,3,4,5,6,7,8]
         }
-    });
+    };
+    return data;
 }
-
 
 function loadProveedores() {
     if(!nifGuardado || nifGuardado == '') {
@@ -1467,9 +1469,9 @@ function loadProveedorAsc(proveedorId) {
     });
 }
 
-function desvinculareProveedorAsc(comercialId) {
+function desvinculaProveedorAsc(proveedorId) {
     // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/comerciles/" + comercialId;
+    var url = myconfig.apiUrl + "/api/comerciales/" + vm.comercialId();
     var mens = "¿Realmente desea desvincular este proveedor?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
@@ -1482,12 +1484,10 @@ function desvinculareProveedorAsc(comercialId) {
         }
         llamadaAjax("PUT", url, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
-                if (err) return;
-                loadTablaProveedorAsc(null);
-            });
+            loadTablaProveedorAsc(null);
         });
     }, function () {
         // cancelar no hace nada
     });
 }
+
