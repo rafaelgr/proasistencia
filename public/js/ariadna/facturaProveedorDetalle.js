@@ -3075,7 +3075,7 @@ function bloqueaEdicionCampos() {
     $('#cmbSeries').prop('disabled', true);
     $('#cmbDepartamentosTrabajo').prop('disabled', true);
     $('#cmbEmpresas').prop('disabled', true);
-    $('#cmbContratos').prop('disabled', true);
+    //$('#cmbContratos').prop('disabled', true);
     $('#cmbFormasPago').prop('disabled', true);
     $("#frmFactura :input").prop('readonly', true);
     $('#btnAceptar').hide();
