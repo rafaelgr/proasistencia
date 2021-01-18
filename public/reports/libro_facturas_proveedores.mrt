@@ -311,9 +311,7 @@
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>23.4,0,1.4,0.2</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>libPro.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>29101da2d0c34f0c8c918a513ade1443</Guid>
@@ -935,10 +933,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/18/2021 1:38:28 PM</ReportChanged>
+  <ReportChanged>1/18/2021 1:56:06 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>7b3f2ee2f0c94411bc816b38396178f7</ReportGuid>
+  <ReportGuid>66e314e87df14591964c7afb05559d0c</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
