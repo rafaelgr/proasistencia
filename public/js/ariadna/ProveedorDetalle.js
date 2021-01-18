@@ -42,6 +42,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+   
 
     $('#frmProveedor').submit(function () {
         return false;
@@ -383,6 +384,7 @@ function admData() {
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
     
+  
 }
 
 function loadData(data) {
@@ -1165,3 +1167,4 @@ function compruebaAnticipos(id) {
             }
         });
 }
+
