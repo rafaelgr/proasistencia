@@ -317,12 +317,12 @@
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>29101da2d0c34f0c8c918a513ade1443</Guid>
+              <HideZeros>True</HideZeros>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="2" />
               <Parent isRef="20" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libPro.importeRetencion}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="24" type="NumberFormat" isKey="true">
@@ -935,10 +935,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/9/2020 10:58:26 AM</ReportChanged>
+  <ReportChanged>1/18/2021 1:38:28 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>a5bbe67f68594cda9b2b2b1363069fef</ReportGuid>
+  <ReportFile>C:\ariadna\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
+  <ReportGuid>7b3f2ee2f0c94411bc816b38396178f7</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
