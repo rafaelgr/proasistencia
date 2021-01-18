@@ -1335,7 +1335,7 @@ function preparaObjProveedor (codigo, codmacta) {
             "telefono": vm.telefono1(),
             "telefono2": vm.telefono2(),
             "formaPagoId": vm.sformaPagoId(),
-            "tipoViaId": vm.tipoViaId(),
+            "tipoViaId": vm.stipoViaId(),
             "persona_contacto": vm.contacto1(),
             "tipoProveedor": 2,
             "tipoProfesionalId": 1,
@@ -1365,8 +1365,8 @@ function preparaObjProveedor (codigo, codmacta) {
 }
 
 function loadProveedores() {
-    if(!nifGuardado || nifGuardado == '') {
-        mensError("Se requiere el NIF del comercial para poder vincular, este campo está vacio");
+    if((!nifGuardado || nifGuardado == '') || (!vm.sformaPagoId() ||  vm.sformaPagoId() == '' )) {
+        mensError("Se requiere el NIF y la forma de pago del comercial para poder vincular, alguno de estos campos están vacios");
         setTimeout( function() { $('#modalProveedorAsc').modal('hide'); }, 50);
         return;
     }
