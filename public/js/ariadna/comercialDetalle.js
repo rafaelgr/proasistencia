@@ -1463,6 +1463,7 @@ function loadTablaProveedorAsc(data) {
 
 
 function loadProveedorAsc(proveedorId) {
+    if(!proveedorId) return;
     llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
         if (err) return;
         loadTablaProveedorAsc(data);
