@@ -1366,7 +1366,7 @@ function preparaObjProveedor (codigo, codmacta) {
 
 function loadProveedores() {
     if((!nifGuardado || nifGuardado == '') || (!vm.sformaPagoId() ||  vm.sformaPagoId() == '' )) {
-        mensError("Se requiere el NIF y la forma de pago del comercial para poder vincular, alguno de estos campos están vacios");
+        mensError("Se requiere el NIF y la forma de pago del colaborador para poder vincular, alguno de estos campos están vacios");
         setTimeout( function() { $('#modalProveedorAsc').modal('hide'); }, 50);
         return;
     }
