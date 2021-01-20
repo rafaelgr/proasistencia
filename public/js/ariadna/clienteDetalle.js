@@ -19,11 +19,35 @@ var cambAgente;
 var datosCambioAgente;
 var ClienteId;
 var fechaTope;
+var fechasCambio = [];
+var my_array = new Array('9/04/2019', '02/02/2021'); 
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
 
 datePickerSpanish(); // see comun.js
+
+$('#txtNuevaFecha').datepicker({
+        closeText: 'Cerrar',
+        prevText: '&#x3C',
+        nextText: '&#x3E;',
+        currentText: 'Hoy',
+        monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+        monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+        dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+        dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        format: 'm/d/yyyy',
+    beforeShowDay: my_check
+});
+
+
 
 var dataComisionistas;
 var dataClientesAgentes;
@@ -80,6 +104,7 @@ function initForm() {
         }
     });
 
+    
     // $("#txtCuentaContable").on('blur', function (e) {
     //     var nif = vm.nif();
     //     if(nif != "" && nif) {
@@ -218,6 +243,7 @@ function initForm() {
             }
         });
     });
+    
 
    
 
@@ -304,6 +330,29 @@ function initForm() {
    } */
 }
 
+
+
+function my_check(in_date) { 
+    var d = in_date.getDate();
+    d = d.toString().padStart(2, '0');
+
+    var m = in_date.getMonth() + 1;
+    m = m.toString().padStart(2, '0');
+
+    var y = in_date.getFullYear();
+    y = y.toString().padStart(2, '0');
+
+    in_date = d + '/' 
+    + m + '/' + y; 
+   
+
+    for(var i = 0; i < fechasCambio.length; i++) {
+        if (fechasCambio[i].indexOf(in_date) >= 0) { 
+            return [false, "no dis", 'No disponible']; 
+        } 
+    }
+    return [true, "dis", "Disponible"]; 
+} 
 function admData() {
     var self = this;
     self.clienteId = ko.observable();
@@ -1689,6 +1738,7 @@ function initTablaClientesAgentes() {
     tablaCarro = $('#dt_clientesAgentes').dataTable({
         sort: false,
         autoWidth: true,
+        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -1733,6 +1783,7 @@ function initTablaClientesAgentes() {
         columns: [{
             data: "fechaCambio",
             render: function (data, type, row) {
+                fechasCambio.push(spanishDate(data));
                 return spanishDate(data);
             }
         }, {
@@ -1758,6 +1809,7 @@ function loadTablaClientesAgentes(data) {
     dt.fnClearTable();
     if (data) dt.fnAddData(data);
     dt.fnDraw();
+    
 }
 
 function loadClientesAgentes(id) {
