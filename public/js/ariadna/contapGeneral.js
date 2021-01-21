@@ -70,6 +70,19 @@ function initForm() {
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
+
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
 }
 
 // tratamiento knockout
@@ -128,7 +141,7 @@ function initTablaFacturas() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -288,8 +301,9 @@ function buscarFacturas() {
                     }
                 });
                 loadTablaFacturas(data);
-                // mostramos el botén de alta
+                // mostramos el botón de alta
                 $("#btnAlta").show();
+                $('#checkMain').prop('checked', false);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -507,6 +521,7 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
+
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
@@ -527,3 +542,45 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+
+function updateAll(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_factura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(opcion) sel = 1
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                facprove: {
+                    facproveId: datos[i].facproveId,
+                    empresaId: datos[i].empresaId,
+                    proveedorId: datos[i].proveedorId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+        var data2 = [];
+        data2.push(data);
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data2),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
