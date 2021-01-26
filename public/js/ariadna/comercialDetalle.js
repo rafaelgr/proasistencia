@@ -130,7 +130,30 @@ function initForm() {
            
         }
     });
-});
+    });
+
+    $("#txtNif").on('change', function (e) {
+        var nif = $("#txtNif").val();
+        if(!nif || nif == "") return;
+
+        var nif = $("#txtNif").val();
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            $('#txtNif').val(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+                compruebaNifRepetido(nif);
+            } else {
+                mensError('El nif introducido no tiene un formato valido');
+                $('#txtNif').val('');
+            }
+        }
+    });
 
     empId = gup('ComercialId');
     if (empId != 0) {

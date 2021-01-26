@@ -24,6 +24,7 @@ var dataLineas;
 var idUsuario;
 var numLineas = 0;
 var comp;
+var fechaRe = null;
 
 
 
@@ -131,6 +132,18 @@ function initForm() {
 
     $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
         if (e.added) loadDepartamentos(e.added.id);
+    });
+
+    $("#txtFechaRecepcion").on('change', function (e) {
+        if(fechaRe) {
+            var ano = moment(fechaRe).year();
+            var ano2 = moment(vm.fechaRecepcion()).year();
+            if(ano != ano2) {
+                mensError("Una vez establecido el año este no se puede cambiar");
+                vm.fechaRecepcion(fechaRe);
+                return;
+            }
+        }
     });
 
     $("#cmbTiposOperacion").select2(select2Spanish());
@@ -533,6 +546,7 @@ function admData() {
 }
 
 function loadData(data) {
+    $('#cmbEmpresas').prop('disabled', true);
     vm.tipoOperacionId(data.tipoOperacionId);
     vm.facproveId(data.facproveId);
     vm.ref(data.ref);
@@ -541,6 +555,7 @@ function loadData(data) {
     vm.numregis(data.numregisconta);
     vm.fecha(spanishDate(data.fecha));
     vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
+    fechaRe = vm.fechaRecepcion();
     vm.fechaRecepcion2(spanishDate(data.fecha_recepcion2));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
