@@ -66,6 +66,15 @@ function initForm() {
 function initTablaComerciales() {
     tablaCarro = $('#dt_comercial').dataTable({
         autoWidth: true,
+       
+        dom:  "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C >>",
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
