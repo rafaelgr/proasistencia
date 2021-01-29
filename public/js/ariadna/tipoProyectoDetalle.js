@@ -66,6 +66,7 @@ function admData() {
     self.tipoProyectoId = ko.observable();
     self.nombre = ko.observable();
     self.abrev = ko.observable();
+    self.activo = ko.observable();
     //
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -79,6 +80,11 @@ function loadData(data) {
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
     loadDepartamento(data.tipoMantenimientoId);
+    if(data.activo == 1){
+        $('#chkActivo').prop("checked", true);
+    } else {
+        $('#chkActivo').prop("checked", false);
+    }
 }
 
 function datosOK() {
@@ -126,12 +132,19 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
+
+        if($('#chkActivo').prop("checked")) {
+            vm.activo(true);
+        } else {
+            vm.activo(false);
+        }
         var data = {
             tipoProyecto: {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
                 "abrev": vm.abrev(),
-                "tipoMantenimientoId": vm.sdepartamentoId()
+                "tipoMantenimientoId": vm.sdepartamentoId(),
+                "activo": vm.activo()
             }
         };
         if (adminId == 0) {

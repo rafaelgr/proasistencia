@@ -563,7 +563,10 @@ function loadDepartamentosUsuario(id) {
 }
 
 function loadTipoProyecto(id) {
-    llamadaAjax('GET', "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.stipoOfertaId(), null, function (err, data) {
+    var url = "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.stipoOfertaId();
+    //si estamos creando la oferta cargamos solo como elegibles los tipos de proyecto activos
+    if (ofertaId == 0)  var url = "/api/tipos_proyectos/departamento/activos" + usuario + "/" + vm.stipoOfertaId();
+    llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
         vm.posiblesTipoProyecto(tipos);
@@ -694,11 +697,13 @@ function cambioTipoProyecto(data) {
         return;
     }
     var tipoProyectoId = data.id;
+    var arquitectura = false;
+    if(vm.stipoOfertaId() == 5) arquitectura = true;
     if(vm.stipoOfertaId() == 7) {
         if(vm.sempresaId() != 2 && vm.sempresaId() != 3 && vm.sempresaId() != 7) {
             llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
                 if (err) return;
-                llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+                llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
                     if (err) return;
                     vm.referencia(nuevaReferencia);
                 });
@@ -708,14 +713,20 @@ function cambioTipoProyecto(data) {
     if(vm.stipoOfertaId() != 7) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
             if (err) return;
-            llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+            llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
                 if (err) return;
                 vm.referencia(nuevaReferencia);
+                if(vm.stipoOfertaId() == 5) {
+                    var a = spanishDbDate(vm.fechaOferta());
+                    var y =  moment(a).year().toString();
+                    y = y.substring(2);
+                    nuevaReferencia = nuevaReferencia + "-comision/" + y
+                    vm.referencia(nuevaReferencia);
+                }
             });
         });
     }
 }
-
 
 function cambioTextosPredeterminados(data) {
     //

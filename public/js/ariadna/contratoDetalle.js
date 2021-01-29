@@ -926,11 +926,20 @@ function cambioTipoProyecto(data) {
         return;
     }
     var tipoProyectoId = data.id;
+    var arquitectura = false;
+    if(vm.stipoContratoId() == 5) arquitectura = true;
     llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
         if (err) return;
-        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev, null, function (err, nuevaReferencia) {
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
             if (err) return;
             vm.referencia(nuevaReferencia);
+            if(vm.stipoContratoId() == 5) {
+                var a = spanishDbDate(vm.fechaContrato());
+                var y =  moment(a).year().toString();
+                y = y.substring(2);
+                nuevaReferencia = nuevaReferencia + "-comision/" + y
+                vm.referencia(nuevaReferencia);
+            }
         });
     });
 }
