@@ -64,8 +64,17 @@ function initForm() {
 }
 
 function initTablaComerciales() {
-    tablaCarro = $('#dt_comercial').dataTable({
-        autoWidth: true,
+    tablaCarro = $('#dt_comercial').dataTable({ 
+        //dom: 'Bfrtip',
+        
+        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12 'C Brtip'>>",
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+       
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -112,6 +121,21 @@ function initTablaComerciales() {
             data: "nombre"
         }, {
             data: "nif"
+        },  {
+            data: "direccion",
+            render: function (data, type, row) {
+                if(!data) data = "";
+                if(!row.poblacion) row.poblacion = "";
+                return data + " " + row.poblacion;
+            }
+        },  {
+            data: "email"
+        },  {
+            data: "email2"
+        },  {
+            data: "telefono1"
+        },  {
+            data: "telefono2"
         }, {
             data: "tipo_actividad"
         }, {
