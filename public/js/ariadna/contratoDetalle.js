@@ -124,7 +124,8 @@ function initForm() {
     loadFormasPago();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
-    loadTipoProyecto();
+    //loadTipoProyecto();
+
     $("#cmbTipoProyecto").select2().on('change', function (e) {
         cambioTipoProyecto(e.added);
     });
@@ -134,7 +135,7 @@ function initForm() {
 
 
     $("#cmbTiposContrato").select2(select2Spanish());
-    loadTiposContrato();
+    loadTiposContrato(null);
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if(e.added) {
@@ -550,8 +551,8 @@ function loadData(data) {
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
     vm.tipoContratoId(data.tipoContratoId);
-    loadTipoProyecto(data.tipoProyectoId);
     loadTiposContrato(data.tipoContratoId);
+    vm.stipoContratoId(data.tipoContratoId);    
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
@@ -562,6 +563,7 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.importeCliente(data.importeCliente);
+    loadTipoProyecto(data.tipoProyectoId);
     
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
@@ -792,12 +794,18 @@ function loadTiposContrato(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesTiposContrato(tipos);
-        $("#cmbTiposContrato").val([id]).trigger('change');
+
+        if(id) {
+            $("#cmbTiposContrato").val([id]).trigger('change');
+            vm.stipoContratoId(id);
+        }
     });
 }
 
 function loadTipoProyecto(id) {
-    llamadaAjax('GET', "/api/tipos_proyectos", null, function (err, data) {
+    if(id == undefined) id = 0;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + id;
+    llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{
             tipoProyectoId: 0,
@@ -948,7 +956,9 @@ function cambioTipoContrato(data) {
     //
     if (!data) return;
     var tipoContratoId = data.id;
-    llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/proyectos-departamento/" + tipoContratoId, null, function (err, data) {
+    if(tipoContratoId == undefined) tipoContratoId = 0;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
+    llamadaAjax('GET', myconfig.apiUrl + url, null, function (err, data) {
         if (err) return;
         var tipos = [{
             tipoProyectoId: 0,
@@ -964,6 +974,7 @@ function loadDepartamento(departamentoId) {
         llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
             if (err) return;
             if(data) {
+                vm.stipoContratoId(departamentoId);
                 usaCalculadora = data.usaCalculadora;
                 if(!data.usaCalculadora) {
                     $('#calculadora').hide();

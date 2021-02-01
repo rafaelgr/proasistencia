@@ -58,6 +58,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.tipoProyectoId(0);
+        $('#chkActivo').prop("checked", true);//valor por defecto de la propiedad
     }
 }
 

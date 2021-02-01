@@ -563,9 +563,10 @@ function loadDepartamentosUsuario(id) {
 }
 
 function loadTipoProyecto(id) {
-    var url = "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.stipoOfertaId();
+    if(id == undefined) id = 0;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoOfertaId()  + "/" + id;
     //si estamos creando la oferta cargamos solo como elegibles los tipos de proyecto activos
-    if (ofertaId == 0)  var url = "/api/tipos_proyectos/departamento/activos" + usuario + "/" + vm.stipoOfertaId();
+    //if (ofertaId == 0 || !id)  url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoOfertaId() + "/" + id;
     llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{ tipoProyectoId: 0, nombre: "" }].concat(data);
