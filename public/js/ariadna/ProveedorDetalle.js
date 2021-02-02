@@ -95,7 +95,7 @@ function initForm() {
     });
 
 
-    loadTiposProveedor();
+    loadTiposProveedor(1);
     $("#cmbMotivosBaja").select2(select2Spanish());
     loadMotivosBaja();
 
@@ -220,7 +220,7 @@ function initForm() {
         });
 
         // contador de código
-        $.ajax({
+       /*  $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
             dataType: "json",
@@ -237,7 +237,7 @@ function initForm() {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
-        });
+        }); */
 
         loadFacturasDelProveedor(proId);
         compruebaAnticipos(proId);
@@ -245,19 +245,32 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.proveedorId(0);
          // contador de código
+         var inicioCuenta = "40";
          $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
+            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/" + inicioCuenta,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 vm.codigo(data.codigo);
-                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
-                                            //el codigo y rtesulta que ya está asignado
-
-            
+                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia el codigo y resulta que ya está asignado
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tipos_proveedor/" + 1,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data, status) {
+                        vm.inicioCuenta(data.inicioCuenta);
+                        var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                        vm.cuentaContable(codmacta);
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });    
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -840,14 +853,15 @@ function compruebaCodigoProveedor() {
             llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
                 if (!data) {
                     if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
-                        vm.codigo(vm.codigoOriginal());
+                        if(vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
+                        if(vm.inicioCuenta() &&  vm.codigo() && numDigitos) {}
                         codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
                         vm.cuentaContable(codmacta);
                     } 
                 }
                 if(data) {
                     if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
-                        vm.codigo(vm.codigoOriginal());
+                        if(vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
                         codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
                         vm.cuentaContable(codmacta);
                     } else {
@@ -880,7 +894,26 @@ function cambioTipoProveedor(data) {
                         contentType: "application/json",
                         success: function (data, status) {
                             vm.inicioCuenta(data.inicioCuenta);
-                                compruebaCodigoProveedor();
+                            // contador de código
+                            $.ajax({
+                                type: "GET",
+                                url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/" + data.inicioCuenta,
+                                dataType: "json",
+                                contentType: "application/json",
+                                data: JSON.stringify(data),
+                                success: function (datos, status) {
+                                    //guardamos el codigo sugerido para poder usarlo si se cambia el codigo y resulta que ya está asignado
+                                    codigoSugerido = datos.codigo;
+                                    vm.codigo(datos.codigo)
+                                    compruebaCodigoProveedor();
+                                
+                                },
+                                error: function (err) {
+                                    mensErrorAjax(err);
+                                    // si hay algo más que hacer lo haremos aquí.
+                                }
+                            });
+                                 
                         },
                         error: function (err) {
                             mensErrorAjax(err);

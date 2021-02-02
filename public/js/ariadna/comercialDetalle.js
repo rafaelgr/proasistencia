@@ -1263,12 +1263,12 @@ function aceptarExportar() {
                 // contador de código
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor",
+                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor/autogenerado",
                     dataType: "json",
                     contentType: "application/json",
                     success: function (data, status) {
                         // hay que mostrarlo en la zona de datos
-                        var codigo = data.codigo;
+                        var codigo = data;
                         var codmacta = montarCuentaContable('410', codigo, numDigitos); 
                         //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
                         if(proveedorId == 0) {
