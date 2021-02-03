@@ -171,6 +171,12 @@ function initTablaFacturas() {
         }, {
             data: "formaPago"
         },{
+            data: "impPorcen"
+        },{
+            data: "costePorcen"
+        },{
+            data: "benPorcen"
+        },{
             data: "numAnticipo"
         }, {
             data: "facproveId",
