@@ -146,6 +146,15 @@ function initTablaFacturas() {
             }
         }, {
             data: "emisorNombre"
+        },{
+            data: "ref"
+        },{
+            data: "direccionTrabajo",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
         }, {
             data: "receptorNombre"
         }, {
@@ -171,11 +180,26 @@ function initTablaFacturas() {
         }, {
             data: "formaPago"
         },{
-            data: "impPorcen"
+            data: "impPorcen",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
         },{
-            data: "costePorcen"
+            data: "costePorcen",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
         },{
-            data: "benPorcen"
+            data: "benPorcen",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
         },{
             data: "numAnticipo"
         }, {
