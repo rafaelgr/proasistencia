@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "791e9725cc4a4eafb3d9f4639b26b93b",
+  "ReportGuid": "10d0dcdc62bc4ac6ae681169d4d2c91e",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1608540892183+0100)/",
+  "ReportChanged": "/Date(1612437496472+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -723,7 +723,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "Guid": "9c765cd366914623affa682801ee4cc9",
-          "ClientRectangle": "0,36.18,19,2.6",
+          "ClientRectangle": "0,35.2,19,2.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1617,7 +1617,7 @@
         }
       },
       "PageWidth": 21.0,
-      "PageHeight": 29.7,
+      "PageHeight": 29.0,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
