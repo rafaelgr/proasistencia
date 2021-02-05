@@ -160,7 +160,11 @@ function initTablaFacturas() {
         }, {
             data: "emisorNombre"
         },{
-            data: "ref"
+            data: "ref",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
         },{
             data: "direccionTrabajo",
             render: function (data, type, row) {
