@@ -49,7 +49,20 @@ function initForm() {
         return false
     });
 
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
 
+    
 
     $('#chkVisadas').change(function () {
         var visada = 0;
@@ -294,6 +307,7 @@ function buscarFacturas() {
             url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario + "/" + vm.sdepartamentoId();
           }
           else {
+            $('#checkMain').prop('checked', false);
               url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario + "/" + vm.sdepartamentoId();
           }
         $.ajax({
@@ -305,6 +319,7 @@ function buscarFacturas() {
                 registros = data.length;
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
+                
                 $("#btnAlta").show();
             },
             error: function (err) {
