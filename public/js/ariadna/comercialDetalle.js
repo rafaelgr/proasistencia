@@ -22,6 +22,7 @@ var cambColaborador;
 var datosCambioColaborador;
 var dataAgentesColaboradores;
 var nifGuardado;
+var firmanteValido = true;
 
 datePickerSpanish(); // see comun.js
 
@@ -136,7 +137,6 @@ function initForm() {
         var nif = $("#txtNif").val();
         if(!nif || nif == "") return;
 
-        var nif = $("#txtNif").val();
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
             $('#txtNif').val(nif);
@@ -147,10 +147,34 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-                compruebaNifRepetido(nif);
+                //no hacemos nada
             } else {
                 mensError('El nif introducido no tiene un formato valido');
                 $('#txtNif').val('');
+            }
+        }
+    });
+
+    $("#txtDniFirmante").on('change', function (e) {
+        var nif = $("#txtDniFirmante").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            $('#txtDniFirmante').val(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+              
+                firmanteValido = true;
+            } else {
+                mensError('El DNI del firmante habitual introducido no tiene un formato valido');
+                firmanteValido = false
+                //$('#txtDniFirmante').val('');
             }
         }
     });
@@ -454,6 +478,10 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
+        if(!firmanteValido && vm.dniFirmante() != "") {
+            mensError('El DNI del firmante habitual introducido no tiene un formato valido');
+            return;
+        }
         var data = {
             comercial: {
                 "comercialId": vm.comercialId(),
@@ -1388,15 +1416,19 @@ function preparaObjProveedor (codigo, codmacta) {
 }
 
 function loadProveedores() {
+    var datos = [];
     if((!nifGuardado || nifGuardado == '') || (!vm.sformaPagoId() ||  vm.sformaPagoId() == '' )) {
         mensError("Se requiere el NIF y la forma de pago del colaborador para poder vincular, alguno de estos campos están vacios");
         setTimeout( function() { $('#modalProveedorAsc').modal('hide'); }, 50);
         return;
     }
+    datos.push(nifGuardado);
+    if(vm.dniFirmante() && vm.dniFirmante() != "") datos.push(vm.dniFirmante());
     $.ajax({
-        type: "GET",
-        url: "/api/proveedores//activos/proveedores/todos/por/nif/?nif=" + nifGuardado,
+        type: "POST",
+        url: "/api/proveedores/activos/proveedores/todos/por/nif",
         dataType: "json",
+        data: JSON.stringify(datos),
         contentType: "application/json",
         success: function (data, status) {
             var comerciales = [{ proveedorId: 0, nombre: "" }].concat(data);
