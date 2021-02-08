@@ -15,6 +15,7 @@ var init = 0;
 var visadas;
 var registros;
 var usuario;
+var facturas;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -40,10 +41,15 @@ function initForm() {
 
     if(visadas == 1) {
         $("#chkVisadas").prop( "checked", true );
+        $('#btnAlta').hide();
+        $('#checkMain').hide();
       }else {
         $("#chkVisadas").prop( "checked", false );
+        $('#btnAlta').show();
+        $('#checkMain').show();
       }
     $('#btnPrint').click(printGeneral);
+    $('#btnAlta').click(visarFacturas);
    
     $('#frmBuscar').submit(function () {
         return false
@@ -54,10 +60,8 @@ function initForm() {
         function(e){
             if($('#checkMain').prop('checked')) {
                 $('.checkAll').prop('checked', true);
-                updateAll(true);
             } else {
                 $('.checkAll').prop('checked', false);
-                updateAll(false);
             }
         }
     );
@@ -66,9 +70,13 @@ function initForm() {
 
     $('#chkVisadas').change(function () {
         var visada = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
         checkCerrados =  this;
         if (this.checked) {
             visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
         } 
         var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario+ "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
@@ -114,6 +122,10 @@ function initTablaFacturas() {
         paging: false,
         autoWidth: true,
         "bDestroy": true,
+        "columnDefs": [ {
+            "targets": 0,
+            "orderable": false
+            } ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -249,11 +261,12 @@ function initModal(facproveId) {
 }
 
 function loadTablaFacturas(data) {
+    facturas = data;
+    $('#checkMain').prop('checked', false);//valor por defecto
     var dt = $('#dt_factura').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
-    
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -263,6 +276,9 @@ function loadTablaFacturas(data) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
+            if(!$("#chkVisadas").prop( "checked" )) return;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
             var quantity = 0;
             var data = {
                 facprove: {
@@ -324,7 +340,7 @@ function buscarFacturas() {
                 loadTablaFacturas(data);
                 // mostramos el botén de alta
                 
-                $("#btnAlta").show();
+                //$("#btnAlta").show();
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -549,6 +565,46 @@ function informePDF(data) {
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
+
+function visarFacturas() {
+    var contador = 0;
+    facturas.forEach(function (v) {
+        contador++;
+        var field = "#chk" + v.facproveId;
+        if (!$(field).prop('checked'))  return;
+            var data = {
+                facprove: {
+                    facproveId: v.facproveId,
+                    empresaId: v.empresaId,
+                    proveedorId: v.proveedorId,
+                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    visada: 1
+                }
+            };
+           
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
+            var data2 = [];
+            data2.push(data);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data2),
+                success: function (data, status) {
+                    if(contador == facturas.length)     buscarFacturas()();
+                    
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+    });
+}
+
+
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
