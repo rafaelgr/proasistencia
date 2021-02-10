@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataContratosComerciales;
 var contratoComercialId;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -19,6 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -138,6 +140,7 @@ function initTablaContratosComerciales() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteContratoComercial(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editContratoComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(usuario.puedeVisualizar == 0) html = "";
                 return html;
             }
         }]

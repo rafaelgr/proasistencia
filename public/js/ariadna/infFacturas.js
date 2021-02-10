@@ -126,13 +126,18 @@ function initForm() {
                 var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
                 llamadaAjax(verb, url, null, function (err, data) {
                     vm.sempresaId(data.empresaId);
-                    obtainReport(true);
+                    vm.sdepartamentoId(data.departamentoId);
+                    obtainReport();
                     $('#selector').hide();
                 });
             }
         }
     });
     //
+    $.validator.addMethod("notEqualTo", function(value, element, param){
+        if(value == "0") return false
+        return true;
+    });
 }
 
 function obtainKey() {
@@ -176,10 +181,8 @@ function admData() {
 };
 
 var obtainReport = function (carga) {
-    if(!carga) {
-        if (!datosOK()) return;
-    }
-    
+    if (!datosOK()) return;
+
     var file = "../reports/factura_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -287,7 +290,8 @@ function datosOK() {
                 required: true
             },
             cmbDepartamentosTrabajo: {
-                required: true
+                required: true,
+                notEqualTo: 0
             }
         },
         // Messages for form validation
@@ -296,7 +300,8 @@ function datosOK() {
                 required: "Debe elegir una empresa"
             },
             cmbDepartamentosTrabajo: {
-                required: "Debe elegir un departamento"
+                required: "Debe elegir un departamento",
+                notEqualTo: "Debe elegir un departamento"
             }
         },
         // Do not change code below

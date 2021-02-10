@@ -427,7 +427,7 @@
     </aside>
     <!-- END NAVIGATION -->
     <!-- MAIN PANEL -->
-    <div id="main" role="main">
+    <div id="main" role="main" style="width: 115%;">
         <!-- RIBBON -->
         <div id="ribbon">
             <!-- breadcrumb -->
@@ -515,7 +515,7 @@
                                 <h2>Visado de facturas de proveedores </h2>
                             </header>
                             <!-- widget div-->
-                            <div>
+                            <div style="width: 1500;">
                                 <!-- widget edit box -->
                                 <div class="jarviswidget-editbox">
                                     <!-- This area used as dropdown edit box -->
@@ -543,10 +543,13 @@
                                             </div>
                                         </fieldset>
                                         <fieldset>
-                                            <div class="pull-right">
+                                            <div class="pull-left">
                                                 <button id="btnPrint" title="Imprimir" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
-                                                </button>                                                
+                                                </button>   
+                                                    <button id="btnAlta" title="Visar facturas" class="btn btn-success btn-circle btn-lg">
+                                                        <i class="fa fa-lg fa-crosshairs"></i>
+                                                    </button>                                      
                                             </div>
                                         </fieldset>
                                     </form>
@@ -554,12 +557,26 @@
                                         <table id="dt_factura" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th data-hide="phone">
-                                                        Visada
+                                                    <th data-hide="phone" style="background : none;">
+                                                        <div class="row">
+                                                            <section class="col col-md-6">
+                                                                <input type="checkbox" id="checkMain">
+                                                            </section>
+                                                            <section class="col col-md-6">
+                                                                <label><i style="text-align: left;">SEL</i>
+                                                                </label>
+                                                            </section>
+                                                        </div>
                                                     </th>
                                                     <th data-class="expand">
                                                         <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Emisor
                                                     </th>
+                                                    <th data-hide="phone">
+                                                        Referencia
+                                                    </th>     
+                                                    <th data-hide="phone">
+                                                        Dirección
+                                                    </th>     
                                                     <th data-hide="phone">
                                                         Receptor
                                                     </th>                                              
@@ -578,6 +595,15 @@
                                                     </th>
                                                     <th data-hide="phone">
                                                         Forma pago
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Importe neto %
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Coste %
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Beneficio %
                                                     </th>
                                                     <th data-hide="phone">
                                                         Anticipo asociado

@@ -1956,6 +1956,7 @@ function aceptarComisionista() {
     if (!datosOKComisionistas()) {
         return;
     }
+   
     if (!vm.contratoComisionistaId()) {
         // es alta
         vm.contratoComisionistaId(0);
@@ -2002,7 +2003,7 @@ function datosOKComisionistas() {
             },
             txtPorComer: {
                 number: "Debe ser un número válido",
-                required: "Debe elegir un porcentaje, este puede ser 0"
+                required: "Debe elegir un porcentaje"
             }
         },
         // Do not change code below
@@ -2204,7 +2205,10 @@ function cambioComercial(data) {
     // hay que buscar el porcentaje
     obtenerPorcentajeDelAgenteColaborador(comercialId, vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
         if (err) return;
-        if(!comision) mensError('El colaborador asociado no tiene una comision por defecto');
+        if(!comision) {
+            mensError('El colaborador asociado no tiene una comision por defecto');
+            comision = 0
+        } 
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
     });
