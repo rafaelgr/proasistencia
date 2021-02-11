@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataAnticipos;
 var antClienId;
+var facturasCero = [];
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -245,12 +246,24 @@ function buscarAnticipos() {
         numIban = []//reiniciamos el array donde guardamos los clientes sin IBAN
         var contador = 0;
         if (!datosOK()) return;
+        facturasCero = [];
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/anticiposClientes/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                //comprobamos si hay anticipos a cero para mostrar mensaje de advertencia
+                if(data) {
+                    if(data.length > 0) {
+                        for(var i = 0; i < data.length; i++) {
+                            if(data[i].totalConIva == 0) {
+                                facturasCero.push(data[i].vNum);
+                            }
+                        }
+                        if(facturasCero.length > 0) mensError("las siguentes facturas tienen el importe a cero\n" + facturasCero);
+                    }
+                }
                 data.forEach(function (f) {
                     contador = 0;
                     if(!f.IBAN) {// comprovamos si el cliente de la factura tiene IBAN para añadirlo a una lista
