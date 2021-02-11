@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "e5f52eda54d343258a6176e452303d4c",
+  "ReportGuid": "b1d6e8c13b0348cfb799ba676214df91",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1602674154007+0200)/",
+  "ReportChanged": "/Date(1613032162606+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -786,7 +786,7 @@
               "Guid": "56e375a65c204f798eb87bfcf5ce4a93",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "3,3.6,6.2,0.4",
+              "ClientRectangle": "0.8,3.6,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -800,25 +800,6 @@
               "Type": "Expression"
             },
             "1": {
-              "Ident": "StiText",
-              "Name": "Text17",
-              "Guid": "952620d2b69240eab53a2e7744c91de6",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.8,3.6,2.2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "FACTURA Nº:"
-              },
-              "Font": ";11.25;Bold;",
-              "Border": ";0,0,0,0;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
               "Ident": "StiText",
               "Name": "Text1",
               "Guid": "14e3ee4ae2b54365b8ef222cfbcce945",
@@ -842,7 +823,7 @@
               },
               "Type": "DataColumn"
             },
-            "3": {
+            "2": {
               "Ident": "StiText",
               "Name": "Text10",
               "Guid": "518324aa7fc047299bcf9327712a58ed",
@@ -861,7 +842,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text26",
               "Guid": "e327bdfa83d249a58252003c3fac2c80",
@@ -880,7 +861,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text6",
               "Guid": "5335ca527b4649cfb5e4c1561144e260",
@@ -899,7 +880,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "6": {
+            "5": {
               "Ident": "StiText",
               "Name": "Text8",
               "Guid": "3e9d3c6521114bf9ad7698fbf6e99120",
@@ -918,7 +899,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "7": {
+            "6": {
               "Ident": "StiText",
               "Name": "Text16",
               "Guid": "d7480aac2fc44a88a2a59a83a784d25b",
@@ -937,7 +918,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "8": {
+            "7": {
               "Ident": "StiText",
               "Name": "Text18",
               "Guid": "904f1ff903854681ac42dde4f3d635b3",
@@ -956,7 +937,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "9": {
+            "8": {
               "Ident": "StiText",
               "Name": "Text19",
               "Guid": "862de89bf0d94008839aa66b5e2eca9f",
@@ -975,7 +956,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "10": {
+            "9": {
               "Ident": "StiText",
               "Name": "Text20",
               "Guid": "fc8dc0be08ea44b29597790ff5973131",
@@ -994,7 +975,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "11": {
+            "10": {
               "Ident": "StiText",
               "Name": "Text22",
               "Guid": "02fc4bc995c041379f2969ed76f3e2d1",
@@ -1013,7 +994,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "12": {
+            "11": {
               "Ident": "StiText",
               "Name": "Text13",
               "Guid": "a39219d6d5d844849088b156f6b587df",
@@ -1032,7 +1013,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "13": {
+            "12": {
               "Ident": "StiText",
               "Name": "Text11",
               "Guid": "0da6ccd747a3428d9d4f78f8e7853f41",
