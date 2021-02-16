@@ -159,7 +159,6 @@ function initForm() {
             loadData(data);
             loadLineasFactura(data.prefacturaAutoId);
             loadBasesFactura(data.prefacturaAutoId);
-            loadCobrosFactura(data.prefacturaAutoId);
             $('#txtFecha').prop('disabled', true);
             
         })
@@ -491,7 +490,7 @@ var aceptarFactura = function () {
         }
         verb = "PUT";
         url = myconfig.apiUrl + "/api/prefacturasAuto/" + prefacturaAutoId;
-        returnUrl = "FacturaGeneral.html?prefacturaAutoId=";
+        returnUrl = "PrefacturaAutoGeneral.html?prefacturaAutoId=";
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
@@ -569,7 +568,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaGeneral.html";
+        var url = "PrefacturaAutoGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -889,8 +888,8 @@ function aceptarLinea() {
         return;
     }
     var data = {
-        facturaLinea: {
-            facturaLineaId: vm.facturaLineaId(),
+        prefacturaAutoLinea: {
+            prefacturaAutoLineaId: vm.facturaLineaId(),
             linea: vm.linea(),
             prefacturaAutoId: vm.prefacturaAutoId(),
             unidadId: vm.sunidadId(),
@@ -920,7 +919,6 @@ function aceptarLinea() {
             loadData(data, true);
             loadLineasFactura(data.prefacturaAutoId);
             loadBasesFactura(data.prefacturaAutoId);
-            loadCobrosFactura(data.prefacturaAutoId);
         });
     });
 }
@@ -1301,7 +1299,6 @@ function deleteFacturaLinea(prefacturaAutoId) {
                 loadData(data, true);
                 loadLineasFactura(data.prefacturaAutoId);
                 loadBasesFactura(data.prefacturaAutoId);
-                loadCobrosFactura(data.prefacturaAutoId);
             });
         });
     }, function () {
@@ -1508,13 +1505,6 @@ function loadTablaCobros(data) {
 }
 
 
-function loadCobrosFactura(prefacturaAutoId) {
-    llamadaAjax("GET", "/api/cobros/prefacturaAuto/" + prefacturaAutoId, null, function (err, data) {
-        if (err) return;
-        loadTablaCobros(data);
-    });
-}
-
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
@@ -1626,7 +1616,6 @@ var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturasAuto/" + vm.prefacturaAutoId(), null, function (err, data) {
             loadLineasFactura(data.prefacturaAutoId);
             loadBasesFactura(data.prefacturaAutoId);
-            loadCobrosFactura(data.prefacturaAutoId);
         });
     });
 };

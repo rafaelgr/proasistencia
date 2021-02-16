@@ -31,7 +31,7 @@ function initForm() {
         if(data) {
             initTablaPrefacturasAuto();
             // comprobamos parámetros
-            preprefacturaAutoAutoId = gup('FacturaId');
+            PrefacturaAutoId = gup('prefacturaAutoId');
             if (PrefacturaAutoId !== '') {
                 // Si nos pasan una prefafctura determinada esa es
                 // la que mostramos en el grid
@@ -309,7 +309,7 @@ function buscarPrefacturasAuto() {
 
 function crearFactura() {
     var mf = function () {
-        var url = "PrefacturaAutoDetalle.html?FacturaId=0";
+        var url = "PrefacturaAutoDetalle.html?prefacturaAutoId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -341,7 +341,7 @@ function deleteFactura(id, departamentoId) {
                 if (ButtonPressed2 === "Borrar") {
                     var data = { 
                         prefacturaAuto: {
-                            facturaId: id,
+                            prefacturaAutoId: id,
                             departamentoId: departamentoId 
                         }
                     };
@@ -367,7 +367,7 @@ function deleteFactura(id, departamentoId) {
             
         }
         if (ButtonPressed === "Descontabilizar prefacturaAuto") {
-            var data = { facturaId: id };
+            var data = { prefacturaAutoId: id };
             llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturasAuto/descontabilizar/" + id, null, function (err) {
                 if (err) return;
                 $('#chkTodos').prop('checked',false);
@@ -394,7 +394,7 @@ var mostrarMensajeFacturaBorrada = function () {
 function editFactura(id) {
     // hay que abrir la página de detalle de prefacturaAuto
     // pasando en la url ese ID
-    var url = "PrefacturaAutoDetalle.html?PrefacturaAutoId=" + id;
+    var url = "PrefacturaAutoDetalle.html?prefacturaAutoId=" + id;
     window.open(url, '_new');
 }
 
@@ -402,12 +402,12 @@ function cargarPrefacturasAuto() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: PrefacturaAutoId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturasAuto/" + facturaId,
+                url: myconfig.apiUrl + "/api/prefacturasAuto/" + prefacturaAutoId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -440,7 +440,7 @@ function cargarPrefacturasAuto() {
 }
 
 function printPrefacturaAuto2(id) {
-    var url = "InfPrefacturaAutos.html?facturaId=" + id;
+    var url = "InfPrefacturaAutos.html?prefacturaAutoId=" + id;
     window.open(url, '_new');
 }
 
