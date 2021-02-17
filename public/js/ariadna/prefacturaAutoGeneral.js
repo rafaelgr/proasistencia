@@ -348,16 +348,10 @@ function deleteFactura(id, departamentoId) {
                     if(departamentoId == 7) {
                         url =  myconfig.apiUrl + "/api/prefacturasAuto/parte/relacionado/" + id;
                     }
-                    llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturasAuto/desmarcar-prefactura/" + id, null, function (err) {
+                    llamadaAjax("DELETE", url, data, function (err) {
                         if (err) return;
-                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
-                            if (err) return;
-                            llamadaAjax("DELETE", url, data, function (err) {
-                                if (err) return;
-                                mostrarMensajeFacturaBorrada();
-                                buscarPrefacturasAuto()();
-                            });
-                        });
+                        mostrarMensajeFacturaBorrada();
+                        buscarPrefacturasAuto()();
                     });
                 }
                 if (ButtonPressed2 === "Cancelar") {

@@ -7,3 +7,9 @@ ALTER TABLE `partes`
 ALTER TABLE `partes_lineas`  
   ADD CONSTRAINT `lineas_parte_prefacturaAuto` FOREIGN KEY (`prefacturaAutoLineaId`) 
   REFERENCES `prefacturasauto_lineas`(`prefacturaAutoLineaId`) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+ALTER TABLE `partes` DROP FOREIGN KEY `ref_parte_prefacturasAuto`;
+
+ALTER TABLE `partes` ADD CONSTRAINT `ref_parte_prefacturasAuto` FOREIGN KEY (`prefacturaAutoId`) 
+REFERENCES `proasistencia`.`prefacturasauto`(`prefacturaAutoId`) ON UPDATE CASCADE ON DELETE SET NULL;

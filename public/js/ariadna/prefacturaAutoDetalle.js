@@ -1948,7 +1948,7 @@ function initTablaAnticiposAsociados() {
 }
 
 function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.clienteId() +  "/" + vm.contratoId() + "/" +prefacturaAutoId, null, function (err, data) {
+    llamadaAjax("GET",  "/api/anticiposClientes/cliente/anticipos/solapa/muestra/tabla/datos/anticipo/prefactura/" + vm.clienteId() +  "/" + vm.contratoId() + "/" +prefacturaAutoId, null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
