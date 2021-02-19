@@ -320,13 +320,12 @@ function deleteFactura(id, departamentoId) {
     var url = myconfig.apiUrl + "/api/prefacturasAuto/" + id;
     var mens = "¿Qué desea hacer con este registro?";
     mens += "<ul>"
-    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
     mens += "<li><strong>Borrar:</strong> Elimina completamente la prefacturaAuto. ¡¡ Atención !! Puede dejar huecos en los números de prefacturaAuto de la serie</li>";
     mens += "</ul>"
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Cancelar][Descontabilizar prefacturaAuto][Borrar prefacturaAuto]'
+        buttons: '[Cancelar][Borrar prefacturaAuto]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Borrar prefacturaAuto") {
             mens = "<ul>"
@@ -359,15 +358,6 @@ function deleteFactura(id, departamentoId) {
                 }
             });
             
-        }
-        if (ButtonPressed === "Descontabilizar prefacturaAuto") {
-            var data = { prefacturaAutoId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/prefacturasAuto/descontabilizar/" + id, null, function (err) {
-                if (err) return;
-                $('#chkTodos').prop('checked',false);
-                mostrarMensajeFacturaDescontabilizada();
-                buscarPrefacturasAuto()();
-            });
         }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
