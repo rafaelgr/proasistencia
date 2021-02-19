@@ -151,7 +151,7 @@ function initTablaContratos() {
         }, {
             data: "tipoProyectoNombre"
         }, {
-            data: "fechaInicio",
+            data: "fechaFinal",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
