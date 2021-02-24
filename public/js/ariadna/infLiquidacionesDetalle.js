@@ -345,12 +345,13 @@ var rptLiquidacionGeneralParametros = function () {
     sql = "SELECT c.nombre, tc.nombre AS tipo, lf.*,  lf.base as base2,";
     sql += " CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha,";
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha, 'OPERACIONES PERIODO ACTUAL' AS periodo,";
-    sql += " ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaFinal, '%Y-%m-%d') AS fechaFinalBis, ccm.fechaInicio, ccm.direccion";
+    sql += " ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaFinal, '%Y-%m-%d') AS fechaFinalBis, ccm.fechaInicio, CONCAT(tp.nombre, ' ', ccm.direccion) AS direccionTrabajo";
     sql += " FROM liquidacion_comercial AS lf";
     sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += " LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId";
+    sql += " LEFT JOIN tipos_via AS tp ON tp.tipoViaId = ccm.tipoViaId";
     if(tipoComercialId == 1) {
         sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
     } else {

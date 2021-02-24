@@ -40,7 +40,7 @@
           <value>contrato,System.String</value>
           <value>fechaFinalBis,System.Byte[]</value>
           <value>fechaInicio,System.DateTime</value>
-          <value>direccion,System.String</value>
+          <value>direccionTrabajo,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
@@ -48,12 +48,14 @@
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
         <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,
-DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura,  ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaFinal, '%Y-%m-%d') AS fechaFinalBis, ccm.fechaInicio, ccm.direccion
+DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura,  ccm.referencia AS contrato, DATE_FORMAT(ccm.fechaFinal, '%Y-%m-%d') AS fechaFinalBis, 
+ccm.fechaInicio, CONCAT(tp.nombre, " ", ccm.direccion) AS direccionTrabajo
 FROM liquidacion_comercial AS lf 
 LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
 LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
 LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId 
-LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId 
+LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
+LEFT JOIN tipos_via AS tp ON tp.tipoViaId = ccm.tipoViaId  
 </SqlCommand>
       </liqdet>
     </DataSources>
@@ -349,7 +351,7 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <Headerliqdet_contrato Ref="23" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>1.6,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Center</HorAlignment>
@@ -400,11 +402,10 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <Text5 Ref="26" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.4,0,4,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0,5.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>ee39a27b5b0b464da8ea3d66a7f2afca</Guid>
-              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="4" />
@@ -670,7 +671,7 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <Dataliqdet_comision Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>25.8,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>26.2,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -713,7 +714,7 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <Dataliqdet_contrato Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>1.6,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
@@ -728,7 +729,7 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <Dataliqdet_porComer Ref="52" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>25.2,0,0.6,0.8</ClientRectangle>
+              <ClientRectangle>25.2,0,0.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -738,24 +739,29 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
               <Parent isRef="27" />
               <Text>{liqdet.porComer}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="53" type="NumberFormat" isKey="true">
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <VertAlignment>Center</VertAlignment>
             </Dataliqdet_porComer>
-            <Text6 Ref="53" type="Text" isKey="true">
+            <Text6 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.4,0,4.2,0.8</ClientRectangle>
+              <ClientRectangle>3.8,0,5.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>bcd70344d1a047bfa7aaffe47cf2ec09</Guid>
-              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="4" />
               <Parent isRef="27" />
-              <Text>{liqdet.direccion}</Text>
+              <Text>{liqdet.direccionTrabajo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="54" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -782,11 +788,11 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
             <value>contrato</value>
           </Sort>
         </Dataliqdet>
-        <GroupFooterBand1 Ref="55" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand1 Ref="56" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.6,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text1 Ref="56" type="Text" isKey="true">
+            <Text1 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -795,13 +801,13 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="4" />
-              <Parent isRef="55" />
+              <Parent isRef="56" />
               <Text>TOTAL COMISIONES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="57" type="Text" isKey="true">
+            <Text2 Ref="58" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.6,0,2,0.6</ClientRectangle>
@@ -811,14 +817,15 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="4" />
-              <Parent isRef="55" />
+              <Parent isRef="56" />
               <Text>{Sum(GroupHeaderBand1,liqdet.comision)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
                 <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Totals</Type>
@@ -840,13 +847,13 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="59" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="60" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="60" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="61" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -859,10 +866,10 @@ LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId
   </ReferencedAssemblies>
   <ReportAlias>liquidacion_detalle</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>2/23/2021 2:22:08 PM</ReportChanged>
+  <ReportChanged>2/24/2021 9:11:34 AM</ReportChanged>
   <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_detalle_colaborador.mrt</ReportFile>
-  <ReportGuid>0b2fff44177b4f19afaef1c52f83cc2e</ReportGuid>
+  <ReportGuid>0394c5c7908b40bea0a5ab6c8ad1ef7a</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>liquidacion_detalle</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
