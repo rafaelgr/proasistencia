@@ -33,7 +33,7 @@
           <value>comision,System.Decimal</value>
           <value>departamento,System.String</value>
           <value>tipoColaborador,System.String</value>
-          <value>fechaInicio,System.Byte[]</value>
+          <value>fechaFinal,System.Byte[]</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
@@ -46,7 +46,7 @@ com.comercialId, com.nombre AS nomComercial,
 cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,
 fac.facturaId,  DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero, 
 liq.impCliente, liq.base, liq.porComer, liq.comision,
-tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaInicio, '%Y-%m-%d') AS fechaInicio 
+tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal 
 FROM liquidacion_comercial AS liq
 LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId
 LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId
@@ -453,7 +453,7 @@ FACTURA
               <Name>Text5</Name>
               <Page isRef="4" />
               <Parent isRef="30" />
-              <Text>{LiqAgente.fechaInicio}</Text>
+              <Text>{LiqAgente.fechaFinal}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="32" type="DateFormat" isKey="true">
                 <StringFormat>dd/MM/yyyy</StringFormat>
@@ -634,7 +634,7 @@ FACTURA
             </Text28>
             <Text2 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,0,2,0.4</ClientRectangle>
+              <ClientRectangle>1.8,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
@@ -810,10 +810,10 @@ FACTURA
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/4/2021 10:41:46 AM</ReportChanged>
+  <ReportChanged>2/24/2021 9:30:47 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
-  <ReportGuid>6f7123055da6411aab86f1282c7aa454</ReportGuid>
+  <ReportGuid>15ef6311e33c4ba49fb0ee2eedbd4f84</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>

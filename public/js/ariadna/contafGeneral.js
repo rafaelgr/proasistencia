@@ -11,6 +11,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var usuario;
+var facturasCero = [];
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -267,6 +268,7 @@ function loadTablaFacturas(data) {
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
+        facturasCero = [];
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId()+ "/" + usuario,
@@ -277,6 +279,18 @@ function buscarFacturas() {
                 // mostramos el botén de alta
                 $("#btnAlta").show();
                 $('#checkMain').prop('checked', false);
+                //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
+                if(data) {
+                    if(data.length > 0) {
+                        for(var i = 0; i < data.length; i++) {
+                            if(data[i].total == 0) {
+                                facturasCero.push(data[i].vNum);
+                            }
+                        }
+                        if(facturasCero.length > 0) mensError("las siguentes facturas tienen el importe a cero\n" + facturasCero);
+                    }
+                }
+
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -465,7 +479,8 @@ function updateAll(opcion) {
     var sel = 0;
     var tb = $('#dt_factura').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
-    if(opcion) sel = 1
+    if(opcion)  sel = 1
+    
     if(datos) {
         for( var i = 0; i < datos.length; i++) {
             var data = {

@@ -1,5 +1,5 @@
-﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
+/*-------------------------------------------------------------------------- 
+PrefacturaAutoGeneral.js
 Funciones js par la página FacturaGeneral.html
 
 ---------------------------------------------------------------------------*/
@@ -8,8 +8,8 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facturaId;
+var dataPrefacturasAuto;
+var PrefacturaAutoId;
 var usuario;
 
 
@@ -29,18 +29,18 @@ function initForm() {
     recuperaDepartamento(function(err, data) {
         if(err) return;
         if(data) {
-            initTablaFacturas();
+            initTablaPrefacturasAuto();
             // comprobamos parámetros
-            facturaId = gup('FacturaId');
-            if (facturaId !== '') {
+            PrefacturaAutoId = gup('prefacturaAutoId');
+            if (PrefacturaAutoId !== '') {
                 // Si nos pasan una prefafctura determinada esa es
                 // la que mostramos en el grid
-                cargarFacturas()(facturaId);
+                cargarPrefacturasAuto()(PrefacturaAutoId);
             } else {
                 // Por defecto ahora a la entrada se van a cargar todas 
-                // las facturas que tengamos en el sistema. En un futuro este
+                // las prefacturasAuto que tengamos en el sistema. En un futuro este
                 // criterio puede cambiar y habrá que adaptarlo.
-                cargarFacturas()();
+                cargarPrefacturasAuto()();
              }
 
         }
@@ -51,7 +51,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        cargarFacturas()();
+        cargarPrefacturasAuto()();
     });
 
 
@@ -60,24 +60,24 @@ function initForm() {
     getVersionFooter();
     
     //
-    $('#btnBuscar').click(buscarFacturas());
+    $('#btnBuscar').click(buscarPrefacturasAuto());
     $('#btnAlta').click(crearFactura());
-    $('#btnPrint').click(imprimirFactura);
+    $('#btnPrint').click(imprimirPrefacturaAuto);
     $('#frmBuscar').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
-    //        buscarFacturas();
+    //        buscarPrefacturasAuto();
     //});
     //
     
 
     $('#chkTodos').change(function () {
         if (this.checked) {
-            cargarFacturas2All();
+            cargarPrefacturasAuto2All();
         } else {
-            cargarFacturas2();
+            cargarPrefacturasAuto2();
         }
     })
 }
@@ -98,8 +98,8 @@ function admData() {
 
 
 
-function initTablaFacturas() {
-    tablaFacturas = $('#dt_factura').DataTable({
+function initTablaPrefacturasAuto() {
+    tablaPrefacturasAuto = $('#dt_prefacturaAuto').DataTable({
         bSort: true,
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [5] },
@@ -120,7 +120,7 @@ function initTablaFacturas() {
             "aButtons": [
                 {
                     "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
+                    "sTitle": "PrefacturasAuto Seleccionadas",
                     "sPdfMessage": "proasistencia PDF Export",
                     "sPdfSize": "A4",
                     "sPdfOrientation": "landscape",
@@ -128,22 +128,22 @@ function initTablaFacturas() {
                 },
                 {
                     "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "PrefacturasAuto filtradas <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "PrefacturasAuto filtradas <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "PrefacturasAuto filtradas <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 },
                 {
                     "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "sMessage": "PrefacturasAuto filtradas <i>(pulse Esc para cerrar)</i>",
                     "oSelectorOpts": { filter: 'applied', order: 'current' }
                 }
             ],
@@ -153,7 +153,7 @@ function initTablaFacturas() {
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefacturaAuto'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -182,9 +182,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataPrefacturasAuto,
         columns: [{
-            data: "facturaId",
+            data: "prefacturaAutoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (row.contafich || row.contabilizada) {
@@ -226,7 +226,7 @@ function initTablaFacturas() {
         }, {
             data: "dirTrabajo"
         }, {
-            data: "facturaId",
+            data: "prefacturaAutoId",
             render: function (data, type, row) {
                 console.log(type +" "+ row);
                 var bt1 = "";
@@ -259,16 +259,16 @@ function initTablaFacturas() {
 
 
     // Apply the filter
-    $("#dt_factura thead th input[type=text]").on('keyup change', function () {
-        tablaFacturas
+    $("#dt_prefacturaAuto thead th input[type=text]").on('keyup change', function () {
+        tablaPrefacturasAuto
             .column($(this).parent().index() + ':visible')
             .search(this.value)
             .draw();
     });
 
     // Hide some columns by default
-    tablaFacturas.columns(8).visible(false);
-    tablaFacturas.columns(10).visible(false);
+    tablaPrefacturasAuto.columns(8).visible(false);
+    tablaPrefacturasAuto.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -290,8 +290,8 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
+function loadTablaPrefacturasAuto(data) {
+    var dt = $('#dt_prefacturaAuto').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -300,16 +300,16 @@ function loadTablaFacturas(data) {
     dt.fnDraw();
 }
 
-function buscarFacturas() {
+function buscarPrefacturasAuto() {
     var mf = function () {
-        cargarFacturas()();
+        cargarPrefacturasAuto()();
     };
     return mf;
 }
 
 function crearFactura() {
     var mf = function () {
-        var url = "FacturaDetalle.html?FacturaId=0";
+        var url = "PrefacturaAutoDetalle.html?prefacturaAutoId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -317,20 +317,19 @@ function crearFactura() {
 
 function deleteFactura(id, departamentoId) {
     // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/facturas/" + id;
+    var url = myconfig.apiUrl + "/api/prefacturasAuto/" + id;
     var mens = "¿Qué desea hacer con este registro?";
     mens += "<ul>"
-    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
-    mens += "<li><strong>Borrar:</strong> Elimina completamente la factura. ¡¡ Atención !! Puede dejar huecos en los números de factura de la serie</li>";
+    mens += "<li><strong>Borrar:</strong> Elimina completamente la prefacturaAuto. ¡¡ Atención !! Puede dejar huecos en los números de prefacturaAuto de la serie</li>";
     mens += "</ul>"
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Cancelar][Descontabilizar factura][Borrar factura]'
+        buttons: '[Cancelar][Borrar prefacturaAuto]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Borrar factura") {
+        if (ButtonPressed === "Borrar prefacturaAuto") {
             mens = "<ul>"
-            mens += "<li><strong>¡¡ Atención !! Se borrá tambien la liquidación asociada a la factura</strong></li>";
+            mens += "<li><strong>¡¡ Atención !! Se borrá tambien la liquidación asociada a la prefacturaAuto</strong></li>";
             mens += "<li>¿Desea continuar?</li>";
             mens += "</ul>"
             $.SmartMessageBox({
@@ -340,24 +339,18 @@ function deleteFactura(id, departamentoId) {
             },function (ButtonPressed2) {
                 if (ButtonPressed2 === "Borrar") {
                     var data = { 
-                        factura: {
-                            facturaId: id,
+                        prefacturaAuto: {
+                            prefacturaAutoId: id,
                             departamentoId: departamentoId 
                         }
                     };
                     if(departamentoId == 7) {
-                        url =  myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id;
+                        url =  myconfig.apiUrl + "/api/prefacturasAuto/parte/relacionado/" + id;
                     }
-                    llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
+                    llamadaAjax("DELETE", url, data, function (err) {
                         if (err) return;
-                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
-                            if (err) return;
-                            llamadaAjax("DELETE", url, data, function (err) {
-                                if (err) return;
-                                mostrarMensajeFacturaBorrada();
-                                buscarFacturas()();
-                            });
-                        });
+                        mostrarMensajeFacturaBorrada();
+                        buscarPrefacturasAuto()();
                     });
                 }
                 if (ButtonPressed2 === "Cancelar") {
@@ -366,15 +359,6 @@ function deleteFactura(id, departamentoId) {
             });
             
         }
-        if (ButtonPressed === "Descontabilizar factura") {
-            var data = { facturaId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err) {
-                if (err) return;
-                $('#chkTodos').prop('checked',false);
-                mostrarMensajeFacturaDescontabilizada();
-                buscarFacturas()();
-            });
-        }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
         }
@@ -382,37 +366,37 @@ function deleteFactura(id, departamentoId) {
 }
 
 var mostrarMensajeFacturaDescontabilizada = function () {
-    var mens = "La factura se ha descontabilizado correctamente.";
+    var mens = "La prefacturaAuto se ha descontabilizado correctamente.";
     mensNormal(mens);
 }
 
 var mostrarMensajeFacturaBorrada = function () {
-    var mens = "La factura se ha borrado correctamente.";
+    var mens = "La prefacturaAuto se ha borrado correctamente.";
     mensNormal(mens);
 }
 
 function editFactura(id) {
-    // hay que abrir la página de detalle de factura
+    // hay que abrir la página de detalle de prefacturaAuto
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    var url = "PrefacturaAutoDetalle.html?prefacturaAutoId=" + id;
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
+function cargarPrefacturasAuto() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: facturaId
+                id: PrefacturaAutoId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                url: myconfig.apiUrl + "/api/prefacturasAuto/" + prefacturaAutoId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaPrefacturasAuto(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -422,12 +406,12 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    loadTablaFacturas(data);
+                    loadTablaPrefacturasAuto(data);
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -439,20 +423,20 @@ function cargarFacturas() {
     return mf;
 }
 
-function printFactura2(id) {
-    var url = "InfFacturas.html?facturaId=" + id;
+function printPrefacturaAuto2(id) {
+    var url = "InfPrefacturaAutos.html?prefacturaAutoId=" + id;
     window.open(url, '_new');
 }
 
-function printFactura(id) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + id, null, function (err, data) {
+function printPrefacturaAuto(id) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturasAuto/" + id, null, function (err, data) {
         if (err) return;
         empresaId = data.empresaId;
         llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + empresaId, null, function (err, empresa) {
             if (err) return;
             var shortid = "rJkSiTZ9g";
-            if (empresa.infFacturas) shortid = empresa.infFacturas;
-            var url = "/api/informes/facturas/" + id;
+            if (empresa.infPrefacturaAutos) shortid = empresa.infPrefacturaAutos;
+            var url = "/api/informes/prefacturasAuto/" + id;
             if (shortid == "rJRv-UF3l" || shortid == "SynNJ46oe") {
                 url = "/api/informes/facturas2/" + id;
             }
@@ -495,14 +479,14 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarFacturas2() {
+function cargarPrefacturaAutos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaFacturas(data);
+            loadTablaPrefacturasAuto(data);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -511,14 +495,14 @@ function cargarFacturas2() {
     });
 }
 
-function cargarFacturas2All() {
+function cargarPrefacturasAuto2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/PrefacturaAutos/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            loadTablaFacturas(data);
+            loadTablaPrefacturasAuto(data);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -527,7 +511,7 @@ function cargarFacturas2All() {
     });
 }
 
-imprimirFactura = function () {
-    var url = "InfFacturas.html";
+imprimirPrefacturaAuto = function () {
+    var url = "InfPrefacturasAuto.html";
     window.open(url, '_blank');
 }

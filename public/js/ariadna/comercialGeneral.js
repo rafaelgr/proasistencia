@@ -64,17 +64,19 @@ function initForm() {
 }
 
 function initTablaComerciales() {
-    tablaCarro = $('#dt_comercial').dataTable({ 
-        //dom: 'Bfrtip',
+   tablaCarro = $('#dt_comercial').DataTable({ 
+        bSort: true,
         
-        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12 'C Brtip'>>",
+        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-       
+        autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -147,6 +149,14 @@ function initTablaComerciales() {
                 return html;
             }
         }]
+    });
+
+    // Apply the filter
+    $("#dt_comercial thead th input[type=text]").on('keyup change', function () {
+        tablaCarro
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
     });
 }
 

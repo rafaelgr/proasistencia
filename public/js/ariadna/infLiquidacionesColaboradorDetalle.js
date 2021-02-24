@@ -275,12 +275,13 @@ var rptLiquidacionGeneralParametros = function () {
     
     sql = "SELECT c.nombre, tc.nombre AS tipo, lf.*,  lf.base as base2,";
     sql += " 'OPERACIONES PERIODO ACTUAL' AS periodo,";
-    sql += " ccm.referencia AS contrato";
+    sql += " ccm.referencia AS contrato, CONCAT(tp.nombre, ' ', ccm.direccion) AS direccionTrabajo";
     sql += " FROM liquidacion_comercial AS lf";
     
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += " LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId";
+    sql += " LEFT JOIN tipos_via AS tp ON tp.tipoViaId = ccm.tipoViaId";
     sql += "  WHERE lf.facturaId IS NULL";
     if (comercialId) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";

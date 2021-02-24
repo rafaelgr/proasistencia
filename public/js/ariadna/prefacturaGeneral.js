@@ -107,13 +107,19 @@ function admData() {
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        /* "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>", */
+        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
+       /*  "oTableTools": {
             "aButtons": [
                 {
                     "sExtends": "pdf",
@@ -145,7 +151,7 @@ function initTablaPrefacturas() {
                 }
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        }, */
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
