@@ -5,6 +5,8 @@ ALTER TABLE `partes`
   ADD CONSTRAINT `ref_parte_prefacturasAuto` FOREIGN KEY (`prefacturaAutoId`) 
   REFERENCES `prefacturasauto`(`prefacturaAutoId`);
 
+  ALTER TABLE `partes_lineas` ADD COLUMN `prefacturaAutoLineaId` INT(11) NULL AFTER `prefacturaLineaId`; 
+
 
 ALTER TABLE `partes_lineas`  
   ADD CONSTRAINT `lineas_parte_prefacturaAuto` FOREIGN KEY (`prefacturaAutoLineaId`) 
