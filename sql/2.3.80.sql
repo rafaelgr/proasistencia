@@ -1,3 +1,5 @@
+#AÑADIMOS PRIMERO LAS TABLAS RELACIONADAS CON PREFACTURAS AUTOMÁTICAS
+
 ALTER TABLE `partes`   
   ADD COLUMN `prefacturaAutoId` INT(11) NULL AFTER `facturaId`,
   ADD CONSTRAINT `ref_parte_prefacturasAuto` FOREIGN KEY (`prefacturaAutoId`) 
