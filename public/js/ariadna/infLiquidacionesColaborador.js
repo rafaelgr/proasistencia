@@ -39,7 +39,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnImprimir").click(rptLiquidacionGeneralParametrosJson);
+    $("#btnImprimir").click(obtainReport);
     // avoid form submmit
     $("#frmRptLiquidaciones").submit(function () {
         return false;
@@ -299,52 +299,8 @@ function loadTiposComerciales(tipoComercialId) {
 }
 
 
-var obtainReportJson = function (obj) {
-    if(tipoColaborador != 1) {
-        file = "../reports/liquidacion_colaborador.mrt";
-    } else {
-        file = "../reports/liquidacion_agente.mrt";
-    }
-
-    var report = new Stimulsoft.Report.StiReport();
-        
-        
-    report.loadFile(file);
-
-    var dataSet = new Stimulsoft.System.Data.DataSet("liq_col");
-    dataSet.readJson(obj);
-    
-     // Remove all connections from the report template
-     report.dictionary.databases.clear();
-
-     //
-    report.regData(dataSet.dataSetName, "", dataSet);
-    report.dictionary.synchronize();
-
-    viewer.report = report;
-
-};
-
-var rptLiquidacionGeneralParametrosJson = function () {
-    var comercialId = vm.scomercialId();
-    var tipoComercialId = vm.stipoComercialId();
-    var departamentoId = vm.sdepartamentoId();
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
-
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
-
-    llamadaAjax("POST", url, null, function (err, data) {
-        if(err) return;
-        if(data) {
-            obtainReportJson(data)
-        } else {
-            alert("No hay registros con estas condiciones");
-        }
-    });
-   
-    
-}
+// initAutoCliente
+// inicializa el control del cliente como un autocomplete
 
 var rptLiquidacionGeneralParametros = function () {
     var sql= "";
@@ -353,7 +309,6 @@ var rptLiquidacionGeneralParametros = function () {
     var departamentoId = vm.sdepartamentoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    
     if(departamentoId !=7 && departamentoId > 0) {
         sql = "SELECT";
         sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
@@ -532,6 +487,5 @@ var rptLiquidacionGeneralParametros = function () {
     
     return sql;
 }
-
 
 
