@@ -51,7 +51,11 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        cargarFacturas()();
+        if( !$('#chkTodos').prop('checked') ) {
+            cargarFacturas2();
+            return;
+        }
+        cargarFacturas2All();
     });
 
 

@@ -32,7 +32,7 @@ function initForm() {
     $("#cmbComerciales").select2().on('change', function (e) {
         cambioComercial(e.added);
     });
-    loadComerciales();
+    loadComerciales(null);
 
     $("#cmbTiposPagos").select2(select2Spanish());
     loadTiposPagos();
@@ -497,9 +497,11 @@ function loadEmpresas(id) {
 }
 
 function loadComerciales(id) {
+    var url =  "/api/comerciales";
+    if(!id) url = "/api/comerciales/activos"
     $.ajax({
         type: "GET",
-        url: "/api/comerciales",
+        url: url,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

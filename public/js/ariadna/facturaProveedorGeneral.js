@@ -41,7 +41,11 @@ function initForm() {
         vm.sdepartamentoId(this.value);
         if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
         else{ $('#btnPrint').show() }
-        cargarFacturas()();
+        if( !$('#chkTodos').prop('checked') ) {
+            cargarFacturas2();
+            return;
+        }
+        cargarFacturas2All();
     });
 
     vm = new admData();
@@ -69,11 +73,13 @@ function initForm() {
         }
     });
 
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarFacturas();
-    //});
-    //
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarFacturas2All();
+        } else {
+            cargarFacturas2();
+        }
+    })
    
 }
 
