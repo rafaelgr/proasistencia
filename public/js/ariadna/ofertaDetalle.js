@@ -718,11 +718,16 @@ function cambioTipoProyecto(data) {
                 if (err) return;
                 vm.referencia(nuevaReferencia);
                 if(vm.stipoOfertaId() == 5) {
+                    if(vm.porcentajeAgente()) {
+                        cargaPorcenRef(vm.porcentajeAgente());
+                        return;
+                    }
                     var a = spanishDbDate(vm.fechaOferta());
                     var y =  moment(a).year().toString();
                     y = y.substring(2);
-                    nuevaReferencia = nuevaReferencia + "-comision/" + y
+                    nuevaReferencia = nuevaReferencia + "-0/" + y
                     vm.referencia(nuevaReferencia);
+                    
                 }
             });
         });
@@ -1566,7 +1571,8 @@ var cargaAgente = function (id, encarga) {
                 var porcenAgen = vm.porcentajeAgente();
                 if (!vm.porcentajeAgente() || porcenAgen == 0) vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
-                nuevaRefReparaciones(vm.stipoOfertaId(), comision);
+                if(vm.stipoOfertaId() == 7)  nuevaRefReparaciones(vm.stipoOfertaId(), comision);
+                if(vm.stipoOfertaId() == 5) cargaPorcenRef(comision);
             });
         }
     });
@@ -1657,6 +1663,11 @@ var initAutoAgente = function () {
                 vm.porcentajeAgente(comision);
                 recalcularCostesImportesDesdeCoste();
                 nuevaRefReparaciones(vm.stipoOfertaId(), comision);
+                //gargamos la comision en la referencia si es de arquitectura
+
+                if(vm.stipoOfertaId() == 5) {
+                   cargaPorcenRef(comision);
+                }
             });
         }
     });
@@ -1667,6 +1678,17 @@ var initAutoAgente = function () {
         return r;
     }, "Debe seleccionar un agente válido");
 };
+
+var cargaPorcenRef = function(comision) {
+    if(!comision) comision = 0;
+    var ref = vm.referencia();
+    if(ref && ref != '') {
+        ref = ref.toString();
+        var com = comision.toString();
+        ref = ref.replace(/-[0-9]*\//, "-" + com + "/");
+        vm.referencia(ref);
+    }
+}
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
