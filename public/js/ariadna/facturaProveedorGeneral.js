@@ -77,7 +77,7 @@ function initForm() {
         if (this.checked) {
             cargarFacturas2All();
         } else {
-            cargarFacturas2();
+            cargarFacturas2()();
         }
     })
    
@@ -422,6 +422,38 @@ function cargarFacturas() {
     return mf;
 }
 
+
+function cargarFacturas2() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaFacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function cargarFacturas2All() {
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaFacturas(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
 function printPrefactura(id) {
     $.ajax({
         type: "GET",
