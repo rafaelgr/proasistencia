@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "fb020aa5a4844f85ad446f2e99c49b23",
+  "ReportGuid": "480bda82f20245a5b7df5b58cd961236",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1602147253324+0200)/",
+  "ReportChanged": "/Date(1614934567469+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1368,7 +1368,6 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "CanShrink": true,
           "ClientRectangle": "0,10.4,19,2.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -1380,9 +1379,9 @@
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
-              "MinSize": "0.4,1",
-              "MaxSize": "8.4,4",
-              "ClientRectangle": "5.6,0,8,1",
+              "MinSize": "0.4,2",
+              "MaxSize": "8.4,8",
+              "ClientRectangle": "5.6,0,8,2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1580,6 +1579,8 @@
               }
             }
           },
+          "MinHeight": 2.0,
+          "MaxHeight": 8.0,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
@@ -2183,7 +2184,7 @@
               "Guid": "5531d3db1a3a49549e5a2f08f4e824e3",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5,0,1.8,0.4",
+              "ClientRectangle": "5,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2242,7 +2243,7 @@
               "Guid": "197193168a884ad88fb3a62f3a53d9cb",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "9.6,0,1.6,0.4",
+              "ClientRectangle": "9.6,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
