@@ -558,7 +558,7 @@ function loadData(data) {
     cargaCliente(data.clienteId);
     cargaMantenedor(data.mantenedorId);
     vm.porcentajeAgente(data.porcentajeAgente);
-    cargaAgente(data.agenteId);
+    cargaAgente(data.agenteId, true);
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
@@ -904,7 +904,7 @@ var cambioCliente = function (data) {
     var clienteId = data.id;
     llamadaAjax('GET', "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
-        cargaAgente(data.comercialId);
+        cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
         //
@@ -940,14 +940,20 @@ function cambioTipoProyecto(data) {
         if (err) return;
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
             if (err) return;
-            vm.referencia(nuevaReferencia);
+           
             if(vm.stipoContratoId() == 5) {
                 var a = spanishDbDate(vm.fechaContrato());
                 var y =  moment(a).year().toString();
                 y = y.substring(2);
-                nuevaReferencia = nuevaReferencia + "-comision/" + y
+                nuevaReferencia = nuevaReferencia + "-0/" + y
                 vm.referencia(nuevaReferencia);
+                
+                if(vm.porcentajeAgente()) {
+                    cargaPorcenRef(vm.porcentajeAgente());
+                    return;
+                }
             }
+            vm.referencia(nuevaReferencia);
         });
     });
 }
@@ -1628,23 +1634,28 @@ var cargaMantenedor = function (id) {
     });
 };
 
-var cargaAgente = function (id) {
+var cargaAgente = function (id, encarga) {
     llamadaAjax('GET', "/api/comerciales/" + id, null, function (err, data) {
         if (err) return;
         $('#txtAgente').val(data.nombre);
         vm.agenteId(data.comercialId);
-        obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
-            if (err) return;
-            var por = vm.porcentajeAgente()
-            if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
-            if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
-            if(!usaCalculadora) vm.porcentajeAgente(0);
-            if(contratoId != 0) {
-                
-            } else {
-                recalcularCostesImportesDesdeCoste();
-            }
-        });
+        if(!encarga) {
+            obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
+                if (err) return;
+                //var por = vm.porcentajeAgente()
+                if(!comision) comision = 0;
+                vm.porcentajeAgente(comision);
+                //if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
+                if(!usaCalculadora) vm.porcentajeAgente(0);
+                if(vm.stipoContratoId() == 5) cargaPorcenRef(comision);
+            });
+        }
+        if(contratoId != 0) {
+                    
+        } else {
+            recalcularCostesImportesDesdeCoste();
+            //actualizarLineasDeLaContratoTrasCambioCostes();
+        }
     });
 };
 
@@ -1731,9 +1742,15 @@ var initAutoAgente = function () {
             vm.agenteId(ui.item.id);
             obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
-                if (!vm.porcentajeAgente() || vm.porcentajeAgente() == null) vm.porcentajeAgente(comision);
+                if(!comision) comision = 0;
+                vm.porcentajeAgente(comision);
                 if(!usaCalculadora) vm.porcentajeAgente(0);
                 recalcularCostesImportesDesdeCoste();
+                //actualizarLineasDeLaContratoTrasCambioCostes()
+
+                if(vm.stipoContratoId() == 5) {
+                    cargaPorcenRef(comision);
+                 }
             });
         }
     });
@@ -1872,7 +1889,16 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
 
     return importeCliente;
 }
-
+var cargaPorcenRef = function(comision) {
+    if(!comision) comision = 0;
+    var ref = vm.referencia();
+    if(ref && ref != '') {
+        ref = ref.toString();
+        var com = comision.toString();
+        ref = ref.replace(/-[0-9]*\//, "-" + com + "/");
+        vm.referencia(ref);
+    }
+}
 var imprimir = function () {
     guardarContrato(function (err) {
         if (err) return;
@@ -2211,6 +2237,7 @@ function cambioComercial(data) {
         } 
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
+        //recalcularCostesImportesDesdeCoste();
     });
 }
 
@@ -2850,11 +2877,15 @@ function loadTablaPrefacturas(data) {
             $('#cmbTiposContrato').prop('disabled', true);
             $('#cmbTipoProyecto').prop('disabled', true);
             $('#txtReferencia').prop('disabled', true);
+            $('#txtCliente').prop('disabled', true);
+            $('#txtAgente').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
             $('#cmbTipoProyecto').prop('disabled', false);
             $('#txtReferencia').prop('disabled', false);
+            $('#txtCliente').prop('disabled', false);
+            $('#txtAgente').prop('disabled', false);
         }
     } else {
         importePrefacturas = 0;
@@ -2864,6 +2895,8 @@ function loadTablaPrefacturas(data) {
         $('#cmbTiposContrato').prop('disabled', false);
         $('#cmbTipoProyecto').prop('disabled', false);
         $('#txtReferencia').prop('disabled', false);
+        $('#txtCliente').prop('disabled', false);
+        $('#txtAgente').prop('disabled', false);
     }
     dt.fnDraw();
 }

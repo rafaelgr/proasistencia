@@ -408,13 +408,29 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
-    cambioDepartamento(data.tipoOfertaId);
+    //cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
 
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
 
     cargaTablaProveedores()
+
+    if(data.contratoId) {
+        $('#cmbEmpresas').prop('disabled', true);
+        $('#cmbTiposContrato').prop('disabled', true);
+        $('#cmbTipoProyecto').prop('disabled', true);
+        $('#txtReferencia').prop('disabled', true);
+        $('#txtCliente').prop('disabled', true);
+        $('#txtAgente').prop('disabled', true);
+    } else {
+        $('#cmbEmpresas').prop('disabled', false);
+        $('#cmbTiposContrato').prop('disabled', false);
+        $('#cmbTipoProyecto').prop('disabled', false);
+        $('#txtReferencia').prop('disabled', false);
+        $('#txtCliente').prop('disabled', false);
+        $('#txtAgente').prop('disabled', false);
+    }
 }
 
 function datosOK() {
@@ -675,7 +691,7 @@ var cambioCliente = function (data) {
     var clienteId = data.id;
     llamadaAjax('GET', "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
-        cargaAgente(data.comercialId);
+        cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
     });
@@ -694,7 +710,7 @@ function cambioEmpresa(data) {
 
 function cambioTipoProyecto(data) {
     //
-    if (!data || vm.referencia()) {
+    if (!data) {
         return;
     }
     var tipoProyectoId = data.id;
@@ -716,19 +732,18 @@ function cambioTipoProyecto(data) {
             if (err) return;
             llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
                 if (err) return;
-                vm.referencia(nuevaReferencia);
                 if(vm.stipoOfertaId() == 5) {
-                    if(vm.porcentajeAgente()) {
-                        cargaPorcenRef(vm.porcentajeAgente());
-                        return;
-                    }
                     var a = spanishDbDate(vm.fechaOferta());
                     var y =  moment(a).year().toString();
                     y = y.substring(2);
                     nuevaReferencia = nuevaReferencia + "-0/" + y
                     vm.referencia(nuevaReferencia);
-                    
+                    if(vm.porcentajeAgente()) {
+                        cargaPorcenRef(vm.porcentajeAgente());
+                        return;
+                    }
                 }
+                vm.referencia(nuevaReferencia);
             });
         });
     }
