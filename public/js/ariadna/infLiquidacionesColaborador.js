@@ -300,6 +300,7 @@ function loadTiposComerciales(tipoComercialId) {
 
 
 var obtainReportJson = function (obj) {
+    var tipoColaborador = vm.stipoComercialId();
     if(tipoColaborador != 1) {
         file = "../reports/liquidacion_colaborador.mrt";
     } else {
