@@ -408,7 +408,7 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
-    //cambioDepartamento(data.tipoOfertaId);
+    cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
 
     loadConceptosLineas(data.ofertaId);
@@ -571,7 +571,7 @@ function loadDepartamentosUsuario(id) {
     if(id) vm.tipoOfertaId(id);
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
         if (err) return;
-        //if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
+        if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
         var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbDepartamentos").val([id]).trigger('change');

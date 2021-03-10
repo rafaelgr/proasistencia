@@ -1787,12 +1787,12 @@ var recalcularCostesImportesDesdeCoste = function () {
         if(imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
-    //if(!usaCalculadora) vm.porcentajeAgente(0);
+    if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100));
         vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
     }
-    //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
+    if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     if (vm.mantenedorId()) {
         vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
