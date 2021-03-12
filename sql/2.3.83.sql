@@ -5,4 +5,4 @@ ALTER TABLE `liquidacion_comercial`
   ADD COLUMN `pagadoAnterior` DECIMAL(12,2) NULL AFTER `pagadoPeriodo`;
 
   ALTER TABLE `facturas`   
-  ADD COLUMN `esSegura` TINYINT(1) DEFAULT 0 NULL AFTER `noContabilizar`;
+  ADD COLUMN `esSegura` TINYINT(1)  NULL AFTER `noContabilizar`;
