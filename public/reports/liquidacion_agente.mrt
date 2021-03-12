@@ -435,7 +435,7 @@ FACTURA
               <Name>Text9</Name>
               <Page isRef="2" />
               <Parent isRef="28" />
-              <Text>{LiqAgente.pagadoPeriodo}</Text>
+              <Text>{LiqAgente.baseCalculo}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -485,6 +485,7 @@ FACTURA
                 <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
+              <Type>Expression</Type>
             </Text13>
             <Text25 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -756,10 +757,10 @@ FACTURA
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/11/2021 10:52:18 AM</ReportChanged>
+  <ReportChanged>3/12/2021 11:03:39 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente.mrt</ReportFile>
-  <ReportGuid>ae340610745c4b8ea7b180c5b2412954</ReportGuid>
+  <ReportGuid>4473f992ac4f4fc1ab5e2ef013c536de</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
