@@ -236,6 +236,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.comercialId(0);
+        vm.activa(1);
     }
 }
 
