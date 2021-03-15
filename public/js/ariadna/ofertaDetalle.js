@@ -2269,7 +2269,7 @@ function initTablaProveedores() {
         columns: [{
             data: "proveedornombre",
             render: function (data, type, row) {
-                if(!data) return row.totalLinea;
+                if(!data) return row.totalProveedor;
                 return data;
             }
         }, {
