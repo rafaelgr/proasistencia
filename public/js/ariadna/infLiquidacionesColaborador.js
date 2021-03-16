@@ -172,9 +172,7 @@ var obtainReport = function () {
     var tipoColaborador = vm.stipoComercialId();
     if(tipoColaborador != 1) {
         file = "../reports/liquidacion_colaborador.mrt";
-    } else {
-        file = "../reports/liquidacion_agente.mrt";
-    }
+    } 
 
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -332,6 +330,11 @@ var rptLiquidacionGeneralParametrosJson = function () {
     var departamentoId = vm.sdepartamentoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+
+    if(tipoComercialId != 1) {
+        obtainReport();
+        return;
+    }
 
     var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
 
