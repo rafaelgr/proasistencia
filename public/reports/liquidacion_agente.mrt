@@ -440,7 +440,7 @@ FACTURA
               <TextFormat Ref="33" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
+                <NegativePattern>5</NegativePattern>
                 <PositivePattern>1</PositivePattern>
                 <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
@@ -463,6 +463,7 @@ FACTURA
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
             </Text11>
             <Text13 Ref="36" type="Text" isKey="true">
@@ -757,10 +758,10 @@ FACTURA
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/12/2021 11:03:39 AM</ReportChanged>
+  <ReportChanged>3/16/2021 10:55:02 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente.mrt</ReportFile>
-  <ReportGuid>4473f992ac4f4fc1ab5e2ef013c536de</ReportGuid>
+  <ReportGuid>4f609917eb374816962af4aa2ca48568</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
