@@ -261,6 +261,7 @@ function admData() {
     self.email = ko.observable();
     self.email2 = ko.observable();
     self.emailFacturas = ko.observable();
+    self.emailConfi = ko.observable();
     self.observaciones = ko.observable();
     self.dniFirmante = ko.observable();
     self.firmante = ko.observable();
@@ -347,6 +348,7 @@ function loadData(data, desdeLoad) {
     vm.email(data.email);
     vm.email2(data.email2);
     vm.emailFacturas(data.emailFacturas);
+    vm.emailConfi(data.emailConfi);
     vm.observaciones(data.observaciones);
     vm.dniFirmante(data.dniFirmante);
     vm.firmante(data.firmante);
@@ -398,6 +400,9 @@ function datosOK() {
             txtEmailFacturas: {
                 email: true
             },
+            txtEmailConfi: {
+                email: true
+            },
             cmbTiposComerciales: {
                 required: true
             }
@@ -417,6 +422,9 @@ function datosOK() {
                 email: 'Debe usar un correo válido'
             },
             txtEmailFacturas: {
+                email: 'Debe usar un correo válido'
+            },
+            txtEmailConfi: {
                 email: 'Debe usar un correo válido'
             },
             cmbTiposComerciales: {
@@ -504,6 +512,7 @@ function aceptar() {
                 "email": vm.email(),
                 "email2": vm.email2(),
                 "emailFacturas": vm.emailFacturas(),
+                "emailConfi": vm.emailConfi(),
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
