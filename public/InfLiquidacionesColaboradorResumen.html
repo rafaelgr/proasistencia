@@ -63,7 +63,7 @@
     <div style="margin: 0px 5px; padding:10px;">
         <div style="padding:10px;" id="selector">
             <div class="row">
-                <h2><i class="fa fa-bar-chart"></i> Informe de liquidaciones por colaborador</h2>
+                <h2><i class="fa fa-bar-chart"></i> Informe resumido de liquidaciones por colaborador</h2>
             </div>
             <div class="row" style="background-color:darkorange; border:solid 1px;">
                 <form id="frmRptLiquidaciones" class="smart-form">
@@ -75,19 +75,19 @@
                                     <input id="txtRFecha" name="txtRFecha"/>
                                 </label>
                             </section>
-                            <div class="col col-md-3">
+                           <!--  <div class="col col-md-3">
                                 <label class="label">Departamento</label>
                                 <label style="width:100%; height:50px;">
                                     <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
                                 </label>
-                            </div>     
+                            </div>      -->
                             <div class="col col-md-3">
                                 <label class="label">Tipo colaborador</label>
                                 <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
                                                     </label>
                             </div>                                                   
-                            <div class="col col-md-4">
+                            <div class="col col-md-7">
                                 <label class="label">Colaborador</label>
                                 <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbColaboradores" name="cmbColaboradores" data-bind="options: posiblesColaboradores, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosColaboradores, selected2:{}"></select><i></i>

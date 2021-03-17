@@ -106,10 +106,10 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
+   /*  recuperaDepartamento(function(err, data) {
         if(err) return;
         
-    });
+    }); */
     //
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
@@ -152,11 +152,11 @@ function admData() {
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
     //
-    self.departamentoId = ko.observable();
-    self.sdepartamentoId = ko.observable();
+    //self.departamentoId = ko.observable();
+    //self.sdepartamentoId = ko.observable();
     //
-    self.posiblesDepartamentos = ko.observableArray([]);
-    self.elegidosDepartamentos = ko.observableArray([]);
+    //self.posiblesDepartamentos = ko.observableArray([]);
+    //self.elegidosDepartamentos = ko.observableArray([]);
     //
     self.tipoComerciallId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -327,7 +327,7 @@ var obtainReportJson = function (obj) {
 var rptLiquidacionGeneralParametrosJson = function () {
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
-    var departamentoId = vm.sdepartamentoId();
+    var departamentoId = 0
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
 
@@ -336,7 +336,7 @@ var rptLiquidacionGeneralParametrosJson = function () {
         return;
     }
 
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/resumen/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
+    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
@@ -354,11 +354,11 @@ var rptLiquidacionGeneralParametros = function () {
     var sql= "";
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
-    var departamentoId = vm.sdepartamentoId();
+    var departamentoId = 0;
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
     
-    if(departamentoId !=7 && departamentoId > 0) {
+  /*   if(departamentoId !=7 && departamentoId > 0) {
         sql = "SELECT";
         sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
         sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
@@ -445,8 +445,8 @@ var rptLiquidacionGeneralParametros = function () {
             sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
         }
         sql += " AND fac.departamentoId = 7";
-    }
-    else {
+    } */
+    
         sql = "SELECT";
         sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
         sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
@@ -532,7 +532,6 @@ var rptLiquidacionGeneralParametros = function () {
         }
         sql += " AND fac.departamentoId = 7";
 
-    }
     
     return sql;
 }
