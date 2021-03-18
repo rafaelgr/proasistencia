@@ -12,7 +12,6 @@ var dataFacturas;
 var facturaId;
 var comercialId = 0;
 var departamentoId = 0;
-var usuario;
 var facturas;
 
 var breakpointDefinition = {
@@ -28,7 +27,6 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -42,9 +40,6 @@ function initForm() {
         if(!e.added) return;
         loadColaboradores(e.added);
     });
-
-    $('#cmbContratos').select2();
-    loadContratosActivos();
 
     //
     $.validator.addMethod("greaterThan",
@@ -61,13 +56,8 @@ function initForm() {
     //
     vm = new admData();
     ko.applyBindings(vm);
-     //Recuperamos el departamento de trabajo
-     recuperaDepartamento(function(err, data) {
-        if(err) return;
-        
-    });
     //
-    $('#btnBuscar').click(buscarFacturas());
+    $('#btnBuscar').click(buscarColaboradores());
     $('#btnAlta').click(enviarCorreos());
     $('#btnDownload').click(buscarFicheros());
     $('#frmBuscar').submit(function () {
@@ -129,13 +119,6 @@ function admData() {
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     self.sComercialId = ko.observable();
-    //
-    self.departamentoId = ko.observable();
-    self.sdepartamentoId = ko.observable();
-    //
-    self.posiblesDepartamentos = ko.observableArray([]);
-    self.elegidosDepartamentos = ko.observableArray([]);
-    //
     //
     self.tipoComerciallId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -307,23 +290,6 @@ function loadColaboradores(e) {
     }
 }
 
-function loadContratosActivos(id){
-    var dep;
-    if(id) {
-        dep = id;
-    } else {
-        dep = 0
-    }
-    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario +"/"+ dep, null, function (err, data) {
-        if (err) return
-        var contratos = [{
-            contratoId: 0,
-            referencia: ""
-        }].concat(data);
-        vm.posiblesContratos(contratos);
-        $("#cmbContratos").val([id]).trigger('change');
-    });
-}
 
 
 function updateAll(opcion) {
@@ -424,16 +390,15 @@ function loadTablaFacturas(data) {
 
 
 
-function buscarFacturas() {
+function buscarColaboradores() {
     var mf = function () {
         if (!datosOK()) return;
         comercialId = vm.sComercialId();
-        contratoId = vm.sContratoId();
-        departamentoId = vm.sdepartamentoId();
+        tipoComercialId = vm.stipoComercialId();
 
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/"+ comercialId  +"/"+ departamentoId +"/"+ usuario,
+            url: myconfig.apiUrl + "/api/comerciales/envio/liquidacion/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +"/"+ comercialId  +"/"+ tipoComercialId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -489,7 +454,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +   "/" +comercialId + "/" + departamentoId + "/" + usuario;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +   "/" +comercialId + "/" + departamentoId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
@@ -532,7 +497,7 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacturas();
+                    var fn = buscarColaboradores();
                     fn();
                 },
                 error: function (err) {
