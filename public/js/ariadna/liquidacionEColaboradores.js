@@ -287,7 +287,7 @@ function updateAll(opcion) {
                     comercialId: datos[i].comercialId,
                     nombre: datos[i].comercialNombre,
                     nif: datos[i].nif,
-                    sel: 0
+                    sel: sel
                 }
         };
                 
