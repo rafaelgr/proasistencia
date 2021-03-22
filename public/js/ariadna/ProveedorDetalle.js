@@ -188,98 +188,98 @@ function initForm() {
         contentType: "application/json",
         success: function (data, status) {
             numDigitos = data.numDigitos
+            proId = gup('ProveedorId');
+            if (proId != 0) {
+                var data = {
+                    proveedorId: proId
+                }
+                $('#cmbTiposProveedor').attr('disabled', true);
+                $('#txtCodigo').attr('disabled', true)
+                // hay que buscar ese elemento en concreto
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/proveedores/" + proId,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        loadData(data);
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+        
+                // contador de código
+               /*  $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        
+                        codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
+                                                    //el codigo y resulta que ya está asignado
+        
+                    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                }); */
+        
+                loadFacturasDelProveedor(proId);
+                compruebaAnticipos(proId);
+            } else {
+                // se trata de un alta ponemos el id a cero para indicarlo.
+                vm.proveedorId(0);
+                vm.cuentaContable(null);
+                 // contador de código
+                 var inicioCuenta = "40";
+                 $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/" + inicioCuenta,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        vm.codigo(data.codigo);
+                        codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia el codigo y resulta que ya está asignado
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/tipos_proveedor/" + 1,
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function (data, status) {
+                                vm.inicioCuenta(data.inicioCuenta);
+                                var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                                vm.cuentaContable(codmacta);
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+        
+                loadFacturasDelProveedor();
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
     });
-
-    proId = gup('ProveedorId');
-    if (proId != 0) {
-        var data = {
-            proveedorId: proId
-        }
-        $('#cmbTiposProveedor').attr('disabled', true);
-        $('#txtCodigo').attr('disabled', true)
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/" + proId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadData(data);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-
-        // contador de código
-       /*  $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                
-                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
-                                            //el codigo y resulta que ya está asignado
-
-            
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        }); */
-
-        loadFacturasDelProveedor(proId);
-        compruebaAnticipos(proId);
-    } else {
-        // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.proveedorId(0);
-         // contador de código
-         var inicioCuenta = "40";
-         $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/" + inicioCuenta,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                vm.codigo(data.codigo);
-                codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia el codigo y resulta que ya está asignado
-                $.ajax({
-                    type: "GET",
-                    url: "/api/tipos_proveedor/" + 1,
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (data, status) {
-                        vm.inicioCuenta(data.inicioCuenta);
-                        var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
-                        vm.cuentaContable(codmacta);
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });    
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-
-        loadFacturasDelProveedor();
-    }
 }
 
 function admData() {
@@ -507,6 +507,9 @@ function datosOK() {
             txtCodigoProfesional: {
                 required: true
             },
+            txtCuentaContable: {
+                required: true
+            },
             cmbPaises: {
                 required: true,
             }
@@ -544,6 +547,9 @@ function datosOK() {
             txtCodigoProfesional: {
                 required: "Debe introducir un código profesional de proveedor"
             },
+            txtCuentaContable: {
+                required: "Este campo no puede estar vacio"
+            },
             cmbPaises: {
                 required: "Debe introducir un código de país"
             }
@@ -574,6 +580,10 @@ function aceptar() {
         if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
         if(vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
         if(vm.sempresaId() == 0) vm.sempresaId(null);
+        if(!vm.cuentaContable() || vm.cuentaContable() == '') {
+            mensError('La cuenta contable está vacia');
+            return;
+        }
         var data = {
             proveedor: {
                 "proveedorId": vm.proveedorId(),
@@ -875,10 +885,9 @@ function compruebaCodigoProveedor() {
         }
     }    
 }
-
 function cambioTipoProveedor(data) {
     if(data) {
-        if(vm.cuentaContable()) {
+        if(vm.cuentaContable() && vm.cuentaContable() != '') {
             // mensaje de confirmación
             var mens = "Al cambiar el tipo de proveedor se cambiará su cuenta contable ¿Realmente desea cambiar el tipo de proveedor registro?";
             $.SmartMessageBox({
@@ -940,6 +949,9 @@ function cambioTipoProveedor(data) {
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });   
+
+            /* mensError("No hay una cuenta contable por defecto, recargue la página");
+            return; */
         }
     }
 }
