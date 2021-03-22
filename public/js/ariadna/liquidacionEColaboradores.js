@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+liquidacionEColaboradores.js
+Funciones js par la página LiquidacionEColaboradores.html
 
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
@@ -8,11 +8,11 @@ var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
-var dataFacturas;
-var facturaId;
+var dataComerciales;
+var comercialId;
 var comercialId = 0;
 var departamentoId = 0;
-var facturas;
+var comerciales;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -66,9 +66,9 @@ function initForm() {
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
-    initTablaFacturas();
+    initTablaComerciales();
     // comprobamos parámetros
-    facturaId = gup('FacturaId');
+    comercialId = gup('ComercialId');
     //
     var socket = io.connect('/');
     socket.on('message', function (data) {
@@ -128,8 +128,8 @@ function admData() {
     
 }
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaComerciales() {
+    tablaCarro = $('#dt_comercial').dataTable({
         autoWidth: true,
         paging: false,
         "columnDefs": [ {
@@ -139,7 +139,7 @@ function initTablaFacturas() {
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comercial'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -168,9 +168,9 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataFacturas,
+        data: dataComerciales,
         columns: [{
-            data: "facturaId",
+            data: "comercialId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -180,41 +180,23 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
-            data: "emisorNombre"
+            data: "comercialNombre"
         }, {
-            data: "receptorNombre"
+            data: "direccion"
         }, {
-            data: "dirTrabajo"
+            data: "poblacion"
         }, {
-            data: "vNum"
+            data: "emailConfi"
         }, {
-            data: "fecha",
+            data: "telefono1",
+           
+        }, {
+            data: "comercialId",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "total",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
-                return string;
-            }
-        }, {
-            data: "totalConIva",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
-                return string;
-            }
-        }, {
-            data: "formaPago"
-        }, {
-            data: "observaciones"
-        }, {
-            data: "facturaId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteComercial(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editComercial(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printComercial(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
         }]
@@ -295,24 +277,25 @@ function loadColaboradores(e) {
 function updateAll(opcion) {
     var datos = null;
     var sel = 0;
-    var tb = $('#dt_factura').dataTable().api();
+    var tb = $('#dt_comercial').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
     if(opcion) sel = 1
     if(datos) {
         for( var i = 0; i < datos.length; i++) {
             var data = {
-                factura: {
-                    facturaId: datos[i].facturaId,
-                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                    sel: sel
-            }
+                comercial: {
+                    comercialId: datos[i].comercialId,
+                    nombre: datos[i].comercialNombre,
+                    nif: datos[i].nif,
+                    sel: 0
+                }
         };
                 
                
         var url = "", type = "";
          // updating record
          var type = "PUT";
-         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
+         var url = sprintf('%s/api/comerciales/%s', myconfig.apiUrl, datos[i].comercialId);
             $.ajax({
                 type: type,
                 url: url,
@@ -342,9 +325,9 @@ function updateAll(opcion) {
 }*/
 
 
-function loadTablaFacturas(data) {
-    var dt = $('#dt_factura').dataTable();
-    facturas = data;
+function loadTablaComerciales(data) {
+    var dt = $('#dt_comercial').dataTable();
+    comerciales = data;
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -352,26 +335,27 @@ function loadTablaFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
+        var field = "#chk" + v.comercialId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                factura: {
-                    facturaId: v.facturaId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                comercial: {
+                    comercialId: v.comercialId,
+                    nombre: v.comercialNombre,
+                    nif: v.nif,
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.factura.sel = 1;
+                data.comercial.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, v.facturaId);
+            var url = sprintf('%s/api/comerciales/%s', myconfig.apiUrl, v.comercialId);
             $.ajax({
                 type: type,
                 url: url,
@@ -402,7 +386,7 @@ function buscarColaboradores() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacturas(data);
+                loadTablaComerciales(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
                 $('#checkMain').prop('checked', false);
@@ -424,13 +408,13 @@ function buscarFicheros() {
     return mf;
 }
 
-function contabilizarFacturas() {
+function contabilizarComerciales() {
     var mf = function () {
         // de momento nada
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            url: myconfig.apiUrl + "/api/comerciales/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -439,7 +423,7 @@ function contabilizarFacturas() {
                 mensNormal('El fichero ' + data + ' para contabilización ya está preparado');
                 vm.desdeFecha(null);
                 vm.hastaFecha(null);
-                loadTablaFacturas(null);
+                loadTablaComerciales(null);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -454,13 +438,13 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +   "/" +comercialId + "/" + departamentoId;
+        var url = myconfig.apiUrl + "/api/liquidaciones/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +   "/" +comercialId + "/" + departamentoId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            url = myconfig.apiUrl + "/api/liquidaciones/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     $('#progress').hide();
@@ -470,7 +454,6 @@ function enviarCorreos() {
                 $('#progress').hide();
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
-                // mensNormal('Las facturas se han enviado por correo');
             });
 
         });
@@ -478,92 +461,20 @@ function enviarCorreos() {
     return mf;
 }
 
-function deleteFactura(id) {
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                facturaId: id
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    var fn = buscarColaboradores();
-                    fn();
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
-}
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de factura
+
+function editComercial(id) {
+    // hay que abrir la página de detalle de comercial
     // pasando en la url ese ID
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    var url = "ComercialDetalle.html?ComercialId=" + id;
     window.open(url, '_blank');
 }
 
-function cargarFacturas() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: facturaId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturas",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
 
-function printFactura(id) {
+function printComercial(id) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/informes/facturas/" + id,
+        url: myconfig.apiUrl + "/api/informes/Comerciales/" + id,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
