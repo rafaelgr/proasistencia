@@ -400,9 +400,7 @@ function datosOK() {
             txtEmailFacturas: {
                 email: true
             },
-            txtEmailConfi: {
-                email: true
-            },
+           
             cmbTiposComerciales: {
                 required: true
             }
@@ -424,9 +422,7 @@ function datosOK() {
             txtEmailFacturas: {
                 email: 'Debe usar un correo válido'
             },
-            txtEmailConfi: {
-                email: 'Debe usar un correo válido'
-            },
+           
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
             }
