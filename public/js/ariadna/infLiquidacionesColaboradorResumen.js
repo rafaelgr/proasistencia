@@ -39,6 +39,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
+    $('#btnImprimir').prop('disabled', false);
     $("#btnImprimir").click(rptLiquidacionGeneralParametrosJson);
     // avoid form submmit
     $("#frmRptLiquidaciones").submit(function () {
@@ -337,12 +338,15 @@ var rptLiquidacionGeneralParametrosJson = function () {
     }
 
     var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
-
+    $('#btnImprimir').prop('disabled', true);
+    mensNormal('Espere mientras se procesa el resultado...tardará unos segundos');
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
         if(data) {
-            obtainReportJson(data)
+            $('#btnImprimir').prop('disabled', false);
+            obtainReportJson(data);
         } else {
+            $('#btnImprimir').prop('disabled', false);
             alert("No hay registros con estas condiciones");
         }
     });
