@@ -422,7 +422,11 @@ function datosOK() {
             txtEmailFacturas: {
                 email: 'Debe usar un correo válido'
             },
+<<<<<<< HEAD
             
+=======
+           
+>>>>>>> feature/correo_agentes
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
             }
