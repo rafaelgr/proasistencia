@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "133849b7a40344638cb7ce5ca1a76d77",
+  "ReportGuid": "777f823c81a1497eb51b2ecd0d8aa2a0",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1602755646515+0200)/",
+  "ReportChanged": "/Date(1616759632807+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -559,10 +559,17 @@
             "NameInSource": "direccionTrabajo",
             "Alias": "direccionTrabajo",
             "Type": "System.String"
+          },
+          "22": {
+            "Name": "refPresupuesto",
+            "Index": -1,
+            "NameInSource": "refPresupuesto",
+            "Alias": "refPresupuesto",
+            "Type": "System.String"
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, ser.direccionTrabajo\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facturaLineaId` = pfl.`facturaLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
+        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, ser.direccionTrabajo, par.refPresupuesto\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facturaLineaId` = pfl.`facturaLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -992,6 +999,34 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "b75a9914e93f4e76a93f4b160b9b31f3",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "13.6,1.4,4.4,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Column": "lineas.refPresupuesto",
+                  "Enabled": false,
+                  "TextColor": "White",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Ref. presupuesto {lineas.refPresupuesto}"
+              },
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
             }
           },
           "DataSourceName": "cabecera",
@@ -1078,8 +1113,7 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "CanShrink": true,
-          "ClientRectangle": "0,8.8,19,2.4",
+          "ClientRectangle": "0,8.8,19,1.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1093,7 +1127,7 @@
               "CanGrow": true,
               "MinSize": "7.7,1",
               "MaxSize": "7.7,4",
-              "ClientRectangle": "5.2,0,7.7,2.4",
+              "ClientRectangle": "5.2,0,7.7,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1233,7 +1267,7 @@
         "5": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,12,19,0",
+          "ClientRectangle": "0,10.8,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1247,7 +1281,7 @@
         "6": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,12.8,19,1.6",
+          "ClientRectangle": "0,11.6,19,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1379,7 +1413,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,15.2,19,0.8",
+          "ClientRectangle": "0,14,19,0.8",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1545,7 +1579,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "1dd040d9033a400389f34426affa95b9",
-          "ClientRectangle": "0,16.8,19,21.8",
+          "ClientRectangle": "0,15.6,19,21.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
