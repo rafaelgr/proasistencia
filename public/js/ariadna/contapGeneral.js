@@ -104,6 +104,10 @@ function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
         paging: false,
+        columnDefs: [{
+            "width": "20%",
+            "targets": 0
+        }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
