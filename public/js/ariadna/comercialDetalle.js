@@ -391,16 +391,6 @@ function datosOK() {
             txtNombre: {
                 required: true
             },
-            txtEmail: {
-                email: true
-            },
-            txtEmail2: {
-                email: true
-            },
-            txtEmailFacturas: {
-                email: true
-            },
-           
             cmbTiposComerciales: {
                 required: true
             }
@@ -413,16 +403,6 @@ function datosOK() {
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
-            txtEmail: {
-                email: 'Debe usar un correo válido'
-            },
-            txtEmail2: {
-                email: 'Debe usar un correo válido'
-            },
-            txtEmailFacturas: {
-                email: 'Debe usar un correo válido'
-            },
-           
             cmbTiposComerciales: {
                 required: "Debe elegir un tipo comercial"
             }
