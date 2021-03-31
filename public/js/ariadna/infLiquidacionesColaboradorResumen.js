@@ -341,7 +341,10 @@ var rptLiquidacionGeneralParametrosJson = function () {
     $('#btnImprimir').prop('disabled', true);
     mensNormal('Espere mientras se procesa el resultado...tardará unos segundos');
     llamadaAjax("POST", url, null, function (err, data) {
-        if(err) return;
+        if(err) {
+            $('#btnImprimir').prop('disabled', false);
+            return;
+        }
         if(data) {
             $('#btnImprimir').prop('disabled', false);
             obtainReportJson(data);
