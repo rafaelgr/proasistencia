@@ -132,10 +132,10 @@ function initTablaComerciales() {
     tablaCarro = $('#dt_comercial').dataTable({
         autoWidth: true,
         paging: false,
-        "columnDefs": [ {
-            "targets": 0,
-            "orderable": false
-            } ],
+        columnDefs: [{
+            "width": "20%",
+            "targets": 0
+        }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {

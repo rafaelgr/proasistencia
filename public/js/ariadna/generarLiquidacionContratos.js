@@ -103,6 +103,11 @@ function initTablaContratos() {
     tablaCarro = $('#dt_contrato').dataTable({
         autoWidth: true,
         paging: false,
+        "columnDefs": [ {
+            "targets": 0,
+            "orderable": false,
+            "width": "20%"
+            } ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
