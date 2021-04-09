@@ -337,11 +337,14 @@ var rptLiquidacionGeneralParametrosJson = function () {
         return;
     }
 
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
+    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/resumen/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
     $('#btnImprimir').prop('disabled', true);
     mensNormal('Espere mientras se procesa el resultado...tardará unos segundos');
     llamadaAjax("POST", url, null, function (err, data) {
-        if(err) return;
+        if(err) {
+            $('#btnImprimir').prop('disabled', false);
+            return;
+        }
         if(data) {
             $('#btnImprimir').prop('disabled', false);
             obtainReportJson(data);

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "590ed19f0f1740f6bb5e48b4639f1fcd",
+  "ReportGuid": "0a42312713ce47d9bb12dca408640313",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1616759187277+0100)/",
+  "ReportChanged": "/Date(1616758882629+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -767,7 +767,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "Guid": "9c765cd366914623affa682801ee4cc9",
-          "ClientRectangle": "0,52.8,19,2.6",
+          "ClientRectangle": "0,58.34,19,2.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1129,7 +1129,7 @@
               "Guid": "dc40f90aad374e079bcaa776e0a3695d",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0,2,0.4",
+              "ClientRectangle": "16.4,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1246,7 +1246,8 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,12.2,19,1.1",
+          "CanShrink": true,
+          "ClientRectangle": "0,12.2,19,6.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1259,9 +1260,9 @@
               "Guid": "a6430bbc94e84ef58e8dbfea827779f5",
               "CanGrow": true,
               "GrowToHeight": true,
-              "MinSize": "0,0",
-              "MaxSize": "9.4,9",
-              "ClientRectangle": "4.6,0,9,0.6",
+              "MinSize": "0,1",
+              "MaxSize": "0,9",
+              "ClientRectangle": "4.6,0,9,5.9",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1285,7 +1286,7 @@
               "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0,2,0.4",
+              "ClientRectangle": "16.4,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1363,7 +1364,7 @@
               "GrowToHeight": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13.6,0,1,0.4",
+              "ClientRectangle": "13.8,0,0.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1406,6 +1407,7 @@
               "Type": "Expression"
             }
           },
+          "MinHeight": 1.5,
           "MaxHeight": 10.0,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
@@ -1418,7 +1420,7 @@
         "6": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,14.1,19,0",
+          "ClientRectangle": "0,19.2,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1432,7 +1434,7 @@
         "7": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
-          "ClientRectangle": "0,14.9,19,0",
+          "ClientRectangle": "0,20,19,0",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1443,7 +1445,7 @@
         "8": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,15.7,19,1",
+          "ClientRectangle": "0,20.8,19,1",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1465,7 +1467,7 @@
               "Guid": "4b16dd7e328e431d8da70c1228a4bbee",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0,2,0.4",
+              "ClientRectangle": "16.2,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1492,7 +1494,7 @@
               "Guid": "e7e4b319245944fdb69fe12974ee5a2b",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13,0.4,3.4,0.4",
+              "ClientRectangle": "12.8,0.4,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1511,7 +1513,7 @@
               "Guid": "d2b67fb2e62c4f818b275214c99e70ac",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0.4,2,0.4",
+              "ClientRectangle": "16.2,0.4,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1538,7 +1540,7 @@
               "Guid": "8cf2574dd0e14e93b8b06b8f3206b738",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13,0,3.4,0.4",
+              "ClientRectangle": "12.8,0,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1563,7 +1565,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand2",
           "Guid": "3d4e3911d9e54a678250727b99baa1d6",
-          "ClientRectangle": "0,17.5,19,1.6",
+          "ClientRectangle": "0,22.6,19,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1576,7 +1578,7 @@
               "Guid": "6dcf9f1b4cac48a89998d82d8dd38458",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0.8,2,0.4",
+              "ClientRectangle": "16.2,0.8,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1604,7 +1606,7 @@
               "Guid": "b6850af870c241a48856bcb5cacdcefd",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13,0.8,3.4,0.4",
+              "ClientRectangle": "12.8,0.8,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1623,7 +1625,7 @@
               "Guid": "767957b6c8584aec946ba97e9710b692",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13,0.4,3.4,0.4",
+              "ClientRectangle": "12.8,0.4,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1642,7 +1644,7 @@
               "Guid": "9eba571f867241c2a07373d73973f569",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0.4,2,0.4",
+              "ClientRectangle": "16.2,0.4,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1669,7 +1671,7 @@
               "Guid": "f881eca95b5748baa0459d34ce3ff0d4",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "16.4,0,2,0.4",
+              "ClientRectangle": "16.2,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1697,7 +1699,7 @@
               "Guid": "c41eb5fe61744996a097447e8e819a78",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13,0,3.4,0.4",
+              "ClientRectangle": "12.8,0,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1716,7 +1718,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "Guid": "9503aee84d0f4c39acc15b178cfdd7e5",
-          "ClientRectangle": "0,19.9,19,1.8",
+          "ClientRectangle": "0,25,19,1.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1812,7 +1814,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "357f639741b74faba0684e9a3f63f10d",
-          "ClientRectangle": "0,22.5,19,21.8",
+          "ClientRectangle": "0,27.6,19,21.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },

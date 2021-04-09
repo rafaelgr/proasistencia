@@ -173,7 +173,8 @@ function initTablaFacturas() {
         paging: false,
         "columnDefs": [ {
             "targets": 0,
-            "orderable": false
+            "orderable": false,
+            "width": "20%"
             } ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
