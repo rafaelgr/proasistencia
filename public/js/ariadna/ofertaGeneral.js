@@ -25,7 +25,7 @@ function initForm() {
     getVersionFooter();
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     //
     $('#btnBuscar').click(buscarOfertas());
     $('#btnAlta').click(crearOferta());
@@ -303,7 +303,7 @@ function editOferta(id) {
 }
 
 var cargarOfertas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario + "/" + vm.sdepartamentoId();
+    var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId();
     if (id) {
         var data = {
             id: ofertaId
@@ -316,7 +316,7 @@ var cargarOfertas = function (id) {
 }
 
 var cargarOfertasNoAceptadas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas/usuario/logado/departamento/"+ usuario + "/" + vm.sdepartamentoId();
+    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId();
     llamadaAjax("GET", url, null, function (err, data) {
         loadTablaOfertas(data);
     });

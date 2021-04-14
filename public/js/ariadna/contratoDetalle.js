@@ -43,7 +43,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -787,7 +787,7 @@ function loadEmpresas(id) {
 
 
 function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var tipos = [{
             departamentoId: 0,
@@ -804,7 +804,7 @@ function loadTiposContrato(id) {
 
 function loadTipoProyecto(id) {
     if(id == undefined) id = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + id;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + id;
     llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -963,7 +963,7 @@ function cambioTipoContrato(data) {
     if (!data) return;
     var tipoContratoId = data.id;
     if(tipoContratoId == undefined) tipoContratoId = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
     llamadaAjax('GET', myconfig.apiUrl + url, null, function (err, data) {
         if (err) return;
         var tipos = [{

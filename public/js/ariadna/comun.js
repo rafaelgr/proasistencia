@@ -14,7 +14,7 @@ var vm2 = null;
 function recuperaDepartamento(retorno) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/usuarios/" + usuario,
+        url: myconfig.apiUrl + "/api/usuarios/" + usuario.usuarioId,
         dataType: "json",
         data: null,
         contentType: "application/json",
@@ -29,14 +29,14 @@ function recuperaDepartamento(retorno) {
             var m = xhr.responseText;
             if (!m) m = "Error general posiblemente falla la conexión";
             mostrarMensaje(m);
-            retorno(err);
+            retorno(m);
         }
     });
 }
 
 
 function loadDepartamentos(id, done){
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return done(err);
         var departamentos = [{
             departamentoId: 0,

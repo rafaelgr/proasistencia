@@ -12,7 +12,7 @@ var dataFacturas;
 var facproveId;
 var codigoSugerido;
 var antNif = ""//recoge el valor que tiene el nif al cargar la página
-var idUsuario;
+var usuario;
 var numfactu = 0;
 
 var responsiveHelper_dt_basic = undefined;
@@ -36,7 +36,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -814,7 +814,7 @@ function loadTiposRetencion(id) {
 }
 
 function loadDepartamentos(departamentosIds) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         var ids = [];
         if (err) return;
         var departamentos = data;

@@ -30,7 +30,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -351,7 +351,7 @@ var rptFacturaParametros = function (sql) {
         if(departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
-            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
         }
 
     }
@@ -379,7 +379,7 @@ var exportarPDF = function () {
     url += "/" + empresaId;
     url += "/" + proveedorId;
     url += "/" + departamentoId;
-    url += "/" + usuario;
+    url += "/" + usuario.usuarioId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) {
             // hay que informar de error durante la exportación

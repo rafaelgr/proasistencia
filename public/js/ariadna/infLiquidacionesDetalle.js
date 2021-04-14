@@ -39,7 +39,7 @@ function initForm() {
     // de smart admin
     //pageSetUp();
     getVersionFooter();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     datePickerSpanish();
     vm = new admData();
     ko.applyBindings(vm);
@@ -367,11 +367,11 @@ var rptLiquidacionGeneralParametros = function () {
         sql += " AND f.departamentoId = " + departamentoId;
     } 
     else if(departamentoId == 0 && tipoComercialId == 1) {
-        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"            
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"            
     }  else if (departamentoId != 0) {
         sql += " AND ccm.tipoContratoId = " + departamentoId;
     } else {
-        sql += " AND ccm.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"   
+        sql += " AND ccm.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"   
     }
     return sql;
 }

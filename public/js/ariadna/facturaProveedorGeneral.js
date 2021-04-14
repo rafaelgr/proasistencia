@@ -22,7 +22,7 @@ var antproveId;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -405,7 +405,7 @@ function cargarFacturas() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" + usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -426,7 +426,7 @@ function cargarFacturas() {
 function cargarFacturas2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -442,7 +442,7 @@ function cargarFacturas2() {
 function cargarFacturas2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

@@ -13,7 +13,7 @@ var lineaEnEdicion = false;
 var dataOfertasLineas;
 var dataBases;
 var usuario;
-usuario = recuperarIdUsuario();
+usuario = recuperarUsuario();
 var usaCalculadora;
 var dataConceptosLineas;
 var numConceptos = 0;
@@ -569,7 +569,7 @@ function loadDepartamentos(id) {
 
 function loadDepartamentosUsuario(id) {
     if(id) vm.tipoOfertaId(id);
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
         var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
@@ -580,7 +580,7 @@ function loadDepartamentosUsuario(id) {
 
 function loadTipoProyecto(id) {
     if(id == undefined) id = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoOfertaId()  + "/" + id;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoOfertaId()  + "/" + id;
     //si estamos creando la oferta cargamos solo como elegibles los tipos de proyecto activos
     //if (ofertaId == 0 || !id)  url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoOfertaId() + "/" + id;
     llamadaAjax('GET', url, null, function (err, data) {

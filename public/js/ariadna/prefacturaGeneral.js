@@ -20,7 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -424,8 +424,8 @@ function cargarPrefacturas() {
                 desdeFecha = spanishDbDate(vm.desdeFecha());
                 hastaFecha = spanishDbDate(vm.hastaFecha());
             }
-            var url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
-            if( $('#chkTodos').prop('checked'))  url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
+            var url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
+            if( $('#chkTodos').prop('checked'))  url = myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha;
             $.ajax({
                 type: "GET",
                 url: url,
@@ -457,7 +457,7 @@ function cargarPrefacturas2() {
     }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -481,7 +481,7 @@ function cargarPrefacturas2All() {
     }
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario+ "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
+        url: myconfig.apiUrl + "/api/prefacturas/usuario/logado/departamento/all/" + usuario.usuarioId+ "/" + vm.sdepartamentoId() + "/" + desdeFecha + "/" + hastaFecha,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

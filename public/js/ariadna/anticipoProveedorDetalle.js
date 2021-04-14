@@ -24,7 +24,7 @@ var servicioId;
 
 var dataServiciadas;
 var dataLineas;
-var idUsuario;
+var usuario;
 
 var lineaEnEdicion = false;
 
@@ -44,7 +44,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -218,7 +218,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, idUsuario + "@" + file.name);
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
             $.ajax({
                 url: '/api/upload',
@@ -811,7 +811,7 @@ var cargarContratos = function (data, contratoId) {
 }
     
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);

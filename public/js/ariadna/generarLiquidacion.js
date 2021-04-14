@@ -25,7 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -309,7 +309,7 @@ function buscarFacturas() {
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
-        url += "/" + usuario;
+        url += "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",
             url: url,
@@ -345,7 +345,7 @@ function generarLiquidaciones() {
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
-        url += "/" + usuario;
+        url += "/" + usuario.usuarioId;
         // Vamos a comprobar si hay datos previos
         $.ajax({
             type: "GET",
@@ -392,7 +392,7 @@ function generaLiquidaciones2() {
     url += "/" + departamentoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
-    url += "/" + usuario;
+    url += "/" + usuario.usuarioId;
     $.ajax({
         type: "POST",
         url: url,

@@ -32,7 +32,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -183,7 +183,7 @@ var rptLiquidacionGeneralParametros = function () {
     if(departamentoId > 0) {
         sql += " AND f.departamentoId = " + departamentoId;
     } else {
-        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")";
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")";
     }
     return sql;
 }
