@@ -220,7 +220,7 @@ function initTablaFacturas() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                if(row.contabilizada) bt1 = '';
+                if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
             }
@@ -315,7 +315,7 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(null),
                 success: function (data, status) {
-                    if(data.contabilizada == 1) {
+                    if(data.contabilizada == 1 && !usuario.puedeEditar) {
                         var mensaje =  "Esta factura ya ha sido contabilizada, no se puede borrar.";
                         mensError(mensaje);
                         return;

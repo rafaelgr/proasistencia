@@ -59,7 +59,7 @@ function initForm() {
         return false;
     });
     $("#txtPrecio").focus(function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtPrecio').val(null);
     });
 
@@ -417,7 +417,7 @@ function loadData(data, desdeLinea) {
 
     cargaTablaAnticiposAsociados();
     //si la prefacturaAuto está contabilizada bloquemos la edicion
-    if(data.contabilizada == 1) bloqueaEdicionCampos();
+    if(data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
 }
 
 
@@ -1090,7 +1090,7 @@ function initTablaFacturasLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada()) bt1 = "";
+                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = "";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -1940,7 +1940,7 @@ function initTablaAnticiposAsociados() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 //var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + bt2 */+ "</div>";
-                if(vm.contabilizada()) html = '';
+                if(vm.contabilizada() && !usuario.puedeEditar) html = '';
                 return html;
             }
         }]

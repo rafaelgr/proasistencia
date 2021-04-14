@@ -89,7 +89,7 @@ function initForm() {
     });
 
     $("#txtPrecio").focus(function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         var val = $('#txtPrecio').val();
         if(!val || val == '') return; 
         $('#txtPrecio').val(null);
@@ -151,7 +151,7 @@ function initForm() {
 
     
     $('#txtTotalConIva').focus( function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtTotalConIva').val('');
     })
 
@@ -568,7 +568,7 @@ function loadData(data) {
         $('#txtTotalConIva').prop('disabled', false);
     }
 
-    if (data.contabilizada == 1) bloqueaEdicionCampos();
+    if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
     //
     document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
 
@@ -1187,7 +1187,7 @@ function initTablaAnticiposLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editAnticipoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada()) bt1 = '';
+                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = '';
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }

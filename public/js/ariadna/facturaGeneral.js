@@ -234,7 +234,7 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 console.log(type +" "+ row);
                 var bt1 = "";
-                if(!row.contabilizada) {
+                if(!row.contabilizada || usuario.puedeEditar) {
                     var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ","+row.departamentoId+ ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
