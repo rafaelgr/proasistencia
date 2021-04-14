@@ -151,16 +151,37 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
             if (err) return;
-            /*if(data.noCalculadora) {
-                $('#calculadora').hide();
-                $('#contrato').hide();
-                obtenerDepartamentoContrato();
-            }*/
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
             $('#txtFecha').prop('disabled', true);
+            //actualización de propiedad al click
+            var clienteId = data.clienteId;
+            var empresaId = data.empresaId;
+            var fecha = moment(data.fecha).format('YYYY-MM-DD');
+            $('#chkEnviadaCorreo').click(
+                function(e){
+                    var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
+                    var data = {
+                        factura: {
+                            "facturaId": facturaId,
+                            "empresaId": empresaId,
+                            "clienteId":  clienteId,
+                            "fecha": fecha,
+                            "enviadaCorreo": enviadaCorreo
+                        }
+                    }
+                    verb = "PUT";
+                    url = myconfig.apiUrl + "/api/facturas/" + facturaId;
+                    llamadaAjax(verb, url, data, function (err, data) {
+                        if(err) return;
+                        mensNormal("Se ha actulizado la propiedad de enviar por correo");
+                    });
+
+                }
+            );
+    
             
         })
     } else { 

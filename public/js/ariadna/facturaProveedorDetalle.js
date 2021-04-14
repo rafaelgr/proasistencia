@@ -330,6 +330,34 @@ function initForm() {
                     }
                 }
             })*/
+             //actualización de propiedad al click
+             var proveedorId = data.proveedorId;
+             var empresaId = data.empresaId;
+             var fecha = moment(data.fecha).format('YYYY-MM-DD');
+             $('#chkEnviadaCorreo').click(
+                 function(e){
+                     var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
+                     var data = {
+                         facprove: {
+                             "facproveId": facproveId,
+                             "empresaId": empresaId,
+                             "proveedorId":  proveedorId,
+                             "fecha": fecha,
+                             "enviadaCorreo": enviadaCorreo
+                         }
+                     }
+                     verb = "PUT";
+                     url = myconfig.apiUrl + "/api/facturasProveedores/" + facproveId;
+                     var datosArray = [];
+                     datosArray.push(data)
+                     llamadaAjax(verb, url, datosArray, function (err, data) {
+                         if(err) return;
+                         mensNormal("Se ha actulizado la propiedad de enviar por correo");
+                     });
+
+                 }
+             );
+     
         });
     } else {
         // caso alta
