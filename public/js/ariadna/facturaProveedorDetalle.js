@@ -137,7 +137,9 @@ function initForm() {
     $("#txtFechaRecepcion").on('change', function (e) {
         if(fechaRe) {
             var ano = moment(fechaRe).year();
-            var ano2 = moment(vm.fechaRecepcion()).year();
+
+            var ano2 = moment().format(vm.fechaRecepcion(), 'YYYY-MM-DD');
+            ano2 = moment(ano2).year();
             if(ano != ano2) {
                 mensError("Una vez establecido el año este no se puede cambiar");
                 vm.fechaRecepcion(fechaRe);
