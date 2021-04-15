@@ -616,19 +616,13 @@
                                                                                                             <input id="txtNif" name="txtNif" data-bind="value: nif" />
                                                                                                         </label>
                                                                                                     </section>
-                                                                                                    <section class="col col-md-6">
+                                                                                                    <section class="col col-md-10">
                                                                                                         <label class="label">Nombre</label>
                                                                                                         <label class="input">
                                                                                                             <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                                                                         </label>
                                                                                                     </section>  
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Tipo profesional</label>
-                                                                                                        <label style="width:100%;">
-                                                                                                            <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional"  data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
-                                                                                                            <i></i>
-                                                                                                        </label>
-                                                                                                    </section>
+                                                                                                    
                                                                                                     
                                                                                                 </div>
                                                                                                 <div class="row">
@@ -746,6 +740,15 @@
                                                                                                         <label class="label">Departamento</label>
                                                                                                         <label style="width:100%;">
                                                                                                             <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" multiple="multiple" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                                                                        </label>
+                                                                                                    </section>
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <section class="col col-md-12">
+                                                                                                        <label class="label">Tipo profesional</label>
+                                                                                                        <label style="width:100%;">
+                                                                                                            <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional"  multiple="multiple" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
+                                                                                                            <i></i>
                                                                                                         </label>
                                                                                                     </section>
                                                                                                 </div>
