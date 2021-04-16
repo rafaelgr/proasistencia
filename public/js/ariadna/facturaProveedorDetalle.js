@@ -138,11 +138,11 @@ function initForm() {
         if(fechaRe) {
             var ano = moment(fechaRe).year();
 
-            var ano2 = moment().format(vm.fechaRecepcion(), 'YYYY-MM-DD');
+            var ano2 = moment(vm.fechaRecepcion(), "DD/MM/YYYY").format('YYYY-MM-DD');
             ano2 = moment(ano2).year();
             if(ano != ano2) {
                 mensError("Una vez establecido el año este no se puede cambiar");
-                vm.fechaRecepcion(fechaRe);
+                vm.fechaRecepcion(moment(fechaRe).format("DD/MM/YYYY"));
                 return;
             }
         }
@@ -585,7 +585,7 @@ function loadData(data) {
     vm.numregis(data.numregisconta);
     vm.fecha(spanishDate(data.fecha));
     vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
-    fechaRe = vm.fechaRecepcion();
+    fechaRe = data.fecha_recepcion;
     vm.fechaRecepcion2(spanishDate(data.fecha_recepcion2));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
@@ -884,7 +884,6 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{

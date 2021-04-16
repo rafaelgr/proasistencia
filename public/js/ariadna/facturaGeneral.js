@@ -26,6 +26,19 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
+
+    $.validator.addMethod("greaterThan",
+    function (value, element, params) {
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha final debe ser mayor que la inicial.');
+
     recuperaDepartamento(function(err, data) {
         if(err) return;
         if(data) {
@@ -58,6 +71,8 @@ function initForm() {
         cargarFacturas2All();
     });
 
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
 
     // de smart admin
     pageSetUp();
@@ -76,6 +91,7 @@ function initForm() {
     //});
     //
     
+    estableceFechaEjercicio();
 
     $('#chkTodos').change(function () {
         if (this.checked) {
@@ -94,7 +110,15 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
     
+    self.dFecha = ko.observable();
+    self.hFecha = ko.observable();
 } 
 
 
@@ -280,6 +304,9 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
+            txtHastaFecha: {
+                greaterThan: "#txtDesdeFecha"
+            }
 
         },
         // Messages for form validation
@@ -534,4 +561,35 @@ function cargarFacturas2All() {
 imprimirFactura = function () {
     var url = "InfFacturas.html";
     window.open(url, '_blank');
+}
+
+function loadEmpresas() {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas =data;
+        vm.posiblesEmpresas(empresas);
+        //$("#cmbEmpresas").val([empresaId]).trigger('change');
+    });
+}
+
+function estableceFechaEjercicio() {
+    //SI EL DIA ACTUAL ES MAYOR QUE EL 15 DE ENERO SE ESTABLECE EL CAMPO
+    //DFECHA DE LA BUSQUEDA COMO EL PRIMER DIA DEL EJERCICIO ANTERIOR.
+    //SI ES MAYOR SE ESTABLECE EL CAMPO DFECHA COMO EL PRIMER DIA DEL EJERCICIO ACTUAL.
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear();
+
+    var InicioEjercicio = new Date(ano +'-01-15');
+    if(fActual > InicioEjercicio) {
+        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha(fechaInicio);
+    } else {
+        ano = ano-1
+        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha(fechaInicio);
+    }
+
+
+
 }
