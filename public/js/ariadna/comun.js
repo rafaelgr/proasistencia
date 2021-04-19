@@ -64,7 +64,7 @@ function guardaDepartamento(departamento) {
     }
     $.ajax({
         type: "PUT",
-        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario,
+        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario.usuarioId,
         dataType: "json",
         data: JSON.stringify(data),
         contentType: "application/json",

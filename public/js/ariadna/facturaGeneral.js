@@ -259,7 +259,6 @@ function initTablaFacturas() {
         }, {
             data: "facturaId",
             render: function (data, type, row) {
-                console.log(type +" "+ row);
                 var bt1 = "";
                 if(!row.contabilizada || usuario.puedeEditar) {
                     var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ","+row.departamentoId+ ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -336,6 +335,7 @@ function loadTablaFacturas(data) {
 
 function buscarFacturas() {
     var mf = function () {
+        tablaFacturas.state.clear();
         if ($('#chkTodos').prop('checked')) {
             cargarFacturas2All()();
         } else {
@@ -432,8 +432,9 @@ var mostrarMensajeFacturaBorrada = function () {
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
+    tablaFacturas.state.save();
     var url = "FacturaDetalle.html?FacturaId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_self');
 }
 
 
@@ -521,10 +522,13 @@ function cargarFacturas2() {
                 }
             });
         } else {
+            if(hFecha != null) {
+                if(!datosOK()) return;
+            }
             
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha,
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -546,10 +550,13 @@ function cargarFacturas2All() {
         var dFecha = moment(vm.dFecha()).format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '') hFecha = null
+        if(hFecha != null) {
+            if(!datosOK) return;
+        }
         if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha,
+            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -574,6 +581,7 @@ function loadEmpresas() {
         if (err) return;
         var empresas =data;
         vm.posiblesEmpresas(empresas);
+        vm.sempresaId(0);
         //$("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }
