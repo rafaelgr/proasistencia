@@ -77,7 +77,7 @@ function initForm() {
         if (this.checked) {
             cargarFacturas2All();
         } else {
-            cargarFacturas2()();
+            cargarFacturas2();
         }
     })
    
