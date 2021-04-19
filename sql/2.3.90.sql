@@ -6,9 +6,8 @@ ALTER TABLE `usuarios`
   `proveedorId` INT(11),
   `tipoProfesionalId` INT(11),
   PRIMARY KEY (`proveedorProfesionId`),
-  CONSTRAINT `proveedoresProfesiones_tipos_profesionales` FOREIGN KEY (`tipoProfesinalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`),
+  CONSTRAINT `proveedoresProfesiones_tipos_profesionales` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`),
   CONSTRAINT `proveedoresProfesiones_proveedores` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`)
 );
-
 INSERT INTO `proveedores_profesiones`
 SELECT 0 AS proveedorProfesionId, proveedorId, tipoProfesionalId FROM proveedores WHERE NOT tipoProfesionalId IS NULL;

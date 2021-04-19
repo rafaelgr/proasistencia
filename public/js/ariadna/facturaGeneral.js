@@ -22,6 +22,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    datePickerSpanish(); // see comun.js
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -48,12 +49,14 @@ function initForm() {
             if (facturaId !== '') {
                 // Si nos pasan una prefafctura determinada esa es
                 // la que mostramos en el grid
-                cargarFacturas()(facturaId);
+                vm.hFecha('');//por defecto está vacio
+                cargarFacturas2()(facturaId);
             } else {
                 // Por defecto ahora a la entrada se van a cargar todas 
                 // las facturas que tengamos en el sistema. En un futuro este
                 // criterio puede cambiar y habrá que adaptarlo.
-                cargarFacturas()();
+                vm.hFecha('');//por defecto está vacio
+                cargarFacturas2()();
              }
 
         }
@@ -65,10 +68,10 @@ function initForm() {
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if( !$('#chkTodos').prop('checked') ) {
-            cargarFacturas2();
+            cargarFacturas2()();
             return;
         }
-        cargarFacturas2All();
+        cargarFacturas2All()();
     });
 
     $("#cmbEmpresas").select2(select2Spanish());
@@ -95,11 +98,11 @@ function initForm() {
 
     $('#chkTodos').change(function () {
         if (this.checked) {
-            cargarFacturas2All();
+            cargarFacturas2All()();
         } else {
-            cargarFacturas2();
+            cargarFacturas2()();
         }
-    })
+    });
 }
 
 function admData() {
@@ -333,7 +336,11 @@ function loadTablaFacturas(data) {
 
 function buscarFacturas() {
     var mf = function () {
-        cargarFacturas()();
+        if ($('#chkTodos').prop('checked')) {
+            cargarFacturas2All()();
+        } else {
+            cargarFacturas2()();
+        }
     };
     return mf;
 }
@@ -429,46 +436,7 @@ function editFactura(id) {
     window.open(url, '_new');
 }
 
-function cargarFacturas() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: facturaId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaFacturas(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
+
 
 function printFactura2(id) {
     var url = "InfFacturas.html?facturaId=" + id;
@@ -527,35 +495,73 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function cargarFacturas2() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaFacturas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
+    var mf = function(id) {
+        var dFecha = moment(vm.dFecha()).format('YYYY-MM-DD');
+        var hFecha = vm.hFecha();
+        if(hFecha == '') hFecha = null
+        if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if (id) {
+            var data = {
+                id: facturaId
+            }
+
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadTablaFacturas(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        } else {
+            
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadTablaFacturas(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
         }
-    });
+    }
+   return mf
 }
 
 function cargarFacturas2All() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId(),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaFacturas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+    var mf = function() {
+        var dFecha = moment(vm.dFecha()).format('YYYY-MM-DD');
+        var hFecha = vm.hFecha();
+        if(hFecha == '') hFecha = null
+        if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                loadTablaFacturas(data);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+    return mf;
 }
 
 imprimirFactura = function () {
