@@ -440,7 +440,7 @@ var aceptarPrefactura = function () {
 }
 
 var generarPrefacturaDb = function () {
-    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+    //vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
     vm.total(numeral(vm.total()).format('0,0.00'));
     var data = {
         prefactura: {
@@ -1323,7 +1323,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
-            importeBeneficio = roundToSix(vm.porcentajeBeneficio() * coste / 100);
+            importeBeneficio = vm.porcentajeBeneficio() * coste / 100;
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }

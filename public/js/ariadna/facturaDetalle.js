@@ -22,6 +22,7 @@ var usaContrato = true;//por defecto se usa contrato
 var numLineas = 0;
 var cont = 0;
 var importeSuplido = 0;
+var advertencia = false;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -46,7 +47,6 @@ function initForm() {
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
    
@@ -313,9 +313,11 @@ function admData() {
     // Para calculadora de costes
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
+    self.antPorcentajeBeneficio = ko.observable();
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
+    self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeAlCliente = ko.observable();
     // Nuevo Total de coste para la factura
@@ -349,6 +351,8 @@ function loadData(data, desdeLinea) {
     vm.generada(data.generada);
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.antPorcentajeAgente(data.porcentajeAgente);
+    vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
@@ -537,7 +541,7 @@ var generarFacturaDb = function () {
     } else {
         vm.noContabilizar(false);
     }
-    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
     vm.total(numeral(vm.total()).format('0,0.00'));
     var data = {
         factura: {
@@ -1586,13 +1590,57 @@ var initAutoCliente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    actualizarLineasDeLaFacturaTrasCambioCostes();
+        actualizarLineasDeLaFacturaTrasCambioCostes();
+    
+    /* if(advertencia == false && numLineas > 0 && (vm.porcentajeAgente() != vm.antPorcentajeAgente() || vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio())) {
+         advertencia = true;
+        // mensaje de confirmación
+        var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                recalcularCostesImportesDesdeCoste();
+                actualizarLineasDeLaFacturaTrasCambioCostes();
+            }
+            if (ButtonPressed === "Cancelar") {
+                $('#textPorcentajeBeneficio').focus();
+                vm.porcentajeBeneficio(vm.antPorcentajeBeneficio());
+            }
+        });
+    } else {
+        recalcularCostesImportesDesdeCoste();
+        actualizarLineasDeLaFacturaTrasCambioCostes();
+    } */
 };
 
-var cambioCampoConRecalculoDesdeBeneficio = function () {
-    recalcularCostesImportesDesdeBeneficio();
-    actualizarLineasDeLaFacturaTrasCambioCostes();
+var advertenciaCambioPorcentajes = function() {
+    if(advertencia == false && numLineas > 0) {
+        advertencia = true;
+       // mensaje de confirmación
+       var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+       $.SmartMessageBox({
+           title: "<i class='fa fa-info'></i> Mensaje",
+           content: mens,
+           buttons: '[Aceptar][Cancelar]'
+       }, function (ButtonPressed) {
+           if (ButtonPressed === "Aceptar") {
+               recalcularCostesImportesDesdeCoste();
+               actualizarLineasDeLaFacturaTrasCambioCostes();
+           }
+           if (ButtonPressed === "Cancelar") {
+               // no hacemos nada (no quiere borrar)
+           }
+       });
+   } else {
+       recalcularCostesImportesDesdeCoste();
+       actualizarLineasDeLaFacturaTrasCambioCostes();
+   }
 }
+
+
 
 var cambioPorcentajeRetencion = function () {
     if (vm.porcentajeRetencion()) {
