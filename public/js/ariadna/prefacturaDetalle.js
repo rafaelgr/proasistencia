@@ -440,7 +440,7 @@ var aceptarPrefactura = function () {
 }
 
 var generarPrefacturaDb = function () {
-    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
     vm.total(numeral(vm.total()).format('0,0.00'));
     var data = {
         prefactura: {
