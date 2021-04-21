@@ -84,7 +84,7 @@ function initForm() {
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
     $('#btnPrint').click(imprimirFactura);
-    $('#btnLimpiar').click(limpiarFiltros)
+    $('#btnLimpiar').click(limpiarFiltros);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -141,18 +141,23 @@ function compruebaFiltros(id) {
             $('#chkTodos').prop('checked', false);
             cargarFacturas2()();
         }
-        if(id) {
-            cargarFacturas2()(facturaId);
-        }
+       /*  if(id) {
+            cargarFacturas2()(id);
+        } */
     } else{
         loadEmpresas(0);
         estableceFechaEjercicio();
         if(id) {
-            cargarFacturas2()(id);
+            cargarFacturas2(id)();
         } else{
             cargarFacturas2()();
         }
 
+    }
+    if(id) {
+        cargarFacturas2(id)();
+    } else{
+        cargarFacturas2()();
     }
 }
 
@@ -535,21 +540,21 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarFacturas2() {
-    var mf = function(id) {
+function cargarFacturas2(id) {
+    var mf = function() {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
         if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
         if (id) {
             var data = {
-                id: facturaId
+                id: id
             }
 
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + facturaId,
+                url: myconfig.apiUrl + "/api/facturas/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
