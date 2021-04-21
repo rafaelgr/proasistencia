@@ -516,7 +516,7 @@ var generarFacturaDb = function () {
     } else {
         vm.noContabilizar(false);
     }
-    vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
     vm.total(numeral(vm.total()).format('0,0.00'));
     var data = {
         factura: {
