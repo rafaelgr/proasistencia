@@ -1256,9 +1256,9 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 var recalcularCostesImportesDesdeCoste = function () {
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
-            vm.importeBeneficio(roundToSix(vm.porcentajeBeneficio() * vm.coste() / 100));
+            vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
         }
-        vm.ventaNeta(roundToSix(vm.coste() * 1 + vm.importeBeneficio() * 1));
+        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
@@ -1270,6 +1270,9 @@ var recalcularCostesImportesDesdeCoste = function () {
         // es un mantenedor
         vm.total(roundToSix(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
+    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
+    vm.ventaNeta(roundToTwo(vm.ventaNeta()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
