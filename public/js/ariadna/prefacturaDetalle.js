@@ -22,6 +22,7 @@ var dataBases;
 
 var usaCalculadora;
 var usaContrato = true;//por defecto se usa contrato
+var numLineas = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -273,9 +274,11 @@ function admData() {
     // Para calculadora de costes
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
+    self.antPorcentajeBeneficio = ko.observable();
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
+    self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeAlCliente = ko.observable();
     // Nuevo Total de coste para la prefactura
@@ -304,7 +307,10 @@ function loadData(data) {
     vm.generada(data.generada);
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+
     vm.porcentajeAgente(data.porcentajeAgente);
+    vm.antPorcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     recalcularCostesImportesDesdeCoste();
     //
@@ -427,17 +433,43 @@ var aceptarPrefactura = function () {
         returnUrl = "PrefacturaGeneral.html?PrefacturaId=";
     }
 
-    llamadaAjax(verb, url, data, function (err, data) {
-        loadData(data);
-        returnUrl = returnUrl + vm.prefacturaId();
-        if(desdeContrato == "true" && prefacturaId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+    if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        AvisaRecalculo(verb, url, data, returnUrl);
+    } else {
+        llamadaAjax(verb, url, data, function (err, data) {
+            loadData(data);
+            returnUrl = returnUrl + vm.prefacturaId();
+            if(desdeContrato == "true" && prefacturaId != 0){
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+            }
+            else{
+                window.open(returnUrl, '_self');
+            }
+        });
+    }
+
+    
+}
+
+
+var AvisaRecalculo = function(verb, url, data, returnUrl) {
+    // mensaje de confirmación
+    var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            actualizarLineasDeLaPrefacturaTrasCambioCostes(verb, url, data, returnUrl);
         }
-        else{
-            window.open(returnUrl, '_self');
+        if (ButtonPressed === "Cancelar") {
+            salir()();
         }
     });
+
 }
+
 
 var generarPrefacturaDb = function () {
     //vm.porcentajeBeneficio(roundToTwo(vm.porcentajeBeneficio()));
@@ -921,8 +953,12 @@ function loadDataLinea(data) {
 
 function loadTablaPrefacturaLineas(data) {
     var dt = $('#dt_lineas').dataTable();
+    numLineas = 0;
     if (data !== null && data.length === 0) {
         data = null;
+    }
+    if(data.length > 0) {
+        numLineas = data.length;
     }
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
@@ -1245,12 +1281,11 @@ var cambioPorcentajeRetencion = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    actualizarLineasDeLaPrefacturaTrasCambioCostes();
+    
 };
 
 var cambioCampoConRecalculoDesdeBeneficio = function () {
     recalcularCostesImportesDesdeBeneficio();
-    actualizarLineasDeLaPrefacturaTrasCambioCostes();
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
@@ -1284,16 +1319,22 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
-var actualizarLineasDeLaPrefacturaTrasCambioCostes = function () {
+var actualizarLineasDeLaPrefacturaTrasCambioCostes = function (verb, url2, datos, returnUrl) {
     var url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     if (vm.mantenedorDesactivado()) {
         url = myconfig.apiUrl + "/api/prefacturas/recalculo/" + vm.prefacturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
     }
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId(), null, function (err, data) {
-            loadLineasPrefactura(data.prefacturaId);
-            loadBasesPrefactura(data.prefacturaId);
+        llamadaAjax(verb, url2, datos, function (err, data) {
+            loadData(data);
+            returnUrl = returnUrl + vm.prefacturaId();
+            if(desdeContrato == "true" && prefacturaId != 0){
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+            }
+            else{
+                window.open(returnUrl, '_self');
+            }
         });
     });
 };
