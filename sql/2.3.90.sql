@@ -11,3 +11,13 @@ ALTER TABLE `usuarios`
 );
 INSERT INTO `proveedores_profesiones`
 SELECT 0 AS proveedorProfesionId, proveedorId, tipoProfesionalId FROM proveedores WHERE NOT tipoProfesionalId IS NULL;
+
+ALTER TABLE `contratos_lineas`   
+  CHANGE `coste` `coste` DECIMAL(14,4) NULL;
+
+ALTER TABLE `ofertas`   
+  CHANGE `coste` `coste` DECIMAL(14,4) NOT NULL COMMENT 'Coste global de la oferta';
+
+  ALTER TABLE `ofertas_lineas`   
+  CHANGE `coste` `coste` DECIMAL(14,4) NULL;
+

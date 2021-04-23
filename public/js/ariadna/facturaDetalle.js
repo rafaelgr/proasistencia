@@ -146,6 +146,9 @@ function initForm() {
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
 
+    $('#btnNuevaLinea').prop('disabled', false);
+    $('#btnAceptarLinea').prop('disabled', false);
+
     if (facturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
@@ -518,7 +521,7 @@ var aceptarFactura = function () {
         returnUrl = "FacturaGeneral.html?FacturaId=";
     }
     if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
-        AvisaRecalculo(verb, url, data, returnUrl);
+        AvisaRecalculo(url, returnUrl);
     } else {
         llamadaAjax(verb, url, data, function (err, data) {
             loadData(data);
@@ -528,7 +531,7 @@ var aceptarFactura = function () {
     }
 }
 
-var AvisaRecalculo = function(verb, url, data, returnUrl) {
+var AvisaRecalculo = function(url,returnUrl) {
     // mensaje de confirmación
     var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
     $.SmartMessageBox({
@@ -537,7 +540,7 @@ var AvisaRecalculo = function(verb, url, data, returnUrl) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            actualizarLineasDeLaFacturaTrasCambioCostes(verb, url, data, returnUrl);
+            actualizarLineasDeLaFacturaTrasCambioCostes(url, returnUrl);
         }
         if (ButtonPressed === "Cancelar") {
             salir()();
@@ -1611,6 +1614,13 @@ var initAutoCliente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
+    if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+        $('#btnNuevaLinea').prop('disabled', true);
+        $('#btnAceptarLinea').prop('disabled', true)
+    } else {
+        $('#btnNuevaLinea').prop('disabled', false);
+        $('#btnAceptarLinea').prop('disabled', false)
+    }
 };
 
 
@@ -1664,20 +1674,67 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
-var actualizarLineasDeLaFacturaTrasCambioCostes = function (verb, url2, datos, returnUrl) {
+var actualizarLineasDeLaFacturaTrasCambioCostes = function (url2, returnUrl) {
     var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     if (vm.mantenedorDesactivado()) {
         url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
     }
+   
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax(verb, url2, datos, function (err, data) {
-            //loadData(data);
-            returnUrl = returnUrl + vm.facturaId();
-            window.open(returnUrl, '_self');
+        recalcularImportesGuardar(url2, returnUrl);
+    });
+    
+};
+
+var recalcularImportesGuardar = function(url2, returnUrl) {
+    llamadaAjax("GET", "/api/facturas/lineas/" + vm.facturaId(), null, function (err, data) {
+        if (err) return;
+        importeSuplido = 0;
+        var totalCoste = 0;
+        data.forEach(function (linea) {
+            totalCoste += (linea.coste * linea.cantidad);
+            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+            if(linea.tipoIvaId == 6) {
+                importeSuplido = linea.totalLinea;
+            }
+        });
+        llamadaAjax("GET", "/api/facturas/bases/" + vm.facturaId(), null, function (err, data) {
+            if (err) return;
+            // actualizamos los totales
+            var t1 = 0; // total sin iva
+            var t3 = 0; // total cuotas
+            var t2 = 0; // total con iva
+            for (var i = 0; i < data.length; i++) {
+                t1 += data[i].base;
+                t3 += data[i].cuota;
+                t2 += data[i].base + data[i].cuota;
+            }
+            vm.total(numeral(t1).format('0,0.00'));
+            vm.totalCuota(numeral(t3).format('0,0.00'))
+            vm.totalConIva(numeral(t2).format('0,0.00'));
+        
+            var acuenta = numeroDbf(vm.importeAnticipo());
+            var totSinAcuenta =  t2-acuenta
+            vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
+            if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
+            
+            //actualizamosm el resto a cobrar
+             var data  = generarFacturaDb();
+             data.importeAnticipo = acuenta
+             if (facturaId != 0) {
+                if(vm.serie() == vm.sserieId()) {// si es igual no se a cambiado la serie u no hay que actualizarla
+                    data.factura.serie = null;
+                }
+            }
+             llamadaAjax("PUT", url2, data, function (err, data) {
+                if(err) return;
+                returnUrl = returnUrl + vm.facturaId();
+                window.open(returnUrl, '_self');
+            });
         });
     });
-};
+}
 
 
 var ocultarCamposFacturasGeneradas = function () {
