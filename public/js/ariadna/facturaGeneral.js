@@ -12,6 +12,7 @@ var dataFacturas;
 var facturaId;
 var usuario;
 var filtros = {};
+var cargaFacturas = false;
 
 
 
@@ -482,6 +483,7 @@ var mostrarMensajeFacturaBorrada = function () {
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
+    cargaFacturas = true;
     var contabilizadas = $('#chkTodos').prop('checked');
     var busquedaFacturas = 
         {

@@ -181,6 +181,20 @@ function eventoCerrar() {
 
 }
 
+function eventoBorrarCookie(cookie_name, cargada) {
+    cargada
+        window.onbeforeunload = borrarCookie;
+        function borrarCookie()
+        {   
+            ///control de cerrar la ventana///
+            if(cargada == false) 
+              {
+                deleteCookie(cookie_name);
+              }
+        }
+
+}
+
 var errorAjax = function (xhr, textStatus, errorThrwon) {
     var m = xhr.responseText;
     if (!m) m = "Error general posiblemente falla la conexión";
