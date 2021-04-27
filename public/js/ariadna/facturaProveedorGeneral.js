@@ -60,20 +60,27 @@ function initForm() {
         }
     }, 'La fecha final debe ser mayor que la inicial.');
 
+    initTablaFacturas();
+    var conservaFiltro = gup("ConservaFiltro");
+    var cleaned = gup("cleaned");
+    if(conservaFiltro != 'true' && cleaned != 'true') {
+        limpiarFiltros();
+    } else {
+        recuperaDepartamento(function(err, data) {
+            if(err) return;
+            if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
+            else{ $('#btnPrint').show() }
+            // comprobamos parámetros
+            facproveId = gup('facproveId');
+            var f = facproveId;
+                if(facproveId = '') {
+                    f = null
+                }
+                compruebaFiltros(f);
+        });
+    }
 
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        initTablaFacturas();
-        if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
-        else{ $('#btnPrint').show() }
-        // comprobamos parámetros
-        facproveId = gup('facproveId');
-        var f = facproveId;
-            if(facproveId = '') {
-                f = null
-            }
-            compruebaFiltros(f);
-    });
+    
 
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
@@ -127,7 +134,12 @@ function compruebaFiltros(id) {
         vm.sempresaId(filtros.empresaId);
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
-            cargarFacturas2All()();
+            if(id > 0) {
+                cargarFacturas2(id)();
+            } else {
+                cargarFacturas2All()();
+            }
+
         } else {
             $('#chkTodos').prop('checked', false);
             cargarFacturas2(id)();
@@ -151,6 +163,11 @@ function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
         "stateSave": true,
+        "stateLoaded": function (settings, state) {
+            state.columns.forEach(function (column, index) {
+                $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
+             });
+        },
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [5] },
         ],
@@ -457,7 +474,7 @@ function editFactura(id) {
         }
     setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_self');
 }
 
 
@@ -560,9 +577,10 @@ function estableceFechaEjercicio() {
 
 
 limpiarFiltros = function() {
+    var returnUrl = "FacturaProveedorGeneral.html?cleaned=true"
     deleteCookie('filtro_facproves');
     tablaFacturas.state.clear();
-    window.location.reload();
+    window.open(returnUrl, '_self');
 }
 
 imprimirFactura = function () {

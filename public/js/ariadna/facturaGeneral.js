@@ -34,6 +34,11 @@ function initForm() {
         filtros = JSON.parse(filtros);
     }
     
+    initTablaFacturas();
+
+    var conservaFiltro = gup("ConservaFiltro");
+    var cleaned = gup("cleaned");
+    if(conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
 
     $.validator.addMethod("greaterThan",
     function (value, element, params) {
@@ -47,10 +52,10 @@ function initForm() {
         }
     }, 'La fecha final debe ser mayor que la inicial.');
 
+   
     recuperaDepartamento(function(err, data) {
         if(err) return;
         if(data) {
-            initTablaFacturas();
             // comprobamos parámetros
             facturaId = gup('FacturaId');
             var f = facturaId;
@@ -137,10 +142,14 @@ function compruebaFiltros(id) {
         vm.sempresaId(filtros.empresaId);
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
-            cargarFacturas2All()();
+            if(id > 0) {
+                cargarFacturas2(id)();
+            } else {
+                cargarFacturas2All()();
+            }
         } else {
             $('#chkTodos').prop('checked', false);
-            cargarFacturas2()();
+            cargarFacturas2(id)();
         }
        /*  if(id) {
             cargarFacturas2()(id);
@@ -154,11 +163,6 @@ function compruebaFiltros(id) {
             cargarFacturas2()();
         }
 
-    }
-    if(id) {
-        cargarFacturas2(id)();
-    } else{
-        cargarFacturas2()();
     }
 }
 
@@ -636,10 +640,12 @@ imprimirFactura = function () {
     window.open(url, '_blank');
 }
 
-limpiarFiltros = function() {
+var limpiarFiltros = function() {
+    var returnUrl = "FacturaGeneral.html?cleaned=true"
     deleteCookie('filtro_facturas');
     tablaFacturas.state.clear();
-    window.location.reload();
+    window.open(returnUrl, '_self');
+    //window.location.reload();
 }
 
 function loadEmpresas(id) {

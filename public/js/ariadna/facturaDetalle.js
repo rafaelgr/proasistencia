@@ -518,7 +518,7 @@ var aceptarFactura = function () {
         }
         verb = "PUT";
         url = myconfig.apiUrl + "/api/facturas/" + facturaId;
-        returnUrl = "FacturaGeneral.html?FacturaId=";
+        returnUrl = "FacturaGeneral.html?ConservaFiltro=true&FacturaId=";
     }
     if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
         AvisaRecalculo(url, returnUrl);
@@ -618,7 +618,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaGeneral.html";
+        var url = "FacturaGeneral.html?ConservaFiltro=true";
         window.open(url, '_self');
     }
     return mf;

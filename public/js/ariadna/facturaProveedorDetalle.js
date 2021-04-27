@@ -807,7 +807,7 @@ var aceptarFactura = function () {
     if (facproveId != 0) {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
-        returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+        returnUrl = "FacturaProveedorGeneral.html?ConservaFiltro=true&facproveId=";
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)
@@ -887,7 +887,7 @@ function salir() {
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
-            var url = "FacturaProveedorGeneral.html";
+            var url = "FacturaProveedorGeneral.html?ConservaFiltro=true";
             window.open(url, '_self');
         }
     }
@@ -2417,7 +2417,7 @@ function nuevaServiciada() {
     
             verb = "PUT";
             url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
-            returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+            returnUrl = "FacturaProveedorGeneral.html?ConservaFiltro=true&facproveId=";
             
         }
         var data = {
