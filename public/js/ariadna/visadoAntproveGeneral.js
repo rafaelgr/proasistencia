@@ -29,7 +29,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -58,7 +58,7 @@ function initForm() {
         if (this.checked) {
             visada = 1;
         } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario + "/" + vm.sdepartamentoId();
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -274,10 +274,10 @@ function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
           }
           else {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
           }
         $.ajax({
             type: "GET",

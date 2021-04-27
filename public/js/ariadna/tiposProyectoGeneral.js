@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataTiposProyecto;
 var tipoProyectoId;
-var idUsuario;
+var usuario;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -26,7 +26,7 @@ function initForm() {
     getVersionFooter();
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     //
     $('#btnBuscar').click(buscarTiposProyecto());
     $('#btnAlta').click(crearTipoProyecto());
@@ -196,7 +196,7 @@ function buscarTiposProyecto() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.sdepartamentoId() + "?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/tipos_proyectos/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -263,7 +263,7 @@ function editTipoProyecto(id) {
 
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/tipos_proyectos/departamento/" + usuario + "/" + vm.sdepartamentoId() + "?nombre=*";
+    var url = myconfig.apiUrl + "/api/tipos_proyectos/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
         loadTablaTiposProyecto(data);
     });

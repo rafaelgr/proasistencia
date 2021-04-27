@@ -3,7 +3,7 @@ tipoProyectoDetalle.js
 Funciones js par la página TipoProyectoDetalle.html
 ---------------------------------------------------------------------------*/
 var adminId = 0;
-var idUsuario;
+var usuario;
 
 var posiblesNiveles = [{
     id: 0,
@@ -22,7 +22,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -200,7 +200,7 @@ function salir() {
 }
 
 function loadDepartamento(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);

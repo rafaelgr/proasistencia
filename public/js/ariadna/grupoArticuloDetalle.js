@@ -3,7 +3,7 @@ grupoArticuloDetalle.js
 Funciones js par la página GrupoArticuloDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
-var idUsuario;
+var usuario;
 
 datePickerSpanish(); // see comun.js
 
@@ -13,7 +13,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -76,7 +76,7 @@ function loadData(data) {
 }
 
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);

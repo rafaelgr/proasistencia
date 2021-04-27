@@ -27,7 +27,7 @@ function initForm() {
     getVersionFooter();
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     //
     $('#btnBuscar').click(buscarGrupoArticulos());
     $('#btnAlta').click(crearGrupoArticulo());
@@ -198,7 +198,7 @@ function buscarGrupoArticulos() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/grupo_articulo/departamento/" + usuario + "/" + vm.sdepartamentoId()+"?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/grupo_articulo/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId()+"?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -265,7 +265,7 @@ function editGrupoArticulo(id) {
 }
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/grupo_articulo/departamento/"+usuario + "/" + vm.sdepartamentoId()+"/?nombre=*";
+    var url = myconfig.apiUrl + "/api/grupo_articulo/departamento/"+usuario.usuarioId + "/" + vm.sdepartamentoId()+"/?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
         if (err) return;
         loadTablaGrupoArticulos(data);

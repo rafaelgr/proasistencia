@@ -540,10 +540,39 @@
                                                     </label>
                                                 </section>
                                             </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Desde fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-5">
+                                                    <label class="label">Empresa</label>
+                                                    <label style="width:100%; height:50px;">
+                                                                            <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                                        </label>
+                                                </section>
+                                                <section class="col col-md-7">
+                                                   
+                                                </section>
+                                               
+                                            </div>
                                         </fieldset>
                                         
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnLimpiar" title="Limpiar filtros" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fas fa-eraser"></i>
+                                                </button>
                                                 <button id="btnPrint" title="Informes" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
                                                 </button>                                 
@@ -564,31 +593,31 @@
                                                         <i class="fa fa-fw fa-search"></i>
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-1" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text"  id="dt_factura-head-filter-2" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-3" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-4" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-5" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-6" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-7" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-8" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
+                                                        <input type="text" id="dt_factura-head-filter-9" class="form-control" placeholder="" />
                                                     </th>
                                                     
                                                                                                     

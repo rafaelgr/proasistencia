@@ -26,7 +26,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -305,7 +305,7 @@ function loadComerciales(id) {
 function loadContratos(id) {
     $.ajax({
         type: "GET",
-        url: "/api/contratos/contratos/beneficio/comercial/cerrados/usuario/departamento/" + usuario,
+        url: "/api/contratos/contratos/beneficio/comercial/cerrados/usuario/departamento/" + usuario.usuarioId,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

@@ -33,7 +33,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     getVersionFooter();
     
     

@@ -24,7 +24,7 @@ function initForm() {
 
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
@@ -61,10 +61,10 @@ function initForm() {
         if($('#chkPreaviso').is(':checked')) {
             $('#chkPreaviso').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         checkCerrados =  this;
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId();
+            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -84,9 +84,9 @@ function initForm() {
         if($('#chkCerrados').is(':checked')) {
             $('#chkCerrados').prop("checked", false);
         }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId();
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario + "/" + vm.sdepartamentoId();
+            url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         } 
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -378,7 +378,7 @@ function cargarContratos() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

@@ -26,7 +26,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -275,7 +275,7 @@ function buscarFacturas() {
         facturasCero = [];
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId()+ "/" + usuario,
+            url: myconfig.apiUrl + "/api/facturas/emision/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId()+ "/" + usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -319,7 +319,7 @@ function contabilizarFacturas() {
         if (!datosOK()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario,
+            url: myconfig.apiUrl + "/api/facturas/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

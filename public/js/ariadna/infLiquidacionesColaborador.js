@@ -31,7 +31,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -336,7 +336,7 @@ var rptLiquidacionGeneralParametrosJson = function () {
         return;
     }
 
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
+    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario.usuarioId;
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
@@ -404,7 +404,7 @@ var rptLiquidacionGeneralParametros = function () {
         if (departamentoId && departamentoId > 0) {
             sql += " AND cnt.tipoContratoId = " + departamentoId;
         }else {
-            sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+            sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
         }
     }
     else if(departamentoId == 7)  {
@@ -489,7 +489,7 @@ var rptLiquidacionGeneralParametros = function () {
         if (tipoComercialId) {
             sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
         }
-        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
 
         sql += " UNION";
 

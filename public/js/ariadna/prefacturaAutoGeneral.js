@@ -25,7 +25,7 @@ function initForm() {
 
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     recuperaDepartamento(function(err, data) {
         if(err) return;
         if(data) {
@@ -406,7 +406,7 @@ function cargarPrefacturasAuto() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -482,7 +482,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarPrefacturaAutos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/prefacturasAuto/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -498,7 +498,7 @@ function cargarPrefacturaAutos2() {
 function cargarPrefacturasAuto2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/PrefacturaAutos/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/PrefacturaAutos/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

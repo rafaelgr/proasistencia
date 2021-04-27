@@ -22,6 +22,7 @@ var usaContrato = true;//por defecto se usa contrato
 var numLineas = 0;
 var cont = 0;
 var importeSuplido = 0;
+var advertencia = false;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -32,7 +33,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -44,9 +45,7 @@ function initForm() {
     ko.applyBindings(vm);
 
     // Eventos de la calculadora de costes
-    $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
    
@@ -59,7 +58,7 @@ function initForm() {
         return false;
     });
     $("#txtPrecio").focus(function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtPrecio').val(null);
     });
 
@@ -147,20 +146,44 @@ function initForm() {
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
 
+    $('#btnNuevaLinea').prop('disabled', false);
+    $('#btnAceptarLinea').prop('disabled', false);
+
     if (facturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
             if (err) return;
-            /*if(data.noCalculadora) {
-                $('#calculadora').hide();
-                $('#contrato').hide();
-                obtenerDepartamentoContrato();
-            }*/
             loadData(data);
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
             $('#txtFecha').prop('disabled', true);
+            //actualización de propiedad al click
+            var clienteId = data.clienteId;
+            var empresaId = data.empresaId;
+            var fecha = moment(data.fecha).format('YYYY-MM-DD');
+            $('#chkEnviadaCorreo').click(
+                function(e){
+                    var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
+                    var data = {
+                        factura: {
+                            "facturaId": facturaId,
+                            "empresaId": empresaId,
+                            "clienteId":  clienteId,
+                            "fecha": fecha,
+                            "enviadaCorreo": enviadaCorreo
+                        }
+                    }
+                    verb = "PUT";
+                    url = myconfig.apiUrl + "/api/facturas/" + facturaId;
+                    llamadaAjax(verb, url, data, function (err, data) {
+                        if(err) return;
+                        mensNormal("Se ha actulizado la propiedad de enviar por correo");
+                    });
+
+                }
+            );
+    
             
         })
     } else { 
@@ -292,9 +315,11 @@ function admData() {
     // Para calculadora de costes
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
+    self.antPorcentajeBeneficio = ko.observable();
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
+    self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeAlCliente = ko.observable();
     // Nuevo Total de coste para la factura
@@ -328,6 +353,8 @@ function loadData(data, desdeLinea) {
     vm.generada(data.generada);
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.antPorcentajeAgente(data.porcentajeAgente);
+    vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
     vm.departamentoId(data.departamentoId);
@@ -418,7 +445,7 @@ function loadData(data, desdeLinea) {
 
     cargaTablaAnticiposAsociados();
     //si la factura está contabilizada bloquemos la edicion
-    if(data.contabilizada == 1) bloqueaEdicionCampos();
+    if(data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
 }
 
 
@@ -491,15 +518,37 @@ var aceptarFactura = function () {
         }
         verb = "PUT";
         url = myconfig.apiUrl + "/api/facturas/" + facturaId;
-        returnUrl = "FacturaGeneral.html?FacturaId=";
+        returnUrl = "FacturaGeneral.html?ConservaFiltro=true&FacturaId=";
     }
-
-    llamadaAjax(verb, url, data, function (err, data) {
-        loadData(data);
-        returnUrl = returnUrl + vm.facturaId();
-        window.open(returnUrl, '_self');
-    });
+    if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        AvisaRecalculo(url, returnUrl);
+    } else {
+        llamadaAjax(verb, url, data, function (err, data) {
+            loadData(data);
+            returnUrl = returnUrl + vm.facturaId();
+            window.open(returnUrl, '_self');
+        });
+    }
 }
+
+var AvisaRecalculo = function(url,returnUrl) {
+    // mensaje de confirmación
+    var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            actualizarLineasDeLaFacturaTrasCambioCostes(url, returnUrl);
+        }
+        if (ButtonPressed === "Cancelar") {
+            salir()();
+        }
+    });
+
+}
+
 
 var generarFacturaDb = function () {
     var serie;
@@ -569,7 +618,7 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaGeneral.html";
+        var url = "FacturaGeneral.html?ConservaFiltro=true";
         window.open(url, '_self');
     }
     return mf;
@@ -598,7 +647,7 @@ function loadFormasPago(formaPagoId) {
 var loadContratos = function (contratoId) {
     var fecha = null;
     if(vm.fecha()) fecha = spanishDbDate(vm.fecha());
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" +  fecha;
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" +  fecha;
     if (contratoId) url = "/api/contratos/uno/campo/departamento/" + contratoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -702,7 +751,7 @@ function loadDepartamento(departamentoId) {
 
 
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
@@ -1092,7 +1141,7 @@ function initTablaFacturasLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada()) bt1 = "";
+                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = "";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -1565,13 +1614,17 @@ var initAutoCliente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    actualizarLineasDeLaFacturaTrasCambioCostes();
+    if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+        $('#btnNuevaLinea').prop('disabled', true);
+        $('#btnAceptarLinea').prop('disabled', true)
+    } else {
+        $('#btnNuevaLinea').prop('disabled', false);
+        $('#btnAceptarLinea').prop('disabled', false)
+    }
 };
 
-var cambioCampoConRecalculoDesdeBeneficio = function () {
-    recalcularCostesImportesDesdeBeneficio();
-    actualizarLineasDeLaFacturaTrasCambioCostes();
-}
+
+
 
 var cambioPorcentajeRetencion = function () {
     if (vm.porcentajeRetencion()) {
@@ -1591,7 +1644,7 @@ var cambioPorcentajeRetencion = function () {
 var recalcularCostesImportesDesdeCoste = function () {
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
-            vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
+            vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
         }
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
@@ -1605,6 +1658,11 @@ var recalcularCostesImportesDesdeCoste = function () {
         // es un mantenedor
         vm.total(roundToTwo(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
+    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
+
+    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
+    vm.ventaNeta(roundToTwo(vm.ventaNeta()));
+    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
 };
 
 var recalcularCostesImportesDesdeBeneficio = function () {
@@ -1616,20 +1674,68 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
-var actualizarLineasDeLaFacturaTrasCambioCostes = function () {
+var actualizarLineasDeLaFacturaTrasCambioCostes = function (url2, returnUrl) {
     var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     if (vm.mantenedorDesactivado()) {
         url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
     }
+   
     llamadaAjax("PUT", url, null, function (err, data) {
         if (err) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + vm.facturaId(), null, function (err, data) {
-            loadLineasFactura(data.facturaId);
-            loadBasesFactura(data.facturaId);
-            loadCobrosFactura(data.facturaId);
+        recalcularImportesGuardar(url2, returnUrl);
+    });
+    
+};
+
+var recalcularImportesGuardar = function(url2, returnUrl) {
+    llamadaAjax("GET", "/api/facturas/lineas/" + vm.facturaId(), null, function (err, data) {
+        if (err) return;
+        importeSuplido = 0;
+        var totalCoste = 0;
+        data.forEach(function (linea) {
+            totalCoste += (linea.coste * linea.cantidad);
+            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+            if(linea.tipoIvaId == 6) {
+                importeSuplido = linea.totalLinea;
+            }
+        });
+        llamadaAjax("GET", "/api/facturas/bases/" + vm.facturaId(), null, function (err, data) {
+            if (err) return;
+            // actualizamos los totales
+            var t1 = 0; // total sin iva
+            var t3 = 0; // total cuotas
+            var t2 = 0; // total con iva
+            for (var i = 0; i < data.length; i++) {
+                t1 += data[i].base;
+                t3 += data[i].cuota;
+                t2 += data[i].base + data[i].cuota;
+            }
+            vm.total(numeral(t1).format('0,0.00'));
+            vm.totalCuota(numeral(t3).format('0,0.00'))
+            vm.totalConIva(numeral(t2).format('0,0.00'));
+        
+            var acuenta = numeroDbf(vm.importeAnticipo());
+            var totSinAcuenta =  t2-acuenta
+            vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
+            if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
+            
+            //actualizamosm el resto a cobrar
+             var data  = generarFacturaDb();
+             data.importeAnticipo = acuenta
+             if (facturaId != 0) {
+                if(vm.serie() == vm.sserieId()) {// si es igual no se a cambiado la serie u no hay que actualizarla
+                    data.factura.serie = null;
+                }
+            }
+             llamadaAjax("PUT", url2, data, function (err, data) {
+                if(err) return;
+                returnUrl = returnUrl + vm.facturaId();
+                window.open(returnUrl, '_self');
+            });
         });
     });
-};
+}
+
 
 var ocultarCamposFacturasGeneradas = function () {
     $('#btnAceptar').hide();
@@ -1664,7 +1770,7 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     var importeAgente = 0;
     if (coste != null) {
         if (vm.porcentajeBeneficio()) {
-            importeBeneficio = roundToTwo(vm.porcentajeBeneficio() * coste / 100);
+            importeBeneficio = vm.porcentajeBeneficio() * coste / 100;
         }
         ventaNeta = (coste * 1) + (importeBeneficio * 1);
     }
@@ -1951,7 +2057,7 @@ function initTablaAnticiposAsociados() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 //var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + bt2 */+ "</div>";
-                if(vm.contabilizada()) html = '';
+                if(vm.contabilizada() && !usuario.puedeEditar) html = '';
                 return html;
             }
         }]

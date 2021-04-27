@@ -28,7 +28,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     //
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -219,7 +219,7 @@ function buscarLiquidacionesAcumuladas() {
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId  + "/" + departamentoId +  "/" + usuario,
+            url: myconfig.apiUrl + "/api/liquidaciones/acumulada/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + tipoComercialId + "/" + contratoId  + "/" + departamentoId +  "/" + usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

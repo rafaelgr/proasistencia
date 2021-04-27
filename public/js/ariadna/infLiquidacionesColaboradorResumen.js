@@ -31,7 +31,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -337,7 +337,7 @@ var rptLiquidacionGeneralParametrosJson = function () {
         return;
     }
 
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/resumen/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario;
+    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/resumen/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario.usuarioId;
     $('#btnImprimir').prop('disabled', true);
     mensNormal('Espere mientras se procesa el resultado...tardará unos segundos');
     llamadaAjax("POST", url, null, function (err, data) {
@@ -496,7 +496,7 @@ var rptLiquidacionGeneralParametros = function () {
         if (tipoComercialId) {
             sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
         }
-        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
 
         sql += " UNION";
 

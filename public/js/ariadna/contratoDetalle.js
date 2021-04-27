@@ -31,6 +31,7 @@ var usaCalculadora;
 var calcInv = false;
 var DesdeContrato
 var AscContratoId;
+var numLineas = 0;
 //var numAscContratos = 0;
 
 
@@ -43,7 +44,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -55,7 +56,6 @@ function initForm() {
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtNumPagos').on('blur', verPrefacturasAGenerar2);
 
@@ -285,6 +285,9 @@ function initForm() {
     $('#sinUso').hide();//ocultamos campo sin uso
    
 
+    $('#btnNuevaLinea').prop('disabled', false);
+    $('#btnAceptarLinea').prop('disabled', false);
+
 
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
@@ -390,9 +393,11 @@ function admData() {
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
+    self.antPorcentajeBeneficio = ko.observable();
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
+    self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
     self.importeMantenedor = ko.observable();
@@ -547,7 +552,7 @@ function admData() {
     self.elegidosFormasPagoLinea = ko.observableArray([]);
 }
 
-function loadData(data) {
+function loadData(data) {  
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
     vm.tipoContratoId(data.tipoContratoId);
@@ -558,10 +563,12 @@ function loadData(data) {
     cargaCliente(data.clienteId);
     cargaMantenedor(data.mantenedorId);
     vm.porcentajeAgente(data.porcentajeAgente);
+    vm.antPorcentajeAgente(data.porcentajeAgente);
     cargaAgente(data.agenteId, true);
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.importeCliente(data.importeCliente);
     loadTipoProyecto(data.tipoProyectoId);
     
@@ -719,6 +726,54 @@ var guardarContrato = function (done) {
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
     comprobarSiHayMantenedor();
     vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
+   
+    var data = generarContratoDb();
+
+    if (contratoId == 0) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos", data, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            loadData(data);
+            done(null, 'POST');
+        });
+    } else {
+        if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+                // mensaje de confirmación
+                var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+                $.SmartMessageBox({
+                    title: "<i class='fa fa-info'></i> Mensaje",
+                    content: mens,
+                    buttons: '[Aceptar][Cancelar]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed === "Aceptar") {
+                        actualizarLineasDeLaContratoTrasCambioCostes(function(err, result) {
+                            if (err) return errorGeneral(err, done);
+                            recalcularImportesGuardar(function(err, result) {
+                                if (err) return errorGeneral(err, done);
+                                var data  = generarContratoDb();
+                                llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
+                                    if (err) return errorGeneral(err, done);
+                                    done(null, 'PUT');
+                                });
+                            });
+                        });
+                    }
+                    
+                    if (ButtonPressed === "Cancelar") {
+                        salir()();
+                    }
+                });
+        } else {
+            llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
+                if (err) return errorGeneral(err, done);
+                done(null, 'PUT');
+            });
+        }
+        
+    }
+}
+
+
+var generarContratoDb = function () {
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -758,19 +813,7 @@ var guardarContrato = function (done) {
             "liquidarBasePrefactura": vm.liquidarBase()
         }
     };
-    if (contratoId == 0) {
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos", data, function (err, data) {
-            if (err) return errorGeneral(err, done);
-            loadData(data);
-            done(null, 'POST');
-        });
-    } else {
-        llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
-            if (err) return errorGeneral(err, done);
-            loadData(data);
-            done(null, 'PUT');
-        });
-    }
+    return data;
 }
 
 function loadEmpresas(id) {
@@ -787,7 +830,7 @@ function loadEmpresas(id) {
 
 
 function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var tipos = [{
             departamentoId: 0,
@@ -804,7 +847,7 @@ function loadTiposContrato(id) {
 
 function loadTipoProyecto(id) {
     if(id == undefined) id = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + id;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + id;
     llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -963,7 +1006,7 @@ function cambioTipoContrato(data) {
     if (!data) return;
     var tipoContratoId = data.id;
     if(tipoContratoId == undefined) tipoContratoId = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
     llamadaAjax('GET', myconfig.apiUrl + url, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -1307,10 +1350,12 @@ function loadDataLinea(data) {
 
 
 function loadTablaContratoLineas(data) {
+    numLineas = data.length;
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(!data) numLineas = 0
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -1654,7 +1699,6 @@ var cargaAgente = function (id, encarga) {
                     
         } else {
             recalcularCostesImportesDesdeCoste();
-            //actualizarLineasDeLaContratoTrasCambioCostes();
         }
     });
 };
@@ -1746,7 +1790,6 @@ var initAutoAgente = function () {
                 vm.porcentajeAgente(comision);
                 if(!usaCalculadora) vm.porcentajeAgente(0);
                 recalcularCostesImportesDesdeCoste();
-                //actualizarLineasDeLaContratoTrasCambioCostes()
 
                 if(vm.stipoContratoId() == 5) {
                     cargaPorcenRef(comision);
@@ -1764,13 +1807,16 @@ var initAutoAgente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    actualizarLineasDeLaContratoTrasCambioCostes();
+    if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+        $('#btnNuevaLinea').prop('disabled', true);
+        $('#btnAceptarLinea').prop('disabled', true)
+    } else {
+        $('#btnNuevaLinea').prop('disabled', false);
+        $('#btnAceptarLinea').prop('disabled', false)
+    }
+    
 };
 
-var cambioCampoConRecalculoDesdeBeneficio = function () {
-    recalcularCostesImportesDesdeBeneficio();
-    actualizarLineasDeLaContratoTrasCambioCostes();
-}
 
 var recalcularCostesImportesDesdeCoste = function () {
     if (!vm.coste()) vm.coste(0);
@@ -1850,15 +1896,40 @@ var recalcularCostesImportesDesdeBeneficio = function () {
     recalcularCostesImportesDesdeCoste();
 };
 
-var actualizarLineasDeLaContratoTrasCambioCostes = function () {
+var actualizarLineasDeLaContratoTrasCambioCostes = function (done) {
     llamadaAjax('PUT',
         "/api/contratos/recalculo/" + vm.contratoId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
         null,
         function (err, data) {
-            if (err) return;
-            recargaLineasBases();
+            if (err) return errorGeneral(err, done);
+            done(null, 'OK');
         });
 };
+
+var recalcularImportesGuardar = function(done) {
+        llamadaAjax('GET', "/api/contratos/lineas/" + vm.contratoId(), null, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            var totalCoste = 0;
+            data.forEach(function (linea) {
+                totalCoste += (linea.coste * linea.cantidad);
+                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+            })
+            llamadaAjax('GET', "/api/contratos/bases/" + vm.contratoId(), null, function (err, data) {
+                if (err) return errorGeneral(err, done);
+                // actualizamos los totales
+                var t1 = 0; // total sin iva
+                var t2 = 0; // total con iva
+                for (var i = 0; i < data.length; i++) {
+                    t1 += data[i].base;
+                    t2 += data[i].base + data[i].cuota;
+                }
+                vm.total(numeral(t1).format('0,0.00'));
+                vm.totalConIva(numeral(t2).format('0,0.00'));
+                vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+                done(null, 'OK')
+            })
+        });
+}
 
 var ocultarCamposContratosGeneradas = function () {
     $('#btnAceptar').hide();

@@ -32,7 +32,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -349,7 +349,7 @@ function loadContratosActivos(id){
     } else {
         dep = 0
     }
-    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario +"/"+ dep, null, function (err, data) {
+    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId +"/"+ dep, null, function (err, data) {
         if (err) return
         var contratos = [{
             contratoId: 0,
@@ -500,7 +500,7 @@ function buscarFacturas() {
 
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId  +"/"+ contratoId +"/"+ empresaId +"/"+ departamentoId +"/"+ usuario,
+            url: myconfig.apiUrl + "/api/facturas/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId +"/"+ comercialId  +"/"+ contratoId +"/"+ empresaId +"/"+ departamentoId +"/"+ usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -556,7 +556,7 @@ function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
         $('#progress').show();
-        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + departamentoId + "/" + usuario;
+        var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + departamentoId + "/" + usuario.usuarioId;
         llamadaAjax("POST", url, null, function (err, data) {
             if (err) {
                 $('#progress').hide();

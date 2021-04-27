@@ -28,7 +28,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
 
     vm = new admData();
     ko.applyBindings(vm);
@@ -158,7 +158,7 @@ function buscarLiquidacionesDetalladas() {
     var mf = function () {
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.comercialId() + "/" + vm.departamentoId() + "/" + usuario,
+            url: myconfig.apiUrl + "/api/liquidaciones/detalle/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.comercialId() + "/" + vm.departamentoId() + "/" + usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

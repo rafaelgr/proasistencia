@@ -14,7 +14,7 @@ var vm2 = null;
 function recuperaDepartamento(retorno) {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/usuarios/" + usuario,
+        url: myconfig.apiUrl + "/api/usuarios/" + usuario.usuarioId,
         dataType: "json",
         data: null,
         contentType: "application/json",
@@ -29,14 +29,14 @@ function recuperaDepartamento(retorno) {
             var m = xhr.responseText;
             if (!m) m = "Error general posiblemente falla la conexión";
             mostrarMensaje(m);
-            retorno(err);
+            retorno(m);
         }
     });
 }
 
 
 function loadDepartamentos(id, done){
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return done(err);
         var departamentos = [{
             departamentoId: 0,
@@ -64,7 +64,7 @@ function guardaDepartamento(departamento) {
     }
     $.ajax({
         type: "PUT",
-        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario,
+        url: myconfig.apiUrl + "/api/usuarios/departamento/trabajo/" + usuario.usuarioId,
         dataType: "json",
         data: JSON.stringify(data),
         contentType: "application/json",
@@ -176,6 +176,20 @@ function eventoCerrar() {
               { ExitCheck = false
                 return "Si decide continuar,abandonará la página pudiendo perder los cambios si no ha GRABADO ¡¡¡";
                 
+              }
+        }
+
+}
+
+function eventoBorrarCookie(cookie_name, cargada) {
+    cargada
+        window.onbeforeunload = borrarCookie;
+        function borrarCookie()
+        {   
+            ///control de cerrar la ventana///
+            if(cargada == false) 
+              {
+                deleteCookie(cookie_name);
               }
         }
 
