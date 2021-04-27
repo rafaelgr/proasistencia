@@ -18,7 +18,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
 
     vm = new admData();
     ko.applyBindings(vm);

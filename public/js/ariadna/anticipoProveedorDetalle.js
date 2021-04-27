@@ -24,7 +24,7 @@ var servicioId;
 
 var dataServiciadas;
 var dataLineas;
-var idUsuario;
+var usuario;
 
 var lineaEnEdicion = false;
 
@@ -44,7 +44,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -89,7 +89,7 @@ function initForm() {
     });
 
     $("#txtPrecio").focus(function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         var val = $('#txtPrecio').val();
         if(!val || val == '') return; 
         $('#txtPrecio').val(null);
@@ -151,7 +151,7 @@ function initForm() {
 
     
     $('#txtTotalConIva').focus( function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtTotalConIva').val('');
     })
 
@@ -218,7 +218,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, idUsuario + "@" + file.name);
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
             $.ajax({
                 url: '/api/upload',
@@ -568,7 +568,7 @@ function loadData(data) {
         $('#txtTotalConIva').prop('disabled', false);
     }
 
-    if (data.contabilizada == 1) bloqueaEdicionCampos();
+    if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
     //
     document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
 
@@ -811,7 +811,7 @@ var cargarContratos = function (data, contratoId) {
 }
     
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
@@ -1187,7 +1187,7 @@ function initTablaAnticiposLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editAnticipoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada()) bt1 = '';
+                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = '';
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }

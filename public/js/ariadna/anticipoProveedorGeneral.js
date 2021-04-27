@@ -20,7 +20,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -360,7 +360,7 @@ function cargarAnticipos() {
             $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -434,7 +434,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarAnticipos2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -450,7 +450,7 @@ function cargarAnticipos2() {
 function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

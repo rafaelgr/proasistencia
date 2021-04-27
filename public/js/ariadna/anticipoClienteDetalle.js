@@ -33,7 +33,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -257,7 +257,7 @@ function loadData(data) {
         $('#chkNoContabilizar').prop("checked", false);
     }
     
-    if(data.contabilizada == 1) bloqueaEdicionCampos()
+    if(data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos()
     //
     document.title = "Anticipo: " + vm.numeroAnticipoCliente();
 }
@@ -418,7 +418,7 @@ function loadFormasPago(formaPagoId) {
 var loadContratos = function (contratoId) {
     var fecha = null;
     if(vm.fecha()) fecha = spanishDbDate(vm.fecha());
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" + fecha;    
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + usaContrato + "/" + fecha;    
     if (contratoId) {
         url = "/api/contratos/uno/campo/departamento/" + contratoId;
     } else {
@@ -526,7 +526,7 @@ function loadDepartamento(departamentoId) {
 }
 
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);

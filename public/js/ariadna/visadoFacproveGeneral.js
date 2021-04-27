@@ -30,7 +30,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -78,7 +78,7 @@ function initForm() {
             $('#btnAlta').hide();
             $('#checkMain').hide();
         } 
-        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario+ "/" + vm.sdepartamentoId();
+        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId+ "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -324,11 +324,11 @@ function buscarFacturas() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario + "/" + vm.sdepartamentoId();
+            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
           }
           else {
             $('#checkMain').prop('checked', false);
-              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario + "/" + vm.sdepartamentoId();
+              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
           }
         $.ajax({
             type: "GET",

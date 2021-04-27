@@ -24,7 +24,7 @@ function initForm() {
 
     vm = new admData();
     ko.applyBindings(vm);
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     recuperaDepartamento(function(err, data) {
         if(err) return;
         initTablaArticulos();
@@ -205,7 +205,7 @@ function buscarArticulos() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/articulos/usuario/departamento/" + usuario + "/" + vm.sdepartamentoId() + "/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/articulos/usuario/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

@@ -12,7 +12,7 @@ var dataFacturas;
 var facproveId;
 var codigoSugerido;
 var antNif = ""//recoge el valor que tiene el nif al cargar la página
-var idUsuario;
+var usuario;
 var numfactu = 0;
 
 var responsiveHelper_dt_basic = undefined;
@@ -36,7 +36,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    idUsuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
@@ -56,7 +56,7 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
-    loadTiposProfesional();
+    loadTiposProfesionales();
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
@@ -450,13 +450,14 @@ function loadData(data) {
     loadTiposIva(data.tipoIvaId)
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
-    loadTiposProfesional(data.tipoProfesionalId);
+    //loadTiposProfesional(data.tipoProfesionalId);
     loadMotivosBaja(data.motivoBajaId);
     loadTarifas(data.tarifaId);
     loadTiposRetencion(data.codigoRetencion);
     loadPaises(data.paisId);
     loadEmpresas(data.empresaId);
     buscaDepartamentos();
+    buscaProfesiones();
     //loadDepartamentos(data.departamentoId)
 }
 
@@ -628,6 +629,9 @@ function aceptar() {
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()
+            },
+            profesiones: {
+                "profesiones": vm.elegidosTiposProfesional()
             }
         };
         if (proId == 0) {
@@ -741,24 +745,6 @@ function loadTiposProveedor(id) {
     });
 }
 
-function loadTiposProfesional(id) {
-    $.ajax({
-        type: "GET",
-        url: "/api/tipos_profesional",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var tiposProfesional = [{ tipoProfesionalId: null, nombre: "" }].concat(data);
-            vm.posiblesTiposProfesional(tiposProfesional);
-            $("#cmbTiposProfesional").val([id]).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
 
 
 function loadFormasPago(formaPagoId) {
@@ -814,7 +800,7 @@ function loadTiposRetencion(id) {
 }
 
 function loadDepartamentos(departamentosIds) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         var ids = [];
         if (err) return;
         var departamentos = data;
@@ -828,6 +814,33 @@ function loadDepartamentos(departamentosIds) {
         }
     });
 }
+
+function loadTiposProfesionales(tiposProfesionalesIds) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ids = [];
+            var tiposProfesionales  = data
+            vm.posiblesTiposProfesional(tiposProfesionales);
+            if(tiposProfesionalesIds) {
+                vm.elegidosTiposProfesional(tiposProfesionalesIds);
+                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                    ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
+                }
+                $("#cmbTiposProfesional").val(ids).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 
 function loadPaises(id) {
     llamadaAjax("GET", "/api/proveedores/recupera/cod/pais", null, function (err, data) {
@@ -848,6 +861,13 @@ function buscaDepartamentos() {
     llamadaAjax("GET", "/api/proveedores/departamentos/asociados/" + proId, null, function (err, data) {
         if (err) return;
         loadDepartamentos(data);
+    });
+}
+
+function buscaProfesiones() {
+    llamadaAjax("GET", "/api/proveedores/profesiones/asociadas/todas/" + proId, null, function (err, data) {
+        if (err) return;
+        loadTiposProfesionales(data);
     });
 }
    

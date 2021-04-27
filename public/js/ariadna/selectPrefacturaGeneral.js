@@ -25,7 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -305,7 +305,7 @@ function buscarPrefacturas() {
         // antes comprobamos si han borrado el campo cliente
         if ($("#txtCliente").val() == "") vm.sclienteId(0);
         if (!datosOK()) return;
-        var url = myconfig.apiUrl + "/api/prefacturas/emision/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + usuario;
+        var url = myconfig.apiUrl + "/api/prefacturas/emision/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + usuario.usuarioId;
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0"
         if (vm.sdepartamentoId()) url += "/" + vm.sdepartamentoId(); else url += "/0"
@@ -339,7 +339,7 @@ function crearFactura() {
         } else {
             vm.rectificativas(0);
         }
-        var url = myconfig.apiUrl + "/api/facturas/prefacturas/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura())+ "/" + usuario;
+        var url = myconfig.apiUrl + "/api/facturas/prefacturas/usuario/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + spanishDbDate(vm.fechaFactura())+ "/" + usuario.usuarioId;
         if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0";
         if (vm.sagenteId()) url += "/" + vm.sagenteId(); else url += "/0";
         if (vm.sdepartamentoId()) url += "/" + vm.sdepartamentoId(); else url += "/0";
@@ -529,7 +529,7 @@ function loadAgentes(id) {
 function loadTiposDepartamentos(id) {
     $.ajax({
         type: "GET",
-        url: "/api/departamentos/usuario/" + usuario,
+        url: "/api/departamentos/usuario/" + usuario.usuarioId,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

@@ -21,7 +21,7 @@ var importeModificar = 0;
 
 var dataServiciadas;
 var dataLineas;
-var idUsuario;
+var usuario;
 var numLineas = 0;
 var comp;
 var fechaRe = null;
@@ -48,7 +48,7 @@ datePickerSpanish(); // see comun.js
 
 function initForm() {
     var user = comprobarLogin();
-     idUsuario = recuperarIdUsuario();
+     usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -137,10 +137,12 @@ function initForm() {
     $("#txtFechaRecepcion").on('change', function (e) {
         if(fechaRe) {
             var ano = moment(fechaRe).year();
-            var ano2 = moment(vm.fechaRecepcion()).year();
+
+            var ano2 = moment(vm.fechaRecepcion(), "DD/MM/YYYY").format('YYYY-MM-DD');
+            ano2 = moment(ano2).year();
             if(ano != ano2) {
                 mensError("Una vez establecido el año este no se puede cambiar");
-                vm.fechaRecepcion(fechaRe);
+                vm.fechaRecepcion(moment(fechaRe).format("DD/MM/YYYY"));
                 return;
             }
         }
@@ -157,7 +159,7 @@ function initForm() {
     
 
     $('#txtPrecio').focus( function () {
-        if(vm.contabilizada()) return;
+        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtPrecio').val('');
     })
 
@@ -259,7 +261,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, idUsuario + "@" + file.name);
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
             $.ajax({
                 url: '/api/upload',
@@ -330,6 +332,34 @@ function initForm() {
                     }
                 }
             })*/
+             //actualización de propiedad al click
+             var proveedorId = data.proveedorId;
+             var empresaId = data.empresaId;
+             var fecha = moment(data.fecha).format('YYYY-MM-DD');
+             $('#chkEnviadaCorreo').click(
+                 function(e){
+                     var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
+                     var data = {
+                         facprove: {
+                             "facproveId": facproveId,
+                             "empresaId": empresaId,
+                             "proveedorId":  proveedorId,
+                             "fecha": fecha,
+                             "enviadaCorreo": enviadaCorreo
+                         }
+                     }
+                     verb = "PUT";
+                     url = myconfig.apiUrl + "/api/facturasProveedores/" + facproveId;
+                     var datosArray = [];
+                     datosArray.push(data)
+                     llamadaAjax(verb, url, datosArray, function (err, data) {
+                         if(err) return;
+                         mensNormal("Se ha actulizado la propiedad de enviar por correo");
+                     });
+
+                 }
+             );
+     
         });
     } else {
         // caso alta
@@ -555,7 +585,7 @@ function loadData(data) {
     vm.numregis(data.numregisconta);
     vm.fecha(spanishDate(data.fecha));
     vm.fechaRecepcion(spanishDate(data.fecha_recepcion));
-    fechaRe = vm.fechaRecepcion();
+    fechaRe = data.fecha_recepcion;
     vm.fechaRecepcion2(spanishDate(data.fecha_recepcion2));
     vm.empresaId(data.empresaId);
     vm.proveedorId(data.proveedorId);
@@ -662,7 +692,7 @@ function loadData(data) {
 
     cargaTablaAnticiposAsociados();
 
-    if (data.contabilizada == 1) bloqueaEdicionCampos();
+    if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
 }
 
 
@@ -777,7 +807,7 @@ var aceptarFactura = function () {
     if (facproveId != 0) {
         verb = "PUT";
         url =  "/api/facturasProveedores/" + facproveId;
-        returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+        returnUrl = "FacturaProveedorGeneral.html?ConservaFiltro=true&facproveId=";
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)
@@ -854,11 +884,10 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
         }else{
-            var url = "FacturaProveedorGeneral.html";
+            var url = "FacturaProveedorGeneral.html?ConservaFiltro=true";
             window.open(url, '_self');
         }
     }
@@ -926,7 +955,7 @@ var cargarContratos = function (data, contratoId) {
 }
 
 function loadDepartamentos(departamentoId) {
-    llamadaAjax("GET", "/api/departamentos/usuario/" + idUsuario, null, function (err, data) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
@@ -1321,7 +1350,7 @@ function initTablaFacturasLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada()) bt1 = "";
+                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = "";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -2388,7 +2417,7 @@ function nuevaServiciada() {
     
             verb = "PUT";
             url =  "/api/facturasProveedores/serviciada/edita/" + vm.facproveServiciadoId();
-            returnUrl = "FacturaProveedorGeneral.html?facproveId=";
+            returnUrl = "FacturaProveedorGeneral.html?ConservaFiltro=true&facproveId=";
             
         }
         var data = {
@@ -3007,7 +3036,7 @@ function initTablaAnticiposAsociados() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                //var brecalculaRestoPagar = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + brecalculaRestoPagar */+ "</div>";
-                if(vm.contabilizada()) html = '';
+                if(vm.contabilizada() && !usuario.puedeEditar) html = '';
                 return html;
             }
         }]

@@ -25,7 +25,7 @@ var vm = null;
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -275,7 +275,7 @@ function buscarContratos() {
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
-        url += "/" + usuario;
+        url += "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",
             url: url,
@@ -310,7 +310,7 @@ function generarLiquidaciones() {
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
-        url += "/" + usuario;
+        url += "/" + usuario.usuarioId;
         // Vamos a comprobar si hay datos previos
         $.ajax({
             type: "GET",
@@ -357,7 +357,7 @@ function generaLiquidaciones2() {
     url += "/" + departamentoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
-    url += "/" + usuario;
+    url += "/" + usuario.usuarioId;
     $.ajax({
         type: "POST",
         url: url,
@@ -510,7 +510,7 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
+    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
         var tipos = [{
             departamentoId: 0,

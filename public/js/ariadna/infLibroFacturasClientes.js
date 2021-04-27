@@ -33,7 +33,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     getVersionFooter();
     
     
@@ -449,7 +449,7 @@ var rptFacturaParametros = function () {
     if(serie.length == 0) serie = 100;
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
-    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie + "/" + departamentoId + "/" + usuario
+    var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie + "/" + departamentoId + "/" + usuario.usuarioId
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;

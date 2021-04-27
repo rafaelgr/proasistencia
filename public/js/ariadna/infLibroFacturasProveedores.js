@@ -33,7 +33,7 @@ viewer.onEmailReport = function (event) {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     //pageSetUp();
     getVersionFooter();
@@ -386,7 +386,7 @@ var rptFacturaParametros = function () {
     var orden = vm.sorden();
     if(!tipoIvaId) tipoIvaId = 0;
     if(!proveedorId) proveedorId = 0;
-    var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + proveedorId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + departamentoId + "/" + usuario
+    var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + proveedorId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + departamentoId + "/" + usuario.usuarioId
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;

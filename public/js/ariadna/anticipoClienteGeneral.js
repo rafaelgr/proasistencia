@@ -21,7 +21,7 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
-    usuario = recuperarIdUsuario();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     getVersionFooter();
@@ -54,6 +54,7 @@ function initForm() {
     ko.applyBindings(vm);
 
     recuperaDepartamento(function(err, data) {
+        if(err) mensError(m);
         initTablaAntcliens();
         // comprobamos parámetros
         antClienId = gup('AntclienId');
@@ -200,7 +201,7 @@ function initTablaAntcliens() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntclien(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                if(row.contabilizada) bt1 = '';
+                if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
                 return html;
             }
@@ -352,7 +353,7 @@ function cargarAntcliens() {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -428,7 +429,7 @@ var f_open_post = function (verb, url, data, target) {
 function cargarAntcliens2() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" +usuario + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -444,8 +445,8 @@ function cargarAntcliens2() {
 function cargarAntcliens2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/all/"  +usuario + "/" + vm.sdepartamentoId(),
-        dataType: "json",
+        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/all/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        dataType: "json", 
         contentType: "application/json",
         success: function (data, status) {
             loadTablaAntcliens(data);
