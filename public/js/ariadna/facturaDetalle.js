@@ -23,6 +23,8 @@ var numLineas = 0;
 var cont = 0;
 var importeSuplido = 0;
 var advertencia = false;
+var desdeContrato;
+var contratoId;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -145,6 +147,8 @@ function initForm() {
 
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
+    desdeContrato = gup("desdeContrato");
+    ContratoId = gup("ContratoId");
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
@@ -510,7 +514,7 @@ var aceptarFactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/facturas";
-    var returnUrl = "FacturaDetalle.html?cmd=nueva&FacturaId=";
+    var returnUrl = "FacturaDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&FacturaId=";
     // caso modificación
     if (facturaId != 0) {
         if(vm.serie() == vm.sserieId()) {// si es igual no se a cambiado la serie u no hay que actualizarla
@@ -521,12 +525,19 @@ var aceptarFactura = function () {
         returnUrl = "FacturaGeneral.html?ConservaFiltro=true&FacturaId=";
     }
     if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        if(desdeContrato == "true" && facturaId != 0){
+            returnUrl = 'ContratoDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self';
+        }
         AvisaRecalculo(url, returnUrl);
     } else {
         llamadaAjax(verb, url, data, function (err, data) {
             loadData(data);
             returnUrl = returnUrl + vm.facturaId();
-            window.open(returnUrl, '_self');
+            if(desdeContrato == "true" && facturaId != 0){
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self');
+            } else {
+                window.open(returnUrl, '_self');
+            }
         });
     }
 }
@@ -618,8 +629,11 @@ var generarFacturaDb = function () {
 
 function salir() {
     var mf = function () {
-        var url = "FacturaGeneral.html?ConservaFiltro=true";
-        window.open(url, '_self');
+        var returnUrl = "FacturaGeneral.html?ConservaFiltro=true";
+        if(desdeContrato == "true" && facturaId != 0){
+            returnUrl = 'ContratoDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self';
+        } 
+        window.open(returnUrl, '_self');
     }
     return mf;
 }
