@@ -124,6 +124,7 @@ function initTablaFacturas() {
         "bDestroy": true,
         "columnDefs": [ {
             "targets": 0,
+            "width": "20%",
             "orderable": false
             } ],
         preDrawCallback: function () {
