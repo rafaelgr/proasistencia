@@ -13,6 +13,7 @@ var facturaId;
 var usuario;
 var filtros = {};
 var cargaFacturas = false;
+var antDepartamentoId;
 
 
 
@@ -70,13 +71,25 @@ function initForm() {
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+        var f = facturaId;
+        if(facturaId = '') {
+            f = null
+        }
+         //compruebaFiltros(f);
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if( !$('#chkTodos').prop('checked') ) {
-            cargarFacturas2()();
-            return;
+            if(this.value != antDepartamentoId) {
+                cargarFacturas2()();
+            } else {
+                cargarFacturas2(f)();
+            }
+        } else {
+            cargarFacturas2All()();
         }
-        cargarFacturas2All()();
+        antDepartamentoId = this.value;
     });
 
     $("#cmbEmpresas").select2(select2Spanish());
@@ -155,6 +168,7 @@ function compruebaFiltros(id) {
             cargarFacturas2()(id);
         } */
     } else{
+        vm.sempresaId(0);
         loadEmpresas(0);
         estableceFechaEjercicio();
         if(id) {
