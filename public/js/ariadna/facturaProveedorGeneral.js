@@ -275,12 +275,17 @@ function initTablaFacturas() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
+        },  {
+            data: "fecha",
+            render: function (data, type, row) {
+                if(!data) return "";
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
             data: "fecha_recepcion",
             render: function (data, type, row) {
                 if(!data) return "";
                 return moment(data).format('DD/MM/YYYY');
-                return data;
             }
         }, {
             data: "total",
