@@ -516,10 +516,24 @@
                                                                         <fieldset>
                                                                                 <div class="row" style="margin-bottom: 2%">
                                                                                         <section class="col col-md-3">
+                                                                                            <div style="margin-top: 10%;">
                                                                                                 <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
+                                                                                            </div>
                                                                                         </section>
-                                                                                        <section class="col col-md-9">
+                                                                                        <section class="col col-md-5">
                                                                                         </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <div style="margin-top: 15%;">
+                                                                                                <input id="chkFirmaActa" type="checkbox" name="chkFirmaActa" data-bind="checked: firmaActa"/> Firma del acta
+                                                                                            </div>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Fecha de firma del acta</label>
+                                                                                            <label class="input">
+                                                                                                <input id="txtFechaFirmaActa" name="txtFechaFirmaActa" data-bind="value: fechaFirmaActa" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        
                                                                                 </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-2">
@@ -587,12 +601,17 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
+                                                                                    <label class="label">Certificación final</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtCertificacionFinal" name="txtCertificacionFinal" data-bind="value: certificacionFinal"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Importe Mantenedor</label>
                                                                                     <label class="input">
                                                                                         <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2"></section>
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">% Retención</label>
                                                                                     <label class="input">
