@@ -334,6 +334,10 @@ function initForm() {
         $('.nav-tabs a[href="#s3"]').tab('show');
     } 
 
+    if (gup('docFac') != "") {
+        $('.nav-tabs a[href="#s4"]').tab('show');
+    } 
+
     //abrir en pestaña de contratos vinculados
     if (gup('docAsc') != "") {
         $('.nav-tabs a[href="#s7"]').tab('show');
@@ -3209,7 +3213,7 @@ function deleteFactura(id) {
 }
 
 function editFactura(id) {
-    var url = "facturaDetalle.html?FacturaId=" + id;
+    var url = "facturaDetalle.html?desdeContrato=true&FacturaId=" + id + "&ContratoId="+ contratoId;
     window.open(url, '_new');
 }
 

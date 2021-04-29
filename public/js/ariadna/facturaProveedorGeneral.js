@@ -16,6 +16,7 @@ var breakpointDefinition = {
     phone: 480
 };
 var tablaFacturas;
+var antDepartamentoId;
 
 var antproveId;
 var filtros = {};
@@ -85,16 +86,28 @@ function initForm() {
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
+        // comprobamos parámetros
+        facproveId = gup('facproveId');
+        var f = facproveId;
+        if(facproveId = '') {
+            f = null
+        }
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
         else{ $('#btnPrint').show() }
         if( !$('#chkTodos').prop('checked') ) {
-            cargarFacturas2()();
-            return;
+            if(this.value != antDepartamentoId) {
+                cargarFacturas2()();
+            } else {
+                cargarFacturas2(f)();
+            }
+        } else {
+            cargarFacturas2All()();
         }
-        cargarFacturas2All()();
+        antDepartamentoId = this.value;
     });
+
 
     $('#chkTodos').change(function () {
         if (this.checked) {
@@ -262,12 +275,17 @@ function initTablaFacturas() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
+        },  {
+            data: "fecha",
+            render: function (data, type, row) {
+                if(!data) return "";
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
             data: "fecha_recepcion",
             render: function (data, type, row) {
                 if(!data) return "";
                 return moment(data).format('DD/MM/YYYY');
-                return data;
             }
         }, {
             data: "total",

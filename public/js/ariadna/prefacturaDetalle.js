@@ -437,6 +437,9 @@ var aceptarPrefactura = function () {
     }
 
     if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        if(desdeContrato == "true" && prefacturaId != 0){
+            returnUrl = 'ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self';
+        }
         AvisaRecalculo(url, returnUrl);
     } else {
         llamadaAjax(verb, url, data, function (err, data) {
@@ -523,7 +526,7 @@ var generarPrefacturaDb = function () {
 function salir() {
     var mf = function () {
         var url = "PrefacturaGeneral.html";
-        if(EmpresaId != "" || desdeContrato == "true"){
+        if(prefacturaId != 0  || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
         } else {
             window.open(url, '_self');
