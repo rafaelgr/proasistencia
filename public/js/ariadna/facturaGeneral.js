@@ -578,7 +578,10 @@ function cargarFacturas2(id) {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
-        if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if(hFecha != null) {
+            if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if(!datosOK) return;
+        }
         if (id) {
             var data = {
                 id: id
@@ -625,13 +628,13 @@ function cargarFacturas2(id) {
 
 function cargarFacturas2All() {
     var mf = function() {
-        var dFecha = moment(vm.dFecha()).format('YYYY-MM-DD');
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
         if(hFecha != null) {
+            if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
             if(!datosOK) return;
         }
-        if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
