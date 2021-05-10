@@ -3,7 +3,7 @@ ALTER TABLE `contratos`
   ADD COLUMN `firmaActa` TINYINT(1) DEFAULT 0 NULL AFTER `certificacionFinal`,
   ADD COLUMN `fechaFirmaActa` DATE NULL AFTER `firmaActa`;
 
-  UPDATE facturas SET liquidadaAgente = 1  WHERE  departamentoId = 8 AND ano = '2020'
+
 
 
 #TABLA liquidacion_comercial_obras
