@@ -548,7 +548,7 @@ function cargarFacturas2(id) {
 
 function cargarFacturas2All() {
     var mf = function() {
-        var dFecha = moment(vm.dFecha()).format('YYYY-MM-DD');
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
         if(hFecha != null) {
