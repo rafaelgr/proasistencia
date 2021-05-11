@@ -303,6 +303,7 @@ var obtainReportJson = function (obj) {
         file = "../reports/liquidacion_colaborador.mrt";
     } else {
         file = "../reports/liquidacion_agente.mrt";
+        if(vm.sdepartamentoId() == 8) file = "../reports/liquidacion_agente_obras.mrt";
     }
 
     var report = new Stimulsoft.Report.StiReport();

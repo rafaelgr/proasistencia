@@ -404,9 +404,11 @@ function admData() {
     self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
+    self.certificacionFinal = ko.observable();
     self.importeMantenedor = ko.observable();
     //
     self.fechaInicio = ko.observable();
+    self.fechaFirmaActa = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
     self.fechaSiguientesFacturas = ko.observable();
@@ -414,6 +416,7 @@ function admData() {
     self.facturaParcial = ko.observable();
     self.liquidarBase = ko.observable();
     self.contratoCerrado = ko.observable();
+    self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
     //
     self.formaPagoId = ko.observable();
@@ -574,6 +577,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.importeCliente(data.importeCliente);
+    vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
     
     vm.importeMantenedor(data.importeMantenedor);
@@ -584,12 +588,15 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
+    vm.fechaFirmaActa(spanishDate(data.fechaFirmaActa));
+
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    vm.firmaActa(data.firmaActa);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -796,10 +803,12 @@ var generarContratoDb = function () {
             "porcentajeAgente": vm.porcentajeAgente(),
             "importeAgente": vm.importeAgente(),
             "importeCliente": vm.importeCliente(),
+            "certificacionFinal": vm.certificacionFinal(),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
             "formaPagoId": vm.sformaPagoId(),
             "fechaInicio": spanishDbDate(vm.fechaInicio()),
+            "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
             "fechaSiguientesFacturas": spanishDbDate(vm.fechaSiguientesFacturas()),
@@ -814,6 +823,7 @@ var generarContratoDb = function () {
             "provincia": vm.provincia(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "contratoCerrado": vm.contratoCerrado(),
+            "firmaActa": vm.firmaActa(),
             "liquidarBasePrefactura": vm.liquidarBase()
         }
     };
