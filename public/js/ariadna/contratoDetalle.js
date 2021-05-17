@@ -282,7 +282,7 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
-    $('#sinUso').hide();//ocultamos campo sin uso
+    //$('#sinUso').hide();//ocultamos campo sin uso
    
 
     $('#btnNuevaLinea').prop('disabled', false);
@@ -418,6 +418,7 @@ function admData() {
     self.contratoCerrado = ko.observable();
     self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
+    self.iban = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -970,6 +971,7 @@ var cambioCliente = function (data) {
         vm.codPostal(data.codPostal2);
         vm.poblacion(data.poblacion2);
         vm.provincia(data.provincia2);
+        vm.iban(data.iban);
     });
 }
 
@@ -1681,6 +1683,7 @@ var cargaCliente = function (id) {
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
+        vm.iban(data.iban);
     });
 };
 
