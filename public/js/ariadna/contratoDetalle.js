@@ -31,6 +31,7 @@ var usaCalculadora;
 var calcInv = false;
 var DesdeContrato
 var AscContratoId;
+var esVinculado = false;
 var numLineas = 0;
 //var numAscContratos = 0;
 
@@ -282,7 +283,7 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
-    $('#sinUso').hide();//ocultamos campo sin uso
+    //$('#sinUso').hide();//ocultamos campo sin uso
    
 
     $('#btnNuevaLinea').prop('disabled', false);
@@ -418,6 +419,7 @@ function admData() {
     self.contratoCerrado = ko.observable();
     self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
+    self.iban = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -623,8 +625,14 @@ function loadData(data) {
     }
     if(data.ascContratoId) {
         $("#tabAscContratos").hide();
+        $("#chkFirmaActa").prop('disabled', true);
+        $('#txtFechaFirmaActa').prop('disabled', true);
+        esVinculado = true;
     } else {
         $("#tabAscContratos").show();
+        $("#chkFirmaActa").prop('disabled', false);
+        $('#txtFechaFirmaActa').prop('disabled', false);
+        esVinculado = false;
     }
     if(data.tipoContratoId != 8) {
         $("#tabAscContratos").hide();
@@ -763,7 +771,10 @@ var guardarContrato = function (done) {
                                 var data  = generarContratoDb();
                                 llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
                                     if (err) return errorGeneral(err, done);
-                                    done(null, 'PUT');
+                                    actualizaAsociados(vm.firmaActa(), function(err, result) {
+                                        if (err) return errorGeneral(err, done);
+                                        done(null, 'PUT');
+                                    });
                                 });
                             });
                         });
@@ -776,7 +787,10 @@ var guardarContrato = function (done) {
         } else {
             llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
                 if (err) return errorGeneral(err, done);
-                done(null, 'PUT');
+                actualizaAsociados(vm.firmaActa(), function(err, result) {
+                    if (err) return errorGeneral(err, done);
+                    done(null, 'PUT');
+                });
             });
         }
         
@@ -970,6 +984,7 @@ var cambioCliente = function (data) {
         vm.codPostal(data.codPostal2);
         vm.poblacion(data.poblacion2);
         vm.provincia(data.provincia2);
+        vm.iban(data.iban);
     });
 }
 
@@ -1681,6 +1696,7 @@ var cargaCliente = function (id) {
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
+        vm.iban(data.iban);
     });
 };
 
@@ -4260,6 +4276,20 @@ function crearContratoAsociado() {
     llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/crear/contrato/asociado", data, function (err, result) {
         if(err) return;
         window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW&AscContratoId=" + vm.contratoId() + '&DesdeContrato=true', '_new');
+    });
+}
+
+var actualizaAsociados = function(seleccionado, done) {
+    if(esVinculado) return done(null, 'OK');
+    var data = {
+        contrato: {
+            firmaActa: seleccionado,
+        }
+    };
+    if(vm.fechaFirmaActa() && vm.fechaFirmaActa() != "") data.contrato.fechaFirmaActa =  spanishDbDate(vm.fechaFirmaActa());
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/vinculados/actualiza/" + vm.contratoId(), data, function (err, result) {
+        if (err) return errorGeneral(err, done);
+        done(null, 'OK')
     });
 }
 
