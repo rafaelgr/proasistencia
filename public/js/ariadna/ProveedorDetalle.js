@@ -977,7 +977,7 @@ function cambioTipoProveedor(data) {
 }
 
 
-function compruebaRepetido(nif) {
+function compruebaNifRepetido(nif) {
     $.ajax({
         type: "GET",
         url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido/" + nif,
@@ -987,7 +987,7 @@ function compruebaRepetido(nif) {
         success: function (data, status) {
             if(data && data.proveedorId != vm.proveedorId()) {
                mensError('Ya existe un proveedor con este NIF');
-               $('#txtNif').val(antNif);
+               
             }
         },
         error: function (err) {
@@ -1219,6 +1219,8 @@ function buscarFacturas() {
     };
     return mf;
 }
+
+
 
 function compruebaAnticipos(id) {
         llamadaAjax('GET', "/api/anticiposProveedores/proveedor/recupera/todos/" + id, null, function (err, data) {
