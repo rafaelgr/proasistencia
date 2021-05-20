@@ -65,12 +65,37 @@ function initForm() {
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
 
+    $('#cmbPeriodos').select2(select2Spanish());
+
+    $('#cmbAnos').select2(select2Spanish());
+    loadAnyos();
+
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
     initTablaContratos();
     // comprobamos parámetros
     contratoId = gup('contratoId');
+}
+
+function   loadAnyos(){
+    var d = new Date();
+    var n = d.getFullYear();
+    n = n - 1
+    var anos = [];
+    var ano = {}
+    var anoText;
+    var limit = n + 1
+    for(var i = n; i <= limit; i++){
+        anoText = i.toString();
+      ano = {
+        nombreAno: anoText,
+        ano: i
+      };
+      anos.push(ano);
+    }
+    vm.optionsAnos(anos);
+    $("#cmbAnos").val([ n + 1]).trigger('change');
 }
 
 // tratamiento knockout
@@ -97,6 +122,33 @@ function admData() {
     //
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
+
+    self.optionsPeriodos = ko.observableArray([
+        {
+            'nombrePeriodo': 'Primer trimestre',
+            'periodo': '1'
+        }, 
+        {
+            'nombrePeriodo': 'Segundo trimestre',
+            'periodo': '2'
+        }, 
+        {
+            'nombrePeriodo': 'Tercer trimestre',
+            'periodo': '3'
+        },
+        {
+            'nombrePeriodo': 'Cuarto trimestre',
+            'periodo': '4'
+        }
+    ]);
+
+    self.selectedPeriodos = ko.observableArray([]);
+    self.speriodo = ko.observable();
+
+    self.optionsAnos = ko.observableArray([]);
+    self.ano = ko.observable(); 
+    self.sano = ko.observable();
+    self.selectedAnos = ko.observableArray([]);
 }
 
 function initTablaContratos() {
@@ -264,6 +316,7 @@ function loadTablaContratos(data) {
 
 function buscarContratos() {
     var mf = function () {
+        componFechas();
         if (!datosOK()) return;
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
@@ -271,7 +324,7 @@ function buscarContratos() {
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
-        var url = myconfig.apiUrl + "/api/contratos/contratos/beneficio/comercial/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/contratos/contratos/beneficio/comercial/" + vm.desdeFecha() + "/" + vm.hastaFecha();
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
@@ -293,6 +346,39 @@ function buscarContratos() {
         });
     };
     return mf;
+}
+
+function componFechas() {
+    var option = parseInt(vm.speriodo());
+    var ano = vm.sano();
+    var dFecha = "";
+    var hFecha = "";
+    switch (option) {
+        case 1:
+            dFecha = ano + "-01-01";
+            hFecha = ano + "-03-31";
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+        case 2:
+            dFecha = ano + "-04-01";
+            hFecha = ano + "-06-30";
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+        case 3:
+            dFecha = ano + "-07-01";
+            hFecha = ano + "-09-30";
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 4:
+            dFecha = ano + "-10-01";
+            hFecha = ano + "-12-31";
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+      }
 }
 
 
