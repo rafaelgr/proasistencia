@@ -237,6 +237,7 @@ function initForm() {
             } else {
                 // se trata de un alta ponemos el id a cero para indicarlo.
                 vm.proveedorId(0);
+                vm.activa(1);
                 vm.cuentaContable(null);
                  // contador de código
                  var inicioCuenta = "40";
@@ -317,6 +318,7 @@ function admData() {
     self.codigoOriginal = ko.observable();
     self.observaciones = ko.observable();
     self.emitirFacturas = ko.observable();
+    self.activa = ko.observable();
     //DATOS DE LA FIANZA
     self.fianza = ko.observable('0.00');
     self.fianzaAcumulada = ko.observable('0.00');
@@ -432,6 +434,7 @@ function loadData(data) {
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
     vm.empresaId(data.empresaId);
+    vm.activa(data.activa);
     
     
     antNif = data.nif;
@@ -609,6 +612,7 @@ function aceptar() {
                 "persona_contacto": vm.contacto(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "activa": vm.activa(),
                 "motivoBajaId": vm.smotivoBajaId(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
