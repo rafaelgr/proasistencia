@@ -517,7 +517,7 @@ ANTERIORES</Text>
               <ClientRectangle>2.2,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="2" />
@@ -536,10 +536,10 @@ ANTERIORES</Text>
             </Text7>
             <Text9 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.2,0,2,0.4</ClientRectangle>
+              <ClientRectangle>21.2,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
               <Page isRef="2" />
@@ -558,21 +558,23 @@ ANTERIORES</Text>
             </Text9>
             <Text11 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>23.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="2" />
               <Parent isRef="33" />
               <Text>{liqAgente.basePeriodo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="40" type="NumberFormat" isKey="true">
+              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
             </Text11>
@@ -600,11 +602,11 @@ ANTERIORES</Text>
             </Text13>
             <Text25 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.6,0,2,0.4</ClientRectangle>
+              <ClientRectangle>13.6,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>4859f4c37f424cfdaac9d7c05fbecb4a</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
               <Page isRef="2" />
@@ -623,11 +625,11 @@ ANTERIORES</Text>
             </Text25>
             <Text26 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.4,0,2,0.4</ClientRectangle>
+              <ClientRectangle>17.4,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>8936435c8ac54dbc96ac66ef42dca78b</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
               <Page isRef="2" />
@@ -646,11 +648,11 @@ ANTERIORES</Text>
             </Text26>
             <Text28 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.4,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>19.4,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>9a19173cd601486b89b5be83a6852769</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
               <Page isRef="2" />
@@ -673,7 +675,7 @@ ANTERIORES</Text>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7899c7220a3a4094a2adea3cb3125818</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
               <Page isRef="2" />
@@ -696,7 +698,7 @@ ANTERIORES</Text>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>28529c902ea347cea7122f9f3815ce1d</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
               <Page isRef="2" />
@@ -719,7 +721,7 @@ ANTERIORES</Text>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>c64af34099164a839fe4bda6bd51ab36</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text43</Name>
               <Page isRef="2" />
@@ -742,7 +744,7 @@ ANTERIORES</Text>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>5b3258c2bb04447ba82ed1ad9aeaada7</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
               <Page isRef="2" />
@@ -761,11 +763,11 @@ ANTERIORES</Text>
             </Text44>
             <Text45 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.4,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>296fe032c2dc4a7d9cd34bf218ed746b</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text45</Name>
               <Page isRef="2" />
@@ -784,11 +786,11 @@ ANTERIORES</Text>
             </Text45>
             <Text27 Ref="59" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>15.6,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>6fb71f109ce34744b6a3798ccc0f8b48</Guid>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="2" />
@@ -807,7 +809,7 @@ ANTERIORES</Text>
             </Text27>
             <Text60 Ref="61" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>24.8,0,1,0.4</ClientRectangle>
+              <ClientRectangle>24.8,0,0.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>4d7703383d824e23b67407c3a467662e</Guid>
@@ -818,13 +820,11 @@ ANTERIORES</Text>
               <Parent isRef="33" />
               <Text>{liqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="62" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="62" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
             </Text60>
@@ -905,10 +905,10 @@ ANTERIORES</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/17/2021 1:24:19 PM</ReportChanged>
+  <ReportChanged>5/20/2021 10:47:19 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>c7b77655d3d94ecfad8c24580de412c4</ReportGuid>
+  <ReportGuid>cc3ba77903f541acaebd4c52bde043b5</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
