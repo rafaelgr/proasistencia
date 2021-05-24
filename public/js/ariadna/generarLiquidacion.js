@@ -429,7 +429,7 @@ function generarLiquidaciones() {
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
         if (vm.scomercialId()) comercialId = vm.scomercialId();
-        var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+        var url = myconfig.apiUrl + "/api/liquidaciones/checkFacturas/" + vm.desdeFecha() + "/" + vm.hastaFecha();
         url += "/" + departamentoId;
         url += "/" + empresaId;
         url += "/" + comercialId;
@@ -476,7 +476,7 @@ function generaLiquidaciones2() {
     if (vm.sempresaId()) empresaId = vm.sempresaId();
     var comercialId = 0;
     if (vm.scomercialId()) comercialId = vm.scomercialId();
-    var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+    var url = myconfig.apiUrl + "/api/liquidaciones/facturas/" + vm.desdeFecha() + "/" + vm.hastaFecha();
     url += "/" + departamentoId;
     url += "/" + empresaId;
     url += "/" + comercialId;
