@@ -522,6 +522,20 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-6">
+                                                    <label class="label">Periodos de liquidación</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%;" id="cmbPeriodos" name="cmbPeriodos" data-bind="options: optionsPeriodos, optionsText: 'nombrePeriodo', optionsValue: 'periodo', 
+                                                            value: speriodo, valueAllowUnset: true, selectedOptions: selectedPeriodos, selected2:{}"></select><i></i>
+                                                        </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Años</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%;" id="cmbAnos" name="cmbAnos" data-bind="options: optionsAnos, optionsText: 'nombreAno', optionsValue: 'ano', 
+                                                        value: sano, valueAllowUnset: true, selectedOptions: selectedAnos, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                <!-- <section class="col col-md-6">
                                                     <label class="label">Desde fecha</label>
                                                     <label class="input">
                                                         <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
@@ -532,7 +546,7 @@
                                                     <label class="input">
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
-                                                </section>
+                                                </section> -->
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-3">

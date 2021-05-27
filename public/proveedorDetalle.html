@@ -616,13 +616,18 @@
                                                                                                             <input id="txtNif" name="txtNif" data-bind="value: nif" />
                                                                                                         </label>
                                                                                                     </section>
-                                                                                                    <section class="col col-md-10">
+                                                                                                    <section class="col col-md-7">
                                                                                                         <label class="label">Nombre</label>
                                                                                                         <label class="input">
                                                                                                             <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                                                                         </label>
                                                                                                     </section>  
-                                                                                                    
+                                                                                                    <section class="col col-md-3">
+                                                                                                        <label class="label">Tarifa asociada</label>
+                                                                                                        <label style="width:100%;">
+                                                                                                            <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select><i></i>
+                                                                                                        </label>
+                                                                                                    </section>
                                                                                                     
                                                                                                 </div>
                                                                                                 <div class="row">
@@ -709,6 +714,12 @@
                                                                                                     </section>
                                                                                                 </div>
                                                                                                 <div class="row">
+                                                                                                    <section class="col col-md-3">
+                                                                                                        <label class="checkbox">
+                                                                                                            <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                                                                            <i></i>El proveedor está activo
+                                                                                                        </label>
+                                                                                                    </section>
                                                                                                     <section class="col col-md-2">
                                                                                                         <label class="label">Fecha alta</label>
                                                                                                         <label class="input">
@@ -721,16 +732,10 @@
                                                                                                             <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                                         </label>
                                                                                                     </section>
-                                                                                                    <section class="col col-md-4">
+                                                                                                    <section class="col col-md-5">
                                                                                                         <label class="label">Motivo de baja</label>
                                                                                                         <label style="width:100%;">
                                                                                                             <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Tarifa asociada</label>
-                                                                                                        <label style="width:100%;">
-                                                                                                            <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select><i></i>
                                                                                                         </label>
                                                                                                     </section>
                                                                                                     

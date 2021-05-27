@@ -310,6 +310,7 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
+        vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
         obtenerPorcentajeBeneficioPorDefecto();
@@ -472,6 +473,9 @@ function admData() {
     //
     self.total = ko.observable();
     self.totalConIva = ko.observable();
+    //radio buttons
+    self.firmaActa = ko.observable();
+    
 
     //-- Valores para la generación de prefacturs
     self.posiblesPeriodosPagos = ko.observableArray([]);
@@ -591,6 +595,8 @@ function loadData(data) {
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFirmaActa(spanishDate(data.fechaFirmaActa));
+    var firma = data.firmaActa.toString();
+    vm.firmaActa(firma);
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
@@ -598,7 +604,6 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
-    vm.firmaActa(data.firmaActa);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -610,6 +615,7 @@ function loadData(data) {
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.servicioId(data.servicioId);
+   
 
     loadConceptosLineas(data.contratoId);
     loadDepartamento(data.tipoContratoId);
@@ -625,12 +631,16 @@ function loadData(data) {
     }
     if(data.ascContratoId) {
         $("#tabAscContratos").hide();
-        $("#chkFirmaActa").prop('disabled', true);
+        $("#radioFirmaActa1").prop('disabled', true);
+        $("#radioFirmaActa2").prop('disabled', true);
+        $("#radioFirmaActa3").prop('disabled', true);
         $('#txtFechaFirmaActa').prop('disabled', true);
         esVinculado = true;
     } else {
         $("#tabAscContratos").show();
-        $("#chkFirmaActa").prop('disabled', false);
+        $("#radioFirmaActa1").prop('disabled', false);
+        $("#radioFirmaActa2").prop('disabled', false);
+        $("#radioFirmaActa3").prop('disabled', false);
         $('#txtFechaFirmaActa').prop('disabled', false);
         esVinculado = false;
     }
@@ -727,7 +737,7 @@ function salir() {
 
 var clicAceptar = function () {
     guardarContrato(function (err, tipo) {
-        if (err) return;
+        if (err) return mensError(err);
         var url;
         if(DesdeContrato == "true" && AscContratoId != 0){
             url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
@@ -742,7 +752,13 @@ var clicAceptar = function () {
 }
 
 var guardarContrato = function (done) {
+    var firma = parseInt(vm.firmaActa());
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
+    if(firma) {
+        if(!vm.fechaFirmaActa() || vm.fechaFirmaActa() == '') {
+            return errorGeneral(new Error('Se requiere una fecha para la firma del acta'), done);
+        }
+    }
     comprobarSiHayMantenedor();
     vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
    
