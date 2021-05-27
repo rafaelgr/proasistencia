@@ -34,6 +34,11 @@ function initForm() {
     //});
     //
     initTablaProveedores();
+
+    $('#chkTodos').change(function () {
+        buscarTodos();
+    });
+
     // comprobamos parámetros
     proveedorId = gup('ProveedorId');
     
@@ -216,23 +221,84 @@ function buscarProveedores(exito) {
         // obtener el n.serie del certificado para la firma.
         aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/proveedores/?nombre=" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaProveedores(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
+        var activos = $('#chkTodos').prop('checked');
+        if($('#chkTodos').prop('checked')) {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/proveedores/?nombre=" + aBuscar + "&activos=" + activos,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaProveedores(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/proveedores/?nombre=" + aBuscar + "&activos=" + activos,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaProveedores(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        }
     };
     return mf;
 }
+
+function buscarClientes() {
+    var mf = function () {
+        if (!datosOK()) {
+            return;
+        }
+        
+        if($('#chkTodos').prop('checked')) {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/buscar/" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaClientes(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/clientes/buscar/activos/" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaClientes(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        }
+       
+    };
+    return mf;
+}
+
 
 function crearProveedor() {
     var mf = function () {

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "163d4c451fdf47f68eaaa2b0fc304517",
+  "ReportGuid": "620ad08a4588462e96faa05e9a8c5520",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1620720064829+0200)/",
+  "ReportChanged": "/Date(1622105275616+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -66,7 +66,7 @@
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.String"
+            "Type": "System.Byte[]"
           },
           "6": {
             "Name": "empresaId",
@@ -216,188 +216,195 @@
             "Type": "System.String"
           },
           "27": {
+            "Name": "formapagoId",
+            "Index": -1,
+            "NameInSource": "formapagoId",
+            "Alias": "formapagoId",
+            "Type": "System.Int32"
+          },
+          "28": {
             "Name": "observaciones",
             "Index": -1,
             "NameInSource": "observaciones",
             "Alias": "observaciones",
             "Type": "System.String"
           },
-          "28": {
+          "29": {
             "Name": "periodo",
             "Index": -1,
             "NameInSource": "periodo",
             "Alias": "periodo",
             "Type": "System.String"
           },
-          "29": {
+          "30": {
             "Name": "porcentajeRetencion",
             "Index": -1,
             "NameInSource": "porcentajeRetencion",
             "Alias": "porcentajeRetencion",
             "Type": "System.Decimal"
           },
-          "30": {
+          "31": {
             "Name": "importeRetencion",
             "Index": -1,
             "NameInSource": "importeRetencion",
             "Alias": "importeRetencion",
             "Type": "System.Decimal"
           },
-          "31": {
+          "32": {
             "Name": "numeroVencimientos",
             "Index": -1,
             "NameInSource": "numeroVencimientos",
             "Alias": "numeroVencimientos",
             "Type": "System.Int32"
           },
-          "32": {
+          "33": {
             "Name": "primerVencimiento",
             "Index": -1,
             "NameInSource": "primerVencimiento",
             "Alias": "primerVencimiento",
             "Type": "System.Int32"
           },
-          "33": {
+          "34": {
             "Name": "restoVencimiento",
             "Index": -1,
             "NameInSource": "restoVencimiento",
             "Alias": "restoVencimiento",
             "Type": "System.Int32"
           },
-          "34": {
+          "35": {
             "Name": "proId",
             "Index": -1,
             "NameInSource": "proId",
             "Alias": "proId",
             "Type": "System.String"
           },
-          "35": {
+          "36": {
             "Name": "postalTipoVia",
             "Index": -1,
             "NameInSource": "postalTipoVia",
             "Alias": "postalTipoVia",
             "Type": "System.String"
           },
-          "36": {
+          "37": {
             "Name": "postalDireccion",
             "Index": -1,
             "NameInSource": "postalDireccion",
             "Alias": "postalDireccion",
             "Type": "System.String"
           },
-          "37": {
+          "38": {
             "Name": "postalCodPostal",
             "Index": -1,
             "NameInSource": "postalCodPostal",
             "Alias": "postalCodPostal",
             "Type": "System.String"
           },
-          "38": {
+          "39": {
             "Name": "postalPoblacion",
             "Index": -1,
             "NameInSource": "postalPoblacion",
             "Alias": "postalPoblacion",
             "Type": "System.String"
           },
-          "39": {
+          "40": {
             "Name": "postalProvincia",
             "Index": -1,
             "NameInSource": "postalProvincia",
             "Alias": "postalProvincia",
             "Type": "System.String"
           },
-          "40": {
+          "41": {
             "Name": "iban",
             "Index": -1,
             "NameInSource": "iban",
             "Alias": "iban",
             "Type": "System.String"
           },
-          "41": {
+          "42": {
             "Name": "vencimiento",
             "Index": -1,
             "NameInSource": "vencimiento",
             "Alias": "vencimiento",
             "Type": "System.DateTime"
           },
-          "42": {
+          "43": {
             "Name": "cuenta",
             "Index": -1,
             "NameInSource": "cuenta",
             "Alias": "cuenta",
             "Type": "System.String"
           },
-          "43": {
+          "44": {
             "Name": "direccion2",
             "Index": -1,
             "NameInSource": "direccion2",
             "Alias": "direccion2",
             "Type": "System.String"
           },
-          "44": {
+          "45": {
             "Name": "codPostal2",
             "Index": -1,
             "NameInSource": "codPostal2",
             "Alias": "codPostal2",
             "Type": "System.String"
           },
-          "45": {
+          "46": {
             "Name": "poblacion2",
             "Index": -1,
             "NameInSource": "poblacion2",
             "Alias": "poblacion2",
             "Type": "System.String"
           },
-          "46": {
+          "47": {
             "Name": "provincia2",
             "Index": -1,
             "NameInSource": "provincia2",
             "Alias": "provincia2",
             "Type": "System.String"
           },
-          "47": {
+          "48": {
             "Name": "direccionAgente",
             "Index": -1,
             "NameInSource": "direccionAgente",
             "Alias": "direccionAgente",
             "Type": "System.String"
           },
-          "48": {
+          "49": {
             "Name": "poblacionAgente",
             "Index": -1,
             "NameInSource": "poblacionAgente",
             "Alias": "poblacionAgente",
             "Type": "System.String"
           },
-          "49": {
+          "50": {
             "Name": "provinciaAgente",
             "Index": -1,
             "NameInSource": "provinciaAgente",
             "Alias": "provinciaAgente",
             "Type": "System.String"
           },
-          "50": {
+          "51": {
             "Name": "codPostalAgente",
             "Index": -1,
             "NameInSource": "codPostalAgente",
             "Alias": "codPostalAgente",
             "Type": "System.String"
           },
-          "51": {
+          "52": {
             "Name": "nifAgente",
             "Index": -1,
             "NameInSource": "nifAgente",
             "Alias": "nifAgente",
             "Type": "System.String"
           },
-          "52": {
+          "53": {
             "Name": "nombreAgente",
             "Index": -1,
             "NameInSource": "nombreAgente",
             "Alias": "nombreAgente",
             "Type": "System.String"
           },
-          "53": {
+          "54": {
             "Name": "agenteTipoVia",
             "Index": -1,
             "NameInSource": "agenteTipoVia",
@@ -406,7 +413,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n\r\n\r\n",
+        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, fp.formapagoId AS formapagoId, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n\r\n\r\n",
         "Parameters": {
           "0": {
             "Name": "Parámetro",
@@ -2050,7 +2057,7 @@
               "Guid": "0d25225647854303a3216cd15711c4a9",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.2,0.4,3.2,0.4",
+              "ClientRectangle": "10.8,0.4,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2070,7 +2077,7 @@
               "Guid": "552da330b5ec4b54bf9fceb758ffd521",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13.4,0.4,3,0.4",
+              "ClientRectangle": "14,0.4,3,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2090,7 +2097,7 @@
               "Guid": "79bc22b4686840eda072617f9609816f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.4,9.8,0.4",
+              "ClientRectangle": "0.4,0.4,10.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2110,12 +2117,12 @@
               "Guid": "bebfac90c16341768f264267164b0ea1",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.8,9.8,1",
+              "ClientRectangle": "0.4,0.8,10.4,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.formaPago}  IBAN: {cabecera.cuenta}"
+                "Value": "{cabecera.formaPago}  IBAN: {IIF(cabecera.formapagoId == 13 || cabecera.formapagoId == 6  ,\"\",cabecera.cuenta)}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -2129,7 +2136,7 @@
               "Guid": "baef2f8f79354e8686bf858fed4f6485",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "13.4,0.8,3,1",
+              "ClientRectangle": "14,0.8,3,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2148,7 +2155,7 @@
               "Guid": "74203502dfe7423989dc815179f3363c",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "10.2,0.8,3.2,1",
+              "ClientRectangle": "10.8,0.8,3.2,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
