@@ -352,7 +352,8 @@ function editProveedor(id) {
 
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/proveedores/?nombre=*";
+    var activos = $('#chkTodos').prop('checked');
+    var url = myconfig.apiUrl + "/api/proveedores/?nombre=*&activos=" + activos;
     llamadaAjax("GET", url, null, function(err, data){
         if (err) return;
         loadTablaProveedores(data);
