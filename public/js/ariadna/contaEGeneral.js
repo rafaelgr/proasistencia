@@ -554,7 +554,7 @@ function contabilizarFacturas() {
 
 function enviarCorreos() {
     var mf = function () {
-        if (!datosOK()) return;
+        //if (!datosOK()) return;
         $('#progress').show();
         var url = myconfig.apiUrl + "/api/facturas/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + clienteId + "/" + mantenedorId + "/" +comercialId + "/" +contratoId + "/" + empresaId + "/" + departamentoId + "/" + usuario.usuarioId;
         llamadaAjax("POST", url, null, function (err, data) {
@@ -562,7 +562,7 @@ function enviarCorreos() {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            /* url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     $('#progress').hide();
@@ -574,7 +574,7 @@ function enviarCorreos() {
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturas se han enviado por correo');
             });
-
+ */
         });
     };
     return mf;
