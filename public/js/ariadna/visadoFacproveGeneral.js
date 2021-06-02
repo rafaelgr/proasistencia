@@ -117,8 +117,8 @@ function admData() {
     
 } 
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
+function initTablaFacturas() { 
+    tablaCarro = $('#dt_factura').DataTable({
         paging: false,
         autoWidth: true,
         "bDestroy": true,
@@ -127,6 +127,10 @@ function initTablaFacturas() {
             "width": "20%",
             "orderable": false
             } ],
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>",
+            "oColVis": {
+                "buttonText": "Mostrar / ocultar columnas"
+            },
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -243,6 +247,11 @@ function initTablaFacturas() {
             }
         }]
     });
+
+    tablaCarro.column(9).visible(false);
+    tablaCarro.column(10).visible(false);
+    tablaCarro.column(11).visible(false);
+    tablaCarro.column(12).visible(false);
 }
 
 function initModal(facproveId) {
