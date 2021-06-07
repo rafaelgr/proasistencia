@@ -40,7 +40,8 @@
     "numeral": "^1.5.3",
     "serve-index": "^1.9.1",
     "socket.io": "^2.3.0",
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "^1.0.3",
+    "stimulsoft-reports-js": "^2021.3.2"
   },
   "devDependencies": {}
 }
