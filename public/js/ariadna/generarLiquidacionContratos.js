@@ -42,6 +42,11 @@ function initForm() {
             }
         }, 'La fecha final debe ser mayor que la inicial.');
     //
+    //
+    $.validator.addMethod("notEqualTo", function(value, element, param){
+        if(value == "0") return false
+        return true;
+    });
     vm = new admData();
     ko.applyBindings(vm);
     //
@@ -248,6 +253,10 @@ function datosOK() {
                 required: true,
                 greaterThan: "#txtDesdeFecha"
             },
+            cmbDepartamentosTrabajo: {
+                required: true,
+                notEqualTo: 0
+            }
 
         },
         // Messages for form validation
@@ -257,6 +266,10 @@ function datosOK() {
             },
             txtHastaFecha: {
                 required: "Debe seleccionar una fecha"
+            },
+            cmbDepartamentosTrabajo: {
+                required: "Se tiene que elegir un departamento",
+                notEqualTo: "Se tiene que elegir un departamento"
             }
         },
         // Do not change code below
