@@ -676,23 +676,25 @@ ALTA</Text>
             </Text25>
             <Text2 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,0,2,0.4</ClientRectangle>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>1.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
-              <HorAlignment>Center</HorAlignment>
+              <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="2" />
               <Parent isRef="25" />
               <Text>{LiqAgente.referencia}</Text>
               <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text2>
             <Text19 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0,2.8,0.4</ClientRectangle>
+              <ClientRectangle>3.6,0,2.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
@@ -917,10 +919,10 @@ ALTA</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/9/2021 1:06:27 PM</ReportChanged>
+  <ReportChanged>6/10/2021 10:33:41 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
-  <ReportGuid>7fdf080382e2410ea2fbc1ce0c9ead53</ReportGuid>
+  <ReportGuid>d6be936291ab4ad7b1868a92d3a9cf9e</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.2.0</ReportVersion>
