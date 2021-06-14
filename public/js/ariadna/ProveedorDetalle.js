@@ -516,6 +516,9 @@ function datosOK() {
             },
             cmbPaises: {
                 required: true,
+            },
+            cmbEmpresas: {
+                required: true,
             }
         },
         // Messages for form validation
@@ -556,6 +559,9 @@ function datosOK() {
             },
             cmbPaises: {
                 required: "Debe introducir un código de país"
+            },
+            cmbEmpresas: {
+                required:  "Debe introducir una empresa de facturación"
             }
         },
         // Do not change code below
@@ -710,7 +716,7 @@ function loadTiposVia(id) {
 function loadEmpresas(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
         if(empresaId) vm.sempresaId(empresaId);
