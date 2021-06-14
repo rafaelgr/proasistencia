@@ -17,6 +17,8 @@ var breakpointDefinition = {
     phone: 480
 };
 
+var totalContratos = 0;
+var totalFacturas = 0;
 
 
 datePickerSpanish(); // see comun.js
@@ -95,23 +97,94 @@ function initForm() {
 }
 
 function cambioDepartamento(id) {
-    var url = "", type = "";
-    // updating record
-    var type = "PUT";
-    var url = sprintf('%s/api/contratos/', myconfig.apiUrl);
-    $.ajax({
-        type: type,
-        url: url,
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data, status) {
+    if(id == 7 && totalFacturas > 0) {
+       updateAllFacturas();
+    }
+     else if(id != 7 && totalContratos > 0) {
+         updateAllContratos();
+     }
 
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-        }
-    });
 }
+
+
+function updateAllFacturas() {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_factura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                factura: {
+                    facturaId: datos[i].facturaId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
+
+
+function updateAllContratos() {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_contrato').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                contrato: {
+                    contratoId: datos[i].contratoId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fechaFinal: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, datos[i].contratoId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
+
+
 
 function   loadAnyos(){
     var d = new Date();
@@ -399,6 +472,7 @@ function loadTablaContratos(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(data && data.length > 0) totalContratos = data.length;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -424,7 +498,7 @@ function loadTablaContratos(data) {
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/contratos/', myconfig.apiUrl);
+            var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, v.contratoId);
             $.ajax({
                 type: type,
                 url: url,
@@ -446,6 +520,7 @@ function loadTablaFacturas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(data && data.length > 0) totalFacturas = data.length;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
