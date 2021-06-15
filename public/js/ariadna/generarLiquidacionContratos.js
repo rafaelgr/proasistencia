@@ -19,6 +19,7 @@ var breakpointDefinition = {
 
 var totalContratos = 0;
 var totalFacturas = 0;
+var antDepartamentoId = 0;
 
 
 datePickerSpanish(); // see comun.js
@@ -81,8 +82,8 @@ function initForm() {
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioDepartamento(this.value);
-        
+        //cambioDepartamento(this.value);
+        //antDepartamentoId = this.value;
     });
 
 
@@ -569,6 +570,8 @@ function buscarContratos() {
         if (!datosOK()) return;
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+        //ACTULIZAMOS LOS SELECCIONADOS SI HAY CAMBIO DE DEPPARTAMENTO
+        //if((antDepartamentoId != departamentoId && departamentoId != 0) && antDepartamentoId != 0) cambioDepartamento(antDepartamentoId);
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
@@ -591,6 +594,7 @@ function buscarContratos() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                antDepartamentoId = departamentoId;
                 if(departamentoId == 7) {
                     loadTablaFacturas(data);
                 } else {
