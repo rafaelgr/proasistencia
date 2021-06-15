@@ -159,7 +159,7 @@ function updateAllContratos() {
                     contratoId: datos[i].contratoId,
                     empresaId: datos[i].empresaId,
                     clienteId: datos[i].clienteId,
-                    fechaFinal: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    fechaFinal: moment(datos[i].fechaFinal).format('YYYY-MM-DD'),
                     sel: sel
             }
         };
@@ -571,7 +571,7 @@ function buscarContratos() {
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         //ACTULIZAMOS LOS SELECCIONADOS SI HAY CAMBIO DE DEPPARTAMENTO
-        //if((antDepartamentoId != departamentoId && departamentoId != 0) && antDepartamentoId != 0) cambioDepartamento(antDepartamentoId);
+        if((antDepartamentoId != departamentoId && departamentoId != 0) && antDepartamentoId != 0) cambioDepartamento(antDepartamentoId);
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
