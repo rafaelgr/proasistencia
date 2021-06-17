@@ -402,7 +402,7 @@ function initTablaFacturas() {
         }, {
             data: "tipoProyectoNombre"
         }, {
-            data: "fechaFinal",
+            data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -663,7 +663,8 @@ function generarLiquidaciones() {
         url += "/" + comercialId;
         url += "/" + usuario.usuarioId;
         // Vamos a comprobar si hay datos previos
-        $.ajax({
+        generaLiquidaciones2();
+        /* $.ajax({
             type: "GET",
             url: url,
             dataType: "json",
@@ -692,7 +693,7 @@ function generarLiquidaciones() {
                 mensErrorAjax(err);
             }
         })
-
+ */
     };
     return mf;
 }
@@ -767,7 +768,13 @@ function deleteContrato(id) {
 function editContrato(id) {
     // hay que abrir la página de detalle del contrato
     // pasando en la url ese ID
-    var url = "ContratoDetalle.html?ContratoId=" + id;
+    var url = "";
+    if( vm.sdepartamentoId() == 7) {
+        url = "FacturaDetalle.html?FacturaId=" + id;
+        window.open(url, '_blank');
+        return;
+    }
+    url = "ContratoDetalle.html?ContratoId=" + id;
     window.open(url, '_blank');
 }
 
