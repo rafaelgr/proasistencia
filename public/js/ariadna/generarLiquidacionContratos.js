@@ -9,6 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataContratos;
+var dataFacturas
 var contratoId;
 var usuario;
 
@@ -386,7 +387,7 @@ function initTablaFacturas() {
                 sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        data: dataContratos,
+        data: dataFacturas,
         columns: [{
             data: "facturaId",
             width: "10%",
