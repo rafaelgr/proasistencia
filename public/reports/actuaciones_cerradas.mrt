@@ -494,7 +494,7 @@ prof.</Text>
               <Name>Text34</Name>
               <Page isRef="2" />
               <Parent isRef="24" />
-              <Text>{libUsu.codigoProfesional}</Text>
+              <Text>{libUsu.codigoProveedor}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="38" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -540,7 +540,7 @@ prof.</Text>
               <Name>Text13</Name>
               <Page isRef="2" />
               <Parent isRef="24" />
-              <Text>{libUsu.importeProfesional}</Text>
+              <Text>{libUsu.importeProveedor}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="42" type="NumberFormat" isKey="true">
                 <DecimalSeparator>,</DecimalSeparator>
@@ -601,10 +601,10 @@ prof.</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2021 1:25:54 PM</ReportChanged>
+  <ReportChanged>6/21/2021 1:34:23 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\actuaciones_cerradas.mrt</ReportFile>
-  <ReportGuid>4ecb3da9e5164cbebcf8b777af74d131</ReportGuid>
+  <ReportGuid>75c56b394605451ca5b646eb4698e9c8</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
