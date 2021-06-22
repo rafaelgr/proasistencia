@@ -129,7 +129,7 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
-    var file = "../reports/pago_profesionales.mrt";
+    var file = "../reports/actuaciones_cerradas.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     
@@ -164,7 +164,7 @@ var obtainReport = function () {
 };
 
 var obtainReportJson = function (obj) {
-        var file = "../reports/pago_profesionales.mrt";
+        var file = "../reports/actuaciones_cerradas.mrt";
         var report = new Stimulsoft.Report.StiReport();
             
             
@@ -185,7 +185,7 @@ var obtainReportJson = function (obj) {
 };
 
 var obtainReportPdf = function () {
-    var file = "../reports/pago_profesionales.mrt";
+    var file = "../reports/actuaciones_cerradas.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     verb = "GET";
@@ -286,7 +286,7 @@ var rptFacturaParametros = function () {
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
-        if(data.libPro.length > 0) {
+        if(data.libUsu.length > 0) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
