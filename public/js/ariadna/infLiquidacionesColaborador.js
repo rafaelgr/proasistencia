@@ -287,12 +287,12 @@ function loadColaboradores(e) {
     });
 }*/
 
-function loadTiposComerciales(tipoComercialId) {
+function loadTiposComerciales() {
     llamadaAjax("GET", "/api/tipos_comerciales", null, function (err, data) {
         if (err) return;
-        var tipos = data;
+        var tipos = [{ tipoComercialId: null, nombre: "" }].concat(data);
         vm.posiblesTiposComerciales(tipos);
-        $("#cmbTiposComerciales").val([tipoComercialId]).trigger('change');
+        $("#cmbTiposComerciales").val([1]).trigger('change');
     });
 }
 
@@ -326,6 +326,7 @@ var obtainReportJson = function (obj) {
 };
 
 var rptLiquidacionGeneralParametrosJson = function () {
+    if(!datosOK) return;
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
     var departamentoId = vm.sdepartamentoId();
