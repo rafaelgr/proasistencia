@@ -71,6 +71,7 @@ function initForm() {
     loadComerciales();
 
     $('#cmbPeriodos').select2(select2Spanish());
+    //loadPeriodos();
 
     $('#cmbAnos').select2(select2Spanish());
     loadAnyos();
@@ -160,6 +161,7 @@ function admData() {
             'nombrePeriodo': 'Cuarto trimestre',
             'periodo': '4'
         }
+        
     ]);
 
     self.selectedPeriodos = ko.observableArray([]);
@@ -279,6 +281,9 @@ function datosOK() {
             cmbDepartamentosTrabajo: {
                 required: true,
                 notEqualTo: 0
+            },
+            cmbPeriodos: {
+                required: true
             }
 
         },
@@ -293,6 +298,9 @@ function datosOK() {
             cmbDepartamentosTrabajo: {
                 required: "Se tiene que elegir un departamento",
                 notEqualTo: "Se tiene que elegir un departamento"
+            },
+            cmbPeriodos: {
+                required: "Intruduzca un periodo de liquidación"
             }
         },
         // Do not change code below
