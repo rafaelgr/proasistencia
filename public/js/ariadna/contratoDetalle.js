@@ -418,6 +418,7 @@ function admData() {
     self.facturaParcial = ko.observable();
     self.liquidarBase = ko.observable();
     self.contratoCerrado = ko.observable();
+    self.contratoIntereses = ko.observable();
     self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
     self.iban = ko.observable();
@@ -604,6 +605,7 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    vm.contratoIntereses(data.contratoIntereses);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -853,6 +855,7 @@ var generarContratoDb = function () {
             "provincia": vm.provincia(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "contratoCerrado": vm.contratoCerrado(),
+            "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
             "liquidarBasePrefactura": vm.liquidarBase()
         }
