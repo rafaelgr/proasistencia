@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.2.0",
-  "ReportGuid": "83fe16f797e944ddaffe68ca43cd8611",
+  "ReportGuid": "0585043dc62449938b7d850733e66fca",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1624965199976+0200)/",
+  "ReportChanged": "/Date(1624965180309+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -22,31 +22,96 @@
   "Dictionary": {
     "DataSources": {
       "0": {
-        "Ident": "StiMySqlSource",
+        "Ident": "StiDataTableSource",
+        "Name": "bases",
+        "Alias": "bases",
+        "Key": "e31eefd78c0045368602fc3721a54051",
+        "Columns": {
+          "0": {
+            "Name": "facproveBaseId",
+            "Index": -1,
+            "NameInSource": "facproveBaseId",
+            "Alias": "facproveBaseId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "facproveId",
+            "Index": -1,
+            "NameInSource": "facproveId",
+            "Alias": "facproveId",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "tipoIvaId",
+            "Index": -1,
+            "NameInSource": "tipoIvaId",
+            "Alias": "tipoIvaId",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "porcentaje",
+            "Index": -1,
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "base",
+            "Index": -1,
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "cuota",
+            "Index": -1,
+            "NameInSource": "cuota",
+            "Alias": "cuota",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "tipoIva",
+            "Index": -1,
+            "NameInSource": "tipoIva",
+            "Alias": "tipoIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "baseImp",
+            "Index": -1,
+            "NameInSource": "baseImp",
+            "Alias": "baseImp",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "facprove.bases"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
-        "Key": "c3e29e1f1b7349fb9a7e97e7b2030a96",
+        "Key": "be28c77f976f4c32a7cc968916d7ff14",
         "Columns": {
           "0": {
             "Name": "facproveId",
             "Index": -1,
             "NameInSource": "facproveId",
             "Alias": "facproveId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "1": {
             "Name": "ano",
             "Index": -1,
             "NameInSource": "ano",
             "Alias": "ano",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "2": {
             "Name": "numero",
             "Index": -1,
             "NameInSource": "numero",
             "Alias": "numero",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "3": {
             "Name": "serie",
@@ -60,35 +125,35 @@
             "Index": -1,
             "NameInSource": "tipoProyectoId",
             "Alias": "tipoProyectoId",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
           "5": {
             "Name": "fecha",
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.DateTime"
+            "Type": "System.String"
           },
           "6": {
             "Name": "proveedorId",
             "Index": -1,
             "NameInSource": "proveedorId",
             "Alias": "proveedorId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "7": {
             "Name": "empresaId",
             "Index": -1,
             "NameInSource": "empresaId",
             "Alias": "empresaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "8": {
             "Name": "empresaId2",
             "Index": -1,
             "NameInSource": "empresaId2",
             "Alias": "empresaId2",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
           "9": {
             "Name": "emisorNif",
@@ -193,7 +258,7 @@
             "Index": -1,
             "NameInSource": "formaPagoId",
             "Alias": "formaPagoId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "24": {
             "Name": "observaciones",
@@ -207,14 +272,14 @@
             "Index": -1,
             "NameInSource": "sel",
             "Alias": "sel",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "26": {
             "Name": "totalAlCliente",
             "Index": -1,
             "NameInSource": "totalAlCliente",
             "Alias": "totalAlCliente",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "27": {
             "Name": "coste",
@@ -228,21 +293,21 @@
             "Index": -1,
             "NameInSource": "porcentajeBeneficio",
             "Alias": "porcentajeBeneficio",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "29": {
             "Name": "porcentajeAgente",
             "Index": -1,
             "NameInSource": "porcentajeAgente",
             "Alias": "porcentajeAgente",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "30": {
             "Name": "contratoId",
             "Index": -1,
             "NameInSource": "contratoId",
             "Alias": "contratoId",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
           "31": {
             "Name": "periodo",
@@ -263,7 +328,7 @@
             "Index": -1,
             "NameInSource": "porcentajeRetencion",
             "Alias": "porcentajeRetencion",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "34": {
             "Name": "importeRetencion",
@@ -305,7 +370,7 @@
             "Index": -1,
             "NameInSource": "fecha_recepcion",
             "Alias": "fecha_recepcion",
-            "Type": "System.DateTime"
+            "Type": "System.String"
           },
           "40": {
             "Name": "fecha_recepcion2",
@@ -319,42 +384,42 @@
             "Index": -1,
             "NameInSource": "noContabilizar",
             "Alias": "noContabilizar",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "42": {
             "Name": "contabilizada",
             "Index": -1,
             "NameInSource": "contabilizada",
             "Alias": "contabilizada",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "43": {
             "Name": "visada",
             "Index": -1,
             "NameInSource": "visada",
             "Alias": "visada",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "44": {
             "Name": "antproveId",
             "Index": -1,
             "NameInSource": "antproveId",
             "Alias": "antproveId",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
           "45": {
             "Name": "departamentoId",
             "Index": -1,
             "NameInSource": "departamentoId",
             "Alias": "departamentoId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "46": {
             "Name": "numregisconta",
             "Index": -1,
             "NameInSource": "numregisconta",
             "Alias": "numregisconta",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "47": {
             "Name": "fianza",
@@ -396,65 +461,44 @@
             "Index": -1,
             "NameInSource": "tipoOperacionId",
             "Alias": "tipoOperacionId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "53": {
             "Name": "enviadaCorreo",
             "Index": -1,
             "NameInSource": "enviadaCorreo",
             "Alias": "enviadaCorreo",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "54": {
-            "Name": "fechaFormat",
-            "Index": -1,
-            "NameInSource": "fechaFormat",
-            "Alias": "fechaFormat",
-            "Type": "System.String"
-          },
-          "55": {
             "Name": "vnum",
             "Index": -1,
             "NameInSource": "vnum",
             "Alias": "vnum",
             "Type": "System.String"
           },
-          "56": {
+          "55": {
             "Name": "formaPagoNombre",
             "Index": -1,
             "NameInSource": "formaPagoNombre",
             "Alias": "formaPagoNombre",
             "Type": "System.String"
           },
-          "57": {
+          "56": {
             "Name": "IBAN",
             "Index": -1,
             "NameInSource": "IBAN",
             "Alias": "IBAN",
             "Type": "System.String"
           },
-          "58": {
+          "57": {
             "Name": "fianzaAcumulada",
             "Index": -1,
             "NameInSource": "fianzaAcumulada",
             "Alias": "fianzaAcumulada",
             "Type": "System.Decimal"
           },
-          "59": {
-            "Name": "importeAnticipo",
-            "Index": -1,
-            "NameInSource": "importeAnticipo",
-            "Alias": "importeAnticipo",
-            "Type": "System.Decimal"
-          },
-          "60": {
-            "Name": "restoPagar",
-            "Index": -1,
-            "NameInSource": "restoPagar",
-            "Alias": "restoPagar",
-            "Type": "System.Decimal"
-          },
-          "61": {
+          "58": {
             "Name": "cuenta",
             "Index": -1,
             "NameInSource": "cuenta",
@@ -462,21 +506,20 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.*, \r\nDATE_FORMAT(pf.fecha, '%d-%m-%Y') AS fechaFormat,\r\npf.numeroFacturaProveedor AS vnum,\r\nfp.nombre AS formaPagoNombre, pro.IBAN, pro.fianzaAcumulada, pf.importeAnticipo, pf.restoPagar, CONCAT(SUBSTR( pro.IBAN,1,20), \"****\")  AS cuenta\r\nFROM facprove AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formaPagoId\r\nLEFT JOIN contratos AS cm ON cm.contratoId = pf.contratoId\r\nLEFT JOIN clientes AS c ON c.clienteId = cm.clienteId\r\nLEFT JOIN proveedores AS pro ON pro.proveedorId = pf.proveedorId\r\n"
+        "NameInSource": "facprove.cabecera"
       },
-      "1": {
-        "Ident": "StiMySqlSource",
+      "2": {
+        "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
-        "Key": "d1125bc35e1447e98bdb72f17483598e",
+        "Key": "b579ce01eee34e64922ccc491b0a9bd0",
         "Columns": {
           "0": {
             "Name": "facproveLineaId",
             "Index": -1,
             "NameInSource": "facproveLineaId",
             "Alias": "facproveLineaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "1": {
             "Name": "linea",
@@ -490,28 +533,28 @@
             "Index": -1,
             "NameInSource": "facproveId",
             "Alias": "facproveId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "3": {
             "Name": "unidadId",
             "Index": -1,
             "NameInSource": "unidadId",
             "Alias": "unidadId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "4": {
             "Name": "articuloId",
             "Index": -1,
             "NameInSource": "articuloId",
             "Alias": "articuloId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "5": {
             "Name": "tipoIvaId",
             "Index": -1,
             "NameInSource": "tipoIvaId",
             "Alias": "tipoIvaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "6": {
             "Name": "porcentaje",
@@ -560,14 +603,14 @@
             "Index": -1,
             "NameInSource": "porcentajeBeneficio",
             "Alias": "porcentajeBeneficio",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "13": {
             "Name": "porcentajeAgente",
             "Index": -1,
             "NameInSource": "porcentajeAgente",
             "Alias": "porcentajeAgente",
-            "Type": "System.Decimal"
+            "Type": "System.String"
           },
           "14": {
             "Name": "capituloLinea",
@@ -595,7 +638,7 @@
             "Index": -1,
             "NameInSource": "codigoRetencion",
             "Alias": "codigoRetencion",
-            "Type": "System.Int16"
+            "Type": "System.Decimal"
           },
           "18": {
             "Name": "cuentaRetencion",
@@ -654,110 +697,15 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, \r\nIF(a.codigoReparacion <> 900, a.nombre, SUBSTRING( pfl.descripcion, 1, IF(POSITION(':' IN pfl.descripcion)-1=-1, LENGTH(pfl.descripcion), POSITION(':' IN pfl.descripcion)-1 ))) AS articuloNombre\r\nFROM facprove_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facproveLineaId` = pfl.`facproveLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
-      },
-      "2": {
-        "Ident": "StiMySqlSource",
-        "Name": "bases",
-        "Alias": "bases",
-        "Key": "316be6a7cb234a54ad354c356d706f63",
-        "Columns": {
-          "0": {
-            "Name": "facproveBaseId",
-            "Index": -1,
-            "NameInSource": "facproveBaseId",
-            "Alias": "facproveBaseId",
-            "Type": "System.Int32"
-          },
-          "1": {
-            "Name": "facproveId",
-            "Index": -1,
-            "NameInSource": "facproveId",
-            "Alias": "facproveId",
-            "Type": "System.Int32"
-          },
-          "2": {
-            "Name": "tipoIvaId",
-            "Index": -1,
-            "NameInSource": "tipoIvaId",
-            "Alias": "tipoIvaId",
-            "Type": "System.Int32"
-          },
-          "3": {
-            "Name": "porcentaje",
-            "Index": -1,
-            "NameInSource": "porcentaje",
-            "Alias": "porcentaje",
-            "Type": "System.Decimal"
-          },
-          "4": {
-            "Name": "base",
-            "Index": -1,
-            "NameInSource": "base",
-            "Alias": "base",
-            "Type": "System.Decimal"
-          },
-          "5": {
-            "Name": "cuota",
-            "Index": -1,
-            "NameInSource": "cuota",
-            "Alias": "cuota",
-            "Type": "System.Decimal"
-          },
-          "6": {
-            "Name": "tipoIva",
-            "Index": -1,
-            "NameInSource": "tipoIva",
-            "Alias": "tipoIva",
-            "Type": "System.String"
-          },
-          "7": {
-            "Name": "baseImp",
-            "Index": -1,
-            "NameInSource": "baseImp",
-            "Alias": "baseImp",
-            "Type": "System.Decimal"
-          }
-        },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfb.*, t.nombre AS tipoIva, pfb.base AS baseImp \r\nFROM facprove_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId\r\n"
+        "NameInSource": "facprove.lineas"
       }
     },
     "Databases": {
       "0": {
-        "Ident": "StiMySqlDatabase",
-        "Name": "PROA_REPORT",
-        "Alias": "PROA_REPORT",
-        "ConnectionStringEncrypted": "41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"
-      }
-    },
-    "Relations": {
-      "0": {
-        "Name": "cabecera_lineas",
-        "ChildColumns": {
-          "0": "facproveId"
-        },
-        "ParentColumns": {
-          "0": "facproveId"
-        },
-        "NameInSource": "cabecera_lineas",
-        "Alias": "cabecera_lineas",
-        "ParentSource": "cabecera",
-        "ChildSource": "lineas"
-      },
-      "1": {
-        "Name": "cabecera_bases",
-        "ChildColumns": {
-          "0": "facproveId"
-        },
-        "ParentColumns": {
-          "0": "facproveId"
-        },
-        "NameInSource": "cabecera_bases",
-        "Alias": "cabecera_bases",
-        "ParentSource": "cabecera",
-        "ChildSource": "bases"
+        "Ident": "StiJsonDatabase",
+        "Name": "facprove",
+        "Alias": "facprove",
+        "PathData": "C:\\ariadna\\proasistencia\\public\\reports\\facprove.json"
       }
     }
   },
@@ -790,7 +738,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.fechaFormat}"
+                "Value": "{cabecera.fecha}"
               },
               "VertAlignment": "Center",
               "Font": "Arial Narrow;9.75;;",
