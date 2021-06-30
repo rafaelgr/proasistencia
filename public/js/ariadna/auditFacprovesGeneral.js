@@ -62,60 +62,11 @@ function initForm() {
     }, 'La fecha final debe ser mayor que la inicial.');
 
     initTablaFacturas();
-    var conservaFiltro = gup("ConservaFiltro");
-    var cleaned = gup("cleaned");
-    if(conservaFiltro != 'true' && cleaned != 'true') {
-        limpiarFiltros();
-    } else {
-        recuperaDepartamento(function(err, data) {
-            if(err) return;
-            if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
-            else{ $('#btnPrint').show() }
-            // comprobamos parámetros
-            facproveId = gup('facproveId');
-            var f = facproveId;
-                if(facproveId = '') {
-                    f = null
-                }
-                compruebaFiltros(f);
-        });
-    }
+    cargarFacturas2()();
 
     
 
-     //Evento asociado al cambio de departamento
-     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        // comprobamos parámetros
-        facproveId = gup('facproveId');
-        var f = facproveId;
-        if(facproveId = '') {
-            f = null
-        }
-        cambioDepartamento(this.value);
-        vm.sdepartamentoId(this.value);
-        if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
-        else{ $('#btnPrint').show() }
-        if( !$('#chkTodos').prop('checked') ) {
-            if(this.value != antDepartamentoId) {
-                cargarFacturas2()();
-            } else {
-                cargarFacturas2(f)();
-            }
-        } else {
-            cargarFacturas2All()();
-        }
-        antDepartamentoId = this.value;
-    });
-
-
-    $('#chkTodos').change(function () {
-        if (this.checked) {
-            cargarFacturas2All()();
-        } else {
-            cargarFacturas2()();
-        }
-    })
+   
    
 }
 
@@ -139,38 +90,6 @@ function admData() {
     
 } 
 
-function compruebaFiltros(id) {
-    if(filtros) {
-        vm.dFecha(filtros.dFecha);
-        vm.hFecha(filtros.hFecha);
-        loadEmpresas(filtros.empresaId);
-        vm.sempresaId(filtros.empresaId);
-        if(filtros.contabilizadas == true) {
-            $('#chkTodos').prop('checked', true);
-            if(id > 0) {
-                cargarFacturas2(id)();
-            } else {
-                cargarFacturas2All()();
-            }
-
-        } else {
-            $('#chkTodos').prop('checked', false);
-            cargarFacturas2(id)();
-        }
-       /*  if(id) {
-            cargarFacturas2()(id);
-        } */
-    } else{
-        loadEmpresas(0);
-        estableceFechaEjercicio();
-        if(id) {
-            cargarFacturas2(id)();
-        } else{
-            cargarFacturas2()();
-        }
-
-    }
-}
 
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
@@ -345,26 +264,6 @@ function initTablaFacturas() {
 
 }
 
-function datosOK() {
-    // Segun se incorporen criterios de filtrado
-    // habrá que controlarlos aquí
-    $('#frmBuscar').validate({
-        rules: {
-            txtHastaFecha: {
-                greaterThan: "#txtDesdeFecha"
-            }
-        },
-        // Messages for form validation
-        messages: {
-
-        },
-        // Do not change code below
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    return $('#frmBuscar').valid();
-}
 
 function loadTablaFacturas(data) {
     var dt = $('#dt_factura').dataTable();
@@ -374,16 +273,6 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
-}
-
-function loadEmpresas(id) {
-    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
-        if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
-        vm.posiblesEmpresas(empresas);
-        vm.sempresaId(id);
-        $("#cmbEmpresas").val([id]).trigger('change');
-    });
 }
 
 function buscarFacturas() {
@@ -397,106 +286,9 @@ function buscarFacturas() {
     return mf;
 }
 
-function crearFactura() {
-    var mf = function () {
-        var url = "FacturaProveedorDetalle.html?facproveId=0";
-        window.open(url, '_new');
-    };
-    return mf;
-}
 
-function deleteFactura(id) {
-    var url = myconfig.apiUrl + "/api/facturasProveedores/nuevo/" + id + "/" + usuario.nombre;
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(null),
-                success: function (data, status) {
-                    if(data.contabilizada == 1 && !usuario.puedeEditar) {
-                        var mensaje =  "Esta factura ya ha sido contabilizada, no se puede borrar.";
-                        mensError(mensaje);
-                        return;
-                    }
-                    if( data.departamentoId == 7) {
-                        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id + "/" + usuario.nombre;
-                    }
-                    antproveId = data.antproveId;
-                   if(data.nombreFacprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/facturasProveedores/archivo/" + data.nombreFacprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
-                   var datos = {
-                    facproveId: id,
-                    departamentoId: data.departamentoId
-                };
-                if(antproveId) {
-                    datos.antproveId =  antproveId;
-                }
-                $.ajax({
-                    type: "DELETE",
-                    url: url,
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(datos),
-                    success: function (data, status) {
-                        var fn = buscarFacturas();
-                        fn();
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                });
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
-}
 
-function editFactura(id) {
-    // hay que abrir la página de detalle de prefactura
-    // pasando en la url ese ID
-    var contabilizadas = $('#chkTodos').prop('checked');
-    var busquedaFacturas = 
-        {
-            empresaId:vm.sempresaId(),
-            dFecha: vm.dFecha(),
-            hFecha: vm.hFecha(),
-            contabilizadas: contabilizadas
-        }
-    setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_self');
-}
+
 
 
 
@@ -516,7 +308,7 @@ function cargarFacturas2(id) {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                url: myconfig.apiUrl + "/api/facturasProveedores/todos/los/registros/tabla/auditada",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -575,40 +367,5 @@ function cargarFacturas2All() {
     return mf;
 }
 
-function printFactura2(id) {
-    var url = "InfFacturasProveedores.html?facproveId=" + id;
-    window.open(url, "_new");
-}
 
-function estableceFechaEjercicio() {
-    //SI EL DIA ACTUAL ES MAYOR QUE EL 15 DE ENERO SE ESTABLECE EL CAMPO
-    //DFECHA DE LA BUSQUEDA COMO EL PRIMER DIA DEL EJERCICIO ANTERIOR.
-    //SI ES MAYOR SE ESTABLECE EL CAMPO DFECHA COMO EL PRIMER DIA DEL EJERCICIO ACTUAL.
-    var fechaInicio;
-    var fActual = new Date();
-    var ano = fActual.getFullYear();
-
-    var InicioEjercicio = new Date(ano +'-01-15');
-    if(fActual > InicioEjercicio) {
-        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
-        vm.dFecha(fechaInicio);
-    } else {
-        ano = ano-1
-        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
-        vm.dFecha(fechaInicio);
-    }
-}
-
-
-limpiarFiltros = function() {
-    var returnUrl = "FacturaProveedorGeneral.html?cleaned=true"
-    deleteCookie('filtro_facproves');
-    tablaFacturas.state.clear();
-    window.open(returnUrl, '_self');
-}
-
-imprimirFactura = function () {
-    var url = "InfFacturasProveedores.html";
-    window.open(url, '_blank');
-}
 
