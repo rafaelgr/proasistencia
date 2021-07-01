@@ -341,6 +341,7 @@ function initTablaFacturas() {
             .search(this.value)
             .draw();
     });
+    tablaFacturas.column(10).visible(false);
 
 }
 
@@ -405,7 +406,7 @@ function crearFactura() {
 }
 
 function deleteFactura(id) {
-    var url = myconfig.apiUrl + "/api/facturasProveedores/" + id;
+    var url = myconfig.apiUrl + "/api/facturasProveedores/nuevo/" + id + "/" + usuario.nombre;
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -428,7 +429,7 @@ function deleteFactura(id) {
                         return;
                     }
                     if( data.departamentoId == 7) {
-                        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id;
+                        url = myconfig.apiUrl + "/api/facturasProveedores/reparaciones/actualiza/parte/" + id + "/" + usuario.nombre;
                     }
                     antproveId = data.antproveId;
                    if(data.nombreFacprovePdf){

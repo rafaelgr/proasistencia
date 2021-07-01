@@ -8,5 +8,7 @@ ALTER TABLE `contratos`
 ALTER TABLE `proasistencia`.`contratos`   
   CHANGE `contratoIntereses` `contratoIntereses` TINYINT(11) DEFAULT 0 NULL;
 
+  
+
 
 UPDATE contratos SET contratoIntereses = 0
