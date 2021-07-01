@@ -129,16 +129,6 @@
                             </a>
                         </span>
                     </div>
-                    <!-- end fullscreen button -->
-                    <div class="col col-xs-4 col-sm-4 col-md-5 pull-right" style="padding-bottom: 5%">
-                            <span>
-                                    <label class="label">Departamento de trabajo</label>
-                                    <label style="width:100%; height:50px;">
-                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
-                                            data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                    </label>
-                            </span>
-                    </div>    
             </div>
         </div>
         <!-- end pulled right: nav area -->
@@ -285,6 +275,11 @@
                         <li id="motivosbaja">
                             <a href="MotivoBajaGeneral.html">
                                 <i class="fa fa-ban"></i> Motivos de baja
+                            </a>
+                        </li>
+                        <li id="auditFacproves">
+                            <a href="AuditFacprovesGeneral.html">
+                                <i class="fa fa-check"></i> Registro cambios facturas de proveedores
                             </a>
                         </li>
                     </ul>
@@ -435,9 +430,8 @@
             <!-- breadcrumb -->
             <ol class="breadcrumb">
                 <li>Inicio</li>
-                <li>Gestión</li>
-                <li>Facturación</li>
-                <li>facturas proveedores</li>
+                <li>Administración</li>
+                <li>Registro de facturas proveedores</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -461,7 +455,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                     <!-- PAGE HEADER -->
-                    <i class="fa-fw fa fa-th"></i> Facturas proveedores <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                    <i class="fa-fw fa fa-th"></i> Registro de facturas proveedores <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                 </h1>
                 </div>
                 <!-- end col -->
@@ -527,52 +521,83 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
+                                    <form id="frmBuscar" class="smart-form">
+                                        <header>
+                                            Criterios filtrado.
+                                        </header>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Desde fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            
+                                        </fieldset>
+                                        
+                                        <fieldset>
+                                            <div class="pull-right">                              
+                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
                                     
-                                    <div id="tbFactura">
-                                        <table id="dt_factura" class="table table-striped table-bordered table-hover" width="100%">
+                                    <div id="tbAntclien">
+                                        <table id="dt_facturas" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>
                                                         <i class="fa fa-fw fa-search"></i>
                                                     </th>
+                                                    
                                                     <th class="hasinput">
-                                                        <input type="text" id="dt_factura-head-filter-1" class="form-control" placeholder="" />
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" id="dt_factura-head-filter-1" class="form-control" placeholder="" />
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text"  id="dt_factura-head-filter-2" class="form-control" placeholder="" />
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" id="dt_factura-head-filter-3" class="form-control" placeholder="" />
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
-                                                        <input type="text" id="dt_factura-head-filter-4" class="form-control" placeholder="" />
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
+                                                    
                                                 </tr>
                                                 <tr>
                                                     <th>
                                                         <i class="fa fa-fw fa-clipboard">
-                                                    <th data-class="phone">
-                                                        Nuemro factura
                                                     </th>
+                                                    <th data-hide="expand">
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Referencia
                                                     </th>
-                                                    <th data-class="phone">
-                                                        Nuemro factura 2
-                                                    </th>
-                                                    
                                                     <th data-hide="phone">
-                                                        Referencia
+                                                        Número factura
                                                     </th>
+                                                    <th data-hide="phone">
+                                                        Número factura 2
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                       Fecha cambio
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Tipo cambio
+                                                     </th>
                                                     <th data-hide="phone">
                                                         Usuario
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Tipo registro
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Fecha cambio
                                                     </th>
                                                 </tr>
                                             </thead>
