@@ -610,9 +610,7 @@
                                                                                                         <label class="input">
                                                                                                             <input id="txtCodigoProfesional" name="txtCodigoProfesional" type="text" data-bind="value: codigoProfesional" />
                                                                                                         </label>
-                                                                                                    </section>
-                                                                                                   
-                                                                                                                                              
+                                                                                                    </section>                                           
                                                                                                 </div>
                                                                                                 <div class="row">
                                                                                                     <section class="col col-md-2">
@@ -633,8 +631,72 @@
                                                                                                             <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaProveedorId', value: starifaProveedorId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select><i></i>
                                                                                                         </label>
                                                                                                     </section>
-                                                                                                    
                                                                                                 </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="checkbox">
+                                                                                                                <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
+                                                                                                                <i></i>El proveedor está activo
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-2">
+                                                                                                            <label class="label">Fecha alta</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-2">
+                                                                                                            <label class="label">Fecha baja</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-5">
+                                                                                                            <label class="label">Motivo de baja</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-12">
+                                                                                                            <label class="label">Departamento</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" multiple="multiple" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-12">
+                                                                                                            <label class="label">Tipo profesional</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional"  multiple="multiple" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
+                                                                                                                <i></i>
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-6">
+                                                                                                            <label class="label">Login aplicación movil</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtLogin" name="txtLogin" data-bind="value: login" />
+                                                                                                            </label>
+                                                                                                        </section>  
+                                                                                                        <section class="col col-md-6">
+                                                                                                            <label class="label">Password aplicación movil</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtPass" name="txtPass" data-bind="value: password" />
+                                                                                                            </label>
+                                                                                                        </section>  
+                                                                                                    </div>
+                                                                                                
+                                                                                                
+                                                                                            </fieldset>
+                                                                                            <header>
+                                                                                                Dirección del proveedor
+                                                                                            </header>
+                                                                                            <fieldset>
                                                                                                 <div class="row">
                                                                                                     <section class="col col-md-3">
                                                                                                         <label class="label">Tipo via</label>
@@ -665,104 +727,68 @@
                                                                                                     </section>
                                                                                                 </div>
                                                                                                 <div class="row">
-                                                                                                    <section class="col col-md-8">
+                                                                                                    <section class="col col-md-12">
                                                                                                         <label class="label">Provincia</label>
                                                                                                         <label class="input">
                                                                                                             <input id="txtProvincia" name="txtProvincia" data-bind="value: provincia" />
                                                                                                         </label>
                                                                                                     </section>
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Teléfono</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Teléfono 2</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Móvil</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtMovil" name="txtMovil" data-bind="value: movil" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-4">
-                                                                                                        <label class="label">Móvil 2</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtMovil2" name="txtMovil2" data-bind="value: movil2" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <section class="col col-md-3">
-                                                                                                        <label class="label">Correo electrónico</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtCorreo" name="txtCorreo" data-bind="value: correo" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-3">
-                                                                                                        <label class="label">Correo electrónico 2</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtCorreo2" name="txtCorreo2" data-bind="value: correo2" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-6">
-                                                                                                        <label class="label">Persona de contacto</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtContacto" name="txtContacto" data-bind="value: contacto" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <section class="col col-md-3">
-                                                                                                        <label class="checkbox">
-                                                                                                            <input id="chkActiva" type="checkbox" name="chkActiva" data-bind="checked: activa">
-                                                                                                            <i></i>El proveedor está activo
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-2">
-                                                                                                        <label class="label">Fecha alta</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtFechaAlta" name="txtFechaAlta" data-bind="value: fechaAlta" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-2">
-                                                                                                        <label class="label">Fecha baja</label>
-                                                                                                        <label class="input">
-                                                                                                            <input id="txtFechaBaja" name="txtFechaBaja" data-bind="value: fechaBaja" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                    <section class="col col-md-5">
-                                                                                                        <label class="label">Motivo de baja</label>
-                                                                                                        <label style="width:100%;">
-                                                                                                            <select style="width:100%" id="cmbMotivosBaja" name="cmbMotivosBaja" data-bind="options: posiblesMotivosBaja, optionsText: 'nombre', optionsValue: 'motivoBajaId', value: smotivoBajaId, valueAllowUnset: true, selectedOptions: elegidosMotivosBaja, selected2:{}"></select><i></i>
-                                                                                                        </label>
-                                                                                                    </section>
                                                                                                     
                                                                                                 </div>
-                                                                                                <div class="row">
-                                                                                                    <section class="col col-md-12">
-                                                                                                        <label class="label">Departamento</label>
-                                                                                                        <label style="width:100%;">
-                                                                                                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" multiple="multiple" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <section class="col col-md-12">
-                                                                                                        <label class="label">Tipo profesional</label>
-                                                                                                        <label style="width:100%;">
-                                                                                                            <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional"  multiple="multiple" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
-                                                                                                            <i></i>
-                                                                                                        </label>
-                                                                                                    </section>
-                                                                                                </div>
                                                                                             </fieldset>
+                                                                                                <header>
+                                                                                                    Datos de contacto
+                                                                                                </header>
+                                                                                                <fieldset>
+                                                                                                    
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Teléfono</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtTelefono1" name="txtTelefono1" data-bind="value: telefono" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Teléfono 2</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtTelefono2" name="txtTelefono2" data-bind="value: telefono2" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Móvil</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtMovil" name="txtMovil" data-bind="value: movil" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Móvil 2</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtMovil2" name="txtMovil2" data-bind="value: movil2" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Correo electrónico</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtCorreo" name="txtCorreo" data-bind="value: correo" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Correo electrónico 2</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtCorreo2" name="txtCorreo2" data-bind="value: correo2" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-6">
+                                                                                                            <label class="label">Persona de contacto</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtContacto" name="txtContacto" data-bind="value: contacto" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                </fieldset>
                                                                                             <header>
                                                                                                 Información bancaria.
                                                                                             </header>
