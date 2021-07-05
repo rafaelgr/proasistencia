@@ -578,7 +578,7 @@ TOTAL</Text>
             </Text7>
             <Text9 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.4,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>22.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
@@ -690,7 +690,7 @@ TOTAL</Text>
             </Text26>
             <Text28 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>19.4,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>9a19173cd601486b89b5be83a6852769</Guid>
@@ -713,7 +713,7 @@ TOTAL</Text>
             </Text28>
             <Text41 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>5.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7899c7220a3a4094a2adea3cb3125818</Guid>
@@ -863,10 +863,11 @@ TOTAL</Text>
               <Text>{liqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="64" type="NumberFormat" isKey="true">
+                <DecimalDigits>1</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+                <State>DecimalDigits, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
             </Text60>
@@ -910,7 +911,7 @@ TOTAL</Text>
             </Text3>
             <Text6 Ref="68" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>20.8,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>20.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>b019ec12b09d4897ac8a3c5af39e9385</Guid>
@@ -994,10 +995,10 @@ TOTAL</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/26/2021 1:30:49 PM</ReportChanged>
+  <ReportChanged>7/5/2021 1:09:30 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>3b189f3d0fb64e5bb7d3213d5aef9015</ReportGuid>
+  <ReportGuid>dff6f3d48b354330a2ace81e20fa1747</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
