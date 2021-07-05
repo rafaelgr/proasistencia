@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.2.0",
-  "ReportGuid": "f02d62e77a9944a0b10604a06f3c2e5d",
+  "ReportGuid": "e2e2126c689c44af9bfa367cb7262f95",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1625212393519+0200)/",
+  "ReportChanged": "/Date(1625477472856+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -645,9 +645,9 @@
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
-              "MinSize": "0.4,0.3",
-              "MaxSize": "8.4,8",
-              "ClientRectangle": "5.6,0,8,0.6",
+              "MinSize": "8,0.3",
+              "MaxSize": "8,18",
+              "ClientRectangle": "5.8,0,8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -845,8 +845,8 @@
               "Type": "Expression"
             }
           },
-          "MinHeight": 0.3,
-          "MaxHeight": 8.0,
+          "MinHeight": 0.8,
+          "MaxHeight": 18.0,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
