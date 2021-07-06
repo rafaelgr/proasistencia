@@ -412,7 +412,7 @@ ANT.</Text>
               <Name>Text2</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
-              <Text>CERTIFICA.
+              <Text>CERT.
 FINAL</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -995,10 +995,10 @@ TOTAL</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>7/5/2021 1:09:30 PM</ReportChanged>
+  <ReportChanged>7/6/2021 9:27:43 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>dff6f3d48b354330a2ace81e20fa1747</ReportGuid>
+  <ReportGuid>02434eae2ea5488cbd1e34132f0bc0c6</ReportGuid>
   <ReportImage isNull="true" />
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
