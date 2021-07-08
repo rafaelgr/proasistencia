@@ -39,7 +39,7 @@
     "nodemailer": "^4.2.0",
     "numeral": "^1.5.3",
     "serve-index": "^1.9.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "sprintf-js": "^1.0.3",
     "stimulsoft-reports-js": "^2017.1.10"
   },
