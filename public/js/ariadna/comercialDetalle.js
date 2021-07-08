@@ -589,41 +589,59 @@ function actualizaClientes() {
     var mf = function () {
         if (!datosImportOK())
             return;
-        $('#btnActualizaClientes').addClass('fa-spin');
-        var url = myconfig.apiUrl + "/api/clientes/desde/agente/" + empId
-        var data = {
-            cliente: {
-                tipoViaId3: vm.stipoViaId(),
-                direccion3: vm.direccion(),
-                poblacion3: vm.poblacion(),
-                codPostal3: vm.codPostal(),
-                provincia3: vm.provincia(),
-                telefono1: vm.telefono1(),
-                fax: vm.fax(),
-                email: vm.email(),
-                email2: vm.email2(),
-                emailFacturas: vm.emailFacturas(),
-                colaboradorId: vm.sascComercialId(),
-                tarifaId: vm.starifaClienteId()
-            }
-        };
-       
-        $.ajax({
-            type: "PUT",
-            url: url,
-            dataType: "json",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function (data, status) {
-                $('#btnActualizaClientes').removeClass('fa-spin');
-                mensNormal('Los clientes se han actualizado con exito');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+
+    var mens = "Se actualizarán los datos de TODOS los clientes asociados al Agente ¿Realmente desea continuar?";
+
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+
+            $('#btnActualizaClientes').addClass('fa-spin');
+            var url = myconfig.apiUrl + "/api/clientes/desde/agente/" + empId
+            var data = {
+                cliente: {
+                    tipoViaId3: vm.stipoViaId(),
+                    direccion3: vm.direccion(),
+                    poblacion3: vm.poblacion(),
+                    codPostal3: vm.codPostal(),
+                    provincia3: vm.provincia(),
+                    telefono1: vm.telefono1(),
+                    fax: vm.fax(),
+                    email: vm.email(),
+                    email2: vm.email2(),
+                    emailFacturas: vm.emailFacturas(),
+                    colaboradorId: vm.sascComercialId(),
+                    tarifaId: vm.starifaClienteId()
+                }
+            };
+           
+            $.ajax({
+                type: "PUT",
+                url: url,
+                dataType: "json",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data, status) {
+                    $('#btnActualizaClientes').removeClass('fa-spin');
+                    mensNormal('Los clientes se han actualizado con exito');
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+            
+            
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
     };
+    
     return mf;
 }
 

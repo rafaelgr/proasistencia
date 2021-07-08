@@ -437,6 +437,7 @@ function contabilizarComerciales() {
 function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
+        var test = $('#chkTest').prop('checked')
         $('#progress').show();
         var url = myconfig.apiUrl + "/api/liquidaciones/preparar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) +   "/" + tipoComercialId;
         llamadaAjax("POST", url, null, function (err, data) {
@@ -444,7 +445,7 @@ function enviarCorreos() {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/liquidaciones/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            url = myconfig.apiUrl + "/api/liquidaciones/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + test;
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     $('#progress').hide();
