@@ -1,11 +1,11 @@
 {
-  "ReportVersion": "2021.3.2.0",
-  "ReportGuid": "6555c9dc1e0446b2aaf872f39aaf0a2a",
+  "ReportVersion": "2021.3.6.0",
+  "ReportGuid": "f2e1de2970de4ddfa7deee7143c3a1cb",
   "ReportName": "FacturaFondogar",
   "ReportAlias": "FacturaFondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(10800000+0100)/",
-  "ReportChanged": "/Date(1624955615731+0200)/",
+  "ReportChanged": "/Date(1627298737156+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -25,80 +25,79 @@
         "Ident": "StiDataTableSource",
         "Name": "bases",
         "Alias": "bases",
-        "Key": "05e81ccce5d74075a56d5e1f2ace6721",
+        "Key": "7690d439697e4527bf827a4e45a12e3c",
         "Columns": {
           "0": {
             "Name": "facturaBaseId",
             "Index": -1,
             "NameInSource": "facturaBaseId",
             "Alias": "facturaBaseId",
-            "Type": "System.Decimal",
-            "Key": "df731ab4318844ad9f0f0c6070247fab"
+            "Type": "System.Decimal"
           },
           "1": {
             "Name": "facturaId",
             "Index": -1,
             "NameInSource": "facturaId",
             "Alias": "facturaId",
-            "Type": "System.Decimal",
-            "Key": "9f5a39a7ef6a40f5890c6a9600c6b055"
+            "Type": "System.Decimal"
           },
           "2": {
             "Name": "tipoIvaId",
             "Index": -1,
             "NameInSource": "tipoIvaId",
             "Alias": "tipoIvaId",
-            "Type": "System.Decimal",
-            "Key": "9ce30bbf166343839c8703b45f59c1a8"
+            "Type": "System.Decimal"
           },
           "3": {
             "Name": "porcentaje",
             "Index": -1,
             "NameInSource": "porcentaje",
             "Alias": "porcentaje",
-            "Type": "System.Decimal",
-            "Key": "0aabfdee6c7c450a8df130b230d6ea85"
+            "Type": "System.Decimal"
           },
           "4": {
             "Name": "base",
             "Index": -1,
             "NameInSource": "base",
             "Alias": "base",
-            "Type": "System.Decimal",
-            "Key": "0eb0c59e188f46a6aa33d249057f8db5"
+            "Type": "System.Decimal"
           },
           "5": {
             "Name": "cuota",
             "Index": -1,
             "NameInSource": "cuota",
             "Alias": "cuota",
-            "Type": "System.Decimal",
-            "Key": "deb0098cd92b4b59b45054c8fa99faed"
+            "Type": "System.Decimal"
           },
           "6": {
             "Name": "tipoIva",
             "Index": -1,
             "NameInSource": "tipoIva",
             "Alias": "tipoIva",
-            "Type": "System.String",
-            "Key": "d1d6f2b3711142feb404f276e81b54ae"
+            "Type": "System.String"
           },
           "7": {
             "Name": "baseImp",
             "Index": -1,
             "NameInSource": "baseImp",
             "Alias": "baseImp",
-            "Type": "System.Decimal",
-            "Key": "57164c43088c413c87ebe4fef05d749e"
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
           }
         },
-        "NameInSource": "factura.bases"
+        "NameInSource": "factura.root_bases"
       },
       "1": {
         "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
-        "Key": "e034a7a4bd2d46b093567e868e56dbca",
+        "Key": "c1049a39efc841748ace37ed297a78e5",
         "Columns": {
           "0": {
             "Name": "facturaId",
@@ -470,15 +469,22 @@
             "NameInSource": "agenteTipoVia",
             "Alias": "agenteTipoVia",
             "Type": "System.String"
+          },
+          "53": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
           }
         },
-        "NameInSource": "factura.cabecera"
+        "NameInSource": "factura.root_cabecera"
       },
       "2": {
         "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
-        "Key": "4d9144393fe04714a8332b30e2ef52ac",
+        "Key": "123085923a2c4af087e72bfb40258a85",
         "Columns": {
           "0": {
             "Name": "facturaLineaId",
@@ -633,9 +639,16 @@
             "NameInSource": "direccionTrabajo",
             "Alias": "direccionTrabajo",
             "Type": "System.String"
+          },
+          "22": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
           }
         },
-        "NameInSource": "factura.lineas"
+        "NameInSource": "factura.root_lineas"
       }
     },
     "Databases": {
@@ -643,37 +656,8 @@
         "Ident": "StiJsonDatabase",
         "Name": "factura",
         "Alias": "factura",
-        "Key": "e93802beedbf4df79c3bc721a5dc33ac",
+        "Key": "83d9cb1007e54ffe93e496a37c5329cf",
         "PathData": "C:\\ariadna\\proasistencia\\public\\reports\\factura.json"
-      }
-    },
-    "Relations": {
-      "0": {
-        "Name": "cabecera_bases",
-        "ChildColumns": {
-          "0": "facturaId"
-        },
-        "ParentColumns": {
-          "0": "facturaId"
-        },
-        "NameInSource": "Relación",
-        "Alias": "cabecera_bases",
-        "Key": "9178cb399bd1489894c506374986bb00",
-        "ParentSource": "cabecera",
-        "ChildSource": "bases"
-      },
-      "1": {
-        "Name": "cabecera_lineas",
-        "ChildColumns": {
-          "0": "facturaId"
-        },
-        "ParentColumns": {
-          "0": "facturaId"
-        },
-        "NameInSource": "Relación2",
-        "Alias": "cabecera_lineas",
-        "ParentSource": "cabecera",
-        "ChildSource": "lineas"
       }
     }
   },

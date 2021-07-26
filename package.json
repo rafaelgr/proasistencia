@@ -41,7 +41,7 @@
     "serve-index": "^1.9.1",
     "socket.io": "^2.4.1",
     "sprintf-js": "^1.0.3",
-    "stimulsoft-reports-js": "^2021.3.4"
+    "stimulsoft-reports-js": "^2021.3.6"
   },
   "devDependencies": {}
 }
