@@ -9,4 +9,8 @@ ALTER TABLE `proasistencia`.`proveedores`
   ALTER TABLE `servicios`   
   ADD COLUMN `cerrado` TINYINT(1) DEFAULT 0 NULL AFTER `proveedorId`;
 
+  ALTER TABLE `servicios`   
+  ADD COLUMN `confirmado` TINYINT(1) DEFAULT 0 NULL AFTER `cerrado`;
+
+
 
