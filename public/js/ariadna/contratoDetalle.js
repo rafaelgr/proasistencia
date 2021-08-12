@@ -4303,6 +4303,7 @@ var actualizaAsociados = function(seleccionado, done) {
     var data = {
         contrato: {
             firmaActa: seleccionado,
+            contratoCerrado: vm.contratoCerrado()
         }
     };
     if(vm.fechaFirmaActa() && vm.fechaFirmaActa() != "") data.contrato.fechaFirmaActa =  spanishDbDate(vm.fechaFirmaActa());
