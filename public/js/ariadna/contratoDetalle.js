@@ -2888,6 +2888,54 @@ function initTablaPrefacturas() {
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 7 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(6).footer() ).html(
+                total
+            );
+
+            $( api.columns(7).footer() ).html(
+                total2 
+            );
+
+            //////
+
+            
+        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3063,6 +3111,7 @@ function borrarPrefacturas() {
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
+        "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -3128,6 +3177,54 @@ function initTablaFacturas() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 7 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(6).footer() ).html(
+                total
+            );
+
+            $( api.columns(7).footer() ).html(
+                total2 
+            );
+
+            //////
+
+            
         },
         language: {
             processing: "Procesando...",
@@ -3205,6 +3302,8 @@ function initTablaFacturas() {
     // Hide some columns by default
     tablaFacturas.columns(8).visible(false);
     tablaFacturas.columns(10).visible(false);
+
+    //tablaFacturas.columns(6).data().sum();
 }
 
 function loadFacturasDelContrato(contratoId) {
@@ -3322,6 +3421,54 @@ function initTablaFacproves() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                total
+            );
+
+            $( api.columns(6).footer() ).html(
+                total2 
+            );
+
+            //////
+
+            
         },
         language: {
             processing: "Procesando...",
