@@ -1,11 +1,11 @@
 {
-  "ReportVersion": "2017.1.10.0",
-  "ReportGuid": "b6dc040e8c3045cd92d69ee5c96af351",
+  "ReportVersion": "2021.3.1.0",
+  "ReportGuid": "6af80d8fe1fe40af9c887983b69d01eb",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1622105433209+0200)/",
+  "ReportChanged": "/Date(1627291702596+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -22,127 +22,200 @@
   "Dictionary": {
     "DataSources": {
       "0": {
-        "Ident": "StiMySqlSource",
+        "Ident": "StiDataTableSource",
+        "Name": "bases",
+        "Alias": "bases",
+        "Key": "9e98bbfe2d9743af8edcfa58561b25ea",
+        "Columns": {
+          "0": {
+            "Name": "facturaBaseId",
+            "Index": -1,
+            "NameInSource": "facturaBaseId",
+            "Alias": "facturaBaseId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "facturaId",
+            "Index": -1,
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "tipoIvaId",
+            "Index": -1,
+            "NameInSource": "tipoIvaId",
+            "Alias": "tipoIvaId",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "porcentaje",
+            "Index": -1,
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "base",
+            "Index": -1,
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "cuota",
+            "Index": -1,
+            "NameInSource": "cuota",
+            "Alias": "cuota",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "tipoIva",
+            "Index": -1,
+            "NameInSource": "tipoIva",
+            "Alias": "tipoIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "baseImp",
+            "Index": -1,
+            "NameInSource": "baseImp",
+            "Alias": "baseImp",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "factura.root_bases"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
+        "Key": "e8f208eb6b99440bae3b84c20769e5ed",
         "Columns": {
           "0": {
             "Name": "facturaId",
             "Index": -1,
             "NameInSource": "facturaId",
             "Alias": "facturaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "1": {
-            "Name": "prefacturaId",
-            "Index": -1,
-            "NameInSource": "prefacturaId",
-            "Alias": "prefacturaId",
-            "Type": "System.Int32"
-          },
-          "2": {
             "Name": "ano",
             "Index": -1,
             "NameInSource": "ano",
             "Alias": "ano",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "3": {
+          "2": {
             "Name": "numero",
             "Index": -1,
             "NameInSource": "numero",
             "Alias": "numero",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "4": {
+          "3": {
             "Name": "serie",
             "Index": -1,
             "NameInSource": "serie",
             "Alias": "serie",
             "Type": "System.String"
           },
-          "5": {
+          "4": {
             "Name": "fecha",
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
-          "6": {
+          "5": {
             "Name": "empresaId",
             "Index": -1,
             "NameInSource": "empresaId",
             "Alias": "empresaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "7": {
+          "6": {
             "Name": "clienteId",
             "Index": -1,
             "NameInSource": "clienteId",
             "Alias": "clienteId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "8": {
+          "7": {
             "Name": "contratoClienteMantenimientoId",
             "Index": -1,
             "NameInSource": "contratoClienteMantenimientoId",
             "Alias": "contratoClienteMantenimientoId",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
-          "9": {
+          "8": {
             "Name": "importeAnticipo",
             "Index": -1,
             "NameInSource": "importeAnticipo",
             "Alias": "importeAnticipo",
             "Type": "System.Decimal"
           },
-          "10": {
+          "9": {
             "Name": "restoCobrar",
             "Index": -1,
             "NameInSource": "restoCobrar",
             "Alias": "restoCobrar",
             "Type": "System.Decimal"
           },
-          "11": {
+          "10": {
             "Name": "emisorNif",
             "Index": -1,
             "NameInSource": "emisorNif",
             "Alias": "emisorNif",
             "Type": "System.String"
           },
-          "12": {
+          "11": {
             "Name": "emisorNombre",
             "Index": -1,
             "NameInSource": "emisorNombre",
             "Alias": "emisorNombre",
             "Type": "System.String"
           },
-          "13": {
+          "12": {
             "Name": "emisorDireccion",
             "Index": -1,
             "NameInSource": "emisorDireccion",
             "Alias": "emisorDireccion",
             "Type": "System.String"
           },
-          "14": {
+          "13": {
             "Name": "emisorCodPostal",
             "Index": -1,
             "NameInSource": "emisorCodPostal",
             "Alias": "emisorCodPostal",
             "Type": "System.String"
           },
-          "15": {
+          "14": {
             "Name": "emisorPoblacion",
             "Index": -1,
             "NameInSource": "emisorPoblacion",
             "Alias": "emisorPoblacion",
             "Type": "System.String"
           },
-          "16": {
+          "15": {
             "Name": "emisorProvincia",
             "Index": -1,
             "NameInSource": "emisorProvincia",
             "Alias": "emisorProvincia",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "receptorTipoVia",
+            "Index": -1,
+            "NameInSource": "receptorTipoVia",
+            "Alias": "receptorTipoVia",
             "Type": "System.String"
           },
           "17": {
@@ -209,216 +282,216 @@
             "Type": "System.String"
           },
           "26": {
-            "Name": "formapagoId",
-            "Index": -1,
-            "NameInSource": "formapagoId",
-            "Alias": "formapagoId",
-            "Type": "System.Int32"
-          },
-          "27": {
             "Name": "observaciones",
             "Index": -1,
             "NameInSource": "observaciones",
             "Alias": "observaciones",
             "Type": "System.String"
           },
-          "28": {
+          "27": {
             "Name": "periodo",
             "Index": -1,
             "NameInSource": "periodo",
             "Alias": "periodo",
             "Type": "System.String"
           },
-          "29": {
+          "28": {
             "Name": "porcentajeRetencion",
             "Index": -1,
             "NameInSource": "porcentajeRetencion",
             "Alias": "porcentajeRetencion",
             "Type": "System.Decimal"
           },
-          "30": {
+          "29": {
             "Name": "importeRetencion",
             "Index": -1,
             "NameInSource": "importeRetencion",
             "Alias": "importeRetencion",
             "Type": "System.Decimal"
           },
-          "31": {
+          "30": {
             "Name": "numeroVencimientos",
             "Index": -1,
             "NameInSource": "numeroVencimientos",
             "Alias": "numeroVencimientos",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "32": {
+          "31": {
             "Name": "primerVencimiento",
             "Index": -1,
             "NameInSource": "primerVencimiento",
             "Alias": "primerVencimiento",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "33": {
+          "32": {
             "Name": "restoVencimiento",
             "Index": -1,
             "NameInSource": "restoVencimiento",
             "Alias": "restoVencimiento",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
-          "34": {
+          "33": {
             "Name": "proId",
             "Index": -1,
             "NameInSource": "proId",
             "Alias": "proId",
             "Type": "System.String"
           },
-          "35": {
+          "34": {
             "Name": "postalTipoVia",
             "Index": -1,
             "NameInSource": "postalTipoVia",
             "Alias": "postalTipoVia",
             "Type": "System.String"
           },
-          "36": {
+          "35": {
             "Name": "postalDireccion",
             "Index": -1,
             "NameInSource": "postalDireccion",
             "Alias": "postalDireccion",
             "Type": "System.String"
           },
-          "37": {
+          "36": {
             "Name": "postalCodPostal",
             "Index": -1,
             "NameInSource": "postalCodPostal",
             "Alias": "postalCodPostal",
             "Type": "System.String"
           },
-          "38": {
+          "37": {
             "Name": "postalPoblacion",
             "Index": -1,
             "NameInSource": "postalPoblacion",
             "Alias": "postalPoblacion",
             "Type": "System.String"
           },
-          "39": {
+          "38": {
             "Name": "postalProvincia",
             "Index": -1,
             "NameInSource": "postalProvincia",
             "Alias": "postalProvincia",
             "Type": "System.String"
           },
-          "40": {
+          "39": {
             "Name": "iban",
             "Index": -1,
             "NameInSource": "iban",
             "Alias": "iban",
             "Type": "System.String"
           },
-          "41": {
+          "40": {
             "Name": "vencimiento",
             "Index": -1,
             "NameInSource": "vencimiento",
             "Alias": "vencimiento",
-            "Type": "System.DateTime"
+            "Type": "System.String"
           },
-          "42": {
+          "41": {
             "Name": "cuenta",
             "Index": -1,
             "NameInSource": "cuenta",
             "Alias": "cuenta",
             "Type": "System.String"
           },
-          "43": {
+          "42": {
             "Name": "direccion2",
             "Index": -1,
             "NameInSource": "direccion2",
             "Alias": "direccion2",
             "Type": "System.String"
           },
-          "44": {
+          "43": {
             "Name": "codPostal2",
             "Index": -1,
             "NameInSource": "codPostal2",
             "Alias": "codPostal2",
             "Type": "System.String"
           },
-          "45": {
+          "44": {
             "Name": "poblacion2",
             "Index": -1,
             "NameInSource": "poblacion2",
             "Alias": "poblacion2",
             "Type": "System.String"
           },
-          "46": {
+          "45": {
             "Name": "provincia2",
             "Index": -1,
             "NameInSource": "provincia2",
             "Alias": "provincia2",
             "Type": "System.String"
           },
-          "47": {
+          "46": {
             "Name": "direccionAgente",
             "Index": -1,
             "NameInSource": "direccionAgente",
             "Alias": "direccionAgente",
             "Type": "System.String"
           },
-          "48": {
+          "47": {
             "Name": "poblacionAgente",
             "Index": -1,
             "NameInSource": "poblacionAgente",
             "Alias": "poblacionAgente",
             "Type": "System.String"
           },
-          "49": {
+          "48": {
             "Name": "provinciaAgente",
             "Index": -1,
             "NameInSource": "provinciaAgente",
             "Alias": "provinciaAgente",
             "Type": "System.String"
           },
-          "50": {
+          "49": {
             "Name": "codPostalAgente",
             "Index": -1,
             "NameInSource": "codPostalAgente",
             "Alias": "codPostalAgente",
             "Type": "System.String"
           },
-          "51": {
+          "50": {
             "Name": "nifAgente",
             "Index": -1,
             "NameInSource": "nifAgente",
             "Alias": "nifAgente",
             "Type": "System.String"
           },
-          "52": {
+          "51": {
             "Name": "nombreAgente",
             "Index": -1,
             "NameInSource": "nombreAgente",
             "Alias": "nombreAgente",
             "Type": "System.String"
           },
-          "53": {
+          "52": {
             "Name": "agenteTipoVia",
             "Index": -1,
             "NameInSource": "agenteTipoVia",
             "Alias": "agenteTipoVia",
             "Type": "System.String"
+          },
+          "53": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
           }
         },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT\r\npf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie, DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, fp.formapagoId AS formapagoId, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, \r\ntpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, cl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,\r\ncl.iban, DATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,4), \"****************\", SUBSTR(cl.iban,20))  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion2 AS poblacion2, cl.provincia2 AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n"
+        "NameInSource": "factura.root_cabecera"
       },
-      "1": {
-        "Ident": "StiMySqlSource",
+      "2": {
+        "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
+        "Key": "b02156fb44bf42e2b90d9697a712f5de",
         "Columns": {
           "0": {
             "Name": "facturaLineaId",
             "Index": -1,
             "NameInSource": "facturaLineaId",
             "Alias": "facturaLineaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "1": {
             "Name": "linea",
@@ -432,28 +505,28 @@
             "Index": -1,
             "NameInSource": "facturaId",
             "Alias": "facturaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "3": {
             "Name": "unidadId",
             "Index": -1,
             "NameInSource": "unidadId",
             "Alias": "unidadId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "4": {
             "Name": "articuloId",
             "Index": -1,
             "NameInSource": "articuloId",
             "Alias": "articuloId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "5": {
             "Name": "tipoIvaId",
             "Index": -1,
             "NameInSource": "tipoIvaId",
             "Alias": "tipoIvaId",
-            "Type": "System.Int32"
+            "Type": "System.Decimal"
           },
           "6": {
             "Name": "porcentaje",
@@ -566,109 +639,51 @@
             "NameInSource": "direccionTrabajo",
             "Alias": "direccionTrabajo",
             "Type": "System.String"
-          }
-        },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo, par.numparte, ser.numservicio, u.abrev, pl.codigoArticulo, ser.direccionTrabajo\r\nFROM facturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId\r\nLEFT JOIN `partes_lineas` AS pl ON pl.`facturaLineaId` = pfl.`facturaLineaId`\r\nLEFT JOIN `partes` AS par ON par.`parteId` = pl.`parteId`\r\nLEFT JOIN servicios AS ser ON ser.servicioId = par.servicioId\r\nLEFT JOIN unidades AS u ON u.unidadId = pfl.unidadId\r\n"
-      },
-      "2": {
-        "Ident": "StiMySqlSource",
-        "Name": "bases",
-        "Alias": "bases",
-        "Columns": {
-          "0": {
-            "Name": "facturaBaseId",
-            "Index": -1,
-            "NameInSource": "facturaBaseId",
-            "Alias": "facturaBaseId",
-            "Type": "System.Int32"
           },
-          "1": {
-            "Name": "facturaId",
+          "22": {
+            "Name": "relationId",
             "Index": -1,
-            "NameInSource": "facturaId",
-            "Alias": "facturaId",
-            "Type": "System.Int32"
-          },
-          "2": {
-            "Name": "tipoIvaId",
-            "Index": -1,
-            "NameInSource": "tipoIvaId",
-            "Alias": "tipoIvaId",
-            "Type": "System.Int32"
-          },
-          "3": {
-            "Name": "porcentaje",
-            "Index": -1,
-            "NameInSource": "porcentaje",
-            "Alias": "porcentaje",
-            "Type": "System.Decimal"
-          },
-          "4": {
-            "Name": "base",
-            "Index": -1,
-            "NameInSource": "base",
-            "Alias": "base",
-            "Type": "System.Decimal"
-          },
-          "5": {
-            "Name": "cuota",
-            "Index": -1,
-            "NameInSource": "cuota",
-            "Alias": "cuota",
-            "Type": "System.Decimal"
-          },
-          "6": {
-            "Name": "tipoIva",
-            "Index": -1,
-            "NameInSource": "tipoIva",
-            "Alias": "tipoIva",
+            "NameInSource": "relationId",
+            "Alias": "relationId",
             "Type": "System.String"
-          },
-          "7": {
-            "Name": "baseImp",
-            "Index": -1,
-            "NameInSource": "baseImp",
-            "Alias": "baseImp",
-            "Type": "System.Decimal"
           }
         },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfb.*, t.nombre AS tipoIva, pfb.base AS baseImp \r\nFROM facturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId\r\n"
+        "NameInSource": "factura.root_lineas"
       }
     },
     "Databases": {
       "0": {
-        "Ident": "StiMySqlDatabase",
-        "Name": "PROA_REPORT",
-        "Alias": "PROA_REPORT",
-        "ConnectionStringEncrypted": "41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"
+        "Ident": "StiJsonDatabase",
+        "Name": "factura",
+        "Alias": "factura",
+        "Key": "58f33dbc34b746a29d04f67decf1726a",
+        "PathData": "C:\\ariadna\\proasistencia\\public\\reports\\factura.json"
       }
     },
     "Relations": {
       "0": {
-        "Name": "cabecera_lineas",
+        "Name": "Nombre",
         "ChildColumns": {
           "0": "facturaId"
         },
         "ParentColumns": {
           "0": "facturaId"
         },
-        "NameInSource": "cabecera_lineas",
-        "Alias": "cabecera_lineas",
+        "NameInSource": "Relación",
+        "Alias": "Nombre",
         "ParentSource": "cabecera",
         "ChildSource": "lineas"
       },
       "1": {
-        "Name": "cabecera_bases",
+        "Name": "Nombre",
         "ChildColumns": {
           "0": "facturaId"
         },
         "ParentColumns": {
           "0": "facturaId"
         },
-        "NameInSource": "cabecera_bases",
-        "Alias": "cabecera_bases",
+        "NameInSource": "Relación2",
+        "Alias": "Nombre",
         "ParentSource": "cabecera",
         "ChildSource": "bases"
       }
@@ -688,7 +703,7 @@
         "0": {
           "Ident": "StiPageHeaderBand",
           "Name": "PageHeaderBand1",
-          "ClientRectangle": "0,0.4,19,2.2",
+          "ClientRectangle": "0,0.4,19,2.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -697,40 +712,36 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text2",
-              "Guid": "0944073aa0b94420a34695c0159472f4",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.4,0.6,6,1.4",
+              "Name": "Text4",
+              "ClientRectangle": "6,0.2,7.4,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ASITEC"
+                "Value": "FONDOGAR SL"
               },
-              "Font": "Arial Unicode MS;36;Bold;",
+              "HorAlignment": "Center",
+              "Font": ";27.75;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:OrangeRed",
+              "TextBrush": "solid:DarkRed",
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text6",
-              "Guid": "d0730c5264714fc1a47b06a0076d0568",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "6.8,1.2,11.8,1",
+              "ClientRectangle": "3.4,1.2,12.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Asistencia y Mantenimiento de Edificios"
+                "Value": "CONSERVACIÓN Y MANTENIMIENTO DE EDIFICIOS"
               },
-              "Font": "Arial Unicode MS;18;Bold;",
+              "HorAlignment": "Center",
+              "Font": ";14.25;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:OrangeRed",
+              "TextBrush": "solid:DarkRed",
               "Type": "Expression"
             }
           }
@@ -738,7 +749,8 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,32.24,19,1",
+          "Guid": "bc8c25a5ff8d44dc865ce177ef35f4bc",
+          "ClientRectangle": "0,25.7,19,2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -748,28 +760,26 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text7",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0,18.8,0.4",
+              "Guid": "02f0097615834386af5b33e2c852999b",
+              "ClientRectangle": "0.4,0.16,18.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "SIERRA DE GUADARRAMA C.B. - E82315227 - C/ Travesia de Portezuela Nº10 - 28470 - Cercedilla (Madrid) - Tfno. 91 290 44 27"
+                "Value": "FONDOGAR SL. CIF. B81002057. C/ RAMÓN Y CAJAL 37 CERCEDILLA 28470 MADRID"
               },
               "HorAlignment": "Center",
-              "Font": ";9;Bold;",
+              "Font": ";12;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
-              "TextBrush": "solid:Black",
+              "TextBrush": "solid:DarkRed",
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text46",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "4.2,0.56,9.8,0.4",
+              "Guid": "73fbe27a87074c0983127748cece42f3",
+              "ClientRectangle": "0.6,1.36,18,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -777,7 +787,44 @@
                 "Value": "{PageNumber} de {TotalPageCount}"
               },
               "HorAlignment": "Center",
+              "Font": ";9;;",
               "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text10",
+              "Guid": "d4b89ca6e2f04812ab5fe456bd057d62",
+              "ClientRectangle": "0.6,0.6,18,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Telf.:910611956 fondogar@fondogar.es"
+              },
+              "HorAlignment": "Center",
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text34",
+              "Guid": "b3ec70d4c69f424fa005ef96273a4a93",
+              "ClientRectangle": "0.6,1.02,18,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "R.M. MADRID. Tomo 8618, secc. 8ª, Folio 166. Hoja M-138714 "
+              },
+              "HorAlignment": "Center",
+              "Font": "Arial Narrow;9;Bold, Italic;",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -787,8 +834,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "Datacabecera",
-          "Guid": "d567218a790447218b7c8c6366a25dc3",
-          "ClientRectangle": "0,3.4,19,4.4",
+          "ClientRectangle": "0,3.6,19,3.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -797,19 +843,18 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text13",
-              "Guid": "f0c8793a1edb40ca82330baa14206028",
+              "Name": "Text20",
+              "Guid": "ccf94d8857900fb669973bdbed51fa2a",
               "CanGrow": true,
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,1.4,9,0.8",
+              "GrowToHeight": true,
+              "ClientRectangle": "1.2,0.2,9.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "NIF: {cabecera.emisorNIf} ({cabecera.emisorNombre})"
+                "Value": "{cabecera.receptorNombre}"
               },
-              "Font": ";10;Bold;",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -820,56 +865,55 @@
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text13",
-              "Guid": "735ac3e5a9fc48a5a1d67c6099ab8897",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.2,9,0.6",
+              "Name": "Text24",
+              "Guid": "f3bfbb55aac6a3e3cf38bafc2fbc6437",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "1.2,1.2,9.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.emisorDireccion} ({cabecera.emisorCodPostal}) {cabecera.receptorPoblacion} [{cabecera.receptorProvincia}]"
+                "Value": "{cabecera.receptorDireccion} {cabecera.receptorCodPostal}-{cabecera.receptorPoblacion}"
               },
-              "Font": ";10;;",
+              "Font": ";11.25;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text9",
+              "Guid": "9f559688652a4580a3309abce0a88cef",
+              "ClientRectangle": "1.2,0.8,9.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "N.I.F.: {cabecera.receptorNif}"
+              },
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text14",
-              "Guid": "c398a25271864d59beb4c7abc742bb52",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.6,6.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "FACTURA Nº: {cabecera.serie}-{cabecera.ano}-{cabecera.numero}"
-              },
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
             "3": {
               "Ident": "StiText",
-              "Name": "Text10",
-              "Guid": "0a38afa9cf39420ab19894ecc662e770",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,2.8,9,0.6",
+              "Name": "Text14",
+              "Guid": "67a81f5883fe43999113a9fd35fcc9b1",
+              "ClientRectangle": "12.6,0.2,2.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "PERIODO FACTURADO: {cabecera.periodo}"
+                "Value": "FACTURA Nº: "
               },
-              "Font": ";9.75;;",
+              "Font": ";11.25;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -877,18 +921,16 @@
             },
             "4": {
               "Ident": "StiText",
-              "Name": "Text16",
-              "Guid": "1f7bb36400fb4feeb98e0beed79bb463",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,3.4,9,0.6",
+              "Name": "Text19",
+              "Guid": "0e539fd22c354f1f8f4abf312da6edfe",
+              "ClientRectangle": "15.2,0.2,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FORMA DE PAGO: {cabecera.formaPago}"
+                "Value": "{cabecera.serie}-{cabecera.ano}-{cabecera.numero.ToString(\"000000\")}"
               },
-              "Font": ";9.75;;",
+              "Font": ";11.25;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -896,61 +938,49 @@
             },
             "5": {
               "Ident": "StiText",
-              "Name": "Text12",
-              "Guid": "74948c1501bb4c8589189b43e0538c7b",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "6.6,0.6,2.4,0.6",
+              "Name": "Text28",
+              "Guid": "ccbd7e124c6449d486236454a523f341",
+              "ClientRectangle": "14.4,0.8,4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{cabecera.fecha}"
               },
-              "Font": ";9.75;Bold;",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextFormat": {
-                "Ident": "StiDateFormatService",
-                "StringFormat": "dd/MM/yyyy"
-              }
+              "TextBrush": "solid:0,0,0"
             },
             "6": {
               "Ident": "StiText",
-              "Name": "Text11",
-              "Guid": "99f6a2f856a34725bad152118e98ee81",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "12,1.4,6.8,0.6",
+              "Name": "Text31",
+              "Guid": "d941461b4c874ae395137ebeafc0bb8c",
+              "ClientRectangle": "12.6,0.8,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.receptorNombre}"
+                "Value": "FECHA:"
               },
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
+              "Font": ";11.25;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "DataColumn"
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
             },
             "7": {
               "Ident": "StiText",
-              "Name": "Text17",
-              "Guid": "f7a4998bf4084389abb703f0877ee35e",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "12,2.2,6.8,0.6",
+              "Name": "Text1",
+              "Guid": "990eb239c9194f12b3e5921b9ced5a5d",
+              "ClientRectangle": "1.2,2.6,9.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.postalDireccion}"
+                "Value": "Presupuesto {cabecera.refOferta}"
               },
-              "Font": ";9.75;Bold;",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -958,37 +988,16 @@
             },
             "8": {
               "Ident": "StiText",
-              "Name": "Text19",
-              "Guid": "8b797bb273ea458ab72f53a65a20fd10",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "12,3.4,6.8,0.6",
+              "Name": "Text2",
+              "Guid": "61466edc557c450ca132437a891795d1",
+              "ClientRectangle": "1.2,2.2,9.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.postalCodPostal}-{cabecera.postalPoblacion}"
+                "Value": "Lugar de trabajo {cabecera.direccion2}"
               },
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "9": {
-              "Ident": "StiText",
-              "Name": "Text30",
-              "Guid": "98fea03d1b6b4010baeddc7626a8f6ef",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "12,2.8,6.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.postalProvincia}"
-              },
-              "Font": ";9.75;Bold;",
+              "Font": ";11.25;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1002,9 +1011,47 @@
           }
         },
         "3": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "Guid": "174e834607de45edb2a5fd3e0e9ae168",
+          "ClientRectangle": "0,7.8,19,1",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "Guid": "07eda74fd0604f1d9fd52e513f0e8482",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "1.2,0.2,14.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.capituloLinea}"
+              },
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          },
+          "Condition": {
+            "Value": "{lineas.capituloLinea}"
+          }
+        },
+        "4": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,8.6,19,0.8",
+          "ClientRectangle": "0,9.6,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1014,20 +1061,18 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text21",
-              "Guid": "b78d063719ac41139a2e517bfb5f6bf1",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "17,0,2,0.8",
+              "Guid": "670d95fa334f472d81d27a91a71f6bc2",
+              "ClientRectangle": "15.8,0.2,2.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Euros"
+                "Value": "Importe"
               },
-              "HorAlignment": "Center",
+              "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";11.25;;",
+              "Border": "Bottom;Silver;;;;;;solid:Gray",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -1035,62 +1080,17 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text35",
-              "Guid": "6f12129b5f0b4073a2de533f66b3b247",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "1.6,0,14,0.8",
+              "Guid": "e75a5f985166476a9b0e1cfbc467159e",
+              "ClientRectangle": "1.2,0.2,13.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Concepto"
               },
-              "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "Guid": "ebc755e6d9c14f4090c7cd27e672f23e",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0,1.6,0.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Cantidad"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text15",
-              "Guid": "ecce6884ff9548cfa7d41575d31211b5",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "15.6,0,1.4,0.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Precio/\r\nUnidad"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";11.25;;",
+              "Border": "Bottom;Silver;;;;;;solid:Gray",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -1098,11 +1098,10 @@
           },
           "PrintIfEmpty": true
         },
-        "4": {
+        "5": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "CanShrink": true,
-          "ClientRectangle": "0,10.2,19,2.6",
+          "ClientRectangle": "0,11.4,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1112,21 +1111,18 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text23",
-              "Guid": "edc8515bc2a44c36ad9ebe961f8698a8",
               "CanGrow": true,
-              "GrowToHeight": true,
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "1.6,0,14,0.6",
+              "MinSize": "13.6,0.4",
+              "MaxSize": "13.6,20",
+              "ClientRectangle": "1.2,0,13.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{lineas.descripcion}"
               },
-              "HorAlignment": "Center",
               "Font": ";9.75;;",
-              "Border": "Left, Right;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
@@ -1137,10 +1133,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text27",
-              "Guid": "e7a705e1321a43a38ee4702fd4b3e9da",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "17,0,2,0.6",
+              "ClientRectangle": "15.8,0,2.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1149,72 +1142,22 @@
               },
               "HorAlignment": "Right",
               "Font": ";9.75;;",
-              "Border": "Left, Right;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "GroupSeparator": ",",
-                "State": "DecimalDigits, GroupSeparator"
-              }
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text18",
-              "Guid": "cea696516c8848388e95bd705c01b1e2",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "15.6,0,1.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{lineas.importe}"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Left, Right;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "DataColumn",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "GroupSeparator": ",",
-                "State": "DecimalDigits, GroupSeparator"
-              }
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text18",
-              "Guid": "56c1c916da65484aa1788516dcf76397",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0,1.6,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{lineas.cantidad}"
-              },
-              "HorAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "Left, Right;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "DataColumn",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "GroupSeparator": ",",
-                "State": "DecimalDigits, GroupSeparator"
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
               }
             }
           },
-          "CanGrow": false,
-          "MinHeight": 1.5,
-          "MaxHeight": 2.6,
+          "MinHeight": 0.6,
+          "MaxHeight": 20.0,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
@@ -1223,10 +1166,10 @@
             "1": "linea"
           }
         },
-        "5": {
+        "6": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
-          "ClientRectangle": "0,13.6,19,0",
+          "ClientRectangle": "0,12.8,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1237,19 +1180,134 @@
             "Value": "{bases.tipoIva}"
           }
         },
-        "6": {
-          "Ident": "StiDataBand",
-          "Name": "Databases",
-          "ClientRectangle": "0,14.4,19,1.2",
-          "Conditions": {
+        "7": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand2",
+          "ClientRectangle": "0,13.6,19,1.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
             "0": {
-              "Ident": "StiCondition",
-              "Column": "bases.tipoIva",
-              "Value1": "Exento",
-              "Enabled": false,
-              "BorderSides": "None"
+              "Ident": "StiText",
+              "Name": "Text13",
+              "ClientRectangle": "1.2,0,5.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "DESGLOSE DE FACTURA"
+              },
+              "Font": ";11.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text38",
+              "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
+              "ClientRectangle": "1.2,0.8,3,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "BASE \r\nIMPONIBLE"
+              },
+              "HorAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text70",
+              "Guid": "c64a5aa5507242899b3cc9239b250e9b",
+              "ClientRectangle": "4.6,0.8,3,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "IVA\r\n"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text55",
+              "Guid": "ec17feac82ef4c5182fd559ed7189a0d",
+              "ClientRectangle": "8,0.8,3.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL \r\nFACTURA"
+              },
+              "HorAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text53",
+              "Guid": "63407d8ab3304b5aa594b9484905b0ff",
+              "ClientRectangle": "11.6,0.8,3.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "ENTRAGAS\r\nA CUENTA"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "f75a2dbdf7194880b378281562c80ca1",
+              "ClientRectangle": "15.2,0.8,3.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL A \r\nABONAR"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
             }
           },
+          "PrintAtBottom": true,
+          "PrintIfEmpty": true
+        },
+        "8": {
+          "Ident": "StiDataBand",
+          "Name": "Databases",
+          "CanShrink": true,
+          "ClientRectangle": "0,16.2,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1260,94 +1318,150 @@
               "Ident": "StiText",
               "Name": "Text69",
               "Guid": "3df945e6a6854d6e848bbd978ddcb473",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16,0,3,0.4",
+              "ClientRectangle": "1.2,0,3,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{bases.baseImp}"
               },
-              "HorAlignment": "Center",
-              "Font": ";9.75;;",
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
-              "Type": "DataColumn",
               "TextFormat": {
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
+              },
+              "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text70",
-              "Guid": "c64a5aa5507242899b3cc9239b250e9b",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0.4,16,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{bases.tipoIva} IVA"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
               "Name": "Text72",
               "Guid": "761437e1256745ada8b323f59a0ee45b",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16,0.4,3,0.4",
+              "ClientRectangle": "5.8,0,1.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{bases.cuota}"
               },
-              "HorAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "All;;;;;;;solid:Black",
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "Top, Right, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
               "TextFormat": {
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text73",
+              "Guid": "67e4d076a7f345e5b54843c5266c0000",
+              "ClientRectangle": "8,0,3.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "ProcessingDuplicates": "Merge",
+              "Text": {
+                "Value": "{cabecera.totalConIva}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
             },
             "3": {
               "Ident": "StiText",
-              "Name": "Text38",
-              "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0,16,0.4",
+              "Name": "Text12",
+              "Guid": "26cd908b91484c2a8daf6847bb23bd81",
+              "ClientRectangle": "11.6,0,3.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "ProcessingDuplicates": "Merge",
+              "Text": {
+                "Value": "{cabecera.importeAnticipo}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "34dc5df6a4284586b5dcdc11fa2141a7",
+              "ClientRectangle": "15.2,0,3.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "ProcessingDuplicates": "Merge",
+              "Text": {
+                "Value": "{cabecera.restoCobrar}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "DataColumn"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "ClientRectangle": "4.6,0,1.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Base Imponible"
+                "Value": "{bases.tipoIva}"
               },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Top, Left, Right;;;;;;;solid:Black",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "Top, Left, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           },
@@ -1358,303 +1472,15 @@
           "Columns": 1,
           "MasterComponent": "Datacabecera"
         },
-        "7": {
-          "Ident": "StiFooterBand",
-          "Name": "FooterBand2",
-          "ClientRectangle": "0,16.4,19,1.4",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text3",
-              "Guid": "34dc5df6a4284586b5dcdc11fa2141a7",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16,0.8,3,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "ProcessingDuplicates": "Merge",
-              "Text": {
-                "Value": "{cabecera.restoCobrar}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9;Bold;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text5",
-              "Guid": "f75a2dbdf7194880b378281562c80ca1",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0.8,16,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Total a Pagar"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": ";9;Bold;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text4",
-              "Guid": "2e8265dec38547aab2cf4441c116896b",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0.4,16,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "A Cuenta"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text8",
-              "Guid": "3ff9e6734b0a40bdbe28f6748f906290",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16,0.4,3,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "HideZeros": true,
-              "Text": {
-                "Value": "{cabecera.importeAnticipo}"
-              },
-              "HorAlignment": "Center",
-              "Font": ";8.25;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text73",
-              "Guid": "b15f6ce9567a4b5a83b2c70e42ac3f6a",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16,0,3,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "ProcessingDuplicates": "Merge",
-              "Text": {
-                "Value": "{cabecera.totalConIva}"
-              },
-              "HorAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
-            },
-            "5": {
-              "Ident": "StiText",
-              "Name": "Text55",
-              "Guid": "5ff7061b1ba44dbfa2bb66194deb240a",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0,0,16,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Total Factura"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Top, Left, Right;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            }
-          }
-        },
-        "8": {
+        "9": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,18.6,19,1.8",
+          "ClientRectangle": "0,17.8,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text58",
-              "Guid": "79bc22b4686840eda072617f9609816f",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.4,9.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Forma de Pago: {cabecera.formaPago}"
-              },
-              "Font": ";9.75;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text1",
-              "Guid": "2004bc834ea2493dac3c3d4400a738ec",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "14.4,0.4,1.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Importe"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;;",
-              "Border": "Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text26",
-              "Guid": "7b825e8656f648a6a827983c9bed42a5",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16.6,0.4,2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fecha Vto."
-              },
-              "HorAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text28",
-              "Guid": "5e53219450c64d498e2d67a200efff56",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "14.4,0.8,1.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.restoCobrar}"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              }
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text29",
-              "Guid": "0e67d19576ff4eb6b0302dec17ea4173",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "16.6,0.8,2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.vencimiento.ToString(\"dd/MM/yyyy\")}"
-              },
-              "HorAlignment": "Right",
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression",
-              "TextFormat": {
-                "Ident": "StiDateFormatService"
-              }
-            },
-            "5": {
-              "Ident": "StiText",
-              "Name": "Text20",
-              "Guid": "e3147eea2f4a4e6aa416b007eebd63b4",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "0.2,0.8,9.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "IBAN: {IIF(cabecera.formapagoId == 13 || cabecera.formapagoId == 6  ,\"\",cabecera.cuenta)}"
-              },
-              "Font": ";9.75;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            }
-          },
           "PrintAtBottom": true,
           "NewPageAfter": true
         }

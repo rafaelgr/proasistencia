@@ -11,6 +11,7 @@
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
+  <Key>cb03a3b5d121461682df2ee65b903dd0</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
     <Page1 Ref="2" type="Page" isKey="true">
@@ -26,6 +27,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,2,1.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>de563db9714f4d1794224d69ad5bb0e5</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -44,6 +46,7 @@ CALCULO</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.6,2,1,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold</Font>
               <Guid>e05688419664430e86152b729f4c3120</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -61,6 +64,7 @@ CALCULO</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,2,2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>ed76c10d3d5d4913a3a6f0eade5d9fe4</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -79,6 +83,7 @@ LIQUI.</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12,2,1.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Guid>ec631b0b5f1e4c5498b486a1fe06b940</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -97,6 +102,7 @@ LIQUI.</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>2,2,8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -113,6 +119,7 @@ LIQUI.</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,2,1.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -129,6 +136,7 @@ LIQUI.</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>10.2,2,1.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -145,8 +153,10 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,0,3,1.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Guid>a8f9a86e233a4e119b441b042ce5cefb</Guid>
-              <Image>/9j/4AAQSkZJRgABAQEAYABgAAD/4QBmRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAMBAAUAAAABAAAAVgMDAAEAAAABAAAAAFEQAAEAAAABAQAAAFERAAQAAAABAAAOw1ESAAQAAAABAAAOwwAAAAAAAYagAACxj//bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAH8AuAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP358wbwu4biMgeo/wAkUizLJt2srbhuXB6j1H5j86ZKxQ/eZVYg7uMLyBt/H+p5HFI7cH95N/H0T3+nbt6+9AEizLJt2srbhuXB6j1H5j86FmWTbtZW3DcuD1HqPzH503d+++9J9/GNvy/d6Zx0759eM9qarnavzS9E52e/079/T260APEqyBdrK24blwfvD1H5j86VZlfZtKtuG5cHqPUfmPzqvNcLbwszSSKAHJbZ0APXp27evv1rndd+IS20jQ2YaRi3EjL8q47D1HB6468HpXg55xJl2UUvbY6oorour9Fuzajh6lV2grnUidX24ZWDDcuD1HqPzH50C4Ryu1lbcNwweo9R+YrzS88W3mqH5ppgsmHVEcLjkdMHtx/TOartrV4JObi4j2kAF5D0ZiMA8+gIGc5xnFflOK8c8ujPloUJSXdtL9WepHJav2mj1JZ1k27WU7huXB6j1H5j86FmVgu1lbcNy89R7fmPzrzKDxNqMC/u7i6XI453FhycfN0PTrjGcZqXxJ+0BZeB9Mmm1TdJIMmOK3A8yRuMKAT36ZPPzDHaveyPxdybMKqoVOalJ7cy0+9bfOyI/sTFSko0lzN9FuekJKr7cMrbhuXB+8PUfmPzoluY4fvSIo9z+P8AQ1+XPx9/4K+/EjXNautM8O6Xb+DVt3MR+1pvupvu4fafuKeSCDjDA8kZPz34g/ay+KPie6a6u/iF4oDsWJaC6e3ypw2RtPHy89gdo5zzX7BSwjqQVRNWe3W676H6zk/gPneLpKtiKkKSeybbf4K34n7lRXMc3KyRt9D+P+FK7BOCfvHj3NfhV4c/aR+JHhe5hNl448UQCNwqRm8ZkX5+mxjjOS5xtPTPIJB9q+Dn/BW74pfDeSFdb+x+LtKiO6dZm8uZVOGPz4JyeSDzkN06AaywE0vdaZvmfgDndCm54WrCp5axb9L6fe0frUJ1LjkfMSo9yM5H6H8qckiuPlOeTz7jg1+fniX/AILt+F9b8MxweD9FubzxLLH/AKRDeN5cFo2w7trAEsFbGNyjdk8ACvnj4i/8FEPi98SpJPtHiaTSbWXO6202PyVAKbcFjk4AJ5AU5OTzWtHKa8/iXL6n5rT4LzJVHTxEfZtO3vfpa915n7Efa4t+3zEznGN3Oef8D+RpySrNGGUhlbkEV+G0vx78fXF0sz+NvEzS9dx1B8nJB/pz/iBjq/BP7cXxb8BTxyWfjTVbzyyGKXri4EhAGM5GenHrgkDA4reWSTtpJHTLgqvb3Jq/mmv8z9nFmXC/MPmJUe5Gcj9D+VHnqQp3D5iVHuRnI/Q/lXwP+z5/wWXjub23sfiPpK2aMSrapYKTHknIZo/4VA4xljkZzzivt/wd420jx94fg1bRNTj1TT7hd0dxbESJIFPPIHU56dxyPWvMxGFqUX+8Xz6HzOYZXicHLlrxt2e6fzNsTq235l+YlRz1IzkfofyoE6nb8y/MSo56kZyP0P5VGeW2+bNnJXOzoTyO3boD07HJoMpY7l81uQ2NuODxjkdupHX+Vc555KkiyfdO7kj8RwaKihU7xld2wFd7Y3Hp0x69+nI6UUAEoEUgb7u45Y8AE8AA9+ePy/Akb8L+8L5bB2r8uQMEd8DIPU9eM9qJQIpA33dxyx4AJ4AB788fl+BQB2P/AC0DEbN64wOM7gMnucev1HNACq+VH7yb+Dqnv9O/f09qjnuFhiZnmkjUbssyhQOcdSMcdvX3pxfccr52MhsbccHjHI/Ejr/Kua+ImstaQJYwtIrSL855JxwB7nOeSD65r5/ibPqWT5dUx9b7K0XdvZfNm2HourUUI9TG8X+LpNaneOOZ47WMjEa4VpfTOfU8AHH59MTcp8xo9027f93K5Iba3zcDIwAM4PHXqQryeQN3yx7QXYMpVQCCTlgducjJPOB9clzloXeRtzeVl8DLF1weABgZyenPAGeSMfxLnWd4vNsVLF4yXNKX3JdEl0sfY0aMKMOSH/Dhs82TaV3qzCQt5mURlwNo7/eGcEY6/Sm2z7442VkfcpkGxdolU5PA3cHO3k+vbPCiHO5fNHyuMGNB5iOeST1GTuyeBwT65qK9u0gs5Li6Ef2eOAs5O1lwQMqp44+XnI5yPoPJj72hvG70RzvxI8fw+CdLkUeTLqFxny4yQ3KjIcgLktgA4wenHTnxnU9VuNQ1Sa4uriWSeRjuaVsKh/hz8wGAhLEdcYPy4UVc8TeIpvF2vSXc0knlzH90gmwpQ9QpwedpBHOTtOMDJOXAm6JV+VWVQuVU/IcIcbVwQPnYAnawUnB+81fWYHBxpQ13e5+kZTlscLSvb33v/kv61OH+PHwC0342aFJlWsdatwfs95HHlgMkYbIG4EA8ZHXrg5r4p1/w9eeEddvNLvrcWd9YlY5Ie24q2Mc/d5GM9uu3rX6HH5OVZlZidjSAjazIg8w7gBntt5JztG0AhfA/25PhRHqWhw+MbO323Wmssd+Nu0tCRwWwcg8p2yV4JGAK/dPCzjSrhcTHKcXK9ObtFv7Ley9Hsl3P1TgziGdGssFXfuS+G/R9vR7drnzC4ESuwVgsfO7HK5ywzwc538DGCR7g15j8QfHreJJ/sVpI0djECoKy5Nxg46gnKg4OQcZOe+B0HxY8RNpem2+nxsvm3Ch2YNgKp9COu47uR8pDdM4rzeEMIkC52gY4G0r/AHeO2MDIx3zgciv6qy/Cq3tZ/L/M+t4izSSl9VpP1f6BDcGCdJ42+ytG4dWBCsMYCnsQRkHrnnHfA9d+FnxI/wCEliGn3h26hCBsJ4Mygdc/3uD+Xoa8gU52uN3lt1VW3KvTGOMcE44znHQnpNpd9Np1zbzQMyyRsHDRn5ScnoS3tn14PrivSlHmjr8v63Pz7Mcvp4qlyy+JbPs/8vI+jC2Pw5/z/n6UAc4/D+v+f6Vn+G9fj8S6Db3qZHmR5cEY2t0I/Q1oH5j/AJ9P8/8A1q4eU/N5xcJOEt1uNK7h7/4165+yD+2Jr/7JHjaOa2muL7wrdSp/aOmFiV25wZYxkAOqluOhwB1CkeS9fyz9M01lyPz/AM/5/TrWdSnGceSaumc2Iw8K9N0qqvF9D90vhl8StJ+MXgbS/Efh+9W80nV4FngmjxgDPKkEZDZypBHG09DW4X3Kp+6m/ILOQeR3B9zjafb6V+bP/BIn9paTwj8SLz4c6pJI+m69G11Yyu5HkTLwyA4zgjoARt+Y9On6TIWZ923azAHlOQBjgkHGeT3798Gvj8ZhnQquHTp6H49nGWywWJdJ7bp90Ot1+6w2naGDFTgbs88dOuevI/E0URkuyuVU9fmIKsAcYGD+vuOnoVynliyL+8+VWHzAkrj5s8c/Tg/gOvSmAgfNGDzl18s8OOCf9nJP8yc9afIfLlDZ2rkBix4bqABzwckdueB9EEbNHj5/m+RiWwcDPIxxk+2OvtigBNu925yqHOd5znnII+hHHv2wK828S3bXevXDMrfNIY8b2wMcHkdBheDxyccZr0e6crazMxKsIskD7qnB6Nx/MdB0ryrUB+9mbarHJP7w7UKjg5IB45PB75+tfg/jpipxwOHw62lJt/Jafme1ksV7ST8hoXy0Ty/3e3ciq+dp+YDccjJbuPUk8nOaGKr90eWxkJC71LFxzhQcj5lBPY4JPBJICypO7KwkkjOw5YgnPzFcAc4U5HU9Rxkmgo0MPlKrxKWZFIy45BI6chRz3GMYHGK/mg+jAsoMXmfKBswpky6MWwvTnJzg844xyMmuT+NOqtpfgplX/XXT7Pmx83JwnVc/MRj1/Wute4zI21mGD5ZU7diNyQT3544Bz8y8DOa88/aAaFNF01lZY4WfgDlWVWUrtCnucYAByduegFdOBipVo37no5TTU8ZTjLv+Wp5bMqpvVs/cKgyMAWA3lCSSp+Vg/PU4U7sA4c25Q3lxqwUExogDKu0lRgbmC4ZYxkrgFs4GTtQrmSRfLdX3kkIAFBwpA3AbhkSn5sD70h47NkkxHIJPLkdST5Z++2ScpwSQMpkr83RlG7gD7DY/Tv1/r0HtFHDIyyqqxq4Q/KWKpt4GRztIYAJgn52ABU8ZfjDRl8UeDtT024Ztt5ayoHZ9oVyrDaSGAJGCxw2AQfugKK0yrRHfGu54w0e5McvuYLwAwYsQchc5YrlfuhZrR9026M7lxsD5Zsx/NjBIHUqpz8xOR2AI6MPWlSrQqx0cWmn5p6fkVTqOElOO6t8j8hPiXdM/jrUombd9hnktQN3yjaxBPA+XOGOeMb+nOKwdyFlbJ3Bj8x5zjkjPTt04AJ45Fb3xRZ1+J/ihl8zI1OcgFMZ+fP3QFx0IwQB245FYbnB3MzbWUbdud2BzjIzngHjnvyM4r/RLAy58NTl3S/JfqfeSxDrS9rLeWv3jSu1mP8SkR/KMEfdyM8de2MD6ninANu+9uKjKMc/MOe4ODnk4HGAOnFN3bHEnyDamwsCAFIwccHjnAwW7Yx1NGPLIXC7wMKSd5JyOp+q8Zxnpxiup6qxJ6d+z7q/n6ffWZYN5JWVenAI74x7dugH0Hoa/d/If5/z+fWvKfgFMw8R3QV2ZDATk8AsCB2OTxkjOTjnmvV+n5flXHW+I/Os+pqOMlbrZ/gB/x/z/AJ/Oj/8AXQvX8f8AP+f5UY4/AZ/z/n/HE8g1Ph/4vl+HXxD0HxBAQs2i6hBeIGAKsUdW2ng8HjpzxX7l+HtWXXPDlhqCt50d3ax3HmRMSrAqGBXHXOew5H4CvwcudzRHadrdM4+6fX/63tX7cfszzTXfwB8IyTxssk2nROwHy7cjcM9D6ZyMnPI614eeRXLGXXVHwfG1JWpVOuqO6ii/fbmX5ufmznA449s4BwOOPzKIuHU7cNgk7my65Ocd+OD3xx+RXz5+fiyHy5Q2dq5AYseG6gAc8HJHbngfRmzzGIwvmMu75wCynOVyB1AOe/b8afIfLlDZ2rkBix4bqABzwckdueB9GsWxjDZA3FQTyc54Y49Dx9OgoASE54XhWUNjYV5JJP8A+rqO/WvMdasWtdbkimjjVWdgwJwdhyVXHIb5Scgn3x6envuUtt3Bmb5eSQcDvwdoOMf/AFzXGfEfRVhk+2wKNt0AJDHwWPYggg5I75AHWvx7xmyeeLyeOKprWlK79GrN/J2Z6uU1lGtyv7Ssc3+8kVVk+V2TDCMkKfu5O7GQRk455/kkZaSPft8xZSAy+X5ZIIAJIbk4x7cHvgZQptPyxqV37tqps4UYHXgncBjpxj05PLDOwG2TYpid3XcwYhMDA4wRgkDA6e9fyhqfUisWjXHmSfIv+sKlnbB+b5QAM4A2nnr0IHPF/Hize+8JxXEf3rabI2HOTngHpwduCMjrj3HY71DKy+csjIzBVZWYnnIJyfukkcnaCwHpiHXdEj8QaJdWbblWUEh422qzbicHGe/XI5z69NsPU9nVjLszowddUK0Kr6Nf8E+c0bzlZYz8zAPtDI65DhyQOPUEEYLBvmKnBpYpFSMKskccbAcxv8oUgEngdNgwGC8CMncOcTahps1nPcWckczTQlomUkfL8oJB3EnlccP8pZQcAkExbludrbjtkGTjnblyFcbiQBuwVHBIP8WFA+0i7q8f66n6opJq6ej+fTR/MRUaORWWPbN0jVl64wNoK44CbQc5AwgBJGDBqOpw6NpN1fNNtjs7eSfLIrblKgj7rHlmBPy4Bw3UkGplZZyzbvlmIMvHmbhgEnaFOVKrtBGM5OfmGD5P+2R8Tv8AhCvhZ/ZtqzLqXiDMMShyxQByXfI5LHG1uTznrya9nh/LKmYZjRwdNaykr+m7fokd+XYOeKxNPDw3k0vTv9yufm/8Q4/N8e6xIsYxNevNGGA3YJJBJ5yeR3Hbnk1ihtpYrkl+FdgTuK5OCMZ4xj1I75Fdx8YvDHlPDqscZaEYSYgZ2jAAcAdmGOAAMD3weHJHmtuXcFbkg5Kt1PoeOMdc/KQOK/0BwTi6MUtkrfd+fc+8zDC/V8RKl0vp6ARj5dhPO1iQPcZ79d2QOp9TnkDgGX7rsu4/MegPJXcex2noOg5wRTsMoXIcENgY+UD7wHpwcLxn0+pRW/cN5YbsqkHcrHBIxngncRycZOK6pHEej/s/afsl1K652KFhUu25jwT65HBXjGSfXrXpPQ/of6/5/SsL4d+GW8JeEbe22qszDzZVyTgntknsMD8PfneI5x9R/X/P9K4akrzZ+Z5piVXxM5x22XotAzgfr+XH+f09KOn54H+f8mjr+P8AX/P/AOujPP6/Xt/n/IrM88k03RpvEes2Om20bTXGoXEdvFGuCXZ3ChR2PXp3r90Ph94cj8J+AND06NdkdnaQxMTmM5CjJIwOS3UEDqeO1flt/wAEwf2fZvjP+0nY6tcQbtD8H/6bcs6grNMMeXHgn5ucEgg4B7ZFfrGePm3SLyBgAHv+PX9B6c187nNZSnGmumv3n5vxljFOtChF/Cm38+/9dRyMdw+eRvvcFcd/p27eo9etFCMdw+eRvvcFcd/p27eo9etFeKfFjZGbzC0ed2BkMDtPXGD0HPU88fhSFcnbuX74wHUnJzuOMnnjpjpj2wFfAk+80e7ABLDDYycAfTOeOn04SPcsS7Vbao3KFAXcOcLg9Mcen8xQAgb5jzsLbWZVALgk4569cYz2wefStq2nx6tp81vcLI0cm4n5dxwDnsCPTA6ke+athN6mPIZQdpwx3J8vr1z+XB/Nq/vNrEqVmGSBlhnA6HpjAPbnP544ihCtTlSqpOMk009mnuhxk07o8x1/RJtHvZIpo4pfN+VS+VWZRkFTx0AJO056ntg1XZWldTjdtZwsiONycdxgDrkY55Cn6ematpNprtobe6jWUTDpswwBzjPpxkc8Hkd8Vx2teA7zTJmkiQ3UOchuWZBk8bPoxGRye4r+VOOPCvG5fVlisti6lF3dlduPlbdpdGr+Z9Lg8zhNKNTSX4MxN7OzNiZsuoKHC+XwDweNw5GeSOo9qQ7kfH3plTAZ2xv5JAztxzg7toyOPamyRrFGI2hbbGpTY+dybcYU4BODt5ycnpg5wHNuVm2rM2x9x24UucEgcgAj7oyD2wehr8jnSnCXLONn56HrXW5wXxn+HDaxD/alnDumiDCeFsMJB0DAEHHGQcdmJxnmvKAMyNHI3zwy7GDuQ332UknPykkSLhQDyoGAA1fSaI0Q2xqq7UVIwsewEjPGecL26cZ4JzXP+M/2dbjxtbTahpMP2LUFBdBLhYrhlxt/H5Vw3YdCMcfWcOYXHY6osLh6UpvyWi9XsvVs+kyriKnh0qGKlaPR9vJ9befQ+dvG/jjTfh74audR1abbbQAlN8jLJO3YKhwS3zbsgDbxjlPl+Hvi38T774u+M7rWrxZF84bba3OVW3iI2qB1CscZP+4cc16H+1r8Kvi9onidm8deG9StdNhZYbVbRBLYKCpKhSpIZvlJIBOMEjoK8Ua6jikXzfNhZ2CgyxGPrwR1GCF6kED5yT2r+ufD/gWlktP6ziGpV5Kztqorsn1v1Z/TXBOVYSnR+uUqkakpLeLTSXZNX17jdUsYNSs5bWRUaOYEghh0I27h1y3yk8fXJxgeQeK/DE3hXUvIlTzIMERSFCFZPlyM469Mgnuc5A59hS/jk4VsliHIRWcnGdzjHcEnnjoMd2rpPBf7PHir9oWVNK0PwrrGrpdNsDpbtHHCd+CzSEYVVDDJOQAeTjIr9UwuMVGWuz3Pd4gw+FlQ9tWqKny/ak7L0bZ8zlV353ZZVwzIwXpy3fIycdSe/TOT33wi+HMl9dw6tfxbYIP+PVD8vmnAG7bnheOBkdeR6/U3iP8A4Ii/Ev4Y6HBr80dl4mUDzX060k/eWZ2FmZtyruAyRwc+x6V5rrXh3UPCV0tnqWmahpM0eF8qe2aPZgkY6Y/hP5V6kcdTqJezZ+EZlxVha8ZUcBNSto5J/gvXuVyc/wAvpn/P/wCsUZzz+P8AT/P9Kj+1R7N29dvrn5evPPSpLSKXU7lYbaG4uJpDgLHEzMSenH6fjj2qNT5nmjuwxjj8Py5/z+tb/wALPhVrvxu8dWXhvw3ZSX2pXjjoreVboTjzJGAO1R716/8As9f8E1viV8eLpJruxfwjoqt897qKlJGwSDsixuboeeAD3FfpB+zH+yR4P/ZU8L/YfD9izahOoF3qUy+Zc3RJHBfHC5AOBgcZIrzcZmVOkrQd5fl6nzWb8SYfDRcKT5p9lsvV/oO/ZN/Zp0n9lP4R2PhvTBG1xKxub65cAyXM7Y3cgDICjaPQLnHJr0xTh2YcsmflIG7HTA54yVzz/wDqUw7xIVz+8OCPu+xOcZzj+Q+tI3z/ADeWz8b0+XBHHTk9Tk+noff5aU3OXPLdn5dWrTq1HUm7tu7HxsWP+sZvvdhjr647dPz60UkR2yqrM+5QRg4/edPm49Onbr06UVJmK3zysqtt3Jyd3K+hA6evPt37MZll5b5lcAHzF27VbjAyO5A4PPP0FOlBY7fl+YjblC2GGTk/kPTp15FGW3bl81l++BgDdx93nn35xyevagA5DR78Oy4yQh4J4yPTv9AfzaXwNzEg7CGZYjuyPTr6nA5znj3Ujy2YBvL9AgyfmP3iMcc59upPt8Df8FDf+C6mm/snftJW/wAF/hx8PfEPxi+KzQLd3mkaUAsenRshYCR+zcKSDxhxz1wAffTDc5U5ZWbaysmRjb0+nuc9x9FWVio+Vmzgg7dvBPoTngdf8ivib/gnB/wW38C/t5aB48t9a0rVPhl4y+F1o194q0LWfkfTbdGO6bcVAKYwDyev0J+Ztd/4OjbrxJe6/wCI/hv+z38QPG3wj8NXL2994thXMY2kbpFTuoz0B6d+MUFcrP1tutOtdRVVmt45Rkgbo84/Me3X6VTPhXTQ/wAtraq+8fwrksBn8yvfrivjH41/8Fw/hr4I/wCCZmm/tOeGbS/8WeDr67t9PmsoyBdWkkjMhjlVmGHQ8sOcgd+K+cfEP/B1boPgzx94Z1DXvgv8QfD/AMJfFCL9k8V31qVWduQxjQZ3KGGMjk84BI+bz62U4OtLmrUoyfnFP9CoTmtmfrDa6VZWXzpbxRbhvJ8vaBjHX07HB9M9qts5yy7vL4xnHcnAwTx+HPUfj+Xnwn/4OWtH8S/tf+GfAHjL4Q+Mfh14X8f3PkeGtf1dPLOoliFidk6KrEEcn+7749T/AOCh/wDwW80/9kL9oXT/AIM/Dn4d+JPjN8W76EXc2iaN8y6fEys+6Z8/LwBgHjDdRjB6KGFpUVy0oqK7JJImTb1Z91XEUd1Htlt433LhVlxgk87e/oCf64rhfEX7LXw48VSNJfeC/D0zTOpdmsY13MrDaDwCRkAY6EDHQ4PzF/wT+/4LXeGf22dE+I2k6l4R8R/D/wCKHwvsZ9T1vwlqSH7S0UQbLRFgAQSoXbwQWz6keIfs7f8ABzf4f/aw+IngXwr4E+E/jfUtc8Ta7/ZGr4t3mtNCi87Ys0ssYKqSp3be+Rz0B6YzfQ6MPjMRQd6E3Hzi2vyP0E0P9kL4Y+GSpsfAvh2N1x/y5I3BUIeWHQqo3DvySCTz2ivpPgfRQxk0zSdPh2BHcpDCE+UDnIHsDx24Pf8AOf8Aau/4OIIPhz+0v4j+GHwY+Efin42ap4HJPiW80k5tdOwV3jeM52ksv1XgYxniv2v/APgqb8Ef+ClP/BE3x5471rTfGdrovh7UrXT/ABNoGnTfZ9W0y8DriPcSvyZYEk9VzkA8g55F4nHYrEf7xUlL1k3+bP1ctdThvbWOaGaG4t5AXEyNmMoO4YZB7d/U9sVleLvh5oPjmHyda0ex1BW42TwiTOGGD+BwQf4eDwa+GfFX/BUj4e/8E1/+CYnwS17T/DfjLxQ3jLSrex8I+HYAtzqmoPsDbZGB6gMMsAeT0rn/ANmT/gvtqnin9sDwr8Ffjd8EfF3wV8WePAE8OtqB8yG+k9GPBUMASD05UE5PCjLsckZSi+aOh9iL+zD8FdU1eeOHwn4KuNQtg0kkEMUPmxdScqD8vU9cDmuq+HHgPwFoK3H/AAiekeGY/LdVnbTYoPlbkfMV6EDPXkj1r8nf+CeN7PN/wcOftr295dX0ljb6Q5aJpTL5Y7ldx6gEgdODgj00v+CTf7Yvw/8A2Xf+Cf8A8aviJ8H/AId/FTxlBo/jVoNR0W5m+3ahcTndkwtliwGckbj6kLnJuVactG2/mbSxVaUbSm2uzbP2CLspVTtj3E4weTg5A5HcA59P1pIgzHPzqeuWxjBOSMA9RjGf581+RXjf/g6iX4UeIdF0nxd+zv8AEjwtqXiO4SGxhv0WKS6Zm2fKhIYqMKA/8WeBgc/QH7bv/Ba2T9nf4u+EfhT8OfhL4w+Lnxa8SaTBrE2hadGRHpcTxeaqyyNx5mAzHngIcnOKgx5T70zgfLu7MhaNmKs2Rn9enGB6ChnGGb7zZADlgoY7jhcjng8dO/fmviv/AIJgf8Fl9L/4KEfE/wAYfDfXPA/iD4Z/FDwEvnavoWpAPtj3BeGHTDMAQ205HQcgfag3FVI3fMmEZgeSRn5l4HYenUjjuEj43xLgNuVs46nBB55/Hp2wfwKUPudfv8g8Y4PI5z/Lnv8AkUAMkOZWKr8yqC2CN5APA57H5uuP6hGj83cqxq/DA+ZnnODjkH5T+mMY9Hn/AFmN27bg7QcEZyMnnkf4HqaYE8w7drbWBUq+WDKMj1xznPPJH6AEg3GQ4bo3IYdsdB/PPPcfT8Kfhf8AHzwr/wAEp/8Ag41+NGtfHOa48O+H/iNpQPh7xBeRs1tbq22QICoY4IHlgAnGB0Hyr+6QRpR/EsmDlyBuQNngHBBwQOPYZz34P4+/sr/Df9qPRrez+Ingjw74qt7VWaFtTs45pLXPUK5+ZQe4B2nHOeKAPzOX9sjwv/wWD+G/7Wuj/Af4Uz6dcxeGJbWD4gR2qQyeLZAATaoRtd2J3EAsMrgEA4z45/wSr/4LB/s7/st/8ET9Y+F/jzVrPwv488J6bqmmap4ZuoWS81qeXeuUQYLlwwQ89FycDIH7XfC74P8AhX4GeF4dB8G+G9J8N6PbkEWem2a28eTgbjtwCQBznJwB7A+e+NP+Cd3wK+JXxCXxZrnwo8E6l4g3sTezaRH5kj5yWfj5jkZBb29qB6H4B3Hwj8QfCT/g1J8aah4osbrRYvGnxLtdY0Wwu4zGYbV5I9sgVsEq3zdd2QuMHIr6U/4L3m2H/BJL9j6No1WP+19GaNYzHhgYI8dBwCoY9OpGSxya/aTx/wDA/wAF/FXwEvhTxF4W0TWfDKuhXS7qxV7NWT5lIjxtGOxHHOKr+M/2ffAfxO8NaXo/iDwhoGsaPobRTabZXemrJDYupGxo1IwpXavQAjHNAtdz8lf+Di+5t7b4/wD7CrTSQwrH4khkACKiqoNruxg5Ax0G08gBeSRXgf7YGgTfs1f8HBvxGvPHnxi8Q/s86X4+0tbnRPGljbLdQ3CMo/0Y7yVVR90fd24wcnGf3s8c/AjwX8TbvQ5vEPhPQ9auPDcvm6U99ZpMdPYYXdExB2nGMYweB0xxn/Hj9mH4b/tPaCmm/ELwb4d8WWlvuaJdUskmaHAKkozDKj5j0OOaB3Px/wD+Ca3gH4T/ABH/AG2vjZ8TPBfxs+JHxm8VaL4C1Gy1vxDqOiRWWi30bxMFUTYDFxj7o/uMcgBc+sf8GimjWcv/AATs8ZXlnb28OoX3i2+inu1QiR3A4DOOTgFSApIAI5zk1+mnws/Z88D/AAL8DTeGvBvg/QfDmg3Cv51lp1lHBFcEjB8zGN7EHGWzwMZxirXwv+DvhP4G6FNpXg3w7oPhfTJJ/Oe3021S3jaRmy2VUAZO7j3bp6gj8L/+CMX7bnw9/wCCQ37W/wC1R4H/AGhNWk8D69qXiSbVrO81G2k3apCJGZEjbBLMyuGAJx8w5643P24/2xvB/wC23/wQl/aI8deB/g7B8KfDt34jsYbe++zpbv4oYTqDcfIFDcc53H7xGCfvfsT8cv2KvhH+0zrllqfxA+HPhfxPqViIxDc6lYJLKoDZVC2PmAI+6SQM8da6LU/2evAev/Cv/hCbrwf4dl8HhRGNFbTo1scLwP3W0LxgYOOwNC0D0Pxe/bv/AG2PF37OH7CX7EXg/QdQ0PwNoHj7SbePU/Huo6Yl62gKqINsKnmOTaSSwX6d8eD+MfEXgG6/4Ld/soN4X+OXi745bPENudV8Vaz+7sfMLHENqcFFXB+YLyC6jkiv6CfiX+yT8M/jB8LLPwT4m8D+G9a8K6agSz0y5ske3swBgeWpHy4HpWbpv7EXwe0fSdB0+z+Gfgy1t/DE5m0pY9HiBsZCAS6NtyGIAy2c5A5yBQB+V/8AwT3u47n/AIOH/wBtvMkLSf2NLkpt3DKgkdT/ALPGSO/uPNv+CG37fvhL/gm3/wAEvP2jvir4mhuLyDTfH81pp9lGwaTUbp/MMMCtgBQSxOScfeI5OK/b7QfgF4K8KfELVfFmm+E9FsvE2vp5OpapDaIt1epj7sr9WXgcHI6cccYH/DF3wj/4QG+8Jf8ACt/B48N6hef2jc6b/ZUQtZrg8eaV243cdvX35N3cD8Q/+CcH7cX7Pfxm/aLf9qL9r/42eGdU+K19cGLwp4P8qa407wVbkgKUQK6rJ2yCOBuOTk16L+3P/wAFAtQ+KH/BX/VPhv4i+Mml/s0/DHT9Bt9TtPFlrpMZ1LxPFJAJItlyw3BTvGB04Y87VA/Vy6/4Jt/AG+d2m+Dfw5kaTG4toNuc4DAfw9gxA9BjHQY0vjB+w58G/jtq+k33jT4c+DvEF5oMAhsZr7TopHt4VXaEBIzsUHgHgUD0Pxl/4N8dV8L6j/wXV+Ok3hXxJ4k8V6PJoQFjrHiPcNT1hNwLXDbhuIY4Izg428V+9nJ3t8u4YZljxu3DBIyfUYHOOP04vw/+zV8O/CHxF/4S7RfBPhbS/FK2wsf7Ts9NhhuI4gmAhZQDtC4GPTA6V2k2QCu5mI5G6PcuSflPA7EevA5PrQIdGVDqqyJhQQqLjAAwD+R44x1xRTldmc4KMmSMjqpHGPfnPpiigBD/AKzG7dtwdoOCM5GTzyP8D1NMIBhAbcybc7ShJZcYw2cknn2J/OpJd2WPOQAQqgbiR1GTxz07fX0btZWxltock4bPGCec+/Ye3bigBHJAzJ9xeWJAC8AHdycjBH+etKiCNk+4rZIztA35GTt54yefwP1qNpo4CpLSR42AqTu6kqoPXueo9OTinBjwu75sBmQsdo3HrnGeMHA4/DjAAK20eY6si53HL/cG3vzj8Bkd/o4cNt82bOQudnUjk9u/Qnp2GDSQjzF8xW+VgGD4G5hknHTpg/Xk9+aQP58G5cyeah2sGKr7e4OD1A7fQUACsREu3PyjGyLBUFTyoOMe3OOnbmnMfLbqzNg7NzbVYnJxx6Y646evNPZW81c/N83y7eNox355/wDrjjjNQrKsbHayszHbyu3c+3PJA7rjt2/CgBXChduTtwFUycqrA4HXkknH1x+b2ZlkK7mG4gr0GfUD8ifx6+iLG0cijt90EuTkY7+p47/n2pIjy4j2uylVbIwScDJJ7/KR2/8ArADCwP8AFEpbDfMmDkkbCQTntj1JHbFSSMwdsb93VVG3LAcnH1zjn9OtNEhiO0szMw2oGwA5AJzwOM/06eptVW8lf4drYzt2L2xgeo6fXtxQA4AqwUeZjec8g5yCe/OMn9PSmhPM2hk3EghvMxwrZ44GD0Ax/kuxuX7kw3f7fTcee/b9O1BVnK7h5gyeABtHcE554wOnc9PQAbn96oMcIkbD9ec9GPTsCBnvnHFEA/dqF+7sIRo8BVHGOOnTGDjHB6ZxQW+zwMz/ALtIcu5VQFbjJOOT1JPrkfmgVZWlUMsm3bHJuTlu5B6A5DfQZP0oAcpVwcKu3IJjAGVbOSTzjuD+vORSEeWjZWNdoDMp4jU5JJBx17/gOmc04sTJtOxmjO4nGNoO4Ajrz2/P6URo6qM/LtUD7xb6jtnpwTzz+YAkibV+4v3jhAPlJzuBJxx0zn1Pc4oSVVHyyRBSQeB1DdO/du/f9aRmy/3lWSQE7gvJUdPy3DrnvxT45PMG5WUrvK/d9OCOv94df/10AN3ean/PTjYTGxXnOG4zxjHrkc/iucfdDKgbsvLEkg5GOmec/j06jBsruXc2Q3JG1DwDg4z0J7evShY/MVflycgFidrEDODx6ntxwT9KACPiT7zblADBjkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</Image>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageURL>https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_fondogar.png</ImageURL>
               <Margins>0,0,0,0</Margins>
               <Name>Image3</Name>
               <Page isRef="2" />
@@ -155,6 +165,7 @@ ALTA</Text>
             </Image3>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageHeaderBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -167,6 +178,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0.1,18.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -179,6 +191,7 @@ ALTA</Text>
             </Text22>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -192,6 +205,7 @@ ALTA</Text>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0.2,0.2,12.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>75db6d982888460aa55a3f742f56d7e7</Guid>
               <Margins>0,0,0,0</Margins>
@@ -207,6 +221,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12.8,0.2,6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
               <Guid>c930089ecfd4411ab48323bd535107f1</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -221,6 +236,7 @@ ALTA</Text>
           </Components>
           <Condition>{LiqAgente.nomComercial}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GrupoComercial</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -233,6 +249,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,19,1</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,12,Bold</Font>
               <Guid>50cf3031daf04dbda62319eff99a7d87</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -248,6 +265,7 @@ ALTA</Text>
           </Components>
           <Condition>{LiqAgente.departamento}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GrupoDepartamento</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -261,6 +279,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,18.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <Guid>a77e77a1cf744b90be6c562dbf921f83</Guid>
               <Margins>0,0,0,0</Margins>
@@ -274,6 +293,7 @@ ALTA</Text>
           </Components>
           <Condition>{LiqAgente.nomAgente}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GrupoAgente</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -284,6 +304,7 @@ ALTA</Text>
           <Components isList="true" count="0" />
           <Condition>{LiqAgente.nomCliente}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GrupoCliente</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -296,6 +317,7 @@ ALTA</Text>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
           <DataSourceName>LiqAgente</DataSourceName>
+          <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataLiqAgente</Name>
           <Page isRef="2" />
@@ -315,6 +337,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -324,6 +347,7 @@ ALTA</Text>
               <Text>{Sum(GrupoCliente,LiqAgente.impCliente)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="25" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -337,6 +361,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -346,6 +371,7 @@ ALTA</Text>
               <Text>{Sum(GrupoCliente,LiqAgente.baseCalculo)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="27" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -359,6 +385,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.6,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -368,6 +395,7 @@ ALTA</Text>
               <Text>{LiqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="29" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
@@ -377,6 +405,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.8,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -386,6 +415,7 @@ ALTA</Text>
               <Text>{Sum(GrupoCliente,LiqAgente.comision)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="31" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -400,6 +430,7 @@ ALTA</Text>
               <CanGrow>True</CanGrow>
               <ClientRectangle>2,0,8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>3718d875084b479f999bbd436bfb3be7</Guid>
@@ -418,6 +449,7 @@ ALTA</Text>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0.2,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>7fcd518586424cb38a3d4dd6b0ed7c9e</Guid>
@@ -436,6 +468,7 @@ ALTA</Text>
               <CanGrow>True</CanGrow>
               <ClientRectangle>10.2,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>ded7d2ff48534015a55126ad0af48b82</Guid>
@@ -451,6 +484,7 @@ ALTA</Text>
             </Text27>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PieGrupoCliente</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -463,6 +497,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>7.4,0,4.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -479,6 +514,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,0,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7fdf7065aaea4de3a24194166a341ea6</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -489,6 +525,7 @@ ALTA</Text>
               <Text>{Sum(GrupoAgente,LiqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -504,6 +541,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>b516fef81cfb41cbb80a56ff56773ff9</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -514,6 +552,7 @@ ALTA</Text>
               <Text>{Sum(GrupoAgente,LiqAgente.baseCalculo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -529,6 +568,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>2fc33bbc127043fc962f89e8fc75705e</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -539,6 +579,7 @@ ALTA</Text>
               <Text>{Sum(GrupoAgente,LiqAgente.impCliente)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -554,6 +595,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.4,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
@@ -566,6 +608,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0,0.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
@@ -575,6 +618,7 @@ ALTA</Text>
             </Text9>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PiegrupoAgente</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -587,6 +631,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>7.4,0,4.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <Guid>6dcaef5eab314a1eae1d93fad0754391</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -604,6 +649,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,0,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>822d6cfe96ca4f5a83e91c02e9329d37</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -614,6 +660,7 @@ ALTA</Text>
               <Text>{Sum(GrupoDepartamento,LiqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -629,6 +676,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>b78288007b3e4db2917d4a4281988243</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -639,6 +687,7 @@ ALTA</Text>
               <Text>{Sum(GrupoDepartamento,LiqAgente.baseCalculo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -654,6 +703,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>7b6f8cf7463b42ffb5b29da5ff33ed70</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -664,6 +714,7 @@ ALTA</Text>
               <Text>{Sum(GrupoDepartamento,LiqAgente.impCliente)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -679,6 +730,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.4,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
@@ -691,6 +743,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0,0.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
@@ -700,6 +753,7 @@ ALTA</Text>
             </Text13>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Guid>98d057adf1fa4624b1eac06af2262e21</Guid>
           <Name>PieGrupoDepartamento</Name>
           <Page isRef="2" />
@@ -714,6 +768,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,0,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>9779ecca0e1f435db5c201366e350afe</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -724,6 +779,7 @@ ALTA</Text>
               <Text>{Sum(GrupoComercial,LiqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="57" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -739,6 +795,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>484fdc2a7b154879abfd885fb8d34aa5</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -749,6 +806,7 @@ ALTA</Text>
               <Text>{Sum(GrupoComercial,LiqAgente.baseCalculo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -764,6 +822,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>12,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>dc836aba26e0436190919267e454da80</Guid>
               <HorAlignment>Center</HorAlignment>
@@ -774,6 +833,7 @@ ALTA</Text>
               <Text>{Sum(GrupoComercial,LiqAgente.impCliente)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="61" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>5</NegativePattern>
@@ -789,6 +849,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.4,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
@@ -801,6 +862,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0,0.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
@@ -812,6 +874,7 @@ ALTA</Text>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0,11.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -825,6 +888,7 @@ ALTA</Text>
             </Text1>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Guid>f4ca7944e2a24e7fac0a779b82cc08db</Guid>
           <Name>PieGrupoComercial</Name>
           <NewPageAfter>True</NewPageAfter>
@@ -833,19 +897,15 @@ ALTA</Text>
         </PieGrupoComercial>
       </Components>
       <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
       <Guid>e3096213613f42ffbf0a0a4954ad2ea4</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="65" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
-        <Font>Arial,100</Font>
-        <TextBrush>[50:0:0:0]</TextBrush>
-      </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="66" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -858,14 +918,13 @@ ALTA</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2021 12:21:39 PM</ReportChanged>
+  <ReportChanged>8/17/2021 10:55:06 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
-  <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
-  <ReportGuid>f22da62fd189455b8a771f469451be73</ReportGuid>
-  <ReportImage isNull="true" />
+  <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
+  <ReportGuid>d0dae32aacad429498960a4ff4bbe83f</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.1.10.0</ReportVersion>
+  <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;
