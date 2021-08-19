@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "27711640f187483bb703025450f10f56",
+  "ReportGuid": "a76cffc1265c4248b36397d31f1dd7b6",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1629360375976+0200)/",
+  "ReportChanged": "/Date(1629361696513+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -139,7 +139,8 @@
             "Index": -1,
             "NameInSource": "empresaId",
             "Alias": "empresaId",
-            "Type": "System.Decimal"
+            "Type": "System.Decimal",
+            "Key": "9f3cf6097a304f5492902c4b5c47cd43"
           },
           "6": {
             "Name": "clienteId",
@@ -483,6 +484,13 @@
             "NameInSource": "refOferta",
             "Alias": "refOferta",
             "Type": "System.String"
+          },
+          "55": {
+            "Name": "formaPagoId",
+            "Index": -1,
+            "NameInSource": "formaPagoId",
+            "Alias": "formaPagoId",
+            "Type": "System.Int32"
           }
         },
         "NameInSource": "factura.root_cabecera"
