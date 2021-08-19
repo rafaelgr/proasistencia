@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "49f4d2ff90b747bc8dba06deb4cbc0c1",
+  "ReportGuid": "86d0207879214035afeb0adc0c7ad232",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1629364853561+0200)/",
+  "ReportChanged": "/Date(1629365828172+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -549,6 +549,12 @@
                 "LineLimit": true,
                 "WordWrap": true
               },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
+              },
               "Type": "Expression"
             },
             "1": {
@@ -565,6 +571,12 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
+              },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "NegativePattern": 8,
@@ -593,6 +605,12 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
+              },
               "Type": "Expression"
             },
             "3": {
@@ -613,6 +631,12 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
+              },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
               },
               "Type": "Expression"
             },
@@ -635,6 +659,12 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
+              },
               "Type": "Expression"
             },
             "5": {
@@ -654,6 +684,12 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
+              },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
               },
               "TextFormat": {
                 "Ident": "StiNumberFormatService",
@@ -681,6 +717,12 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
+              },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
               },
               "TextFormat": {
                 "Ident": "StiNumberFormatService",
@@ -720,6 +762,12 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
+              },
               "TextFormat": {
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
@@ -748,6 +796,12 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
+              },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 1.0
               },
               "Type": "Expression"
             }
