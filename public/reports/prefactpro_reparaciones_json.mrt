@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "e191b0247e474bf9a9154c0be5bec097",
+  "ReportGuid": "60a35e5f66d549d7b75ece5a508a8b9b",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1629368928725+0200)/",
+  "ReportChanged": "/Date(1629369239051+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -532,6 +532,7 @@
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "7.2,0.3",
               "MaxSize": "7.2,20",
               "ClientRectangle": "5.6,0,7.2,0.3",
@@ -548,17 +549,12 @@
                 "LineLimit": true,
                 "WordWrap": true
               },
-              "Margins": {
-                "Left": 0.0,
-                "Right": 0.0,
-                "Top": 0.0,
-                "Bottom": 1.0
-              },
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text27",
+              "GrowToHeight": true,
               "ClientRectangle": "17,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -585,6 +581,7 @@
               "Name": "Text47",
               "Guid": "6f0beabed77a410ca7fb20aedfaa79a0",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "0.4,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -605,6 +602,7 @@
               "Name": "Text48",
               "Guid": "8df59ea99082446b9aa804e2283de55b",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "3.2,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -626,6 +624,7 @@
               "Name": "Text49",
               "Guid": "667db861191343f8bfe98cd864709225",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "4.6,0,0.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -647,6 +646,7 @@
               "Name": "Text50",
               "Guid": "4c1939e4a05b4ec2821691db913b5bda",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "14,0,0.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -674,6 +674,7 @@
               "Name": "Text51",
               "Guid": "a6d23a9c29424430b7bf84249dbfca4d",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "15,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -701,6 +702,7 @@
               "Name": "Text7",
               "Guid": "5033050765164f728d8101fd5d0d20b7",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "13,0,0.8,0.4",
               "Conditions": {
                 "0": {
@@ -740,6 +742,7 @@
               "Name": "Text15",
               "Guid": "3667a2da2f8b4ff680ed17fe44b07d15",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "1.8,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
