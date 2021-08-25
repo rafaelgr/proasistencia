@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "f9b4e76ddde8439f8be0d1bc816b46bb",
+  "ReportGuid": "ddadf37195994feb938b5cfe666663b1",
   "ReportName": "factura_fondogar",
   "ReportAlias": "factura_fondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
-  "ReportChanged": "/Date(1629271939827+0200)/",
+  "ReportChanged": "/Date(1629873701140+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class factura_fondogar : Stimulsoft.Report.StiReport\r\n    {\r\n        public factura_fondogar()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -614,7 +614,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,37.78,19,1",
+          "ClientRectangle": "0,32.24,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -642,7 +642,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "Datacabecera",
-          "ClientRectangle": "0,3.8,19,10",
+          "ClientRectangle": "0,3.8,19,8.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -781,21 +781,6 @@
             },
             "8": {
               "Ident": "StiText",
-              "Name": "Text6",
-              "ClientRectangle": "0.2,8.8,18.6,0.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "LUGAR DE TRABAJO: {cabecera.direccion2} ({cabecera.codPostal2} {cabecera.poblacion2}) {cabecera.provincia2}"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "9": {
-              "Ident": "StiText",
               "Name": "Text7",
               "Guid": "6c5eb82dfd6bbaa089ffc07b2092b8fe",
               "ClientRectangle": "10,1.8,8.4,0.6",
@@ -811,7 +796,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "10": {
+            "9": {
               "Ident": "StiText",
               "Name": "Text8",
               "Guid": "979012d419fb2ae36786366e99a3f977",
@@ -828,7 +813,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "11": {
+            "10": {
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "d8b0784d38e8a61380c8f21bfeb2dc7e",
@@ -845,7 +830,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "12": {
+            "11": {
               "Ident": "StiText",
               "Name": "Text10",
               "Guid": "e4e2d36cd2a2e7eaee9463a4fa0e4593",
@@ -862,7 +847,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             },
-            "13": {
+            "12": {
               "Ident": "StiText",
               "Name": "Text18",
               "Guid": "cc7879fe56fd763ec80fb7870e8212ab",
@@ -879,7 +864,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "14": {
+            "13": {
               "Ident": "StiText",
               "Name": "Text19",
               "Guid": "a99e2d093cf94f73a5c5df2a0e0c03cc",
@@ -896,7 +881,7 @@
               "TextBrush": "solid:0,0,0",
               "Type": "DataColumn"
             },
-            "15": {
+            "14": {
               "Ident": "StiText",
               "Name": "Text51",
               "Guid": "fc9bf476355a4b39a3d51e6e85b828da",
@@ -913,7 +898,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "16": {
+            "15": {
               "Ident": "StiText",
               "Name": "Text54",
               "Guid": "929e2a5c5b4e4c818c2646781aa74fff",
@@ -930,7 +915,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "17": {
+            "16": {
               "Ident": "StiStartPointPrimitive",
               "Name": "StartPointPrimitive1",
               "ClientRectangle": "0.4,0.4,0,0",
@@ -939,7 +924,7 @@
               },
               "ReferenceToGuid": "71e66c5bacb21536a5f783ea32065eee"
             },
-            "18": {
+            "17": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive1",
               "ClientRectangle": "9.2,3.8,0,0",
@@ -948,7 +933,7 @@
               },
               "ReferenceToGuid": "71e66c5bacb21536a5f783ea32065eee"
             },
-            "19": {
+            "18": {
               "Ident": "StiStartPointPrimitive",
               "Name": "StartPointPrimitive2",
               "ClientRectangle": "9.6,0.4,0,0",
@@ -957,7 +942,7 @@
               },
               "ReferenceToGuid": "a8d9801e9695a9cda7906bbe0566aee2"
             },
-            "20": {
+            "19": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive2",
               "ClientRectangle": "18.6,4.4,0,0",
@@ -976,7 +961,7 @@
         "3": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,14.6,19,0.8",
+          "ClientRectangle": "0,13.2,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1022,7 +1007,7 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,16.2,19,0.8",
+          "ClientRectangle": "0,14.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1084,7 +1069,7 @@
         "5": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand2",
-          "ClientRectangle": "0,17.8,19,0.8",
+          "ClientRectangle": "0,16.4,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1140,7 +1125,7 @@
         "6": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,19.4,19,0.8",
+          "ClientRectangle": "0,18,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1197,7 +1182,7 @@
         "7": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
-          "ClientRectangle": "0,21,19,4.8",
+          "ClientRectangle": "0,19.6,19,4.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
