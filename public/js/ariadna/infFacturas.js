@@ -233,36 +233,44 @@ var obtainReport = function (carga) {
 };
 
 var obtainReportJson = function (obj) {
+    if (!datosOK()) return;
+    //Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("Roboto-Black.ttf");
     var file = "../reports/factura_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
+    verb = "GET";
+    url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
+    llamadaAjax(verb, url, null, function (err, data) {
+        var infFacturas;
+        // Create a new report instance
+        var report = new Stimulsoft.Report.StiReport();
 
-    if(vm.sdepartamentoId() == 7) {
-        infFacturas = data.infFacCliRep + "_sin_imagen_json";
-    }else if (vm.sdepartamentoId() == 8) {
-        infFacturas = data.infFacCliObr + "_json";
-     } else {
+        if(vm.sdepartamentoId() == 7) {
+            infFacturas = data.infFacCliRep + "_sin_imagen_json";
+        }else if (vm.sdepartamentoId() == 8) {
+            infFacturas = data.infFacCliObr + "_json";
+        } else {
             infFacturas = data.infFacturas + "_json";
         }
 
-    file = "../reports/" + infFacturas + ".mrt";
+        file = "../reports/" + infFacturas + ".mrt";
     
-    report.loadFile(file);
+        // Remove all connections from the report template
+        report.dictionary.databases.clear();
+        report.loadFile(file);
         
         
 
-    var dataSet = new Stimulsoft.System.Data.DataSet("fact");
-    dataSet.readJson(obj);
+        var dataSet = new Stimulsoft.System.Data.DataSet("fact");
+        dataSet.readJson(obj);
+            
     
-     // Remove all connections from the report template
-     report.dictionary.databases.clear();
-
-     //
-    report.regData(dataSet.dataSetName, "", dataSet);
-    report.dictionary.synchronize();
-
-    viewer.report = report;
-
+            //
+            report.regData("fact", "fact", dataSet);
+            report.dictionary.synchronize();
+    
+            viewer.report = report;
+    });
 };
 
 var obtainReportPdf = function () {
@@ -438,7 +446,7 @@ var rptFacturaParametros = function (sql) {
     return sql;
 }
 
-var rptFacturaParametrosJson = function (sql) {
+var rptFacturaParametrosJson = function () {
     var agenteId = vm.scomercialId();
     var facturaId = vm.facturaId();
     var clienteId = vm.sclienteId();
@@ -446,35 +454,24 @@ var rptFacturaParametrosJson = function (sql) {
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    sql += " WHERE TRUE"
-    if (!facturaId) {
-        facturaId = 0;
-    } else {
-        if (!clienteId) {
-           clienteId = 0;
-        }
-        if (!empresaId) {
-           empresaId = 0;
-        }
-        if(!agenteId) {
-            agenteId = 0
-        }
-        if (dFecha) {
-            sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";
-        }
-        if (hFecha) {
-            sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
-        }
 
-    }
-    var url = "/api/facturas/inf/facturas" + dFecha + "/" + hFecha;
-    url += "/" + facturaId;
+    if(!clienteId) clienteId = 0;
+    if(!agenteId) agenteId = 0;
+    if(!facturaId) facturaId = 0;
+    if(!departamentoId) departamentoId = 0;
+    if(!empresaId) empresaId = 0;
+
+
+    
+    var url = "/api/facturas/inf/facturas/json/visor/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + clienteId;
+    url += "/" + departamentoId;
     url += "/" + agenteId;
+    url += "/" + facturaId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err)   return;
-        if(data.length > 0) {
+        if(data) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
