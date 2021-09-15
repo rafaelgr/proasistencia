@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "7f249c9b725d40f3b46e132ac222888f",
+  "ReportGuid": "901db6b34d6e4c0ea127c47f28ba9028",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1631695072447+0200)/",
+  "ReportChanged": "/Date(1631696532384+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1297,7 +1297,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(Dataofertas_lineas,ofertas_lineas.totalLinea) * ofertas_bases.porcen}"
+                "Value": "{ofertas_bases.importe}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
