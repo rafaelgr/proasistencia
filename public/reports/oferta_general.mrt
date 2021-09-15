@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "1c5d4d8243294b4ea0ddd551e069dc78",
+  "ReportGuid": "1d941b488c94492d95673c949a4e928d",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1631691924674+0200)/",
+  "ReportChanged": "/Date(1631693558089+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -252,10 +252,17 @@
             "NameInSource": "articulo",
             "Alias": "articulo",
             "Type": "System.String"
+          },
+          "12": {
+            "Name": "articuloId",
+            "Index": -1,
+            "NameInSource": "articuloId",
+            "Alias": "articuloId",
+            "Type": "System.Int32"
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, u.abrev, a.nombre AS articulo\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 1,4"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\nu.abrev, a.nombre AS articulo, a.articuloId\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 1,4"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -329,6 +336,7 @@
         "Ident": "StiMySqlDatabase",
         "Name": "PROAS_REPORT",
         "Alias": "PROAS_REPORT",
+        "Key": "36bb07674c6548dd81fc8b80a11c7d59",
         "ConnectionStringEncrypted": "41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"
       }
     },
@@ -856,7 +864,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
-          "ClientRectangle": "0,9.6,19,0.8",
+          "ClientRectangle": "0,9.6,19,1",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -921,6 +929,17 @@
               "CanShrink": true,
               "CanGrow": true,
               "ClientRectangle": "3.4,0.4,9,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "DataType": "Numeric",
+                  "Column": "ofertas_lineas.articuloId",
+                  "Value1": "639",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1013,11 +1032,24 @@
               "CanShrink": true,
               "CanGrow": true,
               "ClientRectangle": "3.4,0,9,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "DataType": "Numeric",
+                  "Column": "ofertas_lineas.articuloId",
+                  "Value1": "639",
+                  "TextColor": "0,0,0",
+                  "Font": ";10;;",
+                  "CanAssignExpression": true,
+                  "AssignExpression": "ofertas_lineas.descripcion",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas_lineas.nombre}"
+                "Value": "{ofertas_lineas.articulo}"
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -1036,7 +1068,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,11.2,19,0.6",
+          "ClientRectangle": "0,11.4,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1094,7 +1126,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "ClientRectangle": "0,12.6,19,0.6",
+          "ClientRectangle": "0,12.8,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1154,7 +1186,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,14,19,0.6",
+          "ClientRectangle": "0,14.2,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1184,7 +1216,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "Guid": "c9589c016d7c4f77b0530bec428c9207",
-          "ClientRectangle": "0,15.4,19,0",
+          "ClientRectangle": "0,15.6,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1199,7 +1231,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,16.2,19,0.4",
+          "ClientRectangle": "0,16.4,19,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1290,7 +1322,7 @@
         "11": {
           "Ident": "StiFooterBand",
           "Name": "PieOferta",
-          "ClientRectangle": "0,17.4,19,5.4",
+          "ClientRectangle": "0,17.6,19,5.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
