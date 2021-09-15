@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "1d941b488c94492d95673c949a4e928d",
+  "ReportGuid": "7f249c9b725d40f3b46e132ac222888f",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1631693558089+0200)/",
+  "ReportChanged": "/Date(1631695072447+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1204,6 +1204,7 @@
               "Text": {
                 "Value": "Forma de pago: {ofertas.formaPago}"
               },
+              "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1242,13 +1243,14 @@
               "Ident": "StiText",
               "Name": "Text14",
               "Guid": "eed6a77614e44df7887bb6a6fa638446",
-              "ClientRectangle": "0.2,0,2,0.4",
+              "ClientRectangle": "0.2,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{ofertas_bases.porcen}"
               },
+              "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1265,41 +1267,16 @@
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text16",
-              "Guid": "c51b36282d5c4229baec4be8a502e539",
-              "ClientRectangle": "2.4,0,1.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{Sum(Dataofertas_lineas,ofertas_lineas.totalLineaProveedor) * ofertas_bases.porcen}"
-              },
-              "HorAlignment": "Right",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "UseLocalSetting": false,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
               "Name": "Text17",
               "Guid": "36e6bc4a031f48d0acbb234dcb809464",
-              "ClientRectangle": "4.4,0,14.4,0.4",
+              "ClientRectangle": "3.4,0,14.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "más IVA, {ofertas_bases.concepto}"
               },
+              "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1309,6 +1286,31 @@
                 "DecimalSeparator": ",",
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "ClientRectangle": "1.6,0,1.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(Dataofertas_lineas,ofertas_lineas.totalLinea) * ofertas_bases.porcen}"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 5,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "PositivePattern": 1,
+                "Symbol": "€"
               },
               "Type": "Expression"
             }
@@ -1334,6 +1336,7 @@
               "Name": "Text9",
               "Guid": "55eb97dfa3e4440992a9f5dbcbcfe61d",
               "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "0.2,0.2,18.6,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -1345,6 +1348,9 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             },
             "1": {
