@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title> Ariadna Notificaciones </title>
+    <title> Proasistencia </title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -598,6 +598,39 @@
                                             </div>
                                         </fieldset>
                                         <fieldset>
+                                            <header>
+                                                Parámetros para las notificaciones
+                                            </header>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Título para notificaciones</label>
+                                                    <label class="input">
+                                                        <input id="txtTituloPush" name="txtTituloPush" type="text" data-bind="value: tituloPush" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Clave de la app (appId)</label>
+                                                    <label class="input">
+                                                        <input id="txtAppId" name="txtAppId" type="text" data-bind="value: appId" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Clave rest (restApi)</label>
+                                                    <label class="input">
+                                                        <input id="txtRestApi" name="txtRestApi" type="text" data-bind="value: restApi" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Google Project Number (gcm)</label>
+                                                    <label class="input">
+                                                        <input id="txtGcm" name="txtGcm" type="text" data-bind="value: gcm" />
+                                                    </label>
+                                                </section>
+                                            </div>            
+                                        </fieldset>
+                                        <fieldset>
                                             <div class="pull-right">
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
@@ -628,7 +661,7 @@
     <div class="page-footer">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <span class="txt-color-white">Ariadna Notificaciones <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
+                <span class="txt-color-white">Proasistencia <span id="versionFooter">1.0</span> <span class="hidden-xs"> - Aplicación general</span> © Ariadna Software S.L. 2016-2017</span>
             </div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                 <div class="txt-color-white inline-block">

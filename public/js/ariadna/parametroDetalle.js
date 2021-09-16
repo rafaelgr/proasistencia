@@ -126,6 +126,12 @@ function admData() {
     self.identityPool = ko.observable();
     self.raizUrl = ko.observable();
 
+    //oneSignal
+    self.tituloPush = ko.observable();
+    self.appId = ko.observable();
+    self.restApi = ko.observable();
+    self.gcm = ko.observable();
+
 }
 
 function loadData(data) {
@@ -137,6 +143,11 @@ function loadData(data) {
     vm.bucketFolder(data.bucket_folder);
     vm.identityPool(data.identity_pool);
     vm.raizUrl(data.raiz_url);
+    //
+    vm.tituloPush(data.tituloPush);
+    vm.appId(data.appId);
+    vm.restApi(data.restApi);
+    vm.gcm(data.gcm);
 
     loadArtMan(data.articuloMantenimiento);
     loadArtManGas(data.articuloMantenimientoParaGastos);
@@ -187,6 +198,10 @@ function aceptar() {
                 "bucket_folder":  vm.bucketFolder(),
                 "identity_pool": vm.identityPool(),
                 "raiz_url": vm.raizUrl(),
+                "appId": vm.appId(),
+                "gcm": vm.gcm(),
+                "tituloPush": vm.tituloPush(),
+                "restApi": vm.restApi()
             
             }
         };
