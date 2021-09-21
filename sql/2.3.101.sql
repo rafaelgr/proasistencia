@@ -21,4 +21,29 @@ ALTER TABLE `proasistencia`.`proveedores`
 
 
 
+  CREATE TABLE `mensajes`(  
+  `mensajeId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `asunto` VARCHAR(255),
+  `texto` TEXT,
+  `estado` VARCHAR(255),
+  `fecha` DATETIME,
+  `pushId` VARCHAR(255),
+  `usuarioId` INT(11),
+  PRIMARY KEY (`mensajeId`),
+  CONSTRAINT `mensajes_usuariosFk` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios`(`usuarioId`) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+
+CREATE TABLE `mensajes_proveedoresPush`(  
+  `mensajeId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `proveedorId` INT(11) NOT NULL,
+  `estado` VARCHAR(255),
+  `fecha` DATETIME,
+  PRIMARY KEY (`mensajeId`, `proveedorId`),
+  CONSTRAINT `mensajes_proveedorFK` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`)
+);
+
+
+
+
 
