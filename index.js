@@ -83,7 +83,7 @@ var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProvee
 //ANTICIPOS CLIERNTES
 var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_controller');
 
-//SEERVICIOS
+//SERVICIOS
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
@@ -91,6 +91,10 @@ var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 var partes_router = require('./lib/partes/partes_controller');
 var report_router = require('./lib/report-controller/reportdb')
+
+//MENSAJES
+
+var mensajes_router = require('./lib/mensajes/mensajes_controller')
 
 
 var pack = require('./package.json');
@@ -216,6 +220,9 @@ app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);
 app.use('/api/estados_presupuesto', estados_presupuesto);
+
+//MENSAJES
+app.use('api/mensajes', mensajes_router);
 
 
 
