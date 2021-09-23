@@ -222,7 +222,7 @@ app.use('/api/partes', partes_router);
 app.use('/api/estados_presupuesto', estados_presupuesto);
 
 //MENSAJES
-app.use('api/mensajes', mensajes_router);
+app.use('/api/mensajes', mensajes_router);
 
 
 
