@@ -43,7 +43,16 @@ CREATE TABLE `mensajes_proveedoresPush`(
   CONSTRAINT `mensajes_proveedorFK` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`)
 );
 
+ALTER TABLE `mensajes_proveedorespush`   
+  ADD COLUMN `mensajeProveedorPushId` INT(11) UNSIGNED NOT NULL FIRST,
+  CHANGE `mensajeId` `mensajeId` INT(11) UNSIGNED NOT NULL, 
+  DROP PRIMARY KEY,
+  ADD PRIMARY KEY (`mensajeProveedorPushId`);
 
+  ALTER TABLE `mensajes_proveedorespush`  
+  ADD CONSTRAINT `mensajes_mensajeFK` FOREIGN KEY (`mensajeId`) REFERENCES `mensajes`(`mensajeId`);
 
+  ALTER TABLE `mensajes_proveedorespush`   
+  CHANGE `mensajeProveedorPushId` `mensajeProveedorPushId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
