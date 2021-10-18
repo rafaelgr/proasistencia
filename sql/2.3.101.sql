@@ -55,4 +55,10 @@ ALTER TABLE `mensajes_proveedorespush`
   ALTER TABLE `mensajes_proveedorespush`   
   CHANGE `mensajeProveedorPushId` `mensajeProveedorPushId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
+  ALTER TABLE `partes`   
+  ADD COLUMN `nombreFirmante` VARCHAR(255) NULL AFTER `antesPre`,
+  ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `nombreFirmante`,
+  ADD COLUMN `firma` VARCHAR(255) NULL AFTER `dniFirmante`;
+
+
 
