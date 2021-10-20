@@ -62,3 +62,18 @@ ALTER TABLE `mensajes_proveedorespush`
 
 
 
+ALTER TABLE `servicios`   
+  ADD COLUMN `poblacionTrabajo` VARCHAR(255) NULL AFTER `direccionTrabajo`;
+
+  UPDATE  servicios AS ser
+  INNER JOIN clientes AS cli ON cli.clienteId = ser.clienteId
+  SET ser.poblacionTrabajo = cli.poblacion2
+
+ALTER TABLE `partes`   
+  ADD COLUMN `observacionesProfesional` TEXT NULL AFTER `observaciones`;
+
+
+ALTER TABLE `mensajes`   
+  ADD COLUMN `presupuesto` TINYINT(1) DEFAULT 0 NULL AFTER `usuarioId`,
+  ADD COLUMN `urgente` TINYINT(1) DEFAULT 0 NULL AFTER `presupuesto`;
+
