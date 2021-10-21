@@ -77,3 +77,8 @@ ALTER TABLE `mensajes`
   ADD COLUMN `presupuesto` TINYINT(1) DEFAULT 0 NULL AFTER `usuarioId`,
   ADD COLUMN `urgente` TINYINT(1) DEFAULT 0 NULL AFTER `presupuesto`;
 
+  ALTER TABLE `mensajes`   
+  ADD COLUMN `servicioId` INT(11) NULL AFTER `urgente`,
+  ADD CONSTRAINT `mensajes_serviciosFK` FOREIGN KEY (`servicioId`) REFERENCES `servicios`(`servicioId`) ON DELETE SET NULL;
+
+
