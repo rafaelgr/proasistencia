@@ -82,3 +82,8 @@ ALTER TABLE `mensajes`
   ADD CONSTRAINT `mensajes_serviciosFK` FOREIGN KEY (`servicioId`) REFERENCES `servicios`(`servicioId`) ON DELETE SET NULL;
 
 
+ALTER TABLE `partes`   
+  ADD COLUMN `trabajosPendientes` TEXT NULL AFTER `observacionesProfesional`,
+  ADD COLUMN `reparacionRealizada` TEXT NULL AFTER `trabajosPendientes`;
+
+
