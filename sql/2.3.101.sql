@@ -10,8 +10,8 @@ ALTER TABLE `proveedores`
   ALTER TABLE `servicios`   
   ADD COLUMN `cerrado` TINYINT(1) DEFAULT 0 NULL AFTER `proveedorId`;
 
-  ALTER TABLE `servicios`   
-  ADD COLUMN `confirmado` TINYINT(1) DEFAULT 0 NULL AFTER `cerrado`;
+  ALTER TABLE `partes`   
+  ADD COLUMN `confirmado` TINYINT(1) DEFAULT 0 NULL AFTER `firma`;
 
   ALTER TABLE `parametros`   
   ADD COLUMN `appId` VARCHAR(255) NULL AFTER `raiz_url`,
@@ -85,5 +85,20 @@ ALTER TABLE `mensajes`
 ALTER TABLE `partes`   
   ADD COLUMN `trabajosPendientes` TEXT NULL AFTER `observacionesProfesional`,
   ADD COLUMN `reparacionRealizada` TEXT NULL AFTER `trabajosPendientes`;
+
+  UPDATE mensajes SET servicioId = NULL
+
+  ALTER TABLE `mensajes`  
+  DROP FOREIGN KEY `mensajes_serviciosFK`;
+
+  ALTER TABLE `mensajes`   
+  DROP INDEX `mensajes_serviciosFK`;
+
+  ALTER TABLE `proasistencia`.`mensajes`   
+  CHANGE `servicioId` `parteId` INT(11) NULL,
+  ADD CONSTRAINT `mensajes_partesFk` FOREIGN KEY (`parteId`) REFERENCES `proasistencia`.`partes`(`parteId`) ON DELETE CASCADE;
+
+
+
 
 
