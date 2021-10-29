@@ -57,9 +57,9 @@ ALTER TABLE `mensajes_proveedorespush`
 
   ALTER TABLE `partes`   
   ADD COLUMN `nombreFirmante` VARCHAR(255) NULL AFTER `antesPre`,
-  ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `nombreFirmante`,
+  ADD COLUMN `apellidosFirmante` VARCHAR(255) NULL AFTER `nombreFirmante`;
+  ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `apellidosFirmante`,
   ADD COLUMN `firma` VARCHAR(255) NULL AFTER `dniFirmante`;
-
 
 
 ALTER TABLE `servicios`   
@@ -94,9 +94,13 @@ ALTER TABLE `partes`
   ALTER TABLE `mensajes`   
   DROP INDEX `mensajes_serviciosFK`;
 
-  ALTER TABLE `proasistencia`.`mensajes`   
+  ALTER TABLE `mensajes`   
   CHANGE `servicioId` `parteId` INT(11) NULL,
-  ADD CONSTRAINT `mensajes_partesFk` FOREIGN KEY (`parteId`) REFERENCES `proasistencia`.`partes`(`parteId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `mensajes_partesFk` FOREIGN KEY (`parteId`) REFERENCES `partes`(`parteId`) ON DELETE CASCADE;
+
+  ALTER TABLE `partes`   
+  ADD COLUMN `noFirma` TINYINT(1) DEFAULT 0 NULL AFTER `confirmado`;
+
 
 
 
