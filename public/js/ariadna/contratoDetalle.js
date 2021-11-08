@@ -2925,11 +2925,11 @@ function initTablaPrefacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00') 
             );
 
             //////
@@ -2980,9 +2980,15 @@ function initTablaPrefacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "vFac"
         }, {
@@ -3215,11 +3221,11 @@ function initTablaFacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -3270,9 +3276,15 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "vFac"
         }, {
@@ -3459,11 +3471,11 @@ function initTablaFacproves() {
 
             // Update footer
             $( api.columns(5).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(6).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00') 
             );
 
             //////
@@ -3512,9 +3524,15 @@ function initTablaFacproves() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         },  {
             data: "vFPago"
         }, {
@@ -3984,7 +4002,7 @@ var calcularNumPagos = function () {
 /* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
 
 function initTablaContratosCobros() {
-    tablaCarro = $('#dt_contratosCobros').dataTable({
+    tablaCarro = $('#dt_contratosCobros').DataTable({
         sort: false,
         autoWidth: true,
         preDrawCallback: function () {
@@ -4002,6 +4020,56 @@ function initTablaContratosCobros() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                   
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 8 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(7).footer() ).html(
+                numeral(total).format('0,0.00')
+                
+            );
+
+            $( api.columns(8).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+            //////
+
+            
         },
         language: {
             processing: "Procesando...",
@@ -4040,6 +4108,17 @@ function initTablaContratosCobros() {
             render: function (data, type, row) {
                 return spanishDate(data);
             }
+        },{
+            data: "fecultco",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
+        },{
+            data: "fechaent",
+            render: function (data, type, row) {
+                if (!data) return "";
+                return moment(data).format('DD/MM/YYYYY');
+            }
         }, {
             data: "impvenci",
             className: "text-right",
@@ -4047,12 +4126,7 @@ function initTablaContratosCobros() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "fecultco",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        }, {
-            data: "impcobro",
+            data: "timporteH",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -4075,7 +4149,7 @@ function loadTablaContratosCobros(data) {
 }
 
 function loadContratosCobros(id) {
-    llamadaAjax('GET', "/api/cobros/contrato/" + id, null, function (err, data) {
+    llamadaAjax('GET', "/api/cobros/contrato/hlinapu/" + id, null, function (err, data) {
         if (err) return;
         loadTablaContratosCobros(data);
     });
@@ -4554,7 +4628,10 @@ function initTablaAscContratos() {
         }, {
             data: "cliente"
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "mantenedor"
         }, {

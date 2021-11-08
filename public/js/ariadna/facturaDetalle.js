@@ -1548,7 +1548,13 @@ function initTablaCobros() {
                 return moment(data).format('DD/MM/YYYYY');
             }
         }, {
-            data: "impcobro",
+            data: "fechaent",
+            render: function (data, type, row) {
+                if (!data) return "";
+                return moment(data).format('DD/MM/YYYYY');
+            }
+        }, {
+            data: "timporteH",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -1571,12 +1577,21 @@ function loadTablaCobros(data) {
 }
 
 
-function loadCobrosFactura(facturaId) {
+/* function loadCobrosFactura(facturaId) {
     llamadaAjax("GET", "/api/cobros/factura/" + facturaId, null, function (err, data) {
         if (err) return;
         loadTablaCobros(data);
     });
 }
+ */
+
+function loadCobrosFactura(facturaId) {
+    llamadaAjax("GET", "/api/cobros/factura/hlinapu/" + facturaId, null, function (err, data) {
+        if (err) return;
+        loadTablaCobros(data);
+    });
+}
+ 
 
 
 // ----------- Funciones relacionadas con el manejo de autocomplete
