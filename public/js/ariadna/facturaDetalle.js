@@ -1586,7 +1586,7 @@ function loadTablaCobros(data) {
  */
 
 function loadCobrosFactura(facturaId) {
-    llamadaAjax("GET", "/api/cobros/factura/hlinapu/" + facturaId, null, function (err, data) {
+    llamadaAjax("GET", "/api/cobros/factura/" + facturaId, null, function (err, data) {
         if (err) return;
         loadTablaCobros(data);
     });

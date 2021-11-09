@@ -1520,12 +1520,10 @@
                                                                             <th class="hasinput">
                                                                                 <input type="text" class="form-control" placeholder="" />
                                                                             </th>
-                                                                            <th class="hasinput">
-                                                                                <input type="text" class="form-control" placeholder="" />
-                                                                            </th>                                     
-                                                                            <th class="hasinput">
-                                                                                <input type="text" class="form-control" placeholder="" />
+
+                                                                            <th style="width:10%">
                                                                             </th>
+                                                                                                    
                                                                         </tr>
                                                                         <tr>
                                                                             <th data-class="expand">
@@ -1547,23 +1545,19 @@
                                                                                 Fecha cobro
                                                                             </th>
                                                                             <th data-hide="phone">
-                                                                                Fecha Apunte
-                                                                            </th>
-                                                                            <th data-hide="phone">
                                                                                 Importe vencimiento
-                                                                            </th>
-                                                                            
-                                                                            <th data-hide="phone">
-                                                                                Importe cobrado
                                                                             </th>
                                                                             <th data-hide="phone">
                                                                                 Forma pago
                                                                             </th>
+                                                                            <th style="width:10%; text-align: center;">
+                                                                                <i class="fa fa-fw fa-gears">
+                                                                            </th>        
                                                                         </tr>
                                                                     </thead>
                                                                     <tfoot>
                                                                         <tr>
-                                                                            <th colspan="7" style="text-align:right">Total:</th>
+                                                                            <th colspan="6" style="text-align:right">Total:</th>
                                                                             <th></th>
                                                                             <th></th>
                                                                         </tr>
@@ -2069,6 +2063,59 @@
         </div>
         <!-- /.modal-dialog -->
     </div>  
+    <!-- MODAL-->
+    <div class="modal fade" id="modalHlinapu" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> ENTRADA DE COBROS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <div id="tbHlinapu">
+                        <table id="dt_hlinapu" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th data-class="phone">
+                                        Fecha entrada
+                                    </th>
+                                    <th data-hide="expand">
+                                        Numero de asiento
+                                    </th>
+                                    <th data-hide="phone">
+                                        cuenta contable
+                                    </th>
+                                    <th data-hide="phone">
+                                        documento
+                                    </th>
+                                    <th data-hide="phone">
+                                        Devolucion
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fecha devolucion
+                                    </th>
+                                    <th data-hide="phone">
+                                        Importe
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="6" style="text-align:right">Total:</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

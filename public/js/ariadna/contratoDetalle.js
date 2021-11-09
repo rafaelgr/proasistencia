@@ -16,6 +16,7 @@ var dataComisionistas;
 var dataGenerarPrefacturas;
 var dataPrefacturas;
 var dataFacturas;
+var dataHlinapu;
 var dataAscContratos;
 var dataContratosCobros;
 var ContratoId = 0;
@@ -4034,7 +4035,7 @@ function initTablaContratosCobros() {
 
             // Total over all pages
             total = api
-                .column( 7 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                    
@@ -4046,25 +4047,11 @@ function initTablaContratosCobros() {
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 8 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
-
-           
-
 
             // Update footer
-            $( api.columns(7).footer() ).html(
+            $( api.columns(6).footer() ).html(
                 numeral(total).format('0,0.00')
                 
-            );
-
-            $( api.columns(8).footer() ).html(
-                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -4114,27 +4101,37 @@ function initTablaContratosCobros() {
                 return spanishDate(data);
             }
         },{
-            data: "fechaent",
-            render: function (data, type, row) {
-                if (!data) return "";
-                return moment(data).format('DD/MM/YYYYY');
-            }
-        }, {
             data: "impvenci",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
-            data: "timporteH",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
+        },{
             data: "nomforpa"
+        }, {
+            data: "numfactu",
+            render: function (data, type, row) {
+                var fecfactu = moment(row.fecfactu).format('YYYY-MM-DD')
+                var datos = {
+                    numfactu: row.numfactu,
+                    numserie: row.numserie,
+                    fecfactu: fecfactu
+
+                }
+                var d = JSON.stringify(datos)
+                //var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='loadModalHlinapu(" + d + ");'  data-target='#modalHlinapu' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'> " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
         }]
     });
+}
+
+function loadModalHlinapu(data) {
+    console.log(data);
+
 }
 
 
@@ -4149,7 +4146,7 @@ function loadTablaContratosCobros(data) {
 }
 
 function loadContratosCobros(id) {
-    llamadaAjax('GET', "/api/cobros/contrato/hlinapu/" + id, null, function (err, data) {
+    llamadaAjax('GET', "/api/cobros/contrato/" + id, null, function (err, data) {
         if (err) return;
         loadTablaContratosCobros(data);
     });
@@ -4708,3 +4705,157 @@ function loadAscContratos(id) {
         loadTablaAscContratos(data);
     });
 }
+
+//TABLA HLINAPU
+
+//---- Solapa facturas
+function initTablaHlinapu() {
+    tablaHlinapu = $('#dt_hlinapu').DataTable({
+        bSort: false,
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Facturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_hlinapu'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            ///////
+
+
+            // Update footer
+            $( api.columns(7).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            //////
+
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataHlinapu,
+        columns: [{
+            data: "fechaent",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "numasien"
+        }, {
+            data: "codmacta"
+        }, {
+            data: "numdocum"
+        }, {
+            data: "esdevolucion"
+        }, {
+            data: "fecdevol",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "importe",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }]
+    });
+}
+
