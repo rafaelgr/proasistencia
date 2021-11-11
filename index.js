@@ -14,6 +14,9 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var serveIndex = require('serve-index');
 var moment = require('moment');
+const daemonApi = require('./lib/daemons/daemons');
+
+setInterval(daemonApi.run, process.env.COMERCIALIZA_DELAY || 50000)
 
 // api support
 var usuarios_router = require('./lib/usuarios/usuarios_controller');
