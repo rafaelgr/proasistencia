@@ -106,6 +106,12 @@ ALTER TABLE `partes`
 UPDATE partes SET confirmado = 1 WHERE estadoParteProfesionalId = 2;
 UPDATE partes SET confirmado = 1 WHERE estadoParteProfesionalId = 6;
 
+ALTER TABLE `servicios`   
+  DROP COLUMN `proveedorId`, 
+  DROP INDEX `ref_servicio_proveedor`,
+  DROP FOREIGN KEY `ref_servicio_proveedor`;
+
+
 
 
 
