@@ -103,6 +103,11 @@ ALTER TABLE `partes`
 
 
 
+UPDATE partes SET confirmado = 1 WHERE estadoParteProfesionalId = 2;
+UPDATE partes SET confirmado = 1 WHERE estadoParteProfesionalId = 6;
+
+
+
 
 
 
