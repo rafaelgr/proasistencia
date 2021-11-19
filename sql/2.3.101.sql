@@ -121,6 +121,12 @@ CREATE TABLE `parte_fotos`(
   PRIMARY KEY (`parteFotoId`)
 );
 
+////
+
+ALTER TABLE `partes`   
+  ADD COLUMN `observacionesDelProfesional` VARCHAR(255) NULL AFTER `noFirma`;
+
+
 
 
 
