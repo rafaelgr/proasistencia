@@ -16,7 +16,6 @@ var serveIndex = require('serve-index');
 var moment = require('moment');
 const daemonApi = require('./lib/daemons/daemons');
 
-setInterval(daemonApi.run, process.env.COMERCIALIZA_DELAY || 50000)
 
 // api support
 var usuarios_router = require('./lib/usuarios/usuarios_controller');
@@ -247,6 +246,9 @@ server.setTimeout(800000000);
 // -- io calls
 var ioAPI = require('./lib/ioapi/ioapi');
 ioAPI.init(io);
+
+//starting daemon
+setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
 
 
 // -- console message

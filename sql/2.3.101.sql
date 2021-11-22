@@ -126,6 +126,12 @@ CREATE TABLE `parte_fotos`(
 ALTER TABLE `partes`   
   ADD COLUMN `observacionesDelProfesional` VARCHAR(255) NULL AFTER `noFirma`;
 
+  ALTER TABLE `partes`   
+  ADD COLUMN `cargoFirmante` VARCHAR(255) NULL AFTER `dniFirmante`;
+
+
+
+
 
 
 
