@@ -248,7 +248,7 @@ var ioAPI = require('./lib/ioapi/ioapi');
 ioAPI.init(io);
 
 //starting daemon
-//setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
+setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
 
 
 // -- console message
