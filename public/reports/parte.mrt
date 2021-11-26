@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "732a5bcf6d3d4c33ad37c44b4616e90a",
+  "ReportGuid": "7186464012e842c593c361c8b30e4cf6",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1637843757061+0100)/",
+  "ReportChanged": "/Date(1637925969166+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -25,7 +25,7 @@
         "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
-        "Key": "dbf852d956614bcc9a0af7a5a261c34f",
+        "Key": "9bdc1784ddfa43a1b21d9f2a4f41265c",
         "Columns": {
           "0": {
             "Name": "parteId",
@@ -84,31 +84,52 @@
             "Type": "System.String"
           },
           "8": {
+            "Name": "descripcion_averia",
+            "Index": -1,
+            "NameInSource": "descripcion_averia",
+            "Alias": "descripcion_averia",
+            "Type": "System.String"
+          },
+          "9": {
             "Name": "nombreCliente",
             "Index": -1,
             "NameInSource": "nombreCliente",
             "Alias": "nombreCliente",
             "Type": "System.String"
           },
-          "9": {
+          "10": {
             "Name": "tipoVia",
             "Index": -1,
             "NameInSource": "tipoVia",
             "Alias": "tipoVia",
             "Type": "System.String"
           },
-          "10": {
+          "11": {
             "Name": "direccionTrabajo",
             "Index": -1,
             "NameInSource": "direccionTrabajo",
             "Alias": "direccionTrabajo",
             "Type": "System.String"
           },
-          "11": {
+          "12": {
             "Name": "poblacionTrabajo",
             "Index": -1,
             "NameInSource": "poblacionTrabajo",
             "Alias": "poblacionTrabajo",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "formaPagoProveedor",
+            "Index": -1,
+            "NameInSource": "formaPagoProveedor",
+            "Alias": "formaPagoProveedor",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "formaPagoCliente",
+            "Index": -1,
+            "NameInSource": "formaPagoCliente",
+            "Alias": "formaPagoCliente",
             "Type": "System.String"
           }
         },
@@ -118,7 +139,7 @@
         "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
-        "Key": "de82ab9b4a7344d29fdb70b3f243f1d4",
+        "Key": "15bbeebf7436454d9030c6163f38e388",
         "Columns": {
           "0": {
             "Name": "parteLineaId",
@@ -205,6 +226,34 @@
             "Type": "System.String"
           },
           "12": {
+            "Name": "importeProveedorIva",
+            "Index": -1,
+            "NameInSource": "importeProveedorIva",
+            "Alias": "importeProveedorIva",
+            "Type": "System.Decimal"
+          },
+          "13": {
+            "Name": "totalClienteIva",
+            "Index": -1,
+            "NameInSource": "totalClienteIva",
+            "Alias": "totalClienteIva",
+            "Type": "System.Decimal"
+          },
+          "14": {
+            "Name": "totalProveedorIva",
+            "Index": -1,
+            "NameInSource": "totalProveedorIva",
+            "Alias": "totalProveedorIva",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "importeClienteIva",
+            "Index": -1,
+            "NameInSource": "importeClienteIva",
+            "Alias": "importeClienteIva",
+            "Type": "System.String"
+          },
+          "16": {
             "Name": "unidadTipo",
             "Index": -1,
             "NameInSource": "unidadTipo",
@@ -218,7 +267,7 @@
         "Ident": "StiDataTableSource",
         "Name": "locales",
         "Alias": "locales",
-        "Key": "48d4fc8eb68046e8a2a8c102b5f63a46",
+        "Key": "3dd041aadd164043b86bca2515c1d981",
         "Columns": {
           "0": {
             "Name": "localAfectadoId",
@@ -303,7 +352,7 @@
         "0": {
           "Ident": "StiPageHeaderBand",
           "Name": "PageHeaderBand1",
-          "ClientRectangle": "0,0.4,19,2.2",
+          "ClientRectangle": "0,0.4,19,8.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -314,7 +363,7 @@
               "Ident": "StiImage",
               "Name": "Image1",
               "Guid": "d28b88a72f6d7eb7bb2d6d88b75e75d3",
-              "ClientRectangle": "0.4,0.2,3.8,1.4",
+              "ClientRectangle": "0,0.2,3.8,1.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -326,7 +375,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text8",
-              "ClientRectangle": "13.4,0.2,5,0.6",
+              "ClientRectangle": "13.8,0.2,5.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -339,13 +388,257 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text10",
+              "ClientRectangle": "7.8,2.2,4.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Fecha: {cabecera.fecha_reparacion}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text32",
+              "Guid": "f467bc6864314591a7d9589307fa2871",
+              "ClientRectangle": "0,3.2,4.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "DATOS DEL CLIENTE"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text33",
+              "Guid": "8328f7377951443ea056578df346e36b",
+              "ClientRectangle": "15.2,2.2,3.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Nº De serie: {cabecera.numParte}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text37",
+              "ClientRectangle": "0,2.2,4.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PARTE DE TRABAJO"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text39",
+              "Guid": "8d497af5a9c344d1bbc62b33a00bfc54",
+              "ClientRectangle": "0,3.8,2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Nombre"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text40",
+              "Guid": "a274b3b526cc43f58729d4341588b548",
+              "ClientRectangle": "0,4.4,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Dirección"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text44",
+              "Guid": "57e8108ccbf245c79085449a3ac7555b",
+              "ClientRectangle": "2,3.8,17,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.nombreCliente}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text45",
+              "Guid": "2dd84295d4314b3ba0b3317f56f2717f",
+              "ClientRectangle": "2,4.4,17,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.tipoVia} {cabecera.direccionTrabajo} {cabecera.poblacionTrabajo}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text49",
+              "Guid": "98c29a9dba694476b87b4547f1af59b7",
+              "ClientRectangle": "0,5.2,4.2,0.6",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Condition": "IsNull",
+                  "Column": "cabecera.trabajos_realizados",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "REPARACIÓN REALIZADA"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "Text50",
+              "Guid": "2887dc616bc248d7ab718c39bd2adf0d",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,5.8,19,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.trabajos_realizados}"
+              },
+              "HorAlignment": "Width",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "DataColumn"
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "Text47",
+              "Guid": "05700aeb22a24fbcb7b914f3a08d09f3",
+              "ClientRectangle": "0,6.4,4.2,0.6",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Condition": "IsNull",
+                  "Column": "cabecera.descripcion_averia",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "DESCRIPCIÓN AVERIA"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "13": {
+              "Ident": "StiText",
+              "Name": "Text48",
+              "Guid": "3aeb78ae3b2f493a8ac97a591fa50bd4",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,7,19,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.descripcion_averia}"
+              },
+              "HorAlignment": "Width",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
             }
           }
         },
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,24.3,19,3.4",
+          "ClientRectangle": "0,35.78,19,3",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -354,25 +647,8 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text7",
-              "ClientRectangle": "0.4,0.16,18.4,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Camino de las Rejas, 1 28821 Coslada (Madrid) - http://www.proasistencia.es - mail: proasistencia@proasistencia.es"
-              },
-              "HorAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
               "Name": "Text46",
-              "ClientRectangle": "0.6,2.76,18,0.4",
+              "ClientRectangle": "0.6,2.36,18,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -385,19 +661,35 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "2": {
+            "1": {
               "Ident": "StiText",
-              "Name": "Text10",
-              "Guid": "9b553d6104824dd762b72af2bd90fe9e",
-              "ClientRectangle": "0.6,0.56,18,0.4",
+              "Name": "Text34",
+              "Guid": "5101272c6dd6433e9c82618d43e22889",
+              "ClientRectangle": "0,0.02,4.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "PROASISTENCIA, S.L. Registro Mercantil de Madrid, Tomo 10.223, Sección 8a, Folio 163, Hoja No M . 162970, Inscripción 1a C.I.F. B 81323180"
+                "Value": "D. Roberto Diaz García D"
               },
-              "HorAlignment": "Center",
-              "Font": ";6.75;;",
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "66a8f44769794255869031f2270e06dd",
+              "ClientRectangle": "14.8,0.1,4.2,1.2",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "D. Claudia Alonso Gómez\r\nD.N.I. 653376761\r\nCargo: Presidente"
+              },
+              "Font": ";9;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -405,323 +697,46 @@
             },
             "3": {
               "Ident": "StiText",
-              "Name": "Text34",
-              "Guid": "5101272c6dd6433e9c82618d43e22889",
-              "ClientRectangle": "0.6,1.02,18,1.6",
+              "Name": "Text5",
+              "ClientRectangle": "7.6,1.5,4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Le informamos que los datos personales de esta factura, están incorporados en un fichero bajo nuestra responsabilidad, para el tratamiento de datos de carácter personal, con la finalidad de\r\nmantenerle informado sobre los servicios que ofrece PROASISTENCIA, S.L Usted como interesado directo, tiene derecho de Acceso, Rectificación, Cancelación y Oposición al tratamiento de la\r\ninformación que le concierne y autoriza a que pase a formar parte del mencionado fichero, así como a recibir información y publicidad de productos y servicios de PROASISTENCIA, S.L. Si no\r\ndesea ser informado de nuestros productos y servicios mándenos un email o carta.\r\nLos derechos precitados podrán hacerse efectivos ante: PROASISTENCIA, S.L, C/ Camino de Rejas, 1 Coslada 28821 de Madrid o enviando un email: proasistencia@proasistencia.es (Ley\r\norgánica 15/1999 de 13 de diciembre de protección de datos de carácter personal)"
+                "Value": "www.proasistencia.es"
               },
               "HorAlignment": "Center",
-              "Font": "Arial Narrow;6.75;Bold, Italic;",
-              "Border": ";;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           },
           "CanGrow": false
         },
         "2": {
-          "Ident": "StiDataBand",
-          "Name": "Datacabecera",
-          "ClientRectangle": "0,3.4,19,4.8",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text1",
-              "ClientRectangle": "9,0,2.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.fecha_reparacion}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": "Arial Narrow;9.75;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text11",
-              "ClientRectangle": "6.4,0,2.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fecha"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text14",
-              "Guid": "97ffbd7e581145f9854d0011a044ad60",
-              "ClientRectangle": "0.4,1,4.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "DATOS DEL CLIENTE"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text26",
-              "Guid": "1e69b60a15a94cf7b02b2d1342e80da4",
-              "ClientRectangle": "12.2,0,2.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Nº De serie"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text31",
-              "ClientRectangle": "15,0,2.4,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.numParte}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "5": {
-              "Ident": "StiText",
-              "Name": "Text4",
-              "ClientRectangle": "0.4,0,4.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "PARTE DE TRABAJO"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "::;::;::;::;True;1;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "6": {
-              "Ident": "StiText",
-              "Name": "Text6",
-              "Guid": "2ed5c2bc8c474bfcb24bc0a8ef864a44",
-              "ClientRectangle": "0.4,1.6,4.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Nombre"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "7": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "Guid": "c5b47a99df0149eebc990828a73456eb",
-              "ClientRectangle": "0.4,2.2,4.2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Dirección"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "8": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "Guid": "2ace6cd1917740fc9aae29963d49f145",
-              "ClientRectangle": "4.6,1.6,14,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.nombreCliente}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "9": {
-              "Ident": "StiText",
-              "Name": "Text13",
-              "Guid": "63bf7c2933354fb5b4bb4c6e17265d62",
-              "ClientRectangle": "4.6,2.2,14,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.tipoVia} {cabecera.direccionTrabajo} {cabecera.poblacionTrabajo}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "10": {
-              "Ident": "StiText",
-              "Name": "Text2",
-              "Guid": "853f64be603642748397d6bcea0dab82",
-              "ClientRectangle": "9,3,4.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "DESCRIPCIÓN AVERIA"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "11": {
-              "Ident": "StiText",
-              "Name": "Text16",
-              "Guid": "0f19704dcbde43efb64effd444cfea85",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "9,3.6,9.6,1",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
-            },
-            "12": {
-              "Ident": "StiText",
-              "Name": "Text18",
-              "Guid": "6a8b2947feba4c728a274ffdf9443d8b",
-              "ClientRectangle": "0.4,3,4.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "REPARACIÓN REALIZADA"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;Bold;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "13": {
-              "Ident": "StiText",
-              "Name": "Text19",
-              "Guid": "8658758ed5dc4082a0cf1d6c2a67e4c7",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "0.4,3.6,8.4,1",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9.75;;",
-              "Border": "::;::;::;::;;;solid:",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
-            }
-          },
-          "DataSourceName": "cabecera",
-          "Sort": {
-            "0": "ASC",
-            "1": "fecha"
-          }
-        },
-        "3": {
           "Ident": "StiHeaderBand",
-          "Name": "HeaderBand1",
-          "ClientRectangle": "0,9,19,0.6",
+          "Name": "HeaderBandLocales",
+          "ClientRectangle": "0,9.6,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
-          "Border": ";;;;;;;solid:Black",
+          "Border": "All;;;;;;;solid:Black",
           "Brush": "solid:",
           "Components": {
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
               "Guid": "8730f39cdfba52873bd9d8d20dd3762f",
-              "ClientRectangle": "16.6,0,2,0.4",
+              "ClientRectangle": "17.2,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Telefono 2"
+                "Value": "TELEFONO 2"
               },
-              "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -730,16 +745,15 @@
               "Ident": "StiText",
               "Name": "Text42",
               "Guid": "0fd752622e864643b492d99ff0577d0f",
-              "ClientRectangle": "0.4,0,11,0.4",
+              "ClientRectangle": "0,0,12,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "local"
+                "Value": "LOCAL"
               },
-              "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -748,16 +762,15 @@
               "Ident": "StiText",
               "Name": "Text43",
               "Guid": "bcda5f7a71834d94898679b11c6c46d4",
-              "ClientRectangle": "14.2,0,2,0.4",
+              "ClientRectangle": "14.8,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Telefono 1"
+                "Value": "TELÉFONO 1"
               },
-              "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -766,16 +779,15 @@
               "Ident": "StiText",
               "Name": "Text36",
               "Guid": "e853a774504245da9ed90faa4c84f2a0",
-              "ClientRectangle": "11.8,0,2,0.4",
+              "ClientRectangle": "12.4,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Contacto"
+                "Value": "CONTACTO"
               },
-              "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -783,20 +795,20 @@
           },
           "PrintIfEmpty": true
         },
-        "4": {
+        "3": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,10.4,19,0.8",
+          "ClientRectangle": "0,10.8,19,0.5",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
-          "Border": ";;;;;;;solid:Black",
+          "Border": "All;;;;;;;solid:Black",
           "Brush": "solid:",
           "Components": {
             "0": {
               "Ident": "StiText",
               "Name": "Text20",
-              "ClientRectangle": "16.6,0,2,0.4",
+              "ClientRectangle": "17.2,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -811,7 +823,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text21",
-              "ClientRectangle": "14.2,0,2,0.4",
+              "ClientRectangle": "14.8,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -826,7 +838,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text22",
-              "ClientRectangle": "11.8,0,2,0.4",
+              "ClientRectangle": "12.4,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -841,7 +853,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text15",
-              "ClientRectangle": "0.4,0,11,0.4",
+              "ClientRectangle": "0,0,11.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -854,24 +866,43 @@
               "Type": "Expression"
             }
           },
-          "MinHeight": 0.8,
+          "MinHeight": 0.5,
           "MaxHeight": 20.0,
-          "DataSourceName": "lineas",
-          "DataRelationName": "cabecera_lineas",
-          "MasterComponent": "Datacabecera",
+          "DataSourceName": "locales",
           "Sort": {
             "0": "ASC",
-            "1": "numparte",
+            "1": "codigoArticulo",
             "2": "ASC",
-            "3": "codigoArticulo",
-            "4": "ASC",
-            "5": "abrev"
+            "3": "numparte"
           }
         },
+        "4": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBandLocales",
+          "ClientRectangle": "0,12.1,19,0",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:"
+        },
         "5": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "ClientRectangle": "0,12.9,19,0",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Condition": {
+            "Value": "{cabecera.parteId}"
+          }
+        },
+        "6": {
           "Ident": "StiHeaderBand",
-          "Name": "HeaderBand2",
-          "ClientRectangle": "0,12,19,0.6",
+          "Name": "HeaderBandLineas",
+          "ClientRectangle": "0,13.7,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -882,7 +913,7 @@
               "Ident": "StiText",
               "Name": "Text38",
               "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
-              "ClientRectangle": "0.4,0,3,0.4",
+              "ClientRectangle": "0,0.6,3.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -890,7 +921,7 @@
                 "Value": "CÓDIGO"
               },
               "Font": ";8.25;Bold;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top, Left, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
@@ -899,16 +930,15 @@
               "Ident": "StiText",
               "Name": "Text28",
               "Guid": "3a74650a721540c9926cb294494cf381",
-              "ClientRectangle": "3.8,0,8.4,0.4",
+              "ClientRectangle": "3.8,0.6,8.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "CONCEPTO"
               },
-              "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
@@ -917,7 +947,7 @@
               "Ident": "StiText",
               "Name": "Text29",
               "Guid": "62aa3f1d2f1e4b70a1418b5a6f4a0df0",
-              "ClientRectangle": "12.6,0,1.2,0.4",
+              "ClientRectangle": "12.6,0.6,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -926,7 +956,7 @@
               },
               "HorAlignment": "Center",
               "Font": ";8.25;Bold;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
@@ -935,16 +965,16 @@
               "Ident": "StiText",
               "Name": "Text41",
               "Guid": "55df3c09bcab4dcdb2e379ec1801fd58",
-              "ClientRectangle": "14.2,0,1.8,0.4",
+              "ClientRectangle": "14.2,0.6,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "PRECIO"
               },
-              "HorAlignment": "Center",
+              "HorAlignment": "Right",
               "Font": ";8.25;Bold;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
@@ -953,37 +983,53 @@
               "Ident": "StiText",
               "Name": "Text55",
               "Guid": "fd7acf0e70864ac5b6249b824d058710",
-              "ClientRectangle": "16.4,0,2.2,0.4",
+              "ClientRectangle": "16.4,0.6,2.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "TOTAL"
               },
-              "HorAlignment": "Center",
+              "HorAlignment": "Right",
               "Font": ";8.25;Bold;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": "Top, Left, Bottom;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text51",
+              "ClientRectangle": "0,0.1,4.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "REPARACIÓN POR TARIFAS"
+              },
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           },
           "PrintAtBottom": true
         },
-        "6": {
+        "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,13.4,19,0.4",
+          "ClientRectangle": "0,15.5,19,0.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
-          "Border": ";;;;;;;solid:Black",
+          "Border": "Left, Right;;;;;;;solid:Black",
           "Brush": "solid:",
           "Components": {
             "0": {
               "Ident": "StiText",
               "Name": "Text23",
-              "ClientRectangle": "0.4,0,3,0.4",
+              "ClientRectangle": "0,0,3.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1013,28 +1059,224 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text25",
-              "ClientRectangle": "12.6,0,1.2,0.4",
+              "ClientRectangle": "12.6,0,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{lineas.unidades}"
               },
+              "HorAlignment": "Center",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text27",
+              "ClientRectangle": "14.2,0,2.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.precioProveedor}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 5,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol, NegativeInRed",
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text30",
+              "ClientRectangle": "16.4,0,2.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.importeProveedor}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 5,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol, NegativeInRed",
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression"
             }
           },
           "PrintAtBottom": true,
-          "DataSourceName": "bases",
-          "DataRelationName": "cabecera_bases",
-          "MasterComponent": "Datacabecera"
+          "DataSourceName": "lineas",
+          "DataRelationName": "cabecera_bases"
         },
-        "7": {
+        "8": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "ClientRectangle": "0,16.5,19,1.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": "Top;;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "ClientRectangle": "16.4,0.1,2.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(Datalineas,lineas.importeProveedor)}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 5,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol, NegativeInRed",
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "ClientRectangle": "13.4,0.7,0.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "IVA"
+              },
+              "Font": ";8.25;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "ClientRectangle": "14.6,0.7,1.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{lineas.ivaProveedor / 100}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiPercentageFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 0,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator",
+                "PositivePattern": 1,
+                "Symbol": "%"
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text18",
+              "ClientRectangle": "16.4,0.7,2.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(Datalineas,lineas.totalProveedorIva)}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol, NegativeInRed",
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text19",
+              "ClientRectangle": "12.4,1.3,2.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL CON IVA"
+              },
+              "HorAlignment": "Center",
+              "Font": ";8.25;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text26",
+              "ClientRectangle": "16.4,1.3,2.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(Datalineas,lineas.importeProveedorIva)}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol, NegativeInRed",
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals"
+            }
+          }
+        },
+        "9": {
           "Ident": "StiFooterBand",
-          "Name": "FooterBand1",
-          "ClientRectangle": "0,14.6,19,2.4",
+          "Name": "FooterBandLineas",
+          "ClientRectangle": "0,19.1,19,7.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1043,121 +1285,197 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text59",
-              "Guid": "0d25225647854303a3216cd15711c4a9",
-              "ClientRectangle": "10.8,0.4,3.2,0.4",
+              "Name": "Text1",
+              "ClientRectangle": "0,0.4,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Importe"
+                "Value": "FORMA DE PAGO"
               },
-              "HorAlignment": "Center",
-              "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text60",
-              "Guid": "552da330b5ec4b54bf9fceb758ffd521",
-              "ClientRectangle": "14,0.4,3,0.4",
+              "Name": "Text2",
+              "ClientRectangle": "3.2,0.4,3,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fecha Vto."
+                "Value": "{cabecera.formaPagoProveedor}"
               },
-              "HorAlignment": "Center",
-              "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text58",
-              "Guid": "79bc22b4686840eda072617f9609816f",
-              "ClientRectangle": "0.4,0.4,10.4,0.4",
+              "Name": "Text4",
+              "ClientRectangle": "0,0.8,3.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Forma de Pago"
+                "Value": "GARANTÍA"
               },
-              "HorAlignment": "Center",
-              "Font": ";8.25;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "3": {
               "Ident": "StiText",
-              "Name": "Text3",
-              "Guid": "bebfac90c16341768f264267164b0ea1",
-              "ClientRectangle": "0.4,0.8,10.4,1",
+              "Name": "Text6",
+              "ClientRectangle": "3.2,0.8,3,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.formaPago}  IBAN: {IIF(cabecera.formapagoId == 13 || cabecera.formapagoId == 6  ,\"\",cabecera.cuenta)}"
+                "Value": "{cabecera.garantia_trabajos}"
               },
-              "VertAlignment": "Center",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "4": {
               "Ident": "StiText",
-              "Name": "Text5",
-              "Guid": "baef2f8f79354e8686bf858fed4f6485",
-              "ClientRectangle": "14,0.8,3,1",
+              "Name": "Text9",
+              "ClientRectangle": "0,2,4,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Condition": "IsNull",
+                  "Column": "cabecera.observacionesDelProfesional",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.vencimiento.ToString(\"dd/MM/yyyy\")}"
+                "Value": "OBSERVACIONES"
               },
-              "HorAlignment": "Center",
-              "Border": "All;;;;;;;solid:Black",
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "5": {
               "Ident": "StiText",
-              "Name": "Text61",
-              "Guid": "74203502dfe7423989dc815179f3363c",
-              "ClientRectangle": "10.8,0.8,3.2,1",
+              "Name": "Text11",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,2.4,19,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.restoCobrar}"
+                "Value": "{cabecera.observacionesDelProfesional}"
               },
-              "HorAlignment": "Center",
-              "Border": "All;;;;;;;solid:Black",
+              "HorAlignment": "Width",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
-                "DecimalSeparator": ",",
-                "GroupSeparator": ".",
-                "UseLocalSetting": false,
-                "PositivePattern": 3,
-                "Symbol": "€"
+              "TextOptions": {
+                "WordWrap": true
               },
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "ClientRectangle": "0,3,4.8,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Condition": "IsNull",
+                  "Column": "cabecera.trabajosPendientes",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TRABAJOS PENDIENTES"
+              },
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,3.4,19,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.trabajosPendientes}"
+              },
+              "HorAlignment": "Width",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text31",
+              "ClientRectangle": "0,4.3,3.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "EL PROFESIONAL"
+              },
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text35",
+              "ClientRectangle": "14.8,4.3,3.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "EL CLIENTE"
+              },
+              "Font": ";9.75;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
             }
-          },
-          "PrintAtBottom": true,
-          "NewPageAfter": true
+          }
         }
       },
       "PageWidth": 21.0,
