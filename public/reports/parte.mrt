@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "7186464012e842c593c361c8b30e4cf6",
+  "ReportGuid": "b098ff2d53af47eb975a02133ec0f2b8",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1637925969166+0100)/",
+  "ReportChanged": "/Date(1637929031602+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -25,7 +25,7 @@
         "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
-        "Key": "9bdc1784ddfa43a1b21d9f2a4f41265c",
+        "Key": "d2882ce38d7c4e1e98c34d5ffabd68d8",
         "Columns": {
           "0": {
             "Name": "parteId",
@@ -139,7 +139,7 @@
         "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
-        "Key": "15bbeebf7436454d9030c6163f38e388",
+        "Key": "d916c099e45a48548da0d25e8e66e433",
         "Columns": {
           "0": {
             "Name": "parteLineaId",
@@ -267,7 +267,7 @@
         "Ident": "StiDataTableSource",
         "Name": "locales",
         "Alias": "locales",
-        "Key": "3dd041aadd164043b86bca2515c1d981",
+        "Key": "295c22bf8ad5496ea012507a5aea6eed",
         "Columns": {
           "0": {
             "Name": "localAfectadoId",
@@ -352,7 +352,7 @@
         "0": {
           "Ident": "StiPageHeaderBand",
           "Name": "PageHeaderBand1",
-          "ClientRectangle": "0,0.4,19,8.4",
+          "ClientRectangle": "0,0.4,19,8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -535,12 +535,12 @@
               "Ident": "StiText",
               "Name": "Text49",
               "Guid": "98c29a9dba694476b87b4547f1af59b7",
-              "ClientRectangle": "0,5.2,4.2,0.6",
+              "ClientRectangle": "0,6.6,4.2,0.6",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
-                  "Condition": "IsNull",
                   "Column": "cabecera.trabajos_realizados",
+                  "Value1": "NOVISIBLE",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"
@@ -565,7 +565,17 @@
               "Guid": "2887dc616bc248d7ab718c39bd2adf0d",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,5.8,19,0.4",
+              "ClientRectangle": "0,7.2,19,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Column": "cabecera.trabajos_realizados",
+                  "Value1": "NOVISIBLE",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -586,17 +596,7 @@
               "Ident": "StiText",
               "Name": "Text47",
               "Guid": "05700aeb22a24fbcb7b914f3a08d09f3",
-              "ClientRectangle": "0,6.4,4.2,0.6",
-              "Conditions": {
-                "0": {
-                  "Ident": "StiCondition",
-                  "Condition": "IsNull",
-                  "Column": "cabecera.descripcion_averia",
-                  "Enabled": false,
-                  "TextColor": "255,255,255",
-                  "BorderSides": "None"
-                }
-              },
+              "ClientRectangle": "0,5.2,4.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -616,7 +616,7 @@
               "Guid": "3aeb78ae3b2f493a8ac97a591fa50bd4",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,7,19,0.6",
+              "ClientRectangle": "0,5.8,19,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -717,7 +717,7 @@
         "2": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBandLocales",
-          "ClientRectangle": "0,9.6,19,0.4",
+          "ClientRectangle": "0,9.2,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -798,7 +798,7 @@
         "3": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
-          "ClientRectangle": "0,10.8,19,0.5",
+          "ClientRectangle": "0,10.4,19,0.5",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -879,7 +879,7 @@
         "4": {
           "Ident": "StiFooterBand",
           "Name": "FooterBandLocales",
-          "ClientRectangle": "0,12.1,19,0",
+          "ClientRectangle": "0,11.7,19,0",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -889,7 +889,7 @@
         "5": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
-          "ClientRectangle": "0,12.9,19,0",
+          "ClientRectangle": "0,12.5,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -902,7 +902,7 @@
         "6": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBandLineas",
-          "ClientRectangle": "0,13.7,19,1",
+          "ClientRectangle": "0,13.3,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1019,7 +1019,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
-          "ClientRectangle": "0,15.5,19,0.2",
+          "ClientRectangle": "0,15.1,19,0.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1130,7 +1130,7 @@
         "8": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,16.5,19,1.8",
+          "ClientRectangle": "0,16.1,19,1.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1276,7 +1276,7 @@
         "9": {
           "Ident": "StiFooterBand",
           "Name": "FooterBandLineas",
-          "ClientRectangle": "0,19.1,19,7.6",
+          "ClientRectangle": "0,18.7,19,7.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1354,8 +1354,8 @@
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
-                  "Condition": "IsNull",
                   "Column": "cabecera.observacionesDelProfesional",
+                  "Value1": "NOVISIBLE",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"
@@ -1379,6 +1379,16 @@
               "CanGrow": true,
               "GrowToHeight": true,
               "ClientRectangle": "0,2.4,19,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Column": "cabecera.observacionesDelProfesional",
+                  "Value1": "NOVISIBLE",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1402,8 +1412,8 @@
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
-                  "Condition": "IsNull",
                   "Column": "cabecera.trabajosPendientes",
+                  "Value1": "NOVISIBLE",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"
@@ -1427,6 +1437,16 @@
               "CanGrow": true,
               "GrowToHeight": true,
               "ClientRectangle": "0,3.4,19,0.4",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Column": "cabecera.trabajosPendientes",
+                  "Value1": "NOVISIBLE",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
