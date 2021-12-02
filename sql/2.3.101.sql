@@ -130,6 +130,22 @@ ALTER TABLE `partes`
   ADD COLUMN `cargoFirmante` VARCHAR(255) NULL AFTER `dniFirmante`;
 
 
+  ///
+
+  ALTER TABLE `partes`   
+  CHANGE `FactPropiaPro` `FactPropiaPro` TINYINT(1) DEFAULT 0 NULL  AFTER `aCuentaCli`,
+  CHANGE `fecha_solicitud` `fecha_solicitud` DATETIME NULL COMMENT 'Fecha y hora en al que se realiza la solcitud'  AFTER `ano`,
+  CHANGE `fecha_prevista` `fecha_prevista` DATE NULL COMMENT 'Fecha prevista en la que se realizarán los trabajos'  AFTER `fecha_solicitud`,
+  CHANGE `fecha_reparacion` `fecha_reparacion` DATE NULL COMMENT 'Fecha en la que realmente se ha hecho la reparación'  AFTER `fecha_prevista`,
+  CHANGE `fecha_factura_cliente` `fecha_factura_cliente` DATE NULL COMMENT 'Fecha en la que se le emitión la factura'  AFTER `fecha_reparacion`,
+  CHANGE `fecha_factura_profesional` `fecha_factura_profesional` DATE NULL COMMENT 'Fecha en la que nos emite el profesional la factura'  AFTER `fecha_factura_cliente`,
+  CHANGE `fecha_cobro_cliente` `fecha_cobro_cliente` DATE NULL COMMENT 'Fecha en la que se ha relaizado el cobro de la factura el cliente'  AFTER `fecha_factura_profesional`,
+  CHANGE `fecha_pago_profesional` `fecha_pago_profesional` DATE NULL COMMENT 'Fecha en la que se le hace efectivo el pago al profesional'  AFTER `fecha_cobro_cliente`,
+  ADD COLUMN `fecha_firma` DATE NULL AFTER `fecha_cierre_profesional`,
+  CHANGE `ofertaId` `ofertaId` INT(11) NULL  AFTER `observacionesDelProfesional`;
+
+
+
 
 
 
