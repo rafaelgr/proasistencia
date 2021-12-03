@@ -144,6 +144,11 @@ ALTER TABLE `partes`
   ADD COLUMN `fecha_firma` DATE NULL AFTER `fecha_cierre_profesional`,
   CHANGE `ofertaId` `ofertaId` INT(11) NULL  AFTER `observacionesDelProfesional`;
 
+  ALTER TABLE `partes_lineas`   
+  ADD COLUMN `horaEntrada` TIME NULL AFTER `prefacturaAutoLineaId`,
+  ADD COLUMN `horaSalida` TIME NULL AFTER `horaEntrada`;
+
+
 
 
 
