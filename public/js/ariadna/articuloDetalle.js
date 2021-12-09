@@ -91,6 +91,7 @@ function admData() {
     self.codigoReparacion = ko.observable();
     self.descripcion = ko.observable();
     self.varios = ko.observable();
+    self.administracion = ko.observable();
     self.coste = ko.observable();
     self.porcentaje = ko.observable();
     self.precioVenta = ko.observable();
@@ -133,6 +134,7 @@ function loadData(data) {
     vm.codigoReparacion(data.codigoReparacion);
     vm.descripcion(data.descripcion);
     vm.varios(data.varios);
+    vm.administracion(data.administracion);
     vm.coste(data.coste);
     vm.porcentaje(data.porcentaje);
     vm.precioVenta(data.precioVenta);
@@ -207,6 +209,7 @@ function aceptar() {
                 "unidadId": vm.sunidadId(),
                 "tipoProfesionalId": vm.stipoProfesionalId(),
                 "varios": vm.varios(),
+                "administracion": vm.administracion(),
                 "departamentoId": vm.sdepartamentoId(),
                 "coste": vm.coste(),
                 "porcentaje": vm.porcentaje(),

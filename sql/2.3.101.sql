@@ -145,8 +145,28 @@ ALTER TABLE `partes`
   CHANGE `ofertaId` `ofertaId` INT(11) NULL  AFTER `observacionesDelProfesional`;
 
   ALTER TABLE `partes_lineas`   
-  ADD COLUMN `horaEntrada` TIME NULL AFTER `prefacturaAutoLineaId`,
-  ADD COLUMN `horaSalida` TIME NULL AFTER `horaEntrada`;
+  ADD COLUMN `horaEntrada` DATETIME NULL AFTER `prefacturaAutoLineaId`,
+  ADD COLUMN `horaSalida` DATETIME NULL AFTER `horaEntrada`;
+
+
+  ALTER TABLE `partes_lineas`   
+  ADD COLUMN `minutosTrabajo` INT NULL AFTER `horaSalida`;
+
+
+  ALTER TABLE `articulos`   
+  ADD COLUMN `administracion` TINYINT(1) DEFAULT 0 NULL AFTER `precioVenta`;
+
+  UPDATE articulos 
+  SET administracion = 1
+  WHERE articuloId IN
+  (
+    SELECT * FROM 
+      (SELECT articuloId FROM articulos WHERE  codigoReparacion LIKE '%50.01' OR codigoReparacion LIKE '%50.02')
+      AS tmp
+  )
+
+
+
 
 
 

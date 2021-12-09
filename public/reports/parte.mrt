@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "4d77ef795a464f8c8aee1cf0b3763bc6",
+  "ReportGuid": "b7b28dc2a78649ea9b588fcf9590370a",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1638188637299+0100)/",
+  "ReportChanged": "/Date(1639049031684+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -25,7 +25,7 @@
         "Ident": "StiDataTableSource",
         "Name": "cabecera",
         "Alias": "cabecera",
-        "Key": "97cfd5bf0b594b348cc8767e173de9e1",
+        "Key": "68c2d63254a644bfa8bacdfd5431ca0c",
         "Columns": {
           "0": {
             "Name": "parteId",
@@ -166,6 +166,13 @@
             "NameInSource": "formaPagoCliente",
             "Alias": "formaPagoCliente",
             "Type": "System.String"
+          },
+          "20": {
+            "Name": "horasTrabajo",
+            "Index": -1,
+            "NameInSource": "horasTrabajo",
+            "Alias": "horasTrabajo",
+            "Type": "System.String"
           }
         },
         "NameInSource": "parte.cabecera"
@@ -174,7 +181,7 @@
         "Ident": "StiDataTableSource",
         "Name": "lineas",
         "Alias": "lineas",
-        "Key": "cd6f7591b9d5466c9d4d5798cccb2cf6",
+        "Key": "a9ad61eaca344cb88cff76784c99b79e",
         "Columns": {
           "0": {
             "Name": "parteLineaId",
@@ -216,7 +223,7 @@
             "Index": -1,
             "NameInSource": "ivaCliente",
             "Alias": "ivaCliente",
-            "Type": "System.String"
+            "Type": "System.Decimal"
           },
           "6": {
             "Name": "ivaProveedor",
@@ -244,7 +251,7 @@
             "Index": -1,
             "NameInSource": "importeCliente",
             "Alias": "importeCliente",
-            "Type": "System.String"
+            "Type": "System.Decimal"
           },
           "10": {
             "Name": "precioProveedor",
@@ -258,7 +265,7 @@
             "Index": -1,
             "NameInSource": "precioCliente",
             "Alias": "precioCliente",
-            "Type": "System.String"
+            "Type": "System.Decimal"
           },
           "12": {
             "Name": "importeProveedorIva",
@@ -286,9 +293,16 @@
             "Index": -1,
             "NameInSource": "importeClienteIva",
             "Alias": "importeClienteIva",
-            "Type": "System.String"
+            "Type": "System.Decimal"
           },
           "16": {
+            "Name": "minutosTrabajo",
+            "Index": -1,
+            "NameInSource": "minutosTrabajo",
+            "Alias": "minutosTrabajo",
+            "Type": "System.Decimal"
+          },
+          "17": {
             "Name": "unidadTipo",
             "Index": -1,
             "NameInSource": "unidadTipo",
@@ -297,71 +311,6 @@
           }
         },
         "NameInSource": "parte.lineas"
-      },
-      "2": {
-        "Ident": "StiDataTableSource",
-        "Name": "locales",
-        "Alias": "locales",
-        "Key": "861eb49e773b4256a663c36142214377",
-        "Columns": {
-          "0": {
-            "Name": "localAfectadoId",
-            "Index": -1,
-            "NameInSource": "localAfectadoId",
-            "Alias": "localAfectadoId",
-            "Type": "System.Decimal"
-          },
-          "1": {
-            "Name": "servicioId",
-            "Index": -1,
-            "NameInSource": "servicioId",
-            "Alias": "servicioId",
-            "Type": "System.Decimal"
-          },
-          "2": {
-            "Name": "nombreLocal",
-            "Index": -1,
-            "NameInSource": "nombreLocal",
-            "Alias": "nombreLocal",
-            "Type": "System.String"
-          },
-          "3": {
-            "Name": "contacto",
-            "Index": -1,
-            "NameInSource": "contacto",
-            "Alias": "contacto",
-            "Type": "System.String"
-          },
-          "4": {
-            "Name": "telefono1",
-            "Index": -1,
-            "NameInSource": "telefono1",
-            "Alias": "telefono1",
-            "Type": "System.String"
-          },
-          "5": {
-            "Name": "telefono2",
-            "Index": -1,
-            "NameInSource": "telefono2",
-            "Alias": "telefono2",
-            "Type": "System.String"
-          },
-          "6": {
-            "Name": "correo",
-            "Index": -1,
-            "NameInSource": "correo",
-            "Alias": "correo",
-            "Type": "System.String"
-          },
-          "7": {
-            "Name": "observaciones",
-            "Index": -1,
-            "NameInSource": "observaciones",
-            "Alias": "observaciones",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "parte.locales"
       }
     },
     "Databases": {
@@ -631,20 +580,6 @@
           "CanGrow": false
         },
         "2": {
-          "Ident": "StiText",
-          "Name": "Text54",
-          "ClientRectangle": "-1.6,11,1.6,0.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Text": {
-            "Value": "{lineas.precioProveedor}"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:Black"
-        },
-        "3": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBandLocales",
           "PrintOn": "OnlyFirstPage",
@@ -825,7 +760,7 @@
           },
           "PrintIfEmpty": true
         },
-        "4": {
+        "3": {
           "Ident": "StiDataBand",
           "Name": "DataLocales",
           "ClientRectangle": "0,10,19,0.5",
@@ -928,7 +863,7 @@
             "3": "numparte"
           }
         },
-        "5": {
+        "4": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
           "ClientRectangle": "0,11.3,19,0",
@@ -943,7 +878,7 @@
             "Value": "{cabecera.parteId}"
           }
         },
-        "6": {
+        "5": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBandLineas",
           "ClientRectangle": "0,12.1,19,1.4",
@@ -1073,11 +1008,29 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text54",
+              "Guid": "d624443617e646abb754b922c8e04482",
+              "ClientRectangle": "10.8,0.1,8.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Horas de trabajo: {cabecera.horasTrabajo}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
             }
           },
           "CanGrow": false
         },
-        "7": {
+        "6": {
           "Ident": "StiDataBand",
           "Name": "DataLineas",
           "ClientRectangle": "0,14.3,19,0.6",
@@ -1199,7 +1152,7 @@
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_bases"
         },
-        "8": {
+        "7": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "ClientRectangle": "0,15.7,19,2.8",
@@ -1409,7 +1362,7 @@
             }
           }
         },
-        "9": {
+        "8": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "CanShrink": true,
