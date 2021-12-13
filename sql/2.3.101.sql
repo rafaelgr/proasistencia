@@ -163,7 +163,7 @@ ALTER TABLE `partes`
     SELECT * FROM 
       (SELECT articuloId FROM articulos WHERE  codigoReparacion LIKE '%50.01' OR codigoReparacion LIKE '%50.02')
       AS tmp
-  )
+  );
 
 
 
