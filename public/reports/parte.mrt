@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "d47a7f4f941647e4b45f1754f83be71d",
+  "ReportGuid": "832b555515614665b00917421c8576f8",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1639387986222+0100)/",
+  "ReportChanged": "/Date(1639556275909+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -18,6 +18,386 @@
     "5": "Stimulsoft.Controls.Dll",
     "6": "Stimulsoft.Base.Dll",
     "7": "Stimulsoft.Report.Dll"
+  },
+  "Dictionary": {
+    "DataSources": {
+      "0": {
+        "Ident": "StiDataTableSource",
+        "Name": "cabecera",
+        "Alias": "cabecera",
+        "Key": "8948b4c20095480f8f5f12f1a7b0e303",
+        "Columns": {
+          "0": {
+            "Name": "parteId",
+            "Index": -1,
+            "NameInSource": "parteId",
+            "Alias": "parteId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "servicioId",
+            "Index": -1,
+            "NameInSource": "servicioId",
+            "Alias": "servicioId",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "numParte",
+            "Index": -1,
+            "NameInSource": "numParte",
+            "Alias": "numParte",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "garantia_trabajos",
+            "Index": -1,
+            "NameInSource": "garantia_trabajos",
+            "Alias": "garantia_trabajos",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "fecha_reparacion",
+            "Index": -1,
+            "NameInSource": "fecha_reparacion",
+            "Alias": "fecha_reparacion",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "observacionesDelProfesional",
+            "Index": -1,
+            "NameInSource": "observacionesDelProfesional",
+            "Alias": "observacionesDelProfesional",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "trabajos_realizados",
+            "Index": -1,
+            "NameInSource": "trabajos_realizados",
+            "Alias": "trabajos_realizados",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "trabajosPendientes",
+            "Index": -1,
+            "NameInSource": "trabajosPendientes",
+            "Alias": "trabajosPendientes",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "descripcion_averia",
+            "Index": -1,
+            "NameInSource": "descripcion_averia",
+            "Alias": "descripcion_averia",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "nombreFirmante",
+            "Index": -1,
+            "NameInSource": "nombreFirmante",
+            "Alias": "nombreFirmante",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "apellidosFirmante",
+            "Index": -1,
+            "NameInSource": "apellidosFirmante",
+            "Alias": "apellidosFirmante",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "dniFirmante",
+            "Index": -1,
+            "NameInSource": "dniFirmante",
+            "Alias": "dniFirmante",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "cargoFirmante",
+            "Index": -1,
+            "NameInSource": "cargoFirmante",
+            "Alias": "cargoFirmante",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "presupuesto",
+            "Index": -1,
+            "NameInSource": "presupuesto",
+            "Alias": "presupuesto",
+            "Type": "System.Decimal"
+          },
+          "14": {
+            "Name": "refPresupuesto",
+            "Index": -1,
+            "NameInSource": "refPresupuesto",
+            "Alias": "refPresupuesto",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "nombreCliente",
+            "Index": -1,
+            "NameInSource": "nombreCliente",
+            "Alias": "nombreCliente",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "nombreProveedor",
+            "Index": -1,
+            "NameInSource": "nombreProveedor",
+            "Alias": "nombreProveedor",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "tipoVia",
+            "Index": -1,
+            "NameInSource": "tipoVia",
+            "Alias": "tipoVia",
+            "Type": "System.String"
+          },
+          "18": {
+            "Name": "direccionTrabajo",
+            "Index": -1,
+            "NameInSource": "direccionTrabajo",
+            "Alias": "direccionTrabajo",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "poblacionTrabajo",
+            "Index": -1,
+            "NameInSource": "poblacionTrabajo",
+            "Alias": "poblacionTrabajo",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "formaPagoProveedor",
+            "Index": -1,
+            "NameInSource": "formaPagoProveedor",
+            "Alias": "formaPagoProveedor",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "formaPagoCliente",
+            "Index": -1,
+            "NameInSource": "formaPagoCliente",
+            "Alias": "formaPagoCliente",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "formaPagoProveedorId",
+            "Index": -1,
+            "NameInSource": "formaPagoProveedorId",
+            "Alias": "formaPagoProveedorId",
+            "Type": "System.Decimal"
+          },
+          "23": {
+            "Name": "formaPagoClienteId",
+            "Index": -1,
+            "NameInSource": "formaPagoClienteId",
+            "Alias": "formaPagoClienteId",
+            "Type": "System.Decimal"
+          },
+          "24": {
+            "Name": "administracion",
+            "Index": -1,
+            "NameInSource": "administracion",
+            "Alias": "administracion",
+            "Type": "System.Boolean"
+          },
+          "25": {
+            "Name": "horasTrabajo",
+            "Index": -1,
+            "NameInSource": "horasTrabajo",
+            "Alias": "horasTrabajo",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "parte.cabecera"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
+        "Name": "lineas",
+        "Alias": "lineas",
+        "Key": "45df670a12b44ca181a0ead704fea826",
+        "Columns": {
+          "0": {
+            "Name": "parteLineaId",
+            "Index": -1,
+            "NameInSource": "parteLineaId",
+            "Alias": "parteLineaId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "parteId",
+            "Index": -1,
+            "NameInSource": "parteId",
+            "Alias": "parteId",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "codigoArticulo",
+            "Index": -1,
+            "NameInSource": "codigoArticulo",
+            "Alias": "codigoArticulo",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "unidades",
+            "Index": -1,
+            "NameInSource": "unidades",
+            "Alias": "unidades",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "descripcion",
+            "Index": -1,
+            "NameInSource": "descripcion",
+            "Alias": "descripcion",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "ivaCliente",
+            "Index": -1,
+            "NameInSource": "ivaCliente",
+            "Alias": "ivaCliente",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "ivaProveedor",
+            "Index": -1,
+            "NameInSource": "ivaProveedor",
+            "Alias": "ivaProveedor",
+            "Type": "System.Decimal"
+          },
+          "7": {
+            "Name": "nombreArticulo",
+            "Index": -1,
+            "NameInSource": "nombreArticulo",
+            "Alias": "nombreArticulo",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "administracion",
+            "Index": -1,
+            "NameInSource": "administracion",
+            "Alias": "administracion",
+            "Type": "System.Decimal"
+          },
+          "9": {
+            "Name": "importeProveedor",
+            "Index": -1,
+            "NameInSource": "importeProveedor",
+            "Alias": "importeProveedor",
+            "Type": "System.Decimal"
+          },
+          "10": {
+            "Name": "importeCliente",
+            "Index": -1,
+            "NameInSource": "importeCliente",
+            "Alias": "importeCliente",
+            "Type": "System.Decimal"
+          },
+          "11": {
+            "Name": "precioProveedor",
+            "Index": -1,
+            "NameInSource": "precioProveedor",
+            "Alias": "precioProveedor",
+            "Type": "System.Decimal"
+          },
+          "12": {
+            "Name": "precioCliente",
+            "Index": -1,
+            "NameInSource": "precioCliente",
+            "Alias": "precioCliente",
+            "Type": "System.Decimal"
+          },
+          "13": {
+            "Name": "importeProveedorIva",
+            "Index": -1,
+            "NameInSource": "importeProveedorIva",
+            "Alias": "importeProveedorIva",
+            "Type": "System.Decimal"
+          },
+          "14": {
+            "Name": "importeClienteIva",
+            "Index": -1,
+            "NameInSource": "importeClienteIva",
+            "Alias": "importeClienteIva",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "totalClienteIva",
+            "Index": -1,
+            "NameInSource": "totalClienteIva",
+            "Alias": "totalClienteIva",
+            "Type": "System.Decimal"
+          },
+          "16": {
+            "Name": "totalProveedorIva",
+            "Index": -1,
+            "NameInSource": "totalProveedorIva",
+            "Alias": "totalProveedorIva",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "minutosTrabajo",
+            "Index": -1,
+            "NameInSource": "minutosTrabajo",
+            "Alias": "minutosTrabajo",
+            "Type": "System.Decimal"
+          },
+          "18": {
+            "Name": "unidadTipo",
+            "Index": -1,
+            "NameInSource": "unidadTipo",
+            "Alias": "unidadTipo",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "importe",
+            "Index": -1,
+            "NameInSource": "importe",
+            "Alias": "importe",
+            "Type": "System.Decimal"
+          },
+          "20": {
+            "Name": "precio",
+            "Index": -1,
+            "NameInSource": "precio",
+            "Alias": "precio",
+            "Type": "System.Decimal"
+          },
+          "21": {
+            "Name": "importeIva",
+            "Index": -1,
+            "NameInSource": "importeIva",
+            "Alias": "importeIva",
+            "Type": "System.Decimal"
+          },
+          "22": {
+            "Name": "totalIva",
+            "Index": -1,
+            "NameInSource": "totalIva",
+            "Alias": "totalIva",
+            "Type": "System.Decimal"
+          },
+          "23": {
+            "Name": "iva",
+            "Index": -1,
+            "NameInSource": "iva",
+            "Alias": "iva",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "parte.lineas"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiJsonDatabase",
+        "Name": "parte",
+        "Alias": "parte",
+        "PathData": "C:\\node_apps\\proasistencia\\public\\reports\\parte.json"
+      }
+    }
   },
   "Pages": {
     "0": {
@@ -693,12 +1073,12 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text51",
-              "ClientRectangle": "0,0.3,4.8,0.4",
+              "ClientRectangle": "0,0.3,8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "REPARACIÓN POR TARIFAS"
+                "Value": "REPARACION POR {IIF(cabecera.administracion == true,\"ADMINISTACION\",\"TARIFAS\")}"
               },
               "Font": ";9.75;Bold;",
               "Border": ";;;;;;;solid:Black",
@@ -798,7 +1178,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{lineas.precioProveedor}"
+                "Value": "{lineas.precio}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -823,7 +1203,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{lineas.importeProveedor}"
+                "Value": "{lineas.importe}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -868,7 +1248,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataLineas,lineas.importeProveedor)}"
+                "Value": "{Sum(DataLineas,lineas.importe)}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -909,7 +1289,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{lineas.ivaProveedor / 100}"
+                "Value": "{lineas.iva / 100}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -935,7 +1315,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataLineas,lineas.totalProveedorIva)}"
+                "Value": "{Sum(DataLineas,lineas.totalIva)}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -977,7 +1357,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataLineas,lineas.importeProveedorIva)}"
+                "Value": "{Sum(DataLineas,lineas.importeIva)}"
               },
               "HorAlignment": "Right",
               "Border": ";;;;;;;solid:Black",
@@ -1018,7 +1398,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{cabecera.formaPagoProveedor}"
+                "Value": "{cabecera.formaPagoCliente}"
               },
               "Font": ";9.75;;",
               "Border": ";;;;;;;solid:Black",
