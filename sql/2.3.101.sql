@@ -165,6 +165,11 @@ ALTER TABLE `partes`
       AS tmp
   );
 
+  //
+  ALTER TABLE `partes`   
+  ADD COLUMN `pdf` VARCHAR(255) NULL AFTER `ofertaId`;
+
+
 
 
 
