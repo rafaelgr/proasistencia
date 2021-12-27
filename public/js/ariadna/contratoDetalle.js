@@ -2925,11 +2925,12 @@ function initTablaPrefacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
+                
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -2980,9 +2981,15 @@ function initTablaPrefacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
             data: "vFac"
         }, {
@@ -3215,11 +3222,11 @@ function initTablaFacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -3270,9 +3277,15 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
             data: "vFac"
         }, {
@@ -3454,17 +3467,31 @@ function initTablaFacproves() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+             // Total over all pages
+              total3 = api
+              .column( 7 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+
            
 
 
             // Update footer
             $( api.columns(5).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(6).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total3).format('0,0.00')
+            ); 
+
 
             //////
 
@@ -3511,10 +3538,25 @@ function initTablaFacproves() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
+        }, 
+        {
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        },{
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
         }, {
-            data: "total"
-        }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
         },  {
             data: "vFPago"
         }, {
