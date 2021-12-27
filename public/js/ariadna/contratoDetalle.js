@@ -4045,6 +4045,54 @@ function initTablaContratosCobros() {
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 7 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(6).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+            //////
+
+            
+        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -4082,18 +4130,18 @@ function initTablaContratosCobros() {
             render: function (data, type, row) {
                 return spanishDate(data);
             }
+        },  {
+            data: "fecultco",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
         }, {
             data: "impvenci",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
-            data: "fecultco",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        }, {
+        },{
             data: "impcobro",
             className: "text-right",
             render: function (data, type, row) {
