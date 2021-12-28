@@ -4644,7 +4644,11 @@ function initTablaAscContratos() {
         }, {
             data: "cliente"
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         }, {
             data: "mantenedor"
         }, {

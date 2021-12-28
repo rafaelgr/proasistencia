@@ -125,19 +125,19 @@ function initTablaLiquidaciones() {
         }, {
             data: "totFactura",
             render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
+                var string = numeral(data).format('0,0.00');
                 return string;
             }
         }, {
             data: "totBase",
             render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
+                var string = numeral(data).format('0,0.00');
                 return string;
             }
         }, {
             data: "totComision",
             render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
+                var string = numeral(data).format('0,0.00');
                 return string;
             }
         }, {
