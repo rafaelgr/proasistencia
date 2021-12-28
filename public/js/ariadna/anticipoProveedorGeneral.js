@@ -181,11 +181,15 @@ function initTablaAnticipos() {
                 return moment(data).format('DD/MM/YYYY');
             }
         },{
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
+                var string = numeral(data).format('0,0.00');
                 return string;
             }
         },  {

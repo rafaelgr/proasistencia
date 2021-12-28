@@ -2822,7 +2822,8 @@ var reglasDeValidacionAdicionales = function () {
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
@@ -2925,11 +2926,12 @@ function initTablaPrefacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
+                
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -2980,9 +2982,15 @@ function initTablaPrefacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
             data: "vFac"
         }, {
@@ -3215,11 +3223,11 @@ function initTablaFacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(7).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
 
             //////
@@ -3270,9 +3278,15 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
         }, {
             data: "vFac"
         }, {
@@ -3370,7 +3384,8 @@ printFactura = function(id){
 function initTablaFacproves() {
     tablaFacproves = $('#dt_facprove').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
@@ -3454,17 +3469,31 @@ function initTablaFacproves() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+             // Total over all pages
+              total3 = api
+              .column( 7 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+
            
 
 
             // Update footer
             $( api.columns(5).footer() ).html(
-                total
+                numeral(total).format('0,0.00')
             );
 
             $( api.columns(6).footer() ).html(
-                total2 
+                numeral(total2).format('0,0.00')
             );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total3).format('0,0.00')
+            ); 
+
 
             //////
 
@@ -3511,10 +3540,25 @@ function initTablaFacproves() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
+        }, 
+        {
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        },{
+            data: "total",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
         }, {
-            data: "total"
-        }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
         },  {
             data: "vFPago"
         }, {
@@ -3986,6 +4030,7 @@ var calcularNumPagos = function () {
 function initTablaContratosCobros() {
     tablaCarro = $('#dt_contratosCobros').dataTable({
         sort: false,
+        "paging": false,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -4002,6 +4047,54 @@ function initTablaContratosCobros() {
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 6 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 7 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+           
+
+
+            // Update footer
+            $( api.columns(6).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+            //////
+
+            
         },
         language: {
             processing: "Procesando...",
@@ -4040,18 +4133,18 @@ function initTablaContratosCobros() {
             render: function (data, type, row) {
                 return spanishDate(data);
             }
+        },  {
+            data: "fecultco",
+            render: function (data, type, row) {
+                return spanishDate(data);
+            }
         }, {
             data: "impvenci",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
-            data: "fecultco",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        }, {
+        },{
             data: "impcobro",
             className: "text-right",
             render: function (data, type, row) {
@@ -4496,6 +4589,7 @@ function datosOKAscContratos() {
 function initTablaAscContratos() {
     tablaCarro = $('#dt_AscContratos').dataTable({
         autoWidth: true,
+        "paging": false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -4554,7 +4648,11 @@ function initTablaAscContratos() {
         }, {
             data: "cliente"
         }, {
-            data: "total"
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         }, {
             data: "mantenedor"
         }, {
