@@ -2822,7 +2822,8 @@ var reglasDeValidacionAdicionales = function () {
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
@@ -3383,7 +3384,8 @@ printFactura = function(id){
 function initTablaFacproves() {
     tablaFacproves = $('#dt_facprove').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
@@ -4028,6 +4030,7 @@ var calcularNumPagos = function () {
 function initTablaContratosCobros() {
     tablaCarro = $('#dt_contratosCobros').dataTable({
         sort: false,
+        "paging": false,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -4586,6 +4589,7 @@ function datosOKAscContratos() {
 function initTablaAscContratos() {
     tablaCarro = $('#dt_AscContratos').dataTable({
         autoWidth: true,
+        "paging": false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
