@@ -188,6 +188,28 @@ function initForm() {
 
                 }
             );
+
+            $('#chkNoCobro').click(
+                function(e){
+                    var noCobro = $('#chkNoCobro').prop('checked');
+                    var data = {
+                        factura: {
+                            "facturaId": facturaId,
+                            "empresaId": empresaId,
+                            "clienteId":  clienteId,
+                            "fecha": fecha,
+                            "noCobro": noCobro
+                        }
+                    }
+                    verb = "PUT";
+                    url = myconfig.apiUrl + "/api/facturas/" + facturaId;
+                    llamadaAjax(verb, url, data, function (err, data) {
+                        if(err) return;
+                        mensNormal("Se ha actulizado la propiedad no cobro");
+                    });
+
+                }
+            );
     
             
         })
