@@ -531,9 +531,9 @@
                                                                 <fieldset>
                                                                     <div class="row">
                                                                         <section class="col col-md-2">
-                                                                            <label class="label">REFERENCIA</label>
+                                                                            <label class="label">REFERENCIA</label> 
                                                                             <label class="input">
-                                                                                <input id="txtReferencia" name="txtReferencia" type="text" data-bind="value: referencia" />
+                                                                                <input id="txtReferencia" name="txtReferencia" data-bind="value: referencia" disabled/>
                                                                             </label>
                                                                         </section>
                                                                         <section class="col col-md-2">
@@ -588,7 +588,12 @@
                                                                                 <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                                             </label>
                                                                         </section>
-                                                                        <section class="col col-md-4"></section>
+                                                                        <section class="col col-md-4">
+                                                                            <label class="label">Rappel agente</label>
+                                                                            <label class="input">
+                                                                                <input id="txtRappelAgente" name="txtRappelAgente" data-bind="value: rappelAgente"/>
+                                                                            </label>
+                                                                        </section>
                                                                         <section class="col col-md-2">
                                                                             <label class="label">Importe Cliente</label>
                                                                             <label class="input">
@@ -652,7 +657,9 @@
                                                                                             <td style="text-align:center;">
                                                                                                 <label class="input">
                                                                                                     <input id="txtImporteBeneficio" name="txtImporteBeneficio" data-bind="value:importeBeneficio" />
-                                                                                                </label </td>
+                                                                                                </label>
+                                                                                            </td>
+                                                                                            
                                                                                                 <td style="text-align:center;">
                                                                                                     <label class="input">
                                                                                                         <input id="txtVentaNeta" name="txtVentaNeta" data-bind="value:ventaNeta" disabled />

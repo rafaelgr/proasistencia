@@ -152,6 +152,7 @@ function initForm() {
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
+    $('#noCobro').hide();
 
     if (facturaId != 0) {
         // caso edicion
@@ -183,6 +184,28 @@ function initForm() {
                     llamadaAjax(verb, url, data, function (err, data) {
                         if(err) return;
                         mensNormal("Se ha actulizado la propiedad de enviar por correo");
+                    });
+
+                }
+            );
+
+            $('#chkNoCobro').click(
+                function(e){
+                    var noCobro = $('#chkNoCobro').prop('checked');
+                    var data = {
+                        factura: {
+                            "facturaId": facturaId,
+                            "empresaId": empresaId,
+                            "clienteId":  clienteId,
+                            "fecha": fecha,
+                            "noCobro": noCobro
+                        }
+                    }
+                    verb = "PUT";
+                    url = myconfig.apiUrl + "/api/facturas/" + facturaId;
+                    llamadaAjax(verb, url, data, function (err, data) {
+                        if(err) return;
+                        mensNormal("Se ha actulizado la propiedad no cobro");
                     });
 
                 }
@@ -339,6 +362,7 @@ function admData() {
     //
     self.mantenedorDesactivado = ko.observable();
     self.devuelta = ko.observable();
+    self.noCobro = ko.observable();
     // 
     self.enviadaCorreo = ko.observable();
 }
@@ -398,9 +422,14 @@ function loadData(data, desdeLinea) {
     vm.importeRetencion(data.importeRetencion);
     vm.mantenedorDesactivado(data.mantenedorDesactivado);
     vm.devuelta(data.devuelta);
+    vm.noCobro(data.noCobro);
     loadContratos(data.contratoId);
     //
-    
+    if(data.departamentoId == 1) {
+        $('#noCobro').show();
+    } else {
+        $('#noCobro').hide();
+    }
     //
     if (vm.generada()) {
         //ocultarCamposFacturasGeneradas();
@@ -616,6 +645,7 @@ var generarFacturaDb = function () {
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "devuelta": vm.devuelta(),
+            "noCobro": vm.noCobro(),
             "enviadaCorreo": vm.enviadaCorreo(),
             "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.departamentoId(),
@@ -756,6 +786,11 @@ function loadDepartamento(departamentoId) {
                     vm.porcentajeAgente(0);
                     vm.porcentajeBeneficio(0);
                     obtenerDepartamentoContrato();
+                }
+                if(departamentoId == 1) {
+                    $('#noCobro').show()
+                }else {
+                    $('#noCobro').hide()
                 }
                     loadContratos();
             }

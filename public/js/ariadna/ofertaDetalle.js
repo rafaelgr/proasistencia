@@ -196,6 +196,10 @@ function initForm() {
     $("#txtPorDescuento").blur(cambioPrecioCantidad);
     $("#txtPorDescuentoProveedor").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
+    $("#txtRappelAgente").blur(function(){
+        var val =  $("#txtRappelAgente").val();
+        nuevaRefReparaciones(vm.stipoOfertaId(), val);
+      });
     $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
     $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
@@ -255,6 +259,7 @@ function admData() {
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
+    self.rappelAgente = ko.observable();
     self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
@@ -407,6 +412,7 @@ function loadData(data) {
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
+    vm.rappelAgente(data.rappelAgente);
     vm.importeCliente(data.importeCliente);
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
@@ -579,6 +585,7 @@ var generarOfertaDb = function() {
             "importeBeneficio": vm.importeBeneficio(),
             "ventaNeta": vm.ventaNeta(),
             "porcentajeAgente": vm.porcentajeAgente(),
+            "rappelAgente": vm.rappelAgente(),
             "importeAgente": vm.importeAgente(),
             "importeCliente": vm.importeCliente(),
             "importeMantenedor": vm.importeMantenedor(),
@@ -650,7 +657,6 @@ function loadDepartamentosUsuario(id) {
     if(id) vm.tipoOfertaId(id);
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
-        if(data && data.length > 0) usaCalculadora = data.usaCalculadora;
         var tipos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesTiposOferta(tipos);
         $("#cmbDepartamentos").val([id]).trigger('change');
@@ -1665,7 +1671,10 @@ var cargaAgente = function (id, encarga) {
             obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
                 if (err) return;
                 var porcenAgen = vm.porcentajeAgente();
-                if (!vm.porcentajeAgente() || porcenAgen == 0) vm.porcentajeAgente(comision);
+                if (!vm.porcentajeAgente() || porcenAgen == 0) {
+                    vm.porcentajeAgente(comision);
+                    vm.rappelAgente(comision);
+                } 
                 recalcularCostesImportesDesdeCoste();
                 if(vm.stipoOfertaId() == 7)  nuevaRefReparaciones(vm.stipoOfertaId(), comision);
                 if(vm.stipoOfertaId() == 5) cargaPorcenRef(comision);
@@ -1757,6 +1766,7 @@ var initAutoAgente = function () {
             obtenerPorcentajeDelAgente(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoOfertaId(), function (err, comision) {
                 if (err) return;
                 vm.porcentajeAgente(comision);
+                vm.rappelAgente(comision);
                 recalcularCostesImportesDesdeCoste();
                 nuevaRefReparaciones(vm.stipoOfertaId(), comision);
                 //gargamos la comision en la referencia si es de arquitectura
