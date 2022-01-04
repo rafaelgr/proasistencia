@@ -169,6 +169,12 @@ ALTER TABLE `partes`
   ALTER TABLE `partes`   
   ADD COLUMN `pdf` VARCHAR(255) NULL AFTER `ofertaId`;
 
+  //
+
+  ALTER TABLE `partes_lineas`   
+  CHANGE `minutosTrabajo` `tiempoTrabajo` INT(11) NULL;
+
+
 
 
 
