@@ -744,6 +744,11 @@ function cambioDepartamento(departamentoId) {
                 cargaAgente(vm.agenteId(), false);
             }
         }
+        if(departamentoId == 7) {
+            $('#txtReferencia').prop('disabled', true);
+        } else {
+            $('#txtReferencia').prop('disabled', false);
+        }
     });
 }
 
