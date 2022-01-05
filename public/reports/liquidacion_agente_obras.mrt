@@ -183,7 +183,7 @@ ANT.</Text>
               <Name>Text57</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
-              <Text>LIQUIDADOS
+              <Text>LIQUIDADO
 ANT.</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -1512,10 +1512,10 @@ FINAL</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/5/2022 9:39:23 AM</ReportChanged>
+  <ReportChanged>1/5/2022 10:48:15 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>a036f602d24546d1be70e9323c69edd3</ReportGuid>
+  <ReportGuid>41dade41d92d49f4a70cfbcad2636316</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
