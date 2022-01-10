@@ -1447,7 +1447,7 @@ ADICIONAL</Text>
             </Text23>
             <Text30 Ref="89" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,0,1.2,0.6</ClientRectangle>
+              <ClientRectangle>22.4,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
@@ -1582,10 +1582,10 @@ ADICIONAL</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/10/2022 10:49:28 AM</ReportChanged>
+  <ReportChanged>1/10/2022 10:53:20 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>54de678ef9154a5b8f886f88612f312d</ReportGuid>
+  <ReportGuid>e49ea8d381ba4c1b893b6c54c8935f62</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
