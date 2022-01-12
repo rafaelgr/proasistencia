@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "8a7b29d7c74c445aba2c0ab471e6c706",
+  "ReportGuid": "4455315079b84d4e900390f0ef9c3b24",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1641988399783+0100)/",
+  "ReportChanged": "/Date(1641990400558+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1499,12 +1499,12 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text35",
-              "ClientRectangle": "10.4,0,2.6,0.4",
+              "ClientRectangle": "10.4,0,7.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "EL CLIENTE"
+                "Value": "EL CLIENTE {IIF(cabecera.noFirma == 1,\"NO DESEA FIRMAR EL PARTE\",\"\")}"
               },
               "Font": ";9.75;Bold;",
               "Border": ";;;;;;;solid:Black",
@@ -1530,6 +1530,17 @@
               "CanGrow": true,
               "GrowToHeight": true,
               "ClientRectangle": "10.4,2.44,5.6,0.2",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "DataType": "Numeric",
+                  "Column": "cabecera.noFirma",
+                  "Value1": "1",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1569,6 +1580,17 @@
               "Ident": "StiText",
               "Name": "Text57",
               "ClientRectangle": "10.4,2.7,5.6,0.6",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "DataType": "Numeric",
+                  "Column": "cabecera.noFirma",
+                  "Value1": "1",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1584,6 +1606,17 @@
               "Ident": "StiImage",
               "Name": "Image2",
               "ClientRectangle": "10.4,0.5,5.6,1.8",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "DataType": "Numeric",
+                  "Column": "cabecera.noFirma",
+                  "Value1": "1",
+                  "Enabled": false,
+                  "TextColor": "255,255,255",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
