@@ -93,6 +93,7 @@ var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
 var partes_router = require('./lib/partes/partes_controller');
 var report_router = require('./lib/report-controller/reportdb')
+var tipos_garantia_router = require('./lib/tipos_garantia/tipos_garantia_controller');
 
 //MENSAJES
 
@@ -226,6 +227,7 @@ app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);
 app.use('/api/estados_presupuesto', estados_presupuesto);
+app.use('/api/tipos_garantia', tipos_garantia_router);
 
 //MENSAJES
 app.use('/api/mensajes', mensajes_router);

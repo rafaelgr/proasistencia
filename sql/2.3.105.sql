@@ -174,6 +174,24 @@ ALTER TABLE `partes`
   ALTER TABLE `partes_lineas`   
   CHANGE `minutosTrabajo` `tiempoTrabajo` INT(11) NULL;
 
+//
+
+CREATE TABLE `tipos_garantia`(  
+  `tipoGarantiaId` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255),
+  PRIMARY KEY (`tipoGarantiaId`)
+);
+
+ALTER TABLE `partes`   
+  ADD COLUMN `tipoGarantiaId` INT(11) NULL AFTER `garantia_trabajos`,
+  ADD CONSTRAINT `ref_parte_tiposGarantia` FOREIGN KEY (`tipoGarantiaId`) REFERENCES `tipos_garantia`(`tipoGarantiaId`);
+
+UPDATE partes AS p
+INNER JOIN tipos_garantia AS g ON g.nombre = p.garantia_trabajos
+SET p.tipoGarantiaId = g.tipoGarantiaId
+
+
+
 
 
 
