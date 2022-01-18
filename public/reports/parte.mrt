@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "4455315079b84d4e900390f0ef9c3b24",
+  "ReportGuid": "1936a1569b5040b0a4d16e41c013cb92",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1641990400558+0100)/",
+  "ReportChanged": "/Date(1642495009639+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -896,7 +896,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "DataLineas",
-          "ClientRectangle": "0,21.1,19,0.6",
+          "ClientRectangle": "0,21.1,19,0.4",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -931,8 +931,8 @@
               "Margins": {
                 "Left": 2.0,
                 "Right": 0.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Top": 2.0,
+                "Bottom": 2.0
               },
               "Type": "Expression"
             },
@@ -949,6 +949,12 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 2.0,
+                "Bottom": 2.0
+              },
               "Type": "Expression"
             },
             "2": {
@@ -965,6 +971,12 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 2.0,
+                "Bottom": 2.0
+              },
               "Type": "Expression"
             },
             "3": {
@@ -982,6 +994,12 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 2.0,
+                "Bottom": 2.0
+              },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "NegativePattern": 5,
@@ -1011,8 +1029,8 @@
               "Margins": {
                 "Left": 0.0,
                 "Right": 2.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Top": 2.0,
+                "Bottom": 2.0
               },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
@@ -1032,7 +1050,7 @@
         "10": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBandlineas",
-          "ClientRectangle": "0,22.5,19,2",
+          "ClientRectangle": "0,22.3,19,2",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1321,7 +1339,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanShrink": true,
-          "ClientRectangle": "0,25.3,19,1.2",
+          "ClientRectangle": "0,25.1,19,1.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1397,7 +1415,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand4",
           "CanShrink": true,
-          "ClientRectangle": "0,27.3,19,1.6",
+          "ClientRectangle": "0,27.1,19,1.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1473,7 +1491,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "CanShrink": true,
-          "ClientRectangle": "0,29.7,19,3.6",
+          "ClientRectangle": "0,29.5,19,3.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1514,17 +1532,6 @@
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text52",
-              "ClientRectangle": "0,0.5,5.8,1.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": "All;;;Dot;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black"
-            },
-            "3": {
-              "Ident": "StiText",
               "Name": "Text3",
               "Guid": "66a8f44769794255869031f2270e06dd",
               "CanGrow": true,
@@ -1555,13 +1562,13 @@
               },
               "Type": "Expression"
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text34",
               "Guid": "5101272c6dd6433e9c82618d43e22889",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,2.36,5.8,0.6",
+              "ClientRectangle": "0,0.36,5.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1576,7 +1583,7 @@
               },
               "Type": "Expression"
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text57",
               "ClientRectangle": "10.4,2.7,5.6,0.6",
@@ -1602,7 +1609,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "6": {
+            "5": {
               "Ident": "StiImage",
               "Name": "Image2",
               "ClientRectangle": "10.4,0.5,5.6,1.8",
