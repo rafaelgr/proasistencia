@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "1936a1569b5040b0a4d16e41c013cb92",
+  "ReportGuid": "66eb4be592024813bd3b2781db800b35",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1642495009639+0100)/",
+  "ReportChanged": "/Date(1643106637733+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -63,7 +63,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Tlef. 24 Hr. 913 613 848"
+                "Value": "Tlef. 24 Hr. {cabecera.telefono1}"
               },
               "HorAlignment": "Right",
               "Font": "Arial Black;14.25;;",
@@ -249,12 +249,12 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text5",
-              "ClientRectangle": "7.6,0.5,4,0.4",
+              "ClientRectangle": "7.2,0.5,4.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "www.proasistencia.es"
+                "Value": "{cabecera.email}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Bottom",
@@ -1500,24 +1500,8 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text31",
-              "ClientRectangle": "0,0,4,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "EL PROFESIONAL"
-              },
-              "Font": ";9.75;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
               "Name": "Text35",
-              "ClientRectangle": "10.4,0,7.8,0.4",
+              "ClientRectangle": "0,0,7.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1530,13 +1514,13 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "2": {
+            "1": {
               "Ident": "StiText",
               "Name": "Text3",
               "Guid": "66a8f44769794255869031f2270e06dd",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "10.4,2.44,5.6,0.2",
+              "ClientRectangle": "0,2.44,8.8,0.2",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
@@ -1562,31 +1546,10 @@
               },
               "Type": "Expression"
             },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text34",
-              "Guid": "5101272c6dd6433e9c82618d43e22889",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "0,0.36,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "D. {cabecera.nombreProveedor}"
-              },
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
-            },
-            "4": {
+            "2": {
               "Ident": "StiText",
               "Name": "Text57",
-              "ClientRectangle": "10.4,2.7,5.6,0.6",
+              "ClientRectangle": "0,2.7,8.8,0.6",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
@@ -1609,10 +1572,10 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "5": {
+            "3": {
               "Ident": "StiImage",
               "Name": "Image2",
-              "ClientRectangle": "10.4,0.5,5.6,1.8",
+              "ClientRectangle": "0,0.5,8.8,1.8",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
