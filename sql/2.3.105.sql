@@ -10,8 +10,6 @@ ALTER TABLE `proveedores`
   ALTER TABLE `servicios`   
   ADD COLUMN `cerrado` TINYINT(1) DEFAULT 0 NULL AFTER `proveedorId`;
 
-  ALTER TABLE `partes`   
-  ADD COLUMN `confirmado` TINYINT(1) DEFAULT 0 NULL AFTER `firma`;
 
   ALTER TABLE `parametros`   
   ADD COLUMN `appId` VARCHAR(255) NULL AFTER `raiz_url`,
@@ -60,6 +58,10 @@ ALTER TABLE `mensajes_proveedorespush`
   ADD COLUMN `apellidosFirmante` VARCHAR(255) NULL AFTER `nombreFirmante`;
   ADD COLUMN `dniFirmante` VARCHAR(255) NULL AFTER `apellidosFirmante`,
   ADD COLUMN `firma` VARCHAR(255) NULL AFTER `dniFirmante`;
+
+    ALTER TABLE `partes`   
+  ADD COLUMN `confirmado` TINYINT(1) DEFAULT 0 NULL AFTER `firma`;
+
 
 
 ALTER TABLE `servicios`   
