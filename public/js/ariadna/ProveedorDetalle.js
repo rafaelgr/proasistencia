@@ -14,6 +14,7 @@ var codigoSugerido;
 var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var usuario;
 var numfactu = 0;
+var dataUsuarios;
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -45,6 +46,10 @@ function initForm() {
    
 
     $('#frmProveedor').submit(function () {
+        return false;
+    });
+
+    $("#frmUsuarios").submit(function () {
         return false;
     });
 
@@ -112,6 +117,7 @@ function initForm() {
     loadTiposVia();
 
     initTablaFacturas();
+    initTablaUsuariosApp();
 
     // autosalto en IBAN
     $(function () {
@@ -435,7 +441,7 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
-    vm.empresaId(data.empresaId);
+    vm.proveedorId(data.empresaId);
     vm.activa(data.activa);
     vm.login(data.login);
     vm.password(data.password);
@@ -1249,5 +1255,259 @@ function compruebaAnticipos(id) {
                 $( "#txtCodigo" ).prop( "disabled", false );
             }
         });
+}
+
+// --------------- Solapa de Usuarios
+function initTablaUsuariosApp() {
+    tablaSeries = $('#dt_usuarios').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Prefacturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_usuarios'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataUsuarios,
+        columns: [{
+            data: "proveedorUsuarioId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "login"
+        }, {
+            data: "password"
+        },{
+            data: "proveedorUsuarioId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosApp(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosApp(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+}
+
+
+function loadUsuariosApp(proveedorId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/" + proveedorId, null, function (err, data) {
+        if (err) return;
+        loadTablaUsuariosApp(data);
+    });
+}
+
+function loadTablaUsuariosApp(data) {
+    var dt = $('#dt_usuarios').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function guardarUsuariosApp() {
+    var departamentoId = vm.sdepartamentoId();
+    var tipoProyectoId = vm.stipoProyectoId();
+    var tiporegi = vm.stiporegi();
+    var seriepre =  vm.seriePre();
+    if(departamentoId == 0) vm.sdepartamentoId(null);
+    if(tipoProyectoId == 0) vm.stipoProyectoId(null);
+    if(tiporegi == 100) vm.stiporegi(null);
+    if(seriepre = '') vm.seriePre(null);
+    var data = {
+        empresaSerie: {
+            empresaId: vm.proveedorId(),
+            departamentoId: vm.sdepartamentoId(),
+            tipoProyectoId: vm.stipoProyectoId(),
+            serie_factura: vm.stiporegi(),
+            serie_prefactura: vm.seriePre()
+        }
+    }
+    if (!serieEnEdicion) {
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadUsuariosApp(vm.proveedorId());
+                $('#modalUsuarios').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/empresas/empresaSerie/" + empSerieId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                serieEnEdicion = false;
+                empSerieId = 0;
+                loadUsuariosApp(vm.proveedorId());
+                $('#modalUsuarios').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
+function deleteUsuariosApp(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/empresas/empresaSerie/del/contrato/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadUsuariosDelContrato(vm.proveedorId());
+                    limpiaModal();
+                    $('#modalUsuarios').modal('hide');
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            limpiaModal();
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function limpiaModal() {
+    loadDepartamentos(0);
+    loadTipoProyecto(0);
+    loadUsuariosFact(100);
+    vm.seriePre(null);
+}
+
+function editUsuariosApp(id) {
+    cargaModalUsuarios(id);
+}
+
+function cargaModalUsuariosApp(id) {
+    limpiaModal();
+    if(id) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
+            if (err) return;
+            //loadTablaUsuarios(data);
+            serieEnEdicion = true;
+            empSerieId = id;
+            loadDepartamentos(data.departamentoId);
+            loadTipoProyecto(data.tipoProyectoId)
+            loadUsuariosFact(data.serie_factura);
+            vm.seriePre(data.serie_prefactura);
+            $('#modalUsuarios').modal('show');
+        });
+    }
 }
 
