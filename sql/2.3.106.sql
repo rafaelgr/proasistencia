@@ -8,3 +8,7 @@ CREATE TABLE `proveedor_usuariospush` (
   KEY `proveedor_ususrioPushFK` (`proveedorId`),
   CONSTRAINT `proveedor_ususrioPushFK` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores` (`proveedorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `proveedor_usuariospush`   
+  ADD COLUMN `playerId` VARCHAR(255) NULL AFTER `proveedorId`;
+

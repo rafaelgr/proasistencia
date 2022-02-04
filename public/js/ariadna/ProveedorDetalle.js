@@ -413,6 +413,7 @@ function admData() {
     self.elegidosEmpresas = ko.observableArray([]);
 
     //USUARIOS PUSH
+    self.proveedorUsuarioPushId = ko.observable();
     self.nombrePush = ko.observable();
     self.loginPush = ko.observable();
     self.passwordPush = ko.observable();
@@ -451,7 +452,6 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
-    vm.proveedorId(data.empresaId);
     vm.activa(data.activa);
     vm.login(data.login);
     vm.password(data.password);
@@ -1359,7 +1359,7 @@ function initTablaUsuariosPush() {
         },
         data: dataUsuarios,
         columns: [{
-            data: "proveedorUsuarioId",
+            data: "proveedorUsuarioPushId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -1374,7 +1374,7 @@ function initTablaUsuariosPush() {
         }, {
             data: "password"
         },{
-            data: "proveedorUsuarioId",
+            data: "proveedorUsuarioPushId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosPush(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosPush(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -1415,6 +1415,7 @@ function guardarUsuarioPush() {
         }
     }
     if (!usuarioEnEdicion) {
+        if(!datosOKUsuariosPush()) return;
         $.ajax({
             type: "POST",
             url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
@@ -1434,7 +1435,7 @@ function guardarUsuarioPush() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/empresas/empresaSerie/" + empSerieId,
+            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -1464,14 +1465,12 @@ function deleteUsuariosPush(id) {
         if (ButtonPressed === "Aceptar") {
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/empresas/empresaSerie/del/contrato/" + id,
+                url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/elimina/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: null,
                 success: function (data, status) {
-                    loadUsuariosDelContrato(vm.proveedorId());
-                    limpiaModalUsuariosPush();
-                    $('#modalUsuariosPush').modal('hide');
+                    loadUsuariosPush(vm.proveedorId());
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -1487,6 +1486,7 @@ function deleteUsuariosPush(id) {
 }
 
 function limpiaModalUsuariosPush() {
+    vm.proveedorUsuarioPushId(null);
    vm.nombrePush(null);
    vm.loginPush(null);
    vm.passwordPush(null);
@@ -1494,6 +1494,7 @@ function limpiaModalUsuariosPush() {
 }
 
 function editUsuariosPush(id) {
+    usuarioEnEdicion = true;
     cargaModalUsuariosPush(id);
 }
 
@@ -1502,6 +1503,7 @@ function cargaModalUsuariosPush(id) {
     if(id) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuario/proveedor/app/" + id, null, function (err, data) {
             if (err) return;
+           vm.proveedorUsuarioPushId(data.proveedorUsuarioPushId);
            vm.nombrePush(data.nombre);
            vm.loginPush(data.login);
            vm.passwordPush(data.password);
@@ -1509,4 +1511,39 @@ function cargaModalUsuariosPush(id) {
         });
     }
 }
+
+function datosOKUsuariosPush() {
+    $('#modalUsuariosPush-form').validate({
+        rules: {
+            txtNombrePush: {
+                required: true
+            },
+            txtLoginPush: {
+                required:true,
+            },
+            txtPasswordPush: {
+                required:true,
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNombrePush: {
+                required: "Debe elegir un nombre"
+            },
+            txtLoginPush: {
+                required: "Debe elegir un usuario"
+            },
+            txtPasswordPush: {
+                required: "Debe elegir una contraseña"
+            },
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#modalUsuariosPush-form").validate().settings;
+    return $('#modalUsuariosPush-form').valid();
+}
+
 
