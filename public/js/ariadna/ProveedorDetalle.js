@@ -15,6 +15,7 @@ var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var usuario;
 var numfactu = 0;
 var dataUsuarios;
+var usuarioEnEdicion = false;
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -50,6 +51,9 @@ function initForm() {
     });
 
     $("#frmUsuarios").submit(function () {
+        return false;
+    });
+    $("#modalUsuariosPush-form").submit(function () {
         return false;
     });
 
@@ -117,7 +121,7 @@ function initForm() {
     loadTiposVia();
 
     initTablaFacturas();
-    initTablaUsuariosApp();
+    initTablaUsuariosPush();
 
     // autosalto en IBAN
     $(function () {
@@ -239,6 +243,7 @@ function initForm() {
                 }); */
         
                 loadFacturasDelProveedor(proId);
+                loadUsuariosPush(proId);
                 compruebaAnticipos(proId);
             } else {
                 // se trata de un alta ponemos el id a cero para indicarlo.
@@ -406,6 +411,11 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
+
+    //USUARIOS PUSH
+    self.nombrePush = ko.observable();
+    self.loginPush = ko.observable();
+    self.passwordPush = ko.observable();
     
   
 }
@@ -1258,7 +1268,7 @@ function compruebaAnticipos(id) {
 }
 
 // --------------- Solapa de Usuarios
-function initTablaUsuariosApp() {
+function initTablaUsuariosPush() {
     tablaSeries = $('#dt_usuarios').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
@@ -1357,6 +1367,8 @@ function initTablaUsuariosApp() {
                 }
                 return html;
             }
+        },{
+            data: "nombre"
         }, {
             data: "login"
         }, {
@@ -1364,8 +1376,8 @@ function initTablaUsuariosApp() {
         },{
             data: "proveedorUsuarioId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosApp(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosApp(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosPush(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosPush(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -1376,14 +1388,14 @@ function initTablaUsuariosApp() {
 }
 
 
-function loadUsuariosApp(proveedorId) {
+function loadUsuariosPush(proveedorId) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/" + proveedorId, null, function (err, data) {
         if (err) return;
-        loadTablaUsuariosApp(data);
+        loadTablaUsuariosPush(data);
     });
 }
 
-function loadTablaUsuariosApp(data) {
+function loadTablaUsuariosPush(data) {
     var dt = $('#dt_usuarios').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -1393,35 +1405,26 @@ function loadTablaUsuariosApp(data) {
     dt.fnDraw();
 }
 
-function guardarUsuariosApp() {
-    var departamentoId = vm.sdepartamentoId();
-    var tipoProyectoId = vm.stipoProyectoId();
-    var tiporegi = vm.stiporegi();
-    var seriepre =  vm.seriePre();
-    if(departamentoId == 0) vm.sdepartamentoId(null);
-    if(tipoProyectoId == 0) vm.stipoProyectoId(null);
-    if(tiporegi == 100) vm.stiporegi(null);
-    if(seriepre = '') vm.seriePre(null);
+function guardarUsuarioPush() {
     var data = {
-        empresaSerie: {
-            empresaId: vm.proveedorId(),
-            departamentoId: vm.sdepartamentoId(),
-            tipoProyectoId: vm.stipoProyectoId(),
-            serie_factura: vm.stiporegi(),
-            serie_prefactura: vm.seriePre()
+        usuarioPush: {
+            nombre: vm.nombrePush(),
+            login: vm.loginPush(),
+            password: vm.passwordPush(),
+            proveedorId: proId
         }
     }
-    if (!serieEnEdicion) {
+    if (!usuarioEnEdicion) {
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/empresas/empresaSerie",
+            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadUsuariosApp(vm.proveedorId());
-                $('#modalUsuarios').modal('hide');
+                loadUsuariosPush(vm.proveedorId());
+                $('#modalUsuariosPush').modal('hide');
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -1437,10 +1440,10 @@ function guardarUsuariosApp() {
             data: JSON.stringify(data),
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                serieEnEdicion = false;
+                usuarioEnEdicion = false;
                 empSerieId = 0;
-                loadUsuariosApp(vm.proveedorId());
-                $('#modalUsuarios').modal('hide');
+                loadUsuariosPush(vm.proveedorId());
+                $('#modalUsuariosPush').modal('hide');
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -1450,7 +1453,7 @@ function guardarUsuariosApp() {
     }
 }
 
-function deleteUsuariosApp(id) {
+function deleteUsuariosPush(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -1467,8 +1470,8 @@ function deleteUsuariosApp(id) {
                 data: null,
                 success: function (data, status) {
                     loadUsuariosDelContrato(vm.proveedorId());
-                    limpiaModal();
-                    $('#modalUsuarios').modal('hide');
+                    limpiaModalUsuariosPush();
+                    $('#modalUsuariosPush').modal('hide');
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -1477,36 +1480,32 @@ function deleteUsuariosApp(id) {
             });
         }
         if (ButtonPressed === "Cancelar") {
-            limpiaModal();
+            limpiaModalUsuariosPush();
             // no hacemos nada (no quiere borrar)
         }
     });
 }
 
-function limpiaModal() {
-    loadDepartamentos(0);
-    loadTipoProyecto(0);
-    loadUsuariosFact(100);
-    vm.seriePre(null);
+function limpiaModalUsuariosPush() {
+   vm.nombrePush(null);
+   vm.loginPush(null);
+   vm.passwordPush(null);
+
 }
 
-function editUsuariosApp(id) {
-    cargaModalUsuarios(id);
+function editUsuariosPush(id) {
+    cargaModalUsuariosPush(id);
 }
 
-function cargaModalUsuariosApp(id) {
-    limpiaModal();
+function cargaModalUsuariosPush(id) {
+    limpiaModalUsuariosPush();
     if(id) {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuario/proveedor/app/" + id, null, function (err, data) {
             if (err) return;
-            //loadTablaUsuarios(data);
-            serieEnEdicion = true;
-            empSerieId = id;
-            loadDepartamentos(data.departamentoId);
-            loadTipoProyecto(data.tipoProyectoId)
-            loadUsuariosFact(data.serie_factura);
-            vm.seriePre(data.serie_prefactura);
-            $('#modalUsuarios').modal('show');
+           vm.nombrePush(data.nombre);
+           vm.loginPush(data.login);
+           vm.passwordPush(data.password);
+            $('#modalUsuariosPush').modal('show');
         });
     }
 }

@@ -1095,7 +1095,7 @@
                                                             <form id="frmUsuarios">
                                                                 <fieldset>
                                                                     <div class="pull-right">
-                                                                            <button id="btnAltaSerie" title="Crear usuarios" data-toggle="modal"  data-target="#modalUsuarios" onclick="cargaModalUsuarios()" class="btn btn-success btn-circle btn-lg>
+                                                                            <button id="btnAltaSerie" title="Crear usuarios" data-toggle="modal"  data-target="#modalUsuariosPush" onclick="cargaModalUsuariosPush()" class="btn btn-success btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-repeat"></i>
                                                                             </button>
                                                                     </div>
@@ -1109,6 +1109,9 @@
                                                                             <tr>
                                                                                 <th>
                                                                                     <i class="fa fa-fw fa-clipboard">
+                                                                                </th>
+                                                                                <th data-class="phone">
+                                                                                    nombre
                                                                                 </th>
                                                                                 <th data-class="phone">
                                                                                     Login
@@ -1143,6 +1146,62 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+    <!--MODAL USUARIOS PUSH-->
+    <div class="modal fade" id="modalUsuariosPush" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> Usuarios móvil</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="modalUsuariosPush-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Nombre</label>
+                                        <label class="input">
+                                            <input id="txtNombrePush" name="txtNombrePush" type="text" data-bind="value: nombrePush"/>
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <label class="label">Login</label>
+                                        <label class="input">
+                                            <input id="txtLoginPush" name="txtLoginPush" type="text" data-bind="value: loginPush" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Password</label>
+                                        <label class="input">
+                                            <input id="txtPasswordPush" name="txtPasswordPush" type="text" data-bind="value: passwordPush" />
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarComisionista" class="btn btn-primary" onclick="guardarUsuarioPush()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
