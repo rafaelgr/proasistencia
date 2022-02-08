@@ -330,8 +330,6 @@ function admData() {
     self.observaciones = ko.observable();
     self.emitirFacturas = ko.observable();
     self.activa = ko.observable();
-    self.login = ko.observable();
-    self.password = ko.observable();
     //DATOS DE LA FIANZA
     self.fianza = ko.observable('0.00');
     self.fianzaAcumulada = ko.observable('0.00');
@@ -453,10 +451,7 @@ function loadData(data) {
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
     vm.activa(data.activa);
-    vm.login(data.login);
-    vm.password(data.password);
-    
-    
+  
     antNif = data.nif;
     // split iban
     if (vm.iban()) {
@@ -639,8 +634,6 @@ function aceptar() {
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
                 "activa": vm.activa(),
-                "login": vm.login(),
-                "password": vm.password(),
                 "motivoBajaId": vm.smotivoBajaId(),
                 "cuentaContable": vm.cuentaContable(),
                 "formaPagoId": vm.sformaPagoId(),
