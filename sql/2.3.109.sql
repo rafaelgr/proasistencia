@@ -9,3 +9,7 @@ LEFT JOIN partes AS p ON p.servicioId = s.servicioId
 SET p.urgente = s.urgente;
 
 ALTER TABLE `servicios` DROP `urgente`; 
+
+ALTER TABLE `empresas`   
+  ADD COLUMN `emailReparaciones` VARCHAR(255) NULL AFTER `email`;
+
