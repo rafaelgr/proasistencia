@@ -160,6 +160,7 @@ function admData() {
     self.telefono2 = ko.observable();
     self.fax = ko.observable();
     self.email = ko.observable();
+    self.emailReparaciones = ko.observable();
     self.observaciones = ko.observable();
     self.hostCorreo = ko.observable();
     self.portCorreo = ko.observable();
@@ -264,6 +265,7 @@ function loadData(data) {
     vm.telefono2(data.telefono2);
     vm.fax(data.fax);
     vm.email(data.email);
+    vm.emailReparaciones(data.emailReparaciones);
     vm.observaciones(data.observaciones);
     vm.hostCorreo(data.hostCorreo);
     vm.portCorreo(data.portCorreo);
@@ -381,6 +383,7 @@ function aceptar() {
                 "telefono2": vm.telefono2(),
                 "fax": vm.fax(),
                 "email": vm.email(),
+                "emailReparaciones": vm.emailReparaciones(),
                 "observaciones": vm.observaciones(),
                 "dniFirmante": vm.dniFirmante(),
                 "firmante": vm.firmante(),
