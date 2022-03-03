@@ -1,11 +1,11 @@
 {
-  "ReportVersion": "2021.3.1.0",
-  "ReportGuid": "7e552b371ceb495bb43704a98eff4982",
+  "ReportVersion": "2021.3.6.0",
+  "ReportGuid": "b4f1036f491e48118048c341cec73dbe",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1627292311163+0200)/",
+  "ReportChanged": "/Date(1646307794881+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -18,16 +18,6 @@
     "5": "Stimulsoft.Controls.Dll",
     "6": "Stimulsoft.Base.Dll",
     "7": "Stimulsoft.Report.Dll"
-  },
-  "Dictionary": {
-    "Databases": {
-      "0": {
-        "Ident": "StiJsonDatabase",
-        "Name": "factura",
-        "Alias": "factura",
-        "PathData": "C:\\ariadna\\proasistencia\\public\\reports\\factura.json"
-      }
-    }
   },
   "Pages": {
     "0": {
@@ -832,6 +822,17 @@
           "Name": "DataBand1",
           "Guid": "1dd040d9033a400389f34426affa95b9",
           "ClientRectangle": "0,15.2,19,21.8",
+          "Conditions": {
+            "0": {
+              "Ident": "StiCondition",
+              "DataType": "Boolean",
+              "Column": "opcion.sinImagen",
+              "Value1": "true",
+              "Enabled": false,
+              "TextColor": "255,255,255",
+              "BorderSides": "None"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -859,7 +860,7 @@
               "Ident": "StiText",
               "Name": "Text11",
               "Guid": "2e202295f5574772984b988910ef1331",
-              "ClientRectangle": "12,0,1.8,0.4",
+              "ClientRectangle": "13.4,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -876,7 +877,7 @@
               "Ident": "StiText",
               "Name": "Text26",
               "Guid": "a48492a445c347c6a56d0bfad3eec57f",
-              "ClientRectangle": "5.2,0,1.8,0.4",
+              "ClientRectangle": "6.8,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -895,7 +896,7 @@
               "Ident": "StiText",
               "Name": "Text29",
               "Guid": "00c20cafdfb5421486ba598b88971a14",
-              "ClientRectangle": "7.6,0,2.2,0.4",
+              "ClientRectangle": "9,0,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -912,7 +913,7 @@
               "Ident": "StiText",
               "Name": "Text30",
               "Guid": "57f4ad87b9cf4557bb356ff70d698e78",
-              "ClientRectangle": "3,0,2.2,0.4",
+              "ClientRectangle": "4.4,0,2.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -929,7 +930,7 @@
               "Ident": "StiText",
               "Name": "Text32",
               "Guid": "fbb091acc6514d21a37a0b1bef3aab49",
-              "ClientRectangle": "9.8,0,1.6,0.4",
+              "ClientRectangle": "11.4,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -948,7 +949,7 @@
               "Ident": "StiText",
               "Name": "Text33",
               "Guid": "f7030e25e24e40328654e879a5fd3d59",
-              "ClientRectangle": "14,0,1.8,0.4",
+              "ClientRectangle": "15.4,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
