@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "00de26537e7f4d52a7e5da8bc6dfddea",
+  "ReportGuid": "01cb4e763f804aaa9936bff48bbcbf84",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1646052129695+0100)/",
+  "ReportChanged": "/Date(1646309836606+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1360,6 +1360,18 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "ClientRectangle": "0,18.8,19,21.8",
+          "Conditions": {
+            "0": {
+              "Ident": "StiCondition",
+              "DataType": "Boolean",
+              "Column": "opcion.sinImagen",
+              "Value1": "true",
+              "Enabled": false,
+              "TextColor": "255,255,255",
+              "BackColor": "255,255,255",
+              "BorderSides": "None"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1378,9 +1390,7 @@
               "Brush": "solid:",
               "Stretch": true,
               "AspectRatio": true,
-              "ImageURL": {
-                "Value": "{imagenes.imagen}"
-              }
+              "File": "https://comercializa-partes.s3.eu-west-1.amazonaws.com/001514.001.pdf"
             },
             "1": {
               "Ident": "StiText",

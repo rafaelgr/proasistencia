@@ -744,11 +744,7 @@ function cambioDepartamento(departamentoId) {
                 cargaAgente(vm.agenteId(), false);
             }
         }
-        if(departamentoId == 7) {
-            $('#txtReferencia').prop('disabled', true);
-        } else {
-            $('#txtReferencia').prop('disabled', false);
-        }
+       
     });
 }
 
@@ -1677,7 +1673,7 @@ var cargaAgente = function (id, encarga) {
                 if (err) return;
                 var porcenAgen = vm.porcentajeAgente();
                 if (!vm.porcentajeAgente() || porcenAgen == 0) {
-                    vm.porcentajeAgente(comision);
+                    if(usaCalculadora)  vm.porcentajeAgente(comision);
                     vm.rappelAgente(comision);
                 } 
                 recalcularCostesImportesDesdeCoste();
