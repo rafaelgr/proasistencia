@@ -1678,7 +1678,7 @@ var cargaAgente = function (id, encarga) {
                 } 
                 recalcularCostesImportesDesdeCoste();
                 if(vm.stipoOfertaId() == 7)  nuevaRefReparaciones(vm.stipoOfertaId(), comision);
-                if(vm.stipoOfertaId() == 5) cargaPorcenRef(comision);
+                if(vm.stipoOfertaId() == 5 && !encarga) cargaPorcenRef(comision);
             });
         }
     });
