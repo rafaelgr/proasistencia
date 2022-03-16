@@ -102,11 +102,11 @@ function initForm() {
 function   loadAnyos(){
     var d = new Date();
     var n = d.getFullYear();
-    n = n - 1
+    n = n - 2
     var anos = [];
     var ano = {}
     var anoText;
-    var limit = n + 1
+    var limit = n + 2
     for(var i = n; i <= limit; i++){
         anoText = i.toString();
       ano = {
