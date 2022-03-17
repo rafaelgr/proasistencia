@@ -1099,7 +1099,7 @@ ADICIONAL</Text>
               <Name>Text1</Name>
               <Page isRef="2" />
               <Parent isRef="34" />
-              <Text>{IIF(liqAgente.firmaActa == 1 || liqAgente.firmaActa == 2 , "SI", "NO")}
+              <Text>{liqAgente.firmaActa}
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -1582,10 +1582,10 @@ ADICIONAL</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>1/10/2022 11:01:29 AM</ReportChanged>
+  <ReportChanged>3/17/2022 12:29:47 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>23a25d53128c4bb782852832591a030c</ReportGuid>
+  <ReportGuid>09568430c6d945cea54cdfacdfccacb2</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
