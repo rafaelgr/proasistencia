@@ -495,7 +495,7 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             </Text33>
             <Text35 Ref="19" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,2.4,3,1</ClientRectangle>
+              <ClientRectangle>12.8,2.4,2.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -514,7 +514,7 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             <Text36 Ref="20" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,3.4,1.8,0.8</ClientRectangle>
+              <ClientRectangle>12.8,3.4,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -533,7 +533,7 @@ ANT.</Text>
             <Text37 Ref="21" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,3.4,1.2,0.8</ClientRectangle>
+              <ClientRectangle>14.4,3.4,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -551,7 +551,7 @@ ANT.</Text>
             <Text38 Ref="22" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,2.4,0.4,1.8</ClientRectangle>
+              <ClientRectangle>12,2.4,0.8,1.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -1684,7 +1684,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Name>Text63</Name>
               <Page isRef="2" />
               <Parent isRef="76" />
-              <Text>{Sum(GroupHeaderBand2,liqAgente.baseAdicional)}</Text>
+              <Text>{Sum(GroupHeaderBand2,liqAgente.adicionalPagadoAnterior)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="106" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1710,7 +1710,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Name>Text64</Name>
               <Page isRef="2" />
               <Parent isRef="76" />
-              <Text>{Sum(GroupHeaderBand2,liqAgente.baseAdicional)}</Text>
+              <Text>{Sum(GroupHeaderBand2,liqAgente.adicionalPagadoPeriodo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <TextFormat Ref="108" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1757,10 +1757,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/21/2022 10:43:11 AM</ReportChanged>
+  <ReportChanged>3/21/2022 1:22:27 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>781dd25303564658a52190d228235222</ReportGuid>
+  <ReportGuid>ef9ca2482eee41c598f23dd0686b1ddb</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
