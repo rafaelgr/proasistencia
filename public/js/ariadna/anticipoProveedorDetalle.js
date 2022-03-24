@@ -260,15 +260,11 @@ function initForm() {
             $('#lineasanticipo').show();
             $('#basesycuotas').show();
             $('#retenciones').show();
-            $('#serviciadas').show();
-            $('#serv').show();
             $('#txtTotalConIva').prop('disabled', true);
         } else  {
             $('#lineasanticipo').hide();
             $('#basesycuotas').hide();
             $('#retenciones').hide();
-            $('#serviciadas').hide();
-            $('#serv').hide();
             $('#txtTotalConIva').prop('disabled', false);
         }
     });
@@ -279,12 +275,12 @@ function initForm() {
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
+            loadServiciadasAntprove(antproveId);
+            $('#btnAltaServiciada').click(reiniciaValores);
             if($('#chkCompleto').prop('checked')) {
                 loadLineasAnticipo(data.antproveId);
                 loadBasesAntprove(data.antproveId);
                 loadRetencionesAntprove(data.antproveId);
-                loadServiciadasAntprove(antproveId);
-                $('#btnAltaServiciada').click(reiniciaValores);
             }
             //$('#chkCompleto').prop("disabled", true);
         })
@@ -555,16 +551,12 @@ function loadData(data) {
         $('#lineasanticipo').show();
         $('#basesycuotas').show();
         $('#retenciones').show();
-        $('#serviciadas').show();
-        $('#serv').show();
         $('#txtTotalConIva').prop('disabled', true);
     } else {
         $('#chkCompleto').prop("checked", false);
         $('#lineasanticipo').hide();
         $('#basesycuotas').hide();
         $('#retenciones').hide();
-        $('#serviciadas').hide();
-        $('#serv').hide();
         $('#txtTotalConIva').prop('disabled', false);
     }
 
@@ -2034,7 +2026,11 @@ function loadServiciadasAntprove(antproveId) {
             mostrarMensajeCrearServiciadas();
         }
         setTimeout(function() {
-            tot = parseFloat(numeroDbf(vm.total()));
+            if($('#chkCompleto').prop("checked")) {
+                tot = parseFloat(numeroDbf(vm.total()));
+            } else {
+                tot = parseFloat(vm.totalConIva());
+            }
             vm.importeServiciada(roundToTwo(tot-acumulado).toFixed(2));
             loadTablaServiciadas(data);
         }, 1000);
@@ -2085,10 +2081,14 @@ function nuevaServiciada() {
         acumulado = roundToTwo(acumulado);
         if(vm.antproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            tot = parseFloat(numeroDbf(vm.total()));
+            
         } else {
             imp = acumulado + parseFloat(vm.importeServiciada());
-            tot = parseFloat(numeroDbf(vm.total()));
+            if($('#chkCompleto').prop("checked")) {
+                tot = parseFloat(numeroDbf(vm.total()));
+            } else {
+                tot = parseFloat(vm.totalConIva());
+            }
         }
     
         if( imp > tot){
