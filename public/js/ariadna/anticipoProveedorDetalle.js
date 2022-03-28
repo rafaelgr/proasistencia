@@ -537,7 +537,7 @@ function loadData(data) {
         mostrarMensajeAnticipoGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva" && !$('chkCompleto').prop('checked', false)) {
+    if (cmd == "nueva") {
         mostrarMensajeAnticipoNueva();
     }
     if(data.noContabilizar == 1){
@@ -658,7 +658,7 @@ var aceptarAnticipo = function () {
     var verb = "POST";
     var url =  "/api/anticiposProveedores";
     var returnUrl = "AnticipoProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&antproveId=";
-    if(!$('#chkCompleto').prop("checked"))  returnUrl = "AnticipoProveedorGeneral.html?antproveId=";
+   
     
     
     // caso modificación
@@ -673,7 +673,7 @@ var aceptarAnticipo = function () {
         loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -744,7 +744,7 @@ function salir() {
     var mf = function () {
         
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
         }else{
             var url = "AnticipoProveedorGeneral.html";
             window.open(url, '_self');
