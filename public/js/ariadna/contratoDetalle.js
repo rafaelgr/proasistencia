@@ -3870,8 +3870,8 @@ function initTablaAntproves() {
         }, {
             data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
@@ -3911,7 +3911,7 @@ function loadTablaAntproves(data) {
 function editAntprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" +ContratoId;
+    var url = "AnticipoProveedorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" +ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
@@ -3932,41 +3932,12 @@ function deleteAntprove(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                   if(data.nombreAntprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreAntprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-           
             var data = {
                 antproveId: id
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturasProveedores/" + id,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -3986,9 +3957,9 @@ function deleteAntprove(id) {
     });
 }
 
-function buscarAntproves() {
+function buscarAntprocves() {
     var mf = function () {
-        loadFacproveDelContrato(contratoId);
+        loadAntproveDelContrato(contratoId);
     };
     return mf;
 }
