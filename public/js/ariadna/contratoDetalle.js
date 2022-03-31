@@ -112,6 +112,12 @@ function initForm() {
     $("#btnAltaAntprove").submit(function () {
         return false;
     });
+    $("#frmAntcol").submit(function () {
+        return false;
+    });
+    $("#btnAltaAntcol").submit(function () {
+        return false;
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -267,6 +273,7 @@ function initForm() {
     initTablaFacturas();
     initTablaFacproves();
     initTablaAntproves();
+    initTablaAntcols();
     initTablaContratosCobros();
     initTablaAscContratos();
 
@@ -283,6 +290,8 @@ function initForm() {
     $('#btnAltaFacprove').click(nuevaFacprove);
 
     $('#btnAltaAntprove').click(nuevaAntprove);
+
+    $('#btnAltaAntcol').click(nuevaAntcol);
 
     reglasDeValidacionAdicionales();
 
@@ -315,6 +324,7 @@ function initForm() {
             loadFacturasDelContrato(data.contratoId);
             loadFacproveDelContrato(data.contratoId);
             loadAntproveDelContrato(data.contratoId);
+            loadAntcolDelContrato(data.contratoId);
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
@@ -331,6 +341,7 @@ function initForm() {
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
         $('#btnAltaAntprove').hide();
+        $('#btnAltaAntcol').hide();
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
         
@@ -359,6 +370,10 @@ function initForm() {
 
     if (gup('docAnt') != "") {
         $('.nav-tabs a[href="#s8"]').tab('show');
+    } 
+    
+    if (gup('docAntcol') != "") {
+        $('.nav-tabs a[href="#s9"]').tab('show');
     } 
     
     //metodo de validacion de fechas
@@ -3960,6 +3975,264 @@ function deleteAntprove(id) {
 function buscarAntprocves() {
     var mf = function () {
         loadAntproveDelContrato(contratoId);
+    };
+    return mf;
+}
+
+//---- Solapa anticipos de colaboradores
+function initTablaAntcols() {
+    tablaAntcols = $('#dt_antcol').DataTable({
+        bSort: false,
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antcol'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+             
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(6).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+      
+
+            //////
+
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFacturas,
+        columns: [{
+            data: "antcolId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "ref"
+        },{
+            data: "numeroAnticipoColaborador"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, 
+        {
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        }, {
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        },  {
+            data: "vFPago"
+        }, {
+            data: "antcolId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_antcol thead th input[type=text]").on('keyup change', function () {
+        tablaAntcols
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    
+}
+
+
+function loadAntcolDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposColaboradores/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaAntcols(data);
+    });
+}
+
+function loadTablaAntcols(data) {
+    var dt = $('#dt_antcol').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editAntcol(id) {
+    // hay que abrir la página de detalle de factura
+    // pasando en la url ese ID
+    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antcolId=" + id + "&ContratoId=" +ContratoId;
+    url += "&EmpresaId=" + vm.sempresaId();
+    window.open(url, '_new');
+}
+
+var nuevaAntcol = function () {
+    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antcolId=0";
+    url += "&EmpresaId=" + vm.sempresaId();
+    url += "&ContratoId=" + vm.contratoId();
+    window.open(url, '_new');
+}
+
+function deleteAntcol(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/anticiposColabboradores/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    var fn = buscarAntprocves();
+                    fn();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function buscarAntprocves() {
+    var mf = function () {
+        loadAntcolDelContrato(contratoId);
     };
     return mf;
 }

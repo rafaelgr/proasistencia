@@ -250,56 +250,23 @@ function crearAnticipo() {
 }
 
 function deleteAnticipo(id) {
-    var mens;
-    $.ajax({//buscamos la factura asociada para extraer su facproveId
-        type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposColaboradores/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        data: null,
-        success: function (data, status) {
-            if(data.facproveId) {
-                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
-            } else {
-                 mens = "¿Realmente desea borrar este registro?";
-            }
-            // mensaje de confirmación
-    
+    var mens = "¿Realmente desea borrar este registro?"
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            var data = {
-                id: antcolId
-            }
-            $.ajax({//buscamos la factura asociada para extraer su facproveId
-                type: "GET",
+          
+            $.ajax({
+                type: "DELETE",
                 url: myconfig.apiUrl + "/api/anticiposColaboradores/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: null,
                 success: function (data, status) {
-                    var data2 = {
-                        antcolId: id,
-                        facproveId: data.facproveId
-                    };
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/anticiposColaboradores/" + id,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data2),
-                        success: function (data, status) {
-                            var fn = buscarAnticipos();
-                            fn();
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
+                    var fn = buscarAnticipos();
+                    fn();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -309,12 +276,6 @@ function deleteAnticipo(id) {
         }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
-        }
-    });
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
         }
     });
 }

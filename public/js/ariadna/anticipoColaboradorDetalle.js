@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------- 
 preanticipoDetalle.js
-Funciones js par la página AnticipoColaboradorDetalle.html
+Funciones js par la página AnticipoComercialDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -10,7 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 var antcolId = 0;
 var ContratoId = 0;
 var EmpresaId = 0;
-var ColaboradorId = 0;
+var ComercialId = 0;
 var refWoId = 0;
 var ruta;
 var desdeContrato;
@@ -18,7 +18,7 @@ var acumulado = 0;
 var tot;
 var numServiciadas;
 var importeModificar = 0;
-var colaboradores;
+var comerciales;
 
 var dataServiciadas;
 var usuario;
@@ -66,13 +66,6 @@ function initForm() {
         return false;
     });
 
-    $("#txtPrecio").focus(function () {
-        if(vm.contabilizada() && !usuario.puedeEditar) return;
-        var val = $('#txtPrecio').val();
-        if(!val || val == '') return; 
-        $('#txtPrecio').val(null);
-    });
-
     
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());
@@ -88,7 +81,7 @@ function initForm() {
         compruebaRepetido(numeroAnt, vm.scomercialId());
     });
 
-    // Ahora Colaborador en autocomplete
+    // Ahora Comercial en autocomplete
     initAutoColaborador();
 
     // select2 things
@@ -109,15 +102,11 @@ function initForm() {
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbContratos").select2(select2Spanish());
-    $("#cmbContratos").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioContrato(e.added.id);
-    });
+   
    
 
     
     $('#txtTotalConIva').focus( function () {
-        if(vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtTotalConIva').val('');
     })
 
@@ -125,12 +114,12 @@ function initForm() {
     cmd = gup("cmd");
     ContratoId = gup("ContratoId");
     EmpresaId = gup("EmpresaId");
-    ColaboradorId = gup("ColaboradorId");
+    ComercialId = gup("ComercialId");
     desdeContrato = gup("desdeContrato");
-    colaboradores = gup('Colaboradores');
+    comerciales = gup('Comerciales');
   
-    colaboradores = colaboradores.split(',');
-    if(colaboradores.length == 1 && colaboradores[0] == "") colaboradores = null;
+    comerciales = comerciales.split(',');
+    if(comerciales.length == 1 && comerciales[0] == "") comerciales = null;
  
 
     if (antcolId != 0) {
@@ -138,7 +127,7 @@ function initForm() {
         llamadaAjax("GET",  "/api/anticiposColaboradores/" + antcolId, null, function (err, data) {
             if (err) return;
             loadData(data);
-            loadServiciadasAntprove(antcolId);
+            loadServiciadasAntcol(antcolId);
             $('#btnAltaServiciada').click(reiniciaValores);
            
         })
@@ -157,9 +146,9 @@ function initForm() {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
         }
-        if (ColaboradorId != 0) {
-            cargaColaborador(ColaboradorId);
-            cambioColaborador(ColaboradorId);
+        if (ComercialId != 0) {
+            cargaColaborador(ComercialId);
+            cambioColaborador(ComercialId);
         }
     }
 
@@ -218,7 +207,6 @@ function admData() {
     self.antTotal = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
-    self.contabilizada = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -248,7 +236,7 @@ function admData() {
     self.periodo = ko.observable();
 
     //valores para la solapa serviciadas
-    self.antproveServiciadoId = ko.observable();
+    self.antcolServiciadoId = ko.observable();
     self.importeServiciada = ko.observable();
     //
     self.sempresaServiciadaId = ko.observable();
@@ -287,7 +275,7 @@ function loadData(data) {
     vm.emisorDireccion(data.emisorDireccion);
     vm.emisorIban(data.IBAN);
     vm.conceptoAnticipo(data.conceptoAnticipo);
-    vm.antproveServiciadoId(0);
+    vm.antcolServiciadoId(0);
     vm.importeServiciada(0);
     
 
@@ -296,14 +284,14 @@ function loadData(data) {
     loadDepartamentos(data.departamentoId);
    
     
-    cargaColaborador(data.colaboradorId);
+    cargaColaborador(data.comercialId);
     loadFormasPago(data.formaPagoId);
     vm.observaciones(data.observaciones);
     //
     
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
-        mostrarMensajeAnticipoNueva();
+        mostrarMensajeCrearServiciadas();
     }
     
     document.title = "ANTICIPO COLABORADOR: " + vm.numero();
@@ -321,7 +309,7 @@ function datosOK() {
             cmbDepartamentosTrabajo: {
                 required: true
             },
-            cmbColaboradores: {
+            cmbComerciales: {
                 required: true
             },
             txtFecha: {
@@ -353,7 +341,7 @@ function datosOK() {
             cmbDepartamentosTrabajo: {
                 required: 'Debe elegir un departamento'
             },
-            cmbColaboradores: {
+            cmbComerciales: {
                 required: 'Debe elegir un emisor'
             },
             txtFecha: {
@@ -390,7 +378,7 @@ var aceptarAnticipo = function () {
 
     eventSalir = false;
     var data = generarAnticipoDb();
-    var ext;
+
     // caso alta
     
     var verb = "POST";
@@ -405,13 +393,12 @@ var aceptarAnticipo = function () {
         url =  "/api/anticiposColaboradores/" + antcolId;
         returnUrl = "AnticipoColaboradorGeneral.html?antcolId=";
     }
-    var datosArray = [];
-    datosArray.push(data)
-    llamadaAjax(verb, url, datosArray, function (err, data) {
+    
+    llamadaAjax(verb, url, data, function (err, data) {
         loadData(data);
         returnUrl = returnUrl + vm.antcolId();
         if(desdeContrato == "true" && antcolId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -428,7 +415,7 @@ var generarAnticipoDb = function () {
             "numeroAnticipoColaborador": vm.numero(),
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
-            "colaboradorId": vm.scomercialId(),
+            "comercialId": vm.scomercialId(),
             "emisorNif": vm.emisorNif(),
             "emisorNombre": vm.emisorNombre(),
             "emisorDireccion": vm.emisorDireccion(),
@@ -456,7 +443,7 @@ function salir() {
     var mf = function () {
         
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
         }else{
             var url = "AnticipoColaboradorGeneral.html";
             window.open(url, '_self');
@@ -579,7 +566,7 @@ function cambioEmpresa(empresaId) {
             loadEmpresaServiciadas(data.empresaId);
 
             var data2 = {
-                antprove: {
+                antcol: {
                     fecha: spanishDbDate(vm.fecha()),
                     empresaId: data.empresaId
     
@@ -609,6 +596,7 @@ function obrenerTipoClienteID(contratoId) {
 }
 
 function compruebaRepetido(numeroAnt, comercialId) {
+    if(!comercialId) return;
     if(numeroAnt.length > 0) {
        
 
@@ -690,97 +678,12 @@ var initAutoColaborador = function () {
         var r = false;
         if (vm.scomercialId()) r = true;
         return r;
-    }, "Debe seleccionar un Colaborador válido");
+    }, "Debe seleccionar un Comercial válido");
 };
-
-
-
-var cambioCampoConRecalculoDesdeCoste = function () {
-    recalcularCostesImportesDesdeCoste();
-    guardarPorcentajes();
-    actualizarLineasDeLaAnticipoTrasCambioCostes();
-};
-
-var guardarPorcentajes = function(){
-    var data = {
-        antprove: {
-            antcolId: vm.antcolId(),
-            empresaId: vm.empresaId(),
-            comercialId: vm.comercialId(),
-            fecha: spanishDbDate(vm.fecha()),
-            porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente()
-        }
-    }
-    if(vm.antcolId() === 0) return;
-
-    llamadaAjax("PUT", "/api/anticiposColaboradores/"+vm.antcolId(), data, function (err, data) {
-        if (err) return;
-        return;
-    });
-}
-
-
-var ocultarCamposPreanticiposGeneradas = function () {
-    $('#btnAceptar').hide();
-    $('#btnNuevaLinea').hide();
-    // los de input para evitar que se lance 'onblur'
-    $('#txtCoste').prop('disabled', true);
-    $('#txtPorcentajeBeneficio').prop('disabled', true);
-    $('#txtImporteBeneficio').prop('disabled', true);
-    $('#txtPorcentajeAgente').prop('disabled', true);
-}
-
-var imprimir = function () {
-    printantprove2(vm.antcolId());
-}
-
-function printPreanticipo(id) {
-    llamadaAjax("GET", "/api/informes/preanticipos/" + id, null, function (err, data) {
-        if (err) return;
-        
-    });
-}
-
-function printantprove2(id) {
-    var url = "InfAnticiposColaboradores.html?antcolId=" + id;
-    window.open(url, "_new");
-}
-
-
-var f_open_post = function (verb, url, data, target) {
-    var form = document.createElement("form");
-    form.action = url;
-    form.method = verb;
-    form.target = target || "_blank";
-
-    var input = document.createElement("textarea");
-    input.name = "template[shortid]";
-    input.value = data.template.shortid;
-    form.appendChild(input);
-
-    input = document.createElement("textarea");
-    input.name = "data";
-    input.value = JSON.stringify(data.data);
-    form.appendChild(input);
-
-    form.style.display = 'none';
-    document.body.appendChild(form);
-    form.submit();
-};
-
-
-var recuperaParametrosPorDefecto = function (){
-    llamadaAjax("GET", "/api/parametros/parametro/grupo", null, function (err, data) {
-        if (err) return;
-        loadDataLineaDefecto(data);
-    });
-}
-
 
 //---- SOLAPA EMPRESAS SERVICIADAS
 function initTablaServiciadas() {
-    tablaAntproves = $('#dt_serviciada').DataTable({
+    tablaAntcols = $('#dt_serviciada').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
@@ -856,7 +759,7 @@ function initTablaServiciadas() {
         },
         data: dataServiciadas,
         columns: [{
-            data: "antproveServiciadoId",
+            data: "antcolServiciadoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -874,7 +777,7 @@ function initTablaServiciadas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "antproveServiciadoId",
+            data: "antcolServiciadoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteServiciada(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalServiciado' onclick='editServiciada(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -887,7 +790,7 @@ function initTablaServiciadas() {
 
     // Apply the filter
     $("#dt_serviciada thead th input[type=text]").on('keyup change', function () {
-        tablaAntproves
+        tablaAntcols
             .column($(this).parent().index() + ':visible')
             .search(this.value)
             .draw();
@@ -897,7 +800,7 @@ function initTablaServiciadas() {
 }
 
 
-function loadServiciadasAntprove(antcolId) {
+function loadServiciadasAntcol(antcolId) {
     llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposColaboradores/servicidas/anticipos/colaborador/todas/" + antcolId, null, function (err, data) {
         if (err) return;
         for(var i = 0; i < data.length; i++){
@@ -905,7 +808,7 @@ function loadServiciadasAntprove(antcolId) {
         }
         numServiciadas = data.length;
         if(numServiciadas == 0) {
-            mostrarMensajeCrearServiciadas();
+            //mostrarMensajeCrearServiciadas();
         }
         setTimeout(function() {
             tot = parseFloat(vm.totalConIva());
@@ -936,7 +839,7 @@ function editServiciada(id) {
 
 function loadDataServiciadas(data) {
     $('#chkCerrados').prop("checked", true);
-    vm.antproveServiciadoId(data.antproveServiciadoId);
+    vm.antcolServiciadoId(data.antcolServiciadoId);
     vm.importeServiciada(data.importe);
 
     loadEmpresaServiciadas(data.empresaId);
@@ -957,7 +860,7 @@ function nuevaServiciada() {
             acumulado += parseFloat(data[i].importe);
         }
         acumulado = roundToTwo(acumulado);
-        if(vm.antproveServiciadoId() != 0) {
+        if(vm.antcolServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
             
         } else {
@@ -977,16 +880,16 @@ function nuevaServiciada() {
         var url =  '/api/anticiposColaboradores/nueva/serviciada';
         
         // caso modificación
-        if (vm.antproveServiciadoId() != 0) {
+        if (vm.antcolServiciadoId() != 0) {
            
     
             verb = "PUT";
-            url =  "/api/anticiposColaboradores/serviciada/edita/" + vm.antproveServiciadoId();
+            url =  "/api/anticiposColaboradores/serviciada/edita/" + vm.antcolServiciadoId();
             returnUrl = "AnticipoColaboradorGeneral.html?antcolId=";
             
         }
         var data = {
-            antproveServiciada: {
+            antcolServiciada: {
                 antcolId: vm.antcolId(),
                 empresaId: vm.sempresaServiciadaId(),
                 contratoId: vm.scontratoId(),
@@ -995,7 +898,7 @@ function nuevaServiciada() {
         }
         llamadaAjax(verb, url, data, function (err, data) {
             if (err) return;
-            loadServiciadasAntprove(antcolId);
+            loadServiciadasAntcol(antcolId);
             $('#modalServiciado').modal('hide');
         });
         
@@ -1049,10 +952,10 @@ function reiniciaValores() {
     acumulado = 0;
     importeModificar = 0;
     vm.importeServiciada(0);
-    vm.antproveServiciadoId(0);
+    vm.antcolServiciadoId(0);
     vm.scontratoId(null);
     loadEmpresaServiciadas(vm.empresaId());
-    loadServiciadasAntprove(antcolId);
+    loadServiciadasAntcol(antcolId);
     if(ContratoId != 0) {
         $('#chkCerrados').prop('checked', true);
         vm.scontratoId(ContratoId);
@@ -1099,7 +1002,7 @@ function deleteServiciada(id) {
 
 function buscarServiciadas() {
     var mf = function () {
-        loadServiciadasAntprove(antcolId);
+        loadServiciadasAntcol(antcolId);
     };
     return mf;
 }
@@ -1128,6 +1031,7 @@ var mostrarMensajeCrearServiciadas = function () {
     var mens = "Es necesario crear empresas serviciadas para esta anticipo en la pestaña correspondinte";
     mensNormal(mens);
 }
+
 
 
 

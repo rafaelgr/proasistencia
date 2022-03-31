@@ -1,7 +1,7 @@
 CREATE TABLE `antcol` (
   `antcolId` int(11) NOT NULL auto_increment,
   `fecha` date default NULL,
-  `colaboradorId` int(11) default NULL,
+  `comercialId` int(11) default NULL,
   `empresaId` int(11) default NULL,
   `emisorNif` varchar(255) default NULL,
   `emisorNombre` varchar(255) default NULL,
@@ -24,17 +24,17 @@ CREATE TABLE `antcol` (
   `numeroAnticipoColaborador` varchar(255) default NULL,
   `departamentoId` int(11) default NULL,
   `conceptoAnticipo` varchar(255) default NULL,
-  PRIMARY KEY  (`antcolaId`),
-  UNIQUE KEY `antcola_numeroprova` (`numeroAnticipoColaborador`,`colaboradorId`),
+  PRIMARY KEY  (`antcolId`),
+  UNIQUE KEY `antcola_numeroprova` (`numeroAnticipoColaborador`,`comercialId`),
   KEY `antcola_empresas` (`empresaId`),
-  KEY `antcola_colaborador` (`colaboradorId`),
+  KEY `antcola_colaborador` (`comercialId`),
   KEY `antcola_formas_pago` (`formaPagoId`),
   KEY `antcola_departamento` (`departamentoId`),
   CONSTRAINT `antcola_empresaFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
-  CONSTRAINT `antcola_colaboradorFK` FOREIGN KEY (`colaboradorId`) REFERENCES `comerciales` (`comercialId`),
+  CONSTRAINT `antcola_colaboradorFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales` (`comercialId`),
   CONSTRAINT `antcola_formas_pagoFK` FOREIGN KEY (`formaPagoId`) REFERENCES `formas_pago` (`formaPagoId`),
   CONSTRAINT `antcola_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos` (`departamentoId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE `antcol_serviciados` (
   `antcolServiciadoId` int(11) NOT NULL auto_increment,
@@ -49,4 +49,4 @@ CREATE TABLE `antcol_serviciados` (
   CONSTRAINT `serviciados_empresaFK2aa` FOREIGN KEY (`empresaId`) REFERENCES `empresas` (`empresaId`),
   CONSTRAINT `serviciados_contratoFK2aa` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
   CONSTRAINT `serviciados_antcolFK` FOREIGN KEY (`antcolId`) REFERENCES `antcol` (`antcolId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);

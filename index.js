@@ -149,6 +149,16 @@ router.use(function (req, res, next) {
     next();
 });
 
+//función de tratamiento de errores
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    });
+});
+
 
 // -- general GET (to know if the server is up and runnig)
 router.get('/', function (req, res) {
