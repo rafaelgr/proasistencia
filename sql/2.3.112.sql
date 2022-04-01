@@ -50,3 +50,10 @@ CREATE TABLE `antcol_serviciados` (
   CONSTRAINT `serviciados_contratoFK2aa` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`),
   CONSTRAINT `serviciados_antcolFK` FOREIGN KEY (`antcolId`) REFERENCES `antcol` (`antcolId`)
 );
+
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `fechaUltimaFactura` DATE NULL AFTER `fechaPrimeraFactura`;
+
+UPDATE contratos SET fechaUltimaFactura = fechaFinal
+WHERE NOT fechaPrimeraFactura IS NULL;

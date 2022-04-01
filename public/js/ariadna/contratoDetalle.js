@@ -368,10 +368,12 @@ function initForm() {
         $('.nav-tabs a[href="#s7"]').tab('show');
     } 
 
+    //abrir en pestaña de anticipos de gastos
     if (gup('docAnt') != "") {
         $('.nav-tabs a[href="#s8"]').tab('show');
     } 
     
+    //abrir en pestaña de anticipos de colaboradores
     if (gup('docAntcol') != "") {
         $('.nav-tabs a[href="#s9"]').tab('show');
     } 
@@ -437,6 +439,7 @@ function admData() {
     self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
+    self.importeClienteFormat = ko.observable();
     self.certificacionFinal = ko.observable();
     self.importeMantenedor = ko.observable();
     //
@@ -444,6 +447,7 @@ function admData() {
     self.fechaFirmaActa = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
+    self.fechaUltimaFactura = ko.observable();
     self.fechaSiguientesFacturas = ko.observable();
     self.fechaOriginal = ko.observable();
     self.facturaParcial = ko.observable();
@@ -615,6 +619,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.importeCliente(data.importeCliente);
+    vm.importeClienteFormat(data.importeCliente);
     vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
     
@@ -632,6 +637,7 @@ function loadData(data) {
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
+    vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
     vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
@@ -874,6 +880,7 @@ var generarContratoDb = function () {
             "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
+            "fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
             "fechaSiguientesFacturas": spanishDbDate(vm.fechaSiguientesFacturas()),
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
@@ -1927,6 +1934,7 @@ var recalcularCostesImportesDesdeCoste = function () {
 
      
     vm.importeCliente(roundToTwo(vm.importeCliente()));
+    vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
@@ -2514,7 +2522,6 @@ var verPrefacturasAGenerar = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    // var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     if(numConceptos > 0 && importePrefacturas == 0) {
         var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
@@ -2602,7 +2609,7 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: true
             },
-            txtGFechaSiguientesFacturas: {
+            txtGFechaUltimaFactura: {
                 required: true
             }
         },
@@ -2620,7 +2627,7 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: "Debe elegir una fecha"
             },
-            txtGFechaSiguientesFacturas: {
+            txtGFechaUltimaFactura: {
                 required: "Debe elegir una fecha"
             }
         },
@@ -4378,14 +4385,14 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
-    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
-    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
-    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
-    var fContrato = moment(finContrato).format('YYYY-MM-DD');
-    var finMesInicioContrato = moment(inicioContrato).endOf('month');
+    var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
+    var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
+    var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
+    //var fFactura = moment(finFactura).format('YYYY-MM-DD');
+    var finMesinicioFactura = moment(inicioFactura).endOf('month');
     var aux = iniContrato.split('-');
-    var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
-    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
+    var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
 
     var importePago = roundToSix(importe / numPagos);
     var importePagoCliente = roundToSix(importeAlCliente / numPagos);
@@ -4414,16 +4421,16 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         // inicio de periodo
         var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
         // fin de periodo
-        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        var f2 = moment(inicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         if (vm.facturaParcial()) {
             if (i > 0) {
-                f0 = moment(inicioMesInicioContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+                f0 = moment(inicioMesinicioFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
             }
-            f2 = moment(inicioMesInicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+            f2 = moment(inicioMesinicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         }
-        if (i == (nPagos - 1)) {
-            f2 = moment(fContrato).format('DD/MM/YYYY');
-        }
+       /*  if (i == (nPagos - 1)) {
+            f2 = moment(fFactura).format('DD/MM/YYYY');
+        } */
         var p = {
             fecha: f,
             importe: importePago,

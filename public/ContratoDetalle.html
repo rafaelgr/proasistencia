@@ -546,7 +546,11 @@
                                                                                                 <input id="chkIntereses" type="checkbox" name="chkIntereses" data-bind="checked: contratoIntereses"/> Contrato de intereses
                                                                                             </div>
                                                                                         </section>
-                                                                                        <section class="col col-md-2"></section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <div style="margin-top: 15%;">
+                                                                                                <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial"> Facturación parcial
+                                                                                            </div>
+                                                                                        </section>
                                                                                         <section class="col col-md-2">
                                                                                             <label  class="label"> Firma del acta</label>
                                                                                             <div id= "radioActa">
@@ -555,11 +559,6 @@
                                                                                                 <div><input type='radio' id='radioFirmaActa3' name='firmaActaGroup' value='2' data-bind="checked: firmaActa"/> ¿Si?</div>
                                                                                             </div>
                                                                                         </section>
-                                                                                        <!-- <section class="col col-md-2">
-                                                                                            <div style="margin-top: 15%;">
-                                                                                                <input id="chkFirmaActa" type="checkbox" name="chkFirmaActa" data-bind="checked: firmaActa"/> Firma del acta
-                                                                                            </div>
-                                                                                        </section> -->
                                                                                         <section class="col col-md-2">
                                                                                             <label class="label">Fecha de firma del acta</label>
                                                                                             <label class="input">
@@ -636,7 +635,7 @@
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">Importe Cliente</label>
                                                                                     <label class="input">
-                                                                                        <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeCliente" disabled/>
+                                                                                        <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeClienteFormat" disabled/>
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
@@ -672,36 +671,28 @@
                                                                                         <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-1">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Preaviso</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2">
-                                                                                    <label class="label">Fecha primera fact.</label>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Fecha inicio fact.</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaPrimeraFactura" name="txtFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-1">
-                                                                                    <!--
-                                                                                    <label class="label">Fecha ref. siguientes.</label>
+                                                                                <!-- <section class="col col-md-3">
+                                                                                    <label class="label">Fecha final fact.</label>
                                                                                     <label class="input">
-                                                                                        <input id="txtFechaSiguientesFacturas" name="txtFechaSiguientesFacturas" data-bind="value: fechaSiguientesFacturas" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                        <input id="txtFechaUltimaFactura" name="txtFechaUltimaFactura" data-bind="value: fechaUltimaFactura" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
-                                                                                    -->
-                                                                                </section>
+                                                                                </section> -->
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">Fecha original</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                    </label>
-                                                                                </section>
-                                                                                <section class="col col-md-2">
-                                                                                    <label class="checkbox">
-                                                                                        <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial">
-                                                                                        <i></i>Facturación parcial
                                                                                     </label>
                                                                                 </section>
                                                                             </div>
@@ -2115,38 +2106,22 @@
                         <fieldset>
                             <section>
                                 <div class="row">
-                                    <section class="col col-md-6">
-                                        <label class="label">Fecha Inicial</label>
-                                        <label class="input">
-                                            <input id="txtGFechaInicio" name="txtGFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-6">
-                                        <label class="label">Fecha Final</label>
-                                        <label class="input">
-                                            <input id="txtGFechaFinal" name="txtGFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
-                                        </label>
-                                    </section>
-                                </div>
-                                <div class="row">
-                                    <section class="col col-md-3">
+                                    <section class="col col-md-12">
                                         <div class="form-group">
-                                            <label class="label">Fecha primera factura</label>
+                                            <label class="label">Fecha Inicio facturación</label>
                                             <label class="input">
                                                 <input id="txtGFechaPrimeraFactura" type="text" name="txtGFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
                                             </label>
                                         </div>
                                     </section>
-                                    <section class="col col-md-3">
-                                        <!--
+                                    <!-- section class="col col-md-6">
                                         <div class="form-group">
-                                            <label class="label">Fecha ref. siguientes</label>
+                                            <label class="label">Fecha Final facturación</label>
                                             <label class="input">
-                                                <input id="txtGFechaSiguientesFacturas" type="text" name="txtGFechaSiguientesFacturas" data-bind="value: fechaSiguientesFacturas" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                                <input id="txtGFechaUltimaFactura" type="text" name="txtGFechaUltimaFactura" data-bind="value: fechaUltimaFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
                                             </label>
                                         </div>
-                                        -->
-                                    </section>
+                                    </section> -->
                                     <section class="col col-md-6">
                                         <label class="checkbox">
                                             <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
