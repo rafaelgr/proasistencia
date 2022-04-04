@@ -90,16 +90,21 @@ function initForm() {
 }
 
 function ajustaDepartamentos(data) {
-    //ELIMINAMOS EL DEPARTAMENTO DE OBRAS PARA QUE NO SE PUEDA LIQUIDAR AQUÍ
+    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
-    data.splice(7, 1);
+     for (var i = 0; i < data.length; i++) {
+            if (data[i].departamentoId != 8) {
+                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
+                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+            }
+    }
     console.log(data);
     var departamentos = [{
         departamentoId: 0,
         nombre: ""
     }].concat(data);
     vm.posiblesDepartamentos(departamentos);
-    if(id == 8)  {
+    if(id != 8)  {
         $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
         vm.sdepartamentoId(0);
     }
@@ -242,20 +247,53 @@ function admData() {
 
     self.optionsPeriodos = ko.observableArray([
         {
-            'nombrePeriodo': 'Primer trimestre',
+            'nombrePeriodo': 'Enero',
             'periodo': '1'
         }, 
         {
-            'nombrePeriodo': 'Segundo trimestre',
+            'nombrePeriodo': 'Febrero',
             'periodo': '2'
         }, 
         {
-            'nombrePeriodo': 'Tercer trimestre',
+            'nombrePeriodo': 'Marzo',
             'periodo': '3'
         },
         {
-            'nombrePeriodo': 'Cuarto trimestre',
+            'nombrePeriodo': 'Maryo',
             'periodo': '4'
+        },
+        {
+            'nombrePeriodo': 'Mayo',
+            'periodo': '5'
+        },
+        {
+            'nombrePeriodo': 'Junio',
+            'periodo': '6'
+        },
+        {
+            'nombrePeriodo': 'Julio',
+            'periodo': '7'
+        },
+        {
+            'nombrePeriodo': 'Agosto',
+            'periodo': '8'
+        },
+        {
+            'nombrePeriodo': 'Septiembre',
+            'periodo': '9'
+        },
+        {
+            'nombrePeriodo': 'Octubre',
+            'periodo': '10'
+        },
+        {
+            'nombrePeriodo': 'Noviembre',
+            'periodo': '11'
+        }
+        ,
+        {
+            'nombrePeriodo': 'Diciembre',
+            'periodo': '12'
         }
     ]);
 
