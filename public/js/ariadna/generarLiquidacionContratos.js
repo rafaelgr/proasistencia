@@ -65,37 +65,44 @@ function initForm() {
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
         if(err) return;
+        ajustaDepartamentos(data)
+
         $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
+        loadEmpresas();
 
-    $("#cmbComerciales").select2(select2Spanish());
-    loadComerciales();
+        $("#cmbComerciales").select2(select2Spanish());
+        loadComerciales();
 
-    $('#cmbPeriodos').select2(select2Spanish());
+        $('#cmbPeriodos').select2(select2Spanish());
 
-    $('#cmbAnos').select2(select2Spanish());
-    loadAnyos();
+        $('#cmbAnos').select2(select2Spanish());
+        loadAnyos();
 
-    // ocultamos el botón de alta hasta que se haya producido una búsqueda
-    $("#btnAlta").hide();
-    $('#tbFactura').hide();
+        // ocultamos el botón de alta hasta que se haya producido una búsqueda
+        $("#btnAlta").hide();
+        $('#tbFactura').hide();
 
-     //Evento asociado al cambio de departamento
-     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        //cambioDepartamento(this.value);
-        //antDepartamentoId = this.value;
+        initTablaContratos();
+        initTablaFacturas();
+        // comprobamos parámetros
+        contratoId = gup('contratoId');
     });
+}
 
-
-    initTablaContratos();
-    initTablaFacturas();
-    // comprobamos parámetros
-    contratoId = gup('contratoId');
-        
-    });
-
-    
+function ajustaDepartamentos(data) {
+    //ELIMINAMOS EL DEPARTAMENTO DE OBRAS PARA QUE NO SE PUEDA LIQUIDAR AQUÍ
+    var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
+    data.splice(7, 1);
+    console.log(data);
+    var departamentos = [{
+        departamentoId: 0,
+        nombre: ""
+    }].concat(data);
+    vm.posiblesDepartamentos(departamentos);
+    if(id == 8)  {
+        $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
+        vm.sdepartamentoId(0);
+    }
 }
 
 function cambioDepartamento(id) {
