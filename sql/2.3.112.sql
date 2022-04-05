@@ -51,9 +51,5 @@ CREATE TABLE `antcol_serviciados` (
   CONSTRAINT `serviciados_antcolFK` FOREIGN KEY (`antcolId`) REFERENCES `antcol` (`antcolId`)
 );
 
-
-ALTER TABLE `contratos`   
-  ADD COLUMN `fechaUltimaFactura` DATE NULL AFTER `fechaPrimeraFactura`;
-
-UPDATE contratos SET fechaUltimaFactura = fechaFinal
-WHERE NOT fechaPrimeraFactura IS NULL;
+ALTER TABLE `contratos_comisionistas`   
+  ADD COLUMN `sel` TINYINT(1) DEFAULT 0 NULL AFTER `liquidado`;
