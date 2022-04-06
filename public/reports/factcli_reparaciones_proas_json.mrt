@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "01cb4e763f804aaa9936bff48bbcbf84",
+  "ReportGuid": "98cae40e4f1c4222b0c93c3340a90697",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1646309836606+0100)/",
+  "ReportChanged": "/Date(1649230114280+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1390,7 +1390,9 @@
               "Brush": "solid:",
               "Stretch": true,
               "AspectRatio": true,
-              "File": "https://comercializa-partes.s3.eu-west-1.amazonaws.com/001514.001.pdf"
+              "ImageURL": {
+                "Value": "{imagenes.imagen}"
+              }
             },
             "1": {
               "Ident": "StiText",
