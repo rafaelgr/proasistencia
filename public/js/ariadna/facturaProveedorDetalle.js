@@ -491,6 +491,7 @@ function admData() {
     self.tipoIvaId = ko.observable();
     self.codigo = ko.observable();
     self.antCodigo = ko.observable();
+    self.antCuentaRetencion = ko.observable();
     self.porcentaje = ko.observable();
     self.descripcion = ko.observable();
     self.cantidad = ko.observable();
@@ -1490,14 +1491,28 @@ function loadTiposRetencion(id) {
         vm.posiblesTiposRetencion(data);
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
-            vm.antCodigo(id);
-            vm.scodigo(id);
+            for( var i = 0; i < data.length; i++) {
+                var re = data[i];
+                if(re.codigo == id) {
+                    vm.antCodigo(id);
+                    vm.antCuentaRetencion(re.cuentaPorDefecto);
+                    vm.scodigo(id);
+                    vm.codigo(id);
+                    $("#cmbTiposRetencion").val([id]).trigger('change');
+                    break;
+                }
+            }
         
         } else {
             $("#cmbTiposRetencion").val([0]).trigger('change');
             vm.antCodigo(0);
+            vm.scodigo(0);
+            vm.codigo(0);
+            vm.antCuentaRetencion(null);
+            vm.porcentajeRetencionLinea(0);
+            vm.importeRetencionLinea(0);
         }
-        vm.antCodigo()
+        //vm.antCodigo()
     });
 }
 
@@ -1589,13 +1604,21 @@ function cambioTiposRetencion(codigo) {
         }
         if(acumulado == 2) {
             mostratMnesajeTipoNoPermitido();
-            loadTiposRetencion(vm.antCodigo());
+            vm.codigo(vm.antCodigo());
+            vm.scodigo(vm.antCodigo());
+            vm.cuentaRetencion(vm.antCuentaRetencion());
+            $("#cmbTiposRetencion").val([vm.antCodigo()]).trigger('change');
+            //loadTiposRetencion(codigo);
             return;
         }
         if(datos.length == 1 &&  vm.scodigo() != 0) {
             if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo()) {
                 mostratMnesajeTipoNoPermitido();
-                loadTiposRetencion(vm.antCodigo());
+                vm.codigo(vm.antCodigo());
+                vm.scodigo(vm.antCodigo());
+                vm.cuentaRetencion(vm.antCuentaRetencion());
+                $("#cmbTiposRetencion").val([vm.antCodigo()]).trigger('change');
+                //loadTiposRetencion(codigo);
                 return;
             }
         }
@@ -1609,7 +1632,7 @@ function cambioTiposRetencion(codigo) {
             } else {
                 vm.importeRetencionLinea(0);
                 vm.porcentajeRetencionLinea(0);
-                vm.cuentaRetencion('');
+                vm.cuentaRetencion(null);
             }
             cambioPrecioCantidad();
         });
