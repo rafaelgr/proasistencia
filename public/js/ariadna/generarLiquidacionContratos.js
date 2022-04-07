@@ -311,7 +311,7 @@ function initTablaContratos() {
         },
         data: dataContratos,
         columns: [{
-            data: "contratoId",
+            data: "contratoComisionistaId",
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -323,8 +323,20 @@ function initTablaContratos() {
         }, {
             data:  "referencia"
         }, {
-            data: "tipoProyectoNombre"
-        }, {
+            data: "comisionista"
+        },{
+            data: "importeContrato",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        },{
+            data: "importeContrato",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        },{
             data: "fechaFinal",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -333,16 +345,8 @@ function initTablaContratos() {
             data: "nombreEmpresa"
         }, {
             data: "nombreCliente"
-        },  {
-            data: "total",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
-        }, {
-            data: "observaciones"
-        }, {
-            data: "contratoId",
+        },{
+            data: "contratoComisionistaId",
             render: function (data, type, row) {
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
@@ -352,7 +356,6 @@ function initTablaContratos() {
         }]
     });
 }
-
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: true,
@@ -492,28 +495,25 @@ function loadTablaContratos(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.contratoId;
+        var field = "#chk" + v.contratoComisionistaId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                contrato: {
-                    contratoId: v.contratoId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fechaInicio: moment(v.fechaInicio).format('YYYY-MM-DD'),
+                contratoComisionista: {
+                    contratoComisionistaId: v.contratoComisionistaId,
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.contrato.sel = 1;
+                data.contratoComisionista.sel = 1;
             }
             var url = "", type = "";
             // updating record
             var type = "PUT";
-            var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, v.contratoId);
+            var url = sprintf('%s/api/contratos/comisionista/%s', myconfig.apiUrl, v.contratoComisionistaId);
             $.ajax({
                 type: type,
                 url: url,

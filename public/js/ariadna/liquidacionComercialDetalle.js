@@ -123,6 +123,8 @@ function initTablaliquidaciones() {
         }, {
             data: "porComer"
         }, {
+            data: "anticipo"
+        }, {
             data: "comision"
         }]
     });

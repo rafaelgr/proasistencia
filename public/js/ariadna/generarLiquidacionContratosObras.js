@@ -61,6 +61,20 @@ function initForm() {
     });
     //
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAllContratos(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAllContratos(false);
+            }
+        }
+    );
+
     //loadTiposContrato();
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
@@ -82,7 +96,6 @@ function initForm() {
         $("#btnAlta").hide();
 
         initTablaContratos();
-        initTablaFacturas();
         // comprobamos parámetros
         contratoId = gup('contratoId');
     });
@@ -109,44 +122,6 @@ function ajustaDepartamentos(data) {
     }
 }
 
-function updateAllFacturas() {
-    var datos = null;
-    var sel = 0;
-    var tb = $('#dt_factura').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
-            var data = {
-                factura: {
-                    facturaId: datos[i].facturaId,
-                    empresaId: datos[i].empresaId,
-                    clienteId: datos[i].clienteId,
-                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                    sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
-        }
-    }
-}
-
 
 function updateAllContratos() {
     var datos = null;
@@ -157,10 +132,7 @@ function updateAllContratos() {
         for( var i = 0; i < datos.length; i++) {
             var data = {
                 contrato: {
-                    contratoId: datos[i].contratoId,
-                    empresaId: datos[i].empresaId,
-                    clienteId: datos[i].clienteId,
-                    fechaFinal: moment(datos[i].fechaFinal).format('YYYY-MM-DD'),
+                    contratoComisionistaId: v.contratoComisionistaId,
                     sel: sel
             }
         };
@@ -169,7 +141,7 @@ function updateAllContratos() {
         var url = "", type = "";
          // updating record
          var type = "PUT";
-         var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, datos[i].contratoId);
+         var url = sprintf('%sapi/contratos/comisionista/%s', myconfig.apiUrl, datos[i].contratoId);
             $.ajax({
                 type: type,
                 url: url,
@@ -296,7 +268,7 @@ function admData() {
 
 function initTablaContratos() {
     tablaCarro = $('#dt_contrato').dataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
         "columnDefs": [ {
             "targets": 0,
@@ -341,7 +313,7 @@ function initTablaContratos() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s"  class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -383,90 +355,7 @@ function initTablaContratos() {
     });
 }
 
-function initTablaFacturas() {
-    tablaCarro = $('#dt_factura').dataTable({
-        autoWidth: true,
-        paging: false,
-        "columnDefs": [ {
-            "targets": 0,
-            "orderable": false,
-            "width": "20%"
-            } ],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
-        language: {
-            processing: "Procesando...",
-            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-            infoFiltered: "(filtrado de un total de _MAX_ registros)",
-            infoPostFix: "",
-            loadingRecords: "Cargando...",
-            zeroRecords: "No se encontraron resultados",
-            emptyTable: "Ningún dato disponible en esta tabla",
-            paginate: {
-                first: "Primero",
-                previous: "Anterior",
-                next: "Siguiente",
-                last: "Último"
-            },
-            aria: {
-                sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sortDescending: ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        data: dataFacturas,
-        columns: [{
-            data: "facturaId",
-            width: "10%",
-            render: function (data, type, row) {
-                var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
-                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
-                html += '</label>';
-                return html;
-            }
-        }, {
-            data:  "vFac"
-        }, {
-            data: "tipoProyectoNombre"
-        }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "nombreEmpresa"
-        }, {
-            data: "nombreCliente"
-        },  {
-            data: "total",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0.00');
-                return string;
-            }
-        }, {
-            data: "observaciones"
-        }, {
-            data: "facturaId",
-            render: function (data, type, row) {
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt2 + "</div>";
-                return html;
-            }
-        }]
-    });
-}
+
 function datosOK() {
     // Segun se incorporen criterios de filtrado
     // habrá que controlarlos aquí
@@ -582,7 +471,7 @@ function buscarContratos() {
             success: function (data, status) {
                 antDepartamentoId = departamentoId;
                 loadTablaContratos(data);
-                
+                $('#checkMain').prop('checked', true);
                
                 // mostramos el botén de alta
                 $("#btnAlta").show();
