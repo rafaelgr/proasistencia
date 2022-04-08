@@ -447,7 +447,7 @@ function admData() {
     self.fechaFirmaActa = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
-    self.fechaUltimaFactura = ko.observable();
+    //self.fechaUltimaFactura = ko.observable();
     self.fechaSiguientesFacturas = ko.observable();
     self.fechaOriginal = ko.observable();
     self.facturaParcial = ko.observable();
@@ -637,7 +637,7 @@ function loadData(data) {
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
-    vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
+    //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
     vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
@@ -880,7 +880,7 @@ var generarContratoDb = function () {
             "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
-            "fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
+            //"fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
             "fechaSiguientesFacturas": spanishDbDate(vm.fechaSiguientesFacturas()),
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
@@ -2609,9 +2609,9 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: true
             },
-            txtGFechaUltimaFactura: {
+           /*  txtGFechaUltimaFactura: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -2627,9 +2627,9 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: "Debe elegir una fecha"
             },
-            txtGFechaUltimaFactura: {
+            /* txtGFechaUltimaFactura: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -4386,7 +4386,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
     var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
-    var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
+    //var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
     var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
     //var fFactura = moment(finFactura).format('YYYY-MM-DD');
     var finMesinicioFactura = moment(inicioFactura).endOf('month');
