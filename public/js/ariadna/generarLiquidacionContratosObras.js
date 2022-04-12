@@ -219,7 +219,7 @@ function admData() {
             'periodo': '3'
         },
         {
-            'nombrePeriodo': 'Maryo',
+            'nombrePeriodo': 'Abril',
             'periodo': '4'
         },
         {
