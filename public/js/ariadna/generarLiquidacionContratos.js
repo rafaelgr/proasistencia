@@ -56,6 +56,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarContratos());
     $('#btnAlta').click(generarLiquidaciones());
+    $('#btnBorrar').click(borrarUltimaLiquidacion());
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -63,6 +64,14 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadTiposContrato();
     //Recuperamos el departamento de trabajo
+
+     //SE OCULTA EL BOTÓN DE BORRAR SI NO SE TIENEN PERMISOS
+     if(usuario.puedeVisualizar) {
+        $('#btnBorrar').show();
+    } else {
+        $('#btnBorrar').hide();
+    }
+
     recuperaDepartamento(function(err, data) {
         if(err) return;
         ajustaDepartamentos(data)
@@ -744,6 +753,49 @@ function generaLiquidaciones2() {
         }
     });
 }
+
+function borrarUltimaLiquidacion() {
+    var mf = function() {
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+    if(departamentoId == 0) {
+        mensError("No hay seleccionado ningún departamento");
+        return;
+    }
+    var mens = "Se borrará la última liquidación del departamento seleccionado. ¿Desea continuar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                departamentoId: departamentoId
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/contratos",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    var fn = buscarFacturas();
+                    fn();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+    }
+    return mf
+}
+
 
 function deleteContrato(id) {
     // mensaje de confirmación
