@@ -101,8 +101,7 @@ function initForm() {
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (data, status) {
-                        var fn = buscarFacturas();
-                        fn();
+                        mensNormal("Se ha borrado la liquidación con fecha de inicio " + data + " del departamento seleccionado");
                     },
                     error: function (err) {
                         mensErrorAjax(err);

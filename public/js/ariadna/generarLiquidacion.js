@@ -543,7 +543,7 @@ function borrarUltimaLiquidacion() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    mensNormal("Se ha borrado la última liquidación del departamento seleccionado.")                    
+                    mensNormal("Se ha borrado la liquidación con fecha de inicio " + data + " del departamento seleccionado");              
                 },
                 error: function (err) {
                     mensErrorAjax(err);
