@@ -207,7 +207,7 @@ function updateAllContratos() {
 function   loadAnyos(){
     var d = new Date();
     var n = d.getFullYear();
-    n = n - 1
+    n = n - 2
     var anos = [];
     var ano = {}
     var anoText;

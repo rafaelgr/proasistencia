@@ -174,8 +174,8 @@ function updateAllContratos() {
     if(datos) {
         for( var i = 0; i < datos.length; i++) {
             var data = {
-                contrato: {
-                    contratoComisionistaId: v.contratoComisionistaId,
+                contratoComisionista: {
+                    contratoComisionistaId: datos[i].contratoComisionistaId,
                     sel: sel
             }
         };
