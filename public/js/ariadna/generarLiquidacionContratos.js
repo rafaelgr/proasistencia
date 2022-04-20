@@ -72,6 +72,32 @@ function initForm() {
         $('#btnBorrar').hide();
     }
 
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAllFacturas(true);
+              
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAllFacturas(false);
+            }
+        }
+    );
+
+    $('#checkMain2').click(
+        function(e){
+            if($('#checkMain2').prop('checked')) {
+                $('.checkAll2').prop('checked', true);
+                updateAllContratos(true);
+            } else {
+                $('.checkAll2').prop('checked', false);
+                updateAllContratos(false);
+            }
+        }
+    );
+
     recuperaDepartamento(function(err, data) {
         if(err) return;
         ajustaDepartamentos(data)
@@ -91,8 +117,9 @@ function initForm() {
         $("#btnAlta").hide();
         $('#tbFactura').hide();
 
-        initTablaContratos();
         initTablaFacturas();
+        initTablaContratos();
+      
         // comprobamos parámetros
         contratoId = gup('contratoId');
     });
@@ -202,6 +229,46 @@ function updateAllContratos() {
     }
 }
 
+function updateAllFacturas(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_factura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(opcion)  sel = 1
+    
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                factura: {
+                    facturaId: datos[i].facturaId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
+
 
 
 function   loadAnyos(){
@@ -279,7 +346,7 @@ function admData() {
 
 function initTablaContratos() {
     tablaCarro = $('#dt_contrato').dataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
         "columnDefs": [ {
             "targets": 0,
@@ -324,7 +391,7 @@ function initTablaContratos() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" class="checkAll2" name="chk%s">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -333,12 +400,6 @@ function initTablaContratos() {
             data:  "referencia"
         }, {
             data: "comisionista"
-        },{
-            data: "importeContrato",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
         },{
             data: "importeContrato",
             render: function (data, type, row) {
@@ -367,7 +428,7 @@ function initTablaContratos() {
 }
 function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
         "columnDefs": [ {
             "targets": 0,
@@ -412,7 +473,7 @@ function initTablaFacturas() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" class="checkAll" name="chk%s">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -620,8 +681,10 @@ function buscarContratos() {
                 antDepartamentoId = departamentoId;
                 if(departamentoId == 7) {
                     loadTablaFacturas(data);
+                    $('#checkMain').prop('checked', true);
                 } else {
                     loadTablaContratos(data);
+                    $('#checkMain2').prop('checked', true);
                 }
                
                 // mostramos el botén de alta
@@ -668,6 +731,42 @@ function componFechas() {
           break;
       }
 }
+
+function updateAllContratos() {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_contrato').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                contratoComisionista: {
+                    contratoComisionistaId: datos[i].contratoComisionistaId,
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%sapi/contratos/comisionista/%s', myconfig.apiUrl, datos[i].contratoId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
+
 
 
 function generarLiquidaciones() {
