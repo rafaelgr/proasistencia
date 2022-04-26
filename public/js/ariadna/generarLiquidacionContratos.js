@@ -274,7 +274,7 @@ function updateAllFacturas(opcion) {
 function   loadAnyos(){
     var d = new Date();
     var n = d.getFullYear();
-    n = n - 2
+    n = n - 1
     var anos = [];
     var ano = {}
     var anoText;
@@ -318,20 +318,53 @@ function admData() {
 
     self.optionsPeriodos = ko.observableArray([
         {
-            'nombrePeriodo': 'Primer trimestre',
+            'nombrePeriodo': 'Enero',
             'periodo': '1'
         }, 
         {
-            'nombrePeriodo': 'Segundo trimestre',
+            'nombrePeriodo': 'Febrero',
             'periodo': '2'
         }, 
         {
-            'nombrePeriodo': 'Tercer trimestre',
+            'nombrePeriodo': 'Marzo',
             'periodo': '3'
         },
         {
-            'nombrePeriodo': 'Cuarto trimestre',
+            'nombrePeriodo': 'Abril',
             'periodo': '4'
+        },
+        {
+            'nombrePeriodo': 'Mayo',
+            'periodo': '5'
+        },
+        {
+            'nombrePeriodo': 'Junio',
+            'periodo': '6'
+        },
+        {
+            'nombrePeriodo': 'Julio',
+            'periodo': '7'
+        },
+        {
+            'nombrePeriodo': 'Agosto',
+            'periodo': '8'
+        },
+        {
+            'nombrePeriodo': 'Septiembre',
+            'periodo': '9'
+        },
+        {
+            'nombrePeriodo': 'Octubre',
+            'periodo': '10'
+        },
+        {
+            'nombrePeriodo': 'Noviembre',
+            'periodo': '11'
+        }
+        ,
+        {
+            'nombrePeriodo': 'Diciembre',
+            'periodo': '12'
         }
     ]);
 
@@ -704,33 +737,97 @@ function componFechas() {
     var ano = vm.sano();
     var dFecha = "";
     var hFecha = "";
+    var diasMes = null;
+    
     switch (option) {
         case 1:
+            diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-01-01";
-            hFecha = ano + "-03-31";
+            hFecha = ano + "-01-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
           break;
         case 2:
-            dFecha = ano + "-04-01";
-            hFecha = ano + "-06-30";
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-02-01";
+            hFecha = ano + "-02-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
           break;
         case 3:
-            dFecha = ano + "-07-01";
-            hFecha = ano + "-09-30";
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-03-01";
+            hFecha = ano + "-03-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
           break;
           case 4:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-04-01";
+            hFecha = ano + "-04-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 5:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-05-01";
+            hFecha = ano + "-05-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 6:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-06-01";
+            hFecha = ano + "-06-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 7:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-07-01";
+            hFecha = ano + "-07-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 8:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-08-01";
+            hFecha = ano + "-08-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 9:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-09-01";
+            hFecha = ano + "-09-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 10:
+            diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-10-01";
-            hFecha = ano + "-12-31";
+            hFecha = ano + "-10-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 11:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-11-01";
+            hFecha = ano + "-11-" + diasMes;
+            vm.desdeFecha(dFecha);
+            vm.hastaFecha(hFecha);
+          break;
+          case 12:
+            diasMes = new Date(ano, option, 0).getDate();
+            dFecha = ano + "-12-01";
+            hFecha = ano + "-12-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
           break;
       }
 }
+
+
 
 function updateAllContratos() {
     var datos = null;
@@ -895,39 +992,7 @@ function borrarUltimaLiquidacion() {
 }
 
 
-function deleteContrato(id) {
-    // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                contratoId: id
-            };
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/Contratos/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    var fn = buscarContratos();
-                    fn();
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
-}
+
 
 function editContrato(id) {
     // hay que abrir la página de detalle del contrato
@@ -942,46 +1007,6 @@ function editContrato(id) {
     window.open(url, '_blank');
 }
 
-function cargarContratos() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: contratoId
-            }
-            // hay que buscar ese elemento en concreto
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/Contratos/" + contratoId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaContratos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/Contratos",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaContratos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        }
-    };
-    return mf;
-}
 
 function printContrato(id) {
     $.ajax({
