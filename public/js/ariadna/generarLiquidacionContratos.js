@@ -940,8 +940,12 @@ function generaLiquidaciones2() {
             mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
             vm.desdeFecha(null);
             vm.hastaFecha(null);
-            loadTablaContratos(null);
             loadComerciales(0);
+            if(departamentoId == 7) {
+                loadTablaFacturas(null);
+                return;
+            }
+            loadTablaContratos(null);
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -965,12 +969,14 @@ function borrarUltimaLiquidacion() {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
+            var url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/contratos";
+            if(departamentoId == 7) url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/colaboradores/facturas";
             var data = {
                 departamentoId: departamentoId
             };
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/contratos",
+                url:url,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
