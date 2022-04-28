@@ -143,10 +143,10 @@ function ajustaDepartamentos(data) {
 
 function cambioDepartamento(id) {
     if(id == 7 && totalFacturas > 0) {
-       updateAllFacturas();
+       updateAllFacturas(false);
     }
      else if(id != 7 && totalContratos > 0) {
-         updateAllContratos();
+         updateAllContratos(false);
      }
 
 }
@@ -191,43 +191,6 @@ function updateAllFacturas() {
 }
 
 
-function updateAllContratos() {
-    var datos = null;
-    var sel = 0;
-    var tb = $('#dt_contrato').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
-            var data = {
-                contrato: {
-                    contratoId: datos[i].contratoId,
-                    empresaId: datos[i].empresaId,
-                    clienteId: datos[i].clienteId,
-                    fechaFinal: moment(datos[i].fechaFinal).format('YYYY-MM-DD'),
-                    sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, datos[i].contratoId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
-        }
-    }
-}
 
 function updateAllFacturas(opcion) {
     var datos = null;
@@ -714,10 +677,10 @@ function buscarContratos() {
                 antDepartamentoId = departamentoId;
                 if(departamentoId == 7) {
                     loadTablaFacturas(data);
-                    $('#checkMain').prop('checked', true);
+                    $('#checkMain').prop('checked', false);
                 } else {
                     loadTablaContratos(data);
-                    $('#checkMain2').prop('checked', true);
+                    $('#checkMain2').prop('checked', false);
                 }
                
                 // mostramos el botén de alta
@@ -829,9 +792,10 @@ function componFechas() {
 
 
 
-function updateAllContratos() {
+function updateAllContratos(option) {
     var datos = null;
     var sel = 0;
+    if(option)  sel = 1
     var tb = $('#dt_contrato').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
     if(datos) {
@@ -1009,8 +973,21 @@ function editContrato(id) {
         window.open(url, '_blank');
         return;
     }
-    url = "ContratoDetalle.html?ContratoId=" + id;
-    window.open(url, '_blank');
+    //buscamos la id del contrato asociada al registro
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contratos/comisionista/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            url = "ContratoDetalle.html?ContratoId=" + data.contratoId;
+            window.open(url, '_blank');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 

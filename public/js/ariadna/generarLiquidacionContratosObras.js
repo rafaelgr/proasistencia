@@ -166,9 +166,10 @@ function ajustaDepartamentos(data) {
 }
 
 
-function updateAllContratos() {
+function updateAllContratos(option) {
     var datos = null;
     var sel = 0;
+    if(option) sel = 1;
     var tb = $('#dt_contrato').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
     if(datos) {
@@ -514,7 +515,7 @@ function buscarContratos() {
             success: function (data, status) {
                 antDepartamentoId = departamentoId;
                 loadTablaContratos(data);
-                $('#checkMain').prop('checked', true);
+                $('#checkMain').prop('checked', false);
                
                 // mostramos el botén de alta
                 $("#btnAlta").show();
@@ -751,8 +752,21 @@ function editContrato(id) {
         window.open(url, '_blank');
         return;
     }
-    url = "ContratoDetalle.html?ContratoId=" + id;
-    window.open(url, '_blank');
+    //buscamos la id del contrato asociada al registro
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contratos/comisionista/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            url = "ContratoDetalle.html?ContratoId=" + data.contratoId;
+            window.open(url, '_blank');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function cargarContratos() {
