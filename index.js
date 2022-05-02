@@ -82,6 +82,9 @@ var reparaciones_router = require('./lib/reparaciones/reparaciones_controller');
 //ANTICIPOS PROVEEDOR
 var anticipos_proveedores = require('./lib/anticipos_proveedores/anticiposProveedores_controller');
 
+//ANTICIPOS PROVEEDOR
+var anticipos_colaboradores = require('./lib/anticipos_colaboradores/anticiposColaboradores_controller');
+
 //ANTICIPOS CLIERNTES
 var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_controller');
 
@@ -144,6 +147,16 @@ var router = express.Router();
 router.use(function (req, res, next) {
     // go on (by now)
     next();
+});
+
+//función de tratamiento de errores
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    });
 });
 
 
@@ -218,7 +231,10 @@ app.use('/api/reparaciones', reparaciones_router);
 app.use('/api/anticiposProveedores/', anticipos_proveedores);
 
 //ANTICIPOS CLIENTES
-app.use('/api/anticiposClientes/', anticipos_clientes)
+app.use('/api/anticiposClientes/', anticipos_clientes);
+
+//ANTICIPOS COLABORADOR
+app.use('/api/anticiposColaboradores/', anticipos_colaboradores);
 
 
 //servicios

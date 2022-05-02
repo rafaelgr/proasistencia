@@ -260,15 +260,11 @@ function initForm() {
             $('#lineasanticipo').show();
             $('#basesycuotas').show();
             $('#retenciones').show();
-            $('#serviciadas').show();
-            $('#serv').show();
             $('#txtTotalConIva').prop('disabled', true);
         } else  {
             $('#lineasanticipo').hide();
             $('#basesycuotas').hide();
             $('#retenciones').hide();
-            $('#serviciadas').hide();
-            $('#serv').hide();
             $('#txtTotalConIva').prop('disabled', false);
         }
     });
@@ -279,12 +275,12 @@ function initForm() {
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
             loadData(data);
+            loadServiciadasAntprove(antproveId);
+            $('#btnAltaServiciada').click(reiniciaValores);
             if($('#chkCompleto').prop('checked')) {
                 loadLineasAnticipo(data.antproveId);
                 loadBasesAntprove(data.antproveId);
                 loadRetencionesAntprove(data.antproveId);
-                loadServiciadasAntprove(antproveId);
-                $('#btnAltaServiciada').click(reiniciaValores);
             }
             //$('#chkCompleto').prop("disabled", true);
         })
@@ -542,7 +538,7 @@ function loadData(data) {
         mostrarMensajeAnticipoGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva" && !$('chkCompleto').prop('checked', false)) {
+    if (cmd == "nueva") {
         mostrarMensajeAnticipoNueva();
     }
     if(data.noContabilizar == 1){
@@ -556,16 +552,12 @@ function loadData(data) {
         $('#lineasanticipo').show();
         $('#basesycuotas').show();
         $('#retenciones').show();
-        $('#serviciadas').show();
-        $('#serv').show();
         $('#txtTotalConIva').prop('disabled', true);
     } else {
         $('#chkCompleto').prop("checked", false);
         $('#lineasanticipo').hide();
         $('#basesycuotas').hide();
         $('#retenciones').hide();
-        $('#serviciadas').hide();
-        $('#serv').hide();
         $('#txtTotalConIva').prop('disabled', false);
     }
 
@@ -667,7 +659,7 @@ var aceptarAnticipo = function () {
     var verb = "POST";
     var url =  "/api/anticiposProveedores";
     var returnUrl = "AnticipoProveedorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&antproveId=";
-    if(!$('#chkCompleto').prop("checked"))  returnUrl = "AnticipoProveedorGeneral.html?antproveId=";
+   
     
     
     // caso modificación
@@ -682,7 +674,7 @@ var aceptarAnticipo = function () {
         loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -753,7 +745,7 @@ function salir() {
     var mf = function () {
         
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
         }else{
             var url = "AnticipoProveedorGeneral.html";
             window.open(url, '_self');
@@ -2060,7 +2052,11 @@ function loadServiciadasAntprove(antproveId) {
             mostrarMensajeCrearServiciadas();
         }
         setTimeout(function() {
-            tot = parseFloat(numeroDbf(vm.total()));
+            if($('#chkCompleto').prop("checked")) {
+                tot = parseFloat(numeroDbf(vm.total()));
+            } else {
+                tot = parseFloat(vm.totalConIva());
+            }
             vm.importeServiciada(roundToTwo(tot-acumulado).toFixed(2));
             loadTablaServiciadas(data);
         }, 1000);
@@ -2111,10 +2107,14 @@ function nuevaServiciada() {
         acumulado = roundToTwo(acumulado);
         if(vm.antproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            tot = parseFloat(numeroDbf(vm.total()));
+            
         } else {
             imp = acumulado + parseFloat(vm.importeServiciada());
-            tot = parseFloat(numeroDbf(vm.total()));
+            if($('#chkCompleto').prop("checked")) {
+                tot = parseFloat(numeroDbf(vm.total()));
+            } else {
+                tot = parseFloat(vm.totalConIva());
+            }
         }
     
         if( imp > tot){
