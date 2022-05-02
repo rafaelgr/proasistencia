@@ -106,6 +106,19 @@ function initForm() {
     $("#frmAscContratos").submit(function () {
         return false;
     });
+    $("#frmAntprove").submit(function () {
+        return false;
+    });
+    $("#btnAltaAntprove").submit(function () {
+        return false;
+    });
+    $("#frmAntcol").submit(function () {
+        return false;
+    });
+    $("#btnAltaAntcol").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -259,6 +272,8 @@ function initForm() {
     initTablaPrefacturas();
     initTablaFacturas();
     initTablaFacproves();
+    initTablaAntproves();
+    initTablaAntcols();
     initTablaContratosCobros();
     initTablaAscContratos();
 
@@ -273,6 +288,10 @@ function initForm() {
     $("#btnAltaPrefactura").click(nuevaPrefactura);
 
     $('#btnAltaFacprove').click(nuevaFacprove);
+
+    $('#btnAltaAntprove').click(nuevaAntprove);
+
+    $('#btnAltaAntcol').click(nuevaAntcol);
 
     reglasDeValidacionAdicionales();
 
@@ -304,6 +323,8 @@ function initForm() {
             loadPrefacturasDelContrato(data.contratoId);
             loadFacturasDelContrato(data.contratoId);
             loadFacproveDelContrato(data.contratoId);
+            loadAntproveDelContrato(data.contratoId);
+            loadAntcolDelContrato(data.contratoId);
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
@@ -319,6 +340,8 @@ function initForm() {
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
+        $('#btnAltaAntprove').hide();
+        $('#btnAltaAntcol').hide();
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
         
@@ -345,6 +368,16 @@ function initForm() {
         $('.nav-tabs a[href="#s7"]').tab('show');
     } 
 
+    //abrir en pestaña de anticipos de gastos
+    if (gup('docAnt') != "") {
+        $('.nav-tabs a[href="#s8"]').tab('show');
+    } 
+    
+    //abrir en pestaña de anticipos de colaboradores
+    if (gup('docAntcol') != "") {
+        $('.nav-tabs a[href="#s9"]').tab('show');
+    } 
+    
     //metodo de validacion de fechas
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -406,6 +439,7 @@ function admData() {
     self.antPorcentajeAgente = ko.observable();
     self.importeAgente = ko.observable();
     self.importeCliente = ko.observable();
+    self.importeClienteFormat = ko.observable();
     self.certificacionFinal = ko.observable();
     self.importeMantenedor = ko.observable();
     //
@@ -413,6 +447,7 @@ function admData() {
     self.fechaFirmaActa = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
+    //self.fechaUltimaFactura = ko.observable();
     self.fechaSiguientesFacturas = ko.observable();
     self.fechaOriginal = ko.observable();
     self.facturaParcial = ko.observable();
@@ -584,6 +619,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.importeCliente(data.importeCliente);
+    vm.importeClienteFormat(data.importeCliente);
     vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
     
@@ -601,6 +637,7 @@ function loadData(data) {
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
+    //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
     vm.fechaSiguientesFacturas(spanishDate(data.fechaSiguientesFacturas));
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
@@ -843,6 +880,7 @@ var generarContratoDb = function () {
             "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
+            //"fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
             "fechaSiguientesFacturas": spanishDbDate(vm.fechaSiguientesFacturas()),
             "fechaOriginal": spanishDbDate(vm.fechaOriginal()),
             "facturaParcial": vm.facturaParcial(),
@@ -1896,6 +1934,7 @@ var recalcularCostesImportesDesdeCoste = function () {
 
      
     vm.importeCliente(roundToTwo(vm.importeCliente()));
+    vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
@@ -2483,7 +2522,6 @@ var verPrefacturasAGenerar = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    // var prefacturas = crearPrefacturas(importe, importeAlCliente, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     if(numConceptos > 0 && importePrefacturas == 0) {
         var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
@@ -2571,9 +2609,9 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: true
             },
-            txtGFechaSiguientesFacturas: {
+           /*  txtGFechaUltimaFactura: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -2589,9 +2627,9 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: "Debe elegir una fecha"
             },
-            txtGFechaSiguientesFacturas: {
+            /* txtGFechaUltimaFactura: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -3665,7 +3703,7 @@ function deleteFacprove(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarFacprocves();
+                    var fn = buscarFacproves();
                     fn();
                 },
                 error: function (err) {
@@ -3680,9 +3718,528 @@ function deleteFacprove(id) {
     });
 }
 
-function buscarFacprocves() {
+function buscarFacproves() {
     var mf = function () {
         loadFacproveDelContrato(contratoId);
+    };
+    return mf;
+}
+
+//---- Solapa anticipos de gastos
+function initTablaAntproves() {
+    tablaAntproves = $('#dt_antprove').DataTable({
+        bSort: false,
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antprove'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+             
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(6).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+      
+
+            //////
+
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFacturas,
+        columns: [{
+            data: "antproveId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "ref"
+        },{
+            data: "numeroAnticipoProveedor"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, 
+        {
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        }, {
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        },  {
+            data: "vFPago"
+        }, {
+            data: "antproveId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_antprove thead th input[type=text]").on('keyup change', function () {
+        tablaAntproves
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    
+}
+
+
+function loadAntproveDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaAntproves(data);
+    });
+}
+
+function loadTablaAntproves(data) {
+    var dt = $('#dt_antprove').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editAntprove(id) {
+    // hay que abrir la página de detalle de factura
+    // pasando en la url ese ID
+    var url = "AnticipoProveedorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" +ContratoId;
+    url += "&EmpresaId=" + vm.sempresaId();
+    window.open(url, '_new');
+}
+
+var nuevaAntprove = function () {
+    var url = "AnticipoProveedorDetalle.html?desdeContrato=true&antproveId=0";
+    url += "&EmpresaId=" + vm.sempresaId();
+    url += "&ContratoId=" + vm.contratoId();
+    window.open(url, '_new');
+}
+
+function deleteAntprove(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                antproveId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    var fn = buscarAntprocves();
+                    fn();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function buscarAntprocves() {
+    var mf = function () {
+        loadAntproveDelContrato(contratoId);
+    };
+    return mf;
+}
+
+//---- Solapa anticipos de colaboradores
+function initTablaAntcols() {
+    tablaAntcols = $('#dt_antcol').DataTable({
+        bSort: false,
+        "paging": false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [
+                {
+                    "sExtends": "pdf",
+                    "sTitle": "Facturas Seleccionadas",
+                    "sPdfMessage": "proasistencia PDF Export",
+                    "sPdfSize": "A4",
+                    "sPdfOrientation": "landscape",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "copy",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "csv",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "xls",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                },
+                {
+                    "sExtends": "print",
+                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
+                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+                }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antcol'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+             
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(6).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+      
+
+            //////
+
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFacturas,
+        columns: [{
+            data: "antcolId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        }, {
+            data: "ref"
+        },{
+            data: "numeroAnticipoColaborador"
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, 
+        {
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        }, {
+            data: "totalConIva",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+                
+            }
+        },  {
+            data: "vFPago"
+        }, {
+            data: "antcolId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
+        }]
+    });
+
+    // Apply the filter
+    $("#dt_antcol thead th input[type=text]").on('keyup change', function () {
+        tablaAntcols
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
+    
+}
+
+
+function loadAntcolDelContrato(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposColaboradores/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaAntcols(data);
+    });
+}
+
+function loadTablaAntcols(data) {
+    var dt = $('#dt_antcol').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editAntcol(id) {
+    // hay que abrir la página de detalle de factura
+    // pasando en la url ese ID
+    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antcolId=" + id + "&ContratoId=" +ContratoId;
+    url += "&EmpresaId=" + vm.sempresaId();
+    window.open(url, '_new');
+}
+
+var nuevaAntcol = function () {
+    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antcolId=0";
+    url += "&EmpresaId=" + vm.sempresaId();
+    url += "&ContratoId=" + vm.contratoId();
+    window.open(url, '_new');
+}
+
+function deleteAntcol(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/anticiposColabboradores/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    var fn = buscarAntprocves();
+                    fn();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function buscarAntprocves() {
+    var mf = function () {
+        loadAntcolDelContrato(contratoId);
     };
     return mf;
 }
@@ -3828,14 +4385,14 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
-    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
-    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
-    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
-    var fContrato = moment(finContrato).format('YYYY-MM-DD');
-    var finMesInicioContrato = moment(inicioContrato).endOf('month');
+    var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
+    //var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
+    var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
+    //var fFactura = moment(finFactura).format('YYYY-MM-DD');
+    var finMesinicioFactura = moment(inicioFactura).endOf('month');
     var aux = iniContrato.split('-');
-    var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
-    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
+    var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
 
     var importePago = roundToSix(importe / numPagos);
     var importePagoCliente = roundToSix(importeAlCliente / numPagos);
@@ -3864,16 +4421,16 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         // inicio de periodo
         var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
         // fin de periodo
-        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        var f2 = moment(inicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         if (vm.facturaParcial()) {
             if (i > 0) {
-                f0 = moment(inicioMesInicioContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+                f0 = moment(inicioMesinicioFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
             }
-            f2 = moment(inicioMesInicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+            f2 = moment(inicioMesinicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         }
-        if (i == (nPagos - 1)) {
-            f2 = moment(fContrato).format('DD/MM/YYYY');
-        }
+       /*  if (i == (nPagos - 1)) {
+            f2 = moment(fFactura).format('DD/MM/YYYY');
+        } */
         var p = {
             fecha: f,
             importe: importePago,
