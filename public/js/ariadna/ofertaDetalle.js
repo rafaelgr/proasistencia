@@ -422,7 +422,7 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
-    cambioDepartamento(data.tipoOfertaId);
+    //cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
 
     loadConceptosLineas(data.ofertaId);
