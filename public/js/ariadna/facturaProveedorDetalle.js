@@ -654,7 +654,7 @@ function loadData(data) {
             }
             }
         });
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, data2) {
             if (err) return;
             if(data2) {
                 if(data2.length > 0) {
@@ -691,7 +691,7 @@ function loadData(data) {
         $('#btnVincularAnticipo').show();
     }
 
-    cargaTablaAnticiposAsociados();
+    cargaTablaAnticiposAsociados(data.departamentoId);
 
     if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
 }
@@ -2807,7 +2807,7 @@ function vinculaAnticiposIncompletos() {
         llamadaAjax("POST", "/api/anticiposProveedores/vincula/varios/", datosArrayAnt, function (err, data) {
             if (err) return;
             $('#modalAnticipo').modal('hide');
-            llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" +vm.facproveId(), null, function (err, anticipos) {
+            llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" +vm.facproveId() + "/" + vm.departamentoId(), null, function (err, anticipos) {
                 if (err) return;
                 //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
             anticipos.forEach(function(a) {
@@ -2975,7 +2975,7 @@ function cargaTablaAnticipos(completo){
             }
         })
     } else {
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + vm.departamentoId(), null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {
@@ -3064,8 +3064,8 @@ function initTablaAnticiposAsociados() {
     });
 }
 
-function cargaTablaAnticiposAsociados(){
-    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/"+ vm.facproveId(),null, function (err, data) {
+function cargaTablaAnticiposAsociados(departamentoId){
+    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/"+ vm.facproveId() + "/" + departamentoId,null, function (err, data) {
         if (err) return;
         loadTablaAnticiposAsociados(data);
     })
@@ -3089,7 +3089,7 @@ function desvinculaAnticipoIncompleto(anticipoId) {
     llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/" + anticipoId, null, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
-        llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" + vm.facproveId(), null, function (err, anticipos) {
+        llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" + vm.facproveId() + "/" + vm.departamentoId(), null, function (err, anticipos) {
             if (err) return;
 
             //actualizamos la casilla importe anticipo con los totales de los anticipos vinculados
