@@ -183,6 +183,7 @@ function admData() {
     self.fechaRecepcion = ko.observable();
     self.empresaId = ko.observable();
     self.comercialId = ko.observable();
+    self.proveedorId = ko.observable();
     self.contratoId = ko.observable();
     self.noContabilizar = ko.observable();
     self.conceptoAnticipo = ko.observable();
@@ -257,6 +258,7 @@ function loadData(data) {
     vm.departamentoId(data.departamentoId);
     vm.sdepartamentoId(data.departamentoId);
     vm.comercialId(data.comercialId);
+    vm.proveedorId(data.proveedorId);
     //vm.contratoId(data.contratoId);
     vm.totalConIva(data.totalConIva);
     //
@@ -416,6 +418,7 @@ var generarAnticipoDb = function () {
             "fecha": spanishDbDate(vm.fecha()),
             "empresaId": vm.sempresaId(),
             "comercialId": vm.scomercialId(),
+            "proveedorId": vm.proveedorId(),
             "emisorNif": vm.emisorNif(),
             "emisorNombre": vm.emisorNombre(),
             "emisorDireccion": vm.emisorDireccion(),
@@ -516,6 +519,7 @@ function cambioColaborador(comercialId) {
     llamadaAjax("GET", "/api/comerciales/" + comercialId, null, function (err, data) {
         if (err) return;
         vm.emisorNif(data.nif);
+        vm.proveedorId(data.proveedorId);
         $('#txtColaborador').val(data.nombre);
         vm.scomercialId(data.comercialId);
         vm.emisorNombre(data.nombre);

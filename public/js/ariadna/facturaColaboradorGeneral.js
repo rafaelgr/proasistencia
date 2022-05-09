@@ -399,7 +399,7 @@ function buscarFacturas() {
 
 function crearFactura() {
     var mf = function () {
-        var url = "FacturaProveedorDetalle.html?facproveId=0";
+        var url = "FacturaColaboradorDetalle.html?facproveId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -494,7 +494,7 @@ function editFactura(id) {
             contabilizadas: contabilizadas
         }
     setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "FacturaColaboradorDetalle.html?facproveId=" + id;
     window.open(url, '_self');
 }
 
@@ -502,7 +502,7 @@ function editFactura(id) {
 
 function cargarFacturas2(id) {
     var mf = function() {
-        var colaborador = 0;
+        var colaborador = 1;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
@@ -533,7 +533,7 @@ function cargarFacturas2(id) {
         } else {
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" +colaborador,
+                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -552,7 +552,7 @@ function cargarFacturas2(id) {
 
 function cargarFacturas2All() {
     var mf = function() {
-        var colaborador = 0;
+        var colaborador = 1;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
@@ -603,7 +603,7 @@ function estableceFechaEjercicio() {
 
 
 limpiarFiltros = function() {
-    var returnUrl = "FacturaProveedorGeneral.html?cleaned=true"
+    var returnUrl = "FacturaColaboradorGeneral.html?cleaned=true"
     deleteCookie('filtro_facproves');
     tablaFacturas.state.clear();
     window.open(returnUrl, '_self');
