@@ -9,7 +9,7 @@ var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
 
 var dataAnticipos;
-var antcolId;
+var antproveId;
 var usuario;
 
 var breakpointDefinition = {
@@ -32,7 +32,14 @@ function initForm() {
         return false
     });
     
-    
+    //Evento asociadpo al checkbox
+    $('#chkTodos').change(function () {
+        if (this.checked) {
+            cargarAnticipos2All();
+        } else {
+            cargarAnticipos2();
+        }
+    });
 
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
@@ -49,12 +56,12 @@ function initForm() {
         if(err) return;
         initTablaAnticipos();
         // comprobamos parámetros
-        antcolId = gup('antcolId');
-        if (antcolId !== '') {
+        antproveId = gup('antproveId');
+        if (antproveId !== '') {
     
             // Si nos pasan una prefafctura determinada esa es
             // la que mostramos en el grid
-            cargarAnticipos()(antcolId);
+            cargarAnticipos()(antproveId);
     
         } else {
     
@@ -154,7 +161,7 @@ function initTablaAnticipos() {
         },
         data: dataAnticipos,
         columns: [{
-            data: "antcolId",
+            data: "antproveId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -163,7 +170,7 @@ function initTablaAnticipos() {
                 return html;
             }
         }, {
-            data: "numeroAnticipoColaborador"
+            data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"
         }, {
@@ -172,6 +179,12 @@ function initTablaAnticipos() {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
             }
         }, {
             data: "totalConIva",
@@ -182,7 +195,7 @@ function initTablaAnticipos() {
         },  {
             data: "vFPago"
         }, {
-            data: "antcolId",
+            data: "antproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -243,30 +256,63 @@ function buscarAnticipos() {
 
 function crearAnticipo() {
     var mf = function () {
-        var url = "AnticipoColaboradorDetalle.html?antcolId=0";
+        var url = "AnticipoColaboradorDetalle.html?antproveId=0";
         window.open(url, '_new');
     };
     return mf;
 }
 
 function deleteAnticipo(id) {
-    var mens = "¿Realmente desea borrar este registro?"
+    var mens;
+    $.ajax({//buscamos la factura asociada para extraer su facproveId
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (data, status) {
+            if(data.facproveId) {
+                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
+            } else {
+                 mens = "¿Realmente desea borrar este registro?";
+            }
+            // mensaje de confirmación
+    
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-          
-            $.ajax({
-                type: "DELETE",
-                url: myconfig.apiUrl + "/api/anticiposColaboradores/" + id,
+            var data = {
+                id: antproveId
+            }
+            $.ajax({//buscamos la factura asociada para extraer su facproveId
+                type: "GET",
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: null,
+                data: JSON.stringify(data),
                 success: function (data, status) {
-                    var fn = buscarAnticipos();
-                    fn();
+                    var data2 = {
+                        antproveId: id,
+                        facproveId: data.facproveId
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            var fn = buscarAnticipos();
+                            fn();
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -278,12 +324,18 @@ function deleteAnticipo(id) {
             // no hacemos nada (no quiere borrar)
         }
     });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function editAnticipo(id) {
     // hay que abrir la página de detalle de anticipo
     // pasando en la url ese ID
-    var url = "AnticipoColaboradorDetalle.html?antcolId=" + id;
+    var url = "AnticipoColaboradorDetalle.html?antproveId=" + id;
     window.open(url, '_new');
 }
 
@@ -291,12 +343,12 @@ function cargarAnticipos() {
     var mf = function (id) {
         if (id) {
             var data = {
-                id: antcolId
+                id: antproveId
             }
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposColaboradores/" + antcolId,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -309,9 +361,11 @@ function cargarAnticipos() {
                 }
             });
         } else {
+            var esColaborador = 1
+            $('#chkTodos').prop("checked", false);
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposColaboradores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -345,7 +399,7 @@ function printPrefactura(id) {
 }
 
 function printAnticipo2(id) {
-    var url = "InfAnticiposColaboradores.html?antcolId=" + id;
+    var url = "InfAnticiposProveedores.html?antproveId=" + id;
     window.open(url, "_new");
 }
 
@@ -383,9 +437,27 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function cargarAnticipos2() {
+    var esColaborador = 1
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposColaboradores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaAnticipos(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function cargarAnticipos2All() {
+    var esColaborador = 1
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -400,6 +472,6 @@ function cargarAnticipos2() {
 
 
 imprimirAnticipo = function () {
-    var url = "InfAnticiposColaboradores.html";
+    var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
 }

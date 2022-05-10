@@ -362,9 +362,10 @@ function cargarAnticipos() {
             });
         } else {
             $('#chkTodos').prop("checked", false);
+            var esColaborador = 0;
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -436,9 +437,10 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function cargarAnticipos2() {
+    var esColaborador = 0;
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -452,9 +454,10 @@ function cargarAnticipos2() {
 }
 
 function cargarAnticipos2All() {
+    var esColaborador = 0;
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
