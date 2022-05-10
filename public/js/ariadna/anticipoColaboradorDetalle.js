@@ -299,7 +299,7 @@ function initForm() {
         $("#basesycuotas").hide();
         $('#btnAltaServiciada').hide();
         $('#retenciones').hide();
-        document.title = "NUEVO ANTICIPO PROVEEDOR";
+        document.title = "NUEVO ANTICIPO COLABORADOR";
         if (EmpresaId != 0) {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
@@ -565,7 +565,7 @@ function loadData(data) {
 
     if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos();
     //
-    document.title = "ANTICIPO PROVEEDOR: " + vm.numero();
+    document.title = "ANTICIPO COLABORADOR: " + vm.numero();
 
     antNumAnt = data.antproveId;
 }
@@ -676,7 +676,7 @@ var aceptarAnticipo = function () {
         loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -748,7 +748,7 @@ function salir() {
     var mf = function () {
         
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
         }else{
             var url = "AnticipoColaboradorGeneral.html";
             window.open(url, '_self');

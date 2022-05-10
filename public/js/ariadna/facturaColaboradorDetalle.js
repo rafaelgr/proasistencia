@@ -815,7 +815,7 @@ var aceptarFactura = function () {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docFactcol=true', '_self');
         }
         else{
             window.open(returnUrl, '_self');
@@ -886,7 +886,7 @@ var generarFacturaDb = function () {
 function salir() {
     var mf = function () {
         if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docFactcol=true', '_self');
         }else{
             var url = "FacturaColaboradorGeneral.html?ConservaFiltro=true";
             window.open(url, '_self');
