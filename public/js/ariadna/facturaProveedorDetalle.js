@@ -665,7 +665,7 @@ function loadData(data) {
                          buttons: '[Aceptar]'
                      }, function (ButtonPressed) {
                         if (ButtonPressed === "Aceptar") {
-                             
+
                         }
                     });
                 }
@@ -2618,6 +2618,8 @@ function initTablaAnticipos() {
         }, {
             data: "numeroAnticipoProveedor"
         }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -3041,6 +3043,9 @@ function initTablaAnticiposAsociados() {
             }
         }, {
             data: "numeroAnticipoProveedor"
+        }, 
+        {
+            data: "referencia"
         }, {
             data: "emisorNombre"
         }, {
