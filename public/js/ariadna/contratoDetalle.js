@@ -4617,7 +4617,7 @@ function crearPrefacturas2Original(importe, importeAlCliente, coste, fechaPrimer
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
-    var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
+    var inicioFactura = new Date(spanishDbDate(vm.fechaInicio()));
     //var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
     var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
     //var fFactura = moment(finFactura).format('YYYY-MM-DD');
