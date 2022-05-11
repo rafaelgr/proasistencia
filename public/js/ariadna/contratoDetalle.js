@@ -268,6 +268,7 @@ function initForm() {
     initTablaBases();
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
+    initTablaGenerarPrefacturasOriginal();
 
     initTablaPrefacturas();
     initTablaFacturas();
@@ -2436,6 +2437,7 @@ var loadPeriodosPagos = function (periodoPagoId) {
     ];
     vm.posiblesPeriodosPagos(periodosPagos);
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
+    $("#cmbPeriodosPagosOriginal").val([periodoPagoId]).trigger('change');
 }
 
 var generarPrefacturas = function () {
@@ -2452,8 +2454,12 @@ var generarPrefacturas = function () {
         modificaFormulario(false);
     }
     $("#cmbPeriodosPagos").select2(select2Spanish());
+    $("#cmbPeriodosPagosOriginal").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
     $("#cmbPeriodosPagos").select2().on('change', function (e) {
+        cambioPeriodosPagos(e.added);
+    });
+    $("#cmbPeriodosPagosOriginal").select2().on('change', function (e) {
         cambioPeriodosPagos(e.added);
     });
     if (vm.mantenedorId()) {
@@ -2531,12 +2537,15 @@ var verPrefacturasAGenerar = function () {
     } else {
         if(vm.tipoContratoId() == 8) {
             var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+            vm.prefacturasAGenerar(prefacturas);
+            loadTablaGenerarPrefacturas(prefacturas);
         } else {
             var prefacturas = crearPrefacturas2Original(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+            vm.prefacturasAGenerar(prefacturas);
+            loadTablaGenerarPrefacturasOriginal(prefacturas);
         }
     }
-    vm.prefacturasAGenerar(prefacturas);
-    loadTablaGenerarPrefacturas(prefacturas);
+   
 }
 
 var verPrefacturasAGenerar2 = function () {
@@ -2866,6 +2875,80 @@ function initTablaGenerarPrefacturas() {
 
 function loadTablaGenerarPrefacturas(data) {
     var dt = $('#dt_generar_prefacturas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+
+function initTablaGenerarPrefacturasOriginal() {
+    tablaGenerarPrefcaturas = $('#dt_generar_prefacturasOriginal').dataTable({
+        bSort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturasOriginal'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerarPrefacturas,
+        columnDefs: [{
+            "width": "20%",
+            "targets": [2, 3]
+        }],
+        columns: [{
+            data: "fecha"
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresa",
+            className: "text-center"
+        }, {
+            data: "cliente",
+            className: "text-center"
+        }, {
+            data: "periodo",
+            className: "text-center"
+        }]
+    });
+}
+
+function loadTablaGenerarPrefacturasOriginal(data) {
+    var dt = $('#dt_generar_prefacturasOriginal').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
