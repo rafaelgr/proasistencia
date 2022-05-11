@@ -849,6 +849,9 @@
                                                                                 <button id="btnGenerarPrefacturas" title="Generar prefacturas" data-toggle="modal" data-target="#modalGenerarPrefacturas" onclick="generarPrefacturas()" class="btn btn-primary btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-stack-exchange"></i>
                                                                                 </button>
+                                                                                <button id="btnGenerarPrefacturas" title="Generar prefacturas" data-toggle="modal" data-target="#modalGenerarPrefacturasOriginal" onclick="generarPrefacturas()" class="btn btn-primary btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-stack-exchange"></i>
+                                                                                </button>
                                                                                 <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-print"></i>
                                                                                 </button>
@@ -2206,6 +2209,129 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modalGenerarPrefacturasOriginal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> GENERAR PREFACTURAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generar-prefacturas-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Inicial</label>
+                                        <label class="input">
+                                            <input id="txtGFechaInicio" name="txtGFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Final</label>
+                                        <label class="input">
+                                            <input id="txtGFechaFinal" name="txtGFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-3">
+                                        <div class="form-group">
+                                            <label class="label">Fecha primera factura</label>
+                                            <label class="input">
+                                                <input id="txtGFechaPrimeraFactura" type="text" name="txtGFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <!--
+                                        <div class="form-group">
+                                            <label class="label">Fecha ref. siguientes</label>
+                                            <label class="input">
+                                                <input id="txtGFechaSiguientesFacturas" type="text" name="txtGFechaSiguientesFacturas" data-bind="value: fechaSiguientesFacturas" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                        -->
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="checkbox">
+                                            <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
+                                            <i></i>Facturación parcial
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <label class="label">Periodificación de pagos</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbPeriodosPagos" name="cmbPeriodosPagos" data-bind="options: posiblesPeriodosPagos, optionsText: 'nombre', optionsValue: 'periodoPagoId', value: speriodoPagoId, valueAllowUnset: true, selectedOptions: elegidosPeriodosPagos, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Importe a facturar</label>
+                                        <label class="input">
+                                            <input id="txtImporteFacturar" name="txtImporteAFacturar" data-bind="value:importeAFacturar" disabled/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Num.Pagos</label>
+                                        <label class="input">
+                                            <input id="txtNumPagos" name="txtNumPagos" data-bind="value:numPagos" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <button id="btnVerPrefacturasAGenerar" class="btn btn-circle btn-lg btn-primary" onclick="verPrefacturasAGenerar()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <div id="tbGenerarPrefacturas">
+                                            <table id="dt_generar_prefacturas" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-class="expand">
+                                                            <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Fecha
+                                                        </th>
+                                                        <th data-hide="phone">
+                                                            Importe
+                                                        </th>
+                                                        <th data-hide="phone">
+                                                            EMISOR
+                                                        </th>
+                                                        <th data-hide="phone">
+                                                            RECEPTOR
+                                                        </th>
+                                                        <th data-hide="phone">
+                                                            PERIODO
+                                                        </th>                                                        
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarGenerarPrefacturas" class="btn btn-primary" onclick="aceptarGenerarPrefacturas()">
+                                GENERAR
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
     <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
