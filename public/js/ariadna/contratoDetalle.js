@@ -2468,6 +2468,10 @@ var generarPrefacturas = function () {
     $("#generar-prefacturas-form").submit(function () {
         return false;
     });
+
+    $("#generar-prefacturas-formOriginal").submit(function () {
+        return false;
+    });
 }
 
 function modificaFormulario(option) {
@@ -2595,6 +2599,53 @@ var aceptarModificarPrefacturas = function () {
 
 var generarPrefacturasOK = function () {
     $('#generar-prefacturas-form').validate({
+        rules: {
+            cmbPeriodosPagos: {
+                required: true
+            },
+            txtGFechaInicio: {
+                required: true
+            },
+            txtGFechaFinal: {
+                required: true,
+                fechaFinalSuperiorAInicial: true
+            },
+            txtGFechaPrimeraFactura: {
+                required: true
+            },
+           /*  txtGFechaUltimaFactura: {
+                required: true
+            } */
+        },
+        // Messages for form validation
+        messages: {
+            cmbPeriodosPagos: {
+                required: "Debe elegir un periodo"
+            },
+            txtGFechaInicio: {
+                number: "Debe elegir una fecha"
+            },
+            txtGFechaFinal: {
+                required: "Debe elegir una fecha"
+            },
+            txtGFechaPrimeraFactura: {
+                required: "Debe elegir una fecha"
+            },
+            /* txtGFechaUltimaFactura: {
+                required: "Debe elegir una fecha"
+            } */
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    // var opciones = $("#generar-prefacturas-form").validate().settings;
+    return $('#generar-prefacturas-form').valid();
+}
+
+var generarPrefacturasOKOriginal = function () {
+    $('#generar-prefacturas-formOriginal').validate({
         rules: {
             cmbPeriodosPagos: {
                 required: true
