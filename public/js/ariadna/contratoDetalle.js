@@ -2565,6 +2565,7 @@ var aceptarGenerarPrefacturas = function () {
         return;
     }
     $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
+    $('#btnAceptarGenerarPrefacturasOriginal').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar()
     };
@@ -2572,16 +2573,20 @@ var aceptarGenerarPrefacturas = function () {
         if (err) return;
         if (!result) {
             $('#modalGenerarPrefacturas').modal('hide');
+            $('#modalGenerarPrefacturasOriginal').modal('hide');
             return;
         }
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
             if (err){
                 $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                $('#btnAceptarGenerarPrefacturasOriginal').prop('disabled', true);
                 return;
             }
             $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+            $('#btnAceptarGenerarPrefacturasOriginal').prop('disabled', true);
             mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturas').modal('hide');
+            $('#modalGenerarPrefacturasOriginal').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
         });
     });
