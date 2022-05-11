@@ -644,34 +644,35 @@ function loadData(data) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
-    }
-     //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
-     llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, result) {
-        if (err) return;
-        if(result) {
-            if(result.length > 0) {
-                cargaTablaAnticipos(true);
-        }
-        }
-    });
-    llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, data2) {
-        if (err) return;
-        if(data2) {
-            if(data2.length > 0) {
-                var mens = "Existen anticipos incompletos para este proveedor, puede vincularlos en la pestaña anticipos";
-                // mensaje de AVISO con confirmación
-                $.SmartMessageBox({
-                    title: "<i class='fa fa-info'></i> Mensaje",
-                    content: mens,
-                    buttons: '[Aceptar]'
-                }, function (ButtonPressed) {
-                    if (ButtonPressed === "Aceptar") {
-                        
-                    }
-                });
+        //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, result) {
+            if (err) return;
+            if(result) {
+                if(result.length > 0) {
+                    cargaTablaAnticipos(true);
             }
-        }
-    });
+            }
+        });
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, data2) {
+            if (err) return;
+            if(data2) {
+                if(data2.length > 0) {
+                    var mens = "Existen anticipos incompletos para este proveedor, puede vincularlos en la pestaña anticipos";
+                    // mensaje de AVISO con confirmación
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            
+                        }
+                    });
+                }
+            }
+        });
+    }
+    
     //se carga el pdf de la factura si existe
     if(vm.nombreFacprovePdf()) {
         loadDoc(vm.nombreFacprovePdf());
