@@ -689,7 +689,8 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-3">
-                                                                                    <label class="label">Fecha inicio fact.</label>
+                                                                                    <label class="label" id="labObras">Fecha inicio fact.</label>
+                                                                                    <label class="label" id="labNoObras">Fecha primera factura</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaPrimeraFactura" name="txtFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
@@ -2244,9 +2245,44 @@
                 <div class="modal-body no-padding">
                     <form id="generar-prefacturas-form" class="smart-form">
                         <fieldset>
-                            <section>
+                            <div id="noObras">
                                 <div class="row">
-                                    <section class="col col-md-12">
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Inicial</label>
+                                        <label class="input">
+                                            <input id="txtGFechaInicio" name="txtGFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha Final</label>
+                                        <label class="input">
+                                            <input id="txtGFechaFinal" name="txtGFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <div class="form-group">
+                                            <label class="label">Fecha primera factura</label>
+                                            <label class="input">
+                                                <input id="txtGFechaPrimeraFactura" type="text" name="txtGFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="checkbox">
+                                            <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
+                                            <i></i>Facturación parcial
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+                            </div>
+
+
+                            <div id="obras">
+                                <div class="row">
+                                    <section class="col col-md-8">
                                         <div class="form-group">
                                             <label class="label">Fecha Inicio facturación</label>
                                             <label class="input">
@@ -2254,6 +2290,19 @@
                                             </label>
                                         </div>
                                     </section>
+                                    <section class="col col-md-4">
+                                        <label class="checkbox">
+                                            <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
+                                            <i></i>Facturación parcial
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    
+                                </div>
+                            </div>
+                                
+                          
                                     <!-- section class="col col-md-6">
                                         <div class="form-group">
                                             <label class="label">Fecha Final facturación</label>
@@ -2262,13 +2311,8 @@
                                             </label>
                                         </div>
                                     </section> -->
-                                    <section class="col col-md-6">
-                                        <label class="checkbox">
-                                            <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial" data-bind="checked: facturaParcial">
-                                            <i></i>Facturación parcial
-                                        </label>
-                                    </section>
-                                </div>
+                                    
+                        
                                 <div class="row">
                                     <section class="col col-md-6">
                                         <label class="label">Periodificación de pagos</label>
@@ -2321,7 +2365,7 @@
                                         </div>
                                     </section>
                                 </div>
-                            </section>
+                
                         </fieldset>
                         <footer>
                             <button id="btnAceptarGenerarPrefacturas" class="btn btn-primary" onclick="aceptarGenerarPrefacturas()">
