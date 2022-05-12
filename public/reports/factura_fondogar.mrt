@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "e5d5c62a30694b9aa36792258b271673",
+  "ReportGuid": "978cea5284b7465f9f2fe28dda7343b8",
   "ReportName": "FacturaFondogar",
   "ReportAlias": "FacturaFondogar",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(10800000+0100)/",
-  "ReportChanged": "/Date(1646383095410+0100)/",
+  "ReportChanged": "/Date(1652353545433+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -616,9 +616,10 @@
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
+                  "Condition": "NotEqualTo",
                   "DataType": "Numeric",
                   "Column": "cabecera.departamentoId",
-                  "Value1": "6",
+                  "Value1": "1",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"
@@ -641,10 +642,9 @@
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
-                  "Condition": "NotEqualTo",
                   "DataType": "Numeric",
                   "Column": "cabecera.departamentoId",
-                  "Value1": "6",
+                  "Value1": "1",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"
@@ -670,10 +670,9 @@
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
-                  "Condition": "NotEqualTo",
                   "DataType": "Numeric",
                   "Column": "cabecera.departamentoId",
-                  "Value1": "6",
+                  "Value1": "1",
                   "Enabled": false,
                   "TextColor": "255,255,255",
                   "BorderSides": "None"

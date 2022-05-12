@@ -4694,6 +4694,8 @@ var calcularNumPagos = function () {
     return numpagos;
 }
 
+
+
 /* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
 
 function initTablaContratosCobros() {
