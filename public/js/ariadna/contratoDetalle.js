@@ -2525,7 +2525,11 @@ var verPrefacturasAGenerar = function () {
     if(numConceptos > 0 && importePrefacturas == 0) {
         var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
-        var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+        if(vm.tipoContratoId() == 8) {
+            var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+        } else {
+            var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+        }
     }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
