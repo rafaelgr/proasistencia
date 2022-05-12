@@ -37,6 +37,8 @@ var DesdeContrato
 var AscContratoId;
 var esVinculado = false;
 var numLineas = 0;
+var antClienteId = null;
+var antClienteNombre = "";
 //var numAscContratos = 0;
 
 
@@ -1056,14 +1058,19 @@ function loadContratos(id) {
 }
 
 
-var cambioCliente = function (data) {
+var cambioCliente = function (datos) {
     //
-    if (!data) {
+    if (!datos) {
         return;
     }
-    var clienteId = data.id;
+    var clienteId = datos.id;
     llamadaAjax('GET', "/api/clientes/" + clienteId, null, function (err, data) {
-        if (err) return;
+        if (err) {
+            mensError("Se ha producido un error en el proceso, el cliente no ha cambiado, revise los datos del contrato.");
+            vm.clienteId(antClienteId);
+            $("#txtCliente").val(antClienteNombre)
+            return;
+        }
         cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
@@ -1074,6 +1081,8 @@ var cambioCliente = function (data) {
         vm.poblacion(data.poblacion2);
         vm.provincia(data.provincia2);
         vm.iban(data.iban);
+        antClienteId = datos.id;
+        antClienteNombre = datos.value;
     });
 }
 
@@ -1786,6 +1795,8 @@ var cargaCliente = function (id) {
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
         vm.iban(data.iban);
+        antClienteId = data.clienteId;
+        antClienteNombre = data.nombre;
     });
 };
 
@@ -1842,6 +1853,7 @@ var initAutoCliente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.clienteId(ui.item.id);
+           
             cambioCliente(ui.item);
         }
     });

@@ -2599,7 +2599,7 @@ function initTablaAnticipos() {
         },
         data: dataAnticipos,
         columns: [{
-            data: "antproveId",
+            data: "antproveServiciadoId",
             render: function (data, type, row) {
                 if(row.completo == 1) {
                     var html = '<label class="input">';
