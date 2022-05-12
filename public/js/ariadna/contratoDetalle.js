@@ -2739,6 +2739,93 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     return pagos;
 }
 
+function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
+    var divisor = obtenerDivisor();
+    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
+    // de mes 
+    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
+    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
+    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
+    var fContrato = moment(finContrato).format('YYYY-MM-DD');
+    var finMesInicioContrato = moment(inicioContrato).endOf('month');
+    var aux = iniContrato.split('-');
+    var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
+
+    var importePago = roundToSix(importe / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
+    var import1 = (importePago / 30) * diffDias;
+    var import11 = (importePagoCliente / 30) * diffDias;
+    var import12 = (importeCoste / 30) * diffDias;
+    var import2 = importePago - import1;
+    var import21 = importePagoCliente - import11;
+    var import22 = importeCoste - import12;
+    var pagos = [];
+    var nPagos = numPagos;
+    if(importe == 0 || importe < 0) return pagos;
+    if (vm.facturaParcial()) {
+        nPagos++
+    }
+    for (var i = 0; i < nPagos; i++) {
+        // sucesivas fechas de factura
+        var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // inicio de periodo
+        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // fin de periodo
+        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        if (vm.facturaParcial()) {
+            if (i > 0) {
+                f0 = moment(inicioMesInicioContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+            }
+            f2 = moment(inicioMesInicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        }
+        if (i == (nPagos - 1)) {
+            f2 = moment(fContrato).format('DD/MM/YYYY');
+        }
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2
+        };
+        if (vm.facturaParcial() && i == 0) {
+            p.importe = import1;
+            p.importeCliente = import11;
+            p.importeCoste = import12;
+        }
+        if (vm.facturaParcial() && i == (nPagos - 1)) {
+            p.importe = import2;
+            p.importeCliente = import21;
+            p.importeCoste = import22;
+        }
+        pagos.push(p);
+    }
+    if (pagos.length > 1) {
+        // en la última factura ponemos los restos
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
+        pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
+        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
+    }
+    return pagos;
+}
+
 
 function initTablaGenerarPrefacturas() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
