@@ -2459,6 +2459,13 @@ var generarPrefacturas = function () {
         return;
     }
  */
+    if(vm.tipoContratoId() == 8) {
+        $("#noObras").hide();
+        $("#obras").show();
+    } else {
+        $("#noObras").show();
+        $("#obras").hide();
+    }
     var resto = 0;
     if(numConceptos > 0 && importePrefacturas == 0) {
         modificaFormulario(true);
