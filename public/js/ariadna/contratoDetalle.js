@@ -155,6 +155,13 @@ function initForm() {
         if(e.added) {
             cambioTipoContrato(e.added);
             loadDepartamento(e.added.id);
+            if(e.added.id == 8) {
+                $('#labObras').show();
+                $('#labNoObras').hide();
+            } else{
+                $('#labObras').hide();
+                $('#labNoObras').show();
+            }
         }
     });
 
