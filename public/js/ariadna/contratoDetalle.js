@@ -335,6 +335,13 @@ function initForm() {
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
+            if(data.tipoContratoId == 8) {
+                $('#labObras').show();
+                $('#labNoObras').hide();
+            } else{
+                $('#labObras').hide();
+                $('#labNoObras').show();
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
