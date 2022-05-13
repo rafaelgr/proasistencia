@@ -2608,15 +2608,20 @@ function initTablaAnticipos() {
                     html += '</label>';
                     return html;
                 } else {
+                   
+                    var datos = data + ","+ row.antproveId;
+                    
                     var html = '<label class="input">';
-                    html += sprintf('<input id="chk%s" type="checkbox" name="anticipos" value="'+data+'">', data, data);
+                    html += sprintf('<input id="chk%s" type="checkbox" name="anticipos" value="'+datos+'">', data, data);
                     //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                     html += '</label>';
                     return html;
                 }
             }
-        }, {
+        },{
             data: "numeroAnticipoProveedor"
+        },{
+            data: "antproveId"
         }, {
             data: "referencia"
         }, {
@@ -2800,9 +2805,10 @@ function vinculaAnticiposIncompletos() {
    
         var datosArrayAnt = [];
         id.forEach(function(f) {
-            
+            var spl = f.split(",")
             var  antProve = {
-                    antproveId: f,
+                    antproveServiciadoId: spl[0],
+                    antproveId: spl[1],
                     facproveId: vm.facproveId()
                 }
         
@@ -3033,7 +3039,7 @@ function initTablaAnticiposAsociados() {
         },
         data: dataAnticipos,
         columns: [{
-            data: "antproveId",
+            data: "antproveServiciadoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -3043,6 +3049,9 @@ function initTablaAnticiposAsociados() {
             }
         }, {
             data: "numeroAnticipoProveedor"
+        },
+        {
+            data: "antproveId"
         }, 
         {
             data: "referencia"
@@ -3060,9 +3069,10 @@ function initTablaAnticiposAsociados() {
         },  {
             data: "vFPago"
         }, {
-            data: "antproveId",
+            data: "antproveServiciadoId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + data + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var datos = data +"." + row.antproveId;
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipoIncompleto(" + datos + ");' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                //var brecalculaRestoPagar = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 /*+ " " + brecalculaRestoPagar */+ "</div>";
                 if(vm.contabilizada() && !usuario.puedeEditar) html = '';
@@ -3090,11 +3100,21 @@ function loadTablaAnticiposAsociados(data) {
     dt.fnDraw();
 }
 
-function desvinculaAnticipoIncompleto(anticipoId) {
+function desvinculaAnticipoIncompleto(datos) {
+    const str = datos.toString();
+    var spl = str.split(".")
+            var  datos = {
+                    antprove: {
+                        antproveServiciadoId: spl[0],
+                        antproveId: spl[1],
+                        facproveId: vm.facproveId()
+                    }
+                   
+                }
     var impAnticipo = 0
     var impFianza = numeroDbf(vm.fianza());
     var result = numeroDbf(vm.totalConIva());
-    llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/" + anticipoId, null, function (err, data) {
+    llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/", datos, function (err, data) {
         if (err) return;
         //recperamos los anticipos que queden asociados y recalculamos
         llamadaAjax("GET", "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/incompleto/completo/" + vm.proveedorId() + "/" + vm.facproveId() + "/" + vm.departamentoId(), null, function (err, anticipos) {
