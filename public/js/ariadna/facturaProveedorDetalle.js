@@ -2873,6 +2873,7 @@ function vinculaAnticiposIncompletos() {
                     antproveId: spl[1],
                     facproveId: vm.facproveId()
                 }
+            if(vm.departamentoId() == 7) antProve.antproveServiciadoId = null;
         
             datosArrayAnt.push(antProve);
         })
@@ -3167,7 +3168,8 @@ function desvinculaAnticipoIncompleto(id) {
     var  datos = {
         antprove: {
             antproveServiciadoId: id,
-            facproveId: vm.facproveId()
+            facproveId: vm.facproveId(),
+            departamentoId: vm.departamentoId()
         }
        
     }
