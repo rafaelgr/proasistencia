@@ -21,6 +21,7 @@ var importeModificar = 0;
 var proveedores;
 var datosPro;
 var servicioId;
+var numLineas = 0;
 
 var dataServiciadas;
 var dataLineas;
@@ -282,7 +283,41 @@ function initForm() {
                 loadBasesAntprove(data.antproveId);
                 loadRetencionesAntprove(data.antproveId);
             }
-            //$('#chkCompleto').prop("disabled", true);
+            $('#chkCompleto').click(
+                function(e){
+                    if(numLineas > 0 && !completo) {
+                        $('#chkCompleto').prop('checked', true);
+                        mensError('Hay que borrar las lineas del anticipo para poder realizar esta acción.');
+                        return;
+                    }
+                    var completo = $('#chkCompleto').prop('checked');
+                    var data = {
+                        antprove: {
+                            "antproveId": antproveId,
+                            "completo": completo
+                        }
+                    }
+                    verb = "PUT";
+                    url = myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId;
+                    var datosArray = [];
+                    datosArray.push(data)
+                    llamadaAjax(verb, url, datosArray, function (err, data) {
+                        if(err) return;
+                        var totIva = numeroDbfComprueba(vm.totalConIva());
+                        vm.totalConIva(totIva);
+                        /* if(!isNaN(vm.totalConIva()) && completo) {
+                            var totIva = numeroDbf(vm.totalConIva());
+                            vm.totalConIva(totIva);
+                        } else {
+                            var totIva = parseFloat(vm.totalConIva());
+                            vm.totalConIva(totIva)
+                        } */
+                        mensNormal("Se ha actulizado la propiedad completo");
+                    });
+
+                }
+            );
+    
         })
     } else {
         // caso alta
@@ -1244,10 +1279,12 @@ function loadDataLineaDefecto(data) {
 
 
 function loadTablaAnticipoLineas(data) {
+    numLineas = 0;
     var dt = $('#dt_lineas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(data) numLineas = data.length;
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();

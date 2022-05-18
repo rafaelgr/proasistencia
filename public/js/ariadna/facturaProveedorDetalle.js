@@ -651,7 +651,7 @@ function loadData(data) {
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
         //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, result) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, result) {
             if (err) return;
             if(result) {
                 if(result.length > 0) {
@@ -3027,7 +3027,7 @@ function cargaTablaAnticipos(completo){
             mensError('Ya existen anticipos vinculados');
             return;
         }
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + vm.departamentoId(), null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {

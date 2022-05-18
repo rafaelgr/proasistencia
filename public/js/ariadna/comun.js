@@ -382,6 +382,15 @@ function numeroDbf(n) {
     return n.replace('.', '').replace(',', '.');
 }
 
+//---- numreoDbf
+// Toma un número en formato imprimible español y lo pasa
+// a formato guardable en base de datos pero comprueba antes que se trate de una cadena
+function numeroDbfComprueba(n) {
+    if(!isNaN(n)) return n = numeral(n).format('0,0.00');
+    
+    return n.replace('.', '').replace(',', '.');
+}
+
 // Initialize utilities
 numeral.language('es', {
     delimiters: {
