@@ -5,6 +5,7 @@ ALTER TABLE `antprove` ADD COLUMN `esColaborador` TINYINT(1) DEFAULT 0 NULL AFTE
 
 ALTER TABLE `facprove_antproves`   
   ADD COLUMN `antproveServiciadoId` INT(11) NULL AFTER `antproveId`,
-  ADD CONSTRAINT `facAnt_antproveServiciado` FOREIGN KEY (`antproveServiciadoId`) REFERENCES `proasistencia`.`antprove_serviciados`(`antproveServiciadoId`);
+  ADD CONSTRAINT `facAnt_antproveServiciado` FOREIGN KEY (`antproveServiciadoId`) 
+  REFERENCES `antprove_serviciados`(`antproveServiciadoId`);
 
 
