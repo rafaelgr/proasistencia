@@ -172,6 +172,8 @@ function initTablaAnticipos() {
         }, {
             data: "numeroAnticipoProveedor"
         }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
