@@ -9,3 +9,17 @@ ALTER TABLE `facprove_antproves`
   REFERENCES `antprove_serviciados`(`antproveServiciadoId`);
 
 
+ALTER TABLE `contratos_comisionistas`   
+  ADD COLUMN `sel` TINYINT(1) DEFAULT 0 NULL AFTER `liquidado`;
+
+
+  ALTER TABLE `liquidacion_comercial`   
+  ADD COLUMN `anticipo` DECIMAL(12,2) NULL AFTER `base`;
+
+
+ALTER TABLE `liquidacion_comercial_obras`   
+  ADD COLUMN `anticipo` DECIMAL(12,2) NULL AFTER `porComer`;
+
+
+ALTER TABLE `antprove_serviciados`   
+  ADD COLUMN `liquidado` TINYINT(1) DEFAULT 0 NULL AFTER `importe`;
