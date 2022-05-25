@@ -39,7 +39,10 @@ SELECT
 a.antproveId,
 s.empresaId,
 s.contratoId,
-a.totalconIva AS importe
+a.totalconIva AS importe,
+0 AS liquidado,
+NULL AS dFecha,
+NULL AS hFecha
 FROM facprove_serviciados s
 LEFT JOIN facprove AS fa ON fa.facproveId = s.facproveId
 LEFT JOIN facprove_antproves AS f ON f.facproveId = s.facproveId
