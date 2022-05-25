@@ -172,6 +172,8 @@ function initTablaAnticipos() {
         }, {
             data: "numeroAnticipoProveedor"
         }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -179,6 +181,12 @@ function initTablaAnticipos() {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
             }
         },{
             data: "total",
