@@ -937,7 +937,7 @@ function obrenerTipoClienteID(contratoId) {
 }
 
 function compruebaRepetido(numeroAnt, proveedorId) {
-    if(numeroAnt.length > 0) {
+    if(numeroAnt.length > 0 && proveedorId > 0) {
        
 
     

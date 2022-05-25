@@ -23,3 +23,8 @@ ALTER TABLE `liquidacion_comercial_obras`
 
 ALTER TABLE `antprove_serviciados`   
   ADD COLUMN `liquidado` TINYINT(1) DEFAULT 0 NULL AFTER `importe`;
+
+  ALTER TABLE `antprove_serviciados`   
+  ADD COLUMN `dFecha` DATE NULL AFTER `liquidado`,
+  ADD COLUMN `hFecha` DATE NULL AFTER `dFecha`;
+
