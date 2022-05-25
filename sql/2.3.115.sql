@@ -28,3 +28,46 @@ ALTER TABLE `antprove_serviciados`
   ADD COLUMN `dFecha` DATE NULL AFTER `liquidado`,
   ADD COLUMN `hFecha` DATE NULL AFTER `dFecha`;
 
+
+
+#sql insertar antprove_serviciados desde facprove_serviciados
+
+
+INSERT INTO antprove_serviciados
+SELECT 
+0 AS antproveServiciadoId,
+a.antproveId,
+s.empresaId,
+s.contratoId,
+a.totalconIva AS importe
+FROM facprove_serviciados s
+LEFT JOIN facprove AS fa ON fa.facproveId = s.facproveId
+LEFT JOIN facprove_antproves AS f ON f.facproveId = s.facproveId
+LEFT JOIN antprove AS a ON a.antproveId = f.antproveId
+WHERE a.completo = 0 
+AND s.facproveId NOT IN
+(
+	SELECT 
+	s.facproveId
+	FROM facprove_serviciados s
+	INNER JOIN facprove AS fa ON fa.facproveId = s.facproveId
+	INNER JOIN facprove_antproves AS f ON f.facproveId = s.facproveId
+	INNER JOIN antprove AS a ON a.antproveId = f.antproveId
+	WHERE a.completo = 1
+	GROUP BY s.facproveId
+	HAVING COUNT(s.facproveId) > 1
+
+)
+AND  a.antproveId NOT IN 
+(
+	SELECT antproveId FROM antprove_serviciados
+)
+
+#sql actualizar facprove_antproves  desde antprove_serviciado
+
+UPDATE
+antprove_serviciados AS a
+INNER JOIN facprove_antproves AS f ON f.antproveId = a.antproveId
+SET f.antproveServiciadoId = a.antproveServiciadoId
+
+

@@ -465,7 +465,7 @@ function cargarAnticipos2All() {
     var esColaborador = 1
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/nueva" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/nueva/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
