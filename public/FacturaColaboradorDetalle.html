@@ -102,7 +102,6 @@
         <!-- end projects dropdown -->
         <!-- #TOGGLE LAYOUT BUTTONS -->
         <!-- pulled right: nav area -->
-        <!-- pulled right: nav area -->
         <div class="pull-right">
             <!-- collapse menu button -->
             <div id="hide-menu" class="btn-header pull-right">
@@ -451,7 +450,7 @@
                 <li>Inicio</li>
                 <li>Gestion</li>
                 <li>Facturación </li>
-                <li>Anticipos colaboradores</li>
+                <li>Facturas colaboradores</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -475,7 +474,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-th"></i> Detalle anticipo colaboradores<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-th"></i> Detalle factura colaboradores<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -486,7 +485,7 @@
                     <!--                        <ul id="sparks">
                         <li class="sparks-info">
                         <h5>
-                        Anticipos pendientes <span class="txt-color-blue">3520</span>
+                        Facturas pendientes <span class="txt-color-blue">3520</span>
                         </h5>
                         </li>
                         <li class="sparks-info">
@@ -513,7 +512,7 @@
                                 <span class="widget-icon">
                                     <i class="fa fa-edit"></i>
                                 </span>
-                                <h2>Información de la anticipo</h2>
+                                <h2>Información de la factura</h2>
                                 <ul class="nav nav-tabs pull-right in">
                                     <li class="active">
                                         <a data-toggle="tab" href="#s1">
@@ -521,11 +520,22 @@
                                             <span class="hidden-mobile hidden-tablet">Datos</span>
                                         </a>
                                     </li>
-                                    
-                                    <li id="serv">
+                                    <li>
+                                        <a data-toggle="tab" href="#s2">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">PDF factura</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a data-toggle="tab" href="#s3">
                                             <i class="fa fa-file-text-o"></i>
                                             <span class="hidden-mobile hidden-tablet">Empresas serviciadas</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s4">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span class="hidden-mobile hidden-tablet">Anticipos</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -553,11 +563,11 @@
                                                     <!-- widget content -->
                                                     <div class="widget-body">
                                                         <!-- this is what the user will see -->
-                                                        <form id="frmAnticipo" class="smart-form">
+                                                        <form id="frmFactura" class="smart-form">
                                                             <fieldset>
                                                                 <div class="row">
                                                                     <section class="col col-md-2">
-                                                                        <label class="label">Numero</label>
+                                                                        <label class="label">Nro. fact. colaborador</label>
                                                                         <label class="input">
                                                                             <input id="txtNumero" name="txtNumero" type="text" data-bind="value: numero" />
                                                                         </label>
@@ -590,15 +600,30 @@
                                                                     <section class="col col-md-2">
                                                                         <label class="label bloqueado">Total IVA</label>
                                                                         <label class="input">
-                                                                            <input id="txtTotalCuota" name="txtTotalCuota" type="text" data-bind="value: totalCuota" disabled/>
+                                                                            <input id="txtTotalCuota" name="txtTotalCuaota" type="text" data-bind="value: totalCuota" disabled/>
                                                                         </label>
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <section class="col col-md-8">
-                                                                        <label class="label">Concepto anticipo</label>
+                                                                    <section class="col col-md-2">
+                                                                        <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Referencia</label>
                                                                         <label class="input">
-                                                                           <input id="txtCoceptoAnticipo" name="txtCoceptoAnticipo" type="text" data-bind="value: conceptoAnticipo" />
+                                                                            <input id="txtRef" name="txtRef" type="text" data-bind="value: ref" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Fecha recepcion</label>
+                                                                        <label class="input">
+                                                                            <input id="txtFechaRecepcion" name="txtFechaRecepcion" data-bind="value: fechaRecepcion" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Fichero</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNombreFacprovePdf" name="txtNombreFacprovePdf" type="text" data-bind="value: nombreFacprovePdf" disabled/>
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
@@ -608,24 +633,90 @@
                                                                         </label>
                                                                     </section>
                                                                     <section class="col col-md-2">
-                                                                        <label class="label bloqueado">Importe anticipo</label>
+                                                                        <label class="label bloqueado">Total factura</label>
                                                                         <label class="input">
-                                                                            <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" />
+                                                                            <input id="txtTotalConIva" name="txtTotalConIva" type="text" data-bind="value: totalConIva" disabled/>
                                                                         </label>
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <section class="col col-sm-3" style="padding-top: 2%">
+                                                                        <section class="col col-md-5">
+                                                                                <label class="label">Concepto anticipo</label>
+                                                                                <label class="input">
+                                                                                   <input id="txtCoceptoAnticipo" name="txtCoceptoAnticipo" type="text" data-bind="value: conceptoAnticipo" disabled />
+                                                                                </label>
+                                                                            </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">importe anticipo</label>
+                                                                        <label class="input">
+                                                                            <input id="txtImporteAnticipo" name="txtImporteAnticipo" type="text" data-bind="value: importeAnticipo" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Contado</label>
+                                                                        <label class="input">
+                                                                            <input id="txtContado" name="txtContado" type="text" data-bind="value: contado" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-3">
+                                                                        <label class="label">Resto a pagar</label>
+                                                                        <label class="input">
+                                                                            <input id="txtRestoPagar" name="txtRestoPagar" type="text" data-bind="value: restoPagar" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <section class="col col-sm-2" style="padding-top: 2%">
                                                                         <label class="checkbox">
                                                                             <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar">
                                                                             <i></i>No contabilizar
                                                                         </label>
                                                                     </section>
-                                                                    <section class="col col-sm-3" style="padding-top: 2%">
-                                                                        <label class="checkbox">
-                                                                            <input id="chkCompleto" type="checkbox" name="chkCompleto">
-                                                                                <i></i>completo
-                                                                       </label>
+                                                                    <section class="col col-md-3">
+                                                                        <label class="label bloqueado">Nº anticipo asociado</label>
+                                                                        <label class="input">
+                                                                            <input id="txtAnticipo" name="txtAnticipo" type="text" data-bind="value: anticipo" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <fieldset>
+                                                                                <button id="btnVincularAnticipo" title="Vincular anticipo" data-toggle="modal"  data-target="#modalAnticipoCompleto" onclick="cargaTablaAnticipos(true)" class="btn btn-primary btn-circle btn-sm">
+                                                                                        <i class="fa fa-lg fa-repeat"></i>
+                                                                                </button>
+                                                                        <button id="btnDesVincularAnticipo" class='btn btn-circle btn-danger btn-sm' onclick='desvinculaAnticipoCompleto();' title='Desvincular anticipo'> <i class='fa fa-trash-o fa-fw'></i> </button>
+                                                                    </fieldset>
+                                                                    </section>
+                                                                    <section class="col col-md-3">
+                                                                        <label class="label">Fianza</label>
+                                                                        <label class="input">
+                                                                            <input id="txtFianza" name="txtFianza" type="text" data-bind="value: fianza" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label bloqueado">Nº contabilidad</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNumRegis" name="txtNumRegis" type="text" data-bind="value: numregis" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                </div>
+                                                                <div class="row" id="prefacturas">
+                                                                    <header>
+                                                                        Campos adicionales (solo precturación)
+                                                                    </header>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Fecha </label>
+                                                                        <label class="input">
+                                                                            <input id="txtFechaRecepcion2" name="txtFechaRecepcion2" data-bind="value: fechaRecepcion2" class="datepicker" data-dateformat="dd/mm/yy" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-2">
+                                                                        <label class="label">Nro. fact. colaborador</label>
+                                                                        <label class="input">
+                                                                            <input id="txtNumero2" name="txtNumero2" type="text" data-bind="value: numero2" disabled/>
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-md-8">
+                                                                        
                                                                     </section>
                                                                 </div>
                                                                 <div class="row">
@@ -698,6 +789,14 @@
                                                                                     </label>
                                                                             </section>
                                                                         </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Tipo de operación</label>
+                                                                                    <label style="width:100%;">
+                                                                                        <select style="width:100%" id="cmbTiposOperacion" name="cmbTiposOperacion" data-bind="options: posiblesTiposOperacion, optionsText: 'nombre', optionsValue: 'tipoOperacionId', value: stipoOperacionId, valueAllowUnset: true, selectedOptions: elegidosTiposOperacion, selected2:{}"></select><i></i>
+                                                                                    </label>
+                                                                            </section>
+                                                                        </div>
                                                                     </section>
                                                                     <section class="col col-md-6">
                                                                         <div class="row">
@@ -707,7 +806,7 @@
                                                                         </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-12">
-                                                                                <label class="label">colaborador</label>
+                                                                                <label class="label">Colaborador</label>
                                                                                 <label class="input">
                                                                                     <input id="txtProveedor" name="txtProveedor" />
                                                                                 </label>
@@ -850,7 +949,7 @@
                                                                                             </td>
                                                                                             <td style="text-align:center;">
                                                                                                 <label class="input">
-                                                                                                    <input id="txtTotalAnticipo" name="txtTotalAnticipo" data-bind="value:total" disabled/>
+                                                                                                    <input id="txtTotalFactura" name="txtTotalFactura" data-bind="value:total" disabled/>
                                                                                                 </label>
                                                                                             </td>                                                                        
                                                                                             <td style="text-align:center;">
@@ -868,7 +967,7 @@
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div class="pull-right">
-                                                                    <!--<button id="btnImprimir" title="Imprimir anticipo" class="btn btn-success btn-circle btn-lg">
+                                                                    <!--<button id="btnImprimir" title="Imprimir factura" class="btn btn-success btn-circle btn-lg">
                                                                         <i class="fa fa-lg fa-print"></i>
                                                                     </button>-->
                                                                     <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
@@ -892,14 +991,14 @@
                                 </div>
                                 <!-- end row -->
                                 <!-- row -->
-                                <div class="row" id="lineasanticipo">
+                                <div class="row" id="lineasfactura">
                                     <!-- NEW WIDGET START -->
                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <!-- Widget ID (each widget will need unique ID)-->
                                         <div class="jarviswidget" id="wid-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                             <header>
                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                                <h2>LINEAS DE anticipo</h2>
+                                                <h2>LINEAS DE factura</h2>
                                             </header>
                                             <!-- widget div-->
                                             <div>
@@ -917,7 +1016,7 @@
                                                             <div class="pull-left">
                                                                 <strong>Total: </strong><span data-bind="text: total"></span>
                                                                 <br/>
-                                                                <strong> Total a cobrar: </strong><span data-bind="text: totalConIva"></span>
+                                                                <strong> Total factura: </strong><span data-bind="text: totalConIva"></span>
                                                             </div>
                                                             <div class="pull-right">
                                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
@@ -1102,7 +1201,61 @@
                                     <!-- WIDGET END -->
                                 </div>
                             </div>
-                            
+                            <div class="tab-pane fade" id="s2">
+                                    <section id="widget-grid" class="">
+                                            <div class="row">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                    <div class="jarviswidget" id="wid-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                            <h2>Factura PDF</h2>
+                                                        </header>
+                                                        <div class="widget-body">
+                                                            <form id="docDetail-form" class="smart-form">
+                                                                <fieldset>
+                                                                    <div class="row">
+                                                                        <!-- DOCUMENT -->
+                                                                        <section class="col col-md-12">
+                                                                            <div id="P1Title" class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <h3>Escoja el documento a subir</h3>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div id="P1Loader" class="row">
+                                                                                <section class="col col-md-6">
+                                                                                    <div class="progress">
+                                                                                        <div class="progress-bar" role="progressbar"></div>
+                                                                                    </div>
+                                                                                </section>
+                                                                                <section class="col col-md-6">
+                                                                                    <input id="upload-input" type="file" name="uploads[]"></br>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <div id="msgContainer" style="color:blue">
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12">
+                                                                                    <div id="docContainer"></div>
+                                                                                </section>
+                                                                            </div>
+                                                                        </section>
+                                                                        <!-- END DOCUMENT -->
+                                                                        
+                                                                    </div>
+                                                                </fieldset>
+                                                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                    </section>
+                            </div>
                             <div class="tab-pane fade" id="s3">
                                 <!-- TERCER TAB (serviciadas) -->
                                 <div class="row" id="serviciadas">
@@ -1187,6 +1340,87 @@
                                     <!-- WIDGET END -->
                                 </div>                                        
                             </div>
+                            <!--SEGUNDO TAB-->
+            <div class="tab-pane fade" id="s4">
+                    <!-- CUARTO TAB (ANTICIPOS) -->
+                    <div class="row" id="anticipos">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <!-- Widget ID (each widget will need unique ID)-->
+                            <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                    <h2>ANTICIPOS</h2>
+                                </header>
+                                <!-- widget div-->
+                                <div>
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                        <!-- This area used as dropdown edit box -->
+                                        <input class="form-control" type="text">
+                                    </div>
+                                    <!-- end widget edit box -->
+                                    <!-- widget content -->
+                                    <div class="widget-body">
+                                        <!-- this is what the user will see -->
+                                        <header>
+                                            Anticipos asociados a la factura
+                                        </header>
+                                        <form id="frmVinculaAnticipos">
+                                            <fieldset>
+                                                <div class="pull-right">
+                                                        <button id="btnVincularAnticipoIncompletos" title="Vincular anticipo" data-toggle="modal"  data-target="#modalAnticipo" onclick="cargaTablaAnticipos(false)" class="btn btn-primary btn-circle btn-lg">
+                                                                <i class="fa fa-lg fa-repeat"></i>
+                                                        </button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                        <hr/>
+                                        <div id="tbAnticiposAsociados" class="table-responsive">
+                                                <table id="dt_anticiposAsociados" class="table table-striped table-bordered table-hover responsive" width="100%">
+                                                    <thead>
+                                                        
+                                                        <tr>
+                                                            <th>
+                                                                <i class="fa fa-fw fa-clipboard">
+                                                            </th>
+                                                            <th data-class="phone">
+                                                                Numero
+                                                            </th>
+                                                            <th data-class="phone">
+                                                                Referencia
+                                                            </th>
+                                                            <th data-hide="expand">
+                                                                <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                Receptor
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                fecha
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                total
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                Forma pago
+                                                            </th>                                                 
+                                                            <th style="width:10%">
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                        </div>
+                                    </div>
+                                    <!-- end widget content -->
+                                </div>
+                                <!-- end widget div -->
+                            </div>
+                            <!-- end widget -->
+                        </article>
+                        <!-- WIDGET END -->
+                    </div>
+            </div>
+            <!--FIN CUARTO TAB-->
                         </div>
                     </div>
                 </div>
@@ -1205,7 +1439,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> LINEA anticipo</h4>
+                    <h4 class="modal-title"> LINEA factura</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="linea-form" class="smart-form">
@@ -1379,6 +1613,150 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+    <div class="modal fade" id="modalAnticipo" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">ANTICIPOS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmBuscar" class="smart-form">
+                            <header>
+                                Estos son los anticipos sin asignar de este colaborador. Puede vincular uno a esta factura.
+                            </header>
+                    </form>
+                    <div id="tbAnticipos" class="table-responsive">
+                        <table id="dt_anticipos" class="table table-striped table-bordered table-hover responsive" width="100%">
+                            <thead>
+                                
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-fw fa-clipboard">
+                                    </th>
+                                    <th data-class="phone">
+                                        Numero
+                                    </th>
+                                    <th data-class="phone">
+                                        Referencia
+                                    </th>
+                                    <th data-hide="expand">
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Receptor
+                                    </th>
+                                    <th data-hide="phone">
+                                        fecha
+                                    </th>
+                                   
+                                    <th data-hide="phone">
+                                        total
+                                    </th>
+                                    
+                                    <th data-hide="phone">
+                                        Forma pago
+                                    </th>
+                                                                                     
+                                    <!--<th style="width:10%; text-align: center;">
+                                        <i class="fa fa-fw fa-gears">
+                                    </th>-->
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <form id= "frmAnt" class="smart-form">
+                        <footer>
+                            <button id="btnVinculaAnticipo" class="btn btn-primary"  onclick="vinculaAnticipo()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                    
+                </div>
+                
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="modalAnticipoCompleto" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">ANTICIPOS COMPLETOS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmBuscarCompleto" class="smart-form">
+                            <header>
+                                Estos son los anticipos completos sin asignar de este proveedor. Puede vincular uno a esta factura.
+                            </header>
+                    </form>
+                    <div id="tbAnticiposCompleto" class="table-responsive">
+                        <table id="dt_anticiposCompleto" class="table table-striped table-bordered table-hover responsive" width="100%">
+                            <thead>
+                                
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-fw fa-clipboard">
+                                    </th>
+                                    <th data-class="phone">
+                                        Numero
+                                    </th>
+                                  
+                                    <th data-hide="expand">
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Receptor
+                                    </th>
+                                    <th data-hide="phone">
+                                        fecha
+                                    </th>
+                                   
+                                    <th data-hide="phone">
+                                        total
+                                    </th>
+                                    
+                                    <th data-hide="phone">
+                                        Forma pago
+                                    </th>
+                                                                                     
+                                    <!--<th style="width:10%; text-align: center;">
+                                        <i class="fa fa-fw fa-gears">
+                                    </th>-->
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <form id= "frmAntCompleto" class="smart-form">
+                        <footer>
+                            <button id="btnVinculaAnticipoCompleto" class="btn btn-primary"  onclick="vinculaAnticipo()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                    
+                </div>
+                
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
@@ -1465,7 +1843,7 @@
     <script src="myconfig.js"></script>
     <script src="js/init.utilities.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/anticipoColaboradorDetalle.js"></script>
+    <script src="js/ariadna/facturaColaboradorDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

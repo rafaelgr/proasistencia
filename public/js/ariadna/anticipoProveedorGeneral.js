@@ -172,6 +172,8 @@ function initTablaAnticipos() {
         }, {
             data: "numeroAnticipoProveedor"
         }, {
+            data: "referencia"
+        }, {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
@@ -181,6 +183,12 @@ function initTablaAnticipos() {
                 return moment(data).format('DD/MM/YYYY');
             }
         },{
+            data: "importeServiciado",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
             data: "total",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
@@ -362,9 +370,10 @@ function cargarAnticipos() {
             });
         } else {
             $('#chkTodos').prop("checked", false);
+            var esColaborador = 0;
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/nueva/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -436,9 +445,10 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function cargarAnticipos2() {
+    var esColaborador = 0;
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/nueva/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -452,9 +462,10 @@ function cargarAnticipos2() {
 }
 
 function cargarAnticipos2All() {
+    var esColaborador = 0;
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/all/nueva/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {

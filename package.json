@@ -1,6 +1,10 @@
 {
   "name": "proasistencia",
+<<<<<<< HEAD
   "version": "2.3.114",
+=======
+  "version": "2.3.115",
+>>>>>>> feature/factura-colaborador
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
