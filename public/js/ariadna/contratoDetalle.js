@@ -348,10 +348,7 @@ function initForm() {
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
-<<<<<<< HEAD
-=======
             loadFactcolDelContrato(contratoId);
->>>>>>> feature/factura-colaborador
             if(data.tipoContratoId == 8) {
                 $('#labObras').show();
                 $('#labNoObras').hide();
