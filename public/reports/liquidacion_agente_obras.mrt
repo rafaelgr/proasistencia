@@ -21,10 +21,10 @@
         <PageHeaderBand1 Ref="3" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,27.7,4.4</ClientRectangle>
-          <Components isList="true" count="26">
+          <Components isList="true" count="27">
             <Text49 Ref="4" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,2.4,3.2,1</ClientRectangle>
+              <ClientRectangle>22.6,2.4,2.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -43,7 +43,7 @@ LIQUIDABLE</Text>
             <Text50 Ref="5" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25.8,2.4,0.4,1.8</ClientRectangle>
+              <ClientRectangle>25.2,2.4,0.4,1.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8.25,Bold,Point,False,0</Font>
@@ -61,7 +61,7 @@ LIQUIDABLE</Text>
             <Text51 Ref="6" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>26.2,2.4,1.4,1.8</ClientRectangle>
+              <ClientRectangle>26.6,2.4,1,1.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -570,7 +570,7 @@ ANT.</Text>
             <Text39 Ref="23" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,3.4,1.8,0.8</ClientRectangle>
+              <ClientRectangle>22.6,3.4,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -589,7 +589,7 @@ ANT.</Text>
             <Text40 Ref="24" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>24.4,3.4,1.4,0.8</ClientRectangle>
+              <ClientRectangle>24,3.4,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.25,Bold</Font>
@@ -696,6 +696,24 @@ ANT.</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text43>
+            <Text66 Ref="30" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.6,2.4,1,1.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7.25</Font>
+              <Guid>b93b60fbe774450db49ae26bb6cecc67</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text66</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>ANT.</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text66>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -703,11 +721,11 @@ ANT.</Text>
           <Page isRef="2" />
           <Parent isRef="2" />
         </PageHeaderBand1>
-        <PageFooterBand1 Ref="30" type="PageFooterBand" isKey="true">
+        <PageFooterBand1 Ref="31" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,19.8,27.7,3</ClientRectangle>
           <Components isList="true" count="2">
-            <Text22 Ref="31" type="Text" isKey="true">
+            <Text22 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.4,2.5,18.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -717,12 +735,12 @@ ANT.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="2" />
-              <Parent isRef="30" />
+              <Parent isRef="31" />
               <Text>Página {PageNumber} de {TotalPageCount}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
             </Text22>
-            <Text65 Ref="32" type="Text" isKey="true">
+            <Text65 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,18.4,1.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -731,7 +749,7 @@ ANT.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text65</Name>
               <Page isRef="2" />
-              <Parent isRef="30" />
+              <Parent isRef="31" />
               <Text>BASES LIQUIDABLES
 30% del importe total del Presupuesto Inicial, cuando la obra este abonada en un 50%
 20% del importe total del Presupuesto Inicial, cuando esté firmada el Acta de recepción de Obra
@@ -748,11 +766,11 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
           <Page isRef="2" />
           <Parent isRef="2" />
         </PageFooterBand1>
-        <GroupHeaderBand2 Ref="33" type="GroupHeaderBand" isKey="true">
+        <GroupHeaderBand2 Ref="34" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,5.6,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text46 Ref="34" type="Text" isKey="true">
+            <Text46 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,21.4,0.6</ClientRectangle>
@@ -763,13 +781,13 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text46</Name>
               <Page isRef="2" />
-              <Parent isRef="33" />
+              <Parent isRef="34" />
               <Text>{liqAgente.tipoColaborador}: {liqAgente.nomComercial}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text46>
-            <Text48 Ref="35" type="Text" isKey="true">
+            <Text48 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>21.4,0,6.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -780,7 +798,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text48</Name>
               <Page isRef="2" />
-              <Parent isRef="33" />
+              <Parent isRef="34" />
               <Text>Desde {liqAgente.dFecha} hasta {liqAgente.hFecha}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -793,11 +811,11 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
           <Page isRef="2" />
           <Parent isRef="2" />
         </GroupHeaderBand2>
-        <GroupHeaderBand4 Ref="36" type="GroupHeaderBand" isKey="true">
+        <GroupHeaderBand4 Ref="37" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,7.2,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text18 Ref="37" type="Text" isKey="true">
+            <Text18 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0,27.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -807,7 +825,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="2" />
-              <Parent isRef="36" />
+              <Parent isRef="37" />
               <Text>{liqAgente.tipoProyecto}  CLIENTE: {liqAgente.nomCliente}  DIRECCIÓN: {liqAgente.direccion}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -820,12 +838,12 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
           <Page isRef="2" />
           <Parent isRef="2" />
         </GroupHeaderBand4>
-        <DataLiqAgente Ref="38" type="DataBand" isKey="true">
+        <DataLiqAgente Ref="39" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,8.8,27.7,0.6</ClientRectangle>
-          <Components isList="true" count="19">
-            <Text5 Ref="39" type="Text" isKey="true">
+          <Components isList="true" count="20">
+            <Text5 Ref="40" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,1.6,0.4</ClientRectangle>
@@ -836,13 +854,13 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.referencia}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text5>
-            <Text7 Ref="40" type="Text" isKey="true">
+            <Text7 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>1.6,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -852,10 +870,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.importeObra}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -866,9 +884,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text7>
-            <Text9 Ref="42" type="Text" isKey="true">
+            <Text9 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>22.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -876,10 +894,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.baseAnterior}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -890,9 +908,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text9>
-            <Text11 Ref="44" type="Text" isKey="true">
+            <Text11 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>24.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>24,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -900,10 +918,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.basePeriodo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -914,9 +932,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text11>
-            <Text13 Ref="46" type="Text" isKey="true">
+            <Text13 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>26.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>26.8,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -924,10 +942,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.comision}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -938,7 +956,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text13>
-            <Text25 Ref="48" type="Text" isKey="true">
+            <Text25 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>12.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -949,10 +967,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoAnterior20}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -963,7 +981,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text25>
-            <Text26 Ref="50" type="Text" isKey="true">
+            <Text26 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -974,10 +992,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoAnterior50}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="51" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -988,7 +1006,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text26>
-            <Text28 Ref="52" type="Text" isKey="true">
+            <Text28 Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -999,10 +1017,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoPeriodo50}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="54" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1013,7 +1031,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
-            <Text41 Ref="54" type="Text" isKey="true">
+            <Text41 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>4.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1024,10 +1042,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.facturado}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="56" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1038,7 +1056,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text41>
-            <Text42 Ref="56" type="Text" isKey="true">
+            <Text42 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>6.6,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1049,10 +1067,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.abonado}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="57" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1063,7 +1081,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text42>
-            <Text44 Ref="58" type="Text" isKey="true">
+            <Text44 Ref="59" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1074,10 +1092,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoAnterior30}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="60" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1088,7 +1106,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text44>
-            <Text45 Ref="60" type="Text" isKey="true">
+            <Text45 Ref="61" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>10.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1099,10 +1117,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text45</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoPeriodo30}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="61" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="62" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1113,7 +1131,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text45>
-            <Text27 Ref="62" type="Text" isKey="true">
+            <Text27 Ref="63" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1124,10 +1142,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.pagadoPeriodo20}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="63" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="64" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1138,9 +1156,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text27>
-            <Text60 Ref="64" type="Text" isKey="true">
+            <Text60 Ref="65" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>25.8,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>25.2,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1149,10 +1167,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text60</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="65" type="NumberFormat" isKey="true">
+              <TextFormat Ref="66" type="NumberFormat" isKey="true">
                 <DecimalDigits>1</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1161,7 +1179,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text60>
-            <Text1 Ref="66" type="Text" isKey="true">
+            <Text1 Ref="67" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.8,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1171,13 +1189,13 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.firmaActa}
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text1>
-            <Text3 Ref="67" type="Text" isKey="true">
+            <Text3 Ref="68" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1188,10 +1206,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.certificacionFinal}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="68" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="69" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1202,7 +1220,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text3>
-            <Text6 Ref="69" type="Text" isKey="true">
+            <Text6 Ref="70" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>18.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1213,10 +1231,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.baseAdicional}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="70" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="71" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1227,7 +1245,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>DataColumn</Type>
             </Text6>
-            <Text61 Ref="71" type="Text" isKey="true">
+            <Text61 Ref="72" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>20,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1238,10 +1256,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text61</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.adicionalPagadoAnterior}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="72" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="73" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1252,7 +1270,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text61>
-            <Text62 Ref="73" type="Text" isKey="true">
+            <Text62 Ref="74" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>21.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1263,10 +1281,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text62</Name>
               <Page isRef="2" />
-              <Parent isRef="38" />
+              <Parent isRef="39" />
               <Text>{liqAgente.adicionalPagadoPeriodo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="74" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="75" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1277,6 +1295,30 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               </TextFormat>
               <Type>Expression</Type>
             </Text62>
+            <Text67 Ref="76" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.8,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text67</Name>
+              <Page isRef="2" />
+              <Parent isRef="39" />
+              <Text>{liqAgente.anticipo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="77" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text67>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -1293,7 +1335,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
             <value>fecha</value>
           </Sort>
         </DataLiqAgente>
-        <GroupFooterBand2 Ref="75" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand2 Ref="78" type="GroupFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,10.2,27.7,0</ClientRectangle>
           <Components isList="true" count="0" />
@@ -1303,12 +1345,12 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
           <Page isRef="2" />
           <Parent isRef="2" />
         </GroupFooterBand2>
-        <GroupFooterBand4 Ref="76" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand4 Ref="79" type="GroupFooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,11,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="16">
-            <Text14 Ref="77" type="Text" isKey="true">
+          <Components isList="true" count="17">
+            <Text14 Ref="80" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>4.8,0,1.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1319,10 +1361,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.facturado)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="78" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="81" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1334,7 +1376,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text14>
-            <Text10 Ref="79" type="Text" isKey="true">
+            <Text10 Ref="82" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>6.6,0,1.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1345,10 +1387,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.abonado)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="80" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="83" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1360,7 +1402,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text19 Ref="81" type="Text" isKey="true">
+            <Text19 Ref="84" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8.6,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1371,10 +1413,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoAnterior30)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="82" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="85" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1386,7 +1428,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text19>
-            <Text20 Ref="83" type="Text" isKey="true">
+            <Text20 Ref="86" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>10.2,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1397,10 +1439,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoPeriodo30)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="84" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="87" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1412,7 +1454,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text29 Ref="85" type="Text" isKey="true">
+            <Text29 Ref="88" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>12.6,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1423,10 +1465,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoAnterior20)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="86" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="89" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1438,7 +1480,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text29>
-            <Text15 Ref="87" type="Text" isKey="true">
+            <Text15 Ref="90" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.4,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1449,10 +1491,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.certificacionFinal)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="88" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="91" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1464,7 +1506,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text15>
-            <Text16 Ref="89" type="Text" isKey="true">
+            <Text16 Ref="92" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>1.8,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1475,10 +1517,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.importeObra)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="90" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="93" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1490,7 +1532,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text16>
-            <Text17 Ref="91" type="Text" isKey="true">
+            <Text17 Ref="94" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0,1.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1501,10 +1543,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoPeriodo20)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="92" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="95" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1516,7 +1558,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text17>
-            <Text21 Ref="93" type="Text" isKey="true">
+            <Text21 Ref="96" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1527,10 +1569,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoAnterior50)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="94" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="97" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1542,7 +1584,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text21>
-            <Text23 Ref="95" type="Text" isKey="true">
+            <Text23 Ref="98" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.2,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1553,10 +1595,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.pagadoPeriodo50)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="96" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="99" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1568,9 +1610,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text23>
-            <Text30 Ref="97" type="Text" isKey="true">
+            <Text30 Ref="100" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.8,0,1.4,0.6</ClientRectangle>
+              <ClientRectangle>22.6,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1579,10 +1621,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.baseAnterior)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="98" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="101" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1594,9 +1636,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text30>
-            <Text31 Ref="99" type="Text" isKey="true">
+            <Text31 Ref="102" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>24.4,0,1.4,0.6</ClientRectangle>
+              <ClientRectangle>24,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1605,10 +1647,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.basePeriodo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="100" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="103" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1620,9 +1662,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text31>
-            <Text47 Ref="101" type="Text" isKey="true">
+            <Text47 Ref="104" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>26.2,0,1.6,0.6</ClientRectangle>
+              <ClientRectangle>26.8,0,1,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1631,10 +1673,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text47</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.comision)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="102" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="105" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1646,7 +1688,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text47>
-            <Text8 Ref="103" type="Text" isKey="true">
+            <Text8 Ref="106" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>18.6,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1657,10 +1699,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.baseAdicional)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="104" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="107" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1672,7 +1714,7 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text8>
-            <Text63 Ref="105" type="Text" isKey="true">
+            <Text63 Ref="108" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>20,0,1.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1683,10 +1725,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text63</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.adicionalPagadoAnterior)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="106" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="109" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1698,9 +1740,9 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text63>
-            <Text64 Ref="107" type="Text" isKey="true">
+            <Text64 Ref="110" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.4,0,1.2,0.6</ClientRectangle>
+              <ClientRectangle>21.4,0,1,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1709,10 +1751,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Margins>0,0,0,0</Margins>
               <Name>Text64</Name>
               <Page isRef="2" />
-              <Parent isRef="76" />
+              <Parent isRef="79" />
               <Text>{Sum(GroupHeaderBand2,liqAgente.adicionalPagadoPeriodo)}</Text>
               <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="108" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="111" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1724,6 +1766,32 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text64>
+            <Text68 Ref="112" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.4,0,1.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>041ad6ef4d7947a8ad2058c901cf1038</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text68</Name>
+              <Page isRef="2" />
+              <Parent isRef="79" />
+              <Text>{Sum(GroupHeaderBand2,liqAgente.anticipo)}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <TextFormat Ref="113" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text68>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -1757,10 +1825,10 @@ Adiccional En la liquidación final se liquidará la diferencia en más o menos 
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/21/2022 1:22:27 PM</ReportChanged>
+  <ReportChanged>5/26/2022 10:36:07 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_agente_obras.mrt</ReportFile>
-  <ReportGuid>ef9ca2482eee41c598f23dd0686b1ddb</ReportGuid>
+  <ReportGuid>6bddbb196eda4fa387b40ee3f8a6bff1</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
