@@ -2601,7 +2601,11 @@ var verPrefacturasAGenerar2 = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    if(vm.tipoContratoId() == 8) {
+        var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    } else {
+        var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
@@ -2925,6 +2929,12 @@ function initTablaGenerarPrefacturas() {
         }],
         columns: [{
             data: "fecha"
+        },{
+            data: "importeCoste",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "importe",
             className: "text-right",
