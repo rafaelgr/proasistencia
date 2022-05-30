@@ -2516,6 +2516,12 @@ var generarPrefacturas = function () {
         resto = importeCliente - importePrefacturasConcepto;
         vm.importeAFacturar(roundToSix(resto));
     }
+    //si no hay fecha de primera factura establecemos la del día de hoy
+    if(!vm.fechaPrimeraFactura()) {
+        var f = new Date();
+        f = moment(f).format('DD/MM/YYYY');
+        vm.fechaPrimeraFactura(f);
+    }
     $("#generar-prefacturas-form").submit(function () {
         return false;
     });
@@ -2524,6 +2530,7 @@ var generarPrefacturas = function () {
 function modificaFormulario(option) {
     $("#cmbPeriodosPagos").prop('disabled', option);
     $("#txtGFechaPrimeraFactura").prop('disabled', option);
+    $("#txtGFechaPrimeraFactura2").prop('disabled', option);
     $("#txtGFechaInicio").prop('disabled', option);
     $("#txtGFechaFinal").prop('disabled', option);
     $("input[name='chkFacturaParcial']").prop("disabled", option);
@@ -2601,7 +2608,11 @@ var verPrefacturasAGenerar2 = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    if(vm.tipoContratoId() == 8) {
+        var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    } else {
+        var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
+    }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
@@ -2925,6 +2936,12 @@ function initTablaGenerarPrefacturas() {
         }],
         columns: [{
             data: "fecha"
+        },{
+            data: "importeCoste",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
         }, {
             data: "importe",
             className: "text-right",
@@ -3081,8 +3098,15 @@ function initTablaPrefacturas() {
             };
 
             // Total over all pages
+            total1 = api
+            .column( 6 )
+            .data()
+            .reduce( function (a, b) {
+                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+            }, 0 );
+
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3095,7 +3119,7 @@ function initTablaPrefacturas() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3106,11 +3130,15 @@ function initTablaPrefacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
+                numeral(total1).format('0,0.00')
+                
+            );
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
                 
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
@@ -3162,6 +3190,11 @@ function initTablaPrefacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "coste",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "total",
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
@@ -3201,8 +3234,8 @@ function initTablaPrefacturas() {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(10).visible(false);
+    tablaPrefacturas.columns(9).visible(false);
+    tablaPrefacturas.columns(11).visible(false);
 }
 
 function loadPrefacturasDelContrato(contratoId) {
@@ -3378,8 +3411,16 @@ function initTablaFacturas() {
             };
 
             // Total over all pages
+            total1 = api
+            .column( 6 )
+            .data()
+            .reduce( function (a, b) {
+                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+            }, 0 );
+
+            //
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3392,7 +3433,7 @@ function initTablaFacturas() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3403,10 +3444,13 @@ function initTablaFacturas() {
 
             // Update footer
             $( api.columns(6).footer() ).html(
+                numeral(total1).format('0,0.00')
+            );
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
@@ -3458,6 +3502,11 @@ function initTablaFacturas() {
                 return moment(data).format('DD/MM/YYYY');
             }
         }, {
+            data: "coste",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        },  {
             data: "total",
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
@@ -3494,8 +3543,8 @@ function initTablaFacturas() {
     });
 
     // Hide some columns by default
-    tablaFacturas.columns(8).visible(false);
-    tablaFacturas.columns(10).visible(false);
+    tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(11).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
