@@ -2723,7 +2723,7 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
 }
 
 function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
-    // calculamos según la periodicidad
+   
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
     // de mes 
