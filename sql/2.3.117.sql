@@ -10,3 +10,7 @@ ALTER TABLE `mensajes`
    ALTER TABLE `mensajes` ADD CONSTRAINT `mensajes_proveedorPushFK` 
    FOREIGN KEY (`proveedorUsuarioPushId`) REFERENCES `proasistencia`.`proveedor_usuariospush`(`proveedorUsuarioPushId`); 
 
+   ALTER TABLE `proasistencia`.`mensajes`   
+  ADD COLUMN `playerId` VARCHAR(211) NULL AFTER `pushId`;
+
+
