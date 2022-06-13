@@ -8,9 +8,9 @@ ALTER TABLE `mensajes`
   ADD COLUMN `proveedorUsuarioPushId` INT(11) NULL AFTER `proveedorId`;
 
    ALTER TABLE `mensajes` ADD CONSTRAINT `mensajes_proveedorPushFK` 
-   FOREIGN KEY (`proveedorUsuarioPushId`) REFERENCES `proasistencia`.`proveedor_usuariospush`(`proveedorUsuarioPushId`); 
+   FOREIGN KEY (`proveedorUsuarioPushId`) REFERENCES `proveedor_usuariospush`(`proveedorUsuarioPushId`); 
 
-   ALTER TABLE `proasistencia`.`mensajes`   
+   ALTER TABLE `mensajes`   
   ADD COLUMN `playerId` VARCHAR(211) NULL AFTER `pushId`;
 
 
