@@ -12,3 +12,6 @@ UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_tecnico'
 WHERE `tipoComercialId` = '7'; 
 UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_comercial' 
 WHERE `tipoComercialId` = '2'; 
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `fechaCertFinal` DATE NULL AFTER `fechaFirmaActa`;
