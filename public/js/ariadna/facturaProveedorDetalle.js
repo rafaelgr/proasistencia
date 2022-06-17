@@ -648,9 +648,8 @@ function loadData(data) {
         mostrarMensajeFacturaGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
-        //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
+        //buscamos anticipos completos existentes para el proveedor, si los hay abrimos el modal
         llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, result) {
             if (err) return;
             if(result) {
@@ -679,7 +678,7 @@ function loadData(data) {
         });
        
        
-    }
+    
      
     //se carga el pdf de la factura si existe
     if(vm.nombreFacprovePdf()) {
