@@ -21,14 +21,14 @@
         <PageHeaderBand1 Ref="3" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,27.7,4.4</ClientRectangle>
-          <Components isList="true" count="23">
+          <Components isList="true" count="21">
             <Text50 Ref="4" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.8,3.8,0.6,0.4</ClientRectangle>
+              <ClientRectangle>21.8,3.8,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>e05688419664430e86152b729f4c3120</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -43,10 +43,10 @@
             <Text51 Ref="5" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.4,3.8,1.8,0.4</ClientRectangle>
+              <ClientRectangle>22.4,3.8,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>ed76c10d3d5d4913a3a6f0eade5d9fe4</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -61,10 +61,10 @@
             <Text52 Ref="6" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,3.2,1.4,1</ClientRectangle>
+              <ClientRectangle>0,3.2,1.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>3f31ac366ed84860be11efc0c958c31c</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text52</Name>
@@ -79,10 +79,10 @@ CONTRATO</Text>
             <Text57 Ref="7" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.4,3.8,1.6,0.4</ClientRectangle>
+              <ClientRectangle>16.8,3.8,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>bec7074acd8c4374aa09243caf07fb6c</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -97,10 +97,10 @@ CONTRATO</Text>
             <Text59 Ref="8" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,3.4,1.2,0.8</ClientRectangle>
+              <ClientRectangle>12.6,3.4,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>e730b37c4522459f86d2d70c8700f1b7</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -120,207 +120,7 @@ NETA</Text>
               <Expressions isList="true" count="0" />
               <Guid>4b44839eae744f209c8b623257a6040a</Guid>
               <IconColor>68, 114, 196</IconColor>
-              <ImageBytes>/9j/4AAQSkZJRgABAQEAYABgAAD/4QBmRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAMBAAUA
-AAABAAAAVgMDAAEAAAABAAAAAFEQAAEAAAABAQAAAFERAAQAAAABAAAOw1ESAAQAAAABAAAOwwAA
-AAAAAYagAACxj//bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoI
-BwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwM
-DAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAH8AuAMBIgACEQEDEQH/xAAf
-AAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEF
-EiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJ
-SlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
-uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEB
-AAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIy
-gQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNk
-ZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfI
-ycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP358wbwu4biMgeo/wAk
-UizLJt2srbhuXB6j1H5j86ZKxQ/eZVYg7uMLyBt/H+p5HFI7cH95N/H0T3+nbt6+9AEizLJt2srb
-huXB6j1H5j86FmWTbtZW3DcuD1HqPzH503d+++9J9/GNvy/d6Zx0759eM9qarnavzS9E52e/079/
-T260APEqyBdrK24blwfvD1H5j86VZlfZtKtuG5cHqPUfmPzqvNcLbwszSSKAHJbZ0APXp27evv1r
-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</ImageBytes>
+              <ImageURL>https://tdinf-uploads.s3.eu-west-1.amazonaws.com/proasistencia/logo_fondogar.jpg</ImageURL>
               <Margins>0,0,0,0</Margins>
               <Name>Image3</Name>
               <Page isRef="2" />
@@ -345,10 +145,10 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             <Text36 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,3.4,1.4,0.8</ClientRectangle>
+              <ClientRectangle>14.4,3.4,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>8928ba88f22148848af449f78a634b63</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -363,10 +163,10 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             <Text37 Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,3.8,1,0.4</ClientRectangle>
+              <ClientRectangle>15.8,3.8,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>15dd04ea5a644dd19d15276f53770c3d</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -381,10 +181,10 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             <Text38 Ref="13" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4,3.2,0.6,1</ClientRectangle>
+              <ClientRectangle>4.8,3.2,0.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>6236092bdb28477eb94dd926e837b1f1</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text38</Name>
@@ -399,10 +199,10 @@ jkkcgHAOBk85x/8AWKcpZH+bLfLyRgKCP15z79PzKAP/2Q==</ImageBytes>
             <Text39 Ref="14" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.4,3.4,1.4,0.8</ClientRectangle>
+              <ClientRectangle>20.4,3.4,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>163e2f4e29a94f1c9ba572ad0682f1d8</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -418,10 +218,10 @@ LIQU.</Text>
             <Text40 Ref="15" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>26.2,3.4,1.4,0.8</ClientRectangle>
+              <ClientRectangle>25.8,3.4,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>4eeea08a29e940f9895b3d35609cccd5</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -436,10 +236,10 @@ LIQU.</Text>
             <Text2 Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.6,3.4,1.6,0.8</ClientRectangle>
+              <ClientRectangle>10.8,3.4,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>d19ca6c41acb4729a733029051bfdd07</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -455,10 +255,10 @@ FINAL</Text>
             <Text34 Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16,3.4,2,0.8</ClientRectangle>
+              <ClientRectangle>18.4,3.4,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>ff3ffdfd559a457fbeaee240220e66dd</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -470,50 +270,31 @@ FINAL</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text34>
-            <Text43 Ref="18" type="Text" isKey="true">
+            <Text66 Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>20.2,3.4,1.2,0.8</ClientRectangle>
+              <ClientRectangle>24.2,3.4,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
-              <Guid>b362321b846948509a0b7f8e2c2adcb5</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text43</Name>
-              <Page isRef="2" />
-              <Parent isRef="3" />
-              <Text>OFICINA
-TÉCNICA</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Bottom</VertAlignment>
-            </Text43>
-            <Text66 Ref="19" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.2,3.4,1,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>b93b60fbe774450db49ae26bb6cecc67</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text66</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
-              <Text>ANT.</Text>
+              <Text>ANTICIPOS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text66>
-            <Text7 Ref="20" type="Text" isKey="true">
+            <Text7 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.4,3.2,1.4,1</ClientRectangle>
+              <ClientRectangle>1.8,3.2,1.6,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>3036b3a9000d4a0f98d62a773b504c68</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -526,13 +307,13 @@ CONTRATO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text7>
-            <Text10 Ref="21" type="Text" isKey="true">
+            <Text10 Ref="20" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.8,3.2,1.2,1</ClientRectangle>
+              <ClientRectangle>3.4,3.2,1.4,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>73a9085398f64f22aea60c8c0a83395e</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -546,13 +327,13 @@ FINAL</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text10>
-            <Text12 Ref="22" type="Text" isKey="true">
+            <Text12 Ref="21" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.6,3.4,1.8,0.8</ClientRectangle>
+              <ClientRectangle>5.4,3.4,4.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>22b06502034f4269b076a74dcbdfc95d</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -564,12 +345,12 @@ FINAL</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text12>
-            <Text14 Ref="23" type="Text" isKey="true">
+            <Text14 Ref="22" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,3.4,2.6,0.4</ClientRectangle>
+              <ClientRectangle>15.8,3.4,2.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
@@ -580,12 +361,12 @@ FINAL</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text14>
-            <Text16 Ref="24" type="Text" isKey="true">
+            <Text16 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.8,3.4,2.4,0.4</ClientRectangle>
+              <ClientRectangle>21.8,3.4,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
@@ -596,13 +377,13 @@ FINAL</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text16>
-            <Text70 Ref="25" type="Text" isKey="true">
+            <Text70 Ref="24" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,3.4,1.2,0.8</ClientRectangle>
+              <ClientRectangle>9.8,3.4,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
+              <Font>Arial,8,Bold</Font>
               <Guid>0c2d4bee8bc74933b2b9d63320b0792c</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -615,23 +396,6 @@ OBR.</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text70>
-            <Text76 Ref="26" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>11.6,3.4,0.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7.5,Bold</Font>
-              <Guid>e43bf047940341a29a8c2692027e0ca6</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text76</Name>
-              <Page isRef="2" />
-              <Parent isRef="3" />
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Bottom</VertAlignment>
-            </Text76>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -639,11 +403,11 @@ OBR.</Text>
           <Page isRef="2" />
           <Parent isRef="2" />
         </PageHeaderBand1>
-        <PageFooterBand1 Ref="27" type="PageFooterBand" isKey="true">
+        <PageFooterBand1 Ref="25" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text22 Ref="28" type="Text" isKey="true">
+            <Text22 Ref="26" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>4,0.1,18.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -653,7 +417,7 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="2" />
-              <Parent isRef="27" />
+              <Parent isRef="25" />
               <Text>Página {PageNumber} de {TotalPageCount}</Text>
               <TextBrush>[0:0:0]</TextBrush>
               <Type>Expression</Type>
@@ -665,40 +429,43 @@ OBR.</Text>
           <Page isRef="2" />
           <Parent isRef="2" />
         </PageFooterBand1>
-        <GroupHeaderBand2 Ref="29" type="GroupHeaderBand" isKey="true">
+        <GroupHeaderBand2 Ref="27" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,5.6,27.7,0.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text46 Ref="30" type="Text" isKey="true">
+            <Text46 Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,21.4,0.6</ClientRectangle>
+              <ClientRectangle>0,0,21.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
-              <Guid>75db6d982888460aa55a3f742f56d7e7</Guid>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>531adf40db0a48deb7ae19a652edfaca</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text46</Name>
               <Page isRef="2" />
-              <Parent isRef="29" />
-              <Text>{liqAgente.nomComercial}</Text>
+              <Parent isRef="27" />
+              <Text>NOMBRE COLABORADOR: {liqAgente.nomComercial} - TIPO COLABORADOR: {liqAgente.tipoColaborador}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text46>
-            <Text48 Ref="31" type="Text" isKey="true">
+            <Text48 Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.4,0,6.2,0.6</ClientRectangle>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>21.4,0,6.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
-              <Guid>c930089ecfd4411ab48323bd535107f1</Guid>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>949043ea97ac45179cf8309be61c3e55</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text48</Name>
               <Page isRef="2" />
-              <Parent isRef="29" />
-              <Text>Desde {liqAgente.dFecha} hasta {liqAgente.hFecha}</Text>
+              <Parent isRef="27" />
+              <Text>DESDE {liqAgente.dFecha} HASTA {liqAgente.hFecha}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text48>
@@ -710,15 +477,15 @@ OBR.</Text>
           <Page isRef="2" />
           <Parent isRef="2" />
         </GroupHeaderBand2>
-        <DataLiqAgente Ref="32" type="DataBand" isKey="true">
+        <DataLiqAgente Ref="30" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,7.2,27.7,0.4</ClientRectangle>
-          <Components isList="true" count="18">
-            <Text5 Ref="33" type="Text" isKey="true">
+          <Components isList="true" count="17">
+            <Text5 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>0,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -726,15 +493,15 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.referencia}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text5>
-            <Text1 Ref="34" type="Text" isKey="true">
+            <Text1 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>4,0,0.4,0.4</ClientRectangle>
+              <ClientRectangle>4.8,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -742,15 +509,15 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.firmaActa}
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text1>
-            <Text3 Ref="35" type="Text" isKey="true">
+            <Text3 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.6,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>11,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -759,10 +526,10 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.certificacionFinal}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -773,10 +540,10 @@ OBR.</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text3>
-            <Text6 Ref="37" type="Text" isKey="true">
+            <Text6 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>1.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -785,16 +552,16 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.fechaAlta}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text6>
-            <Text8 Ref="38" type="Text" isKey="true">
+            <Text8 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>4.6,0,2,0.4</ClientRectangle>
+              <ClientRectangle>5.6,0,4.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -802,15 +569,15 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.nomCliente}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text8>
-            <Text11 Ref="39" type="Text" isKey="true">
+            <Text11 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>12.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -819,8 +586,33 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.certificacionNeta}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text11>
+            <Text13 Ref="39" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>86fab0968c424483874cd65ec91d2673</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="2" />
+              <Parent isRef="30" />
+              <Text>{liqAgente.coste}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -832,20 +624,20 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text11>
-            <Text13 Ref="41" type="Text" isKey="true">
+            </Text13>
+            <Text15 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>16.8,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>86fab0968c424483874cd65ec91d2673</Guid>
+              <Guid>dff53e0f35f8438b86b1b3662693df9b</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text13</Name>
+              <Name>Text15</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.coste}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.BI}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -857,22 +649,45 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text13>
-            <Text15 Ref="43" type="Text" isKey="true">
+            </Text15>
+            <Text17 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>15.8,0,0.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>dff53e0f35f8438b86b1b3662693df9b</Guid>
+              <Guid>468b25b89f174bf98d54fcdcee514169</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text15</Name>
+              <Name>Text17</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.BI}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.porBI}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="44" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="44" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text17>
+            <Text18 Ref="45" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>18.4,0,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>cd0c711a1efe41109a83dbcc9ddc0e0f</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="2" />
+              <Parent isRef="30" />
+              <Text>{liqAgente.IAT}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -882,43 +697,20 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text15>
-            <Text17 Ref="45" type="Text" isKey="true">
+            </Text18>
+            <Text20 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0,0.8,0.4</ClientRectangle>
+              <ClientRectangle>20.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>468b25b89f174bf98d54fcdcee514169</Guid>
+              <Guid>b82c6b96d36543029fc6c1b753cd89e2</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text17</Name>
+              <Name>Text20</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.porBI}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="46" type="NumberFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text17>
-            <Text18 Ref="47" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>16,0,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7</Font>
-              <Guid>cd0c711a1efe41109a83dbcc9ddc0e0f</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text18</Name>
-              <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.IJO}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.baseCalculo}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -930,45 +722,43 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text18>
-            <Text19 Ref="49" type="Text" isKey="true">
+            </Text20>
+            <Text21 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>20.6,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>22.2,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>461220ac82f443e7ab054c5621a75539</Guid>
+              <Guid>3b8a900c2c55448e864e9b4456f9872c</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text19</Name>
+              <Name>Text21</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.IOT}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.porComer}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="50" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
-            </Text19>
-            <Text20 Ref="51" type="Text" isKey="true">
+            </Text21>
+            <Text23 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>23,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>b82c6b96d36543029fc6c1b753cd89e2</Guid>
+              <Guid>93862375fd514ba2851e0c97051b3791</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text20</Name>
+              <Name>Text23</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.baseCalculo}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.totComision}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -980,43 +770,45 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text20>
-            <Text21 Ref="53" type="Text" isKey="true">
+            </Text23>
+            <Text25 Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>23,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>24.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>3b8a900c2c55448e864e9b4456f9872c</Guid>
+              <Guid>df8bc805650d40f0bc3c618d2f01215a</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text21</Name>
+              <Name>Text25</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.porComer}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.anticipo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="54" type="NumberFormat" isKey="true">
+              <TextFormat Ref="54" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text21>
-            <Text23 Ref="55" type="Text" isKey="true">
+            </Text25>
+            <Text26 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.8,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>26.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
-              <Guid>93862375fd514ba2851e0c97051b3791</Guid>
+              <Guid>c9297b17eb7c4627a05f164904b20c8c</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text23</Name>
+              <Name>Text26</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.totComision}</Text>
+              <Parent isRef="30" />
+              <Text>{liqAgente.comision}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="56" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1028,61 +820,11 @@ OBR.</Text>
                 <Symbol>€</Symbol>
               </TextFormat>
               <Type>Expression</Type>
-            </Text23>
-            <Text25 Ref="57" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.2,0,0.8,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7</Font>
-              <Guid>df8bc805650d40f0bc3c618d2f01215a</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text25</Name>
-              <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.anticipo}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="58" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text25>
-            <Text26 Ref="59" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>26.2,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7</Font>
-              <Guid>c9297b17eb7c4627a05f164904b20c8c</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text26</Name>
-              <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{liqAgente.comision}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="60" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
             </Text26>
-            <Text69 Ref="61" type="Text" isKey="true">
+            <Text69 Ref="57" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>2.6,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>3.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1091,16 +833,16 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text69</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.fechaCertFinal}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text69>
-            <Text71 Ref="62" type="Text" isKey="true">
+            <Text71 Ref="58" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>6.8,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>10,0,0.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1108,7 +850,7 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text71</Name>
               <Page isRef="2" />
-              <Parent isRef="32" />
+              <Parent isRef="30" />
               <Text>{liqAgente.tipoProyecto}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -1130,15 +872,15 @@ OBR.</Text>
             <value>fecha</value>
           </Sort>
         </DataLiqAgente>
-        <GroupFooterBand2 Ref="63" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand2 Ref="59" type="GroupFooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.4,27.7,3.8</ClientRectangle>
-          <Components isList="true" count="26">
-            <Text27 Ref="64" type="Text" isKey="true">
+          <Components isList="true" count="28">
+            <Text27 Ref="60" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,2,0.4</ClientRectangle>
+              <ClientRectangle>9,0,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1147,16 +889,16 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>TOTALES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text27>
-            <Text29 Ref="65" type="Text" isKey="true">
+            <Text29 Ref="61" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.6,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>14.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1165,8 +907,62 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>{Sum(DataLiqAgente,liqAgente.coste)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="62" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text29>
+            <Text30 Ref="63" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.6,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>0bb3b5cb7f6646899104f6f0f5f5d9f7</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <Text>{Sum(DataLiqAgente,liqAgente.BI)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="64" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text30>
+            <Text31 Ref="65" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>22.2,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>e503ecba2a9c477b85dcae8bf2307b78</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <Text>{Sum(DataLiqAgente,liqAgente.totComision)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="66" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1179,21 +975,21 @@ OBR.</Text>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text29>
-            <Text30 Ref="67" type="Text" isKey="true">
+            </Text31>
+            <Text32 Ref="67" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>24.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
-              <Guid>0bb3b5cb7f6646899104f6f0f5f5d9f7</Guid>
+              <Guid>06288e05d1e74d188673e8bf7dfc8b71</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text30</Name>
+              <Name>Text32</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{Sum(DataLiqAgente,liqAgente.BI)}</Text>
+              <Parent isRef="59" />
+              <Text>{Sum(DataLiqAgente,liqAgente.anticipo)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="68" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1206,21 +1002,21 @@ OBR.</Text>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text30>
-            <Text31 Ref="69" type="Text" isKey="true">
+            </Text32>
+            <Text33 Ref="69" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23,0,2,0.4</ClientRectangle>
+              <ClientRectangle>26.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
-              <Guid>e503ecba2a9c477b85dcae8bf2307b78</Guid>
+              <Guid>0b39d4ec8e754f46bb24fb364f440046</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text31</Name>
+              <Name>Text33</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{Sum(DataLiqAgente,liqAgente.totComision)}</Text>
+              <Parent isRef="59" />
+              <Text>{Sum(GroupHeaderBand2,liqAgente.comision)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="70" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1233,62 +1029,8 @@ OBR.</Text>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text31>
-            <Text32 Ref="71" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.2,0,0.8,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7,Bold</Font>
-              <Guid>06288e05d1e74d188673e8bf7dfc8b71</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text32</Name>
-              <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{Sum(DataLiqAgente,liqAgente.anticipo)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="72" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Bottom</VertAlignment>
-            </Text32>
-            <Text33 Ref="73" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>26.2,0,1.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7,Bold</Font>
-              <Guid>0b39d4ec8e754f46bb24fb364f440046</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text33</Name>
-              <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{Sum(GroupHeaderBand2,liqAgente.comision)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="74" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Bottom</VertAlignment>
             </Text33>
-            <Text35 Ref="75" type="Text" isKey="true">
+            <Text35 Ref="71" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.8,13.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1298,13 +1040,13 @@ OBR.</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text35</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>LOS CONTRATOS DEBEN ESTAR CERRADOS PARA LIQUIDAR LA TOTALIDAD
 PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text35>
-            <Text41 Ref="76" type="Text" isKey="true">
+            <Text41 Ref="72" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>22,0.8,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1314,13 +1056,14 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>RETENCION</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text41>
-            <Text42 Ref="77" type="Text" isKey="true">
+            <Text42 Ref="73" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>22,1.2,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1330,13 +1073,13 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>IVA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text42>
-            <Text44 Ref="78" type="Text" isKey="true">
+            <Text44 Ref="74" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>22,1.6,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1346,13 +1089,13 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>TOTAL</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text44>
-            <Text45 Ref="79" type="Text" isKey="true">
+            <Text45 Ref="75" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>24,0.8,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1363,13 +1106,14 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text45</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>15%</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text45>
-            <Text47 Ref="80" type="Text" isKey="true">
+            <Text47 Ref="76" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24,1.2,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1380,13 +1124,13 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text47</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>21%</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text47>
-            <Text49 Ref="81" type="Text" isKey="true">
+            <Text49 Ref="77" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>25.4,0.8,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1397,8 +1141,62 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text49</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision))* (decimal)0.15}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="78" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text49>
+            <Text53 Ref="79" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.4,1.2,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>7935cb53e6be426f8a854d311fabf340</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text53</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <Text>{Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="80" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text53>
+            <Text54 Ref="81" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.4,1.6,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>280789508a844542a5a19a015f445c16</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text54</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision)-Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.15) + Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}
+</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="82" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1411,64 +1209,11 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               </TextFormat>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text49>
-            <Text53 Ref="83" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.4,1.2,2.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8,Bold</Font>
-              <Guid>7935cb53e6be426f8a854d311fabf340</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text53</Name>
-              <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="84" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text53>
-            <Text54 Ref="85" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.4,1.6,2.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8,Bold</Font>
-              <Guid>280789508a844542a5a19a015f445c16</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text54</Name>
-              <Page isRef="2" />
-              <Parent isRef="63" />
-              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision)-Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.15) + Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}
-</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="86" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
             </Text54>
-            <Text56 Ref="87" type="Text" isKey="true">
+            <Text56 Ref="83" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,5.8,0.4</ClientRectangle>
+              <ClientRectangle>0,0,9,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1476,15 +1221,15 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text56</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text56>
-            <Text60 Ref="88" type="Text" isKey="true">
+            <Text60 Ref="84" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,0,1,0.4</ClientRectangle>
+              <ClientRectangle>11.4,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1492,15 +1237,15 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text60</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text60>
-            <Text61 Ref="89" type="Text" isKey="true">
+            <Text61 Ref="85" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>24.2,0,0.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1508,15 +1253,15 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text61</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text61>
-            <Text63 Ref="90" type="Text" isKey="true">
+            <Text63 Ref="86" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>18.4,0,4.6,0.4</ClientRectangle>
+              <ClientRectangle>18.2,0,4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1524,15 +1269,15 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text63</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text63>
-            <Text65 Ref="91" type="Text" isKey="true">
+            <Text65 Ref="87" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>25.8,0,0.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6</Font>
@@ -1541,9 +1286,9 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text65</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="92" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="88" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1555,10 +1300,10 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text65>
-            <Text67 Ref="93" type="Text" isKey="true">
+            <Text67 Ref="89" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>15.8,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1567,10 +1312,10 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text67</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <Text>{Sum(DataLiqAgente,liqAgente.BI)/Sum(DataLiqAgente,liqAgente.coste)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="94" type="NumberFormat" isKey="true">
+              <TextFormat Ref="90" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1580,10 +1325,10 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text67>
-            <Text62 Ref="95" type="Text" isKey="true">
+            <Text62 Ref="91" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,1,0.4</ClientRectangle>
+              <ClientRectangle>25.8,0,0,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1591,15 +1336,15 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text62</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text62>
-            <Text72 Ref="96" type="Text" isKey="true">
+            <Text72 Ref="92" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.2,0,0.2,0.4</ClientRectangle>
+              <ClientRectangle>14,0,0.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1607,26 +1352,27 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text72</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text72>
-            <Text73 Ref="97" type="Text" isKey="true">
+            <Text4 Ref="93" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,0.2,0.4</ClientRectangle>
+              <ClientRectangle>12.4,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Arial,6</Font>
-              <Guid>6d9ee32aa6fa4564ad52258dedbf85f6</Guid>
+              <Font>Arial,7,Bold</Font>
+              <Guid>b3f71ca27a5a4d438e8abaa78af6cab7</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>Text73</Name>
+              <Name>Text4</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
+              <Text>{Sum(DataLiqAgente,liqAgente.certificacionNeta)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="98" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="94" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1635,41 +1381,73 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
                 <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
                 <Symbol>€</Symbol>
               </TextFormat>
-              <Type>Expression</Type>
+              <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text73>
-            <Text74 Ref="99" type="Text" isKey="true">
+            </Text4>
+            <Text9 Ref="95" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>26,0,0.2,0.4</ClientRectangle>
+              <ClientRectangle>15.6,0,0.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
-              <Guid>79ab03ebc4e4478bb87b4aa858d16528</Guid>
+              <Guid>da62960e5d5f4e15ae4ebd57dbe6c9bd</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Text74</Name>
+              <Name>Text9</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text74>
-            <Text75 Ref="100" type="Text" isKey="true">
+            </Text9>
+            <Text19 Ref="96" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25,0,0.2,0.4</ClientRectangle>
+              <ClientRectangle>16.4,0,0.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
-              <Guid>69650b05ffb14fcd8a4381b70e9eb5a7</Guid>
+              <Guid>d55f879bd3774ab09119eabd2a14c0d9</Guid>
               <Margins>0,0,0,0</Margins>
-              <Name>Text75</Name>
+              <Name>Text19</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
-            </Text75>
+            </Text19>
+            <Text28 Ref="97" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>23.6,1.2,0.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6.5,Bold</Font>
+              <Guid>6a666cefcf964e6fb33a3d56acd73f76</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text28>
+            <Text43 Ref="98" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25,1.2,0.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6.5,Bold</Font>
+              <Guid>fb58ccdd3cfe464d82882516c1ac51a1</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text43</Name>
+              <Page isRef="2" />
+              <Parent isRef="59" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text43>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -1702,10 +1480,10 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/16/2022 11:31:15 AM</ReportChanged>
+  <ReportChanged>6/17/2022 1:02:22 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_oTecnica.mrt</ReportFile>
-  <ReportGuid>4f86211d9d5940f8a014356a10d1a9ab</ReportGuid>
+  <ReportGuid>436e46e65c7e4816a9a1b64f65351d7b</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
