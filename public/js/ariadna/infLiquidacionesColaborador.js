@@ -362,6 +362,10 @@ var getParametrosTipo = function(id) {
 
 var rptLiquidacionGeneralParametrosJson = function () {
     if(!datosOK) return;
+  /*   if(vm.sdepartamentoId() == 0 && vm.stipoComercialId() != 1) {
+        mensError("Se tiene que introducir un departamento.");
+        return;
+    } */
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
     var departamentoId = vm.sdepartamentoId();
