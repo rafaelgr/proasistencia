@@ -1074,7 +1074,7 @@ OBR.</Text>
             <Text27 Ref="73" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.2,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>4.8,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1418,7 +1418,7 @@ OBR.</Text>
             <Text56 Ref="97" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,5.2,0.4</ClientRectangle>
+              <ClientRectangle>0,0,4.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1434,7 +1434,7 @@ OBR.</Text>
             <Text60 Ref="98" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>6,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7,Bold</Font>
@@ -1867,10 +1867,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2022 11:01:48 AM</ReportChanged>
+  <ReportChanged>6/21/2022 12:57:24 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_dTecnico.mrt</ReportFile>
-  <ReportGuid>942cfc84c3334a1585246d93fbc9df6b</ReportGuid>
+  <ReportGuid>48ffa3ea97474a57b4e6d546f623d82a</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
