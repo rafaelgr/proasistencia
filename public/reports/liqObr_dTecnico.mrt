@@ -1867,10 +1867,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/20/2022 2:19:02 PM</ReportChanged>
+  <ReportChanged>6/21/2022 9:13:10 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_dTecnico.mrt</ReportFile>
-  <ReportGuid>ed6b4a9dab2e42ef9afda73ad5bf760e</ReportGuid>
+  <ReportGuid>5d99cda965164e5c8495851372e9749e</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

@@ -876,7 +876,7 @@ OBR.</Text>
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.4,27.7,3.8</ClientRectangle>
-          <Components isList="true" count="28">
+          <Components isList="true" count="27">
             <Text27 Ref="60" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
@@ -1030,23 +1030,7 @@ OBR.</Text>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text33>
-            <Text35 Ref="71" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0.8,13.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Guid>9399534d73d8470a892360c36dbeb43b</Guid>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text35</Name>
-              <Page isRef="2" />
-              <Parent isRef="59" />
-              <Text>LOS CONTRATOS DEBEN ESTAR CERRADOS PARA LIQUIDAR LA TOTALIDAD
-PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text35>
-            <Text41 Ref="72" type="Text" isKey="true">
+            <Text41 Ref="71" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>22,0.8,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1062,7 +1046,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text41>
-            <Text42 Ref="73" type="Text" isKey="true">
+            <Text42 Ref="72" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>22,1.2,1.6,0.4</ClientRectangle>
@@ -1079,7 +1063,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text42>
-            <Text44 Ref="74" type="Text" isKey="true">
+            <Text44 Ref="73" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>22,1.6,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1095,7 +1079,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text44>
-            <Text45 Ref="75" type="Text" isKey="true">
+            <Text45 Ref="74" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>24,0.8,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1112,7 +1096,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text45>
-            <Text47 Ref="76" type="Text" isKey="true">
+            <Text47 Ref="75" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24,1.2,1,0.4</ClientRectangle>
@@ -1130,7 +1114,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text47>
-            <Text49 Ref="77" type="Text" isKey="true">
+            <Text49 Ref="76" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>25.4,0.8,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1144,7 +1128,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Parent isRef="59" />
               <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision))* (decimal)0.15}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="78" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="77" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1156,7 +1140,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text49>
-            <Text53 Ref="79" type="Text" isKey="true">
+            <Text53 Ref="78" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.4,1.2,2.2,0.4</ClientRectangle>
@@ -1171,7 +1155,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Parent isRef="59" />
               <Text>{Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="80" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="79" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1183,7 +1167,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text53>
-            <Text54 Ref="81" type="Text" isKey="true">
+            <Text54 Ref="80" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>25.4,1.6,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -1198,7 +1182,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision)-Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.15) + Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}
 </Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="82" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="81" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1210,7 +1194,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text54>
-            <Text56 Ref="83" type="Text" isKey="true">
+            <Text56 Ref="82" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,9,0.4</ClientRectangle>
@@ -1226,7 +1210,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text56>
-            <Text60 Ref="84" type="Text" isKey="true">
+            <Text60 Ref="83" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0,1,0.4</ClientRectangle>
@@ -1242,7 +1226,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text60>
-            <Text61 Ref="85" type="Text" isKey="true">
+            <Text61 Ref="84" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24.2,0,0.2,0.4</ClientRectangle>
@@ -1258,7 +1242,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text61>
-            <Text63 Ref="86" type="Text" isKey="true">
+            <Text63 Ref="85" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>18.2,0,4,0.4</ClientRectangle>
@@ -1274,7 +1258,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text63>
-            <Text65 Ref="87" type="Text" isKey="true">
+            <Text65 Ref="86" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.8,0,0.4,0.4</ClientRectangle>
@@ -1288,7 +1272,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Page isRef="2" />
               <Parent isRef="59" />
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="88" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="87" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1300,7 +1284,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text65>
-            <Text67 Ref="89" type="Text" isKey="true">
+            <Text67 Ref="88" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.8,0,0.6,0.4</ClientRectangle>
@@ -1313,9 +1297,9 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Name>Text67</Name>
               <Page isRef="2" />
               <Parent isRef="59" />
-              <Text>{Sum(DataLiqAgente,liqAgente.BI)/Sum(DataLiqAgente,liqAgente.coste)}</Text>
+              <Text>{(Sum(DataLiqAgente,liqAgente.BI)/Sum(DataLiqAgente,liqAgente.coste)) * 100}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="90" type="NumberFormat" isKey="true">
+              <TextFormat Ref="89" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1325,7 +1309,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text67>
-            <Text62 Ref="91" type="Text" isKey="true">
+            <Text62 Ref="90" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.8,0,0,0.4</ClientRectangle>
@@ -1341,7 +1325,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text62>
-            <Text72 Ref="92" type="Text" isKey="true">
+            <Text72 Ref="91" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>14,0,0.2,0.4</ClientRectangle>
@@ -1357,7 +1341,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text72>
-            <Text4 Ref="93" type="Text" isKey="true">
+            <Text4 Ref="92" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>12.4,0,1.6,0.4</ClientRectangle>
@@ -1372,7 +1356,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Parent isRef="59" />
               <Text>{Sum(DataLiqAgente,liqAgente.certificacionNeta)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="94" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="93" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1384,7 +1368,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text4>
-            <Text9 Ref="95" type="Text" isKey="true">
+            <Text9 Ref="94" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.6,0,0.2,0.4</ClientRectangle>
@@ -1400,7 +1384,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text9>
-            <Text19 Ref="96" type="Text" isKey="true">
+            <Text19 Ref="95" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.4,0,0.2,0.4</ClientRectangle>
@@ -1416,7 +1400,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text19>
-            <Text28 Ref="97" type="Text" isKey="true">
+            <Text28 Ref="96" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>23.6,1.2,0.4,0.4</ClientRectangle>
@@ -1432,7 +1416,7 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text28>
-            <Text43 Ref="98" type="Text" isKey="true">
+            <Text43 Ref="97" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25,1.2,0.4,0.4</ClientRectangle>
@@ -1480,10 +1464,10 @@ PUEDEN IR COBRANDO PAGOS A CUENTA</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/17/2022 1:02:22 PM</ReportChanged>
+  <ReportChanged>6/21/2022 9:18:30 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_oTecnica.mrt</ReportFile>
-  <ReportGuid>436e46e65c7e4816a9a1b64f65351d7b</ReportGuid>
+  <ReportGuid>cdccbf866ab04da5be2c0ecb7199c222</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
