@@ -448,7 +448,7 @@ OBR.</Text>
             <Text5 Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,2,0.4</ClientRectangle>
+              <ClientRectangle>0,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
@@ -464,7 +464,7 @@ OBR.</Text>
             </Text5>
             <Text1 Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.4,0,0.6,0.4</ClientRectangle>
+              <ClientRectangle>5.6,0,0.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.5</Font>
@@ -506,7 +506,7 @@ OBR.</Text>
             <Text6 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>2.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>2,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
@@ -737,7 +737,7 @@ OBR.</Text>
             <Text69 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>3.8,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
@@ -1393,10 +1393,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/20/2022 1:58:08 PM</ReportChanged>
+  <ReportChanged>6/21/2022 10:46:49 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_jObras.mrt</ReportFile>
-  <ReportGuid>a1bdadf1c9bb420b9ff41c8f91584105</ReportGuid>
+  <ReportGuid>78d50b67416a4ee8ab6a31e5a54d6f4c</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

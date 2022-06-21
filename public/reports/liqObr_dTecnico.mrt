@@ -671,7 +671,7 @@ OBR.</Text>
             </Text8>
             <Text9 Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.8,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>8.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -696,7 +696,7 @@ OBR.</Text>
             </Text9>
             <Text11 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>10,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -721,7 +721,7 @@ OBR.</Text>
             </Text11>
             <Text13 Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>11.6,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -771,7 +771,7 @@ OBR.</Text>
             </Text15>
             <Text17 Ref="50" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0,0.8,0.4</ClientRectangle>
+              <ClientRectangle>13.2,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1867,10 +1867,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2022 9:13:10 AM</ReportChanged>
+  <ReportChanged>6/21/2022 11:01:48 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_dTecnico.mrt</ReportFile>
-  <ReportGuid>5d99cda965164e5c8495851372e9749e</ReportGuid>
+  <ReportGuid>942cfc84c3334a1585246d93fbc9df6b</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

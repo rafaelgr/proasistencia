@@ -79,7 +79,7 @@ CONTRATO</Text>
             <Text59 Ref="7" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.2,3.4,2,0.8</ClientRectangle>
+              <ClientRectangle>18.8,3.4,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -163,7 +163,7 @@ NETA</Text>
             <Text2 Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,3.4,1.6,0.8</ClientRectangle>
+              <ClientRectangle>15.2,3.4,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -239,7 +239,7 @@ FINAL</Text>
             <Text12 Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,3.4,6,0.8</ClientRectangle>
+              <ClientRectangle>7.8,3.4,5.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -273,7 +273,7 @@ FINAL</Text>
             <Text70 Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.8,3.4,1.8,0.8</ClientRectangle>
+              <ClientRectangle>13.4,3.4,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -292,7 +292,7 @@ OBR.</Text>
             <Text14 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.2,3.4,1.8,0.8</ClientRectangle>
+              <ClientRectangle>17,3.4,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -429,7 +429,7 @@ AGENTE</Text>
             </Text1>
             <Text3 Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.2,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>15,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -473,7 +473,7 @@ AGENTE</Text>
             <Text8 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>8.2,0,5.8,0.4</ClientRectangle>
+              <ClientRectangle>8.2,0,5.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -489,7 +489,7 @@ AGENTE</Text>
             </Text8>
             <Text11 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.2,0,1.8,0.4</ClientRectangle>
+              <ClientRectangle>18.8,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -631,7 +631,7 @@ AGENTE</Text>
             <Text71 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>14.2,0,0.8,0.4</ClientRectangle>
+              <ClientRectangle>13.8,0,0.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -647,7 +647,7 @@ AGENTE</Text>
             </Text71>
             <Text15 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.2,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>17,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -690,7 +690,7 @@ AGENTE</Text>
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.4,27.7,3.8</ClientRectangle>
-          <Components isList="true" count="25">
+          <Components isList="true" count="26">
             <Text27 Ref="47" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
@@ -1003,7 +1003,7 @@ AGENTE</Text>
             <Text72 Ref="68" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,1.4,0.5</ClientRectangle>
+              <ClientRectangle>15.6,0,1,0.5</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1019,7 +1019,7 @@ AGENTE</Text>
             <Text4 Ref="69" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17,0,2,0.5</ClientRectangle>
+              <ClientRectangle>18.8,0,2,0.5</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -1152,7 +1152,7 @@ AGENTE</Text>
             <Text29 Ref="78" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19,0,0.2,0.5</ClientRectangle>
+              <ClientRectangle>18.6,0,0.2,0.5</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,6.5,Bold</Font>
@@ -1168,7 +1168,7 @@ AGENTE</Text>
             <Text18 Ref="79" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.2,0,1.8,0.5</ClientRectangle>
+              <ClientRectangle>16.6,0,2,0.5</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -1192,6 +1192,22 @@ AGENTE</Text>
               <Type>Totals</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text18>
+            <Text20 Ref="81" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>20.8,0,0.2,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6.5,Bold</Font>
+              <Guid>e4b046e31c5f4e7a945f2484c716b085</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="2" />
+              <Parent isRef="46" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text20>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -1224,10 +1240,10 @@ AGENTE</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionAgente</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2022 9:07:54 AM</ReportChanged>
+  <ReportChanged>6/21/2022 10:54:11 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_comercial.mrt</ReportFile>
-  <ReportGuid>7c990ba52a27477b9aba1e00fb00a1fe</ReportGuid>
+  <ReportGuid>ccd7881b6a064d5a9795d5c7745cedb7</ReportGuid>
   <ReportName>LiquidacionAgente</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
