@@ -8,9 +8,9 @@ UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_oTecnica'
 WHERE `tipoComercialId` = '6'; 
 UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_jObras' 
 WHERE `tipoComercialId` = '5'; 
-UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_general' 
+UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_aTecnico' 
 WHERE `tipoComercialId` = '7'; 
-UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_general' 
+UPDATE `tipos_comerciales` SET `informeColaboradorObras` = 'liqObr_comercial' 
 WHERE `tipoComercialId` = '2'; 
 
 ALTER TABLE `contratos`   
