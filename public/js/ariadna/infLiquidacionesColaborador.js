@@ -11,6 +11,7 @@ var breakpointDefinition = {
 };
 
 var usuario;
+var mrt = null;
 // License Key
 
 // Create the report viewer with default options
@@ -117,6 +118,11 @@ function initForm() {
     $('#cmbTiposComerciales').change(function(e) {
         if(!e.added) return;
         loadColaboradores(e.added);
+        getParametrosTipo(e.added.id);
+    });
+
+    $('#cmbDepartamentosTrabajo').change(function(e) {
+        getParametrosTipo(null);
     });
 
     // verificamos si nos han llamado directamente
@@ -298,13 +304,22 @@ function loadTiposComerciales() {
 
 
 var obtainReportJson = function (obj) {
+    if(obj.liqAgente.length == 0) {
+        mensError('No hay registros conestos parámetros.');
+        return;
+    }
     var tipoColaborador = vm.stipoComercialId();
-    if(tipoColaborador != 1) {
+    var file = null;
+    if(mrt) {
+        file = "../reports/" + mrt + ".mrt";
+    } 
+    else if(tipoColaborador != 1) {
         file = "../reports/liquidacion_colaborador.mrt";
     } else {
         file = "../reports/liquidacion_agente.mrt";
         if(vm.sdepartamentoId() == 8) file = "../reports/liquidacion_agente_obras.mrt";
     }
+   
 
     var report = new Stimulsoft.Report.StiReport();
         
@@ -325,8 +340,32 @@ var obtainReportJson = function (obj) {
 
 };
 
+var getParametrosTipo = function(id) {
+    if(!id) {
+        if(vm.stipoComercialId()) {
+            id = vm.stipoComercialId();
+        }
+    }
+    if (!id) return
+    var url = myconfig.apiUrl + "/api/tipos_comerciales/" +id
+    llamadaAjax("GET", url, null, function (err, data) {
+        if(err) return;
+        if(data) {
+            if(vm.sdepartamentoId() == 8 && vm.stipoComercialId() != 1) {
+                mrt = data.informeColaboradorObras
+            } else {
+                mrt = null;
+            }
+        } 
+    });
+}
+
 var rptLiquidacionGeneralParametrosJson = function () {
     if(!datosOK) return;
+  /*   if(vm.sdepartamentoId() == 0 && vm.stipoComercialId() != 1) {
+        mensError("Se tiene que introducir un departamento.");
+        return;
+    } */
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
     var departamentoId = vm.sdepartamentoId();

@@ -45,7 +45,7 @@ function loadDepartamentos(id, done){
         vm.posiblesDepartamentos(departamentos);
         vm.sdepartamentoId(id);
         $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
-        return done(null, data)
+        return done(null, departamentos);
     });
 }
 
