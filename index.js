@@ -54,7 +54,7 @@ var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
 var facturas_router = require('./lib/facturas/facturas_controller');
 var facturasProveedores_router = require('./lib/facturas_proveedores/facturasProveedores_controller');
 var config_router = require('./lib/configuracion_env/config_env_controller');
-var documentos_pago_router = require('./lib/documentos_pago/unidades_controller');
+var documentos_pago_router = require('./lib/documentos_pago/documentos_pago_controller');
 
 
 
