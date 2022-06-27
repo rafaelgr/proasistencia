@@ -397,6 +397,7 @@ function initForm() {
 
     //Evento asociado al checkbox
     $('#chkCerrados').change(contratosCerrados);
+   
 
 }
 
@@ -643,12 +644,26 @@ function loadData(data) {
     //
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.importeRetencion(data.importeRetencion);
+
+    //ocultamos el check de contratos cerrados en obras para que no se puedan serviciar contratos cerrados
+    if(data.departamentoId == 8 && usuario.puedeVisualizar) {
+        $('#cerrados').show();
+    }
+    else if(data.departamentoId == 8 && !usuario.puedeVisualizar) {
+        $('#cerrados').hide();
+    }
+    else {
+        $('#cerrados').show();
+    }
+
     if (vm.generada()) {
         // ocultarCamposFacturasGeneradas();
         mostrarMensajeFacturaGenerada();
     }
     vm.periodo(data.periodo);
+    if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
+    }
         //buscamos anticipos completos existentes para el proveedor, si los hay abrimos el modal
         llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, result) {
             if (err) return;

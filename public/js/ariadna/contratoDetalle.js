@@ -720,6 +720,24 @@ function loadData(data) {
     if(data.tipoContratoId != 8) {
         $("#tabAscContratos").hide();
     }
+
+    if(data.contratoCerrado && usuario.puedeEditar) {
+       $('#chkContratoCerrado').prop('disabled' , false)
+    } else if (!data.contratoCerrado) {
+        $('#chkContratoCerrado').prop('disabled' , false);
+    }else if (data.contratoCerrado && !usuario.puedeEdita) {
+        $('#chkContratoCerrado').prop('disabled' , true);
+    }
+
+    if(data.departamentoId == 8 && usuario.puedeVisualizar) {
+        $('#cerrados').show();
+    }
+    else if(data.departamentoId == 8 && !usuario.puedeVisualizar) {
+        $('#cerrados').hide();
+    }
+    else {
+        $('#cerrados').show();
+    }
 }
 
 

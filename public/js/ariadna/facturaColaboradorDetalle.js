@@ -650,8 +650,9 @@ function loadData(data) {
     vm.periodo(data.periodo);
     if (cmd == "nueva") {
         mostrarMensajeFacturaNueva();
-        //buscamos anticipos completos existemtes para el proveedor, si los hay abrimos el modal
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, result) {
+    }
+        //buscamos anticipos completos existentes para el proveedor, si los hay abrimos el modal
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + "0", null, function (err, result) {
             if (err) return;
             if(result) {
                 if(result.length > 0) {
@@ -659,7 +660,7 @@ function loadData(data) {
             }
             }
         });
-        llamadaAjax("GET",  "/api/anticiposProveedores/muestra/anticipos/incompletos/no-asociados/" + vm.proveedorId() + "/" + data.departamentoId, null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/muestra/anticipos/incompletos/no-asociados/" + vm.proveedorId() + "/" + "0", null, function (err, data2) {
             if (err) return;
             if(data2) {
                 if(data2.length > 0) {
@@ -677,7 +678,7 @@ function loadData(data) {
                 }
             }
         });
-    }
+    
     
     //se carga el pdf de la factura si existe
     if(vm.nombreFacprovePdf()) {
@@ -3024,7 +3025,7 @@ function cargaTablaAnticipos(completo){
             mensError('Ya existen anticipos vinculados');
             return;
         }
-        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + vm.departamentoId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + vm.proveedorId() + "/" + "0", null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {
@@ -3046,7 +3047,7 @@ function cargaTablaAnticipos(completo){
             }
         })
     } else {
-        llamadaAjax("GET",  "/api/anticiposProveedores/muestra/anticipos/incompletos/no-asociados/" + vm.proveedorId() + "/" + vm.departamentoId(), null, function (err, data2) {
+        llamadaAjax("GET",  "/api/anticiposProveedores/muestra/anticipos/incompletos/no-asociados/" + vm.proveedorId() + "/" + "0", null, function (err, data2) {
             if (err) return;
             var result = [];
             if(data2) {

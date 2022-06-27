@@ -74,7 +74,10 @@ function initForm() {
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if (e.added) cambioEmpresa(e.added.id);
+        if (e.added) {
+            cambioEmpresa(e.added.id);
+            loadContratos();
+        }
     });
 
     $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
@@ -609,6 +612,7 @@ function loadDepartamentos(departamentoId) {
         vm.posiblesDepartamentos(departamentos);
         if(departamentoId) {
             vm.departamentoId(departamentoId);
+            vm.sdepartamentoId(departamentoId);
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
@@ -636,7 +640,6 @@ function cambioCliente(clienteId) {
         vm.receptorProvincia(data.provincia);
         vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
-        loadContratos();
     });
 }
 
@@ -649,7 +652,6 @@ function cambioEmpresa(empresaId) {
         vm.emisorCodPostal(data.codPostal);
         vm.emisorPoblacion(data.poblacion);
         vm.emisorProvincia(data.provincia);
-        loadContratos();
     });
 }
 
@@ -1265,6 +1267,7 @@ var initAutoCliente = function () {
         select: function (event, ui) {
             vm.sclienteId(ui.item.id);
             cambioCliente(ui.item.id);
+            loadContratos();
         }
     });
     // regla de validación para el control inicializado
