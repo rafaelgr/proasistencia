@@ -38,7 +38,7 @@ function initForm() {
     // Add event listener for opening and closing details
     $('#dt_documentoPago').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
-        var row = table.row(tr);
+        var row = tablaCarro.row(tr);
  
         if (row.child.isShown()) {
             // This row is already open - close it
@@ -80,7 +80,7 @@ function initForm() {
 }
 
 function initTablaDocumentospago() {
-    tablaCarro = $('#dt_documentoPago').dataTable({
+    tablaCarro = $('#dt_documentoPago').DataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -115,9 +115,13 @@ function initTablaDocumentospago() {
             }
         },
         data: dataDocumentospago,
-        columns: [{
-            data:"documentoPagoId"
-        },
+        columns: [
+            {
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+            },
             {
             data: "nombre"
         }, {
@@ -141,7 +145,7 @@ function format(d) {
     return (
         '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
         '<tr>' +
-        '<td>Full REFERENCIA:</td>' +
+        '<td>REFERENCIA:</td>' +
         '<td>' +
         d.name +
         '</td>' +
