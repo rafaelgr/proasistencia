@@ -34,6 +34,22 @@ function initForm() {
     //});
     //
     initTablaDocumentospago();
+
+    // Add event listener for opening and closing details
+    $('#dt_documentoPago').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
     // comprobamos parámetros
     documentoPagoId = gup('DocumentoPagoId');
     if (documentoPagoId !== '') {
@@ -64,12 +80,12 @@ function initForm() {
 }
 
 function initTablaDocumentospago() {
-    tablaCarro = $('#dt_documentpago').dataTable({
+    tablaCarro = $('#dt_documentoPago').dataTable({
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_documentpago'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_documentoPago'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -100,9 +116,12 @@ function initTablaDocumentospago() {
         },
         data: dataDocumentospago,
         columns: [{
+            data:"documentoPagoId"
+        },
+            {
             data: "nombre"
         }, {
-            data: "abrev"
+            data: "pdf"
         }, {
             data: "documentoPagoId",
             render: function (data, type, row) {
@@ -112,7 +131,33 @@ function initTablaDocumentospago() {
                 return html;
             }
         }]
+
+        
     });
+}
+
+function format(d) {
+    // `d` is the original data object for the row
+    return (
+        '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
+        '<tr>' +
+        '<td>Full REFERENCIA:</td>' +
+        '<td>' +
+        d.name +
+        '</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>NÚMERO:</td>' +
+        '<td>' +
+        d.extn +
+        '</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>PROVEEDOR:</td>' +
+        '<td>And any further details here (images etc)...</td>' +
+        '</tr>' +
+        '</table>'
+    );
 }
 
 function datosOK() {
@@ -136,15 +181,15 @@ function datosOK() {
 }
 
 function loadTablaDocumentospago(data) {
-    var dt = $('#dt_documentpago').dataTable();
+    var dt = $('#dt_documentoPago').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbDocumentPago").hide();
+        $("#tbDocumentoPago").hide();
     } else {
         dt.fnClearTable();
         dt.fnAddData(data);
         dt.fnDraw();
-        $("#tbDocumentPago").show();
+        $("#tbDocumentoPago").show();
     }
 }
 
