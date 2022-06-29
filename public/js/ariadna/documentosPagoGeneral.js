@@ -79,6 +79,21 @@ function initForm() {
     }
 }
 
+function createSelect(selItem){
+    var fac = selItem
+    var sel = "<select><option>" + fac[0].ref+ "</option>" ;
+    for(var i = 0; i < fac.length; ++i){
+        if(fac[i] == selItem){
+            sel += "<option>" + fac[i].ref + "</option>";
+        }
+        else{
+            sel += "<option>" + fac[i].ref + "</option>";
+        }
+    }
+    sel += "</select>";
+    return sel;
+}
+
 function initTablaDocumentospago() {
     tablaCarro = $('#dt_documentoPago').DataTable({
         autoWidth: true,
@@ -127,6 +142,11 @@ function initTablaDocumentospago() {
         }, {
             data: "pdf"
         }, {
+            data: "facturas",
+             render: function(data){
+                return createSelect(data);
+            }           
+        }, {
             data: "documentoPagoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -141,27 +161,26 @@ function initTablaDocumentospago() {
 }
 
 function format(d) {
-    // `d` is the original data object for the row
-    return (
-        '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
-        '<tr>' +
-        '<td>REFERENCIA:</td>' +
-        '<td>' +
-        d.name +
-        '</td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td>NÚMERO:</td>' +
-        '<td>' +
-        d.extn +
-        '</td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td>PROVEEDOR:</td>' +
-        '<td>And any further details here (images etc)...</td>' +
-        '</tr>' +
-        '</table>'
-    );
+    var fac = d.facturas;
+    var html = "";
+        fac.forEach(e => {
+            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<tr>' +
+            '<td>REFERENCIA:</td>' +
+            '<td>' +
+            e.ref +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>NÚMERO:</td>' +
+            '<td>' +
+            e.numeroFacturaProveedor +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '</table>'
+        });
+    return html;
 }
 
 function datosOK() {
@@ -225,7 +244,7 @@ function buscarDocumentospago() {
 
 function crearDocumentPago() {
     var mf = function () {
-        var url = "DocumentPagoDetalle.html?DocumentoPagoId=0";
+        var url = "DocumentoPagoDetalle.html?DocumentoPagoId=0";
         window.open(url, '_self');
     };
     return mf;
@@ -268,7 +287,7 @@ function deleteDocumentPago(id) {
 function editDocumentPago(id) {
     // hay que abrir la página de detalle de documentpago
     // pasando en la url ese ID
-    var url = "DocumentPagoDetalle.html?DocumentoPagoId=" + id;
+    var url = "DocumentoPagoDetalle.html?DocumentoPagoId=" + id;
     window.open(url, '_self');
 }
 
