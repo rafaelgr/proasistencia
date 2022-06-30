@@ -174,29 +174,12 @@ function salir() {
 }
 
 
-function cargarFacturasAsociadas() {
-    var mf = function() {
-        var colaborador = 0;
-        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var hFecha = vm.hFecha();
-        if(hFecha == '' || hFecha == undefined) hFecha = null;
-        if(hFecha != null) {
-            if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if(!datosOK()) return;
-        }
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                loadTablaFacturas(data);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+function loadTablaFacturas(data) {
+    var dt = $('#dt_FacturasAsociadas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
     }
-    return mf;
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
 }
