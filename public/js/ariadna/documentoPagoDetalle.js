@@ -5,6 +5,7 @@ Funciones js par la página DocumentoPagoDetalle.html
 var documentoPagoId = 0;
 var usuario;
 
+
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
@@ -32,7 +33,7 @@ function initForm() {
     ko.applyBindings(vm);
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
-    $("#btnbuscarAsociarFacturas").click(aceptarBuscarAsociarFacturas());
+    //$("#btnbuscarAsociarFacturas").click(aceptarBuscarAsociarFacturas()());
     
     $("#btnSalir").click(salir());
     $("#frmDocumentoPago").submit(function() {
@@ -314,7 +315,7 @@ function loadEmpresas() {
 function loadDeparta() {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
-        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
     });
 }
@@ -322,15 +323,16 @@ function loadDeparta() {
 
 //modal asociación facturas
 
+
 function initTablaAsociarFacturas() {
     tablaCarro = $('#dt_asociarFacturas').dataTable({
-        autoWidth: false,
+        autoWidth: true,
         paging: false,
-        "columnDefs": [ {
-            "targets": 0,
-            "orderable": false,
-            "width": "40%"
-            }],
+        "bDestroy": true,
+        columnDefs: [{
+            "width": "10%",
+            "targets": 0
+        }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -421,24 +423,26 @@ function loadTablaAsociarFacturas(data) {
     dt.fnAddData(data);
     dt.fnDraw();
     data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
+        var field = "#chk" + v.facproveId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
             var quantity = 0;
             var data = {
-                factura: {
+                facprove: {
                     facproveId: v.facproveId,
                     empresaId: v.empresaId,
-                    clienteId: v.clienteId,
+                    proveedorId: v.proveedorId,
                     fecha: moment(v.fecha).format('YYYY-MM-DD'),
                     sel: 0
                 }
             };
             if (this.checked) {
-                data.factura.sel = 1;
+                data.facprove.sel = 1;
             }
+            var datosArray = [];
+            datosArray.push(data)
             var url = "", type = "";
             // updating record
             var type = "PUT";
@@ -447,7 +451,7 @@ function loadTablaAsociarFacturas(data) {
                 type: type,
                 url: url,
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(datosArray),
                 success: function (data, status) {
 
                 },
@@ -460,22 +464,26 @@ function loadTablaAsociarFacturas(data) {
 }
 
 function aceptarBuscarAsociarFacturas() {
-    var mf = function () {
+      $('#dt_asociarFacturas').dataTable().fnClearTable();
+      //$('#dt_asociarFacturas').dataTable().fnDestroy();
+        //initTablaAsociarFacturas();
         //if (!datosOK()) return;
-        vm.dFecha(moment().format('YYYY-MM-DD'));
-        vm.hFecha(moment().format('YYYY-MM-DD'));
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
         var proveedorId = 0
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
+        var esCorreo = 0;
       
-        var url = myconfig.apiUrl + "/api/facturasProveedores/correo/" + vm.dFecha() + "/" + vm.hFecha() 
+        var url = myconfig.apiUrl + "/api/facturasProveedores/correo/" + dFecha + "/" + hFecha
         + "/" + proveedorId 
         + "/" + empresaId 
         + "/"  + departamentoId 
-        + "/" + usuario.usuarioId;
+        + "/" + usuario.usuarioId
+        + "/" + esCorreo;
         $.ajax({
             type: "GET",
             url: url,
@@ -485,59 +493,99 @@ function aceptarBuscarAsociarFacturas() {
                 loadTablaAsociarFacturas(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
-                $('#checkMain').prop('checked', true);
+                $('#checkMain').prop('checked', false);
             },
             error: function (err) {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
-    };
-    return mf;
+}
+
+function aceptarAsociarFacturas() {
+    var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+    var empresaId = 0;
+    if (vm.sempresaId()) empresaId = vm.sempresaId();
+   
+  
+    var url = myconfig.apiUrl + "/api/docuemntos_pago/" + dFecha + "/" + hFecha
+    + "/" + proveedorId 
+    + "/" + empresaId 
+    + "/"  + departamentoId
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaAsociarFacturas(data);
+            // mostramos el botén de alta
+            $("#btnAlta").show();
+            $('#checkMain').prop('checked', false);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 
 
-function nuevaFacturaAsociada() {
-
+function limpiarModal() {
+    vm.dFecha(null);
+    vm.hFecha(null);
+    vm.sdepartamentoId(null);
+    vm.sempresaId(null);
+    $('#dt_asociarFacturas').dataTable().fnClearTable();
+    //$('#dt_asociarFacturas').dataTable().fnDestroy();
+    //$('#tbFacturasAsociadas').hide();
 }
 
 
 function updateAll(opcion) {
-    var datos = null;
     var sel = 0;
+    if(opcion) sel = 1
     var tb = $('#dt_asociarFacturas').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
+    var length = datos.length;
     if(opcion) sel = 1
     if(datos) {
         for( var i = 0; i < datos.length; i++) {
-            var data = {
-                facprove: {
-                    facproveId: datos[i].facturaId,
-                    empresaId: datos[i].empresaId,
-                    clienteId: datos[i].clienteId,
-                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                    sel: sel
-            }
-        };
+                var data = {
+                    facprove: {
+                        facproveId: datos[i].facproveId,
+                        empresaId: datos[i].empresaId,
+                        proveedorId: datos[i].proveedorId,
+                        fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                        sel: sel
+                    }
+                };
                 
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
+                var datosArray = [];
+                datosArray.push(data)
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(datosArray),
+                    success: function (data, status) {
+    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+        
+    
         }
     }
 }
