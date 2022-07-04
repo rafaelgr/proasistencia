@@ -4,7 +4,7 @@ Funciones js par la página DocumentoPagoDetalle.html
 ---------------------------------------------------------------------------*/
 var documentoPagoId = 0;
 var usuario;
-
+var esFactura = false;
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -32,7 +32,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptar());
+    $("#btnAceptar").click(aceptar);
     //$("#btnbuscarAsociarFacturas").click(aceptarBuscarAsociarFacturas()());
     
     $("#btnSalir").click(salir());
@@ -75,7 +75,7 @@ function initForm() {
     documentoPagoId = gup('DocumentoPagoId');
     if (documentoPagoId != 0) {
         var data = {
-                documentopagoId: documentoPagoId
+                documentoPagoId: documentoPagoId
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
@@ -95,16 +95,16 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        vm.documentopagoId(0);
+        vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
     }
 }
 
 function admData() {
     var self = this;
-    self.documentopagoId = ko.observable();
+    self.documentoPagoId = ko.observable();
     self.nombre = ko.observable();
-    self.numero = ko.observable();
+    self.fecha = ko.observable();
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     self.facproveId = ko.observable();
@@ -123,36 +123,24 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.documentopagoId(data.documentopagoId);
+    vm.documentoPagoId(data.documentoPagoId);
     vm.nombre(data.nombre);
-    vm.numero(data.numero);
+    vm.fecha(spanishDate(data.fecha));
     loadTablaFacturas(data.facturas)
 }
 
 function datosOK() {
     $('#frmDocumentoPago').validate({
         rules: {
-            cmbNivel: {
-                required: true
-            },
             txtNombre: {
                 required: true
             },
-            txtAbrev: {
-                required: true
-            }
         },
         // Messages for form validation
         messages: {
-            cmbNivel: {
-                required: "Debe seleccionar un nivel"
-            },
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
-            txtAbrev: {
-                required: 'Introduzca una breviatura'
-            }
         },
         // Do not change code below
         errorPlacement: function(error, element) {
@@ -164,14 +152,13 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
         if (!datosOK())
             return;
         var data = {
-            documentopago: {
-                "documentopagoId": vm.documentopagoId(),
+            documentoPago: {
+                "documentoPagoId": vm.documentoPagoId(),
                 "nombre": vm.nombre(),
-                "numero": vm.numero()
+                "fecha":spanishDbDate(vm.fecha())
             }
         };
         if (documentoPagoId == 0) {
@@ -185,7 +172,7 @@ function aceptar() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
-                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentopagoId();
+                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentoPagoId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -201,10 +188,7 @@ function aceptar() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function(data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentopagoId();
+                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentoPagoId();
                     window.open(url, '_self');
                 },
                                 error: function (err) {
@@ -213,8 +197,6 @@ function aceptar() {
                 }
             });
         }
-    };
-    return mf;
 }
 
 function salir() {
@@ -266,7 +248,11 @@ function initTablaFacturasAsociadas() {
         }, {
             data: "ref"
         }, {
-            data: "fecha"
+            data: "fechaFactura",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+           
         },{
             data: "total",
             className: "text-right",
@@ -511,21 +497,42 @@ function aceptarAsociarFacturas() {
     var empresaId = 0;
     if (vm.sempresaId()) empresaId = vm.sempresaId();
    
+    var data = 
+    {
+        docfac: 
+        {
+            dFecha: dFecha,
+            hFecha: hFecha,
+            empresaId: empresaId,
+            departamentoId: departamentoId,
+            documentoPagoId: documentoPagoId
+        }
+    }
   
-    var url = myconfig.apiUrl + "/api/docuemntos_pago/" + dFecha + "/" + hFecha
-    + "/" + proveedorId 
-    + "/" + empresaId 
-    + "/"  + departamentoId
     $.ajax({
-        type: "GET",
-        url: url,
+        type: "POST",
+        url: myconfig.apiUrl + "/api/documentos_pago/facturas",
         dataType: "json",
         contentType: "application/json",
+        data: JSON.stringify(data),
         success: function (data, status) {
-            loadTablaAsociarFacturas(data);
-            // mostramos el botén de alta
-            $("#btnAlta").show();
-            $('#checkMain').prop('checked', false);
+            mensNormal("Se han asociado las facturas correctamente.")
+            $('#modalAsociarRegistros').modal('hide');
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadData(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -536,7 +543,17 @@ function aceptarAsociarFacturas() {
 
 
 
-function limpiarModal() {
+function limpiarModal(opcion) {
+    esFactura = opcion;
+    if(!esFactura) {
+        $('#dep').hide();
+        $('#tbAsociarfacturas').hide();
+        $('#tbAsociarRegistros').show();
+    } else {
+        $('#dep').show();
+        $('#tbAsociarfacturas').show();
+        $('#tbAsociarRegistros').hide();
+    }
     vm.dFecha(null);
     vm.hFecha(null);
     vm.sdepartamentoId(null);
