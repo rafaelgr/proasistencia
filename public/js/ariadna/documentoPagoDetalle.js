@@ -449,8 +449,17 @@ function loadTablaAsociarFacturas(data) {
     });
 }
 
-function aceptarBuscarAsociarFacturas() {
-      $('#dt_asociarFacturas').dataTable().fnClearTable();
+function aceptarBuscarAsociar() {
+    if(opcion) {
+        buscarAsociarFacturas();
+    } else {
+        buscarAsociarRegistros();
+    }
+      
+}
+
+function buscarAsociarFacturas() {
+    $('#dt_asociarFacturas').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
         //if (!datosOK()) return;
@@ -488,6 +497,37 @@ function aceptarBuscarAsociarFacturas() {
         });
 }
 
+function buscarAsociarRegistros() {
+    $('#dt_asociarRegistros').dataTable().fnClearTable();
+      //$('#dt_asociarFacturas').dataTable().fnDestroy();
+        //initTablaAsociarFacturas();
+        //if (!datosOK()) return;
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+    
+        var empresaId = 0;
+        if (vm.sempresaId()) empresaId = vm.sempresaId();
+      
+        var url = myconfig.apiUrl + "/api/documentos_pago/buscar/registros" + dFecha + "/" + hFecha + "/" + empresaId 
+     
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                loadTablaAsociarFacturas(data);
+                // mostramos el botén de alta
+                $("#btnAlta").show();
+                $('#checkMain').prop('checked', false);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
 function aceptarAsociarFacturas() {
     var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
