@@ -5,6 +5,7 @@ Funciones js par la página DocumentoPagoDetalle.html
 var documentoPagoId = 0;
 var usuario;
 var esFactura = false;
+var datosArrayRegistros = []
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -54,7 +55,7 @@ function initForm() {
     $("#cmbDepartamentos").select2(select2Spanish());
     loadDeparta();
 
-    //Evento de marcar/desmarcar todos los checks
+    //Evento de marcar/desmarcar todos los checks del grid facturas de gastos
     $('#checkMain').click(
         function(e){
             if($('#checkMain').prop('checked')) {
@@ -63,6 +64,19 @@ function initForm() {
             } else {
                 $('.checkAll').prop('checked', false);
                 updateAll(false);
+            }
+        }
+    );
+
+    //Evento de marcar/desmarcar todos los checks del grid de transferencias
+    $('#checkMainRegistros').click(
+        function(e){
+            if($('#checkMainRegistros').prop('checked')) {
+                $('.checkAllRegistros').prop('checked', true);
+                updateAllRegistros(true);
+            } else {
+                $('.checkAllRegistros').prop('checked', false);
+                updateAllRegistros(false);
             }
         }
     );
@@ -293,7 +307,7 @@ function loadTablaFacturas(data) {
 function loadEmpresas() {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
     });
 }
@@ -446,10 +460,10 @@ function initTablaAsociarRegistros() {
         data: dataAsociarFacturas,
         columns: [{
             data: "codigo",
-            width: "10%",
+            width: "5%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAllRegistros">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -539,41 +553,19 @@ function loadTablaAsociarRegistros(data) {
     dt.fnDraw();
     data.forEach(function (v) {
         var field = "#chk" + v.codigo;
-        if (v.sel == 1) {
-            $(field).attr('checked', true);
-        }
+        $(field).attr('checked', true);
+        
         $(field).change(function () {
-            var quantity = 0;
-            var data = {
-                facprove: {
-                    facproveId: v.facproveId,
-                    empresaId: v.empresaId,
-                    proveedorId: v.proveedorId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: 0
-                }
-            };
             if (this.checked) {
-                data.facprove.sel = 1;
-            }
-            var datosArray = [];
-            datosArray.push(data)
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(datosArray),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
+                datosArrayRegistros.push(v.codigo);
+            } else {
+                for(var i=0; i < datosArrayRegistros.length; i++) {
+                    if(datosArrayRegistros[i] == v.codigo) {
+                        datosArrayRegistros.splice(i,1);//eliminamos un elemto del array y modificamops su tamaño
+                        break;
+                    } 
                 }
-            });
+            }
         });
     });
 }
@@ -649,13 +641,22 @@ function buscarAsociarRegistros() {
                 loadTablaAsociarRegistros(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
-                $('#checkMain').prop('checked', false);
+                $('#checkMainRegistros').prop('checked', true);
+                updateAllRegistros(true);
             },
             error: function (err) {
                 mensErrorAjax(err);
                 // si hay algo más que hacer lo haremos aquí.
             }
         });
+}
+
+function aceptarAsociar() {
+    if(esFactura) {
+        aceptarAsociarFacturas();
+    } else {
+        aceptarAsociarRegistros();
+    }
 }
 function aceptarAsociarFacturas() {
     var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -710,7 +711,73 @@ function aceptarAsociarFacturas() {
     });
 }
 
+function aceptarAsociarRegistros() {
+    var claves = procesaClavesTransferencias();
+    var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
+   
+    var empresaId = 0;
+    if (vm.sempresaId()) empresaId = vm.sempresaId();
+   
+    var data = 
+    {
+        docfac: 
+        {
+            dFecha: dFecha,
+            hFecha: hFecha,
+            empresaId: empresaId,
+            documentoPagoId: documentoPagoId,
+            claves: claves
+        }
+    }
+  
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/documentos_pago/registros",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            mensNormal("Se han asociado las facturas correctamente.")
+            $('#modalAsociarRegistros').modal('hide');
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadData(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
+function procesaClavesTransferencias() {
+    var arr = [];
+    datosArrayRegistros.forEach(e => {
+        var obj = {};
+        var cadenas = e.split("-");
+        obj = {
+            nrodocum: cadenas[0],
+            anyodocum: cadenas[1]
+        }
+        arr.push(obj);
+    });
+    return arr;
+}
 
 function limpiarModal(opcion) {
     esFactura = opcion;
@@ -775,3 +842,18 @@ function updateAll(opcion) {
         }
     }
 }
+
+function updateAllRegistros(opcion) {
+    datosArrayRegistros = [];
+    var tb = $('#dt_asociarRegistros').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(datos) {
+        if(opcion) {
+            for( var i = 0; i < datos.length; i++) {
+                datosArrayRegistros.push(datos[i].codigo);
+            }
+        } 
+       
+    }
+}
+

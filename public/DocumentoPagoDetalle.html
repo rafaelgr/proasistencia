@@ -706,7 +706,7 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarFacturas" title="Guardar y salir" onClick="aceptarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
+                                <button id="btnAceptarAsociarFacturas" title="Guardar y salir" onClick="aceptarAsociar()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnSalir" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
@@ -765,8 +765,13 @@
                         <table id="dt_asociarRegistros" class="table table-striped table-bordered table-hover" width="100%">
                             <thead>
                                 <tr>
-                                    <th data-class="expand">
-                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Código/Año
+                                    <th data-hide="phone" style="background : none;">
+                                        <div class="row">
+                                            <section class="col col-sm-12">
+                                                <input type="checkbox" id="checkMainRegistros">
+                                            </section>
+                                            
+                                        </div>
                                     </th>
                                     <th data-hide="phone">
                                         Fichero
