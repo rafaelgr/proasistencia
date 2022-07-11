@@ -184,6 +184,7 @@ function format(d) {
 }
 
 function datosOK() {
+
     
     $('#frmBuscar').validate({
         rules: {
@@ -218,6 +219,8 @@ function loadTablaDocumentospago(data) {
 
 function buscarDocumentospago() {
     var mf = function () {
+        var aBuscar = $('#txtBuscar').val();
+        if(aBuscar == '') $('#txtBuscar').val('*')
         if (!datosOK()) {
             return;
         }

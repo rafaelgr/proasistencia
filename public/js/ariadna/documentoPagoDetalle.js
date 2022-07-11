@@ -86,11 +86,70 @@ function initForm() {
     initTablaAsociarRegistros();
 
 
+    //evento asociado a la carga de un archivo
+    $('#upload-input').on('change', function () {
+        var files = $(this).get(0).files;
+        
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+        
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+                
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+            
+            $.ajax({
+                url: '/api/upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.pdf(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
+                }
+            });
+    });
+
 
     documentoPagoId = gup('DocumentoPagoId');
+    cmd = gup("cmd");
     if (documentoPagoId != 0) {
         var data = {
                 documentoPagoId: documentoPagoId
+            }
+            if (cmd == "nuevo") {
+                mensNormal("Docuemnto de pago creado con exito, puede ahora adjuntar las facturas de gastos asociadas.");
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
@@ -102,6 +161,7 @@ function initForm() {
             success: function(data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
+                $('#facturasAsociadas').show();
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -112,6 +172,7 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
+        $('#facturasAsociadas').hide();
     }
 }
 
@@ -123,6 +184,7 @@ function admData() {
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
     self.facproveId = ko.observable();
+    self.pdf = ko.observable();
     //
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -141,7 +203,12 @@ function loadData(data) {
     vm.documentoPagoId(data.documentoPagoId);
     vm.nombre(data.nombre);
     vm.fecha(spanishDate(data.fecha));
-    loadTablaFacturas(data.facturas)
+    vm.pdf(data.pdf);
+     //se carga el pdf de la factura si existe
+     if(vm.pdf()) {
+        loadDoc(vm.pdf());
+    }
+    //loadTablaFacturas(data.facturas);
 }
 
 function datosOK() {
@@ -150,12 +217,18 @@ function datosOK() {
             txtNombre: {
                 required: true
             },
+            txtFecha: {
+                required: true
+            }
         },
         // Messages for form validation
         messages: {
             txtNombre: {
                 required: 'Introduzca el nombre'
             },
+            txtFecha: {
+                required: 'Introduzca una fecha'
+            }
         },
         // Do not change code below
         errorPlacement: function(error, element) {
@@ -173,45 +246,36 @@ function aceptar() {
             documentoPago: {
                 "documentoPagoId": vm.documentoPagoId(),
                 "nombre": vm.nombre(),
-                "fecha":spanishDbDate(vm.fecha())
+                "fecha":spanishDbDate(vm.fecha()),
+                "pdf": vm.pdf(),
             }
         };
-        if (documentoPagoId == 0) {
-            $.ajax({
-                type: "POST",
-                url: myconfig.apiUrl + "/api/documentos_pago",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function(data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentoPagoId();
-                    window.open(url, '_self');
-                },
-                                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function(data, status) {
-                    var url = "DocumentosPagoGeneral.html?DocumentoPagoId=" + vm.documentoPagoId();
-                    window.open(url, '_self');
-                },
-                                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+        var verb = "POST";
+        var url =   myconfig.apiUrl + "/api/documentos_pago"
+        var returnUrl = "DocumentoPagoDetalle.html?cmd=nuevo&DocumentoPagoId=" + vm.documentoPagoId()
+    
+    
+        // caso modificación
+        if (documentoPagoId != 0) {
+            verb = "PUT";
+            url =  myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId;
+            returnUrl = "DocumentosPagoGeneral.html?DocumentoPagoId=";
         }
+            $.ajax({
+                type: verb,
+                url: url,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    returnUrl = returnUrl + data.documentoPagoId;
+                    window.open(returnUrl, '_self');
+                },
+                                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
 }
 
 function salir() {
@@ -857,3 +921,44 @@ function updateAllRegistros(opcion) {
     }
 }
 
+
+//funciones de la pestaña de facturas en PDF
+
+function loadDoc(filename) {
+    var ext = filename.split('.').pop().toLowerCase();
+    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+        // see it in container
+        var url = "https://comercializa-partes.s3.eu-west-1.amazonaws.com/000190.001.jpg";
+        if (ext == "pdf") {
+            // <iframe src="" width="100%" height="600px"></iframe>
+            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+        } else {
+            // .html("<img src=' + this.href + '>");
+            $("#docContainer").html('<img src="' + url + '" width="100%">');;
+        }
+        $("#msgContainer").html('');
+    } else {
+        $("#msgContainer").html('Vista previa no dispònible');
+        $("#docContainer").html('');
+    }
+}
+
+
+ function checkVisibility(filename) {
+    var ext = filename.split('.').pop().toLowerCase();
+    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+        // see it in container
+        var url = "/ficheros/uploads/" + filename;
+        if (ext == "pdf") {
+            // <iframe src="" width="100%" height="600px"></iframe>
+            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+        } else {
+            // .html("<img src=' + this.href + '>");
+            $("#docContainer").html('<img src="' + url + '" width="100%">');;
+        }
+        $("#msgContainer").html('');
+    } else {
+        $("#msgContainer").html('Vista previa no dispònible');
+        $("#docContainer").html('');
+    }
+}
