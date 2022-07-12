@@ -2,6 +2,7 @@
 documentopagoDetalle.js
 Funciones js par la página DocumentoPagoDetalle.html
 ---------------------------------------------------------------------------*/
+
 var documentoPagoId = 0;
 var usuario;
 var esFactura = false;
@@ -86,7 +87,6 @@ function initForm() {
     initTablaAsociarRegistros();
 
 
-    //evento asociado a la carga de un archivo
     $('#upload-input').on('change', function () {
         var files = $(this).get(0).files;
         
@@ -102,7 +102,7 @@ function initForm() {
         formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
             $.ajax({
-                url: '/api/upload',
+                url: '/api/upload/s3',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -208,7 +208,7 @@ function loadData(data) {
      if(vm.pdf()) {
         loadDoc(vm.pdf());
     }
-    //loadTablaFacturas(data.facturas);
+    loadTablaFacturas(data.facturas);
 }
 
 function datosOK() {
