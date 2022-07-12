@@ -23,9 +23,29 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
+    $.validator.addMethod("greaterThan",
+    function (value, element, params) {
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha final debe ser mayor que la inicial.');
+    //
+    vm = new admData();
+    ko.applyBindings(vm);
+    //
     $('#btnBuscar').click(buscarDocumentospago());
+    $('#btnBuscar2').click(buscarDocumentospago2());
     $('#btnAlta').click(crearDocumentPago());
     $('#frmBuscar').submit(function () {
+        return false
+    });
+
+    $('#frmGenerar').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
@@ -33,6 +53,12 @@ function initForm() {
     //        buscarDocumentospago();
     //});
     //
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    $("#cmbEmpresas").select2(select2Spanish());
+    loadEmpresas();
+
     initTablaDocumentospago();
 
     // Add event listener for opening and closing details
@@ -77,6 +103,30 @@ function initForm() {
     } else{
         buscarTodos();
     }
+}
+
+
+function admData() {
+    var self = this;
+
+    self.dFecha = ko.observable();
+    self.hFecha = ko.observable();
+    self.docAsociado = ko.observable();
+   
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
+   
+
+
 }
 
 /* function createSelect(selItem){
@@ -204,6 +254,39 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
+function datosOk2() {
+    $('#frmGenerar').validate({
+        rules: {
+            txtdFecha: {
+                required: true
+            },
+            txthFecha: {
+                required: true,
+                greaterThan: "#txtDesdeFecha"
+            },
+            cmbEmpresas: { required: true},
+
+
+        },
+        // Messages for form validation
+        messages: {
+            txtdFecha: {
+                required: "Debe seleccionar una fecha"
+            },
+            txthFecha: {
+                required: "Debe seleccionar una fecha"
+            },
+            cmbEmpresas: { required: 'Debe introducir una empresa'}
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmGenerar').valid();
+}
+
+
 function loadTablaDocumentospago(data) {
     var dt = $('#dt_documentoPago').dataTable();
     if (data !== null && data.length === 0) {
@@ -230,6 +313,40 @@ function buscarDocumentospago() {
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/documentos_pago/?nombre=" + aBuscar,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaDocumentospago(data);
+            },
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+        });
+    };
+    return mf;
+}
+
+function buscarDocumentospago2() {
+    var mf = function () {
+        var dFecha = 0;
+        var hFecha = 0;
+        var empresaId = 0;
+        var proveedorId = 0;
+        if(vm.dFecha()) {
+            dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        }
+        if(vm.hFecha()) {
+            hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        }
+        empresaId = vm.sempresaId();
+        proveedorId = vm.sproveedorId();
+        // obtener el n.serie del certificado para la firma.
+        // enviar la consulta por la red (AJAX)
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/documentos_pago/buscar/" + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -296,5 +413,33 @@ buscarTodos = function() {
     var url = myconfig.apiUrl + "/api/documentos_pago/?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
         loadTablaDocumentospago(data);
+    });
+}
+
+function loadProveedores() {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        vm.sproveedorId(0)
+        $("#cmbProveedores").val([0]).trigger('change');
+    });
+}
+
+function loadEmpresas() {
+    $.ajax({
+        type: "GET",
+        url: "/api/empresas",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var empresas = [{ empresaId: 0, nombre: null }].concat(data);
+            vm.posiblesEmpresas(empresas);
+            $("#cmbEmpresas").val([0]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }

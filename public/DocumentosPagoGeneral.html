@@ -564,6 +564,58 @@
                                             </div>
                                         </fieldset>
                                     </form>
+                                    <form id="frmGenerar" class="smart-form">
+                                        <header>
+                                            Buscar documentos de pago para generar archivos
+                                        </header>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Desde fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtdFecha" name="txtdFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="input">
+                                                        <input id="txthFecha" name="txthFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-md-6">
+                                                    <label class="label">Empresa</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                                        <i></i>
+                                                    </label>
+                                                </div>
+                                                <div class="col col-md-6">
+                                                    <label class="label">Proveedores</label>
+                                                        <label style="width:100%;">
+                                                            <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
+                                                            <i></i>
+                                                    </label>
+                                                </div>
+                                            </div> 
+                                            <div class="row">
+                                                <div class="col col-md-12">
+                                                    <label class="checkbox">
+                                                        <input id="chkDocAsociado" type="checkbox" name="chkDocAsociado" data-bind="checked: docAsociado">
+                                                        <i></i>Con documento de pago asociado
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="pull-right">
+                                                <button id="btnBuscar2" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
                                     <div id="tbDocumentoPago" style="display:none;">
                                         <table id="dt_documentoPago" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
@@ -634,6 +686,7 @@
                 
      <!--- KNOCKOUT JS -->
      <script src="js/knockout-3.1.0.js"></script>
+     <script src="js/moment.js"></script>
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
     <script src="js/numeral.js"></script>
