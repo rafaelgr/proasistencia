@@ -79,7 +79,7 @@ function initForm() {
     }
 }
 
-function createSelect(selItem){
+/* function createSelect(selItem){
     var fac = selItem
     var sel = "<select><option>" + fac[0].ref+ "</option>" ;
     for(var i = 0; i < fac.length; ++i){
@@ -92,7 +92,7 @@ function createSelect(selItem){
     }
     sel += "</select>";
     return sel;
-}
+} */
 
 function initTablaDocumentospago() {
     tablaCarro = $('#dt_documentoPago').DataTable({
@@ -141,12 +141,12 @@ function initTablaDocumentospago() {
             data: "nombre"
         }, {
             data: "pdf"
-        }, {
+        },/*  {
             data: "facturas",
              render: function(data){
                 return createSelect(data);
             }           
-        }, {
+        },  */{
             data: "documentoPagoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -262,15 +262,12 @@ function deleteDocumentPago(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            var data = {
-                documentoPagoId: id
-            };
             $.ajax({
                 type: "DELETE",
                 url: myconfig.apiUrl + "/api/documentos_pago/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: null,
                 success: function (data, status) {
                     var fn = buscarDocumentospago();
                     fn();
