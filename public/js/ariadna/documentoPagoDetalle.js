@@ -928,7 +928,7 @@ function loadDoc(filename) {
     var ext = filename.split('.').pop().toLowerCase();
     if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
         // see it in container
-        var url = "/../../../ficheros/uploads/" + filename;
+        var url = "/../../../ficheros/docpago/" + filename;
         if (ext == "pdf") {
             // <iframe src="" width="100%" height="600px"></iframe>
             $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
@@ -948,7 +948,7 @@ function loadDoc(filename) {
     var ext = filename.split('.').pop().toLowerCase();
     if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
         // see it in container
-        var url = "/ficheros/uploads/" + filename;
+        var url = "/ficheros/docpago/" + filename;
         if (ext == "pdf") {
             // <iframe src="" width="100%" height="600px"></iframe>
             $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');

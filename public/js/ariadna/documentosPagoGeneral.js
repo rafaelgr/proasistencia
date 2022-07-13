@@ -40,6 +40,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarDocumentospago());
     $('#btnBuscar2').click(buscarDocumentospago2());
+    $('#btnExportar').click(exportarDocumentospago());
     $('#btnAlta').click(crearDocumentPago());
     $('#frmBuscar').submit(function () {
         return false
@@ -262,7 +263,7 @@ function datosOk2() {
             },
             txthFecha: {
                 required: true,
-                greaterThan: "#txtDesdeFecha"
+                greaterThan: "#txtdFecha"
             },
             cmbEmpresas: { required: true},
 
@@ -362,6 +363,36 @@ function buscarDocumentospago2() {
     return mf;
 }
 
+function exportarDocumentospago() {
+    var mf = function () {
+        if (!datosOk2()) {
+            return;
+        }
+        var proveedorId = 0;
+        dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        empresaId = vm.sempresaId();
+        proveedorId = vm.sproveedorId();
+        // obtener el n.serie del certificado para la firma.
+        // enviar la consulta por la red (AJAX)
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/documentos_pago/exportar/" + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaDocumentospago(data);
+            },
+                            error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+        });
+    };
+    return mf;
+}
+
 function crearDocumentPago() {
     var mf = function () {
         var url = "DocumentoPagoDetalle.html?DocumentoPagoId=0";
@@ -419,10 +450,10 @@ buscarTodos = function() {
 function loadProveedores() {
     llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
         if (err) return;
-        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
         vm.posiblesProveedores(proveedores);
         vm.sproveedorId(0)
-        $("#cmbProveedores").val([0]).trigger('change');
+        $("#cmbProveedores").val(0).trigger('change');
     });
 }
 
@@ -435,7 +466,7 @@ function loadEmpresas() {
         success: function (data, status) {
             var empresas = [{ empresaId: 0, nombre: null }].concat(data);
             vm.posiblesEmpresas(empresas);
-            $("#cmbEmpresas").val([0]).trigger('change');
+            $("#cmbEmpresas").val(null).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
