@@ -30,6 +30,7 @@
     "connect": "^3.4.0",
     "cors": "^2.7.1",
     "dotenv": "^6.2.0",
+    "easy-pdf-merge": "^0.2.6",
     "express": "^4.13.3",
     "formidable": "^1.2.2",
     "glob": "^7.1.2",

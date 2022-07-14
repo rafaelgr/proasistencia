@@ -382,7 +382,7 @@ function exportarDocumentospago() {
             contentType: "application/json",
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaDocumentospago(data);
+                if(data) mensNormal("Exportación realizada con éxito.");
             },
                             error: function (err) {
                     mensErrorAjax(err);
