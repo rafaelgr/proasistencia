@@ -326,6 +326,9 @@ function initTablaFacturasAsociadas() {
             data: "numeroFacturaProveedor"
         }, {
             data: "ref"
+        },
+        {
+            data: "proveedorNombre"
         }, {
             data: "fechaFactura",
             render: function (data, type, row) {
@@ -344,7 +347,9 @@ function initTablaFacturasAsociadas() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, {
+        },{
+            data: "pdfFactura"
+        },  {
             data: "facproveId",
             render: function (data, type, row) {
                 var html = "";
@@ -449,6 +454,8 @@ function initTablaAsociarFacturas() {
             data: "numeroFacturaProveedor"
         },{
             data: "ref"
+        },{
+            data: "proveedorNombre"
         }, {
             data: "fecha",
             render: function (data, type, row) {
