@@ -40,7 +40,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarDocumentospago());
     $('#btnBuscar2').click(buscarDocumentospago2());
-    $('#btnExportar').click(exportarDocumentospago());
+    $('#btnAceptarExportar').click(exportarDocumentospago());
     $('#btnAlta').click(crearDocumentPago());
     $('#frmBuscar').submit(function () {
         return false
@@ -368,6 +368,8 @@ function exportarDocumentospago() {
         if (!datosOk2()) {
             return;
         }
+        $("#mensajeExportacion").hide();
+        $("#mensajeEspera").show();
         var proveedorId = 0;
         dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -381,8 +383,13 @@ function exportarDocumentospago() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                if(data) mensNormal("Exportación realizada con éxito.");
+                if(data) {
+                    $("#mensajeEspera").hide();
+                    $("#mensajeExportacion").show();
+                    $('#modalExportar').modal('hide');
+                    var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
+                    mensNormal("Exportación realizada con éxito.");
+                }
             },
                             error: function (err) {
                     mensErrorAjax(err);
