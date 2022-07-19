@@ -22,3 +22,15 @@ CREATE TABLE `documentosPago_facproves`(
   CONSTRAINT `facproveFK` FOREIGN KEY (`facproveId`) REFERENCES `proasistencia`.`facprove`(`facproveId`)
 );
 
+
+ALTER TABLE `documentospago_facproves`   
+  ADD COLUMN `codigo` INT(11) NULL AFTER `facproveId`,
+  ADD COLUMN `anyo` INT(11) NULL AFTER `codigo`,
+  ADD COLUMN `empresaConta` VARCHAR(255) NULL AFTER `anyo`;
+
+
+
+
+  
+
+

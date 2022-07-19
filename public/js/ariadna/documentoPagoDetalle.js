@@ -185,6 +185,7 @@ function admData() {
     self.hFecha = ko.observable();
     self.facproveId = ko.observable();
     self.pdf = ko.observable();
+    self.facturas = ko.observableArray([]);
     //
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -208,6 +209,7 @@ function loadData(data) {
      if(vm.pdf()) {
         loadDoc(vm.pdf());
     }
+    vm.facturas(data.facturas);
     loadTablaFacturas(data.facturas);
 }
 
@@ -353,8 +355,8 @@ function initTablaFacturasAsociadas() {
             data: "facproveId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteFacturaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editFacturaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='desvinculaFactura(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-lg'  onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -555,9 +557,9 @@ function initTablaAsociarRegistros() {
         }, {
             data: "Descripcion"
         },{
-            data: "codogo",
+            data: "codigo",
             render: function (data, type, row) {
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editRegistro(" + data + ");' title='Editar registro data-toggle='modal' data-target='#modalAsociarRegistros''> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
@@ -840,10 +842,13 @@ function procesaClavesTransferencias() {
     var arr = [];
     datosArrayRegistros.forEach(e => {
         var obj = {};
-        var cadenas = e.split("-");
+        var anyo = e.substr(-4);
+        var i = e.indexOf(anyo);
+        var cod = e.substr(0, i);
+
         obj = {
-            nrodocum: cadenas[0],
-            anyodocum: cadenas[1]
+            nrodocum: cod,
+            anyodocum: anyo
         }
         arr.push(obj);
     });
@@ -968,4 +973,102 @@ function loadDoc(filename) {
         $("#msgContainer").html('Vista previa no dispònible');
         $("#docContainer").html('');
     }
+}
+
+function editFactura(id) {
+    // hay que abrir la página de detalle de la factura
+    // pasando en la url ese ID
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    window.open(url, '_blank');
+}
+
+function editRegistro(codigo) {
+   console.log(codigo);
+}
+
+function desvinculaFactura(id) {
+    var arr = [ {
+        documentoPagoId: documentoPagoId,
+        facproveId: id
+    }];
+    $.ajax({
+        type: "DELETE",
+        url: myconfig.apiUrl + "/api/documentos_pago/delete/docpago-facprove",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(arr),
+        success: function (data, status) {
+            //buscamos ahora los datos para refrescar
+            
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    if(data.facturas) {
+                        vm.facturas(data.facturas);
+                        loadTablaFacturas(data.facturas);
+                        return;
+                    }
+                    vm.facturas([]);
+                    loadTablaFacturas([])
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+           
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function desvinculaFacturas() {
+    var arr = vm.facturas();
+    arr.forEach(e => {
+        e.documentoPagoId = documentoPagoId;
+    });
+    $.ajax({
+        type: "DELETE",
+        url: myconfig.apiUrl + "/api/documentos_pago/delete/docpago-facprove",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(arr),
+        success: function (data, status) {
+            //buscamos ahora los datos para refrescar
+            
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    if(data.facturas) {
+                        loadTablaFacturas(data.facturas);
+                        return;
+                    }
+                    vm.facturas([]);
+                    loadTablaFacturas([])
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+           
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }

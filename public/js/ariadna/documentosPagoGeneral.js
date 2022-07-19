@@ -48,6 +48,10 @@ function initForm() {
 
     $('#frmGenerar').submit(function () {
         return false
+    });frmExportar
+
+    $('#frmExportar').submit(function () {
+        return false
     });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
