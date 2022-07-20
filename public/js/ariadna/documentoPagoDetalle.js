@@ -50,6 +50,11 @@ function initForm() {
         return false;
     });
 
+
+    $("#frmFacturasRegistros").submit(function() {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
@@ -82,9 +87,24 @@ function initForm() {
         }
     );
 
+    $.validator.addMethod("greaterThan",
+    function (value, element, params) {
+        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return new Date(fv) >= new Date(fp);
+        } else {
+            // esto es debido a que permitimos que la segunda fecha nula
+            return true;
+        }
+    }, 'La fecha final debe ser mayor que la inicial.');
+    //
+
+    $('#btnAceptarAsociarFacturas').hide()//botón oculto por defecto
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
+    initTablaFacturasRegistros();
 
 
     $('#upload-input').on('change', function () {
@@ -102,7 +122,7 @@ function initForm() {
         formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
             $.ajax({
-                url: '/api/upload/s3',
+                url: '/api/upload/docpago',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -214,6 +234,7 @@ function loadData(data) {
 }
 
 function datosOK() {
+    
     $('#frmDocumentoPago').validate({
         rules: {
             txtNombre: {
@@ -240,6 +261,39 @@ function datosOK() {
     var opciones = $("#frmDocumentoPago").validate().settings;
     return $('#frmDocumentoPago').valid();
 }
+
+function datosOK2() {
+    $('#frmAsociarFacturas').validate({
+        rules: {
+            txtdFecha: {
+                required: true
+            },
+            txthFecha: {
+                required: true,
+                greaterThan: "#txtdFecha"
+            },
+            cmbEmpresas: { required: true},
+
+
+        },
+        // Messages for form validation
+        messages: {
+            txtdFecha: {
+                required: "Debe seleccionar una fecha"
+            },
+            txthFecha: {
+                required: "Debe seleccionar una fecha"
+            },
+            cmbEmpresas: { required: 'Debe introducir una empresa'}
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmAsociarFacturas').valid();
+}
+
 
 function aceptar() {
         if (!datosOK())
@@ -380,6 +434,7 @@ function loadEmpresas() {
         if (err) return;
         var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
+        $("#cmbEmpresas").val([0]).trigger('change');
     });
 }
 
@@ -389,6 +444,7 @@ function loadDeparta() {
         if (err) return;
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
+        $("#cmbDepartamentos").val([0]).trigger('change');
     });
 }
 
@@ -559,7 +615,7 @@ function initTablaAsociarRegistros() {
         },{
             data: "codigo",
             render: function (data, type, row) {
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editRegistro(" + data + ");' title='Editar registro data-toggle='modal' data-target='#modalAsociarRegistros''> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editRegistro(" + data + ");' title='Editar registro' data-toggle='modal' data-target='#modalFacturasRegistros'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
@@ -656,7 +712,7 @@ function buscarAsociarFacturas() {
     $('#dt_asociarFacturas').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
-        //if (!datosOK()) return;
+        if (!datosOK2()) return;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
@@ -681,8 +737,8 @@ function buscarAsociarFacturas() {
             success: function (data, status) {
                 loadTablaAsociarFacturas(data);
                 // mostramos el botén de alta
-                $("#btnAlta").show();
                 $('#checkMain').prop('checked', false);
+                if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -695,7 +751,7 @@ function buscarAsociarRegistros() {
     $('#dt_asociarRegistros').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
-        //if (!datosOK()) return;
+        if (!datosOK2()) return;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
@@ -712,8 +768,8 @@ function buscarAsociarRegistros() {
             contentType: "application/json",
             success: function (data, status) {
                 loadTablaAsociarRegistros(data);
-                // mostramos el botén de alta
-                $("#btnAlta").show();
+                // mostramos el botó de alta
+                if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
                 $('#checkMainRegistros').prop('checked', true);
                 updateAllRegistros(true);
             },
@@ -759,7 +815,7 @@ function aceptarAsociarFacturas() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data, status) {
-            mensNormal("Se han asociado las facturas correctamente.")
+            mensNormal("Se han asociado las facturas correctamente.");
             $('#modalAsociarRegistros').modal('hide');
             $.ajax({
                 type: "GET",
@@ -771,7 +827,7 @@ function aceptarAsociarFacturas() {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                 },
-                                error: function (err) {
+                error: function (err) {
                         mensErrorAjax(err);
                         // si hay algo más que hacer lo haremos aquí.
                     }
@@ -785,7 +841,7 @@ function aceptarAsociarFacturas() {
 }
 
 function aceptarAsociarRegistros() {
-    var claves = procesaClavesTransferencias();
+    var claves = procesaClavesTransferencias(null);
     var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
@@ -838,9 +894,15 @@ function aceptarAsociarRegistros() {
 }
 
 
-function procesaClavesTransferencias() {
+function procesaClavesTransferencias(cod) {
     var arr = [];
-    datosArrayRegistros.forEach(e => {
+    var c = datosArrayRegistros;
+    if(cod) {
+        c = [];
+        cod = cod.toString();
+        c.push(cod);
+    }
+    c.forEach(e => {
         var obj = {};
         var anyo = e.substr(-4);
         var i = e.indexOf(anyo);
@@ -866,13 +928,16 @@ function limpiarModal(opcion) {
         $('#tbAsociarfacturas').show();
         $('#tbAsociarRegistros').hide();
     }
+    $('#btnAceptarAsociarFacturas').hide()
     vm.dFecha(null);
     vm.hFecha(null);
-    vm.sdepartamentoId(null);
-    vm.sempresaId(null);
+    vm.departamentoId(null);
+    vm.empresaId(null);
+    loadEmpresas()
+    loadDeparta();
     $('#dt_asociarFacturas').dataTable().fnClearTable();
+    $('#dt_asociarRegistros').dataTable().fnClearTable();
     //$('#dt_asociarFacturas').dataTable().fnDestroy();
-    //$('#tbFacturasAsociadas').hide();
 }
 
 
@@ -933,6 +998,128 @@ function updateAllRegistros(opcion) {
     }
 }
 
+//modal facturas de pagos conta
+
+
+function initTablaFacturasRegistros() {
+    tablaCarro = $('#dt_facturasRegistros').dataTable({
+        autoWidth: true,
+        paging: false,
+        "bDestroy": true,
+        columnDefs: [{
+            "width": "10%",
+            "targets": 0
+        }],
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facturasRegistros'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAsociarFacturas,
+        columns: [{
+            data: "facproveId",
+            width: "10%",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                return html;
+            }
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        },  {
+            data: "numeroFacturaProveedor"
+        },{
+            data: "ref"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "formaPago"
+        }]
+    });
+}
+
+function editRegistro(codigo) {
+    var claves = procesaClavesTransferencias(codigo);
+    var empresaId = vm.sempresaId();
+    var cod = claves[0].nrodocum
+    var anyo = claves[0].anyodocum
+    $.ajax({
+     type: "GET",
+     url: myconfig.apiUrl + "/api/documentos_pago/registro/" + cod + "/" + anyo + "/" + empresaId,
+     dataType: "json",
+     contentType: "application/json",
+     data: null,
+     success: function (data, status) {
+         if(data) {
+            loadTablaFacturasRegistros(data)
+             return;
+         }
+         mensNormal("No se han encontrado registros.")
+         
+     },
+     error: function (err) {
+         mensErrorAjax(err);
+         // si hay algo más que hacer lo haremos aquí.
+     }
+ });
+ }
+ 
+
+
+function loadTablaFacturasRegistros(data) {
+    var dt = $('#dt_facturasRegistros').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
 
 //funciones de la pestaña de facturas en PDF
 
@@ -982,9 +1169,6 @@ function editFactura(id) {
     window.open(url, '_blank');
 }
 
-function editRegistro(codigo) {
-   console.log(codigo);
-}
 
 function desvinculaFactura(id) {
     var arr = [ {
@@ -1071,4 +1255,8 @@ function desvinculaFacturas() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function cierraModal() {
+    $('#modalFacturasRegistros').modal('hide'); 
 }

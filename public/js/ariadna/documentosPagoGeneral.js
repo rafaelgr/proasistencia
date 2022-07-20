@@ -194,14 +194,14 @@ function initTablaDocumentospago() {
             },
             {
             data: "nombre"
-        }, {
+        },{
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
             data: "pdf"
-        },/*  {
-            data: "facturas",
-             render: function(data){
-                return createSelect(data);
-            }           
-        },  */{
+        },{
             data: "documentoPagoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -221,18 +221,19 @@ function format(d) {
         fac.forEach(e => {
             html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
             '<tr>' +
-            '<td>REFERENCIA:</td>' +
-            '<td>' +
-            e.ref +
-            '</td>' +
+                '<td>REFERENCIA:</td>' +
+                '<td>' +
+                    e.ref +
+                '</td>' +
+                '<td>NÚMERO:</td>' +
+                '<td>' +
+                    e.numeroFacturaProveedor +
+                '</td>' +
+                '<td>PROVEEDOR:</td>' +
+                '<td>' +
+                    e.proveedorNombre +
+                '</td>' +
             '</tr>' +
-            '<tr>' +
-            '<td>NÚMERO:</td>' +
-            '<td>' +
-            e.numeroFacturaProveedor +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
             '</table>'
         });
     return html;
