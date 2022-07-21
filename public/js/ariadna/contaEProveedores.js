@@ -189,7 +189,7 @@ function initTablaFacproves() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll" style=" width: 50px;height: 50px;">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
