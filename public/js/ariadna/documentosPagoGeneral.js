@@ -376,15 +376,21 @@ function exportarDocumentospago() {
         $("#mensajeExportacion").hide();
         $("#mensajeEspera").show();
         var proveedorId = 0;
-        dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        empresaId = vm.sempresaId();
-        proveedorId = vm.sproveedorId();
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var empresaId = vm.sempresaId();
+        var proveedorId = vm.sproveedorId();
+        var conDocPago = vm.docAsociado();
+        if(conDocPago) {
+            conDocPago = 1;
+        }else {
+            conDocPago = 0;
+        }
         // obtener el n.serie del certificado para la firma.
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/documentos_pago/exportar/" + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
+            url: myconfig.apiUrl + "/api/documentos_pago/exportar/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

@@ -422,10 +422,11 @@ function buscarFacproves() {
         if (!datosOK()) return;
         empresaId = vm.sEmpresaId();
         departamentoId = vm.sdepartamentoId();
+        var esCorreo = 1;
 
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/"  + empresaId + "/" + departamentoId + "/" + usuario.usuarioId,
+            url: myconfig.apiUrl + "/api/facturasProveedores/correo/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + proveedorId + "/"  + empresaId + "/" + departamentoId + "/" + usuario.usuarioId + "/" + esCorreo,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
