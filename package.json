@@ -41,7 +41,6 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.6.3",
     "numeral": "^1.5.3",
-    "pdf-merger-js": "^3.4.0",
     "request": "^2.88.2",
     "serve-index": "^1.9.1",
     "socket.io": "^2.4.1",
