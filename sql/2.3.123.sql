@@ -6,12 +6,10 @@ CREATE TABLE `documentos_pago`(
 );
 
 ALTER TABLE `documentos_pago`   
-  DROP COLUMN `nombre`, 
   ADD COLUMN `fecha` DATE NULL AFTER `pdf`;
 
 
-ALTER TABLE `documentos_pago`   
-  ADD COLUMN `numero` VARCHAR(255) NULL AFTER `documentoPagoId`;
+
 
 CREATE TABLE `documentosPago_facproves`(  
   `docfacproveId` INT(11) NOT NULL AUTO_INCREMENT,
