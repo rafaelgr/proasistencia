@@ -128,7 +128,7 @@ function initForm() {
 function ajustaDepartamentos(data) {
     //ELIMINAMOS EL DEPARTAMENTO DE OBRAS PARA QUE NO SE PUEDA LIQUIDAR AQUÍ
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
-    data.splice(7, 1);
+    data.splice(8, 1);
     console.log(data);
     var departamentos = [{
         departamentoId: 0,
