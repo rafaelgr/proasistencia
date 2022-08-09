@@ -451,7 +451,7 @@
                 <ol class="breadcrumb">
                     <li>Inicio</li>
                     <li>Administración</li>
-                    <li>Documentos de pago</li>
+                    <li>Exportar facturas de proveedor</li>
                 </ol>
                 <!-- end breadcrumb -->
                 <!-- You can also add more buttons to the
@@ -476,7 +476,7 @@
 
                             <!-- PAGE HEADER -->
                             <i class="fa-fw fa fa-asterisk"></i>
-                            Documentos de pago <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            Exportación de facturas de proveedores <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -529,7 +529,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento documentos de pago </h2>
+                                <h2>Exportación de facturas de proveedor</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -569,7 +569,7 @@
                                     </form> -->
                                     <form id="frmGenerar" class="smart-form">
                                         <header>
-                                            Buscar documentos de pago.
+                                            Seleccione las facturas de proveedor que va a contabilizar
                                         </header>
                                         <fieldset>
                                             <div class="row">
@@ -628,12 +628,13 @@
                                             </fieldset>
                                         </fieldset>
                                     </form>
-                                    <div id="tbDocumentoPago" style="display:none;">
-                                        <table id="dt_documentoPago" class="table table-striped table-bordered table-hover" width="100%">
+                                    <div id="tbfExportar" style="display:none;">
+                                        <table id="dt_fExportar" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <i class="fa fa-fw fa-clipboard">
+                                                    <th style="background : none;">
+                                                                <input type="checkbox" id="checkMain">
+                                                    </th>
                                                     <th data-class="phone">
                                                         Referencia
                                                     </th>
@@ -659,18 +660,11 @@
                                                     <th data-hide="phone">
                                                         total
                                                     </th>
-                                                    
-                                                    <th data-hide="phone">
-                                                        Forma pago
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        CIF/NIF
-                                                    </th>
-                                                    <th data-hide="phone">
-                                                        Num. conta
+                                                    <th>
+                                                        PDF factura
                                                     </th>
                                                     <th>
-                                                        PDFR documento de page-footer
+                                                        PDF documento de pago
                                                     </th>
                                                                                                      
                                                     <th style="width:10%; text-align: center;">
@@ -726,12 +720,10 @@
                                 <div class="row" id="mensajeExportacion">
                                     <section class="col col-md-12">
                                         <div>
-                                            Este proceso exportará los documentos de pago filtrados por los siguentes parámetros:<br/>
-                                            De fecha a fecha (requerido)<br/>
-                                            Empresa (requerido) </br>
-                                            proveedor (opcional). </br> Puede acceder al directorio
+                                            Este proceso exportará las facturas de proveedor seleccionados<br/>
+                                            Puede acceder al directorio
                                             de exportación por un enlace que figura en la pantalla principal de informes, en
-                                            el apartado "Documentos de pago".
+                                            el apartado "Facturas exportadas".
                                         </div>
                                     </section>
                                 </div>

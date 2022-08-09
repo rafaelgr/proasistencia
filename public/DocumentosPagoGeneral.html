@@ -542,7 +542,7 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     
-                                    <!-- <form id="frmBuscar" class="smart-form">
+                                    <form id="frmBuscar" class="smart-form">
                                         <header>
                                             Buscar documentos de pago por nombre.
                                         </header>
@@ -565,70 +565,6 @@
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
                                             </div>
-                                        </fieldset>
-                                    </form> -->
-                                    <form id="frmGenerar" class="smart-form">
-                                        <header>
-                                            Buscar documentos de pago.
-                                        </header>
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-md-6">
-                                                    <label class="label">Desde fecha</label>
-                                                    <label class="input">
-                                                        <input id="txtdFecha" name="txtdFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Hasta fecha</label>
-                                                    <label class="input">
-                                                        <input id="txthFecha" name="txthFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col col-md-6">
-                                                    <label class="label">Empresa</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
-                                                        <i></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col col-md-6">
-                                                    <label class="label">Proveedores</label>
-                                                        <label style="width:100%;">
-                                                            <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
-                                                            <i></i>
-                                                    </label>
-                                                </div>
-                                            </div> 
-                                            <div class="row">
-                                                <div class="col col-md-12">
-                                                    <label class="checkbox">
-                                                        <input id="chkDocAsociado" type="checkbox" name="chkDocAsociado" data-bind="checked: docAsociado">
-                                                        <i></i>Exportar con documento de pago asociado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <fieldset>
-                                                <div class="pull-right">
-                                                    <button id="btnAlta" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">
-                                                        <i class="fa fa-lg fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <button id="btnBuscar2" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                        <i class="fa fa-lg fa-search"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <button id="btnExportar" title="Exportar"  data-toggle="modal" data-target="#modalExportar" class="btn btn-primary btn-circle btn-lg">
-                                                        <i class="fa fa-lg fa-file-code-o"></i>
-                                                    </button>
-                                                </div>
-                                            </fieldset>
                                         </fieldset>
                                     </form>
                                     <div id="tbDocumentoPago" style="display:none;">

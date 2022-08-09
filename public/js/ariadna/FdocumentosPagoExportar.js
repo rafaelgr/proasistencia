@@ -34,23 +34,39 @@ function initForm() {
             return true;
         }
     }, 'La fecha final debe ser mayor que la inicial.');
+
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
     //
     vm = new admData();
     ko.applyBindings(vm);
     //
     $('#btnBuscar2').click(buscarDocumentospago2());
-    $('#btnAceptarExportar').click(exportarDocumentospago());
+    $('#btnAceptarExportar').click(exportarFacturasDocpago());
     $('#frmBuscar').submit(function () {
         return false
     });
 
     $('#frmGenerar').submit(function () {
         return false
-    });frmExportar
+    });
 
     $('#frmExportar').submit(function () {
         return false
     });
+
+    $('#chkDocAsociado').prop('checked', true);// se marcan por defecto todos los checks
+
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarDocumentospago();
@@ -62,23 +78,7 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
-    initTablaDocumentospago();
-
-    // Add event listener for opening and closing details
-    $('#dt_documentoPago').on('click', 'td.dt-control', function () {
-        var tr = $(this).closest('tr');
-        var row = tablaCarro.row(tr);
- 
-        if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        } else {
-            // Open this row
-            row.child(format(row.data())).show();
-            tr.addClass('shown');
-        }
-    });
+    initTablaExportar();
 }
 
 
@@ -105,28 +105,16 @@ function admData() {
 
 }
 
-/* function createSelect(selItem){
-    var fac = selItem
-    var sel = "<select><option>" + fac[0].ref+ "</option>" ;
-    for(var i = 0; i < fac.length; ++i){
-        if(fac[i] == selItem){
-            sel += "<option>" + fac[i].ref + "</option>";
-        }
-        else{
-            sel += "<option>" + fac[i].ref + "</option>";
-        }
-    }
-    sel += "</select>";
-    return sel;
-} */
 
-function initTablaDocumentospago() {
-    tablaCarro = $('#dt_documentoPago').DataTable({
+
+function initTablaExportar() {
+    tablaCarro = $('#dt_fExportar').DataTable({
         autoWidth: true,
+        paging: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_documentoPago'), breakpointDefinition);
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_fExportar'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
@@ -159,10 +147,10 @@ function initTablaDocumentospago() {
         columns: [{
             data: "facproveId",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {
@@ -174,12 +162,11 @@ function initTablaDocumentospago() {
         }, {
             data: "receptorNombre"
         },  {
-            data: "fecha",
+            data: "fechaFactura",
             render: function (data, type, row) {
-                if(!data) return "";
                 return moment(data).format('DD/MM/YYYY');
             }
-        },  {
+        }, {
             data: "fecharecepcionFactura",
             render: function (data, type, row) {
                 if(!data) return "";
@@ -197,12 +184,8 @@ function initTablaDocumentospago() {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },  {
-            data: "vFPago"
-        }, {
-            data: "emisorNif"
         },{
-            data: "numregisconta",
+            data: "nombreFacprovePdf",
         },{
             data: "pdf",
         },   {
@@ -221,50 +204,8 @@ function initTablaDocumentospago() {
     });
 }
 
-function format(d) {
-    var fac = d.facturas;
-    var html = "";
-        fac.forEach(e => {
-            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
-            '<tr>' +
-                '<td>REFERENCIA:</td>' +
-                '<td>' +
-                    e.ref +
-                '</td>' +
-                '<td>NÚMERO:</td>' +
-                '<td>' +
-                    e.numeroFacturaProveedor +
-                '</td>' +
-                '<td>PROVEEDOR:</td>' +
-                '<td>' +
-                    e.proveedorNombre +
-                '</td>' +
-            '</tr>' +
-            '</table>'
-        });
-    return html;
-}
 
-function datosOK() {
 
-    
-    $('#frmBuscar').validate({
-        rules: {
-            txtBuscar: { required: true },
-        },
-        // Messages for form validation
-        messages: {
-            txtBuscar: {
-                required: 'Introduzca el texto a buscar'
-            }
-        },
-        // Do not change code below
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    return $('#frmBuscar').valid();
-}
 
 function datosOk2() {
     $('#frmGenerar').validate({
@@ -300,48 +241,64 @@ function datosOk2() {
 
 
 function loadTablaDocumentospago(data) {
-    var dt = $('#dt_documentoPago').dataTable();
+    var dt = $('#dt_fExportar').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
-        $("#tbDocumentoPago").hide();
+        $("#tbfExportar").hide();
     } else {
         dt.fnClearTable();
         dt.fnAddData(data);
         dt.fnDraw();
-        $("#tbDocumentoPago").show();
+        data.forEach(function (v) {
+            var field = "#chk" + v.facproveId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
+            }
+            $(field).change(function () {
+                var quantity = 0;
+                var data = {
+                    facprove: {
+                        facproveId: v.facproveId,
+                        empresaId: v.empresaId,
+                        proveedorId: v.proveedorId,
+                        fecha: moment(v.fechaFactura).format('YYYY-MM-DD'),
+                        sel: 0
+                    }
+                };
+                if (this.checked) {
+                    data.facprove.sel = 1;
+                }
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
+                var data2 = [];
+                data2.push(data);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data2),
+                    success: function (data, status) {
+    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+            });
+        });
+        $("#tbfExportar").show();
     }
 }
 
-function buscarDocumentospago() {
-    var mf = function () {
-        var aBuscar = $('#txtBuscar').val();
-        if(aBuscar == '') $('#txtBuscar').val('*')
-        if (!datosOK()) {
-            return;
-        }
-        // obtener el n.serie del certificado para la firma.
-        var aBuscar = $('#txtBuscar').val();
-        // enviar la consulta por la red (AJAX)
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/documentos_pago/?nombre=" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaDocumentospago(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
-    };
-    return mf;
-}
+
 
 function buscarDocumentospago2() {
     var mf = function () {
+        if (!datosOk2()) {
+            return;
+        }
         var dFecha = 0;
         var hFecha = 0;
         var empresaId = 0;
@@ -374,7 +331,7 @@ function buscarDocumentospago2() {
     return mf;
 }
 
-function exportarDocumentospago() {
+function exportarFacturasDocpago() {
     var mf = function () {
         if (!datosOk2()) {
             return;
@@ -386,8 +343,8 @@ function exportarDocumentospago() {
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var empresaId = vm.sempresaId();
         var proveedorId = vm.sproveedorId();
-        var conDocPago = vm.docAsociado();
-        if(conDocPago) {
+        var conDocPago = 1;
+        if($('#chkDocAsociado').prop('checked')) {
             conDocPago = 1;
         }else {
             conDocPago = 0;
@@ -396,7 +353,7 @@ function exportarDocumentospago() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/documentos_pago/exportar/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
+            url: myconfig.apiUrl + "/api/documentos_pago/exportar/facproves/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -490,4 +447,45 @@ function loadEmpresas() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function updateAll(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_fExportar').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(opcion) sel = 1
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                facprove: {
+                    facproveId: datos[i].facproveId,
+                    empresaId: datos[i].empresaId,
+                    proveedorId: datos[i].proveedorId,
+                    fecha: moment(datos[i].fechaFactura).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+        var data2 = [];
+        data2.push(data);
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data2),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
 }

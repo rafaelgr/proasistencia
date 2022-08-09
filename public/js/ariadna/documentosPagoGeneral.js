@@ -46,9 +46,7 @@ function initForm() {
         return false
     });
 
-    $('#frmGenerar').submit(function () {
-        return false
-    });frmExportar
+  
 
     $('#frmExportar').submit(function () {
         return false
@@ -258,38 +256,6 @@ function datosOK() {
         }
     });
     return $('#frmBuscar').valid();
-}
-
-function datosOk2() {
-    $('#frmGenerar').validate({
-        rules: {
-            txtdFecha: {
-                required: true
-            },
-            txthFecha: {
-                required: true,
-                greaterThan: "#txtdFecha"
-            },
-            cmbEmpresas: { required: true},
-
-
-        },
-        // Messages for form validation
-        messages: {
-            txtdFecha: {
-                required: "Debe seleccionar una fecha"
-            },
-            txthFecha: {
-                required: "Debe seleccionar una fecha"
-            },
-            cmbEmpresas: { required: 'Debe introducir una empresa'}
-        },
-        // Do not change code below
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.parent());
-        }
-    });
-    return $('#frmGenerar').valid();
 }
 
 
