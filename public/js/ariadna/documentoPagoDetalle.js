@@ -119,7 +119,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
             
             $.ajax({
                 url: '/api/upload/docpago',
@@ -409,8 +409,8 @@ function initTablaFacturasAsociadas() {
             data: "facproveId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='desvinculaFactura(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg'  onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaFactura(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success'  onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -682,7 +682,7 @@ function loadTablaAsociarRegistros(data) {
     dt.fnDraw();
     data.forEach(function (v) {
         var field = "#chk" + v.codigo;
-        $(field).attr('checked', true);
+        $(field).attr('checked', false);
         
         $(field).change(function () {
             if (this.checked) {
@@ -770,7 +770,7 @@ function buscarAsociarRegistros() {
                 loadTablaAsociarRegistros(data);
                 // mostramos el botó de alta
                 if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
-                $('#checkMainRegistros').prop('checked', true);
+                $('#checkMainRegistros').prop('checked', false);
                 updateAllRegistros(true);
             },
             error: function (err) {

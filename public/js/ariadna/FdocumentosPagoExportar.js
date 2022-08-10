@@ -79,6 +79,8 @@ function initForm() {
     loadEmpresas();
 
     initTablaExportar();
+
+    $('#btnExportar').hide();//botón de exportar oculto al inicio
 }
 
 
@@ -240,7 +242,7 @@ function datosOk2() {
 }
 
 
-function loadTablaDocumentospago(data) {
+function loadTablaFacturasExp(data) {
     var dt = $('#dt_fExportar').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
@@ -280,6 +282,7 @@ function loadTablaDocumentospago(data) {
                     contentType: "application/json",
                     data: JSON.stringify(data2),
                     success: function (data, status) {
+
     
                     },
                     error: function (err) {
@@ -289,6 +292,7 @@ function loadTablaDocumentospago(data) {
             });
         });
         $("#tbfExportar").show();
+        $('#btnExportar').show()//mostramos el botón de exportación
     }
 }
 
@@ -320,12 +324,12 @@ function buscarDocumentospago2() {
             contentType: "application/json",
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
-                loadTablaDocumentospago(data);
+                loadTablaFacturasExp(data);
             },
-                            error: function (err) {
+            error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
-                }
+            }
         });
     };
     return mf;
@@ -363,12 +367,13 @@ function exportarFacturasDocpago() {
                     $('#modalExportar').modal('hide');
                     var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
                     mensNormal("Exportación realizada con éxito.");
+                    loadTablaFacturasExp(null);
                 }
             },
-                            error: function (err) {
+            error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
-                }
+            }
         });
     };
     return mf;
@@ -417,7 +422,7 @@ function editDocumentPago(id) {
 buscarTodos = function() {
     var url = myconfig.apiUrl + "/api/documentos_pago/?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
-        loadTablaDocumentospago(data);
+        loadTablaFacturasExp(data);
     });
 }
 
