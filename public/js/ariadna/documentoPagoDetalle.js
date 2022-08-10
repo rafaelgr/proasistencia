@@ -683,7 +683,7 @@ function loadTablaAsociarRegistros(data) {
     data.forEach(function (v) {
         var field = "#chk" + v.codigo;
         $(field).attr('checked', false);
-        
+      
         $(field).change(function () {
             if (this.checked) {
                 datosArrayRegistros.push(v.codigo);
@@ -771,7 +771,7 @@ function buscarAsociarRegistros() {
                 // mostramos el botó de alta
                 if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
                 $('#checkMainRegistros').prop('checked', false);
-                updateAllRegistros(true);
+                //updateAllRegistros(true);
             },
             error: function (err) {
                 mensErrorAjax(err);
