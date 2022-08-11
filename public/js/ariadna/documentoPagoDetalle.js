@@ -769,14 +769,12 @@ function buscarAsociarFacturas() {
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
-        var esCorreo = 0;
       
-        var url = myconfig.apiUrl + "/api/facturasProveedores/correo/" + dFecha + "/" + hFecha
+        var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/docpago/" + dFecha + "/" + hFecha
         + "/" + proveedorId 
         + "/" + empresaId 
         + "/"  + departamentoId 
-        + "/" + usuario.usuarioId
-        + "/" + esCorreo;
+        + "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",
             url: url,
@@ -916,7 +914,11 @@ function aceptarAsociarRegistros() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data, status) {
-            mensNormal("Se han asociado las facturas correctamente.")
+            if(data == 0) {
+                mensAlerta("No se ha asociado nada, revise que las facturas no se encuentren ya vinculadas.");
+            } else {
+                mensNormal("Se han asociado las facturas correctamente.");
+            }
             $('#modalAsociarRegistros').modal('hide');
             $.ajax({
                 type: "GET",
