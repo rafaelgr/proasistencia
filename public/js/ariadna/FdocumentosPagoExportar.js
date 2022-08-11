@@ -110,7 +110,7 @@ function admData() {
 
 
 function initTablaExportar() {
-    tablaCarro = $('#dt_fExportar').DataTable({
+    tablaFacturas = $('#dt_fExportar').DataTable({
         autoWidth: true,
         paging: false,
         preDrawCallback: function () {
@@ -193,16 +193,22 @@ function initTablaExportar() {
         },   {
             data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                var html = "<div class='pull-right'>" + bt1 + "</div>";
                 return html;
             }
         }]
 
         
+    });
+    // Apply the filter
+    $("#dt_fExportar thead th input[type=text]").on('keyup change', function () {
+        tablaFacturas
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
     });
 }
 
@@ -243,6 +249,7 @@ function datosOk2() {
 
 
 function loadTablaFacturasExp(data) {
+    $('#checkMain').prop('checked', false);//al cargar la tabla el check general se encuentra siempre desmarcado
     var dt = $('#dt_fExportar').dataTable();
     if (data !== null && data.length === 0) {
         mostrarMensajeSmart('No se han encontrado registros');
@@ -372,6 +379,9 @@ function exportarFacturasDocpago() {
             },
             error: function (err) {
                     mensErrorAjax(err);
+                    $("#mensajeEspera").hide();
+                    $("#mensajeExportacion").show();
+                    $('#modalExportar').modal('hide');
                     // si hay algo más que hacer lo haremos aquí.
             }
         });
@@ -493,4 +503,12 @@ function updateAll(opcion) {
             });
         }
     }
+}
+
+
+function editFactura(id) {
+    // hay que abrir la página de detalle de la factura
+    // pasando en la url ese ID
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    window.open(url, '_blank');
 }

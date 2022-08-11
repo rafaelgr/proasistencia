@@ -46,6 +46,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmAsociarRegistros").submit(function() {
+        return false;
+    });
+
     $("#frmNuevaFacturaAsociada").submit(function() {
         return false;
     });
@@ -56,6 +60,7 @@ function initForm() {
     });
 
     $("#cmbEmpresas").select2(select2Spanish());
+    $("#cmbEmpresas2").select2(select2Spanish());
     loadEmpresas();
 
     $("#cmbDepartamentos").select2(select2Spanish());
@@ -165,6 +170,7 @@ function initForm() {
     documentoPagoId = gup('DocumentoPagoId');
     cmd = gup("cmd");
     if (documentoPagoId != 0) {
+        $('#pdfDoc').show();
         var data = {
                 documentoPagoId: documentoPagoId
             }
@@ -190,6 +196,7 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
+        $('#pdfDoc').hide();
         vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
@@ -265,6 +272,39 @@ function datosOK() {
 function datosOK2() {
     $('#frmAsociarFacturas').validate({
         rules: {
+            txtdFecha2: {
+                required: true
+            },
+            txthFecha2: {
+                required: true,
+                greaterThan: "#txtdFecha2"
+            },
+            cmbEmpresas2: { required: true},
+
+
+        },
+        // Messages for form validation
+        messages: {
+            txtdFecha2: {
+                required: "Debe seleccionar una fecha"
+            },
+            txthFecha2: {
+                required: "Debe seleccionar una fecha"
+            },
+            cmbEmpresas2: { required: 'Debe introducir una empresa'}
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmAsociarFacturas').valid();
+}
+
+
+function datosOK3() {
+    $('#frmAsociarRegistros').validate({
+        rules: {
             txtdFecha: {
                 required: true
             },
@@ -291,7 +331,7 @@ function datosOK2() {
             error.insertAfter(element.parent());
         }
     });
-    return $('#frmAsociarFacturas').valid();
+    return $('#frmAsociarRegistros').valid();
 }
 
 
@@ -391,6 +431,13 @@ function initTablaFacturasAsociadas() {
                 return moment(data).format('DD/MM/YYYY');
             }
            
+        },
+        {
+            data: "fechaRecepcionFactura",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+           
         },{
             data: "total",
             className: "text-right",
@@ -435,6 +482,7 @@ function loadEmpresas() {
         var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([0]).trigger('change');
+        $("#cmbEmpresas2").val([0]).trigger('change');
     });
 }
 
@@ -515,7 +563,7 @@ function initTablaAsociarFacturas() {
         },{
             data: "proveedorNombre"
         }, {
-            data: "fecha",
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -751,7 +799,7 @@ function buscarAsociarRegistros() {
     $('#dt_asociarRegistros').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
-        if (!datosOK2()) return;
+        if (!datosOK3()) return;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
@@ -816,7 +864,7 @@ function aceptarAsociarFacturas() {
         data: JSON.stringify(data),
         success: function (data, status) {
             mensNormal("Se han asociado las facturas correctamente.");
-            $('#modalAsociarRegistros').modal('hide');
+            $('#modalAsociarFacturas').modal('hide');
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
