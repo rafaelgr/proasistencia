@@ -417,6 +417,9 @@
                         <li id="documentosPago">
                             <a href="DocumentosPagoGeneral.html"><i class="fa fa-fw fa-file-o"></i> Documentos de pago</a>
                         </li>
+                        <li id="facproveExportar">
+                            <a href="FdocumentosPagoExportar.html"><i class="fa fa-arrow-circle-up"></i> Exportar facturas de proveedores</a>
+                        </li>
                     </ul>
                 </li>
                 
@@ -522,7 +525,7 @@
                                         <span class="hidden-mobile hidden-tablet">Datos</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li id="pdfDoc">
                                     <a data-toggle="tab" href="#s2">
                                         <i class="fa fa-file-text-o"></i>
                                         <span class="hidden-mobile hidden-tablet">PDF</span>
@@ -643,7 +646,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevaFacturaAsociada" title="Nueva factura asociada" data-toggle="modal" data-target="#modalAsociarRegistros" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevaFacturaAsociada" title="Nueva factura asociada" data-toggle="modal" data-target="#modalAsociarFacturas" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -670,6 +673,9 @@
                                                                     </th>
                                                                     <th data-hide="phone">
                                                                         Fecha
+                                                                    </th>
+                                                                    <th data-hide="phone">
+                                                                        Fecha recepcion
                                                                     </th>
                                                                     <th data-hide="phone" class="text-right">
                                                                         Base
@@ -774,20 +780,20 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title">Asociar Facturas</h4>
+                    <h4 class="modal-title">Asociar transferencias</h4>
                 </div>
                 <div class="modal-body no-padding">
-                    <form id="frmAsociarFacturas" class="smart-form">
+                    <form id="frmAsociarRegistros" class="smart-form">
                         <fieldset>
                             <div class="row">
                                 <section class="col col-sm-6">
-                                    <label class="label">De fecha</label>
+                                    <label class="label">De fecha transferencia</label>
                                     <label class="input">
                                         <input id="txtdFecha" name="txtdFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: dFecha"/>
                                     </label>
                                 </section>
                                 <section class="col col-sm-6">
-                                    <label class="label">A fecha</label>
+                                    <label class="label">A fecha transferencia</label>
                                     <label class="input">
                                         <input id="txthFecha" name="txthFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: hFecha"/>
                                     </label>
@@ -798,6 +804,98 @@
                                     <label class="label">Empresa</label>
                                     <label style="width:100%; height:50px;">
                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                        <i></i>
+                                    </label>
+                                </section>
+                                    <section class="col col-sm-6" >
+                                    </section>
+                            
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="pull-right">
+                                <button id="btnAceptarAsociarRegistros" title="Asociar registros" onClick="aceptarAsociarRegistros()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
+                                </button>
+                                <button id="btnSalirAsociarRegistros" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnbuscarAsociarRegistros" title="Buscar registros" onClick="buscarAsociarRegistros()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-search"></i>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                   
+                    <div id="tbAsociarRegistros">
+                        <table id="dt_asociarRegistros" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th data-hide="phone" style="background : none;">
+                                        <div class="row">
+                                            <section class="col col-sm-12">
+                                                <input type="checkbox" id="checkMainRegistros">
+                                            </section>
+                                            
+                                        </div>
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fichero
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fecha transferencia
+                                    </th>
+                                    <th data-hide="phone" class="text-right">
+                                        Importe
+                                    </th>
+                                    <th data-hide="phone" class="text-right">
+                                        Descripcion
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--END MODAL-->
+     <!--MODAL-->
+     <div class="modal fade" id="modalAsociarFacturas" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog" style="width: 1300px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Asociar Facturas</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmAsociarFacturas" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-sm-6">
+                                    <label class="label">De fecha recepción</label>
+                                    <label class="input">
+                                        <input id="txtdFecha2" name="txtdFecha2" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: dFecha"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-6">
+                                    <label class="label">A fecha recepción</label>
+                                    <label class="input">
+                                        <input id="txthFecha2" name="txthFecha2" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: hFecha"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row" >
+                                <section class="col col-sm-6">
+                                    <label class="label">Empresa</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbEmpresas2" name="cmbEmpresas2" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
                                         <i></i>
                                     </label>
                                 </section>
@@ -813,13 +911,13 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarFacturas" title="Asociar registros" onClick="aceptarAsociar()" class="btn btn-success btn-circle btn-lg">
+                                <button id="btnAceptarAsociarFacturas" title="Asociar registros" onClick="aceptarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnSalirAsociarFacturas" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
                                 </button>
-                                <button id="btnbuscarAsociar" title="Buscar registros" onClick="aceptarBuscarAsociar()" class="btn btn-success btn-circle btn-lg">
+                                <button id="btnbuscarAsociarFacturas" title="Buscar registros" onClick="buscarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-search"></i>
                                 </button>
                             </div>
@@ -853,7 +951,7 @@
                                         proveedor
                                     </th>
                                     <th data-hide="phone">
-                                        Fecha
+                                        Fecha recepcion
                                     </th>
                                     <th data-hide="phone">
                                         Base
@@ -870,37 +968,7 @@
                             </thead>
                         </table>
                     </div>
-                    <hr/>
-                    <div id="tbAsociarRegistros">
-                        <table id="dt_asociarRegistros" class="table table-striped table-bordered table-hover" width="100%">
-                            <thead>
-                                <tr>
-                                    <th data-hide="phone" style="background : none;">
-                                        <div class="row">
-                                            <section class="col col-sm-12">
-                                                <input type="checkbox" id="checkMainRegistros">
-                                            </section>
-                                            
-                                        </div>
-                                    </th>
-                                    <th data-hide="phone">
-                                        Fichero
-                                    </th>
-                                    <th data-hide="phone">
-                                        Fecha
-                                    </th>
-                                    <th data-hide="phone" class="text-right">
-                                        Importe
-                                    </th>
-                                    <th data-hide="phone" class="text-right">
-                                        Descripcion
-                                    </th>
-                                    <th>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -908,6 +976,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!--END MODAL-->
+
 
     <!--MODAL-->
     <div class="modal fade" id="modalFacturasRegistros" tabindex="-1" role="dialog">

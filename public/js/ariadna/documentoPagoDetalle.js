@@ -29,6 +29,7 @@ function initForm() {
     usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
+    datePickerSpanish(); // see comun.js
     // /
     getVersionFooter();
     vm = new admData();
@@ -46,6 +47,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmAsociarRegistros").submit(function() {
+        return false;
+    });
+
     $("#frmNuevaFacturaAsociada").submit(function() {
         return false;
     });
@@ -56,6 +61,7 @@ function initForm() {
     });
 
     $("#cmbEmpresas").select2(select2Spanish());
+    $("#cmbEmpresas2").select2(select2Spanish());
     loadEmpresas();
 
     $("#cmbDepartamentos").select2(select2Spanish());
@@ -100,7 +106,8 @@ function initForm() {
     }, 'La fecha final debe ser mayor que la inicial.');
     //
 
-    $('#btnAceptarAsociarFacturas').hide()//botón oculto por defecto
+    $('#btnAceptarAsociarFacturas').hide();//botón oculto por defecto
+    $('#btnAceptarAsociarRegistros').hide();
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
@@ -119,7 +126,7 @@ function initForm() {
         var ext = file.name.split('.').pop().toLowerCase();
                 
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
             
             $.ajax({
                 url: '/api/upload/docpago',
@@ -165,6 +172,7 @@ function initForm() {
     documentoPagoId = gup('DocumentoPagoId');
     cmd = gup("cmd");
     if (documentoPagoId != 0) {
+        $('#pdfDoc').show();
         var data = {
                 documentoPagoId: documentoPagoId
             }
@@ -190,6 +198,7 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
+        $('#pdfDoc').hide();
         vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
@@ -265,6 +274,39 @@ function datosOK() {
 function datosOK2() {
     $('#frmAsociarFacturas').validate({
         rules: {
+            txtdFecha2: {
+                required: true
+            },
+            txthFecha2: {
+                required: true,
+                greaterThan: "#txtdFecha2"
+            },
+            cmbEmpresas2: { required: true},
+
+
+        },
+        // Messages for form validation
+        messages: {
+            txtdFecha2: {
+                required: "Debe seleccionar una fecha"
+            },
+            txthFecha2: {
+                required: "Debe seleccionar una fecha"
+            },
+            cmbEmpresas2: { required: 'Debe introducir una empresa'}
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmAsociarFacturas').valid();
+}
+
+
+function datosOK3() {
+    $('#frmAsociarRegistros').validate({
+        rules: {
             txtdFecha: {
                 required: true
             },
@@ -291,7 +333,7 @@ function datosOK2() {
             error.insertAfter(element.parent());
         }
     });
-    return $('#frmAsociarFacturas').valid();
+    return $('#frmAsociarRegistros').valid();
 }
 
 
@@ -391,6 +433,13 @@ function initTablaFacturasAsociadas() {
                 return moment(data).format('DD/MM/YYYY');
             }
            
+        },
+        {
+            data: "fechaRecepcionFactura",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+           
         },{
             data: "total",
             className: "text-right",
@@ -409,8 +458,8 @@ function initTablaFacturasAsociadas() {
             data: "facproveId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='desvinculaFactura(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg'  onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaFactura(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success'  onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -435,6 +484,7 @@ function loadEmpresas() {
         var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([0]).trigger('change');
+        $("#cmbEmpresas2").val([0]).trigger('change');
     });
 }
 
@@ -515,7 +565,7 @@ function initTablaAsociarFacturas() {
         },{
             data: "proveedorNombre"
         }, {
-            data: "fecha",
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -682,8 +732,8 @@ function loadTablaAsociarRegistros(data) {
     dt.fnDraw();
     data.forEach(function (v) {
         var field = "#chk" + v.codigo;
-        $(field).attr('checked', true);
-        
+        $(field).attr('checked', false);
+      
         $(field).change(function () {
             if (this.checked) {
                 datosArrayRegistros.push(v.codigo);
@@ -721,14 +771,12 @@ function buscarAsociarFacturas() {
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
-        var esCorreo = 0;
       
-        var url = myconfig.apiUrl + "/api/facturasProveedores/correo/" + dFecha + "/" + hFecha
+        var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/docpago/" + dFecha + "/" + hFecha
         + "/" + proveedorId 
         + "/" + empresaId 
         + "/"  + departamentoId 
-        + "/" + usuario.usuarioId
-        + "/" + esCorreo;
+        + "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",
             url: url,
@@ -751,7 +799,7 @@ function buscarAsociarRegistros() {
     $('#dt_asociarRegistros').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
-        if (!datosOK2()) return;
+        if (!datosOK3()) return;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
@@ -769,9 +817,9 @@ function buscarAsociarRegistros() {
             success: function (data, status) {
                 loadTablaAsociarRegistros(data);
                 // mostramos el botó de alta
-                if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
-                $('#checkMainRegistros').prop('checked', true);
-                updateAllRegistros(true);
+                if(data.length > 0)  $("#btnAceptarAsociarRegistros").show();
+                $('#checkMainRegistros').prop('checked', false);
+                //updateAllRegistros(true);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -816,7 +864,7 @@ function aceptarAsociarFacturas() {
         data: JSON.stringify(data),
         success: function (data, status) {
             mensNormal("Se han asociado las facturas correctamente.");
-            $('#modalAsociarRegistros').modal('hide');
+            $('#modalAsociarFacturas').modal('hide');
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
@@ -868,7 +916,11 @@ function aceptarAsociarRegistros() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data, status) {
-            mensNormal("Se han asociado las facturas correctamente.")
+            if(data == 0) {
+                mensAlerta("No se ha asociado nada, revise que las facturas no se encuentren ya vinculadas.");
+            } else {
+                mensNormal("Se han asociado las facturas correctamente.");
+            }
             $('#modalAsociarRegistros').modal('hide');
             $.ajax({
                 type: "GET",
@@ -928,7 +980,8 @@ function limpiarModal(opcion) {
         $('#tbAsociarfacturas').show();
         $('#tbAsociarRegistros').hide();
     }
-    $('#btnAceptarAsociarFacturas').hide()
+    $('#btnAceptarAsociarFacturas').hide();
+    $('#btnAceptarAsociarRegistros').hide();
     vm.dFecha(null);
     vm.hFecha(null);
     vm.departamentoId(null);
