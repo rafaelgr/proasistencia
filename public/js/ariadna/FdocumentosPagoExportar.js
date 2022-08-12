@@ -21,6 +21,7 @@ function initForm() {
     comprobarLogin();
     // de smart admin
     pageSetUp();
+    datePickerSpanish(); // see comun.js
     getVersionFooter();
     //
     $.validator.addMethod("greaterThan",

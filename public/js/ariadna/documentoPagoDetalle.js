@@ -29,6 +29,7 @@ function initForm() {
     usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
+    datePickerSpanish(); // see comun.js
     // /
     getVersionFooter();
     vm = new admData();
@@ -105,7 +106,8 @@ function initForm() {
     }, 'La fecha final debe ser mayor que la inicial.');
     //
 
-    $('#btnAceptarAsociarFacturas').hide()//botón oculto por defecto
+    $('#btnAceptarAsociarFacturas').hide();//botón oculto por defecto
+    $('#btnAceptarAsociarRegistros').hide();
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
@@ -815,7 +817,7 @@ function buscarAsociarRegistros() {
             success: function (data, status) {
                 loadTablaAsociarRegistros(data);
                 // mostramos el botó de alta
-                if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
+                if(data.length > 0)  $("#btnAceptarAsociarRegistros").show();
                 $('#checkMainRegistros').prop('checked', false);
                 //updateAllRegistros(true);
             },
@@ -978,7 +980,8 @@ function limpiarModal(opcion) {
         $('#tbAsociarfacturas').show();
         $('#tbAsociarRegistros').hide();
     }
-    $('#btnAceptarAsociarFacturas').hide()
+    $('#btnAceptarAsociarFacturas').hide();
+    $('#btnAceptarAsociarRegistros').hide();
     vm.dFecha(null);
     vm.hFecha(null);
     vm.departamentoId(null);
