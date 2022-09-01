@@ -215,7 +215,9 @@ function initTablaDocumentospago() {
 
 function format(d) {
     var fac = d.facturas;
+    var ant = d.anticipos;
     var html = "";
+        html = '<h5> Facturas</h5>'
         fac.forEach(e => {
             html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
             '<tr>' +
@@ -230,6 +232,25 @@ function format(d) {
                 '<td>PROVEEDOR:</td>' +
                 '<td>' +
                     e.proveedorNombre +
+                '</td>' +
+            '</tr>' +
+            '</table>'
+        });
+        //anticipos
+        html += '<h5>Anticipos</h5>'
+        ant.forEach(e => {
+            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<tr>' +
+                '<td>REFERENCIA:</td>' +
+                '<td>' +
+                '</td>' +
+                '<td>NÚMERO:</td>' +
+                '<td>' +
+                    e.numeroAnticipoProveedor +
+                '</td>' +
+                '<td>PROVEEDOR:</td>' +
+                '<td>' +
+                    e.proveedorNombreAnticipo +
                 '</td>' +
             '</tr>' +
             '</table>'

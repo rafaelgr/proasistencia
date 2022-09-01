@@ -24,6 +24,7 @@ var dataAsociarFacturas;
 
 
 
+
 function initForm() {
     comprobarLogin();
     usuario = recuperarUsuario();
@@ -51,17 +52,30 @@ function initForm() {
         return false;
     });
 
+    $("#frmAsociarRegistrosAnt").submit(function() {
+        return false;
+    });
+
     $("#frmNuevaFacturaAsociada").submit(function() {
         return false;
     });
 
+    $("#frmNuevoAnticipoAsociado").submit(function() {
+        return false;
+    });
+    
 
     $("#frmFacturasRegistros").submit(function() {
         return false;
     });
 
+    $("#frmAnticiposRegistros").submit(function() {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     $("#cmbEmpresas2").select2(select2Spanish());
+    $("#cmbEmpresas3").select2(select2Spanish());
     loadEmpresas();
 
     $("#cmbDepartamentos").select2(select2Spanish());
@@ -93,6 +107,19 @@ function initForm() {
         }
     );
 
+    //Evento de marcar/desmarcar todos los checks del grid de transferencias
+    $('#checkMainRegistrosAnt').click(
+        function(e){
+            if($('#checkMainRegistrosAnt').prop('checked')) {
+                $('.checkAllRegistrosAnt').prop('checked', true);
+                updateAllRegistrosAnt(true);
+            } else {
+                $('.checkAllRegistrosAnt').prop('checked', false);
+                updateAllRegistrosAnt(false);
+            }
+        }
+    );
+
     $.validator.addMethod("greaterThan",
     function (value, element, params) {
         var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -108,10 +135,14 @@ function initForm() {
 
     $('#btnAceptarAsociarFacturas').hide();//botón oculto por defecto
     $('#btnAceptarAsociarRegistros').hide();
+    $('#btnAceptarAsociarRegistrosAnt').hide();
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
+    initTablaAsociarRegistrosAnt();
     initTablaFacturasRegistros();
+    //
+    initTablaAnticipoasAsociados();
 
 
     $('#upload-input').on('change', function () {
@@ -124,7 +155,7 @@ function initForm() {
         
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
-                
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
         // add the files to formData object for the data payload
         formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
             
@@ -240,6 +271,7 @@ function loadData(data) {
     }
     vm.facturas(data.facturas);
     loadTablaFacturas(data.facturas);
+    loadTablaAnticipos(data.anticipos);
 }
 
 function datosOK() {
@@ -334,6 +366,38 @@ function datosOK3() {
         }
     });
     return $('#frmAsociarRegistros').valid();
+}
+
+function datosOK4() {
+    $('#frmAsociarRegistrosAnt').validate({
+        rules: {
+            txtdFecha3: {
+                required: true
+            },
+            txthFecha3: {
+                required: true,
+                greaterThan: "#txtdFecha3"
+            },
+            cmbEmpresas3: { required: true},
+
+
+        },
+        // Messages for form validation
+        messages: {
+            txtdFecha3: {
+                required: "Debe seleccionar una fecha"
+            },
+            txthFecha3: {
+                required: "Debe seleccionar una fecha"
+            },
+            cmbEmpresas3: { required: 'Debe introducir una empresa'}
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmAsociarRegistrosAnt').valid();
 }
 
 
@@ -469,6 +533,7 @@ function initTablaFacturasAsociadas() {
 
 
 function loadTablaFacturas(data) {
+    if(data.length == 0) return;
     var dt = $('#dt_FacturasAsociadas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -478,6 +543,16 @@ function loadTablaFacturas(data) {
     dt.fnDraw();
 }
 
+function loadTablaAnticipos(data) {
+    if(data.length == 0) return;
+    var dt = $('#dt_AnticiposAsociados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
 function loadEmpresas() {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
@@ -497,6 +572,7 @@ function loadDeparta() {
         $("#cmbDepartamentos").val([0]).trigger('change');
     });
 }
+
 
 
 //modal asociación facturas
@@ -815,6 +891,7 @@ function buscarAsociarRegistros() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
+                if(data[0].contabilidad && data[0].contabilidad == "noConta")  return mensAlerta("La empresa seleccionada no tiene una contabilidad asociada.");
                 loadTablaAsociarRegistros(data);
                 // mostramos el botó de alta
                 if(data.length > 0)  $("#btnAceptarAsociarRegistros").show();
@@ -863,6 +940,8 @@ function aceptarAsociarFacturas() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data, status) {
+            if(!data) return mensAlerta("No se han obtenido registros.");
+          
             mensNormal("Se han asociado las facturas correctamente.");
             $('#modalAsociarFacturas').modal('hide');
             $.ajax({
@@ -890,6 +969,7 @@ function aceptarAsociarFacturas() {
 
 function aceptarAsociarRegistros() {
     var claves = procesaClavesTransferencias(null);
+    if(claves.length == 0) return mensAlerta("No se han obtenido registros");
     var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
@@ -975,13 +1055,18 @@ function limpiarModal(opcion) {
         $('#dep').hide();
         $('#tbAsociarfacturas').hide();
         $('#tbAsociarRegistros').show();
+        //
+        $('#tbAsociarRegistrosAnt').show();
     } else {
         $('#dep').show();
         $('#tbAsociarfacturas').show();
         $('#tbAsociarRegistros').hide();
+        //
+        $('#tbAsociarRegistrosAnt').hide();
     }
     $('#btnAceptarAsociarFacturas').hide();
     $('#btnAceptarAsociarRegistros').hide();
+    $('#btnAceptarAsociarRegistrosAnt').hide();
     vm.dFecha(null);
     vm.hFecha(null);
     vm.departamentoId(null);
@@ -990,6 +1075,8 @@ function limpiarModal(opcion) {
     loadDeparta();
     $('#dt_asociarFacturas').dataTable().fnClearTable();
     $('#dt_asociarRegistros').dataTable().fnClearTable();
+    //
+    $('#dt_asociarRegistrosAnt').dataTable().fnClearTable();
     //$('#dt_asociarFacturas').dataTable().fnDestroy();
 }
 
@@ -1040,6 +1127,20 @@ function updateAll(opcion) {
 function updateAllRegistros(opcion) {
     datosArrayRegistros = [];
     var tb = $('#dt_asociarRegistros').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(datos) {
+        if(opcion) {
+            for( var i = 0; i < datos.length; i++) {
+                datosArrayRegistros.push(datos[i].codigo);
+            }
+        } 
+       
+    }
+}
+
+function updateAllRegistrosAnt(opcion) {
+    datosArrayRegistros = [];
+    var tb = $('#dt_asociarRegistrosAnt').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
     if(datos) {
         if(opcion) {
@@ -1312,4 +1413,285 @@ function desvinculaFacturas() {
 
 function cierraModal() {
     $('#modalFacturasRegistros').modal('hide'); 
+}
+
+//funciones relacionadas con los anticipos
+
+function initTablaAnticipoasAsociados() {
+    tablaCarro = $('#dt_AnticiposAsociados').DataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_AnticiposAsociados'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataFacturasAsociadas,
+        columns: [{
+            data: "numeroAnticipoProveedor"
+        },{
+            data: "proveedorNombreAnticipo"
+        }, {
+            data: "fechaAnticipo",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+           
+        },{
+            data: "totalAnticipo",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "totalConIvaAnticipo",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "antproveId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='desvinculaAnticipo(" + data + ");' title='Desvincular registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success'  onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function loadTablaAnticipos(data) {
+    var dt = $('#dt_AnticiposAsociados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function initTablaAsociarRegistrosAnt() {
+    tablaCarro = $('#dt_asociarRegistrosAnt').dataTable({
+        autoWidth: true,
+        paging: false,
+        "bDestroy": true,
+        columnDefs: [{
+            "width": "10%",
+            "targets": 0
+        }],
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarRegistrosAnt'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAsociarFacturas,
+        columns: [{
+            data: "codigo",
+            width: "5%",
+            render: function (data, type, row) {
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAllRegistrosAnt">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
+                return html;
+            }
+        }, {
+            data: "IdFicheroSEPA"
+        },{
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "importe",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "Descripcion"
+        },{
+            data: "codigo",
+            render: function (data, type, row) {
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editRegistro(" + data + ");' title='Editar registro' data-toggle='modal' data-target='#modalFacturasRegistros'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function loadTablaAsociarRegistrosAnt(data) {
+    var dt = $('#dt_asociarRegistrosAnt').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+    data.forEach(function (v) {
+        var field = "#chk" + v.codigo;
+        $(field).attr('checked', false);
+      
+        $(field).change(function () {
+            if (this.checked) {
+                datosArrayRegistros.push(v.codigo);
+            } else {
+                for(var i=0; i < datosArrayRegistros.length; i++) {
+                    if(datosArrayRegistros[i] == v.codigo) {
+                        datosArrayRegistros.splice(i,1);//eliminamos un elemto del array y modificamops su tamaño
+                        break;
+                    } 
+                }
+            }
+        });
+    });
+}
+
+function buscarAsociarRegistrosAnt() {
+    $('#dt_asociarRegistrosAnt').dataTable().fnClearTable();
+      //$('#dt_asociarFacturas').dataTable().fnDestroy();
+        //initTablaAsociarFacturas();
+        if (!datosOK4()) return;
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+    
+        var empresaId = 0;
+        if (vm.sempresaId()) empresaId = vm.sempresaId();
+      
+        var url = myconfig.apiUrl + "/api/documentos_pago/buscar/registros/Anticipos/" + dFecha + "/" + hFecha + "/" + empresaId 
+     
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                if(data[0].contabilidad && data[0].contabilidad == "noConta")  return mensAlerta("La empresa seleccionada no tiene una contabilidad asociada.");
+                loadTablaAsociarRegistrosAnt(data);
+                // mostramos el botó de alta
+                if(data.length > 0)  $("#btnAceptarAsociarRegistrosAnt").show();
+                //$('#checkMainRegistros').prop('checked', false);
+                //updateAllRegistros(true);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+function aceptarAsociarRegistrosAnt() {
+    var claves = procesaClavesTransferencias(null);
+    if(claves.length == 0) return mensAlerta("No se han obtenido registros");
+    var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+   
+    var empresaId = 0;
+    if (vm.sempresaId()) empresaId = vm.sempresaId();
+   
+    var data = 
+    {
+        docfac: 
+        {
+            dFecha: dFecha,
+            hFecha: hFecha,
+            empresaId: empresaId,
+            documentoPagoId: documentoPagoId,
+            claves: claves
+        }
+    }
+  
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/documentos_pago/registros",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            if(data == 0) {
+                mensAlerta("No se ha asociado nada, revise que las facturas no se encuentren ya vinculadas.");
+            } else {
+                mensNormal("Se han asociado las facturas correctamente.");
+            }
+            $('#modalAsociarRegistros').modal('hide');
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadData(data);
+                },
+                                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }

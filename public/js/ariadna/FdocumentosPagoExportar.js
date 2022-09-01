@@ -376,6 +376,11 @@ function exportarFacturasDocpago() {
                     var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
                     mensNormal("Exportación realizada con éxito.");
                     loadTablaFacturasExp(null);
+                }else {
+                    mensAlerta("Registros no encontrados.");
+                    $("#mensajeEspera").hide();
+                    $("#mensajeExportacion").show();
+                    $('#modalExportar').modal('hide');
                 }
             },
             error: function (err) {
