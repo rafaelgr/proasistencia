@@ -49,6 +49,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmAsociarAnticipos").submit(function() {
+        return false;
+    });
+
     $("#frmAsociarRegistros").submit(function() {
         return false;
     });
@@ -77,9 +81,11 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     $("#cmbEmpresas2").select2(select2Spanish());
     $("#cmbEmpresas3").select2(select2Spanish());
+    $("#cmbEmpresas4").select2(select2Spanish());
     loadEmpresas();
 
     $("#cmbDepartamentos").select2(select2Spanish());
+    $("#cmbDepartamentos4").select2(select2Spanish());
     loadDeparta();
 
     //Evento de marcar/desmarcar todos los checks del grid facturas de gastos
@@ -140,11 +146,12 @@ function initForm() {
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
-    initTablaAsociarRegistrosAnt();
     initTablaFacturasRegistros();
-    initTablaAnticiposRegistros()
     //
     initTablaAnticipoasAsociados();
+    initTablaAsociarAnticipos();
+    initTablaAsociarRegistrosAnt();
+    initTablaAnticiposRegistros();
 
 
     $('#upload-input').on('change', function () {
@@ -851,14 +858,12 @@ function buscarAsociarFacturas() {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     
-        var proveedorId = 0
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
       
         var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/docpago/" + dFecha + "/" + hFecha
-        + "/" + proveedorId 
         + "/" + empresaId 
         + "/"  + departamentoId 
         + "/" + usuario.usuarioId;
@@ -1938,6 +1943,182 @@ function procesaClavesTransferenciasAnt(cod) {
 
 function cierraModalAnt() {
     $('#modalAnticiposRegistros').modal('hide'); 
+}
+
+function initTablaAsociarAnticipos() {
+    tablaCarro = $('#dt_asociarAnticipos').dataTable({
+        autoWidth: true,
+        paging: false,
+        "bDestroy": true,
+        columnDefs: [{
+            "width": "10%",
+            "targets": 0
+        }],
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarAnticipos'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataAsociarFacturas,
+        columns: [{
+            data: "antproveId",
+            width: "10%",
+            render: function (data, type, row) {
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAllAnt">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
+                return html;
+            }
+        }, {
+            data: "emisorNombre"
+        }, {
+            data: "receptorNombre"
+        },  {
+            data: "numeroAnticipoProveedor"
+        },{
+            data: "proveedorNombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "total",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "formaPago"
+        }, {
+            data: "antproveId",
+            render: function (data, type, row) {
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function buscarAsociarAnticipos() {
+    $('#dt_asociarFacturas').dataTable().fnClearTable();
+      //$('#dt_asociarFacturas').dataTable().fnDestroy();
+        //initTablaAsociarFacturas();
+        if (!datosOK2()) return;
+        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+        var empresaId = 0;
+        if (vm.sempresaId()) empresaId = vm.sempresaId();
+      
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/docpago/" + dFecha + "/" + hFecha
+        + "/" + empresaId 
+        + "/"  + departamentoId 
+        + "/" + usuario.usuarioId;
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                loadTablaAsociarAnticipos(data);
+                // mostramos el botén de alta
+                $('#checkMain').prop('checked', false);
+                if(data.length > 0)  $("#btnAceptarAsociarFacturas").show();
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+
+function loadTablaAsociarAnticipos(data) {
+    var dt = $('#dt_asociarAnticipos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+    data.forEach(function (v) {
+        var field = "#chk" + v.antproveId;
+        if (v.sel == 1) {
+            $(field).attr('checked', true);
+        }
+        $(field).change(function () {
+            var quantity = 0;
+            var data = {
+                antprove: {
+                    antproveId: v.antproveId,
+                    empresaId: v.empresaId,
+                    proveedorId: v.proveedorId,
+                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    sel: 0
+                }
+            };
+            if (this.checked) {
+                data.antprove.sel = 1;
+            }
+            var datosArray = [];
+            datosArray.push(data)
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/anticiposProveedores/%s', myconfig.apiUrl, v.antproveId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(datosArray),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        });
+    });
 }
 
 

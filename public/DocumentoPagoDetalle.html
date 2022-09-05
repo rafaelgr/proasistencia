@@ -732,7 +732,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevoAnticipoAsociado" title="Nuevo anticipo asociada" data-toggle="modal" data-target="#modalAsociarAnticipos" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevoAnticipoAsociado" title="Nuevo anticipo asociado" data-toggle="modal" data-target="#modalAsociarAnticipos" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -950,7 +950,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title">Asociar Facturas</h4>
+                    <h4 class="modal-title">Asociar facturas</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="frmAsociarFacturas" class="smart-form">
@@ -1260,8 +1260,115 @@
         <!-- /.modal-dialog -->
     </div>
     <!--END MODAL-->
+    <!--MODAL-->
+    <div class="modal fade" id="modalAsociarAnticipos" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog" style="width: 1300px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Asociar anticipos</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmAsociarAnticipos" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-sm-6">
+                                    <label class="label">De fecha</label>
+                                    <label class="input">
+                                        <input id="txtdFecha4" name="txtdFecha4" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: dFecha"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-6">
+                                    <label class="label">A fecha</label>
+                                    <label class="input">
+                                        <input id="txthFecha4" name="txthFecha4" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: hFecha"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row" >
+                                <section class="col col-sm-6">
+                                    <label class="label">Empresa</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbEmpresas4" name="cmbEmpresas2" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                        <i></i>
+                                    </label>
+                                </section>
+                                <div id="dep">
+                                    <section class="col col-sm-6" >
+                                        <label class="label">Departamento</label>
+                                            <label style="width:100%;">
+                                                <select style="width:100%" id="cmbDepartamentos4" name="cmbDepartamentos4" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                            </label>
+                                    </section>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="pull-right">
+                                <button id="btnAceptarAsociarAnticipos" title="Asociar registros" onClick="aceptarAsociarAnticipos()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
+                                </button>
+                                <button id="btnSalirAsociarAnticipos" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnbuscarAsociarAnticipos" title="Buscar registros" onClick="buscarAsociarAnticipos()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-search"></i>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div id="tbAsociaranticipos">
+                        <table id="dt_asociarAnticipos" class="table table-striped table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <th data-hide="phone" style="background : none;">
+                                        <div class="row">
+                                            <section class="col col-sm-12">
+                                                <input type="checkbox" id="checkMainAnt">
+                                            </section>
+                                            
+                                        </div>
+                                    </th>
+                                    <th data-class="expand">
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Receptor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Numero
+                                    </th>
+                                    <th data-hide="phone">
+                                        proveedor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fecha
+                                    </th>
+                                    <th data-hide="phone">
+                                        Base
+                                    </th>
+                                    <th data-hide="phone">
+                                        Total
+                                    </th>
+                                    <th data-hide="phone">
+                                        Forma pago
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!--END MODAL-->
-
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
