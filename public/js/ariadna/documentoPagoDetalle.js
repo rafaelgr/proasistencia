@@ -114,7 +114,7 @@ function initForm() {
         }
     );
 
-    //Evento de marcar/desmarcar todos los checks del grid de transferencias
+    //Evento de marcar/desmarcar todos los checks del grid de transferencias anticipos
     $('#checkMainRegistrosAnt').click(
         function(e){
             if($('#checkMainRegistrosAnt').prop('checked')) {
@@ -123,6 +123,19 @@ function initForm() {
             } else {
                 $('.checkAllRegistrosAnt').prop('checked', false);
                 updateAllRegistrosAnt(false);
+            }
+        }
+    );
+
+    //Evento de marcar/desmarcar todos los checks del grid anticipos de gastos
+    $('#checkMainAnt').click(
+        function(e){
+            if($('#checkMainAnt').prop('checked')) {
+                $('.checkAllAnt').prop('checked', true);
+                updateAllAnt(true);
+            } else {
+                $('.checkAllAnt').prop('checked', false);
+                updateAllAnt(false);
             }
         }
     );
@@ -217,7 +230,7 @@ function initForm() {
                 documentoPagoId: documentoPagoId
             }
             if (cmd == "nuevo") {
-                mensNormal("Docuemnto de pago creado con exito, puede ahora adjuntar las facturas de gastos asociadas.");
+                mensNormal("Documento de pago creado con exito, puede ahora adjuntar las facturas de gastos asociadas.");
             }
             // hay que buscar ese elemento en concreto
         $.ajax({
@@ -544,13 +557,21 @@ function initTablaFacturasAsociadas() {
 
 
 function loadTablaFacturas(data) {
-    if(!data) {
-        data = []
-    } 
-    var dt = $('#dt_FacturasAsociadas').dataTable();
-    dt.fnClearTable();
-    dt.fnAddData(data);
-    dt.fnDraw();
+    try{
+        if(data) {
+            if (data !== null && data.length === 0) {
+                data = null;
+            }
+        } else {
+            data = null;
+        }
+        var dt = $('#dt_FacturasAsociadas').dataTable();
+        dt.fnClearTable();
+        dt.fnAddData(data);
+        dt.fnDraw();
+    } catch(e) {
+
+    }
 }
 
 function loadTablaAnticipos(data) {
@@ -1168,6 +1189,48 @@ function updateAllRegistrosAnt(opcion) {
     }
 }
 
+function updateAllAnt(opcion) {
+    var sel = 0;
+    if(opcion) sel = 1
+    var tb = $('#dt_asociarAnticipos').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    var length = datos.length;
+    if(opcion) sel = 1
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+                var data = {
+                    antprove: {
+                        antproveId: datos[i].antproveId,
+                        empresaId: datos[i].empresaId,
+                        proveedorId: datos[i].proveedorId,
+                        fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                        sel: sel
+                    }
+                };
+                
+                var datosArray = [];
+                datosArray.push(data)
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/anticiposProveedores/%s', myconfig.apiUrl, datos[i].antproveId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(datosArray),
+                    success: function (data, status) {
+    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+        
+    
+        }
+    }
+}
 //modal facturas de pagos conta
 
 
@@ -1333,10 +1396,13 @@ function loadDoc(filename) {
 }
 
 function editFactura(id) {
-    // hay que abrir la página de detalle de la factura
-    // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_blank');
+    //primero comprobamos si el anticipo es de colaborador o no para redirigir a la vista correspondiente
+    llamadaAjax("GET", "/api/facturasProveedores/" + id, null, function (err, data) {
+        if (err) return;
+        if(data.esColaborador) url = "FacturaColaboradorDetalle.html?facproveId=" + id;
+        window.open(url, '_blank');
+    });   
 }
 
 
@@ -1634,7 +1700,7 @@ function buscarAsociarRegistrosAnt() {
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
       
-        var url = myconfig.apiUrl + "/api/documentos_pago/buscar/registros/Anticipos/" + dFecha + "/" + hFecha + "/" + empresaId 
+        var url = myconfig.apiUrl + "/api/documentos_pago/buscar/registros/anticipos/" + dFecha + "/" + hFecha + "/" + empresaId 
      
         $.ajax({
             type: "GET",
@@ -2003,8 +2069,6 @@ function initTablaAsociarAnticipos() {
             data: "receptorNombre"
         },  {
             data: "numeroAnticipoProveedor"
-        },{
-            data: "proveedorNombre"
         }, {
             data: "fecha",
             render: function (data, type, row) {
@@ -2027,7 +2091,7 @@ function initTablaAsociarAnticipos() {
         }, {
             data: "antproveId",
             render: function (data, type, row) {
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt2 + "</div>";
                 return html;
             }
@@ -2119,6 +2183,71 @@ function loadTablaAsociarAnticipos(data) {
             });
         });
     });
+}
+
+function aceptarAsociarAnticipos() {
+    var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+    var departamentoId = 0;
+    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+    var empresaId = 0;
+    if (vm.sempresaId()) empresaId = vm.sempresaId();
+   
+    var data = 
+    {
+        docant: 
+        {
+            dFecha: dFecha,
+            hFecha: hFecha,
+            empresaId: empresaId,
+            departamentoId: departamentoId,
+            documentoPagoId: documentoPagoId
+        }
+    }
+  
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/documentos_pago/asociar/anticipos",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            if(!data) return mensAlerta("No se han obtenido registros.");
+          
+            mensNormal("Se han asociado las facturas correctamente.");
+            $('#modalAsociarFacturas').modal('hide');
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadData(data);
+                },
+                error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+            });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function editAnticipo(id) {
+    var url = "AnticipoProveedorDetalle.html?antproveId=" + id;
+    //primero comprobamos si el anticipo es de colaborador o no para redirigir a la vista correspondiente
+    llamadaAjax("GET", "/api/anticiposProveedores/" + id, null, function (err, data) {
+        if (err) return;
+        if(data.esColaborador) url = "AnticipoColaboradorDetalle.html?antproveId=" + id;
+        window.open(url, '_blank');
+    });   
 }
 
 
