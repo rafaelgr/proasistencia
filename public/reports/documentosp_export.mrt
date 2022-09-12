@@ -15,7 +15,7 @@
       <registros Ref="3" type="DataTableSource" isKey="true">
         <Alias>registros</Alias>
         <Columns isList="true" count="15">
-          <value>documentoPagoId,System.String</value>
+          <value>documentoPagoId,System.Decimal</value>
           <value>nombre,System.String</value>
           <value>pdf,System.String</value>
           <value>fecha,System.String</value>
@@ -140,7 +140,7 @@
             <Headerliqgen_tipo Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,0,2,0.8</ClientRectangle>
+              <ClientRectangle>5,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -148,8 +148,7 @@
               <Name>Headerliqgen_tipo</Name>
               <Page isRef="4" />
               <Parent isRef="11" />
-              <Text>FECHA
-RECEPCIÓN</Text>
+              <Text>FECHA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -302,7 +301,7 @@ FACTURA</Text>
             <Text20 Ref="21" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>6.6,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold</Font>
@@ -310,7 +309,8 @@ FACTURA</Text>
               <Name>Text20</Name>
               <Page isRef="4" />
               <Parent isRef="11" />
-              <Text>FECHA</Text>
+              <Text>FECHA
+RECEPCIÓN</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -351,7 +351,7 @@ FACTURA</Text>
             </Text25>
             <Text35 Ref="24" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,0,1.9,0.4</ClientRectangle>
+              <ClientRectangle>5,0,1.5,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.5</Font>
@@ -519,7 +519,7 @@ FACTURA</Text>
             </Text14>
             <Text21 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>7,0,1.5,0.4</ClientRectangle>
+              <ClientRectangle>6.6,0,1.9,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7.5</Font>
@@ -567,10 +567,10 @@ FACTURA</Text>
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>9/9/2022 1:12:29 PM</ReportChanged>
+  <ReportChanged>9/12/2022 8:44:39 AM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\documentosp_export.mrt</ReportFile>
-  <ReportGuid>0f6f3841053443a3927d440c3d67bed1</ReportGuid>
+  <ReportGuid>8ffff5b2ae3b4474a2a36ec3e8673f0c</ReportGuid>
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

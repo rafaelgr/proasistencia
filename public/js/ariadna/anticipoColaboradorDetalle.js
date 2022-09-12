@@ -22,6 +22,7 @@ var proveedores;
 var datosPro;
 var servicioId;
 var numLineas = 0;
+var numServ = 0;
 
 var dataServiciadas;
 var dataLineas;
@@ -288,6 +289,17 @@ function initForm() {
                     if(numLineas > 0 && !completo) {
                         $('#chkCompleto').prop('checked', true);
                         mensError('Hay que borrar las lineas del anticipo para poder realizar esta acción.');
+                        return;
+                    }
+                    if(numServ > 0)  {
+                        var opcion = $('#chkCompleto').prop('checked');
+                        if(opcion) {
+                            $('#chkCompleto').prop('checked', false);
+                        } else {
+                            $('#chkCompleto').prop('checked', true)
+                        }
+                       
+                        mensError('Hay que borrar las serviciadas del anticipo para poder realizar esta acción.');
                         return;
                     }
                     var completo = $('#chkCompleto').prop('checked');
@@ -2104,10 +2116,12 @@ function loadServiciadasAntprove(antproveId) {
 }
 
 function loadTablaServiciadas(data) {
+    numServ = 0;
     var dt = $('#dt_serviciada').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
+    if(data) numServ = data.length;
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();

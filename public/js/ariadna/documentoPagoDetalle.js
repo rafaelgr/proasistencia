@@ -88,6 +88,10 @@ function initForm() {
     $("#cmbDepartamentos4").select2(select2Spanish());
     loadDeparta();
 
+    $("#cmbFormasPago").select2(select2Spanish());
+    $("#cmbFormasPago2").select2(select2Spanish());
+    loadFormasPago();
+
     //Evento de marcar/desmarcar todos los checks del grid facturas de gastos
     $('#checkMain').click(
         function(e){
@@ -281,6 +285,12 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -611,6 +621,16 @@ function loadDeparta() {
 }
 
 
+function loadFormasPago() {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([0]).trigger('change');
+        $("#cmbFormasPago2").val([0]).trigger('change');
+    });
+}
+
 
 //modal asociación facturas
 
@@ -883,10 +903,13 @@ function buscarAsociarFacturas() {
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
+        var formapagoId = 0;
+        if (vm.sformaPagoId()) formapagoId = vm.sformaPagoId();
       
         var url = myconfig.apiUrl + "/api/facturasProveedores/facturas/docpago/" + dFecha + "/" + hFecha
         + "/" + empresaId 
         + "/"  + departamentoId 
+        + "/"  + formapagoId 
         + "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",
@@ -1110,6 +1133,7 @@ function limpiarModal(opcion) {
     vm.empresaId(null);
     loadEmpresas()
     loadDeparta();
+    loadFormasPago()
     $('#dt_asociarFacturas').dataTable().fnClearTable();
     $('#dt_asociarRegistros').dataTable().fnClearTable();
     //
@@ -2112,10 +2136,13 @@ function buscarAsociarAnticipos() {
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
+        var formapagoId = 0;
+        if (vm.sformaPagoId()) formapagoId = vm.sformaPagoId();
       
         var url = myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/docpago/" + dFecha + "/" + hFecha
         + "/" + empresaId 
         + "/"  + departamentoId 
+        + "/"  + formapagoId 
         + "/" + usuario.usuarioId;
         $.ajax({
             type: "GET",

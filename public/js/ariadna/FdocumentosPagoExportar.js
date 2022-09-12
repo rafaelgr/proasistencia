@@ -79,6 +79,9 @@ function initForm() {
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
+    $("#cmbFormasPago").select2(select2Spanish());
+    loadFormasPago();
+
     initTablaExportar();
 
     $('#btnExportar').hide();//botón de exportar oculto al inicio
@@ -103,6 +106,12 @@ function admData() {
     //
     self.posiblesProveedores = ko.observableArray([]);
     self.elegidosProveedores = ko.observableArray([]);
+    //
+    self.formaPagoId = ko.observable();
+    self.sformaPagoId = ko.observable();
+    //
+    self.posiblesFormasPago = ko.observableArray([]);
+    self.elegidosFormasPago = ko.observableArray([]);
    
 
 
@@ -315,6 +324,7 @@ function buscarDocumentospago2() {
         var hFecha = 0;
         var empresaId = 0;
         var proveedorId = 0;
+        var formapagoId = 0;
         if(vm.dFecha()) {
             dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         }
@@ -323,11 +333,12 @@ function buscarDocumentospago2() {
         }
         empresaId = vm.sempresaId();
         proveedorId = vm.sproveedorId();
+        formaPagoId = vm.sformaPagoId();
         // obtener el n.serie del certificado para la firma.
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/documentos_pago/buscar/" + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
+            url: myconfig.apiUrl + "/api/documentos_pago/buscar/" + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId + "/" + formaPagoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -355,6 +366,7 @@ function exportarFacturasDocpago() {
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var empresaId = vm.sempresaId();
         var proveedorId = vm.sproveedorId();
+        var formapagoId = vm.sformaPagoId();
         var conDocPago = 1;
         if($('#chkDocAsociado').prop('checked')) {
             conDocPago = 1;
@@ -365,7 +377,7 @@ function exportarFacturasDocpago() {
         // enviar la consulta por la red (AJAX)
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/documentos_pago/exportar/facproves/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
+            url: myconfig.apiUrl + "/api/documentos_pago/exportar/facproves/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId + "/" + formapagoId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -467,6 +479,15 @@ function loadEmpresas() {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+function loadFormasPago() {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([0]).trigger('change');
     });
 }
 

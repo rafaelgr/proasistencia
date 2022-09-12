@@ -60,33 +60,18 @@ function initForm() {
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadTiposDepartamentos();
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        initTablaFacturas();
-        // comprobamos parámetros
-        facturaId = gup('FacturaId');
-        if (facturaId !== '') {
-
-            // Si nos pasan una prefafctura determinada esa es
-            // la que mostramos en el grid
-            cargarFacturas()(facturaId);
-    
-        } else {
-    
-            // Por defecto ahora a la entrada se van a cargar todas 
-            // las facturas que tengamos en el sistema. En un futuro este
-            // criterio puede cambiar y habrá que adaptarlo.
-            cargarFacturas()();
-        }
-
-    });
-
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
-    initTablaPrefacturas();
-    // comprobamos parámetros
-    prefacturaId = gup('PrefacturaId');
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        initTablaPrefacturas();
+        // comprobamos parámetros
+        prefacturaId = gup('PrefacturaId');
+
+    });
+
+   
 }
 
 // tratamiento knockout
@@ -122,13 +107,20 @@ function admData() {
 }
 
 function initTablaPrefacturas() {
-    tablaCarro = $('#dt_prefactura').dataTable({
+    tablaCarro = $('#dt_prefactura').DataTable({
         autoWidth: true,
         paging: false,
         columnDefs: [{
             "width": "20%",
             "targets": 0
         }],
+        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' f> <'col-sm-3 col-xs-3'Cl>>>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -172,6 +164,8 @@ function initTablaPrefacturas() {
                 html += '</label>';
                 return html;
             }
+        },{
+            data: "referencia"
         }, {
             data: "emisorNombre"
         }, {
@@ -200,7 +194,7 @@ function initTablaPrefacturas() {
                 return string;
             }
         }, {
-            data: "observaciones"
+            data: "observacionesPago"
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
