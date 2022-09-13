@@ -721,23 +721,20 @@ function loadData(data) {
         $("#tabAscContratos").hide();
     }
 
-    if(data.contratoCerrado && usuario.puedeEditar) {
+    if(data.contratoCerrado && usuario.puedeAbrir) {
        $('#chkContratoCerrado').prop('disabled' , false)
     } else if (!data.contratoCerrado) {
         $('#chkContratoCerrado').prop('disabled' , false);
-    }else if (data.contratoCerrado && !usuario.puedeEdita) {
+    }else if (data.contratoCerrado && !usuario.puedeAbrir) {
         $('#chkContratoCerrado').prop('disabled' , true);
     }
 
-    if(data.departamentoId == 8 && usuario.puedeVisualizar) {
-        $('#cerrados').show();
+    
+
+   if(data.contratoCerrado){
+        ocualtaBotonesContratoCerrado();
     }
-    else if(data.departamentoId == 8 && !usuario.puedeVisualizar) {
-        $('#cerrados').hide();
-    }
-    else {
-        $('#cerrados').show();
-    }
+   
 }
 
 
@@ -1461,8 +1458,9 @@ function initTablaContratosLineas() {
             data: "contratoLineaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteContratoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editContratoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLinea' onclick='editContratoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 if (!vm.generada())
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -2313,8 +2311,9 @@ function initTablaComisionistas() {
         }, {
             data: "contratoComisionistaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado())  bt1 = "<button  class='btn btn-circle btn-danger btn-sm' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -3543,7 +3542,8 @@ function initTablaFacturas() {
         }, {
             data: "facturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
@@ -3811,7 +3811,8 @@ function initTablaFacproves() {
         }, {
             data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -4102,7 +4103,8 @@ function initTablaAntproves() {
         }, {
             data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -4365,7 +4367,8 @@ function initTablaAntcols() {
         }, {
             data: "antproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado())  bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -4639,7 +4642,8 @@ function initTablaFactcol() {
         }, {
             data: "facproveId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -5417,8 +5421,12 @@ function initTablaConceptosLineas() {
             data: "contratoPorcenId",
             render: function (data, type, row) {
                 var html = "";
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "";
+                var bt2 = "";
+                if(!vm.contratoCerrado()) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 if(row.prefacturaId) html = "<div class='pull-right'></div>";
                 return html;
@@ -5891,4 +5899,20 @@ function loadAscContratos(id) {
         if (err) return;
         loadTablaAscContratos(data);
     });
+}
+
+function ocualtaBotonesContratoCerrado() {
+    $('#btnAceptar').hide();
+    if(usuario.puedeAbrir)   $('#btnAceptar').show();
+    $('#btnNuevoComisionista').hide();
+    $('#btnAltaPrefactura').hide();
+    $('#btnAltaFacprove').hide();
+    $('#btnAltaAntprove').hide();
+    $('#btnAltaFactcol').hide();
+    $('#btnAltaAntcol').hide();
+    $('#btnContratoAsociado').hide();
+    //
+    $('#btnGenerarPrefacturas').hide();
+    $('#btnNuevaLineaConcepto').hide();
+
 }
