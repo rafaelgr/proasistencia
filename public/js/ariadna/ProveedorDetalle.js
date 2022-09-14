@@ -1399,6 +1399,9 @@ function loadTablaUsuariosPush(data) {
 }
 
 function guardarUsuarioPush() {
+    //COMPROBAMOS PRIMERO QUE NO HAYA YA UN USUARIO CON ESTE LOGIN Y CONTRASEÑA 
+    
+    var encontrado = 0;
     var data = {
         usuarioPush: {
             nombre: vm.nombrePush(),
@@ -1407,44 +1410,113 @@ function guardarUsuarioPush() {
             proveedorId: proId
         }
     }
-    if (!usuarioEnEdicion) {
-        if(!datosOKUsuariosPush()) return;
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadUsuariosPush(vm.proveedorId());
-                $('#modalUsuariosPush').modal('hide');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-    } else {
-        $.ajax({
-            type: "PUT",
-            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                usuarioEnEdicion = false;
-                empSerieId = 0;
-                loadUsuariosPush(vm.proveedorId());
-                $('#modalUsuariosPush').modal('hide');
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
-    }
+
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/proveedores/login/usuPush/password/registro/" + vm.loginPush() + "/" + vm.passwordPush(),
+        dataType: "json",
+        contentType: "application/json",
+        data: null,
+        success: function (datos, status) {
+            // si se devuelve un registro el login/password ya existe y hay que comprobar que se trate de otro registro y 
+            //no que simplemente estemos editando y ayamos aceprado sin cambiar nada
+            if(datos) {
+                if(datos.length > 0) {
+                    for(var i = 0; i < datos.length; i++) {
+                        if(datos[i].proveedorUsuarioPushId != vm.proveedorUsuarioPushId()) {
+                            mensError("Ya existe un proveedor con este usuario y contraseña");
+                            encontrado = 1;
+                            break;
+                        }
+                    }
+               
+                    if(encontrado) return;
+                    if (!usuarioEnEdicion) {
+                        if(!datosOKUsuariosPush()) return;
+                        $.ajax({
+                            type: "POST",
+                            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                                // hay que mostrarlo en la zona de datos
+                                loadUsuariosPush(vm.proveedorId());
+                                $('#modalUsuariosPush').modal('hide');
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: "PUT",
+                            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                                // hay que mostrarlo en la zona de datos
+                                usuarioEnEdicion = false;
+                                empSerieId = 0;
+                                loadUsuariosPush(vm.proveedorId());
+                                $('#modalUsuariosPush').modal('hide');
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    }
+
+                } else {
+                    if (!usuarioEnEdicion) {
+                        if(!datosOKUsuariosPush()) return;
+                        $.ajax({
+                            type: "POST",
+                            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                                // hay que mostrarlo en la zona de datos
+                                loadUsuariosPush(vm.proveedorId());
+                                $('#modalUsuariosPush').modal('hide');
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: "PUT",
+                            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                                // hay que mostrarlo en la zona de datos
+                                usuarioEnEdicion = false;
+                                empSerieId = 0;
+                                loadUsuariosPush(vm.proveedorId());
+                                $('#modalUsuariosPush').modal('hide');
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    }
+                }
+            }  
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function deleteUsuariosPush(id) {

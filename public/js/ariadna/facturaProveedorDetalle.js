@@ -265,7 +265,7 @@ function initForm() {
         
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
-                
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
         // add the files to formData object for the data payload
         formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
             
