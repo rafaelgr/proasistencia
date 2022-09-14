@@ -5,6 +5,6 @@ ALTER TABLE `documentospago_facproves`
   ALTER TABLE `usuarios`   
   ADD COLUMN `puedeAbrir` TINYINT(1) DEFAULT 0 NULL AFTER `puedeEditar`;
 
-UPDATE `proasistencia`.`usuarios` SET `puedeAbrir` = '1' WHERE `usuarioId` = '21'; 
+UPDATE `usuarios` SET `puedeAbrir` = '1' WHERE `usuarioId` = '21'; 
 
-UPDATE `proasistencia`.`usuarios` SET `puedeAbrir` = '1' WHERE `usuarioId` = '16'; 
+UPDATE `usuarios` SET `puedeAbrir` = '1' WHERE `usuarioId` = '16'; 
