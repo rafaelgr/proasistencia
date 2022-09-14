@@ -641,12 +641,12 @@
                                                     <form id="frmNuevaFacturaAsociada">
                                                         <fieldset>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevoFicheroAsociado" title="Nueva transferencia asociada" data-toggle="modal" data-target="#modalAsociarRegistros" onclick="limpiarModal(false)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevoFicheroAsociado" title="Nueva transferencia asociada" data-toggle="modal" data-target="#modalAsociarRegistros" onclick="limpiarModal()" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-file"></i>
                                                                 </button>
                                                             </div>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevaFacturaAsociada" title="Nueva factura asociada" data-toggle="modal" data-target="#modalAsociarFacturas" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevaFacturaAsociada" title="Nueva factura asociada" data-toggle="modal" data-target="#modalAsociarFacturas" onclick="limpiarModal()" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -727,12 +727,12 @@
                                                     <form id="frmNuevoAnticipoAsociado">
                                                         <fieldset>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevoFicheroAsociadoAnt" title="Nueva transferencia asociada" data-toggle="modal" data-target="#modalAsociarRegistrosAnt" onclick="limpiarModal(false)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevoFicheroAsociadoAnt" title="Nueva transferencia asociada" data-toggle="modal" data-target="#modalAsociarRegistrosAnt" onclick="limpiarModal()" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-file"></i>
                                                                 </button>
                                                             </div>
                                                             <div class="pull-right">
-                                                                <button id="btnNuevoAnticipoAsociado" title="Nuevo anticipo asociado" data-toggle="modal" data-target="#modalAsociarAnticipos" onclick="limpiarModal(true)" class="btn btn-success btn-circle btn-lg">
+                                                                <button id="btnNuevoAnticipoAsociado" title="Nuevo anticipo asociado" data-toggle="modal" data-target="#modalAsociarAnticipos" onclick="limpiarModal()" class="btn btn-success btn-circle btn-lg">
                                                                     <i class="fa fa-lg fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -892,11 +892,11 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarRegistros" title="Asociar registros" onClick="aceptarAsociarRegistros()" class="btn btn-success btn-circle btn-lg">
-                                    <i class="fa fa-lg fa-check"></i>
-                                </button>
                                 <button id="btnSalirAsociarRegistros" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnAceptarAsociarRegistros" title="Asociar registros" onClick="aceptarAsociarRegistros()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnbuscarAsociarRegistros" title="Buscar registros" onClick="buscarAsociarRegistros()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-search"></i>
@@ -996,11 +996,11 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarFacturas" title="Asociar registros" onClick="aceptarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
-                                    <i class="fa fa-lg fa-check"></i>
-                                </button>
                                 <button id="btnSalirAsociarFacturas" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnAceptarAsociarFacturas" title="Asociar registros" onClick="aceptarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnbuscarAsociarFacturas" title="Buscar registros" onClick="buscarAsociarFacturas()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-search"></i>
@@ -1162,11 +1162,11 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarRegistrosAnt" title="Asociar registros" onClick="aceptarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
-                                    <i class="fa fa-lg fa-check"></i>
-                                </button>
                                 <button id="btnSalirAsociarRegistrosAnt" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnAceptarAsociarRegistrosAnt" title="Asociar registros" onClick="aceptarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnbuscarAsociarRegistrosAnt" title="Buscar registros" onClick="buscarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-search"></i>
@@ -1306,7 +1306,7 @@
                                     <section class="col col-sm-4" >
                                         <label class="label">Departamento</label>
                                             <label style="width:100%;">
-                                                <select style="width:100%" id="cmbDepartamentos4" name="cmbDepartamentos4" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                <select style="width:100%" id="cmbDepartamentos2" name="cmbDepartamentos2" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
                                             </label>
                                     </section>
                                 </div>
@@ -1321,11 +1321,11 @@
                         </fieldset>
                         <fieldset>
                             <div class="pull-right">
-                                <button id="btnAceptarAsociarAnticipos" title="Asociar registros" onClick="aceptarAsociarAnticipos()" class="btn btn-success btn-circle btn-lg">
-                                    <i class="fa fa-lg fa-check"></i>
-                                </button>
                                 <button id="btnSalirAsociarAnticipos" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <button id="btnAceptarAsociarAnticipos" title="Asociar registros" onClick="aceptarAsociarAnticipos()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnbuscarAsociarAnticipos" title="Buscar registros" onClick="buscarAsociarAnticipos()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-search"></i>

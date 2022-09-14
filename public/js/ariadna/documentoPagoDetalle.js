@@ -85,7 +85,7 @@ function initForm() {
     loadEmpresas();
 
     $("#cmbDepartamentos").select2(select2Spanish());
-    $("#cmbDepartamentos4").select2(select2Spanish());
+    $("#cmbDepartamentos2").select2(select2Spanish());
     loadDeparta();
 
     $("#cmbFormasPago").select2(select2Spanish());
@@ -640,6 +640,8 @@ function loadEmpresas() {
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([0]).trigger('change');
         $("#cmbEmpresas2").val([0]).trigger('change');
+        $("#cmbEmpresas3").val([0]).trigger('change');
+        $("#cmbEmpresas4").val([0]).trigger('change');
     });
 }
 
@@ -650,6 +652,7 @@ function loadDeparta() {
         var departamentos = [{ departamentoId: 0, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
         $("#cmbDepartamentos").val([0]).trigger('change');
+        $("#cmbDepartamentos2").val([0]).trigger('change');
     });
 }
 
@@ -1143,8 +1146,8 @@ function procesaClavesTransferencias(cod) {
     return arr;
 }
 
-function limpiarModal(opcion) {
-  
+function limpiarModal() {
+    claves = [];
     $('#btnAceptarAsociarFacturas').hide();
     $('#btnAceptarAsociarRegistros').hide();
     $('#btnAceptarAsociarRegistrosAnt').hide();
