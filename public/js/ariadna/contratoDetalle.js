@@ -109,10 +109,19 @@ function initForm() {
     $("#concepto-form").submit(function () {
         return false;
     });
+
+    $("#conceptoObras-form").submit(function () {
+        return false;
+    });
     
     $("#frmLineaConceptos").submit(function () {
         return false;
     });
+
+    $("#frmLineaConceptosObras").submit(function () {
+        return false;
+    });
+
     $("#frmAscContratos").submit(function () {
         return false;
     });
@@ -211,9 +220,61 @@ function initForm() {
         }
     });
 
+    $("#txtPorcentajeCobroObras").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajeCobroObras").val());
+        var restoPorcentaje = 0;
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if(isNaN(porcentaje)) return;
+
+        if(importePrefacturasConcepto > 0) {
+            restoContraro = totalContrato - importePrefacturasConcepto
+            restoPorcentaje = restoContraro / totalContrato * 100//nuevo porcentaje sobre el resto
+            porcentaje = ((porcentaje/100)/(restoPorcentaje/100)) * 100
+             
+        } else {
+            restoContraro = totalContrato;
+        }
+
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * restoContraro;
+
+        if(restoContraro == 0 || restoContraro < 0) {
+            mensError("Se ha superado el total del contrato");
+           //vm.importeCalculado(null);
+        }
+        vm.importeCalculado(roundToSix(importePorcentaje));
+        if((importePrefacturasConcepto +  vm.importeCalculado()) > totalContrato) {
+            mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
+            vm.importeCalculado(totalContrato - importePrefacturasConcepto);
+            var porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
+            vm.porcentajeCobro(roundToSix(porcentaje));
+            //vm.importeCalculado(null);
+            //vm.porcentajeCobro(null);
+            //return;
+        }
+    });
+
     $("#txtImporteCalculado").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculado").val());
+        var porcentaje = 0;
+        if(isNaN(importeCalculado)) return;
+        if(importeCalculado+importePrefacturasConcepto > totalContrato) {
+            mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
+            vm.importeCalculado(totalContrato - importePrefacturasConcepto);
+            porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
+            vm.porcentajeCobro(roundToSix(porcentaje));
+        } else {
+            porcentaje = (importeCalculado * 100) / totalContrato;
+            vm.porcentajeCobro(roundToSix(porcentaje));
+        }
+    });
+
+    $("#txtImporteCalculadoObras").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var importeCalculado = parseFloat($("#txtImporteCalculadoObras").val());
         var porcentaje = 0;
         if(isNaN(importeCalculado)) return;
         if(importeCalculado+importePrefacturasConcepto > totalContrato) {
@@ -253,6 +314,7 @@ function initForm() {
 
 
     $("#cmbFormasPagoLinea").select2(select2Spanish());
+    $("#cmbFormasPagoLineaObras").select2(select2Spanish());
     loadFormasPagoLinea();
 
 
@@ -296,6 +358,7 @@ function initForm() {
     initTablaFactcol();
 
     initTablaConceptosLineas();
+    initTablaConceptosLineasObras();
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
     $("#cmbComerciales").select2().on('change', function (e) {
@@ -691,6 +754,7 @@ function loadData(data) {
    
 
     loadConceptosLineas(data.contratoId);
+    loadConceptosLineasObras(data,contratoId);
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste();
     
@@ -855,7 +919,7 @@ var guardarContrato = function (done) {
     if (contratoId == 0) {
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos", data, function (err, data) {
             if (err) return errorGeneral(err, done);
-            loadData(data);
+            modalConceptoObras(data);
             done(null, 'POST');
         });
     } else {
@@ -1041,6 +1105,7 @@ function loadFormasPagoLinea(id) {
         vm.posiblesFormasPagoLinea(formasPago);
         vm.sformaPagoIdLinea(id);
         $("#cmbFormasPagoLinea").val([id]).trigger('change');
+        $("#cmbFormasPagoLineaObras").val([id]).trigger('change');
     });
 }
 
@@ -1470,7 +1535,7 @@ function initTablaContratosLineas() {
     tablaContratosLineas.columns(1).visible(false);
 }
 
-function loadDataLinea(data) {
+function modalConceptoObrasLinea(data) {
     vm.contratoLineaId(data.contratoLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
@@ -1664,7 +1729,7 @@ function editContratoLinea(id) {
     llamadaAjax('GET', "/api/contratos/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
-            loadDataLinea(data[0]);
+            modalConceptoObrasLinea(data[0]);
         }
     });
 }
@@ -1691,7 +1756,7 @@ function deleteContratoLinea(id) {
 var recargaCabeceraLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        loadData(data);
+        modalConceptoObras(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
         
@@ -5616,10 +5681,10 @@ function editFprmaPagoLineaConcepto(id) {
     lineaEnEdicion = true;
     llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
         if (err) return;
-        if (data.length > 0) loadDataLineaConcepto(data[0]);
+        if (data.length > 0) modalConceptoObrasLineaConcepto(data[0]);
     });
 }
-function loadDataLineaConcepto(data) {
+function modalConceptoObrasLineaConcepto(data) {
     vm.contratoPorcenId(data.contratoPorcenId);
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
@@ -5695,6 +5760,362 @@ function datosOKLineasConceptos() {
     });
     return $('#concepto-form').valid();
 }
+
+//FUNCIONES PLANIFICACION OBRAS
+
+function initTablaConceptosLineasObras() {
+    tablaCarro = $('#dt_lineasConceptoObras').DataTable({
+        autoWidth: true,
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConceptoObras'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+            
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataConceptosLineas,
+        columns: [  {
+            data: "fecha",
+            
+        },{
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "concepto",
+            
+        }, {
+            data: "porcentaje",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        },{
+            data: "importe",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "formaPagoNombre",
+            
+        }, {
+            data: "contratoPorcenId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "";
+                var bt2 = "";
+                if(!vm.contratoCerrado()) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConceptoObras' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                }
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                if(row.prefacturaId) html = "<div class='pull-right'></div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function  loadConceptosLineasObras(id) {
+    llamadaAjax("GET", "/api/contratos/conceptos/porcentaje/" + id, null, function (err, data) {
+        if (err) return;
+        
+        loadTablaConceptosLineasObras(data);
+        
+    });
+}
+
+function loadTablaConceptosLineasObras(data) {
+    if (data) {
+        dataConceptos = data;
+        numConceptos = data.length;
+    } else {
+        dataConceptos = null;
+        numConceptos = 0;
+    }
+    var dt = $('#dt_lineasConceptoObras').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+        $('#btnCopiar').hide();
+        $('#btnPorcentaje').hide();
+        $('#btnDeleteTipo').hide();
+    }
+    dt.fnClearTable();
+    if (data != null){
+        dt.fnAddData(data);
+        $('#btnCopiar').show();
+        $('#btnPorcentaje').show();
+        $('#btnDeleteTipo').show();
+    }
+    dt.fnDraw();
+}
+
+
+function nuevaLineaConceptoObras() {
+    limpiaDataLineaConceptoObras();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLineaConceptoObras() {
+    vm.conceptoCobro('');
+    vm.porcentajeCobro(0);
+    vm.fechaConcepto(vm.fechaInicio());
+    vm.importeCalculado(0);
+    loadFormasPagoLinea(vm.formaPagoId())
+
+}
+
+
+function aceptarLineaConceptoObras() {
+    if (!datosOKLineasConceptosObras()) {
+        return;
+    }
+    var data = {
+        cobroPorcen: {
+            contratoId: vm.contratoId(),
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro(),
+            fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
+        }
+    }
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/contratos/concepto";
+                if (lineaEnEdicion) {
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
+                }
+                llamadaAjax(verbo, url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalConceptoObras').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
+                        loadTablaConceptosLineasObras(data);
+                    });
+                });
+}
+
+function aceptarLineaConceptoPrefacturaObras() {
+    if (!datosOKLineasConceptos()) {
+        return;
+    }
+   var  impCli = parseFloat(vm.importeCliente());
+   var imp = parseFloat(vm.importeCalculado());
+    if(importePrefacturasConcepto > impCli) {
+        mensError("Se está sobrepasando el total del contrato");
+        return;
+    } else if(importePrefacturasConcepto + imp > impCli) {
+        mensError("Se está sobrepasando el total del contrato");
+        return;
+    } 
+    var data = {
+        cobroPorcen: {
+            contratoId: vm.contratoId(),
+            concepto: vm.conceptoCobro(),
+            porcentaje: vm.porcentajeCobro(),
+            fecha: spanishDbDate(vm.fechaConcepto()),
+            importe: vm.importeCalculado(),
+            formaPagoId: vm.sformaPagoIdLinea(),
+            contratoPorcenId: null
+        }
+    }
+                var verbo = "POST";
+                var url = myconfig.apiUrl + "/api/contratos/concepto";
+                if (lineaEnEdicion) {
+                    data.cobroPorcen.contratoPorcenId = vm.contratoPorcenId();
+                    verbo = "PUT";
+                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
+                }
+                if(verbo == "PUT") {
+                    mens = "<ul>"
+                    mens += "<li><strong>¡¡ Atención !! Al modificar El concepto se borrarán las prefacturas  que no se hayan generado mediante conceptos / porcentajes, las puede volver a generar</strong></li>";
+                    mens += "<li>¿Desea continuar?</li>";
+                    mens += "</ul>"
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Cancelar][Modificar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Modificar") {
+                            llamadaAjax(verbo, url, data, function (err, dato) {
+                                if (err) return;
+                    
+                                $('#modalConceptoObras').modal('hide');
+                                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                                    loadTablaConceptosLineasObras(data2);
+                                    // comprobamos si es de mantenedor o cliente final.
+                                    var importe = vm.importeCliente(); // importe real de la factura;
+                                    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                                    var clienteId = vm.clienteId();
+                                    var cliente = $("#txtCliente").val();
+                                    var empresa = $("#cmbEmpresas").select2('data').text;
+                                    // si es un mantenedor su importe de factura es el calculado para él.
+                                    if (vm.mantenedorId()) {
+                                        importe = vm.importeMantenedor();
+                                        clienteId = vm.mantenedorId();
+                                        cliente = $("#txtMantenedor").val();
+                                    }
+                                    var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
+                                    vm.prefacturasAGenerar(prefacturas);
+                                    aceptarModificarPrefacturas();
+                                });
+                            });
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            // no hacemos nada (no quiere borrar)
+                            return;
+                        }
+                    });
+                } else {
+                    llamadaAjax(verbo, url, data, function (err, dato) {
+                        if (err) return;
+            
+                        $('#modalConceptoObras').modal('hide');
+                        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                            loadTablaConceptosLineasObras(data2);
+                            // comprobamos si es de mantenedor o cliente final.
+                            var importe = vm.importeCliente(); // importe real de la factura;
+                            var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                            var clienteId = vm.clienteId();
+                            var cliente = $("#txtCliente").val();
+                            var empresa = $("#cmbEmpresas").select2('data').text;
+                            // si es un mantenedor su importe de factura es el calculado para él.
+                            if (vm.mantenedorId()) {
+                                importe = vm.importeMantenedor();
+                                clienteId = vm.mantenedorId();
+                                cliente = $("#txtMantenedor").val();
+                            }
+                            var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
+                            vm.prefacturasAGenerar(prefacturas);
+                            aceptarGenerarPrefacturas();
+                        });
+                    });
+                }
+}
+
+function editFprmaPagoLineaConceptoObras(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) modalConceptoObrasLineaConcepto(data[0]);
+    });
+}
+function modalConceptoObrasLineaConceptoObras(data) {
+    vm.contratoPorcenId(data.contratoPorcenId);
+    vm.conceptoCobro(data.concepto);
+    vm.porcentajeCobro(data.porcentaje);
+    vm.fechaConcepto(spanishDate(data.fecha));
+    vm.importeCalculado(data.importe);
+    loadFormasPagoLinea(data.formaPagoId);
+    
+}
+
+function deleteConceptosLineaObras(contratoPorcenId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro, se borrarán además todas las prefacturas generadas que no se han generado atraves de conceptos / porcentajes ?";
+    mensajeAceptarCancelar(mens, function () {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/concepto/" + contratoPorcenId, null, function (err, data) {
+            if (err) return;
+            //una vez borrada borramos todas las prefacturas del contrato no generadas mediante conceptos y porcentajes
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
+                if (err) return;
+                $('#modalConceptoObras').modal('hide');
+                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
+                    loadTablaConceptosLineasObras(data);
+                    loadPrefacturasDelContrato(vm.contratoId());
+                });
+                
+            });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKLineasConceptosObras() {
+    $('#conceptoObras-form').validate({
+        rules: {
+            txtConceptoCobroObras: {
+                required: true
+            },
+            txtPorcentajeCobroObras: {
+                required: true,
+                number:true
+            },
+            txtImporteCalculadoObras: {
+                required: true,
+                number:true
+            },
+            txtFechaConceptoObras: {
+                required: true,
+                greaterThan: '#txtFechaInicio',
+                lessThan: '#txtFechaFinal'
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtConceptoCobroObras: {
+                required: "Debe dar un concepto"
+            },
+            txtPorcentajeCobroObras: {
+                required: "Debe proporcionar un porcentaje",
+                number: "Se tiene que introducir un numero válido"
+            },
+            txtImporteCalculadoObras: {
+                required: true,
+                number:true
+            },
+            txtFechaConceptoObras: {
+                required: "Debe proporcionar una fecha de factura",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#conceptoObras-form').valid();
+}
+
 
 //contrato asociado
 function crearContratoAsociado() {
@@ -5914,5 +6335,6 @@ function ocualtaBotonesContratoCerrado() {
     //
     $('#btnGenerarPrefacturas').hide();
     $('#btnNuevaLineaConcepto').hide();
+    $('#btnNuevaLineaConceptoObras').hide();
 
 }
