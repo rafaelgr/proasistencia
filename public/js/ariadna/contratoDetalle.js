@@ -5893,7 +5893,7 @@ function initTablaConceptosLineasObras() {
 }
 
 function  loadConceptosLineasObras(id) {
-    llamadaAjax("GET", "/api/contratos/conceptos/porcentaje/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos//lineas/planificacion/" + id, null, function (err, data) {
         if (err) return;
         
         loadTablaConceptosLineasObras(data);
@@ -5947,7 +5947,7 @@ function aceptarLineaConceptoObras() {
         return;
     }
     var data = {
-        cobroPorcen: {
+        planificacion: {
             contratoId: vm.contratoId(),
             concepto: vm.conceptoCobro(),
             porcentaje: vm.porcentajeCobro(),
@@ -5957,15 +5957,15 @@ function aceptarLineaConceptoObras() {
         }
     }
                 var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/contratos/concepto";
+                var url = myconfig.apiUrl + "/api/contratos/planificacion";
                 if (lineaEnEdicion) {
                     verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
+                    url = myconfig.apiUrl + "/api/contratos/planificacion/" +  vm.contratoPorcenId();
                 }
                 llamadaAjax(verbo, url, data, function (err, data) {
                     if (err) return;
                     $('#modalConceptoObras').modal('hide');
-                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
                         loadTablaConceptosLineasObras(data);
                     });
                 });
