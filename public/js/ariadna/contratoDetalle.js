@@ -754,7 +754,7 @@ function loadData(data) {
    
 
     if(data.tipoContratoId != 8) {
-        loadConceptosLineas(data.contratoId); ç
+        loadConceptosLineas(data.contratoId);
         $('#lineasPagoObras').hide();
         $('#lineasPago').show()
 
