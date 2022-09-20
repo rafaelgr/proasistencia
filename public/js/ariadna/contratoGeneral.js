@@ -430,7 +430,7 @@ function restarDias(fecha, dias){
     });
 } */
 
-function informePDF(data) {
+/* function informePDF(data) {
     var shortid = "rySBxKzIe";
     var data = {
         "template": {
@@ -439,9 +439,9 @@ function informePDF(data) {
         "data": data
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-}
+} */
 
-var f_open_post = function (verb, url, data, target) {
+/* var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
     form.method = verb;
@@ -460,7 +460,7 @@ var f_open_post = function (verb, url, data, target) {
     form.style.display = 'none';
     document.body.appendChild(form);
     form.submit();
-};
+}; */
 
 function cargarContratos2() {
     $.ajax({
