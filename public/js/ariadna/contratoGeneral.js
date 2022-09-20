@@ -249,8 +249,8 @@ function initTablaContratos() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printContrato(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
@@ -414,7 +414,7 @@ function restarDias(fecha, dias){
     return registro;
   }
 
-function printContrato(id) {
+/* function printContrato(id) {
     $.ajax({
         type: "GET",
         url: myconfig.apiUrl + "/api/informes/contratos/" + id,
@@ -428,7 +428,7 @@ function printContrato(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
-}
+} */
 
 function informePDF(data) {
     var shortid = "rySBxKzIe";

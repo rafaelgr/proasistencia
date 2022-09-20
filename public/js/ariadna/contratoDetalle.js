@@ -69,7 +69,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
     $("#btnSalir").click(salir());
-    $("#btnImprimir").click(imprimir);
+    //$("#btnImprimir").click(imprimir);
     $('#txtPrecio').focus( function () {
         $('#txtPrecio').val(null);
     })
@@ -2118,7 +2118,7 @@ var cargaPorcenRef = function(comision) {
         vm.referencia(ref);
     }
 }
-var imprimir = function () {
+/* var imprimir = function () {
     guardarContrato(function (err) {
         if (err) return;
         printContrato(vm.contratoId());
@@ -2141,7 +2141,7 @@ function informePDF(data) {
         "data": data
     }
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
-}
+} */
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
