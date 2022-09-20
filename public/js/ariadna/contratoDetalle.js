@@ -753,8 +753,16 @@ function loadData(data) {
     vm.servicioId(data.servicioId);
    
 
-    loadConceptosLineas(data.contratoId);
-    loadConceptosLineasObras(data,contratoId);
+    if(data.tipoContratoId != 8) {
+        loadConceptosLineas(data.contratoId); ç
+        $('#lineasPagoObras').hide();
+        $('#lineasPago').show()
+
+    } else {
+        loadConceptosLineasObras(data.contratoId);
+        $('#lineasPagoObras').show();
+        $('#lineasPago').hide()
+    }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste();
     
@@ -919,7 +927,7 @@ var guardarContrato = function (done) {
     if (contratoId == 0) {
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos", data, function (err, data) {
             if (err) return errorGeneral(err, done);
-            modalConceptoObras(data);
+            loadData(data);
             done(null, 'POST');
         });
     } else {
@@ -1535,7 +1543,7 @@ function initTablaContratosLineas() {
     tablaContratosLineas.columns(1).visible(false);
 }
 
-function modalConceptoObrasLinea(data) {
+function loadDataLinea(data) {
     vm.contratoLineaId(data.contratoLineaId);
     vm.linea(data.linea);
     vm.articuloId(data.articuloId);
@@ -1729,7 +1737,7 @@ function editContratoLinea(id) {
     llamadaAjax('GET', "/api/contratos/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
-            modalConceptoObrasLinea(data[0]);
+            loadDataLinea(data[0]);
         }
     });
 }
@@ -1756,7 +1764,7 @@ function deleteContratoLinea(id) {
 var recargaCabeceraLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        modalConceptoObras(data);
+        loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
         
@@ -5681,10 +5689,10 @@ function editFprmaPagoLineaConcepto(id) {
     lineaEnEdicion = true;
     llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
         if (err) return;
-        if (data.length > 0) modalConceptoObrasLineaConcepto(data[0]);
+        if (data.length > 0) loadDataLineaConcepto(data[0]);
     });
 }
-function modalConceptoObrasLineaConcepto(data) {
+function loadDataLineaConcepto(data) {
     vm.contratoPorcenId(data.contratoPorcenId);
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
@@ -5774,6 +5782,35 @@ function initTablaConceptosLineasObras() {
                 "searchable": false
             }
         ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+            .column( 4 )
+            .data()
+            .reduce( function (a, b) {
+                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+            }, 0 );
+
+            // Update footer
+            $( api.columns(4).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+        
+
+            //////
+
+            
+        },
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -5844,7 +5881,7 @@ function initTablaConceptosLineasObras() {
                 var bt1 = "";
                 var bt2 = "";
                 if(!vm.contratoCerrado()) {
-                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConceptoObras' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -6036,10 +6073,10 @@ function editFprmaPagoLineaConceptoObras(id) {
     lineaEnEdicion = true;
     llamadaAjax("GET", "/api/contratos/concepto/porcenteje/registro/" + id, null, function (err, data) {
         if (err) return;
-        if (data.length > 0) modalConceptoObrasLineaConcepto(data[0]);
+        if (data.length > 0) loadDataLineaConceptoObras(data[0]);
     });
 }
-function modalConceptoObrasLineaConceptoObras(data) {
+function loadDataLineaConceptoObras(data) {
     vm.contratoPorcenId(data.contratoPorcenId);
     vm.conceptoCobro(data.concepto);
     vm.porcentajeCobro(data.porcentaje);
@@ -6055,8 +6092,9 @@ function deleteConceptosLineaObras(contratoPorcenId) {
     mensajeAceptarCancelar(mens, function () {
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/concepto/" + contratoPorcenId, null, function (err, data) {
             if (err) return;
+            loadTablaConceptosLineasObras(data);
             //una vez borrada borramos todas las prefacturas del contrato no generadas mediante conceptos y porcentajes
-            llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
+            /* llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
                 if (err) return;
                 $('#modalConceptoObras').modal('hide');
                 llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
@@ -6064,7 +6102,7 @@ function deleteConceptosLineaObras(contratoPorcenId) {
                     loadPrefacturasDelContrato(vm.contratoId());
                 });
                 
-            });
+            }); */
         });
     }, function () {
         // cancelar no hace nada
