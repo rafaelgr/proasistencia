@@ -1060,7 +1060,7 @@
                                                                                         Fecha 
                                                                                     </th>
                                                                                     <th  class="text-left">
-                                                                                        Fecha factura
+                                                                                        Fecha registro
                                                                                     </th>
                                                                                     <th data-hide="phone" class="text-left">
                                                                                         Concepto
@@ -2560,7 +2560,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> LINEA DEL PAGO</h4>
+                    <h4 class="modal-title"> LíNEA DEL PAGO</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="concepto-form" class="smart-form">
@@ -2625,7 +2625,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> LINEA DEL PAGO</h4>
+                    <h4 class="modal-title"> LÍNEA PLANIFICACIÓN</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="conceptoObras-form" class="smart-form">
@@ -2671,6 +2671,53 @@
                                 Aceptar
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
+    <!--End modal-->
+     <!-- Modal -->
+     <div class="modal fade" id="modalGenerarPrefacturasObras" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> GENERACIÓN DE PREFACTURAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generarPrefacturasObras-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-6">
+                                        <div style="margin-top: 10%;">
+                                            <input id="chkVarias" type="checkbox" name="chkVarias" /> Generar varias prefacturas
+                                        </div>
+                                    </section>
+                                    <section class="col col-md-6">
+                                        <label class="label">Fecha prefactura</label>
+                                        <label class="input">
+                                            <input id="txtFechaPlanificacionObras2" name="txtFechaPlanificacionObras2" data-bind="value: fechaPlanificacionObras2" class="datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </section>
+                                   
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarGenerarPrefacturasObras" class="btn btn-primary" onclick="aceptarGenerarPrefacturaPlanificacionObras()">
+                                Aceptar
+                            </button>
+                           <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarModalGenerarPrefacturasObras()">
                                 Cancelar
                             </button>
                         </footer>
