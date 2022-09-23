@@ -19,3 +19,14 @@ ALTER TABLE `prefacturas`
   ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `contratoPorcenId`,
   ADD CONSTRAINT `pref_contratoPlanificacion` FOREIGN KEY (`contPlanificacionId`) 
   REFERENCES `contrato_planificacion`(`contPlanificacionId`) ON DELETE CASCADE;
+
+  ALTER TABLE `contrato_planificacion`   
+  ADD COLUMN `importePrefacturado` DECIMAL(12,2) NULL AFTER `importeFacturado`;
+
+
+  ALTER TABLE `contrato_planificacion`   
+  CHANGE `importePrefacturado` `importePrefacturado` DECIMAL(12,2) DEFAULT 0 NULL  AFTER `importe`,
+  CHANGE `importeFacturado` `importeFacturado` DECIMAL(12,2) DEFAULT 0 NULL,
+  CHANGE `importeCobrado` `importeCobrado` DECIMAL(12,2) DEFAULT 0 NULL;
+
+
