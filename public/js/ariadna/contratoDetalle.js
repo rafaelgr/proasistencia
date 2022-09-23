@@ -2691,6 +2691,10 @@ var verPrefacturasAGenerar = function () {
 }
 
 var verPrefacturasAGenerar2 = function () {
+    if(vm.tipoContratoId() == 8) {
+        verPrefacturasAGenerarPlanificacion();
+        return;
+    }
     if (!generarPrefacturasOK()) return;
     
     // comprobamos si es de mantenedor o cliente final.
@@ -2714,6 +2718,30 @@ var verPrefacturasAGenerar2 = function () {
     loadTablaGenerarPrefacturas(prefacturas);
 }
 
+
+var verPrefacturasAGenerarPlanificacion = function () {
+    if (!generarPrefacturasOK()) return;
+    
+    // comprobamos si es de mantenedor o cliente final.
+    var importe = vm.importeAFacturar(); // importe real de la factura;
+    var importeAlCliente = vm.importeAFacturar(); // importe al cliente final;
+    var clienteId = vm.clienteId();
+    var cliente = $("#txtCliente").val();
+    var empresa = $("#cmbEmpresas").select2('data').text;
+    // si es un mantenedor su importe de factura es el calculado para él.
+    if (vm.mantenedorId()) {
+        importe = vm.importeMantenedor();
+        clienteId = vm.mantenedorId();
+        cliente = $("#txtMantenedor").val();
+    }
+    var divisor = importe / vm.importeCliente();
+    var coste = vm.coste() * divisor;
+    var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    
+    vm.prefacturasAGenerar(prefacturas);
+    loadTablaGenerarPrefacturas(prefacturas);
+}
+
 var aceptarGenerarPrefacturas = function () {
     if (!generarPrefacturasOK()) return;
     if (vm.prefacturasAGenerar().length == 0) {
@@ -2721,7 +2749,8 @@ var aceptarGenerarPrefacturas = function () {
     }
     $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
     var data = {
-        prefacturas: vm.prefacturasAGenerar()
+        prefacturas: vm.prefacturasAGenerar(),
+        importeFacturar: vm.importeAFacturar() + ((vm.importeAFacturar() * 0.21))
     };
     controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
         if (err) return;
@@ -4986,6 +5015,8 @@ function deletePrefactura(id) {
 }
 function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
     var divisor = obtenerDivisor();
+
+
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
     // de mes 
     var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
@@ -5248,12 +5279,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
 
 function crearPrefacturaPlanificacion(importe, numPagos, empresaId, clienteId, empresa, cliente, data) {
     var divisor = 1;
-    
-    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
-    // de mes 
-    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
-    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
-    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
+    var fecha = new Date(spanishDbDate(data[0].fecha));
     var pagos = [];
     var nPagos = numPagos;
     var acumulado = 0;
@@ -5268,20 +5294,13 @@ function crearPrefacturaPlanificacion(importe, numPagos, empresaId, clienteId, e
         var  contPlanificacionId = data[i].contPlanificacionId;
         var formaPagoId = data[i].formaPagoId;
         // sucesivas fechas de factura
-        var f = moment(data[i].fecha).format('DD/MM/YYYY');
+        var f = moment(fecha).format('DD/MM/YYYY');
         // inicio de periodo
         if(i == 0) {
-            var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
-        } else {
-            var f0 = moment(data[i].fecha).format('DD/MM/YYYY');
-        }
+            var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
+        } 
        
-        // fin de periodo
-        if(data[i+1]) {
-            var f2 = moment(data[i+1].fecha).format('DD/MM/YYYY');
-        } else {
-            var f2 = moment(finContrato).format('DD/MM/YYYY');
-        }
+        var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         //completamos el compo observacionesPago
         var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
         var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
@@ -5309,26 +5328,10 @@ function crearPrefacturaPlanificacion(importe, numPagos, empresaId, clienteId, e
             contPlanificacionId: contPlanificacionId,
             formaPagoId: formaPagoId
         };
-        /*if (vm.facturaParcial() && i == 0) {
-            p.importe = import1;
-            p.importeCliente = import11;
-            p.importeCoste = import12;
-        }
-        if (vm.facturaParcial() && i == (nPagos - 1)) {
-            p.importe = import2;
-            p.importeCliente = import21;
-            p.importeCoste = import22;
-        }*/
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();
     }
-    /*if (pagos.length > 1) {
-        // en la última factura ponemos los restos
-        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
-        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
-        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
-    }*/
     
     return pagos;
 }
@@ -6141,6 +6144,7 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
             clienteId = vm.mantenedorId();
             cliente = $("#txtMantenedor").val();
         }
+        RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(importe,  1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
         aceptarGenerarPrefacturas();
