@@ -2791,7 +2791,7 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
         contPlanificacionId: RegPlanificacion[0].contPlanificacionId
     };
   
-    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), function (err, result) {
+    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(),  RegPlanificacion[0].contPlanificacionId, function (err, result) {
             if (err) return;
             if (!result) {
                 $('#modalGenerarPrefacturas').modal('hide');
