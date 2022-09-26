@@ -67,6 +67,7 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtNumPagos').on('blur', verPrefacturasAGenerar2);
+    $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
@@ -317,6 +318,7 @@ function initForm() {
     initTablaBases();
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
+    initTablaGenerarPrefacturasPlanificacion();
 
     initTablaPrefacturas();
     initTablaFacturas();
@@ -2550,6 +2552,7 @@ var loadPeriodosPagos = function (periodoPagoId) {
     ];
     vm.posiblesPeriodosPagos(periodosPagos);
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
+    $("#cmbPeriodosPagos2").val([periodoPagoId]).trigger('change');
 }
 
 var generarPrefacturas = function () {
@@ -2559,13 +2562,7 @@ var generarPrefacturas = function () {
         return;
     }
  */
-    if(vm.tipoContratoId() == 8) {
-        $("#noObras").hide();
-        $("#obras").show();
-    } else {
-        $("#noObras").show();
-        $("#obras").hide();
-    }
+    
     var resto = 0;
     if(numConceptos > 0 && importePrefacturas == 0) {
         modificaFormulario(true);
@@ -2573,9 +2570,13 @@ var generarPrefacturas = function () {
         modificaFormulario(false);
     }
     $("#cmbPeriodosPagos").select2(select2Spanish());
+    $("#cmbPeriodosPagos2").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
     $("#cmbPeriodosPagos").select2().on('change', function (e) {
         cambioPeriodosPagos(e.added);
+    });
+    $("#cmbPeriodosPagos2").select2().on('change', function (e) {
+        cambioPeriodosPagosPlanificacion(e.added);
     });
     if (vm.mantenedorId()) {
         var importeMantenedor = vm.importeMantenedor();
@@ -2595,11 +2596,13 @@ var generarPrefacturas = function () {
     $("#generar-prefacturas-form").submit(function () {
         return false;
     });
+    $("#generar-prefacturas-form-planificacion").submit(function () {
+        return false;
+    });
 }
 
 var generarPrefacturasPlanificacion = function (data) {
-    $("#noObras").hide();
-    $("#obras").show();
+
      var resto = data[0].importe;
      vm.importeAFacturar(roundToSix(resto));
     /*  if(numConceptos > 0 && importePrefacturas == 0) {
@@ -2607,19 +2610,22 @@ var generarPrefacturasPlanificacion = function (data) {
      } else {
          modificaFormulario(false);
      } */
-     $("#cmbPeriodosPagos").select2(select2Spanish());
+     $("#cmbPeriodosPagos2").select2(select2Spanish());
      loadPeriodosPagos(vm.speriodoPagoId());
-     $("#cmbPeriodosPagos").select2().on('change', function (e) {
-         cambioPeriodosPagos(e.added);
+     $("#cmbPeriodosPagos2").select2().on('change', function (e) {
+         cambioPeriodosPagosPlanificacion(e.added);
      });
     
-     //si no hay fecha de primera factura establecemos la del día de hoy
-     if(!vm.fechaPrimeraFactura()) {
+    
+     if(vm.fechaPlanificacionObras2()) {
+        vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
+     }
+     else if(!vm.fechaPrimeraFactura()) {
          var f = new Date();
          f = moment(f).format('DD/MM/YYYY');
          vm.fechaPrimeraFactura(f);
      }
-     $("#generar-prefacturas-form").submit(function () {
+     $("#generar-prefacturas-form-planificacion").submit(function () {
          return false;
      });
  }
@@ -2635,6 +2641,10 @@ function modificaFormulario(option) {
 
 var cambioPeriodosPagos = function (data) {
     vm.numPagos(calcularNumPagos());
+}
+
+var cambioPeriodosPagosPlanificacion = function (data) {
+    vm.numPagos(calcularNumPagosPlanificacion());
 }
 
 var obtenerDivisor = function () {
@@ -2691,10 +2701,6 @@ var verPrefacturasAGenerar = function () {
 }
 
 var verPrefacturasAGenerar2 = function () {
-    if(vm.tipoContratoId() == 8) {
-        verPrefacturasAGenerarPlanificacion();
-        return;
-    }
     if (!generarPrefacturasOK()) return;
     
     // comprobamos si es de mantenedor o cliente final.
@@ -2719,6 +2725,8 @@ var verPrefacturasAGenerar2 = function () {
 }
 
 
+
+
 var verPrefacturasAGenerarPlanificacion = function () {
     if (!generarPrefacturasOK()) return;
     
@@ -2739,7 +2747,7 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
     
     vm.prefacturasAGenerar(prefacturas);
-    loadTablaGenerarPrefacturas(prefacturas);
+    loadTablaGenerarPrefacturasPlanificacion(prefacturas);
 }
 
 var aceptarGenerarPrefacturas = function () {
@@ -2750,27 +2758,88 @@ var aceptarGenerarPrefacturas = function () {
     $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
-        importeFacturar: vm.importeAFacturar() + ((vm.importeAFacturar() * 0.21))
+        contPlanificacionId: RegPlanificacion[0].contPlanificacionId
     };
-    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
-        if (err) return;
-        if (!result) {
-            $('#modalGenerarPrefacturas').modal('hide');
-            return;
-        }
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-            if (err){
-                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+  
+        controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+            if (err) return;
+            if (!result) {
+                $('#modalGenerarPrefacturas').modal('hide');
                 return;
             }
-            $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
-            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-            $('#modalGenerarPrefacturas').modal('hide');
-            loadPrefacturasDelContrato(vm.contratoId());
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+                if (err){
+                    $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                    return;
+                }
+                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+                $('#modalGenerarPrefacturas').modal('hide');
+                loadPrefacturasDelContrato(vm.contratoId());
+            });
         });
-    });
+    
 }
 
+var aceptarGenerarPrefacturaPlanificacion = function () {
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+        contPlanificacionId: RegPlanificacion[0].contPlanificacionId
+    };
+  
+    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), function (err, result) {
+            if (err) return;
+            if (!result) {
+                $('#modalGenerarPrefacturas').modal('hide');
+                return;
+            }
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+                if (err){
+                    $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                    return;
+                }
+                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+                $('#modalGenerarPrefacturas').modal('hide');
+                loadPrefacturasDelContrato(vm.contratoId());
+            });
+    });
+    
+}
+
+var aceptarGenerarPrefacturasPlanificacion = function () {
+    if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+    };
+        controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
+            if (err) return;
+            if (!result) {
+                $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+                return;
+            }
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+                if (err){
+                    $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
+                    return;
+                }
+                $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
+                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+                $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+                loadPrefacturasDelContrato(vm.contratoId());
+                loadPlanificacionLineasObras(vm.contratoId());
+                limpiarModalGenerarPrefacturasObras();
+            });
+        });
+}
 
 var aceptarModificarPrefacturas = function () {
     //primero borramos la prefactura
@@ -2832,6 +2901,40 @@ var generarPrefacturasOK = function () {
     return $('#generar-prefacturas-form').valid();
 }
 
+var generarPrefacturasPlanificacionOK = function () {
+    $('#generar-prefacturas-form-planificacion').validate({
+        rules: {
+            cmbPeriodosPagos2: {
+                required: true
+            },
+            txtGFechaPrimeraFactura2: {
+                required: true
+            },
+           /*  txtGFechaUltimaFactura: {
+                required: true
+            } */
+        },
+        // Messages for form validation
+        messages: {
+            cmbPeriodosPagos2: {
+                required: "Debe elegir un periodo"
+            },
+            txtGFechaPrimeraFactura2: {
+                required: "Debe elegir una fecha"
+            },
+            /* txtGFechaUltimaFactura: {
+                required: "Debe elegir una fecha"
+            } */
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    // var opciones = $("#generar-prefacturas-form").validate().settings;
+    return $('#generar-prefacturas-form-planificacion').valid();
+}
+
 var controlDePrefacturasYaGeneradas = function (contratoId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
         if (err) return done(err);
@@ -2839,6 +2942,30 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
         var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
         mensajeAceptarCancelar(mensaje, function () {
             llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+var controlDePrefacturasYaGeneradasPlanificacion = function (contratoId, contPlanificacionId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        //sumamos los importes que se van a eliminar
+        var importe = 0
+        data.forEach(function (pf) {
+            importe = importe + pf.totalAlCliente;
+        });
+        var datos = {
+            importe: importe
+        }
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, datos, function (err, data) {
                 if (err) return done(err);
                 done(null, true);
             });
@@ -2858,9 +2985,8 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -2931,92 +3057,6 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     return pagos;
 }
 
-function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
-    var divisor = obtenerDivisor();
-    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
-    // de mes 
-    var inicioContrato = new Date(spanishDbDate(vm.fechaInicio()));
-    var finContrato = new Date(spanishDbDate(vm.fechaFinal()));
-    var iniContrato = moment(inicioContrato).format('YYYY-MM-DD');
-    var fContrato = moment(finContrato).format('YYYY-MM-DD');
-    var finMesInicioContrato = moment(inicioContrato).endOf('month');
-    var aux = iniContrato.split('-');
-    var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
-    var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
-
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
-
-    // como la división puede no dar las cifras hay que calcular los restos.
-    var restoImportePago = importe - (importePago * numPagos);
-    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
-    var restoImporteCoste = coste - (importeCoste * numPagos);
-
-    var import1 = (importePago / 30) * diffDias;
-    var import11 = (importePagoCliente / 30) * diffDias;
-    var import12 = (importeCoste / 30) * diffDias;
-    var import2 = importePago - import1;
-    var import21 = importePagoCliente - import11;
-    var import22 = importeCoste - import12;
-    var pagos = [];
-    var nPagos = numPagos;
-    if(importe == 0 || importe < 0) return pagos;
-    if (vm.facturaParcial()) {
-        nPagos++
-    }
-    for (var i = 0; i < nPagos; i++) {
-        // sucesivas fechas de factura
-        var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
-        // inicio de periodo
-        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
-        // fin de periodo
-        var f2 = moment(inicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
-        if (vm.facturaParcial()) {
-            if (i > 0) {
-                f0 = moment(inicioMesInicioContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
-            }
-            f2 = moment(inicioMesInicioContrato).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
-        }
-        if (i == (nPagos - 1)) {
-            f2 = moment(fContrato).format('DD/MM/YYYY');
-        }
-        var p = {
-            fecha: f,
-            importe: importePago,
-            importeCliente: importePagoCliente,
-            importeCoste: importeCoste,
-            empresaId: empresaId,
-            clienteId: clienteId,
-            porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente(),
-            empresa: empresa,
-            cliente: cliente,
-            periodo: f0 + "-" + f2
-        };
-        if (vm.facturaParcial() && i == 0) {
-            p.importe = import1;
-            p.importeCliente = import11;
-            p.importeCoste = import12;
-        }
-        if (vm.facturaParcial() && i == (nPagos - 1)) {
-            p.importe = import2;
-            p.importeCliente = import21;
-            p.importeCoste = import22;
-        }
-        pagos.push(p);
-    }
-    if (pagos.length > 1) {
-        // en la última factura ponemos los restos
-        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
-        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
-        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
-        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
-        pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
-        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
-    }
-    return pagos;
-}
 
 
 function initTablaGenerarPrefacturas() {
@@ -3089,6 +3129,85 @@ function initTablaGenerarPrefacturas() {
 
 function loadTablaGenerarPrefacturas(data) {
     var dt = $('#dt_generar_prefacturas').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function initTablaGenerarPrefacturasPlanificacion() {
+    tablaGenerarPrefcaturas = $('#dt_generar_prefacturas2').dataTable({
+        bSort: false,
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas2'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerarPrefacturas,
+        columnDefs: [{
+            "width": "20%",
+            "targets": [2, 3]
+        }],
+        columns: [{
+            data: "fecha"
+        },{
+            data: "importeCoste",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresa",
+            className: "text-center"
+        }, {
+            data: "cliente",
+            className: "text-center"
+        }, {
+            data: "periodo",
+            className: "text-center"
+        }]
+    });
+}
+
+function loadTablaGenerarPrefacturasPlanificacion(data) {
+    var dt = $('#dt_generar_prefacturas2').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -5028,9 +5147,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
 
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5076,7 +5195,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: f0 + "-" + f2
+            periodo: f0 + "-" + f2,
+            contPlanificacionId: RegPlanificacion[0].contPlanificacionId
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -5114,9 +5234,9 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
     var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5204,12 +5324,12 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     var acumulado = 0;
     var copiaDataConceptos = dataConceptos.slice();
     for (var j =0; j< nPagos; j++) {
-        acumulado += roundToSix((importe * dataConceptos[j].porcentaje) / 100) ;
+        acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
     }
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToSix(dataConceptos[i].importe);
-        var importePagoCliente = roundToSix(dataConceptos[i].importe);
-        var importeCoste = roundToSix(dataConceptos[i].importe);
+        var importePago = roundToTwo(dataConceptos[i].importe);
+        var importePagoCliente = roundToTwo(dataConceptos[i].importe);
+        var importeCoste = roundToTwo(dataConceptos[i].importe);
         var contratoPorcenId = dataConceptos[i].contratoPorcenId;
         var formaPagoId = dataConceptos[i].formaPagoId;
         // sucesivas fechas de factura
@@ -5277,20 +5397,17 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     return pagos;
 }
 
-function crearPrefacturaPlanificacion(importe, numPagos, empresaId, clienteId, empresa, cliente, data) {
+function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, cliente, data) {
     var divisor = 1;
     var fecha = new Date(spanishDbDate(data[0].fecha));
     var pagos = [];
     var nPagos = numPagos;
-    var acumulado = 0;
     var copiadata = data.slice();
-    for (var j =0; j< nPagos; j++) {
-        acumulado += roundToSix((importe * data[j].porcentaje) / 100) ;
-    }
+  
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToSix(data[i].importe);
-        var importePagoCliente = roundToSix(data[i].importe);
-        var importeCoste = roundToSix(data[i].importe);
+        var importePago = roundToTwo(data[i].importe);
+        var importePagoCliente = roundToTwo(data[i].importe);
+        var importeCoste = roundToTwo(data[i].importe);
         var  contPlanificacionId = data[i].contPlanificacionId;
         var formaPagoId = data[i].formaPagoId;
         // sucesivas fechas de factura
@@ -5354,6 +5471,27 @@ var calcularNumPagos = function () {
     if (divisor != 0) numpagos = parseInt(numMeses / divisor);
     if (numpagos == 0) numpagos = 1; // por lo menos uno
     $('#txtNumPagos').val(numpagos);
+    return numpagos;
+}
+
+
+var calcularNumPagosPlanificacion = function () {
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    // if (vm.facturaParcial()){
+    //     var aux = moment(fInicial).format('YYYY-MM-DD').split('-');
+    //     fInicial = aux[0] + "-" + aux[1] + "-01";
+    // }
+    var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
+    // añadimos un dia a la feha final para contemplar el caso en el que ponen
+    // como fecha final de contrato la de fin de mes.
+    var numMeses = parseInt(moment(fFinal).add(1, 'days').diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
+    // calculamos según la periodicidad
+    var divisor = obtenerDivisor();
+    var numpagos = 1
+    if (divisor != 0) numpagos = parseInt(numMeses / divisor);
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
+    $('#txtNumPagos2').val(numpagos);
     return numpagos;
 }
 
@@ -5990,6 +6128,13 @@ function initTablaPlanificacionLineasObras() {
                 return numeral(data).format('0,0.00');
             }
         }, {
+            data: "importePrefacturado",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+            
+        },{
             data: "importeFacturado",
             className: "text-left",
             render: function (data, type, row) {
@@ -6027,7 +6172,7 @@ function initTablaPlanificacionLineasObras() {
 }
 
 function  loadPlanificacionLineasObras(id) {
-    llamadaAjax("GET", "/api/contratos//lineas/planificacion/" + id, null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/lineas/planificacion/" + id, null, function (err, data) {
         if (err) return;
         
         loadTablaPlanificacionLineasObras(data);
@@ -6111,6 +6256,7 @@ function aceptarLineaPlanificacionObras() {
 
 function generarPrefacturaPlanificacionObras(id) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/" + id, null, function (err, data) {
+        if(err) return;
         RegPlanificacion = data
         var f = moment(data[0].fecha).format('DD/MM/YYYY');
         vm.fechaPlanificacionObras2(f);
@@ -6128,26 +6274,21 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
     var opcion = $('#chkVarias').prop('checked');
     //limpiarModalGenerarPrefacturasObras();
     if(opcion) {
-        $('#modalGenerarPrefacturas').modal({
+        $('#modalGenerarPrefacturasPlanificacion').modal({
             show: 'true'
         }); 
         generarPrefacturasPlanificacion(RegPlanificacion);
     } else {
         // comprobamos si es de mantenedor o cliente final.
-        var importe = vm.importeCliente(); // importe real de la factura;
         var clienteId = vm.clienteId();
         var cliente = $("#txtCliente").val();
         var empresa = $("#cmbEmpresas").select2('data').text;
         // si es un mantenedor su importe de factura es el calculado para él.
-        if (vm.mantenedorId()) {
-            importe = vm.importeMantenedor();
-            clienteId = vm.mantenedorId();
-            cliente = $("#txtMantenedor").val();
-        }
+        
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
-        var prefacturas = crearPrefacturaPlanificacion(importe,  1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
+        var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
-        aceptarGenerarPrefacturas();
+        aceptarGenerarPrefacturaPlanificacion();
     }
 }
 
