@@ -98,7 +98,8 @@ function initForm() {
                 compruebaNifRepetido(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
-                $('#txtNif').val('');
+                compruebaNifRepetido(nif);
+                //$('#txtNif').val('');
             }
         }
     });
