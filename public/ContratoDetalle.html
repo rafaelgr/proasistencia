@@ -1044,6 +1044,16 @@
                                                                     <!-- this is what the user will see -->
                                                                     <form id="frmLineaPlanificacionObras">
                                                                         <fieldset>
+                                                                            <div class="pull-left">
+                                                                                <strong>Certificación final: </strong>
+                                                                                <span data-bind="text: certificacionFinal"></span>
+                                                                                <br/>
+                                                                                <strong> Total facturado: </strong>
+                                                                                <span data-bind="text: totalFacturado"></span>
+                                                                                <br/>
+                                                                                <strong> Diferencia: </strong>
+                                                                                <span data-bind="text: diferencia"></span>
+                                                                            </div>
                                                                             <div class="pull-right">
                                                                                 <button id="btnNuevaLineaPlanificacionObras" title="Nueva línea" data-toggle="modal" data-target="#modalPlanificacionObras" onclick="nuevaLineaPlanificacionObras()" class="btn btn-success btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-plus"></i>
@@ -2502,7 +2512,7 @@
     </div>
     <!--End Modal-->
       <!-- /.modal -->
-      <div class="modal fade" id="modalGenerarPrefacturasPlanificacion" tabindex="-1" role="dialog">
+      <div class="modal fade" id="modalGenerarPrefacturasPlanificacion" tabindex="-1" role="dialog"  style="overflow-y: scroll;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2535,18 +2545,7 @@
                                     
                                 </div>
                             </div>
-                                
-                          
-                                    <!-- section class="col col-md-6">
-                                        <div class="form-group">
-                                            <label class="label">Fecha Final facturación</label>
-                                            <label class="input">
-                                                <input id="txtGFechaUltimaFactura" type="text" name="txtGFechaUltimaFactura" data-bind="value: fechaUltimaFactura" class="form-control datepicker" data-dateformat="dd/mm/yy" />
-                                            </label>
-                                        </div>
-                                    </section> -->
-                                    
-                        
+
                                 <div class="row">
                                     <section class="col col-md-6">
                                         <label class="label">Periodificación de pagos</label>
@@ -2806,7 +2805,7 @@
     </div>  
     <!--End modal-->
      <!-- Modal -->
-     <div class="modal fade" id="modalGenerarPrefacturasObras" tabindex="-1" role="dialog">
+     <div class="modal fade" id="modalGenerarPrefacturasObras" tabindex="-1" role="dialog" style="overflow-y: scroll;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2834,7 +2833,7 @@
                                 </div>
                         </fieldset>
                         <footer>
-                            <button id="btnAceptarGenerarPrefacturasObras" class="btn btn-primary" onclick="aceptarGenerarPrefacturaPlanificacionObras()">
+                            <button id="btnAceptarGenerarPrefacturasObras" class="btn btn-primary"  onclick="aceptarGenerarPrefacturaPlanificacionObras()">
                                 Aceptar
                             </button>
                            <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">

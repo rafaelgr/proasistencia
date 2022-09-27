@@ -678,6 +678,8 @@ function admData() {
     self.fechaPlanificacionObras2 = ko.observable();
     self.importeFacturado = ko.observable();
     self.importeCobrado = ko.observable();
+    self.totalFacturado = ko.observable();
+    self.diferencia = ko.observable();
 }
 
 function loadData(data) {  
@@ -2602,7 +2604,6 @@ var generarPrefacturas = function () {
 }
 
 var generarPrefacturasPlanificacion = function (data) {
-
      var resto = data[0].importe;
      vm.importeAFacturar(roundToSix(resto));
     /*  if(numConceptos > 0 && importePrefacturas == 0) {
@@ -2785,10 +2786,8 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
     if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
-    $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
-        contPlanificacionId: RegPlanificacion[0].contPlanificacionId
     };
   
     controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(),  RegPlanificacion[0].contPlanificacionId, function (err, result) {
@@ -2799,10 +2798,9 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
             }
             llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
                 if (err){
-                    $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+                    mensError('Error al crear la prefactura');
                     return;
                 }
-                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
                 mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
                 $('#modalGenerarPrefacturas').modal('hide');
                 loadPrefacturasDelContrato(vm.contratoId());
@@ -6056,6 +6054,13 @@ function initTablaPlanificacionLineasObras() {
              .column( 6 )
              .data()
              .reduce( function (a, b) {
+                var dif = 0
+                vm.totalFacturado(total3);
+                if(vm.certificacionFinal()) {
+                    dif = vm.certificacionFinal()
+                } 
+                dif = dif - total3;
+                vm.diferencia(dif);
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
  
@@ -6159,12 +6164,16 @@ function initTablaPlanificacionLineasObras() {
                 var bt1 = "";
                 var bt2 = "";
                 if(!vm.contratoCerrado()) {
-                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    if(row.importeFacturado == '0.00') {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    }
+                   
+                    if(row.importePrefacturado == '0.00') {
+                        bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    }
                     bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
-                if(row.prefacturaId) html = "<div class='pull-right'></div>";
                 return html;
             }
         }]
@@ -6270,7 +6279,7 @@ function limpiarModalGenerarPrefacturasObras() {
     RegPlanificacion = null;
 }
 function aceptarGenerarPrefacturaPlanificacionObras() {
-    $('#modalGenerarPrefacturasObras').hide();
+    $('#modalGenerarPrefacturasObras').modal('hide');
     var opcion = $('#chkVarias').prop('checked');
     //limpiarModalGenerarPrefacturasObras();
     if(opcion) {
@@ -6278,13 +6287,12 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
             show: 'true'
         }); 
         generarPrefacturasPlanificacion(RegPlanificacion);
+
     } else {
         // comprobamos si es de mantenedor o cliente final.
         var clienteId = vm.clienteId();
         var cliente = $("#txtCliente").val();
         var empresa = $("#cmbEmpresas").select2('data').text;
-        // si es un mantenedor su importe de factura es el calculado para él.
-        
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
