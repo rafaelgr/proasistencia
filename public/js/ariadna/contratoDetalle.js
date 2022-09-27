@@ -6163,15 +6163,17 @@ function initTablaPlanificacionLineasObras() {
                 var html = "";
                 var bt1 = "";
                 var bt2 = "";
+                var bt3 = "";
                 if(!vm.contratoCerrado()) {
                     if(row.importeFacturado == '0.00') {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                        bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
                     }
                    
                     if(row.importePrefacturado == '0.00') {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     }
-                    bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
+                   
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                 return html;
@@ -6257,6 +6259,7 @@ function aceptarLineaPlanificacionObras() {
                     $('#modalPlanificacionObras').modal('hide');
                     llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
                         loadTablaPlanificacionLineasObras(data);
+                        limpiarModalLineasPlanificacion();
                     });
                 });
 }
@@ -6387,6 +6390,15 @@ function datosOKLineasPlanificacionObras() {
         }
     });
     return $('#conceptoObras-form').valid();
+}
+
+function limpiarModalLineasPlanificacion() {
+    vm.contPlanificacionId(null);
+    vm.conceptoPlanificacion(null);
+    vm.porcentajePlanificacion(null);
+    vm.fechaPlanificacionObras(null);
+    vm.importeCalculadoPlanificacion(null);
+    loadFormasPagoLinea(null);
 }
 
 
