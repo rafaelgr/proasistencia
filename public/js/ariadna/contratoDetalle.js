@@ -5145,6 +5145,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
+            contPlanificacionId: RegPlanificacion[0].contPlanificacionId
+
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -5978,6 +5980,11 @@ function initTablaPlanificacionLineasObras() {
             .column( 4 )
             .data()
             .reduce( function (a, b) {
+                var dif = 0
+                vm.totalFacturado(total2);
+               
+                dif = vm.importeCliente() - total2;
+                vm.diferencia(dif);
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
 
@@ -6004,13 +6011,6 @@ function initTablaPlanificacionLineasObras() {
              .column( 6 )
              .data()
              .reduce( function (a, b) {
-                var dif = 0
-                vm.totalFacturado(total3);
-                if(vm.certificacionFinal()) {
-                    dif = vm.certificacionFinal()
-                } 
-                dif = dif - total3;
-                vm.diferencia(dif);
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
  
@@ -6280,6 +6280,7 @@ function deletePlanificacionLineaObras(contPlanificacionId) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
                 loadTablaPlanificacionLineasObras(data);
+                loadPrefacturasDelContrato(vm.contratoId());
             });
             //una vez borrada borramos todas las prefacturas del contrato no generadas mediante conceptos y porcentajes
             /* llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/borrar-prefacturas/concepto/todas/" + vm.contratoId(), null, function (err) {
