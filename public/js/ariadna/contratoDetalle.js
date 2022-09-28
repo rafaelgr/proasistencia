@@ -66,7 +66,6 @@ function initForm() {
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtNumPagos').on('blur', verPrefacturasAGenerar2);
     $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
 
     // asignación de eventos al clic
@@ -740,12 +739,14 @@ function loadData(data) {
     if(data.tipoContratoId != 8) {
         loadConceptosLineas(data.contratoId);
         $('#lineasPagoObras').hide();
-        $('#lineasPago').show()
+        $('#lineasPago').show();
+        $('#btnGenerarPrefacturas').show();
 
     } else {
         loadPlanificacionLineasObras(data.contratoId);
         $('#lineasPagoObras').show();
-        $('#lineasPago').hide()
+        $('#lineasPago').hide();
+        $('#btnGenerarPrefacturas').hide();
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste();
@@ -2600,11 +2601,6 @@ var generarPrefacturas = function () {
 var generarPrefacturasPlanificacion = function (data) {
      var resto = data[0].importe;
      vm.importeAFacturar(roundToSix(resto));
-    /*  if(numConceptos > 0 && importePrefacturas == 0) {
-         modificaFormulario(true);
-     } else {
-         modificaFormulario(false);
-     } */
      $("#cmbPeriodosPagos2").select2(select2Spanish());
      loadPeriodosPagos(vm.speriodoPagoId());
      $("#cmbPeriodosPagos2").select2().on('change', function (e) {
@@ -2624,15 +2620,6 @@ var generarPrefacturasPlanificacion = function (data) {
          return false;
      });
  }
- 
-function modificaFormulario(option) {
-    $("#cmbPeriodosPagos").prop('disabled', option);
-    $("#txtGFechaPrimeraFactura").prop('disabled', option);
-    $("#txtGFechaPrimeraFactura2").prop('disabled', option);
-    $("#txtGFechaInicio").prop('disabled', option);
-    $("#txtGFechaFinal").prop('disabled', option);
-    $("input[name='chkFacturaParcial']").prop("disabled", option);
-}
 
 var cambioPeriodosPagos = function (data) {
     vm.numPagos(calcularNumPagos());
@@ -2683,44 +2670,15 @@ var verPrefacturasAGenerar = function () {
         cliente = $("#txtMantenedor").val();
     }
     if(numConceptos > 0 && importePrefacturas == 0) {
-        var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[1].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
+        var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[0].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
-        if(vm.tipoContratoId() == 8) {
-            var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
-        } else {
-            var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
-        }
+        var divisor = (importe - importePrefacturasConcepto) / importe;
+        var coste = vm.coste() * divisor;
+        var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, coste, spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
     }
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturas(prefacturas);
 }
-
-var verPrefacturasAGenerar2 = function () {
-    if (!generarPrefacturasOK()) return;
-    
-    // comprobamos si es de mantenedor o cliente final.
-    var importe = vm.importeCliente(); // importe real de la factura;
-    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
-    var clienteId = vm.clienteId();
-    var cliente = $("#txtCliente").val();
-    var empresa = $("#cmbEmpresas").select2('data').text;
-    // si es un mantenedor su importe de factura es el calculado para él.
-    if (vm.mantenedorId()) {
-        importe = vm.importeMantenedor();
-        clienteId = vm.mantenedorId();
-        cliente = $("#txtMantenedor").val();
-    }
-    if(vm.tipoContratoId() == 8) {
-        var prefacturas = crearPrefacturas2(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
-    } else {
-        var prefacturas = crearPrefacturasRestoDepartamentos(importe - importePrefacturasConcepto, importeAlCliente - importePrefacturasConcepto, vm.coste(), spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), calcularNumPagos(), vm.sempresaId(), clienteId, empresa, cliente);
-    }
-    vm.prefacturasAGenerar(prefacturas);
-    loadTablaGenerarPrefacturas(prefacturas);
-}
-
-
-
 
 var verPrefacturasAGenerarPlanificacion = function () {
     if (!generarPrefacturasOK()) return;
