@@ -2564,13 +2564,7 @@ var generarPrefacturas = function () {
         return;
     }
  */
-    
     var resto = 0;
-    if(numConceptos > 0 && importePrefacturas == 0) {
-        modificaFormulario(true);
-    } else {
-        modificaFormulario(false);
-    }
     $("#cmbPeriodosPagos").select2(select2Spanish());
     $("#cmbPeriodosPagos2").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
@@ -2759,7 +2753,6 @@ var aceptarGenerarPrefacturas = function () {
     $('#btnAceptarGenerarPrefacturas').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
-        contPlanificacionId: RegPlanificacion[0].contPlanificacionId
     };
   
         controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
@@ -5194,7 +5187,6 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
-            contPlanificacionId: RegPlanificacion[0].contPlanificacionId
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
