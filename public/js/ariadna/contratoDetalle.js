@@ -677,8 +677,11 @@ function admData() {
     self.fechaPlanificacionObras2 = ko.observable();
     self.importeFacturado = ko.observable();
     self.importeCobrado = ko.observable();
-    self.totalFacturado = ko.observable();
+    self.importePlanificado = ko.observable();
     self.diferencia = ko.observable();
+    self.importePrefacturado = ko.observable();
+    self.diferenciaPrefacturado = ko.observable();
+    self.certificacionFinalFormat = ko.observable();
 }
 
 function loadData(data) {  
@@ -3212,6 +3215,14 @@ var reglasDeValidacionAdicionales = function () {
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            //contratos en preaviso
+            if(aData.facturaId) {
+                $(nRow).attr('style', 'background: #81F889'); 
+            }
+            
+        },
         bSort: false,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
@@ -3319,7 +3330,22 @@ function initTablaPrefacturas() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+             // Total over all pages
+             total3 = api
+             .column( 9 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
            
+             // Total over all pages
+             total4 = api
+             .column( 10 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
 
 
             // Update footer
@@ -3334,6 +3360,12 @@ function initTablaPrefacturas() {
 
             $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
+            );
+            $( api.columns(9).footer() ).html(
+                numeral(total3).format('0,0.00')
+            );
+            $( api.columns(10).footer() ).html(
+                numeral(total4).format('0,0.00')
             );
 
             //////
@@ -3398,7 +3430,17 @@ function initTablaPrefacturas() {
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
             }
-        }, {
+        },{
+            data: "noFacturado",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        },{
+            data: "facturado",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        },  {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -3428,8 +3470,9 @@ function initTablaPrefacturas() {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(9).visible(false);
+    tablaPrefacturas.columns(6).visible(false);
     tablaPrefacturas.columns(11).visible(false);
+    tablaPrefacturas.columns(13).visible(false);
 }
 
 function loadPrefacturasDelContrato(contratoId) {
@@ -5974,6 +6017,18 @@ function initTablaPlanificacionLineasObras() {
                     typeof i === 'number' ?
                         i : 0;
             };
+            // Total over all pages
+            total4 = api
+            .column( 3 )
+            .data()
+            .reduce( function (a, b) {
+                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+            }, 0 );
+
+            // Update footer
+            $( api.columns(3).footer() ).html(
+                numeral(total4).format('0,0.00')
+            );
 
             // Total over all pages
             total = api
@@ -5981,10 +6036,10 @@ function initTablaPlanificacionLineasObras() {
             .data()
             .reduce( function (a, b) {
                 var dif = 0
-                vm.totalFacturado(total2);
+                vm.importePlanificado(numeral(total).format('0,0.00'));
                
-                dif = vm.importeCliente() - total2;
-                vm.diferencia(dif);
+                dif =  total - vm.importeCliente();
+                vm.diferencia(numeral(dif).format('0,0.00'));
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
 
@@ -5992,9 +6047,10 @@ function initTablaPlanificacionLineasObras() {
             $( api.columns(4).footer() ).html(
                 numeral(total).format('0,0.00')
             );
-            //////
+
+              //////
              // Total over all pages
-             total2 = api
+             total5 = api
              .column( 5 )
              .data()
              .reduce( function (a, b) {
@@ -6003,23 +6059,58 @@ function initTablaPlanificacionLineasObras() {
  
              // Update footer
              $( api.columns(5).footer() ).html(
-                 numeral(total2).format('0,0.00')
+                 numeral(total5).format('0')
              );
+
             //////
              // Total over all pages
-             total3 = api
+             total2 = api
              .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
+                //
+                var dif2 = 0
+                var tot2 = numeral(total2).format('0,0.00')
+                vm.importePrefacturado(tot2);
+                //
+                dif2 =  total2 - vm.importeCliente();
+                vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+ 
+             // Update footer
+             $( api.columns(6).footer() ).html(
+                 numeral(total2).format('0,0.00')
+             );
+
+             //////
+             // Total over all pages
+             total7 = api
+             .column( 7 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
  
              // Update footer
-             $( api.columns(6).footer() ).html(
+             $( api.columns(7).footer() ).html(
+                 numeral(total7).format('0')
+             );
+
+            //////
+             // Total over all pages
+             total3 = api
+             .column( 8 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+ 
+             // Update footer
+             $( api.columns(8).footer() ).html(
                  numeral(total3).format('0,0.00')
              );
-         
-
             
         },
         preDrawCallback: function () {
@@ -6083,12 +6174,24 @@ function initTablaPlanificacionLineasObras() {
                 return numeral(data).format('0,0.00');
             }
         }, {
+            data: "numPrefacturas",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0');
+            }
+        },{
             data: "importePrefacturado",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
             
+        },{
+            data: "numFacturas",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0');
+            }
         },{
             data: "importeFacturado",
             className: "text-left",
