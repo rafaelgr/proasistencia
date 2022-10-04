@@ -740,13 +740,15 @@ function loadData(data) {
    
 
     if(data.tipoContratoId != 8) {
+       
         loadConceptosLineas(data.contratoId);
         $('#lineasPagoObras').hide();
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
 
     } else {
-        loadPlanificacionLineasObras(data.contratoId);
+        actualizaCobrosPlanificacion(data.contratoId);
+        //loadPlanificacionLineasObras(data.contratoId);
         $('#lineasPagoObras').show();
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
@@ -2787,7 +2789,7 @@ var aceptarGenerarPrefacturasPlanificacion = function () {
                 mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
                 $('#modalGenerarPrefacturasPlanificacion').modal('hide');
                 loadPrefacturasDelContrato(vm.contratoId());
-                loadPlanificacionLineasObras(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId());
                 limpiarModalGenerarPrefacturasObras();
             });
         });
@@ -5736,9 +5738,15 @@ function initTablaConceptosLineas() {
 function  loadConceptosLineas(id) {
     llamadaAjax("GET", "/api/contratos/conceptos/porcentaje/" + id, null, function (err, data) {
         if (err) return;
-        
         loadTablaConceptosLineas(data);
         
+    });
+}
+
+function actualizaCobrosPlanificacion(id) {
+    llamadaAjax("GET", "/api/cobros/contrato/planificacion/" + id, null, function (err, numCobros) {
+        if (err) return;
+        loadPlanificacionLineasObras(id, numCobros)
     });
 }
 
@@ -6111,6 +6119,34 @@ function initTablaPlanificacionLineasObras() {
              $( api.columns(8).footer() ).html(
                  numeral(total3).format('0,0.00')
              );
+
+             /////
+             // Total over all pages
+             total9 = api
+             .column( 9 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+ 
+             // Update footer
+             $( api.columns(9).footer() ).html(
+                 numeral(total9).format('0,0.00')
+             );
+
+             /////
+             // Total over all pages
+             total10 = api
+             .column( 10 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+ 
+             // Update footer
+             $( api.columns(10).footer() ).html(
+                 numeral(total10).format('0,0.00')
+             );
             
         },
         preDrawCallback: function () {
@@ -6199,6 +6235,12 @@ function initTablaPlanificacionLineasObras() {
                 return numeral(data).format('0,0.00');
             }
             
+        },{
+            data: "numCobros",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0');
+            }
         },
         {
             data: "importeCobrado",
@@ -6235,8 +6277,8 @@ function initTablaPlanificacionLineasObras() {
     });
 }
 
-function  loadPlanificacionLineasObras(id) {
-    llamadaAjax("GET", "/api/contratos/lineas/planificacion/" + id, null, function (err, data) {
+function  loadPlanificacionLineasObras(id, numCobros) {
+    llamadaAjax("GET", "/api/contratos/lineas/planificacion/" + id + "/" + numCobros, null, function (err, data) {
         if (err) return;
         
         loadTablaPlanificacionLineasObras(data);
@@ -6453,6 +6495,15 @@ function limpiarModalLineasPlanificacion() {
     vm.fechaPlanificacionObras(null);
     vm.importeCalculadoPlanificacion(null);
     loadFormasPagoLinea(null);
+}
+
+function actulizaCobroPlanificacion() {
+
+    var impCobro = 0
+    data.forEach( function(d) {
+        impCobro = impCobro + d.impCobro
+    });
+
 }
 
 
