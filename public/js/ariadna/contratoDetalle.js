@@ -6132,7 +6132,7 @@ function initTablaPlanificacionLineasObras() {
  
              // Update footer
              $( api.columns(9).footer() ).html(
-                 numeral(total9).format('0,0.00')
+                 numeral(total9).format('0')
              );
 
              /////
