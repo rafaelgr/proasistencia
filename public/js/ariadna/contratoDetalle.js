@@ -2760,6 +2760,7 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
                 mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
                 $('#modalGenerarPrefacturas').modal('hide');
                 loadPrefacturasDelContrato(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId(), null);
             });
     });
     
@@ -6082,7 +6083,7 @@ function initTablaPlanificacionLineasObras() {
                 var tot2 = numeral(total2).format('0,0.00')
                 vm.importePrefacturado(tot2);
                 //
-                dif2 =  total2 - vm.importeCliente();
+                dif2 =  total2 - vm.certificacionFinal();
                 vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
