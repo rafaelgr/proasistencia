@@ -50,6 +50,57 @@ WHERE c.tipocontratoId = 8;
 
 UPDATE prefacturas SET contPlanificacionId = contratoPorcenId WHERE NOT contratoPorcenId IS NULL AND departamentoId = 8;
 
+#creacion de linea planificacion de prefacturas no concepto
+INSERT INTO contrato_planificacion
+SELECT 
+0 AS contPlanificacionId,
+cc.contratoId,
+'LETRAS' AS concepto,
+100 - SUM(cp.porcentaje) AS porcentaje,
+cp.fecha,
+tmp.total AS importe,
+0 AS importePrefacturado,
+0 AS importeFacturado,
+0 AS importeCobrado,
+cc.formaPagoId
+
+ FROM contratos AS cc
+ INNER JOIN formas_pago AS fp ON fp.formaPagoId = cc.formaPagoId
+ INNER JOIN contrato_planificacion AS cp ON cp.contratoId = cc.contratoId 
+INNER JOIN
+(SELECT 
+c1.contratoId AS contratoId, 
+SUM(p.total) AS total, 
+#c.importeCliente, (SUM(p.total) * 100) / c.importeCliente as porcentage, 
+c1.referencia
+FROM contratos AS c1
+INNER JOIN prefacturas AS p ON p.contratoId = c1.contratoId
+LEFT JOIN facturas AS f ON f.facturaId = p.facturaId
+WHERE 
+p.contPlanificacionId IS NULL  AND 
+c1.tipoContratoId = 8 
+GROUP BY c1.contratoId) AS tmp ON tmp.contratoId = cc.contratoId
+GROUP BY cc.contratoId;
+
+#Actualización de campo contPlanificacionId de prefacturas no concepto
+UPDATE contratos AS c
+INNER JOIN contrato_planificacion AS cp ON cp.contratoId = c.contratoId 
+INNER JOIN prefacturas AS p ON p.contratoId = c.contratoId
+SET p.contPlanificacionId = cp.contPlanificacionId
+WHERE cp.concepto = 'LETRAS' AND p.contPlanificacionId IS NULL AND c.tipoContratoId = 8
+
+#actulizamos el importe prefacturado en la tabla contrato_planificacion
+UPDATE contrato_planificacion AS cp
+INNER JOIN
+(
+	SELECT SUM(p.total) AS total, p.contPlanificacionId FROM prefacturas AS p
+	WHERE  p.departamentoId = 8
+	GROUP BY p.contPlanificacionId
+) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
+SET importePrefacturado = tmp.total
+
+
+
 
 
 
