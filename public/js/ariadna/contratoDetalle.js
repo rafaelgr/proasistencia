@@ -6278,7 +6278,12 @@ function initTablaPlanificacionLineasObras() {
 }
 
 function  loadPlanificacionLineasObras(id, numCobros) {
-    llamadaAjax("GET", "/api/contratos/lineas/planificacion/" + id + "/" + numCobros, null, function (err, data) {
+    var data = {
+        numCobros: {
+            numCobros
+        }
+    }
+    llamadaAjax("POST", "/api/contratos/lineas/planificacion/" + id , data, function (err, data) {
         if (err) return;
         
         loadTablaPlanificacionLineasObras(data);
