@@ -15,9 +15,9 @@ CREATE TABLE `contrato_planificacion` (
   KEY `formaPago_planificacionFK` (`formaPagoId`)
 );
 
-ALTER TABLE `proasistencia`.`prefacturas` ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `contratoPorcenId`, 
+ALTER TABLE `prefacturas` ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `contratoPorcenId`, 
   ADD CONSTRAINT `pref_contratoPlanicicacion` FOREIGN KEY (`contPlanificacionId`) 
-  REFERENCES `proasistencia`.`contrato_planificacion`(`contPlanificacionId`) ON DELETE CASCADE; 
+  REFERENCES `contrato_planificacion`(`contPlanificacionId`) ON DELETE CASCADE; 
 
 
   ALTER TABLE `contrato_planificacion`   
