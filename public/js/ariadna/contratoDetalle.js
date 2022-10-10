@@ -6132,7 +6132,7 @@ function initTablaPlanificacionLineasObras() {
  
              // Update footer
              $( api.columns(9).footer() ).html(
-                 numeral(total9).format('0')
+                 numeral(total9).format('0,0.00')
              );
 
              /////
@@ -6146,7 +6146,21 @@ function initTablaPlanificacionLineasObras() {
  
              // Update footer
              $( api.columns(10).footer() ).html(
-                 numeral(total10).format('0,0.00')
+                 numeral(total10).format('0')
+             );
+
+              /////
+             // Total over all pages
+             total11 = api
+             .column( 11 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+ 
+             // Update footer
+             $( api.columns(11).footer() ).html(
+                 numeral(total11).format('0,0.00')
              );
             
         },
@@ -6231,6 +6245,13 @@ function initTablaPlanificacionLineasObras() {
             }
         },{
             data: "importeFacturado",
+            className: "text-left",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+            
+        },{
+            data: "importeFacturadoIva",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');

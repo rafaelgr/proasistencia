@@ -29,6 +29,10 @@ ALTER TABLE `prefacturas` ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `c
   CHANGE `importeFacturado` `importeFacturado` DECIMAL(12,2) DEFAULT 0 NULL,
   CHANGE `importeCobrado` `importeCobrado` DECIMAL(12,2) DEFAULT 0 NULL;
 
+  ALTER TABLE `contrato_planificacion`   
+  ADD COLUMN `importeFacturadoIva` DECIMAL(12,2)  DEFAULT 0 NULL AFTER `importeFacturado`;
+
+
 #CREAMOS LOS REGISTROS EN LA NUEVA TABLA contrato_planificacion A PARTIR DE LA TABLA contrato_porcentajes
 
 INSERT INTO contrato_planificacion
