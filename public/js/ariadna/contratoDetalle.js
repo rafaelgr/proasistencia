@@ -41,6 +41,8 @@ var numLineas = 0;
 var antClienteId = null;
 var antClienteNombre = "";
 var RegPlanificacion = null;
+var tablaPrefacturas;
+var a;
 //var numAscContratos = 0;
 
 
@@ -188,6 +190,25 @@ function initForm() {
             }
         }
     });
+
+    $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
+        var dt = $('#dt_prefactura').DataTable(); 
+        if (e.target.hash == '#s3'){
+            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+        } else {
+            $('.fixedHeader').remove();
+        }
+
+    /* if (e.target.hash == '#tab1'){
+        table1.fixedHeader.enable().fixedHeader.adjust();
+      table2.fixedHeader.enable().fixedHeader.adjust();  
+    }
+    else if (e.target.hash == '#tab2'){  	  
+        table3.fixedHeader.enable().fixedHeader.adjust();
+      table4.fixedHeader.enable().fixedHeader.adjust(); 
+    }]]*/
+});
+
 
     $("#txtPorcentajeCobro").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
@@ -3218,6 +3239,8 @@ var reglasDeValidacionAdicionales = function () {
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas() {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
+        responsive: true,
+        paging: false,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //contratos en preaviso
@@ -3226,8 +3249,8 @@ function initTablaPrefacturas() {
             }
             
         },
+        
         bSort: false,
-        "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -3462,6 +3485,7 @@ function initTablaPrefacturas() {
                 return html;
             }
         }]
+       
     });
 
     // Apply the filter
@@ -3476,6 +3500,7 @@ function initTablaPrefacturas() {
     tablaPrefacturas.columns(6).visible(false);
     tablaPrefacturas.columns(11).visible(false);
     tablaPrefacturas.columns(13).visible(false);
+    
 }
 
 function loadPrefacturasDelContrato(contratoId) {
@@ -3486,8 +3511,10 @@ function loadPrefacturasDelContrato(contratoId) {
 }
 
 function loadTablaPrefacturas(data) {
-    
     var dt = $('#dt_prefactura').dataTable();
+    //new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+    
+   
     if (data !== null && data.length === 0) {
         data = null;
     }

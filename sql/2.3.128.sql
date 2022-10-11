@@ -256,4 +256,18 @@ UPDATE contratos AS c
 	AND pf.contPlanificacionId IS NULL;
 
 
+#ACTULIZAMOS EL CAMPO importeFacturadoIva DE LA TABLA contrato_planificacion
+
+UPDATE contrato_planificacion AS cp
+INNER JOIN
+(
+	SELECT SUM(f.totalConIva) AS totalConIva, p.contPlanificacionId 
+	FROM prefacturas AS p
+	INNER JOIN facturas AS f ON f.facturaId = p.facturaId
+	WHERE  f.departamentoId = 8 AND NOT p.contPlanificacionId IS NULL
+	GROUP BY p.contPlanificacionId
+) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
+SET importeFacturadoIva = tmp.totalConIva;
+
+
 
