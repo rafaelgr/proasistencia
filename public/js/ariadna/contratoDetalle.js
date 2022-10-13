@@ -3947,7 +3947,7 @@ function initTablaFacproves() {
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3960,7 +3960,7 @@ function initTablaFacproves() {
 
              // Total over all pages
              total2 = api
-             .column( 6 )
+             .column( 7 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3968,7 +3968,7 @@ function initTablaFacproves() {
 
              // Total over all pages
               total3 = api
-              .column( 7 )
+              .column( 8 )
               .data()
               .reduce( function (a, b) {
                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3979,15 +3979,15 @@ function initTablaFacproves() {
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $( api.columns(6).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total3).format('0,0.00')
             ); 
 
@@ -4026,7 +4026,9 @@ function initTablaFacproves() {
                 }
                 return html;
             }
-        }, {
+        },  {
+            data: "referencia"
+        },{
             data: "ref"
         },{
             data: "numeroFacturaProveedor"
