@@ -575,6 +575,8 @@ function admData() {
     //
     self.sempresaServiciadaId = ko.observable();
     //
+    self.refObrasInfo = ko.observable();
+    //
     self.posiblesEmpresaServiciadas = ko.observableArray([]);
     self.elegidasEmpresaServiciadas = ko.observableArray([]);
     self.scontratoId = ko.observable();
@@ -2381,9 +2383,18 @@ function initTablaServiciadas() {
 function loadServiciadasFacprove(facproveId) {
     llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
+        var refServ = "";
         for(var i = 0; i < data.length; i++){
             acumulado += parseFloat(data[i].importe);
+            if(i == 0) {
+                refServ = data[i].referencia
+            } else {
+                refServ = refServ + "\n" + data[i].referencia
+            }
         }
+        vm.refObrasInfo(refServ);
+        //ajustamos el textarea según sus elementos
+        $('#txtReferenciaObra').css("rows", data.length);
         numServiciadas = data.length;
         if(numServiciadas == 0) {
             mostrarMensajeCrearServiciadas();

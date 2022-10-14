@@ -35,6 +35,11 @@ ALTER TABLE `prefacturas` ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `c
   ALTER TABLE `antprove`   
   ADD COLUMN `noFactura` TINYINT(1) DEFAULT 0 NULL AFTER `contabilizada`;
 
+  ALTER TABLE `prefacturas`   
+  ADD COLUMN `fechaRecibida` DATE NULL AFTER `contPlanificacionId`,
+  ADD COLUMN `fechaGestionCobros` DATE NULL AFTER `fechaRecibida`;
+
+
 
 
 #CREAMOS LOS REGISTROS EN LA NUEVA TABLA contrato_planificacion A PARTIR DE LA TABLA contrato_porcentajes

@@ -340,7 +340,7 @@ function initForm() {
     initTablaGenerarPrefacturas();
     initTablaGenerarPrefacturasPlanificacion();
 
-    initTablaPrefacturas();
+    
     initTablaFacturas();
     initTablaFacproves();
     initTablaAntproves();
@@ -391,6 +391,7 @@ function initForm() {
             
 
             loadData(data);
+            initTablaPrefacturas(data.tipoContratoId);
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
            
@@ -703,6 +704,7 @@ function admData() {
     self.importePrefacturado = ko.observable();
     self.diferenciaPrefacturado = ko.observable();
     self.certificacionFinalFormat = ko.observable();
+    self.fechaRecepcionGestion = ko.observable();
 }
 
 function loadData(data) {  
@@ -3237,7 +3239,7 @@ var reglasDeValidacionAdicionales = function () {
 }
 
 // --------------- Solapa de prefacturas
-function initTablaPrefacturas() {
+function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         responsive: true,
         paging: false,
@@ -3329,15 +3331,15 @@ function initTablaPrefacturas() {
             };
 
             // Total over all pages
-            total1 = api
-            .column( 6 )
+            total8 = api
+            .column( 8 )
             .data()
             .reduce( function (a, b) {
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
 
-            total = api
-                .column( 7 )
+            total9 = api
+                .column( 9 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3349,16 +3351,16 @@ function initTablaPrefacturas() {
             ///////
 
              // Total over all pages
-             total2 = api
-             .column( 8 )
+             total10 = api
+             .column( 10 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
              // Total over all pages
-             total3 = api
-             .column( 9 )
+             total11 = api
+             .column( 11 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3366,8 +3368,8 @@ function initTablaPrefacturas() {
 
            
              // Total over all pages
-             total4 = api
-             .column( 10 )
+             total12 = api
+             .column( 12 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3375,23 +3377,23 @@ function initTablaPrefacturas() {
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
-                numeral(total1).format('0,0.00')
+            $( api.columns(8).footer() ).html(
+                numeral(total8).format('0,0.00')
                 
             );
-            $( api.columns(7).footer() ).html(
-                numeral(total).format('0,0.00')
+            $( api.columns(9).footer() ).html(
+                numeral(total9).format('0,0.00')
                 
             );
 
-            $( api.columns(8).footer() ).html(
-                numeral(total2).format('0,0.00')
-            );
-            $( api.columns(9).footer() ).html(
-                numeral(total3).format('0,0.00')
-            );
             $( api.columns(10).footer() ).html(
-                numeral(total4).format('0,0.00')
+                numeral(total10).format('0,0.00')
+            );
+            $( api.columns(11).footer() ).html(
+                numeral(total11).format('0,0.00')
+            );
+            $( api.columns(12).footer() ).html(
+                numeral(total12).format('0,0.00')
             );
 
             //////
@@ -3440,6 +3442,26 @@ function initTablaPrefacturas() {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
+            }
+        },
+        {
+            data: "fechaRecibida",
+            render: function (data, type, row) {
+                if(data) {
+                    return moment(data).format('DD/MM/YYYY');
+                } else {
+                    return null
+                }
+            }
+        },
+        {
+            data: "fechaGestionCobros",
+            render: function (data, type, row) {
+                if(data) {
+                    return moment(data).format('DD/MM/YYYY');
+                } else {
+                    return null
+                }
             }
         }, {
             data: "coste",
@@ -3497,9 +3519,13 @@ function initTablaPrefacturas() {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(6).visible(false);
-    tablaPrefacturas.columns(11).visible(false);
+    tablaPrefacturas.columns(8).visible(false);
     tablaPrefacturas.columns(13).visible(false);
+    tablaPrefacturas.columns(15).visible(false);
+    if(departamentoId != 8) {
+        tablaPrefacturas.columns(6).visible(false);
+        tablaPrefacturas.columns(7).visible(false);
+    }
     
 }
 
@@ -5024,6 +5050,19 @@ function buscarFactcols() {
 var prepararRenovacion = function () {
     proponerFechasRenovacion();
 };
+
+var prepararRecepcionGestion = function(opcion) {
+    f = moment(new Date()).format('DD/MM/YYYY');
+
+    vm.fechaRecepcionGestion(f);
+    $('#recepcion').show();
+    $('#gestionCobros').show();
+    if(!opcion) {
+        $('#recepcion').hide();
+    } else {
+        $('#gestionCobros').hide()
+    }
+} 
 
 
 var proponerFechasRenovacion = function () {
