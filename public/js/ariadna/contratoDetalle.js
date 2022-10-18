@@ -725,7 +725,20 @@ function admData() {
     self.importePrefacturado = ko.observable();
     self.diferenciaPrefacturado = ko.observable();
     self.certificacionFinalFormat = ko.observable();
+    //
     self.fechaRecepcionGestion = ko.observable();
+    self.emitidas = ko.observable();
+    self.numEmitidas = ko.observable();
+
+    self.totEmitidas = ko.observable();
+    self.numEmitidas = ko.observable();
+    //
+    self.totRecibidas = ko.observable();
+    self.numRecibidas = ko.observable();
+    //
+    self.totGestionCobros = ko.observable();
+    self.numGestionCobros = ko.observable();
+
 }
 
 function loadData(data) {  
@@ -3350,7 +3363,7 @@ function initTablaPrefacturas(departamentoId) {
                     typeof i === 'number' ?
                         i : 0;
             };
-
+           
             // Total over all pages
             total9 = api
             .column( 9 )
@@ -3370,7 +3383,41 @@ function initTablaPrefacturas(departamentoId) {
             
 
             ///////
-
+            var c = api.data();
+            if(c.length > 0) {
+               var totEmitidas = 0;
+                var numEmitidas = 0;
+                var totRecibidas = 0;
+                var numRecibidas = 0;
+                var totGestionCobros = 0;
+                var numGestionCobros = 0;
+                for(var i = 0; i < c.length; i++) {
+                    var s = c[i];
+                    if(s.tipoFormaPagoId == 3) {
+                        //LETRAS EMITIDAS
+                        totEmitidas = totEmitidas + s.total;
+                        numEmitidas++
+                        //LETRAS RECIBIDAS
+                        if(s.fechaRecibida) {
+                            totRecibidas = totRecibidas + s.total;
+                            numRecibidas++
+                        }
+                         //LETRAS EN GESTION DE COBROS
+                         if(s.fechaGestionCobros) {
+                            totGestionCobros = totGestionCobros + s.total;
+                            numGestionCobros++
+                        }
+                    }
+                }
+                vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
+                vm.numEmitidas(numEmitidas);
+                //
+                vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
+                vm.numRecibidas(numRecibidas);
+                //
+                vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
+                vm.numGestionCobros(numGestionCobros);
+            }
              // Total over all pages
              total11 = api
              .column( 11 )
@@ -5184,22 +5231,74 @@ var prepararRecepcionGestion = function(opcion) {
 } 
 
 var aceptarGenerarRecepcionGestion = function() {
+    if(!datosOKRecepcionGestion()) return;
     var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
-   var data = {
-        recepcionGestion:{
-            fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+    //recuperamos primero las fechas de recepción y gestión de cobros de las prefcaturas seleccionadas
+    llamadaAjax("GET", url, null, function (err, datos) {
+        if (err) return;
+        if(datos.length == 0) {
+            $('#modalGenerarRecepcionGestion').modal('hide');
+           return mensError("No se han seleccionado registros");
+            
         }
+        var data = {
+            recepcionGestion:{
+                fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+            }
+        }
+       if(!_recepcionGestion) {
+            //comprobamos que la fecha seleccionada para gestión de cobros no sea inferior que la fecha de recepción
+            delete data.recepcionGestion.fechaRecibida
+            data.recepcionGestion.fechaGestionCobros =  spanishDbDate(vm.fechaRecepcionGestion())
+            var resultado = compruebaFechaGestionCobros(datos,  data.recepcionGestion.fechaGestionCobros);
+            if(resultado) {
+                mensError("La fecha de gestión de cobros no puede ser menor que la de recepción");
+                return;
+            } 
+       } else {
+            var resultado = compruebaFechaRecepcion(datos,  data.recepcionGestion.fechaRecibida);
+            if(resultado) {
+                mensError("La fecha recepción no puede ser mayor que la de gestión de cobros");
+                return;
+            }
     }
-   if(!_recepcionGestion) {
-        delete data.fechaRecibida
-        data.recepcionGestion.fechaGestionCobros =  spanishDbDate(vm.fechaRecepcionGestion())
-   }
-   llamadaAjax("PUT", url, data, function (err, data) {
-    if (err) return;
-    $('#modalGenerarRecepcionGestion').modal('hide');
-    loadPrefacturasDelContrato()
+       llamadaAjax("PUT", url, data, function (err, data) {
+            if (err) return;
+            $('#modalGenerarRecepcionGestion').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
+        }); 
     });
 } 
+
+var compruebaFechaGestionCobros = function(datos, fecha) {
+    var opcion = false;
+    for(var i = 0; i < datos.length; i++) {
+        var f = datos[i];
+        if(f.fechaRecibida) {
+            opcion = fecha < f.fechaRecibida;
+            if(opcion) break
+            
+        } else {
+            opcion = true;
+            break;
+        }
+
+    }
+    return opcion;
+}
+
+var compruebaFechaRecepcion = function(datos, fecha) {
+    var opcion = false;
+    for(var i = 0; i < datos.length; i++) {
+        var f = datos[i];
+        if(f.fechaGestionCobros) {
+            opcion = fecha > f.fechaGestionCobros;
+            if(opcion) break
+            
+        }
+    }
+    return opcion;
+}
 
 
 var proponerFechasRenovacion = function () {
@@ -6206,6 +6305,27 @@ function datosOKLineasConceptos() {
         }
     });
     return $('#concepto-form').valid();
+}
+
+function datosOKRecepcionGestion() {
+    $('#generarRecepcionGestion-form').validate({
+        rules: {
+            txtFechaRecepcionGestion: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtFechaRecepcionGestion: {
+                required: "Debe proporcionar una fecha",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#generarRecepcionGestion-form').valid();
 }
 
 //FUNCIONES PLANIFICACION OBRAS
