@@ -182,7 +182,7 @@ function initTablaFacturas() {
              });
         },
         "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [5] },
+            { "sType": "date-uk", "aTargets": [5,6] },
         ],
         
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +

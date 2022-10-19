@@ -738,6 +738,15 @@ function admData() {
     //
     self.totGestionCobros = ko.observable();
     self.numGestionCobros = ko.observable();
+    //
+    self.difPlanificadoLetras = ko.observable();
+    self.difNumPlanificadoLetras = ko.observable()
+    //
+    self.difRecibidasLetras = ko.observable();
+    self.difNumRecibidasLetras = ko.observable();
+    //
+    self.difGestionCobroLetras = ko.observable();
+    self.difNumGestionCobroLetras = ko.observable();
 
 }
 
@@ -797,13 +806,14 @@ function loadData(data) {
    
 
     if(data.tipoContratoId != 8) {
-       
+        $('.obras').hide()
         loadConceptosLineas(data.contratoId);
         $('#lineasPagoObras').hide();
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
 
     } else {
+        $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
         //loadPlanificacionLineasObras(data.contratoId);
         $('#lineasPagoObras').show();
@@ -3384,7 +3394,7 @@ function initTablaPrefacturas(departamentoId) {
 
             ///////
             var c = api.data();
-            if(c.length > 0) {
+            if(c.length > 0 && vm.tipoContratoId() == 8) {
                var totEmitidas = 0;
                 var numEmitidas = 0;
                 var totRecibidas = 0;
@@ -3393,7 +3403,7 @@ function initTablaPrefacturas(departamentoId) {
                 var numGestionCobros = 0;
                 for(var i = 0; i < c.length; i++) {
                     var s = c[i];
-                    if(s.tipoFormaPagoId == 3) {
+                    if(s.esLetra == 1) {
                         //LETRAS EMITIDAS
                         totEmitidas = totEmitidas + s.total;
                         numEmitidas++
@@ -3503,7 +3513,7 @@ function initTablaPrefacturas(departamentoId) {
             width: "10%",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
-                if(row.tipoFormaPagoId != 3) {
+                if(row.esLetra != 1) {
                     html = "<i class='fa fa-file-o'></i>";
                     if (row.facturaId) {
                         html = "<i class='fa fa-files-o'></i>";
@@ -3756,7 +3766,7 @@ function updateAllPreFacturas(opcion) {
     
     if(datos) {
         for( var i = 0; i < datos.length; i++) {
-            if(datos[i].tipoFormaPagoId == 3) {
+            if(datos[i].esLetra == 1) {
                 var data = {
                     prefactura: {
                         prefacturaId: datos[i].prefacturaId,
@@ -6351,6 +6361,44 @@ function initTablaPlanificacionLineasObras() {
                     typeof i === 'number' ?
                         i : 0;
             };
+            var c = api.data();
+            if(c.length > 0) {
+               var totLetrasPlanificadas = 0;
+               var numLetrasPlanificadas = 0;
+                // var numEmitidas = 0;
+                // var totRecibidas = 0;
+                // var numRecibidas = 0;
+                // var totGestionCobros = 0;
+                // var numGestionCobros = 0;
+                for(var i = 0; i < c.length; i++) {
+                    var s = c[i];
+                    if(s.esLetra == 1) {
+                        //LETRAS PLANIFICADAS
+                        totLetrasPlanificadas = totLetrasPlanificadas + s.importe;
+                        numLetrasPlanificadas = numLetrasPlanificadas + s.numPrefacturas;
+        
+                       
+                    }
+                }
+                //diferencia entre letras planificadas y prefacturadas
+                //vm.totLetrasPlanificadas(numeral(Math.round(totLetrasPlanificadas * 100)/100).format('0,0.00'));
+                var a =  numeroDbf(vm.totEmitidas());
+                var na = vm.numEmitidas();
+                vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
+                vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
+               
+                //diferencia entre letras prefacturadas y recibidas
+                var b = numeroDbf(vm.totRecibidas());
+                var nb = vm.numRecibidas();
+                vm.difRecibidasLetras(numeral(Math.round((a - b) * 100)/100).format('0,0.00'));
+                vm.difNumRecibidasLetras(numeral(Math.round((na - nb) * 100)/100).format('0'));
+                //diferencia entre recibidas y en gestión de cobros
+                var c = numeroDbf(vm.totGestionCobros());
+                var nc = vm.numGestionCobros();
+                vm.difGestionCobroLetras(numeral(Math.round((b - c) * 100)/100).format('0,0.00'));
+                vm.difNumGestionCobroLetras(numeral(Math.round((nb - nc) * 100)/100).format('0'));
+            }
+                
             // Total over all pages
             total4 = api
             .column( 3 )
@@ -6408,7 +6456,7 @@ function initTablaPlanificacionLineasObras() {
                 var tot2 = numeral(total2).format('0,0.00')
                 vm.importePrefacturado(tot2);
                 //
-                dif2 =  total2 - vm.certificacionFinal();
+                dif2 = vm.certificacionFinal() - total2;
                 vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
@@ -6661,6 +6709,12 @@ function loadTablaPlanificacionLineasObras(data) {
         $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
+    var a =  numeroDbf(vm.diferenciaPrefacturado());
+    if(a == 0 || a < 0 ) {
+        $('#chkContratoCerrado').prop('disabled', false);
+    } else {
+        $('#chkContratoCerrado').prop('disabled', true);
+    }
 }
 
 

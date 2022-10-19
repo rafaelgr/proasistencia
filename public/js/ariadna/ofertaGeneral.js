@@ -33,8 +33,8 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    $("#cmbComerciales").select2(select2Spanish());
-    loadComerciales();
+    // $("#cmbComerciales").select2(select2Spanish());
+    // loadComerciales();
 
     initTablaOfertas();
 
@@ -78,16 +78,20 @@ function admData() {
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
     //
-    self.comercialId = ko.observable();
-    self.scomercialId = ko.observable();
-    //
-    self.posiblesComerciales = ko.observableArray([]);
-    self.elegidosComerciales = ko.observableArray([]);
+    // self.comercialId = ko.observable();
+    // self.scomercialId = ko.observable();
+    // //
+    // self.posiblesComerciales = ko.observableArray([]);
+    // self.elegidosComerciales = ko.observableArray([]);
     
 } 
 function initTablaOfertas() {
     tablaOfertas = $('#dt_oferta').DataTable({
-        bSort: false,
+        bSort: true,
+        "pageLength": 100,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [3] },
+        ],
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -208,6 +212,8 @@ function initTablaOfertas() {
         }, {
             data: "agente"
         }, {
+            data: "comercialCliente"
+        },  {
             data: "observaciones"
         },{
             data: "contratoId",
@@ -234,6 +240,22 @@ function initTablaOfertas() {
         }]
     });
 
+    //function sort by date
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
     // Apply the filter
     $("#dt_oferta thead th input[type=text]").on('keyup change', function () {
         tablaOfertas
@@ -246,6 +268,7 @@ function initTablaOfertas() {
     tablaOfertas.columns(7).visible(false);
     tablaOfertas.columns(8).visible(false);
     tablaOfertas.columns(9).visible(false);
+    tablaOfertas.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -267,10 +290,10 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
-function loadComerciales() {
+/* function loadComerciales() {
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/agentes",
+        url: "/api/comerciales",
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -284,7 +307,7 @@ function loadComerciales() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
-}
+} */
 
 function loadTablaOfertas(data) {
     var dt = $('#dt_oferta').dataTable();
@@ -356,7 +379,7 @@ function editOferta(id) {
 }
 
 var cargarOfertas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + vm.scomercialId();
+    var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId();
     if (id) {
         url = myconfig.apiUrl + "/api/ofertas/" + ofertaId
     };
@@ -366,7 +389,7 @@ var cargarOfertas = function (id) {
 }
 
 var cargarOfertasNoAceptadas = function (id) {
-    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + vm.scomercialId();
+    var url = myconfig.apiUrl + "/api/ofertas/no-aceptadas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId();
     llamadaAjax("GET", url, null, function (err, data) {
         loadTablaOfertas(data);
     });

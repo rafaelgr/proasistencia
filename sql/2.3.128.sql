@@ -39,6 +39,10 @@ ALTER TABLE `prefacturas` ADD COLUMN `contPlanificacionId` INT(11) NULL AFTER `c
   ADD COLUMN `fechaRecibida` DATE NULL AFTER `contPlanificacionId`,
   ADD COLUMN `fechaGestionCobros` DATE NULL AFTER `fechaRecibida`;
 
+  ALTER TABLE `formas_pago`   
+  ADD COLUMN `esLetra` TINYINT(1) DEFAULT 0 NULL AFTER `codigoContable`;
+
+
 
 
 

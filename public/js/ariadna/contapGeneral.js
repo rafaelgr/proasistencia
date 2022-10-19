@@ -155,9 +155,7 @@ function initTablaFacturas() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
-            data: "dirTrabajo"
-        }, {
+        },{
             data: "vNum"
         }, {
             data: "fecha_recepcion",

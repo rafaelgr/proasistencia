@@ -1049,8 +1049,11 @@
                                                                     <!-- this is what the user will see -->
                                                                     <form id="frmLineaPlanificacionObras">
                                                                         <fieldset>
+                                                                            <div style="height: 20px; margin-bottom: 1%;">
+                                                                                <h5 style="text-decoration: underline;">GENERAL</h5>
+                                                                            </div>
                                                                             <div class="row">
-                                                                                <div class="pull-left">
+                                                                                <div class="col col-md-4">
                                                                                     <strong>Importe contrato: </strong>
                                                                                     <span data-bind="text: importeClienteFormat"></span>
                                                                                     <br/>
@@ -1060,7 +1063,7 @@
                                                                                     <strong  style="color:red;"> Diferencia: </strong>
                                                                                     <span  style="color:red;" data-bind="text: diferencia"></span>
                                                                                 </div>
-                                                                                <div class="pull-left" style="margin-left: 20%">
+                                                                                <div class="col col-md-4">
                                                                                     <strong>Certificación final: </strong>
                                                                                     <span data-bind="text: certificacionFinalFormat"></span>
                                                                                     <br/>
@@ -1070,33 +1073,55 @@
                                                                                     <strong style="color:red;"> Diferencia: </strong>
                                                                                     <span style="color:red;" data-bind="text: diferenciaPrefacturado"></span>
                                                                                 </div>
-                                                                                <div class="pull-right">
+                                                                                <div class="pull-right" style="margin-right: 2%;">
                                                                                     <button id="btnNuevaLineaPlanificacionObras" title="Nueva línea" data-toggle="modal" data-target="#modalPlanificacionObras" onclick="nuevaLineaPlanificacionObras()" class="btn btn-success btn-circle btn-lg">
                                                                                         <i class="fa fa-lg fa-plus"></i>
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
+                                                                            <hr>
+                                                                            <div style="height: 20px; margin-bottom: 1%;"">
+                                                                                <h5 style="text-decoration: underline;">LETRAS</h5>
+                                                                            </div>
                                                                             <div class="row">
-                                                                                <div class="pull-left">
-                                                                                    <strong>Importe emitido: </strong>
+                                                                                <div class="col col-md-4">
+                                                                                    <strong>Importe  emitidas: </strong>
                                                                                     <span data-bind="text: totEmitidas"></span>
                                                                                     <br/>
                                                                                     <strong> Num. emitidas: </strong>
                                                                                     <span data-bind="text: numEmitidas"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia importe planificado: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difPlanificadoLetras"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difNumPlanificadoLetras"></span>
                                                                                 </div>
-                                                                                <div class="pull-left" style="margin-left: 10%">
+                                                                                <div class="col col-md-4">
                                                                                     <strong>Importe recibido: </strong>
                                                                                     <span data-bind="text: totRecibidas"></span>
                                                                                     <br/>
                                                                                     <strong> Num. recibidas: </strong>
                                                                                     <span data-bind="text: numRecibidas"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia importe emitido: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difRecibidasLetras"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difNumRecibidasLetras"></span>
                                                                                 </div>
-                                                                                <div class="pull-left" style="margin-left: 10%">
+                                                                                <div class="col col-md-4">
                                                                                     <strong>Importe gestión cobro: </strong>
                                                                                     <span data-bind="text: totGestionCobros"></span>
                                                                                     <br/>
                                                                                     <strong> Num. gestión cobro </strong>
                                                                                     <span data-bind="text: numGestionCobros"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia importe recibido: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difGestionCobroLetras"></span>
+                                                                                    <br/>
+                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                    <span style="color:red;" data-bind="text: difNumGestionCobroLetras"></span>
                                                                                 </div>
                                                                             </div>
                                                                         </fieldset>
@@ -1308,21 +1333,21 @@
                                                                         Prefacturas emitidas contra este contrato
                                                                     </header>
                                                                     <fieldset>
-                                                                            <div class="pull-left">
+                                                                            <div class="pull-left obras">
                                                                                 <strong>Importe emitido: </strong>
                                                                                 <span data-bind="text: totEmitidas"></span>
                                                                                 <br/>
                                                                                 <strong> Num. emitidas: </strong>
                                                                                 <span data-bind="text: numEmitidas"></span>
                                                                             </div>
-                                                                            <div class="pull-left" style="margin-left: 10%">
+                                                                            <div class="pull-left obras" style="margin-left: 10%">
                                                                                 <strong>Importe recibido: </strong>
                                                                                 <span data-bind="text: totRecibidas"></span>
                                                                                 <br/>
                                                                                 <strong> Num. recibidas: </strong>
                                                                                 <span data-bind="text: numRecibidas"></span>
                                                                             </div>
-                                                                            <div class="pull-left" style="margin-left: 10%">
+                                                                            <div class="pull-left obras" style="margin-left: 10%">
                                                                                 <strong>Importe gestión cobro: </strong>
                                                                                 <span data-bind="text: totGestionCobros"></span>
                                                                                 <br/>
@@ -1330,10 +1355,10 @@
                                                                                 <span data-bind="text: numGestionCobros"></span>
                                                                             </div>
                                                                         <div class="pull-right">
-                                                                            <button id="btnAltaRecepcion" title="Recepcionar letras" data-toggle="modal" data-target="#modalGenerarRecepcionGestion" onclick="prepararRecepcionGestion(true)" class="btn btn-primary btn-circle btn-lg">
+                                                                            <button id="btnAltaRecepcion"  title="Recepcionar letras" data-toggle="modal" data-target="#modalGenerarRecepcionGestion" onclick="prepararRecepcionGestion(true)" class="btn btn-primary btn-circle btn-lg obras">
                                                                                 <i class="fa fa-lg fa-file"></i>
                                                                             </button>
-                                                                            <button id="btnAltaGestionCobros" title="Poner en gestión de cobros"  data-toggle="modal" data-target="#modalGenerarRecepcionGestion" onclick="prepararRecepcionGestion(false)" class="btn btn-seconday btn-circle btn-lg">
+                                                                            <button id="btnAltaGestionCobros" title="Poner en gestión de cobros"  data-toggle="modal" data-target="#modalGenerarRecepcionGestion" onclick="prepararRecepcionGestion(false)" class="btn btn-seconday btn-circle btn-lg obras">
                                                                                 <i class="fa fa-lg fa-clipboard"></i>
                                                                             </button>
                                                                             <button id="btnAltaPrefactura" title="Crear nuevo registro" class="btn btn-success btn-circle btn-lg">

@@ -134,7 +134,10 @@ function initTablaContratos() {
                 $(nRow).attr('style', 'background: #99DACF'); 
             }
         },
-        bSort: false,
+        bSort: true,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [3,4] },
+        ],
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -254,6 +257,22 @@ function initTablaContratos() {
                 return html;
             }
         }]
+    });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
     });
 
     // Apply the filter
