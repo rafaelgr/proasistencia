@@ -1079,51 +1079,6 @@
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <hr>
-                                                                            <div style="height: 20px; margin-bottom: 1%;"">
-                                                                                <h5 style="text-decoration: underline;">LETRAS</h5>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col col-md-4">
-                                                                                    <strong>Importe  emitidas: </strong>
-                                                                                    <span data-bind="text: totEmitidas"></span>
-                                                                                    <br/>
-                                                                                    <strong> Num. emitidas: </strong>
-                                                                                    <span data-bind="text: numEmitidas"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia importe planificado: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difPlanificadoLetras"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difNumPlanificadoLetras"></span>
-                                                                                </div>
-                                                                                <div class="col col-md-4">
-                                                                                    <strong>Importe recibido: </strong>
-                                                                                    <span data-bind="text: totRecibidas"></span>
-                                                                                    <br/>
-                                                                                    <strong> Num. recibidas: </strong>
-                                                                                    <span data-bind="text: numRecibidas"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia importe emitido: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difRecibidasLetras"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difNumRecibidasLetras"></span>
-                                                                                </div>
-                                                                                <div class="col col-md-4">
-                                                                                    <strong>Importe gestión cobro: </strong>
-                                                                                    <span data-bind="text: totGestionCobros"></span>
-                                                                                    <br/>
-                                                                                    <strong> Num. gestión cobro </strong>
-                                                                                    <span data-bind="text: numGestionCobros"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia importe recibido: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difGestionCobroLetras"></span>
-                                                                                    <br/>
-                                                                                    <strong style="color:red;"> Diferencia número letras: </strong>
-                                                                                    <span style="color:red;" data-bind="text: difNumGestionCobroLetras"></span>
-                                                                                </div>
-                                                                            </div>
                                                                         </fieldset>
                                                                     </form>
                                                                     <hr/>
@@ -1192,6 +1147,33 @@
                                                                             </tfoot>
                                                                         </table>
                                                                     </div>
+                                                                    <fieldset>
+                                                                        <div style="height: 20px; margin-bottom: 1%;">
+                                                                            <h5 style="text-decoration: underline;">GENERAL</h5>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col col-md-4">
+                                                                                <strong>Importe contrato: </strong>
+                                                                                <span data-bind="text: importeClienteFormat"></span>
+                                                                                <br/>
+                                                                                <strong> Importe planificado: </strong>
+                                                                                <span data-bind="text: importePlanificado"></span>
+                                                                                <br/>
+                                                                                <strong  style="color:red;"> Diferencia: </strong>
+                                                                                <span  style="color:red;" data-bind="text: diferencia"></span>
+                                                                            </div>
+                                                                            <div class="col col-md-4">
+                                                                                <strong>Certificación final: </strong>
+                                                                                <span data-bind="text: certificacionFinalFormat"></span>
+                                                                                <br/>
+                                                                                <strong> Importe importePrefacturado </strong>
+                                                                                <span data-bind="text: importePrefacturado"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia: </strong>
+                                                                                <span style="color:red;" data-bind="text: diferenciaPrefacturado"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
                                                                     <hr/>
                                                                 </div>
                                                                 <!-- end widget content -->
@@ -1333,12 +1315,22 @@
                                                                         Prefacturas emitidas contra este contrato
                                                                     </header>
                                                                     <fieldset>
+                                                                        <div style="height: 20px; margin-bottom: 1%;">
+                                                                            <h5 style="text-decoration: underline;">LETRAS</h5>
+                                                                        </div>
+                                    
                                                                             <div class="pull-left obras">
-                                                                                <strong>Importe emitido: </strong>
+                                                                                <strong>Importe prefacturado: </strong>
                                                                                 <span data-bind="text: totEmitidas"></span>
                                                                                 <br/>
-                                                                                <strong> Num. emitidas: </strong>
+                                                                                <strong> Num. prefacturadas: </strong>
                                                                                 <span data-bind="text: numEmitidas"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia importe planificado: </strong>
+                                                                                <span style="color:red;" data-bind="text: difPlanificadoLetras"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                <span style="color:red;" data-bind="text: difNumPlanificadoLetras"></span>
                                                                             </div>
                                                                             <div class="pull-left obras" style="margin-left: 10%">
                                                                                 <strong>Importe recibido: </strong>
@@ -1346,6 +1338,12 @@
                                                                                 <br/>
                                                                                 <strong> Num. recibidas: </strong>
                                                                                 <span data-bind="text: numRecibidas"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia importe prefacturado: </strong>
+                                                                                <span style="color:red;" data-bind="text: difRecibidasLetras"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                <span style="color:red;" data-bind="text: difNumRecibidasLetras"></span>
                                                                             </div>
                                                                             <div class="pull-left obras" style="margin-left: 10%">
                                                                                 <strong>Importe gestión cobro: </strong>
@@ -1353,6 +1351,12 @@
                                                                                 <br/>
                                                                                 <strong> Num. gestión cobro </strong>
                                                                                 <span data-bind="text: numGestionCobros"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia importe recibido: </strong>
+                                                                                <span style="color:red;" data-bind="text: difGestionCobroLetras"></span>
+                                                                                <br/>
+                                                                                <strong style="color:red;"> Diferencia número letras: </strong>
+                                                                                <span style="color:red;" data-bind="text: difNumGestionCobroLetras"></span>
                                                                             </div>
                                                                         <div class="pull-right">
                                                                             <button id="btnAltaRecepcion"  title="Recepcionar letras" data-toggle="modal" data-target="#modalGenerarRecepcionGestion" onclick="prepararRecepcionGestion(true)" class="btn btn-primary btn-circle btn-lg obras">
