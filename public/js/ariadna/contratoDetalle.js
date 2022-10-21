@@ -42,7 +42,7 @@ var antClienteId = null;
 var antClienteNombre = "";
 var RegPlanificacion = null;
 var tablaPrefacturas;
-var a;
+var a = null;
 var _recepcionGestion
 //var numAscContratos = 0;
 
@@ -202,6 +202,7 @@ function initForm() {
             a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
         } else {
             $('.fixedHeader').remove();
+            a = null;
         }
 
     /* if (e.target.hash == '#tab1'){
@@ -214,6 +215,14 @@ function initForm() {
     }]]*/
 });
 
+ $(window).resize(function(){
+    //aqui el codigo que se ejecutara cuando se redimencione la ventana
+    if(a) {
+        $('.fixedHeader').remove();
+        var dt = $('#dt_prefactura').DataTable(); 
+        a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+    }
+})
 
     $("#txtPorcentajeCobro").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
@@ -369,7 +378,6 @@ function initForm() {
     initTablaContratosCobros();
     initTablaAscContratos();
     initTablaFactcol();
-
     initTablaConceptosLineas();
     initTablaPlanificacionLineasObras();
     $("#cmbComerciales").select2(select2Spanish());
@@ -2827,7 +2835,7 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
                 mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
                 $('#modalGenerarPrefacturas').modal('hide');
                 loadPrefacturasDelContrato(vm.contratoId());
-                actualizaCobrosPlanificacion(vm.contratoId(), null);
+                actualizaCobrosPlanificacion(vm.contratoId());
             });
     });
     
@@ -3350,7 +3358,7 @@ function initTablaPrefacturas(departamentoId) {
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
-        autoWidth: true,
+        autoWidth: false,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -3375,15 +3383,15 @@ function initTablaPrefacturas(departamentoId) {
             };
            
             // Total over all pages
-            total9 = api
-            .column( 9 )
+            total8 = api
+            .column( 8 )
             .data()
             .reduce( function (a, b) {
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
 
-            total10 = api
-                .column( 10 )
+            total9 = api
+                .column( 9 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -3394,40 +3402,16 @@ function initTablaPrefacturas(departamentoId) {
 
             ///////
             var c = api.data();
-            if(c.length > 0 && vm.tipoContratoId() == 8) {
-               var totEmitidas = 0;
-                var numEmitidas = 0;
-                var totRecibidas = 0;
-                var numRecibidas = 0;
-                var totGestionCobros = 0;
-                var numGestionCobros = 0;
-                for(var i = 0; i < c.length; i++) {
-                    var s = c[i];
-                    if(s.esLetra == 1) {
-                        //LETRAS EMITIDAS
-                        totEmitidas = totEmitidas + s.total;
-                        numEmitidas++
-                        //LETRAS RECIBIDAS
-                        if(s.fechaRecibida) {
-                            totRecibidas = totRecibidas + s.total;
-                            numRecibidas++
-                        }
-                         //LETRAS EN GESTION DE COBROS
-                         if(s.fechaGestionCobros) {
-                            totGestionCobros = totGestionCobros + s.total;
-                            numGestionCobros++
-                        }
-                    }
-                }
-                vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
-                vm.numEmitidas(numEmitidas);
-                //
-                vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
-                vm.numRecibidas(numRecibidas);
-                //
-                vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
-                vm.numGestionCobros(numGestionCobros);
-            }
+            calculaImportesInformativosPrefacturas(c)
+          
+             // Total over all pages
+             total10 = api
+             .column( 10 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
              // Total over all pages
              total11 = api
              .column( 11 )
@@ -3436,6 +3420,7 @@ function initTablaPrefacturas(departamentoId) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+           
              // Total over all pages
              total12 = api
              .column( 12 )
@@ -3444,34 +3429,25 @@ function initTablaPrefacturas(departamentoId) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
-           
-             // Total over all pages
-             total13 = api
-             .column( 13 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
-
 
             // Update footer
+            $( api.columns(8).footer() ).html(
+                numeral(total8).format('0,0.00')
+                
+            );
             $( api.columns(9).footer() ).html(
                 numeral(total9).format('0,0.00')
                 
             );
+
             $( api.columns(10).footer() ).html(
                 numeral(total10).format('0,0.00')
-                
             );
-
             $( api.columns(11).footer() ).html(
                 numeral(total11).format('0,0.00')
             );
             $( api.columns(12).footer() ).html(
                 numeral(total12).format('0,0.00')
-            );
-            $( api.columns(13).footer() ).html(
-                numeral(total13).format('0,0.00')
             );
 
             //////
@@ -3500,17 +3476,7 @@ function initTablaPrefacturas(departamentoId) {
         },
         data: dataPrefacturas,
         columns: [{
-            data: "facturaId",
-            render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
-                return html;
-            }
-        }, {
             data: "prefacturaId",
-            width: "10%",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if(row.esLetra != 1) {
@@ -3595,6 +3561,7 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 var bt1 = "";
                 if(!row.contratoPorcenId) {
+                    if(row.departamentoId != 8)
                     bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -3606,6 +3573,7 @@ function initTablaPrefacturas(departamentoId) {
        
     });
 
+   
     // Apply the filter
     $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {
         tablaPrefacturas
@@ -3615,17 +3583,53 @@ function initTablaPrefacturas(departamentoId) {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(9).visible(false);
-    tablaPrefacturas.columns(14).visible(false);
-    tablaPrefacturas.columns(16).visible(false);
+    tablaPrefacturas.columns(1).visible(false);
+    tablaPrefacturas.columns(8).visible(false);
+    tablaPrefacturas.columns(13).visible(false);
+    tablaPrefacturas.columns(15).visible(false);
     if(departamentoId != 8) {
-        tablaPrefacturas.columns(1).visible(false);
+        tablaPrefacturas.columns(6).visible(false);
         tablaPrefacturas.columns(7).visible(false);
-        tablaPrefacturas.columns(8).visible(false);
-    } else {
-        tablaPrefacturas.columns(0).visible(false);
     }
     
+}
+
+function calculaImportesInformativosPrefacturas(c) {
+    if(!c) return;
+    if(c.length > 0 && vm.tipoContratoId() == 8) {
+        var totEmitidas = 0;
+         var numEmitidas = 0;
+         var totRecibidas = 0;
+         var numRecibidas = 0;
+         var totGestionCobros = 0;
+         var numGestionCobros = 0;
+         for(var i = 0; i < c.length; i++) {
+             var s = c[i];
+             if(s.esLetra == 1) {
+                 //LETRAS EMITIDAS
+                 totEmitidas = totEmitidas + s.total;
+                 numEmitidas++
+                 //LETRAS RECIBIDAS
+                 if(s.fechaRecibida) {
+                     totRecibidas = totRecibidas + s.total;
+                     numRecibidas++
+                 }
+                  //LETRAS EN GESTION DE COBROS
+                  if(s.fechaGestionCobros) {
+                     totGestionCobros = totGestionCobros + s.total;
+                     numGestionCobros++
+                 }
+             }
+         }
+         vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
+         vm.numEmitidas(numEmitidas);
+         //
+         vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
+         vm.numRecibidas(numRecibidas);
+         //
+         vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
+         vm.numGestionCobros(numGestionCobros);
+     }
 }
 
 function loadPrefacturasDelContrato(contratoId) {
@@ -3680,43 +3684,45 @@ function loadTablaPrefacturas(data) {
         $('#txtAgente').prop('disabled', false);
     }
     dt.fnDraw();
-    data.forEach(function (v) {
-        var field = "#chk" + v.prefacturaId;
-        if (v.sel == 1) {
-            $(field).attr('checked', true);
-        }
-        $(field).change(function () {
-            var quantity = 0;
-            var data = {
-                prefactura: {
-                    prefacturaId: v.prefacturaId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: 0
-                }
-            };
-            if (this.checked) {
-                data.prefactura.sel = 1;
+    if(data) {
+        data.forEach(function (v) {
+            var field = "#chk" + v.prefacturaId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
             }
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
+            $(field).change(function () {
+                var quantity = 0;
+                var data = {
+                    prefactura: {
+                        prefacturaId: v.prefacturaId,
+                        empresaId: v.empresaId,
+                        clienteId: v.clienteId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: 0
+                    }
+                };
+                if (this.checked) {
+                    data.prefactura.sel = 1;
                 }
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+    
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
             });
         });
-    });
+    }
 }
 
 
@@ -5276,6 +5282,7 @@ var aceptarGenerarRecepcionGestion = function() {
             if (err) return;
             $('#modalGenerarRecepcionGestion').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
         }); 
     });
 } 
@@ -5505,7 +5512,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
-            contPlanificacionId: RegPlanificacion[0].contPlanificacionId
+            contPlanificacionId: RegPlanificacion[0].contPlanificacionId,
+            formaPagoId: RegPlanificacion[0].formaPagoId
 
         };
         if (vm.facturaParcial() && i == 0) {
@@ -6362,42 +6370,7 @@ function initTablaPlanificacionLineasObras() {
                         i : 0;
             };
             var c = api.data();
-            if(c.length > 0) {
-               var totLetrasPlanificadas = 0;
-               var numLetrasPlanificadas = 0;
-                // var numEmitidas = 0;
-                // var totRecibidas = 0;
-                // var numRecibidas = 0;
-                // var totGestionCobros = 0;
-                // var numGestionCobros = 0;
-                for(var i = 0; i < c.length; i++) {
-                    var s = c[i];
-                    if(s.esLetra == 1) {
-                        //LETRAS PLANIFICADAS
-                        totLetrasPlanificadas = totLetrasPlanificadas + s.importe;
-                        numLetrasPlanificadas = numLetrasPlanificadas + s.numPrefacturas;
-        
-                       
-                    }
-                }
-                //diferencia entre letras planificadas y prefacturadas
-                //vm.totLetrasPlanificadas(numeral(Math.round(totLetrasPlanificadas * 100)/100).format('0,0.00'));
-                var a =  numeroDbf(vm.totEmitidas());
-                var na = vm.numEmitidas();
-                vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
-                vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
-               
-                //diferencia entre letras prefacturadas y recibidas
-                var b = numeroDbf(vm.totRecibidas());
-                var nb = vm.numRecibidas();
-                vm.difRecibidasLetras(numeral(Math.round((a - b) * 100)/100).format('0,0.00'));
-                vm.difNumRecibidasLetras(numeral(Math.round((na - nb) * 100)/100).format('0'));
-                //diferencia entre recibidas y en gestión de cobros
-                var c = numeroDbf(vm.totGestionCobros());
-                var nc = vm.numGestionCobros();
-                vm.difGestionCobroLetras(numeral(Math.round((b - c) * 100)/100).format('0,0.00'));
-                vm.difNumGestionCobroLetras(numeral(Math.round((nb - nc) * 100)/100).format('0'));
-            }
+            calculaImportesInformativosPlanificacion(c)
                 
             // Total over all pages
             total4 = api
@@ -6420,7 +6393,7 @@ function initTablaPlanificacionLineasObras() {
                 var dif = 0
                 vm.importePlanificado(numeral(total).format('0,0.00'));
                
-                dif =  total - vm.importeCliente();
+                dif =  vm.importeCliente() - total;
                 vm.diferencia(numeral(dif).format('0,0.00'));
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
@@ -6670,6 +6643,48 @@ function initTablaPlanificacionLineasObras() {
             }
         }]
     });
+}
+
+function calculaImportesInformativosPlanificacion(c) {
+    if(!c) return;
+    if(c.length > 0) {
+        var totLetrasPlanificadas = 0;
+        var numLetrasPlanificadas = 0;
+         for(var i = 0; i < c.length; i++) {
+             var s = c[i];
+             if(s.esLetra == 1) {
+                 //LETRAS PLANIFICADAS
+                 totLetrasPlanificadas = totLetrasPlanificadas + parseFloat(s.importe);
+                 numLetrasPlanificadas = numLetrasPlanificadas + parseInt(s.numPrefacturas);
+ 
+                
+             }
+         }
+         //diferencia entre letras planificadas y prefacturadas
+         //vm.totLetrasPlanificadas(numeral(Math.round(totLetrasPlanificadas * 100)/100).format('0,0.00'));
+         if(vm.totEmitidas()) {
+             var a =  numeroDbf(vm.totEmitidas());
+             var na = vm.numEmitidas();
+             vm.difPlanificadoLetras(numeral(Math.round((a - totLetrasPlanificadas) * 100)/100).format('0,0.00'));
+             vm.difNumPlanificadoLetras(numeral(Math.round((na - numLetrasPlanificadas) * 100)/100).format('0'));
+         }
+         
+        
+         //diferencia entre letras prefacturadas y recibidas
+         if(vm.totRecibidas()) {
+             var b = numeroDbf(vm.totRecibidas());
+             var nb = vm.numRecibidas();
+             vm.difRecibidasLetras(numeral(Math.round((a - b) * 100)/100).format('0,0.00'));
+             vm.difNumRecibidasLetras(numeral(Math.round((na - nb) * 100)/100).format('0'));
+         }
+         //diferencia entre recibidas y en gestión de cobros
+         if(vm.totGestionCobros()) {
+             var c = numeroDbf(vm.totGestionCobros());
+             var nc = vm.numGestionCobros();
+             vm.difGestionCobroLetras(numeral(Math.round((b - c) * 100)/100).format('0,0.00'));
+             vm.difNumGestionCobroLetras(numeral(Math.round((nb - nc) * 100)/100).format('0'));
+         }
+     }
 }
 
 function  loadPlanificacionLineasObras(id, numCobros) {
