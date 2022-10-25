@@ -3317,7 +3317,7 @@ function initTablaPrefacturas(departamentoId) {
             }
             
         },
-        
+       
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
         "t" +
@@ -3855,53 +3855,7 @@ function initTablaFacturas() {
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Facturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -6434,7 +6388,7 @@ function initTablaPlanificacionLineasObras() {
                 var dif = 0
                 vm.importePlanificado(numeral(total).format('0,0.00'));
                
-                dif =  vm.importeCliente() - total;
+                dif = total -  vm.importeCliente();
                 vm.diferencia(numeral(dif).format('0,0.00'));
                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
             }, 0 );
@@ -6470,7 +6424,7 @@ function initTablaPlanificacionLineasObras() {
                 var tot2 = numeral(total2).format('0,0.00')
                 vm.importePrefacturado(tot2);
                 //
-                dif2 = vm.certificacionFinal() - total2;
+                dif2 = total2 - vm.certificacionFinal();
                 vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
