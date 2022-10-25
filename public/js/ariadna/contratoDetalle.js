@@ -3415,8 +3415,11 @@ function initTablaPrefacturas(departamentoId) {
             
 
             ///////
-            var c = api.data();
-            calculaImportesInformativosPrefacturas(c)
+            if(vm.tipoContratoId() == 8) {
+                var c = api.data();
+                calculaImportesInformativosPrefacturas(c)
+            }
+           
           
              // Total over all pages
              total10 = api
@@ -3635,14 +3638,31 @@ function calculaImportesInformativosPrefacturas(c) {
                  }
              }
          }
-         vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
-         vm.numEmitidas(numEmitidas);
+         if(totEmitidas) {
+            vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
+            vm.numEmitidas(numEmitidas);
+         } else {
+            vm.totEmitidas(0);
+            vm.numEmitidas(0);
+         }
          //
-         vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
-         vm.numRecibidas(numRecibidas);
+         if(totRecibidas) {
+            vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
+            vm.numRecibidas(numRecibidas);
+         } else {
+            vm.totRecibidas(0);
+            vm.numRecibidas(0);
+         }
+         
          //
-         vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
-         vm.numGestionCobros(numGestionCobros);
+         if(totGestionCobros) {
+            vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
+            vm.numGestionCobros(numGestionCobros);
+         } else {
+            vm.totGestionCobros(0);
+            vm.numGestionCobros(0);
+         }
+         
          //calculo de las diferencias
 
          if(vm.totEmitidas()) {
@@ -6364,8 +6384,11 @@ function initTablaPlanificacionLineasObras() {
                     typeof i === 'number' ?
                         i : 0;
             };
-            var c = api.data();
-            calculaImportesInformativosPlanificacion(c)
+            if(vm.tipoContratoId() == 8) {
+                var c = api.data();
+                calculaImportesInformativosPlanificacion(c)
+             }
+           
                 
             // Total over all pages
             total4 = api
@@ -6677,6 +6700,7 @@ function  loadPlanificacionLineasObras(id, numCobros) {
 }
 
 function loadTablaPlanificacionLineasObras(data) {
+    var a = null;
     if (data) {
         dataPlanificacion = data;
         numPlanificacion = data.length;
@@ -6699,9 +6723,14 @@ function loadTablaPlanificacionLineasObras(data) {
         $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
-    var a =  numeroDbf(vm.diferenciaPrefacturado());
-    if(a == 0 || a < 0 ) {
-        $('#chkContratoCerrado').prop('disabled', false);
+    if(a) {
+        if(vm.diferenciaPrefacturado()) a =  numeroDbf(vm.diferenciaPrefacturado());
+    
+        if(a == 0 || a < 0 ) {
+            $('#chkContratoCerrado').prop('disabled', false);
+        } else {
+            $('#chkContratoCerrado').prop('disabled', true);
+        }
     } else {
         $('#chkContratoCerrado').prop('disabled', true);
     }

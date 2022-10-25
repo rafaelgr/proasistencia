@@ -147,19 +147,20 @@ INSERT INTO contrato_planificacion
 SELECT 
 0 AS contPlanificacionId,
 c.contratoId, 
-'INTERESES' AS concepto,
+'SUPLIDOS' AS concepto,
 100 AS porcentaje,
 c.fechaInicio AS fecha,
 COALESCE(SUM(p.total), 0) AS importe,
 COALESCE(SUM(p.total), 0) AS importePrefacturado,
-tmp.importefacturado AS importeFacturado,
+COALESCE(SUM(tmp.importeFacturado), 0) AS importeFacturado,
+COALESCE(SUM(tmp.importeFacturadoIva), 0) AS importeFacturadoIva,
 0 AS importeCobrado,
 p.formapagoId
 FROM prefacturas AS p
 LEFT JOIN contratos AS c ON c.contratoId = p.contratoId
 LEFT JOIN 
 (
-	SELECT COALESCE(SUM(f.total), 0) AS importeFacturado, c.contratoId
+	SELECT COALESCE(SUM(f.total), 0) AS importeFacturadoIva, COALESCE(SUM(f.totalConIva), 0) AS importeFacturado, c.contratoId
 	FROM contratos AS c
 	LEFT JOIN facturas AS f ON f.contratoId = c.contratoId
 	LEFT JOIN prefacturas AS pf ON pf.facturaId = f.facturaId
