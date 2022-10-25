@@ -557,12 +557,24 @@
                                             Criterios filtrado.
                                         </header>
                                         <fieldset>
+                                           <!--  <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Colaborador</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                </section>
+                                            </div> -->
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkAceptadas" type="checkbox" name="chkAceptadas">
                                                         <i></i>Ver también ofertas aceptadas
                                                     </label>
+                                                </section>
+                                                <section class="col col-md-6">
                                                 </section>
                                             </div>
                                         </fieldset>
@@ -586,6 +598,12 @@
                                                 <tr>
                                                     <th>
                                                         <i class="fa fa-fw fa-search"></i>
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
+                                                    </th>
+                                                    <th class="hasinput">
+                                                        <input type="text" class="form-control" placeholder="" />
                                                     </th>
                                                     <th class="hasinput">
                                                         <input type="text" class="form-control" placeholder="" />
@@ -646,10 +664,16 @@
                                                         Agente
                                                     </th>
                                                     <th data-hide="phone">
+                                                        Comercial
+                                                    </th>
+                                                    <th data-hide="phone">
                                                         Observaciones
                                                     </th>
+                                                    <th data-hide="phone">
+                                                        Aceptada
+                                                    </th>
                                                     <th style="width:10%; text-align: center;">
-<i class="fa fa-fw fa-gears">
+                                                        <i class="fa fa-fw fa-gears">
                                                     </th>
                                                 </tr>
                                             </thead>

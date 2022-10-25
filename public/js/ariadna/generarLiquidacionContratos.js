@@ -152,46 +152,6 @@ function cambioDepartamento(id) {
 }
 
 
-function updateAllFacturas() {
-    var datos = null;
-    var sel = 0;
-    var tb = $('#dt_factura').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
-            var data = {
-                factura: {
-                    facturaId: datos[i].facturaId,
-                    empresaId: datos[i].empresaId,
-                    clienteId: datos[i].clienteId,
-                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                    sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
-        }
-    }
-}
-
-
-
 function updateAllFacturas(opcion) {
     var datos = null;
     var sel = 0;

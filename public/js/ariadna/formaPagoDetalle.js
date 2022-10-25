@@ -95,6 +95,7 @@ function admData() {
     self.primerVencimiento = ko.observable();
     self.restoVencimiento = ko.observable();
     self.codigoContable = ko.observable();
+    self.esLetra = ko.observable();
     //
     self.stipoFormaPagoId = ko.observable();
     //
@@ -110,6 +111,7 @@ function loadData(data) {
     vm.primerVencimiento(data.primerVencimiento);
     vm.restoVencimiento(data.restoVencimiento);
     vm.codigoContable(data.codigoContable);
+    vm.esLetra(data.esLetra);
     loadTiposFormaPago(data.tipoFormaPagoId);
 }
 
@@ -180,7 +182,8 @@ function aceptar() {
                 "numeroVencimientos": vm.numeroVencimientos(),
                 "primerVencimiento": vm.primerVencimiento(),
                 "restoVencimiento": vm.restoVencimiento(),
-                "codigoContable": vm.codigoContable()
+                "codigoContable": vm.codigoContable(),
+                "esLetra": vm.esLetra()
             }
         };
         if (empId == 0) {

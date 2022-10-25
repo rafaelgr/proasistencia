@@ -29,10 +29,13 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarOfertas());
     $('#btnAlta').click(crearOferta());
-    $('#btnPrint').click(imprimirOferta);
+    $('#btnPrint').click(imprimirOfertas);
     $('#frmBuscar').submit(function () {
         return false
     });
+    // $("#cmbComerciales").select2(select2Spanish());
+    // loadComerciales();
+
     initTablaOfertas();
 
     ofertaId = gup('OfertaId');
@@ -43,7 +46,7 @@ function initForm() {
         } else {
             cargarOfertasNoAceptadas();
         }
-    
+        
         $('#chkAceptadas').change(function () {
             if (this.checked) {
                 cargarOfertas();
@@ -74,11 +77,21 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    // self.comercialId = ko.observable();
+    // self.scomercialId = ko.observable();
+    // //
+    // self.posiblesComerciales = ko.observableArray([]);
+    // self.elegidosComerciales = ko.observableArray([]);
     
 } 
 function initTablaOfertas() {
     tablaOfertas = $('#dt_oferta').DataTable({
-        bSort: false,
+        bSort: true,
+        "pageLength": 100,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [3] },
+        ],
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -167,10 +180,17 @@ function initTablaOfertas() {
         },
         data: dataOfertas,
         columns: [{
-            data: "facturaId",
+            data: "contratoId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
+                if(row.servicioId) {
+                    html = "<i class='fa fa-file'></i>";
+                }
+                else if(row.contratoId) {
+                    html = "<i class='fa fa-file'></i>";
+                }
                 return html;
+                
             }
         }, {
             data: "referencia"
@@ -192,17 +212,48 @@ function initTablaOfertas() {
         }, {
             data: "agente"
         }, {
+            data: "comercialCliente"
+        },  {
             data: "observaciones"
-        }, {
+        },{
+            data: "contratoId",
+            render: function (data, type, row) {
+                var html = "<i>No</i>";
+                if(row.servicioId) {
+                    html = "<i>Si</i>";
+                }
+                else if(data) {
+                    html = "<i >Si</i>";
+                }
+                return html;
+                
+            }
+        },  {
             data: "ofertaId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteOferta(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editOferta(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printOferta2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-success' onclick='printOferta(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
                 return html;
             }
         }]
+    });
+
+    //function sort by date
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
     });
 
     // Apply the filter
@@ -217,6 +268,7 @@ function initTablaOfertas() {
     tablaOfertas.columns(7).visible(false);
     tablaOfertas.columns(8).visible(false);
     tablaOfertas.columns(9).visible(false);
+    tablaOfertas.columns(10).visible(false);
 }
 
 function datosOK() {
@@ -238,6 +290,25 @@ function datosOK() {
     return $('#frmBuscar').valid();
 }
 
+/* function loadComerciales() {
+    $.ajax({
+        type: "GET",
+        url: "/api/comerciales",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposComerciales = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesComerciales(tiposComerciales);
+            //vm.scomercialId(0)
+            $("#cmbComerciales").val([0]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+} */
+
 function loadTablaOfertas(data) {
     var dt = $('#dt_oferta').dataTable();
     if (data !== null && data.length === 0) {
@@ -250,7 +321,12 @@ function loadTablaOfertas(data) {
 
 function buscarOfertas() {
     var mf = function () {
-        cargarOfertas();
+        var opcion = $('#chkAceptadas').prop("checked")
+        if(opcion) {
+            cargarOfertas();
+        } else {
+            cargarOfertasNoAceptadas()
+        }
     };
     return mf;
 }
@@ -305,9 +381,6 @@ function editOferta(id) {
 var cargarOfertas = function (id) {
     var url = myconfig.apiUrl + "/api/ofertas/usuario/logado/departamento/"+ usuario.usuarioId + "/" + vm.sdepartamentoId();
     if (id) {
-        var data = {
-            id: ofertaId
-        }
         url = myconfig.apiUrl + "/api/ofertas/" + ofertaId
     };
     llamadaAjax("GET", url, null, function (err, data) {
@@ -322,96 +395,12 @@ var cargarOfertasNoAceptadas = function (id) {
     });
 }
 
-function printOferta2(id) {
+function printOferta(id) {
     var url = "InfOfertas.html?ofertaId=" + id;
     window.open(url, "_new");
 }
 
-function printOferta(id) {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/informes/ofertas/" + id,
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            informePDF(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-function informePDF(data) {
-    var shortid = "rySBxKzIe";
-    var infData = {
-        "template": {
-            "shortid": shortid
-        },
-        "data": data
-    }
-    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + data.cabecera.empresaId, null, function (err, empresa) {
-        if (err) return;
-        if (empresa.infOfertas) infData.template.shortid = empresa.infOfertas;
-        f_open_post("POST", myconfig.reportUrl + "/api/report", infData);
-    });
-}
-
-var f_open_post = function (verb, url, data, target) {
-    var form = document.createElement("form");
-    form.action = url;
-    form.method = verb;
-    form.target = target || "_blank";
-
-    var input = document.createElement("textarea");
-    input.name = "template[shortid]";
-    input.value = data.template.shortid;
-    form.appendChild(input);
-
-    input = document.createElement("textarea");
-    input.name = "data";
-    input.value = JSON.stringify(data.data);
-    form.appendChild(input);
-
-    form.style.display = 'none';
-    document.body.appendChild(form);
-    form.submit();
-};
-
-function cargarOfertas2() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaOfertas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-function cargarOfertas2All() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/prefacturas/all",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaOfertas(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-imprimirOferta = function () {
+imprimirOfertas = function () {
     var url = "InfOfertas.html";
     window.open(url, '_blank');
 }

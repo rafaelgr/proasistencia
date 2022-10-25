@@ -396,6 +396,7 @@ function admData() {
     self.emisorIban = ko.observable();
     self.servicioId = ko.observable();
     self.esColaborador = ko.observable();
+    self.noFactura = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -595,6 +596,11 @@ function loadData(data) {
     } else {
         $('#chkNoContabilizar').prop("checked", false);
     }
+    if(data.noFactura == 1){
+        $('#chkNoFactura').prop("checked", true);
+    } else {
+        $('#chkNoFactura').prop("checked", false);
+    }
     //
     if(data.completo == 1){
         $('#chkCompleto').prop("checked", true);
@@ -738,6 +744,11 @@ var generarAnticipoDb = function () {
     } else {
         vm.noContabilizar(false);
     }
+    if($('#chkNoFactura').prop("checked")) {
+        vm.noFactura(true);
+    } else {
+        vm.noFactura(false);
+    }
     //
     if($('#chkCompleto').prop("checked")) {
         if(antproveId != 0) totConIva = numeroDbf(vm.totalConIva());
@@ -780,6 +791,7 @@ var generarAnticipoDb = function () {
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "importeRetencion": vm.importeRetencion(),
             "noContabilizar": vm.noContabilizar(),
+            "noFactura": vm.noFactura(),
             "departamentoId": vm.sdepartamentoId(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "completo": vm.completo(),
