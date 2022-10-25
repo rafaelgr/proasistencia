@@ -57,6 +57,7 @@ cp.fecha,
 cp.importe,
 0 AS importePrefacturado,
 0 AS importeFacturado,
+0 AS importeFacturadoIva,
 0 AS importeCobrado,
 cp.formapagoId 
 FROM contrato_porcentajes AS cp
@@ -78,6 +79,7 @@ cp.fecha,
 tmp.total AS importe,
 0 AS importePrefacturado,
 0 AS importeFacturado,
+0 AS importeFacturadoIva,
 0 AS importeCobrado,
 cc.formaPagoId
 
@@ -127,7 +129,19 @@ INNER JOIN
 ) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
 SET importeFacturado = tmp.total;
 
+#actualizamos el importe facturado con IVA en la tabla contrato_planificacion
+UPDATE contrato_planificacion AS cp
+INNER JOIN
+(
+	SELECT SUM(f.totalConIva) AS totalConIva, p.contPlanificacionId 
+	FROM prefacturas AS p
+	INNER JOIN facturas AS f ON f.facturaId = p.facturaId
+	WHERE  f.departamentoId = 8 AND NOT p.contPlanificacionId IS NULL
+	GROUP BY p.contPlanificacionId
+) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
+SET importeFacturadoIva = tmp.totalConIva;
 
+##########################################
 #Creamos las lineas en contrato_planificacion de los contratos de intereses
 INSERT INTO contrato_planificacion
 SELECT 
