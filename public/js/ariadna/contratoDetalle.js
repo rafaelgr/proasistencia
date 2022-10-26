@@ -832,6 +832,7 @@ function loadData(data) {
         $('#lineasPagoObras').show();
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
+        $('#btnAltaPrefactura').hide();
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste();
@@ -5478,9 +5479,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
 
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5567,9 +5568,9 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
     var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToSix(importe / numPagos);
-    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
-    var importeCoste = roundToSix(coste / numPagos);
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
