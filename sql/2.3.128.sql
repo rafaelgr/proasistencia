@@ -149,27 +149,15 @@ SELECT
 c.contratoId, 
 'SUPLIDOS' AS concepto,
 100 AS porcentaje,
-c.fechaInicio AS fecha,
+p.fecha AS fecha,
 COALESCE(SUM(p.total), 0) AS importe,
 COALESCE(SUM(p.total), 0) AS importePrefacturado,
-COALESCE(SUM(tmp.importeFacturado), 0) AS importeFacturado,
-COALESCE(SUM(tmp.importeFacturadoIva), 0) AS importeFacturadoIva,
+0 AS importeFacturado,
+0 AS importeFacturadoIva,
 0 AS importeCobrado,
 p.formapagoId
 FROM prefacturas AS p
 LEFT JOIN contratos AS c ON c.contratoId = p.contratoId
-LEFT JOIN 
-(
-	SELECT COALESCE(SUM(f.total), 0) AS importeFacturadoIva, COALESCE(SUM(f.totalConIva), 0) AS importeFacturado, c.contratoId
-	FROM contratos AS c
-	LEFT JOIN facturas AS f ON f.contratoId = c.contratoId
-	LEFT JOIN prefacturas AS pf ON pf.facturaId = f.facturaId
-	WHERE  
-	c.tipoContratoId = 8 
-	AND pf.contPlanificacionId IS NULL
-	AND c.contratoIntereses = 1
-	GROUP BY c.contratoId
-) AS tmp ON tmp.contratoId = c.contratoId
 WHERE 
 contPlanificacionId IS NULL 
 AND c.tipoContratoId = 8
@@ -193,29 +181,17 @@ SELECT
 c.contratoId, 
 'ENTREGAS A CUENTA' AS concepto,
 100 AS porcentaje,
-P.fecha AS fecha,
+p.fecha AS fecha,
 COALESCE(SUM(p.total), 0) AS importe,
 COALESCE(SUM(p.total), 0) AS importePrefacturado,
-COALESCE(SUM(tmp.importeFacturado), 0) AS importeFacturado,
-COALESCE(SUM(tmp.importeFacturadoIva), 0) AS importeFacturadoIva,
+0 AS importeFacturado,
+0 AS importeFacturadoIva,
 0 AS importeCobrado,
 p.formapagoId
 FROM prefacturas AS p
 LEFT JOIN contratos AS c ON c.contratoId = p.contratoId
-LEFT JOIN 
-(
-	SELECT COALESCE(SUM(f.total), 0) AS importeFacturadoIva, COALESCE(SUM(f.totalConIva), 0) AS importeFacturado, c.contratoId
-	FROM contratos AS c
-	LEFT JOIN facturas AS f ON f.contratoId = c.contratoId
-	LEFT JOIN prefacturas AS pf ON pf.facturaId = f.facturaId
-	WHERE  
-	c.tipoContratoId = 8 
-	AND pf.contPlanificacionId IS NULL
-	AND c.contratoIntereses = 0
-	GROUP BY c.contratoId
-) AS tmp ON tmp.contratoId = c.contratoId
 WHERE 
-P.contPlanificacionId IS NULL 
+p.contPlanificacionId IS NULL 
 AND c.tipoContratoId = 8
 AND c.contratoIntereses = 0
 GROUP BY c.contratoId;
@@ -230,4 +206,15 @@ UPDATE contratos AS c
 	AND pf.contPlanificacionId IS NULL
 	AND c.contratoIntereses = 0;
 
+
+UPDATE contrato_planificacion AS cp
+INNER JOIN
+(
+	SELECT SUM(f.total) AS total, SUM(f.totalConIva) AS totalConIva, p.contPlanificacionId 
+	FROM prefacturas AS p
+	INNER JOIN facturas AS f ON f.facturaId = p.facturaId
+	WHERE  f.departamentoId = 8 AND NOT p.contPlanificacionId IS NULL
+	GROUP BY p.contPlanificacionId
+) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
+SET importeFacturado = tmp.total, importeFacturadoIva = tmp.totalConIva;
 
