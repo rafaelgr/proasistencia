@@ -3020,8 +3020,8 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
     var finMesInicioContrato = moment(inicioContrato).endOf('month');
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
-    var importeCoste = roundToTwo(coste / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5478,9 +5478,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
 
-    var importePago = roundToTwo(importe / numPagos);
-    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
-    var importeCoste = roundToTwo(coste / numPagos);
+    var importePago = roundToSix(importe / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5567,9 +5567,9 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
     var inicioMesInicioContrato = aux[0] + "-" + aux[1] + "-01";
     var diffDias = finMesInicioContrato.diff(inicioContrato, 'days');
 
-    var importePago = roundToTwo(importe / numPagos);
-    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
-    var importeCoste = roundToTwo(coste / numPagos);
+    var importePago = roundToSix(importe / numPagos);
+    var importePagoCliente = roundToSix(importeAlCliente / numPagos);
+    var importeCoste = roundToSix(coste / numPagos);
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5657,12 +5657,12 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     var acumulado = 0;
     var copiaDataConceptos = dataConceptos.slice();
     for (var j =0; j< nPagos; j++) {
-        acumulado += roundToTwo((importe * dataConceptos[j].porcentaje) / 100) ;
+        acumulado += roundToSix((importe * dataConceptos[j].porcentaje) / 100) ;
     }
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToTwo(dataConceptos[i].importe);
-        var importePagoCliente = roundToTwo(dataConceptos[i].importe);
-        var importeCoste = roundToTwo(dataConceptos[i].importe);
+        var importePago = roundToSix(dataConceptos[i].importe);
+        var importePagoCliente = roundToSix(dataConceptos[i].importe);
+        var importeCoste = roundToSix(dataConceptos[i].importe);
         var contratoPorcenId = dataConceptos[i].contratoPorcenId;
         var formaPagoId = dataConceptos[i].formaPagoId;
         // sucesivas fechas de factura
@@ -5738,9 +5738,9 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
     var copiadata = data.slice();
   
     for (var i = 0; i < nPagos; i++) {
-        var importePago = roundToTwo(data[i].importe);
-        var importePagoCliente = roundToTwo(data[i].importe);
-        var importeCoste = roundToTwo(data[i].importe);
+        var importePago = roundToSix(data[i].importe);
+        var importePagoCliente = roundToSix(data[i].importe);
+        var importeCoste = roundToSix(data[i].importe);
         var  contPlanificacionId = data[i].contPlanificacionId;
         var formaPagoId = data[i].formaPagoId;
         // sucesivas fechas de factura
