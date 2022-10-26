@@ -167,14 +167,12 @@ LEFT JOIN
 	WHERE  
 	c.tipoContratoId = 8 
 	AND pf.contPlanificacionId IS NULL
-	AND c.ascContratoId IS NULL 
 	AND c.contratoIntereses = 1
 	GROUP BY c.contratoId
 ) AS tmp ON tmp.contratoId = c.contratoId
 WHERE 
 contPlanificacionId IS NULL 
 AND c.tipoContratoId = 8
-AND c.ascContratoId IS NULL
 AND c.contratoIntereses = 1
 GROUP BY c.contratoId;
 
@@ -186,47 +184,43 @@ UPDATE contratos AS c
 	WHERE  
 	c.tipoContratoId = 8 
 	AND pf.contPlanificacionId IS NULL
-	AND c.ascContratoId IS NULL 
 	AND c.contratoIntereses = 1;
 
 
-#Creamos las lineas en contrato_planificacion de los contratos asociados
-  INSERT INTO contrato_planificacion
+INSERT INTO contrato_planificacion
 SELECT 
 0 AS contPlanificacionId,
 c.contratoId, 
-'ADICIONAL' AS concepto,
+'ENTREGAS A CUENTA' AS concepto,
 100 AS porcentaje,
-c.fechaInicio AS fecha,
+P.fecha AS fecha,
 COALESCE(SUM(p.total), 0) AS importe,
 COALESCE(SUM(p.total), 0) AS importePrefacturado,
-tmp.importefacturado AS importeFacturado,
+COALESCE(SUM(tmp.importeFacturado), 0) AS importeFacturado,
+COALESCE(SUM(tmp.importeFacturadoIva), 0) AS importeFacturadoIva,
 0 AS importeCobrado,
 p.formapagoId
 FROM prefacturas AS p
 LEFT JOIN contratos AS c ON c.contratoId = p.contratoId
 LEFT JOIN 
 (
-	SELECT COALESCE(SUM(f.total), 0) AS importeFacturado, c.contratoId
+	SELECT COALESCE(SUM(f.total), 0) AS importeFacturadoIva, COALESCE(SUM(f.totalConIva), 0) AS importeFacturado, c.contratoId
 	FROM contratos AS c
 	LEFT JOIN facturas AS f ON f.contratoId = c.contratoId
 	LEFT JOIN prefacturas AS pf ON pf.facturaId = f.facturaId
 	WHERE  
 	c.tipoContratoId = 8 
 	AND pf.contPlanificacionId IS NULL
-	AND NOT c.ascContratoId IS NULL 
 	AND c.contratoIntereses = 0
 	GROUP BY c.contratoId
 ) AS tmp ON tmp.contratoId = c.contratoId
 WHERE 
-contPlanificacionId IS NULL 
+P.contPlanificacionId IS NULL 
 AND c.tipoContratoId = 8
-AND NOT c.ascContratoId IS NULL
 AND c.contratoIntereses = 0
 GROUP BY c.contratoId;
 
-
-#actualizamos las prefacturas de los contratos asociados con su id correspondiente de la tabla contrato_planificacion
+#actualizamos las prefacturas de los contratos de intereses con su id correspondiente de la tabla contrato_planificacion
 UPDATE contratos AS c
 	INNER JOIN contrato_planificacion AS cp ON cp.contratoId = c.contratoId
 	INNER JOIN prefacturas AS pf ON pf.contratoId = c.contratoId
@@ -234,68 +228,6 @@ UPDATE contratos AS c
 	WHERE  
 	c.tipoContratoId = 8 
 	AND pf.contPlanificacionId IS NULL
-	AND NOT c.ascContratoId IS NULL 
 	AND c.contratoIntereses = 0;
-	
-
-  #creamos y actualizamos los contratos que han quedado
-
-  INSERT INTO contrato_planificacion
-SELECT 
-0 AS contPlanificacionId,
-c.contratoId, 
-'AUTOMATICO' AS concepto,
-100 AS porcentaje,
-c.fechaInicio AS fecha,
-COALESCE(SUM(p.total), 0) AS importe,
-COALESCE(SUM(p.total), 0) AS importePrefacturado,
-tmp.importefacturado AS importeFacturado,
-0 AS importeCobrado,
-p.formapagoId
-FROM prefacturas AS p
-LEFT JOIN contratos AS c ON c.contratoId = p.contratoId
-LEFT JOIN 
-(
-	SELECT COALESCE(SUM(f.total), 0) AS importeFacturado, c.contratoId
-	FROM contratos AS c
-	LEFT JOIN facturas AS f ON f.contratoId = c.contratoId
-	LEFT JOIN prefacturas AS pf ON pf.facturaId = f.facturaId
-	WHERE  
-	c.tipoContratoId = 8 
-	AND pf.contPlanificacionId IS NULL
-	#AND NOT c.ascContratoId IS NULL 
-	#AND c.contratoIntereses = 0
-	GROUP BY c.contratoId
-) AS tmp ON tmp.contratoId = c.contratoId
-WHERE 
-contPlanificacionId IS NULL 
-AND c.tipoContratoId = 8
-#and NOT c.ascContratoId is null
-#AND c.contratoIntereses = 0
-GROUP BY c.contratoId;
-
-
-UPDATE contratos AS c
-	INNER JOIN contrato_planificacion AS cp ON cp.contratoId = c.contratoId
-	INNER JOIN prefacturas AS pf ON pf.contratoId = c.contratoId
-	SET pf.contPlanificacionId = cp.contPlanificacionId
-	WHERE  
-	c.tipoContratoId = 8 
-	AND pf.contPlanificacionId IS NULL;
-
-
-#ACTULIZAMOS EL CAMPO importeFacturadoIva DE LA TABLA contrato_planificacion
-
-UPDATE contrato_planificacion AS cp
-INNER JOIN
-(
-	SELECT SUM(f.totalConIva) AS totalConIva, p.contPlanificacionId 
-	FROM prefacturas AS p
-	INNER JOIN facturas AS f ON f.facturaId = p.facturaId
-	WHERE  f.departamentoId = 8 AND NOT p.contPlanificacionId IS NULL
-	GROUP BY p.contPlanificacionId
-) AS tmp ON tmp.contPlanificacionId = cp.contPlanificacionId
-SET importeFacturadoIva = tmp.totalConIva;
-
 
 
