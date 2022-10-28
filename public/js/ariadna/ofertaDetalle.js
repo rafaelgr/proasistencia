@@ -2081,7 +2081,6 @@ var comprobarSiHayMantenedor = function () {
 var obtenerPorcentajeDelAgente = function (comercialId, clienteId, empresaId, tipoOfertaId, done) {
     var url = myconfig.apiUrl + "/api/comerciales/comision";
     url += "/" + comercialId;
-    url += "/" + clienteId;
     url += "/" + empresaId;
     url += "/" + tipoOfertaId;
     llamadaAjax('GET', url, null, function (err, data) {

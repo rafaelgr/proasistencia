@@ -3274,7 +3274,6 @@ var comprobarSiHayMantenedor = function () {
 var obtenerPorcentajeDelAgenteColaborador = function (comercialId, clienteId, empresaId, tipoContratoId, done) {
     var url = myconfig.apiUrl + "/api/comerciales/comision";
     url += "/" + comercialId;
-    url += "/" + clienteId;
     url += "/" + empresaId;
     url += "/" + tipoContratoId;
     llamadaAjax('GET', url, null, function (err, data) {
@@ -3411,16 +3410,6 @@ function initTablaPrefacturas(departamentoId) {
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0 );
-
-              
-            
-
-            ///////
-            if(vm.tipoContratoId() == 8) {
-                var c = api.data();
-                calculaImportesInformativosPrefacturas(c)
-            }
-           
           
              // Total over all pages
              total10 = api
@@ -3470,6 +3459,11 @@ function initTablaPrefacturas(departamentoId) {
 
             //////
 
+             //importes informaticos de las letras
+             if(vm.tipoContratoId() == 8) {
+                var c = api.data();
+                calculaImportesInformativosPrefacturas(c)
+            }
             
         },
         language: {

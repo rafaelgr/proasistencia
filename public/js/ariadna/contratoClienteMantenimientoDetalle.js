@@ -951,7 +951,7 @@ function cambioComercial(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sclienteId() + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (comision, status) {
@@ -973,7 +973,7 @@ function cambioAgente(data) {
     var comercialId = data.id;
     $.ajax({
         type: "GET",
-        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sclienteId() + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
+        url: "/api/comerciales/comision/" + comercialId + "/" + vm.sempresaId() + "/" + vm.stipoMantenimientoId(),
         dataType: "json",
         contentType: "application/json",
         success: function (comision, status) {
