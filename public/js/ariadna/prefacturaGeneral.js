@@ -137,7 +137,6 @@ function initTablaPrefacturas() {
             }
         }
     };
-    var buttonCommon2 = 
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         bSort: false,
         /* "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
