@@ -138,10 +138,10 @@ function initTablaPrefacturas() {
         }
     };
     tablaPrefacturas = $('#dt_prefactura').DataTable({
-        bSort: false,
-        /* "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>", */
+        bSort: true,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [5] },
+        ],
         dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -151,7 +151,7 @@ function initTablaPrefacturas() {
             $.extend( true, {}, buttonCommon, {
                 extend: 'excel'
             },{footer: true} ), 
-            $.extend( true, {}, buttonCommon, {
+            $.extend( true, {}, {
                 extend: 'pdf'
             },{
                 orientation: 'landscape',
@@ -294,6 +294,23 @@ function initTablaPrefacturas() {
             }
         }]
     });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
 
     // Apply the filter
     $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {

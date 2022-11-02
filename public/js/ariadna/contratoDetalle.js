@@ -3573,8 +3573,12 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 var bt1 = "";
                 if(!row.contratoPorcenId) {
-                    if(row.departamentoId != 8)
-                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    if(row.departamentoId != 8) {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    }
+                    else if(row.departamentoId == 8 && row.esLetra == 1 && !row.facturaId) {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    }
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
