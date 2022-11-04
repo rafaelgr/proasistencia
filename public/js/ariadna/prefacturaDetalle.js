@@ -954,7 +954,7 @@ function loadDataLinea(data) {
     loadTiposIva(data.tipoIvaId);
     loadUnidades(data.unidadId);
     //
-    desglosaPorcentajes();    
+    //desglosaPorcentajes();    
 }
 
 
@@ -1098,7 +1098,7 @@ var cambioPrecioCantidad = function () {
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    desglosaPorcentajes();
+    //desglosaPorcentajes();
 }
 
 
