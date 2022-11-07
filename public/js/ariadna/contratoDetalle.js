@@ -3576,7 +3576,7 @@ function initTablaPrefacturas(departamentoId) {
                     if(row.departamentoId != 8) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     }
-                    else if(row.departamentoId == 8 && row.esLetra == 1 && !row.facturaId) {
+                    else if(row.departamentoId == 8 && !row.facturaId) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     }
                 }
