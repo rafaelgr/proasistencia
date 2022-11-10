@@ -6722,10 +6722,14 @@ function loadTablaPlanificacionLineasObras(data) {
         $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
+  
+        if(vm.diferenciaPrefacturado()) {
+            a =  parseFloat(numeroDbf(vm.diferenciaPrefacturado()));
+        } else {
+            a = null;
+        }
     if(a) {
-        if(vm.diferenciaPrefacturado()) a =  numeroDbf(vm.diferenciaPrefacturado());
-    
-        if(a == 0 || a < 0 ) {
+        if(a >= -1 && vm.certificacionFinal()) {
             $('#chkContratoCerrado').prop('disabled', false);
         } else {
             $('#chkContratoCerrado').prop('disabled', true);
@@ -6733,7 +6737,8 @@ function loadTablaPlanificacionLineasObras(data) {
     } else {
         $('#chkContratoCerrado').prop('disabled', true);
     }
-}
+} 
+
 
 
 function nuevaLineaPlanificacionObras() {
