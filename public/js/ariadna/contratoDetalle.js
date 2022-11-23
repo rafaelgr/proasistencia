@@ -3672,6 +3672,14 @@ function calculaImportesInformativosPrefacturas(c) {
 
             vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
             vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
+        } else {
+            var a =  0
+            var na = 0
+            var totLetrasPlanificadas = vm.totLetrasPlanificadas();
+            var numLetrasPlanificadas = vm.numLetrasPlanificadas();
+
+            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
+            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
         }
         
        
@@ -3679,6 +3687,11 @@ function calculaImportesInformativosPrefacturas(c) {
         if(vm.totRecibidas()) {
             var b = numeroDbf(vm.totRecibidas());
             var nb = vm.numRecibidas();
+            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
+            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
+        } else {
+            var b = 0;
+            var nb = 0;
             vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
             vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
         }
@@ -5330,13 +5343,16 @@ var compruebaFechaRecepcion = function(datos, fecha) {
         var f = datos[i];
         if(f.fechaGestionCobros && fecha) {
             opcion = fecha > f.fechaGestionCobros;
-            
+            if(opcion) {
+                break;
+            }
         } else if(!f.fechaGestionCobros && !fecha) {
             opcion = false;
         } else if(!f.fechaGestionCobros && fecha) {
             opcion = false;
-        } else {
+        }  else {
             opcion = true;
+            break;
         }
     }
     return opcion;
