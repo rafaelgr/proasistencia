@@ -5261,7 +5261,8 @@ var prepararRecepcionGestion = function(opcion) {
 } 
 
 var aceptarGenerarRecepcionGestion = function() {
-    if(!datosOKRecepcionGestion()) return;
+    //if(!datosOKRecepcionGestion()) return;
+    var data = {};
     var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
     //recuperamos primero las fechas de recepción y gestión de cobros de las prefcaturas seleccionadas
     llamadaAjax("GET", url, null, function (err, datos) {
@@ -5271,9 +5272,16 @@ var aceptarGenerarRecepcionGestion = function() {
            return mensError("No se han seleccionado registros");
             
         }
-        var data = {
+        data = {
             recepcionGestion:{
-                fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+                fechaRecibida:  null
+            }
+        }
+        if(vm.fechaRecepcionGestion() != '') {
+            data = {
+                recepcionGestion:{
+                    fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+                }
             }
         }
        if(!_recepcionGestion) {
@@ -5307,11 +5315,9 @@ var compruebaFechaGestionCobros = function(datos, fecha) {
         var f = datos[i];
         if(f.fechaRecibida) {
             opcion = fecha < f.fechaRecibida;
-            if(opcion) break
             
         } else {
             opcion = true;
-            break;
         }
 
     }
@@ -5322,10 +5328,15 @@ var compruebaFechaRecepcion = function(datos, fecha) {
     var opcion = false;
     for(var i = 0; i < datos.length; i++) {
         var f = datos[i];
-        if(f.fechaGestionCobros) {
+        if(f.fechaGestionCobros && fecha) {
             opcion = fecha > f.fechaGestionCobros;
-            if(opcion) break
             
+        } else if(!f.fechaGestionCobros && !fecha) {
+            opcion = false;
+        } else if(!f.fechaGestionCobros && fecha) {
+            opcion = false;
+        } else {
+            opcion = true;
         }
     }
     return opcion;
@@ -6728,7 +6739,7 @@ function loadTablaPlanificacionLineasObras(data) {
         } else {
             a = null;
         }
-    if(a) {
+   /*  if(a) {
         if(a >= -1 && vm.certificacionFinal()) {
             $('#chkContratoCerrado').prop('disabled', false);
         } else {
@@ -6736,7 +6747,7 @@ function loadTablaPlanificacionLineasObras(data) {
         }
     } else {
         $('#chkContratoCerrado').prop('disabled', true);
-    }
+    } */
 } 
 
 
