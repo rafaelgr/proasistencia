@@ -673,13 +673,21 @@ function loadFormasPago() {
 
 function initTablaAsociarFacturas() {
     tablaCarro = $('#dt_asociarFacturas').dataTable({
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            //color para las facturas asociadas una vez
+            if(aData.num == 1) {
+                $(nRow).attr('style', 'background: #FFEF4B'); 
+            }
+            //contratos cerrados
+            if(aData.num > 1) {
+                $(nRow).attr('style', 'background: #D46A6A'); 
+            }
+        },
         autoWidth: true,
         paging: false,
         "bDestroy": true,
-        columnDefs: [{
-            "width": "10%",
-            "targets": 0
-        }],
+
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -752,6 +760,9 @@ function initTablaAsociarFacturas() {
             }
         }, {
             data: "formaPago"
+        },
+        {
+            data: "num"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
