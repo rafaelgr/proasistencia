@@ -2425,9 +2425,11 @@ function nuevaServiciada() {
         acumulado = roundToTwo(acumulado);
         if(vm.facproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+            imp.toFixed(2);
             tot = parseFloat(numeroDbf(vm.total()));
         } else {
             imp = acumulado + parseFloat(vm.importeServiciada());
+            imp.toFixed(2);
             tot = parseFloat(numeroDbf(vm.total()));
         }
     
