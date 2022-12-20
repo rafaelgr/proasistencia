@@ -2173,9 +2173,11 @@ function nuevaServiciada() {
         acumulado = roundToTwo(acumulado);
         if(vm.antproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+            imp.toFixed(2);
             
         } else {
             imp = acumulado + parseFloat(vm.importeServiciada());
+            imp.toFixed(2);
             if($('#chkCompleto').prop("checked")) {
                 tot = parseFloat(numeroDbf(vm.total()));
             } else {
@@ -2219,7 +2221,6 @@ function nuevaServiciada() {
         
     });
 }
-
 function datosOKServiciada() {
     if(vm.importeServiciada() == "") {
         vm.porcentaje(null);
