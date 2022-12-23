@@ -1,2 +1,2 @@
-ALTER TABLE `mensajes`   
-  ADD COLUMN `presupuestoAceptado` TINYINT(1) DEFAULT 0 NULL AFTER `proveedorUsuarioPushId`;
+ALTER TABLE `proasistencia`.`usuarios`   
+  ADD COLUMN `usuarioWeb` TINYINT(1) DEFAULT 0 NULL AFTER `puedeAbrir`;
