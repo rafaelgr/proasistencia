@@ -62,6 +62,8 @@ function initForm() {
     loadTiposIva();
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbTiposViaRp").select2(select2Spanish());
+    loadTiposViaRp();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
@@ -118,8 +120,6 @@ function initForm() {
     $("#txtCodigo").blur(function () {
         compruebaCodigoProveedor();
     });
-    $("#cmbTiposVia").select2(select2Spanish());
-    loadTiposVia();
 
     initTablaFacturas();
     initTablaUsuariosPush();
@@ -417,6 +417,21 @@ function admData() {
     self.loginPush = ko.observable();
     self.passwordPush = ko.observable();
     
+    //RECURSO PRVENTIVO
+    self.nombreRp = ko.observable();
+    self.dniRp = ko.observable();
+    self.direccionRp = ko.observable();
+    self.poblacionRp = ko.observable();
+    self.categoriaProfesional = ko.observable();
+    self.codPostalRp = ko.observable();
+    self.provinciaRp = ko.observable();
+    //
+    self.tipoViaRpId = ko.observable();
+    self.stipoViaRpId = ko.observable();
+    //
+    self.posiblesTiposViaRp = ko.observableArray([]);
+    self.elegidosTiposViaRp = ko.observableArray([]);
+    
   
 }
 
@@ -452,6 +467,14 @@ function loadData(data) {
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
     vm.activa(data.activa);
+    //recurso preventivo
+    vm.nombreRp(data.nombreRp);
+    vm.dniRp(data.dniRp);
+    vm.direccionRp(data.direccionRp);
+    vm.poblacionRp(data.poblacionRp);
+    vm.codPostalRp(data.codPostalRp);
+    vm.provinciaRp(data.provinciaRp);
+    vm.categoriaProfesional(data.categoriaProfesional);
   
     antNif = data.nif;
     // split iban
@@ -466,6 +489,7 @@ function loadData(data) {
     obtenInicioCuenta();
 
     loadTiposVia(data.tipoViaId);
+    loadTiposViaRp(data.tipoViaRpId);
     loadTiposIva(data.tipoIvaId)
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
@@ -650,8 +674,15 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "paisId": vm.spaisId(),
                 "emitirFacturas": vm.emitirFacturas(),
-                "empresaId": vm.sempresaId()
-
+                "empresaId": vm.sempresaId(),
+                "nombreRp": vm.nombreRp(),
+                "dniRp": vm.dniRp(),
+                "tipoViaRpId": vm.stipoViaRpId(),
+                "direccionRp": vm.direccionRp(),
+                "poblacionRp": vm.poblacionRp(),
+                "codPostalRp": vm.codPostalRp(),
+                "provinciaRp": vm.provinciaRp(),
+                "categoriaProfesional": vm.categoriaProfesional()
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()
@@ -721,6 +752,24 @@ function loadTiposVia(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposViaRp(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRp(tiposVia);
+            $("#cmbTiposViaRp").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
