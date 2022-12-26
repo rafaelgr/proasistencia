@@ -1,2 +1,2 @@
-ALTER TABLE `proasistencia`.`usuarios`   
+ALTER TABLE `usuarios`   
   ADD COLUMN `usuarioWeb` TINYINT(1) DEFAULT 0 NULL AFTER `puedeAbrir`;
