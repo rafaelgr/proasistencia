@@ -82,7 +82,7 @@ function initForm() {
         cambioTipoProveedor(e.added);
     });
 
-    $("#txtNif").on('change', function (e) {
+    /* $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
         if(!nif || nif == "") return;
 
@@ -101,6 +101,34 @@ function initForm() {
             } else {
                 mensError('El nif introducido no tiene un formato valido');
                 compruebaNifRepetido(nif);
+                //$('#txtNif').val('');
+            }
+        }
+    }); */
+
+    $(".esNif").on('change', function (e) {
+        var origin = e.currentTarget.id;
+        var nif = $('#'+origin).val();
+        
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            if(origin == "txtNif") vm.nif(nif);
+            if(origin == "txtDniRp") vm.dniRp(nif);
+            if(origin == "txtDniRepresentante") vm.dniRepresentante(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+                //si es el nif del proveedor comprobamos si está repetido
+                if(origin == "txtNif")   compruebaNifRepetido(nif);
+            } else {
+                mensError('El nif introducido no tiene un formato valido');
+                if(origin == "txtNif") compruebaNifRepetido(nif);
                 //$('#txtNif').val('');
             }
         }
@@ -431,6 +459,10 @@ function admData() {
     //
     self.posiblesTiposViaRp = ko.observableArray([]);
     self.elegidosTiposViaRp = ko.observableArray([]);
+
+    //REPRESENTANTE
+    self.nombreRepresentante = ko.observable();
+    self.dniRepresentante = ko.observable();
     
   
 }
@@ -475,6 +507,10 @@ function loadData(data) {
     vm.codPostalRp(data.codPostalRp);
     vm.provinciaRp(data.provinciaRp);
     vm.categoriaProfesional(data.categoriaProfesional);
+    //representante
+    vm.nombreRepresentante(data.nombreRepresentante);;
+    vm.dniRepresentante(data.dniRepresentante);
+
   
     antNif = data.nif;
     // split iban
@@ -535,6 +571,9 @@ function datosOK() {
             cmbTiposProveedor: {
                 required: true
             },
+            cmbDepartamentosTrabajo: {
+                required: true
+            },
             cmbTiposProfesional: {
                 required: true
             },
@@ -581,8 +620,11 @@ function datosOK() {
             cmbTiposProveedor: {
                 required: "Debe elegir un tipo de proveedor"
             },
+            cmbDepartamentosTrabajo: {
+                required: "Debe elegir al menos un departamento"
+            },
             cmbTiposProfesional: {
-                required: "Debe elegir un tipo de profesional"
+                required: "Debe elegir al menos un tipo de profesional"
             },
             txtFechaAlta: {
                 required: "Debe seleccionar una fecha"
@@ -682,7 +724,10 @@ function aceptar() {
                 "poblacionRp": vm.poblacionRp(),
                 "codPostalRp": vm.codPostalRp(),
                 "provinciaRp": vm.provinciaRp(),
-                "categoriaProfesional": vm.categoriaProfesional()
+                "categoriaProfesional": vm.categoriaProfesional(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante()
+
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()

@@ -87,9 +87,9 @@ function initForm() {
         cambioAscColaborador(e.added);
     });
 
-    $("#txtNif").on('blur', function () {
+   /*  $("#txtNif").on('blur', function () {
        vm.dniFirmante(vm.nif());
-    });
+    }); */
 
     $("#txtNombre").on('blur', function () {
         vm.firmante(vm.nombre());
@@ -141,7 +141,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtNif').val(nif);
+            vm.nif(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -149,7 +149,7 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-                //no hacemos nada
+                vm.dniFirmante(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
                 $('#txtNif').val('');
@@ -163,7 +163,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtDniFirmante').val(nif);
+            vm.dniFirmante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -171,7 +171,6 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-              
                 firmanteValido = true;
             } else {
                 mensError('El DNI del firmante habitual introducido no tiene un formato valido');
@@ -181,14 +180,40 @@ function initForm() {
         }
     });
 
+    $("#txtDniRp").on('change', function (e) {
+        var nif = $("#txtDniRp").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRp(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del recurso preventivo introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
+    
 
     $("#cmbTiposComerciales").on('change', function (e) {
         //SI EL TIPO COMERCIAL ELEGIDO ES DIFERENTE DE 
         //JEFE DE OBRAS OCUYLTAMOS LOS CAMPOS DE RECURSO PREVENTIVO
          //alert(JSON.stringify(e.added));
-         $('#esJObras').show();
          if (e.added)  {
-            if(e.added.id != 5) $('#esJObras').hide();
+            if(e.added.id != 5) {
+                $('#esJObras').hide();
+            } else {
+                $('#esJObras').show();
+            }
          }
     });
 
