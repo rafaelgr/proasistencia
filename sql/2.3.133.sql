@@ -13,6 +13,15 @@ ALTER TABLE `proveedores`
   ON UPDATE CASCADE ON DELETE CASCADE;
 
 
+ALTER TABLE `proveedores`   
+  ADD COLUMN `direccionRepresentante` VARCHAR(255) NULL AFTER `dniRepresentante`,
+  ADD COLUMN `poblacionRepresentante` VARCHAR(255) NULL AFTER `direccionRepresentante`,
+  ADD COLUMN `codPostalRepresentante` VARCHAR(255) NULL AFTER `poblacionRepresentante`,
+  ADD COLUMN `provinciaRepresentante` VARCHAR(255) NULL AFTER `codPostalRepresentante`,
+  ADD COLUMN `tipoViaRepresentanteId` INT(11) NULL AFTER `provinciaRepresentante`,
+  ADD CONSTRAINT `proveedores_tiposViaRepresentante` FOREIGN KEY (`tipoViaRepresentanteId`) REFERENCES `tipos_via`(`tipoViaId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 
 ALTER TABLE `comerciales`   
   ADD COLUMN `nombreRp` VARCHAR(255) NULL AFTER `sel`,
@@ -24,6 +33,18 @@ ALTER TABLE `comerciales`
   ADD COLUMN `provinciaRp` VARCHAR(255) NULL AFTER `codPostalRp`,
   ADD COLUMN `categoriaProfesional` VARCHAR(255) NULL AFTER `provinciaRp`,
   ADD CONSTRAINT `ref_comercial_viaRp` FOREIGN KEY (`tipoViaRpId`) REFERENCES `tipos_via`(`tipoViaId`);
+
+
+  ALTER TABLE `comerciales`   
+  ADD COLUMN `nombreRepresentante` VARCHAR(255) NULL AFTER `categoriaProfesional`,
+  ADD COLUMN `dniRepresentante` VARCHAR(255) NULL AFTER `nombreRepresentante`,
+  ADD COLUMN `direccionRepresentante` VARCHAR(255) NULL AFTER `dniRepresentante`,
+  ADD COLUMN `poblacionRepresentante` VARCHAR(255) NULL AFTER `direccionRepresentante`,
+  ADD COLUMN `codPostalRepresentante` VARCHAR(255) NULL AFTER `poblacionRepresentante`,
+  ADD COLUMN `provinciaRepresentante` VARCHAR(255) NULL AFTER `codPostalRepresentante`,
+  ADD COLUMN `tipoViaRepresentanteId` INT(11) NULL AFTER `provinciaRepresentante`,
+  ADD CONSTRAINT `ref_comercial_via2` FOREIGN KEY (`tipoViaRepresentanteId`) REFERENCES `tipos_via`(`tipoViaId`);
+
 
 
 ALTER TABLE `contrato_comercial`   

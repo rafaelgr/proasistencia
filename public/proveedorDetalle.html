@@ -821,7 +821,6 @@
                                                                                                             </label>
                                                                                                         </section>
                                                                                                     </div>
-                                                                                                    
                                                                                                         <div class="row">
                                                                                                             <section class="col col-md-3">
                                                                                                                 <label class="label">Tipo via</label>
@@ -870,7 +869,6 @@
                                                                                                     Representante
                                                                                                 </header>
                                                                                                 <fieldset>
-                                                                                                    
                                                                                                     <div class="row">
                                                                                                         <section class="col col-md-9">
                                                                                                             <label class="label">Nombre</label>
@@ -883,6 +881,45 @@
                                                                                                             <label class="input">
                                                                                                                 <input id="txtDniRepresentante" name="txtDniRepresentante" class="esNif" data-bind="value: dniRepresentante" />
                                                                                                             </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Tipo via</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbTiposViaRepresentante" name="cmbTiposViaRepresentante" data-bind="options: posiblesTiposViaRepresentante, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaRepresentanteId, valueAllowUnset: true, selectedOptions: elegidosTiposViaRepresentante, selected2:{}"></select>
+                                                                                                                <i></i>
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-9">
+                                                                                                            <label class="label">Dirección</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtDireccionRepresentante" name="txtDireccionRepresentante" data-bind="value: direccionRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-8">
+                                                                                                            <label class="label">Poblacion</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtPoblacionRepresentante" name="txtPoblacionRepresentante" data-bind="value: poblacionRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-4">
+                                                                                                            <label class="label">Cod.Postal</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtCodPostalRepresentante" name="txtCodPostalRepresentante" data-bind="value: codPostalRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-4">
+                                                                                                            <label class="label">Provincia</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtProvinciaRepresentante" name="txtProvinciaRepresentante" data-bind="value: provinciaRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-8">
                                                                                                         </section>
                                                                                                     </div>
                                                                                                 </fieldset>

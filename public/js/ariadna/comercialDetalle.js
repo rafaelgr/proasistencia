@@ -76,6 +76,8 @@ function initForm() {
     loadTiposVia();
     $("#cmbTiposViaRp").select2(select2Spanish());
     loadTiposViaRp();
+    $("#cmbTiposViaRepresentante").select2(select2Spanish());
+    loadTiposViaRepresentante();
     // select2 things
     $("#cmbTarifas").select2(select2Spanish());
     loadTarifas();
@@ -379,6 +381,19 @@ function admData() {
     //
     self.posiblesTiposViaRp = ko.observableArray([]);
     self.elegidosTiposViaRp = ko.observableArray([]);
+
+    //REPRESENTANTE
+    self.nombreRepresentante = ko.observable();
+    self.dniRepresentante = ko.observable();
+    self.direccionRepresentante = ko.observable();
+    self.poblacionRepresentante = ko.observable();
+    self.codPostalRepresentante = ko.observable();
+    self.provinciaRepresentante = ko.observable();
+    //
+    self.stipoViaRepresentanteId = ko.observable();
+    //
+    self.posiblesTiposViaRepresentante = ko.observableArray([]);
+    self.elegidosTiposViaRepresentante = ko.observableArray([]);
 }
 
 function loadData(data, desdeLoad) {
@@ -426,6 +441,17 @@ function loadData(data, desdeLoad) {
     vm.provinciaRp(data.provinciaRp);
     vm.categoriaProfesional(data.categoriaProfesional);
     loadTiposViaRp(data.tipoViaRpId);
+    loadTiposViaRepresentante(data.tipoViaRepresentanteId);
+
+    //representante
+    vm.nombreRepresentante(data.nombreRepresentante);;
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.nombreRepresentante(data.nombreRepresentante);
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.direccionRepresentante(data.direccionRepresentante);
+    vm.poblacionRepresentante(data.poblacionRepresentante);
+    vm.codPostalRepresentante(data.codPostalRepresentante);
+    vm.provinciaRepresentante(data.provinciaRepresentante);
 
     vm.iban(data.iban);
     loadMotivosBaja(data.motivoBajaId);    
@@ -573,7 +599,16 @@ function aceptar() {
                 "poblacionRp": vm.poblacionRp(),
                 "codPostalRp": vm.codPostalRp(),
                 "provinciaRp": vm.provinciaRp(),
-                "categoriaProfesional": vm.categoriaProfesional()
+                "categoriaProfesional": vm.categoriaProfesional(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "direccionRepresentante": vm.direccionRepresentante(),
+                "poblacionRepresentante": vm.poblacionRepresentante(),
+                "codPostalRepresentante": vm.codPostalRepresentante(),
+                "provinciaRepresentante": vm.provinciaRepresentante(),
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId()
             }
         };
         if (empId == 0) {
@@ -984,6 +1019,25 @@ function loadTiposViaRp(id) {
         }
     });
 }
+
+function loadTiposViaRepresentante(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRepresentante(tiposVia);
+            $("#cmbTiposViaRepresentante").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 function loadMotivosBaja(id) {
     $.ajax({

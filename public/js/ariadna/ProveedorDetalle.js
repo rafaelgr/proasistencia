@@ -64,6 +64,8 @@ function initForm() {
     loadTiposVia();
     $("#cmbTiposViaRp").select2(select2Spanish());
     loadTiposViaRp();
+    $("#cmbTiposViaRepresentante").select2(select2Spanish());
+    loadTiposViaRepresentante();
     $("#cmbFormasPago").select2(select2Spanish());
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
@@ -445,7 +447,7 @@ function admData() {
     self.loginPush = ko.observable();
     self.passwordPush = ko.observable();
     
-    //RECURSO PRVENTIVO
+    //RECURSO PREVNTIVO
     self.nombreRp = ko.observable();
     self.dniRp = ko.observable();
     self.direccionRp = ko.observable();
@@ -463,6 +465,15 @@ function admData() {
     //REPRESENTANTE
     self.nombreRepresentante = ko.observable();
     self.dniRepresentante = ko.observable();
+    self.direccionRepresentante = ko.observable();
+    self.poblacionRepresentante = ko.observable();
+    self.codPostalRepresentante = ko.observable();
+    self.provinciaRepresentante = ko.observable();
+    //
+    self.stipoViaRepresentanteId = ko.observable();
+    //
+    self.posiblesTiposViaRepresentante = ko.observableArray([]);
+    self.elegidosTiposViaRepresentante = ko.observableArray([]);
     
   
 }
@@ -510,6 +521,12 @@ function loadData(data) {
     //representante
     vm.nombreRepresentante(data.nombreRepresentante);;
     vm.dniRepresentante(data.dniRepresentante);
+    vm.nombreRepresentante(data.nombreRepresentante);
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.direccionRepresentante(data.direccionRepresentante);
+    vm.poblacionRepresentante(data.poblacionRepresentante);
+    vm.codPostalRepresentante(data.codPostalRepresentante);
+    vm.provinciaRepresentante(data.provinciaRepresentante);
 
   
     antNif = data.nif;
@@ -526,6 +543,7 @@ function loadData(data) {
 
     loadTiposVia(data.tipoViaId);
     loadTiposViaRp(data.tipoViaRpId);
+    loadTiposViaRepresentante(data.tipoViaRepresentanteId);
     loadTiposIva(data.tipoIvaId)
     loadFormasPago(data.formaPagoId);
     loadTiposProveedor(data.tipoProveedor);
@@ -726,8 +744,14 @@ function aceptar() {
                 "provinciaRp": vm.provinciaRp(),
                 "categoriaProfesional": vm.categoriaProfesional(),
                 "nombreRepresentante": vm.nombreRepresentante(),
-                "dniRepresentante": vm.dniRepresentante()
-
+                "dniRepresentante": vm.dniRepresentante(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "direccionRepresentante": vm.direccionRepresentante(),
+                "poblacionRepresentante": vm.poblacionRepresentante(),
+                "codPostalRepresentante": vm.codPostalRepresentante(),
+                "provinciaRepresentante": vm.provinciaRepresentante(),
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId()
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()
@@ -815,6 +839,24 @@ function loadTiposViaRp(id) {
             var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposViaRp(tiposVia);
             $("#cmbTiposViaRp").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposViaRepresentante(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRepresentante(tiposVia);
+            $("#cmbTiposViaRepresentante").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
