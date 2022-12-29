@@ -645,7 +645,7 @@
                                                                                                     <section class="col col-md-2">
                                                                                                         <label class="label">NIF</label>
                                                                                                         <label class="input">
-                                                                                                            <input id="txtNif" name="txtNif" data-bind="value: nif" />
+                                                                                                            <input id="txtNif" name="txtNif" class="esNif" data-bind="value: nif" />
                                                                                                         </label>
                                                                                                     </section>
                                                                                                     <section class="col col-md-7">
@@ -801,6 +801,127 @@
                                                                                                         </section>
                                                                                                     </div>
                                                                                                     <div class="row">
+                                                                                                </fieldset>
+                                                                                                <header>
+                                                                                                    Recurso preventivo
+                                                                                                </header>
+                                                                                                <fieldset>
+                                                                                                    
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-9">
+                                                                                                            <label class="label">Nombre</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtNombreRp" name="txtNombreRp" data-bind="value: nombreRp" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">DNI</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtDniRp" name="txtDniRp" class="esNif" data-bind="value: dniRp" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                        <div class="row">
+                                                                                                            <section class="col col-md-3">
+                                                                                                                <label class="label">Tipo via</label>
+                                                                                                                <label style="width:100%;">
+                                                                                                                    <select style="width:100%" id="cmbTiposViaRp" name="cmbTiposViaRp" data-bind="options: posiblesTiposViaRp, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaRpId, valueAllowUnset: true, selectedOptions: elegidosTiposViaRp, selected2:{}"></select>
+                                                                                                                    <i></i>
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                            <section class="col col-md-9">
+                                                                                                                <label class="label">Dirección</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtDireccionRp" name="txtDireccionRp" data-bind="value: direccionRp" />
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                        </div>
+                                                                                                        <div class="row">
+                                                                                                            <section class="col col-md-8">
+                                                                                                                <label class="label">Poblacion</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtPoblacionRp" name="txtPoblacionRp" data-bind="value: poblacionRp" />
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                            <section class="col col-md-4">
+                                                                                                                <label class="label">Cod.Postal</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtCodPostalRp" name="txtCodPostalRp" data-bind="value: codPostalRp" />
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                        </div>
+                                                                                                        <div class="row">
+                                                                                                            <section class="col col-md-4">
+                                                                                                                <label class="label">Provincia</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtProvinciaRp" name="txtProvinciaRp" data-bind="value: provinciaRp" />
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                            <section class="col col-md-8">
+                                                                                                                <label class="label">Categoría profesional</label>
+                                                                                                                <label class="input">
+                                                                                                                    <input id="txtCategoriaProfesional" name="txtCategoriaProfesional" data-bind="value: categoriaProfesional" />
+                                                                                                                </label>
+                                                                                                            </section>
+                                                                                                        </div>
+                                                                                                </fieldset>
+                                                                                                <header>
+                                                                                                    Representante
+                                                                                                </header>
+                                                                                                <fieldset>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-9">
+                                                                                                            <label class="label">Nombre</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtNombreRepresentante" name="txtNombreRepresentante" data-bind="value: nombreRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">DNI</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtDniRepresentante" name="txtDniRepresentante" class="esNif" data-bind="value: dniRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-3">
+                                                                                                            <label class="label">Tipo via</label>
+                                                                                                            <label style="width:100%;">
+                                                                                                                <select style="width:100%" id="cmbTiposViaRepresentante" name="cmbTiposViaRepresentante" data-bind="options: posiblesTiposViaRepresentante, optionsText: 'nombre', optionsValue: 'tipoViaId', value: stipoViaRepresentanteId, valueAllowUnset: true, selectedOptions: elegidosTiposViaRepresentante, selected2:{}"></select>
+                                                                                                                <i></i>
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-9">
+                                                                                                            <label class="label">Dirección</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtDireccionRepresentante" name="txtDireccionRepresentante" data-bind="value: direccionRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-8">
+                                                                                                            <label class="label">Poblacion</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtPoblacionRepresentante" name="txtPoblacionRepresentante" data-bind="value: poblacionRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-4">
+                                                                                                            <label class="label">Cod.Postal</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtCodPostalRepresentante" name="txtCodPostalRepresentante" data-bind="value: codPostalRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <section class="col col-md-4">
+                                                                                                            <label class="label">Provincia</label>
+                                                                                                            <label class="input">
+                                                                                                                <input id="txtProvinciaRepresentante" name="txtProvinciaRepresentante" data-bind="value: provinciaRepresentante" />
+                                                                                                            </label>
+                                                                                                        </section>
+                                                                                                        <section class="col col-md-8">
+                                                                                                        </section>
+                                                                                                    </div>
                                                                                                 </fieldset>
                                                                                             <header>
                                                                                                 Información bancaria.

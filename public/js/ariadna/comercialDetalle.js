@@ -74,6 +74,10 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbTiposViaRp").select2(select2Spanish());
+    loadTiposViaRp();
+    $("#cmbTiposViaRepresentante").select2(select2Spanish());
+    loadTiposViaRepresentante();
     // select2 things
     $("#cmbTarifas").select2(select2Spanish());
     loadTarifas();
@@ -85,9 +89,9 @@ function initForm() {
         cambioAscColaborador(e.added);
     });
 
-    $("#txtNif").on('blur', function () {
+   /*  $("#txtNif").on('blur', function () {
        vm.dniFirmante(vm.nif());
-    });
+    }); */
 
     $("#txtNombre").on('blur', function () {
         vm.firmante(vm.nombre());
@@ -139,7 +143,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtNif').val(nif);
+            vm.nif(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -147,7 +151,7 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-                //no hacemos nada
+                vm.dniFirmante(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
                 $('#txtNif').val('');
@@ -161,7 +165,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtDniFirmante').val(nif);
+            vm.dniFirmante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -169,7 +173,6 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-              
                 firmanteValido = true;
             } else {
                 mensError('El DNI del firmante habitual introducido no tiene un formato valido');
@@ -177,6 +180,65 @@ function initForm() {
                 //$('#txtDniFirmante').val('');
             }
         }
+    });
+
+    $("#txtDniRp").on('change', function (e) {
+        var nif = $("#txtDniRp").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRp(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del recurso preventivo introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
+    $("#txtDniRepresentante").on('change', function (e) {
+        var nif = $("#txtDniRepresentante").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRepresentante(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del representante introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
+    
+
+    $("#cmbTiposComerciales").on('change', function (e) {
+        //SI EL TIPO COMERCIAL ELEGIDO ES DIFERENTE DE 
+        //JEFE DE OBRAS OCUYLTAMOS LOS CAMPOS DE RECURSO PREVENTIVO
+         //alert(JSON.stringify(e.added));
+         if (e.added)  {
+            if(e.added.id != 5) {
+                $('#esJObras').hide();
+            } else {
+                $('#esJObras').show();
+            }
+         }
     });
 
     empId = gup('ComercialId');
@@ -326,6 +388,34 @@ function admData() {
      //
      self.posiblesProveedores = ko.observableArray([]);
      self.elegidosProveedores = ko.observableArray([]);
+
+     //RECURSO PRVENTIVO
+    self.nombreRp = ko.observable();
+    self.dniRp = ko.observable();
+    self.direccionRp = ko.observable();
+    self.poblacionRp = ko.observable();
+    self.categoriaProfesional = ko.observable();
+    self.codPostalRp = ko.observable();
+    self.provinciaRp = ko.observable();
+    //
+    self.tipoViaRpId = ko.observable();
+    self.stipoViaRpId = ko.observable();
+    //
+    self.posiblesTiposViaRp = ko.observableArray([]);
+    self.elegidosTiposViaRp = ko.observableArray([]);
+
+    //REPRESENTANTE
+    self.nombreRepresentante = ko.observable();
+    self.dniRepresentante = ko.observable();
+    self.direccionRepresentante = ko.observable();
+    self.poblacionRepresentante = ko.observable();
+    self.codPostalRepresentante = ko.observable();
+    self.provinciaRepresentante = ko.observable();
+    //
+    self.stipoViaRepresentanteId = ko.observable();
+    //
+    self.posiblesTiposViaRepresentante = ko.observableArray([]);
+    self.elegidosTiposViaRepresentante = ko.observableArray([]);
 }
 
 function loadData(data, desdeLoad) {
@@ -360,7 +450,30 @@ function loadData(data, desdeLoad) {
     vm.antiguoColaboradorNombre(data.colaborador);
 
     loadTiposComerciales(data.tipoComercialId);
+    //si el tipo comercial es diferente de jefe de obras ocultamos los campos de recurso preventivo
+    $('#esJObras').show();
+    if(data.tipoComercialId != 5) $('#esJObras').hide();
     loadAscComerciales(data.ascComercialId);
+    //recurso preventivo
+    vm.nombreRp(data.nombreRp);
+    vm.dniRp(data.dniRp);
+    vm.direccionRp(data.direccionRp);
+    vm.poblacionRp(data.poblacionRp);
+    vm.codPostalRp(data.codPostalRp);
+    vm.provinciaRp(data.provinciaRp);
+    vm.categoriaProfesional(data.categoriaProfesional);
+    loadTiposViaRp(data.tipoViaRpId);
+    loadTiposViaRepresentante(data.tipoViaRepresentanteId);
+
+    //representante
+    vm.nombreRepresentante(data.nombreRepresentante);;
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.nombreRepresentante(data.nombreRepresentante);
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.direccionRepresentante(data.direccionRepresentante);
+    vm.poblacionRepresentante(data.poblacionRepresentante);
+    vm.codPostalRepresentante(data.codPostalRepresentante);
+    vm.provinciaRepresentante(data.provinciaRepresentante);
 
     vm.iban(data.iban);
     loadMotivosBaja(data.motivoBajaId);    
@@ -501,6 +614,23 @@ function aceptar() {
                 "loginWeb": vm.loginWeb(),
                 "passWeb": vm.passWeb(),
                 "tarifaId": vm.starifaClienteId(),
+                "nombreRp": vm.nombreRp(),
+                "dniRp": vm.dniRp(),
+                "tipoViaRpId": vm.stipoViaRpId(),
+                "direccionRp": vm.direccionRp(),
+                "poblacionRp": vm.poblacionRp(),
+                "codPostalRp": vm.codPostalRp(),
+                "provinciaRp": vm.provinciaRp(),
+                "categoriaProfesional": vm.categoriaProfesional(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "direccionRepresentante": vm.direccionRepresentante(),
+                "poblacionRepresentante": vm.poblacionRepresentante(),
+                "codPostalRepresentante": vm.codPostalRepresentante(),
+                "provinciaRepresentante": vm.provinciaRepresentante(),
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId()
             }
         };
         if (empId == 0) {
@@ -893,6 +1023,43 @@ function loadTiposVia(id) {
                 }
     });
 }
+
+function loadTiposViaRp(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRp(tiposVia);
+            $("#cmbTiposViaRp").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposViaRepresentante(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRepresentante(tiposVia);
+            $("#cmbTiposViaRepresentante").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 function loadMotivosBaja(id) {
     $.ajax({
