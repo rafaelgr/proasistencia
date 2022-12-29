@@ -204,6 +204,28 @@ function initForm() {
         }
     });
 
+    $("#txtDniRepresentante").on('change', function (e) {
+        var nif = $("#txtDniRepresentante").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRepresentante(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del representante introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
     
 
     $("#cmbTiposComerciales").on('change', function (e) {
