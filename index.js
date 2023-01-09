@@ -130,10 +130,7 @@ app.use(bodyParser.json(
 ));
 
 // using cors for cross class
-app.use(cors({
-    origin: 'https://clientes-test.comercializa.net',
-    credentials: true
-  }))
+app.use(cors());
 
 // servidor html estático
 app.use(express.static(__dirname + "/public"));
@@ -150,7 +147,11 @@ router.use(function (req, res, next) {
     next();
 });
 
-
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 //función de tratamiento de errores
 app.use((error, req, res, next) => {
