@@ -147,11 +147,16 @@ router.use(function (req, res, next) {
     next();
 });
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+router.post('/', function (req, res) {
+    console.log("POST :" ,req.body);
+    response = res;
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Cache-Control", "no-cache");
+    var data = "";
+    req.on('data', function (buffer) {
+        data += buffer;
+    });
+});
 
 //función de tratamiento de errores
 app.use((error, req, res, next) => {
@@ -170,6 +175,7 @@ router.get('/', function (req, res) {
 });
 
 // -- registering routes
+app.use('/api/clientes', clientes_router);
 app.use('/bi', bi_router);
 app.use('/api', router);
 app.use('/api/informes', informes_router);
@@ -177,7 +183,6 @@ app.use('/api/usuarios', usuarios_router);
 app.use('/api/departamentos', departamentos_router);
 app.use('/api/version', version_router);
 app.use('/api/empresas', empresas_router);
-app.use('/api/clientes', clientes_router);
 app.use('/api/proveedores', proveedores_router);
 app.use('/api/comerciales', comerciales_router);
 app.use('/api/sqlany', sqlany_router);
