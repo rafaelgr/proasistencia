@@ -786,7 +786,7 @@ function aceptar() {
         if (empId == 0) {
             $.ajax({
                 type: "POST",
-                url: myconfig.apiUrl + "/api/clientes",
+                url: myconfig.apiUrl + "/api/clientes/nuevo",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
