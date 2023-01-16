@@ -570,9 +570,6 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-2">
-                                                    <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
-                                                </section>
-                                                <section class="col col-md-2">
                                                     <label class="label">Total Bases</label>
                                                     <label class="input">
                                                         <input id="txtTotal" name="txtTotal" type="text" data-bind="value: total" disabled/>
@@ -596,6 +593,12 @@
                                                         <input id="txtImporteRetencion" name="txtImporteRetencion" type="text" data-bind="value: importeRetencion" disabled/>
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Retención de garantía</label>
+                                                    <label class="input">
+                                                        <input id="txtRetenGarantias" name="txtRetenGarantias" type="text" data-bind="value: retenGarantias" disabled/>
+                                                    </label>
+                                                </section>
                                                
                                                 <section class="col col-md-2">
                                                     <label class="label">Total</label>
@@ -605,10 +608,13 @@
                                                 </section>
                                             </div>
                                             <div class="row">
+                                                <section class="col col-md-2">
+                                                    <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
+                                                </section>
                                                 <section class="col col-md-2" style="padding-top: 2%">
                                                         <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar"> No contabilizar
                                                 </section>
-                                                <section class="col col-md-4">
+                                                <section class="col col-md-3">
                                                     <label class="label">Concepto anticipo</label>
                                                     <label class="input">
                                                         <input id="txtConceptoAnticipo" name="txtConceptoAnticipo" type="text" data-bind="value: conceptoAnticipo" disabled/>

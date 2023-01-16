@@ -632,9 +632,11 @@ function admData() {
     self.totalConIva = ko.observable();
     //radio buttons
     self.firmaActa = ko.observable();
+    //
+    self.porRetenGarantias = ko.observable();
     
 
-    //-- Valores para la generación de prefacturs
+    //-- Valores para la generación de prefacturas
     self.posiblesPeriodosPagos = ko.observableArray([]);
     self.elegidosPeriodosPagos = ko.observableArray([]);
     self.speriodoPagoId = ko.observableArray([]);
@@ -797,6 +799,7 @@ function loadData(data) {
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
 
+    vm.porRetenGarantias(data.porRetenGarantias);
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
@@ -1087,7 +1090,8 @@ var generarContratoDb = function () {
             "contratoCerrado": vm.contratoCerrado(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
-            "liquidarBasePrefactura": vm.liquidarBase()
+            "liquidarBasePrefactura": vm.liquidarBase(),
+            "porRetenGarantias": vm.porRetenGarantias()
         }
     };
     return data;
@@ -3737,6 +3741,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', true);
             $('#txtCliente').prop('disabled', true);
             $('#txtAgente').prop('disabled', true);
+            $('#txtPorRetenGarantias').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
@@ -3744,6 +3749,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', false);
             $('#txtCliente').prop('disabled', false);
             $('#txtAgente').prop('disabled', false);
+            $('#txtPorRetenGarantias').prop('disabled', false);
         }
     } else {
         importePrefacturas = 0;
@@ -3755,6 +3761,7 @@ function loadTablaPrefacturas(data) {
         $('#txtReferencia').prop('disabled', false);
         $('#txtCliente').prop('disabled', false);
         $('#txtAgente').prop('disabled', false);
+        $('#txtPorRetenGarantias').prop('disabled', false);
     }
     dt.fnDraw();
     if(data) {

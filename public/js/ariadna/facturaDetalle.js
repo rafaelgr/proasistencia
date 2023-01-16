@@ -247,6 +247,7 @@ function admData() {
     self.restoCobrar = ko.observable();
     self.tipoProyectoId = ko.observable();
     self.contabilizada = ko.observable();
+    self.retenGarantias = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -409,6 +410,7 @@ function loadData(data, desdeLinea) {
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
+    vm.retenGarantias(data.retenGarantias)
 
 
     //
