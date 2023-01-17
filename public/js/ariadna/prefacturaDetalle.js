@@ -209,6 +209,7 @@ function admData() {
     self.total = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
+    self.restoCobrar = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -320,7 +321,8 @@ function loadData(data) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    vm.retenGarantias(data.retenGarantias)
+    vm.retenGarantias(data.retenGarantias);
+    vm.restoCobrar(data.restoCobrar);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);

@@ -523,7 +523,6 @@
                                     <form id="frmFactura" class="smart-form">
                                         <fieldset>
                                             <div class="row">
-                                                
                                                 <section class="col col-md-2">
                                                     <label class="label">Serie</label>
                                                     <label style="width:100%; height:50px;">
@@ -555,13 +554,10 @@
                                                         <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-2">
-                                                    <label class="checkbox">
-                                                        <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado">
-                                                        <i></i>Desactivar el cliente como mantenedor
-                                                    </label>
+                                                <section class="col col-md-2" style="padding-top: 2%">
+                                                        <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado"/> Desactivar el cliente como mantenedor
                                                 </section>
-                                                <section class="col col-md-1">
+                                                <section class="col col-md-2">
                                                     <label class="label">Coste</label>
                                                     <label class="input">
                                                         <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
@@ -608,7 +604,7 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-2">
+                                                <section class="col col-md-2" style="padding-top: 2%">
                                                     <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
                                                 </section>
                                                 <section class="col col-md-2" style="padding-top: 2%">
@@ -626,7 +622,7 @@
                                                         <input id="txtImporteAnticipo" name="txtImporteAnticipo" type="text" data-bind="value: importeAnticipo" disabled/>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Resto a pagar</label>
                                                     <label class="input">
                                                         <input id="txtRestoPagar" name="txtRestoPagar" type="text" data-bind="value: restoCobrar" disabled/>

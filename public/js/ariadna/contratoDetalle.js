@@ -5514,6 +5514,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var importePago = roundToTwo(importe / numPagos);
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
     var importeCoste = roundToTwo(coste / numPagos);
+    
+   
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5553,6 +5555,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             importe: importePago,
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
+            retenGarantias: 0,
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
@@ -5574,6 +5577,13 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             p.importeCliente = import21;
             p.importeCoste = import22;
         }
+        //calculamos la retención de garantia si existe
+        if(vm.porRetenGarantias()) {
+            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
+            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
+        } 
+        
+
         pagos.push(p);
     }
     if (pagos.length > 1) {
@@ -5581,6 +5591,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        if(vm.porRetenGarantias()) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * porRetenGarantias);
+        }
         /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
         pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
@@ -5811,6 +5824,12 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             contPlanificacionId: contPlanificacionId,
             formaPagoId: formaPagoId
         };
+
+        //calculamos la retención de garantia si existe
+        if(vm.porRetenGarantias()) {
+            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
+            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
+        } 
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();
