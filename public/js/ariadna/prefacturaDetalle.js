@@ -209,6 +209,7 @@ function admData() {
     self.total = ko.observable();
     self.totalCuota = ko.observable();
     self.totalConIva = ko.observable();
+    self.restoCobrar = ko.observable();
     //
     self.empresaId = ko.observable();
     self.sempresaId = ko.observable();
@@ -299,6 +300,8 @@ function admData() {
     self.importeRetencion = ko.observable();
     //
     self.mantenedorDesactivado = ko.observable();
+    //
+    self.retenGarantias = ko.observable();
 }
 
 function loadData(data) {
@@ -318,6 +321,8 @@ function loadData(data) {
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
+    vm.retenGarantias(data.retenGarantias);
+    vm.restoCobrar(data.restoCobrar);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -516,6 +521,7 @@ var generarPrefacturaDb = function () {
             "generada": vm.generada(),
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
+            "retenGarantias": vm.retenGarantias(),
             "importeRetencion": vm.importeRetencion(),
             "mantenedorDesactivado": vm.mantenedorDesactivado(),
             "departamentoId": vm.departamentoId(),

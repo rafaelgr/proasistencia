@@ -632,9 +632,11 @@ function admData() {
     self.totalConIva = ko.observable();
     //radio buttons
     self.firmaActa = ko.observable();
+    //
+    self.porRetenGarantias = ko.observable();
     
 
-    //-- Valores para la generación de prefacturs
+    //-- Valores para la generación de prefacturas
     self.posiblesPeriodosPagos = ko.observableArray([]);
     self.elegidosPeriodosPagos = ko.observableArray([]);
     self.speriodoPagoId = ko.observableArray([]);
@@ -797,6 +799,7 @@ function loadData(data) {
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
 
+    vm.porRetenGarantias(data.porRetenGarantias);
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
@@ -1087,7 +1090,8 @@ var generarContratoDb = function () {
             "contratoCerrado": vm.contratoCerrado(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
-            "liquidarBasePrefactura": vm.liquidarBase()
+            "liquidarBasePrefactura": vm.liquidarBase(),
+            "porRetenGarantias": vm.porRetenGarantias()
         }
     };
     return data;
@@ -3048,6 +3052,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: 0,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -3070,6 +3075,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCliente: import21,
             importeCoste: import22,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
@@ -3436,6 +3442,22 @@ function initTablaPrefacturas(departamentoId) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total13 = api
+              .column( 13 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total14 = api
+               .column( 14 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+
 
             // Update footer
             $( api.columns(8).footer() ).html(
@@ -3455,6 +3477,12 @@ function initTablaPrefacturas(departamentoId) {
             );
             $( api.columns(12).footer() ).html(
                 numeral(total12).format('0,0.00')
+            );
+            $( api.columns(13).footer() ).html(
+                numeral(total13).format('0,0.00')
+            );
+            $( api.columns(14).footer() ).html(
+                numeral(total14).format('0,0.00')
             );
 
             //////
@@ -3562,7 +3590,17 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
             }
-        },  {
+        }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -3602,7 +3640,9 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
     tablaPrefacturas.columns(13).visible(false);
+    tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
+    tablaPrefacturas.columns(17).visible(false);
     if(departamentoId != 8) {
         tablaPrefacturas.columns(6).visible(false);
         tablaPrefacturas.columns(7).visible(false);
@@ -3737,6 +3777,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', true);
             $('#txtCliente').prop('disabled', true);
             $('#txtAgente').prop('disabled', true);
+            $('#txtPorRetenGarantias').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
@@ -3744,6 +3785,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', false);
             $('#txtCliente').prop('disabled', false);
             $('#txtAgente').prop('disabled', false);
+            $('#txtPorRetenGarantias').prop('disabled', false);
         }
     } else {
         importePrefacturas = 0;
@@ -3755,6 +3797,7 @@ function loadTablaPrefacturas(data) {
         $('#txtReferencia').prop('disabled', false);
         $('#txtCliente').prop('disabled', false);
         $('#txtAgente').prop('disabled', false);
+        $('#txtPorRetenGarantias').prop('disabled', false);
     }
     dt.fnDraw();
     if(data) {
@@ -3941,6 +3984,23 @@ function initTablaFacturas() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total9 = api
+              .column( 9 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total10 = api
+               .column( 10 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+ 
+
            
 
 
@@ -3954,6 +4014,14 @@ function initTablaFacturas() {
 
             $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
+            );
+
+            $( api.columns(9).footer() ).html(
+                numeral(total9).format('0,0.00')
+            );
+
+            $( api.columns(10).footer() ).html(
+                numeral(total10).format('0,0.00')
             );
 
             //////
@@ -4019,6 +4087,16 @@ function initTablaFacturas() {
                 return  numeral(data).format('0,0.00')
             }
         }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -4047,7 +4125,10 @@ function initTablaFacturas() {
 
     // Hide some columns by default
     tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+   
+    tablaFacturas.columns(13).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
@@ -5507,6 +5588,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var importePago = roundToTwo(importe / numPagos);
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
     var importeCoste = roundToTwo(coste / numPagos);
+    
+   
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5546,6 +5629,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             importe: importePago,
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
+            retenGarantias: 0,
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
@@ -5567,6 +5651,13 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             p.importeCliente = import21;
             p.importeCoste = import22;
         }
+        //calculamos la retención de garantia si existe
+        if(vm.porRetenGarantias()) {
+            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
+            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
+        } 
+        
+
         pagos.push(p);
     }
     if (pagos.length > 1) {
@@ -5574,6 +5665,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        if(vm.porRetenGarantias()) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * porRetenGarantias);
+        }
         /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
         pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
@@ -5636,6 +5730,7 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
@@ -5725,6 +5820,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
+            retenGarantias: 0,
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
@@ -5794,6 +5890,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: 0,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -5804,6 +5901,12 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             contPlanificacionId: contPlanificacionId,
             formaPagoId: formaPagoId
         };
+
+        //calculamos la retención de garantia si existe
+        if(vm.porRetenGarantias()) {
+            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
+            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
+        } 
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();

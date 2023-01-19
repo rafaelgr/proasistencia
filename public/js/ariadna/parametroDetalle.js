@@ -85,6 +85,7 @@ function initForm() {
     });
     loadArtMan();
     loadArtManGas();
+    loadFormasPago();
 
     $.ajax({
         type: "GET",
@@ -100,6 +101,8 @@ function initForm() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+
+    $("#cmbFormasPago").select2(select2Spanish());
 }
 
 function admData() {
@@ -132,6 +135,14 @@ function admData() {
     self.restApi = ko.observable();
     self.gcm = ko.observable();
 
+    //garantias
+     //
+     self.formaPagoId = ko.observable();
+     self.sformaPagoId = ko.observable();
+     //
+     self.posiblesFormasPago = ko.observableArray([]);
+     self.elegidosFormasPago = ko.observableArray([]);
+
 }
 
 function loadData(data) {
@@ -153,6 +164,7 @@ function loadData(data) {
     loadArtManGas(data.articuloMantenimientoParaGastos);
 
     vm.cuentaretencion(data.cuentaretencion);
+    loadFormasPago(data.formaPagoGarantiasId);
 }
 
 function datosOK() {
@@ -192,6 +204,7 @@ function aceptar() {
                 "articuloMantenimiento": vm.sartManId(),
                 "margenMantenimiento": vm.margenMantenimiento(),
                 "articuloMantenimientoParaGastos": vm.sdefectId(),
+                "formaPagoGarantiasId": vm.sformaPagoId(),
                 "cuentaretencion": vm.cuentaretencion(),
                 "bucket":  vm.bucket(),
                 "bucket_region":  vm.bucketRegion(),
@@ -269,5 +282,14 @@ function loadArtManGas(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+function loadFormasPago(formaPagoId) {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
 }

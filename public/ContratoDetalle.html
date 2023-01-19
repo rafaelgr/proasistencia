@@ -548,7 +548,7 @@
                                                 <div class="row">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- WIDGET DE LA CABECERA -->
-                                                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>CABECERA</h2>
@@ -686,6 +686,12 @@
                                                                             </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-2">
+                                                                                    <label class="label">% Retención Garantias</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtPorRetenGarantias" name="txtPorRetenGarantias" data-bind="value: porRetenGarantias"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Fecha inicio </label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaInicio" name="txtFechaInicio" data-bind="value: fechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
@@ -703,19 +709,13 @@
                                                                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label" id="labObras">Fecha inicio fact.</label>
                                                                                     <label class="label" id="labNoObras">Fecha primera factura</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaPrimeraFactura" name="txtFechaPrimeraFactura" data-bind="value: fechaPrimeraFactura" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <!-- <section class="col col-md-3">
-                                                                                    <label class="label">Fecha final fact.</label>
-                                                                                    <label class="input">
-                                                                                        <input id="txtFechaUltimaFactura" name="txtFechaUltimaFactura" data-bind="value: fechaUltimaFactura" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                    </label>
-                                                                                </section> -->
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">Fecha original</label>
                                                                                     <label class="input">
@@ -1432,6 +1432,12 @@
                                                                                     Importe facturado
                                                                                 </th>
                                                                                 <th data-hide="phone">
+                                                                                    Retención garatías
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Resto a pagar
+                                                                                </th>
+                                                                                <th data-hide="phone">
                                                                                     Factura asociada
                                                                                 </th>
                                                                                 
@@ -1450,6 +1456,8 @@
                                                                         <tfoot>
                                                                             <tr>
                                                                                 <th colspan="8" style="text-align:right">Total:</th>
+                                                                                <th></th>
+                                                                                <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
@@ -1538,6 +1546,12 @@
                                                                                 <th class="hasinput">
                                                                                     <input type="text" class="form-control" placeholder="" />
                                                                                 </th>
+                                                                                <th class="hasinput">
+                                                                                    <input type="text" class="form-control" placeholder="" />
+                                                                                </th>
+                                                                                <th class="hasinput">
+                                                                                    <input type="text" class="form-control" placeholder="" />
+                                                                                </th>
                                                                                 <th style="width:10%">
                                                                                 </th>
                                                                             </tr>
@@ -1570,6 +1584,12 @@
                                                                                     Total
                                                                                 </th>
                                                                                 <th data-hide="phone">
+                                                                                    Retención garatías
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Resto a pagar
+                                                                                </th>
+                                                                                <th data-hide="phone">
                                                                                     Factura asociada
                                                                                 </th>
                                                                                 <th data-hide="phone">
@@ -1586,6 +1606,8 @@
                                                                         <tfoot>
                                                                             <tr>
                                                                                 <th colspan="6" style="text-align:right">Total:</th>
+                                                                                <th></th>
+                                                                                <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
