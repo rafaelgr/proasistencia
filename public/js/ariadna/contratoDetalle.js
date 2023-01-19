@@ -3984,6 +3984,23 @@ function initTablaFacturas() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total9 = api
+              .column( 9 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total10 = api
+               .column( 10 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+ 
+
            
 
 
@@ -3997,6 +4014,14 @@ function initTablaFacturas() {
 
             $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
+            );
+
+            $( api.columns(9).footer() ).html(
+                numeral(total9).format('0,0.00')
+            );
+
+            $( api.columns(10).footer() ).html(
+                numeral(total10).format('0,0.00')
             );
 
             //////
@@ -4062,6 +4087,16 @@ function initTablaFacturas() {
                 return  numeral(data).format('0,0.00')
             }
         }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -4090,7 +4125,10 @@ function initTablaFacturas() {
 
     // Hide some columns by default
     tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+   
+    tablaFacturas.columns(13).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
