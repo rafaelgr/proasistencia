@@ -410,7 +410,7 @@ function loadData(data, desdeLinea) {
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
-    vm.retenGarantias(data.retenGarantias)
+    vm.retenGarantias(numeral(data.retenGarantias).format('0,0.00'));
 
 
     //
@@ -1521,7 +1521,9 @@ function loadBasesFactura(facturaId) {
         vm.totalConIva(numeral(t2).format('0,0.00'));
     
         var acuenta = numeroDbf(vm.importeAnticipo());
-        var totSinAcuenta =  t2-acuenta
+        var retenGarantias = numeroDbf(vm.retenGarantias());
+        
+        var totSinAcuenta =  (t2-acuenta) -  retenGarantias;
         vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
@@ -1703,8 +1705,9 @@ var cambioPorcentajeRetencion = function () {
         var importeAnticipo = numeroDbf(vm.importeAnticipo()) * 1.0;
         vm.importeRetencion(roundToTwo((totalSinSuplido * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToTwo(totalSinSuplido + totalCuota - vm.importeRetencion());
-        totalConIva = roundToTwo(totalConIva + importeSuplido)
-        var restoCobrar = totalConIva-importeAnticipo;
+        totalConIva = roundToTwo(totalConIva + importeSuplido);
+        var retenGarantias = numeroDbf(vm.retenGarantias());
+        var restoCobrar = (totalConIva-importeAnticipo) - retenGarantias;
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
         vm.restoCobrar(numeral(restoCobrar).format('0,0.00'));
     }
@@ -1784,7 +1787,8 @@ var recalcularImportesGuardar = function(url2, returnUrl) {
             vm.totalConIva(numeral(t2).format('0,0.00'));
         
             var acuenta = numeroDbf(vm.importeAnticipo());
-            var totSinAcuenta =  t2-acuenta
+            var retenGarantias = numeroDbf(vm.retenGarantias());
+            var totSinAcuenta =  (t2-acuenta) - retenGarantias;
             vm.restoCobrar(numeral(totSinAcuenta).format('0,0.00'));
             if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
             
@@ -2039,7 +2043,8 @@ function vinculaAnticipo() {
                 });
                 if(impAnticipo > 0) {
                     var tot = numeroDbf(vm.totalConIva());
-                    var result = tot - impAnticipo
+                    var retenGarantias = numeroDbf(vm.retenGarantias());
+                    var result = (tot - impAnticipo) - retenGarantias;
                     vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
@@ -2168,14 +2173,16 @@ function desvinculaAnticipo(anticipoId) {
                 });
                 if(impAnticipo > 0) {
                     var tot = numeroDbf(vm.totalConIva());
-                    var result = tot - impAnticipo
+                    var retenGarantias = numeroDbf(vm.retenGarantias());
+                    var result = (tot - impAnticipo) - retenGarantias;
                     vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
                 }
             } else {//SI NO HAY ANTICIPOS ASOCIADOS
                 var tot = numeroDbf(vm.totalConIva());
-                    var result = tot - 0
+                var retenGarantias = numeroDbf(vm.retenGarantias());
+                    var result = tot - retenGarantias
                     vm.restoCobrar(numeral(result).format('0,0.00'));
                     vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo('');

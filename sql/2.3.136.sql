@@ -11,3 +11,7 @@ ALTER TABLE `contratos`
   ADD COLUMN `restoCobrar` DECIMAL(12,2) DEFAULT 0.00 NULL AFTER `totalAlCliente`;
 
   UPDATE prefacturas SET restoCobrar = totalConIva;
+
+  ALTER TABLE `parametros`   
+  ADD COLUMN `formaPagoGarantiasId` INT(11) NULL AFTER `articuloMantenimiento`;
+

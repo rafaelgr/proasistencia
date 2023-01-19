@@ -550,7 +550,7 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
+                                                <section class="col col-md-4">
                                                     <label class="label">Artículo mantenimiento</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbArtMan" name="cmbArtMan" data-bind="options: posiblesArtMan, optionsText: 'nombre', optionsValue: 'articuloId', value: sartManId, valueAllowUnset: true, selectedOptions: elegidosArtMan, selected2:{}"></select><i></i>
@@ -562,6 +562,14 @@
                                                         <input id="txtMargenManetenimiento" name="txtMargenMantenimiento" data-bind="value: margenMantenimiento" />
                                                     </label>
                                                 </section>
+                                                <div class="row">
+                                                    <section class="col col-md-4">
+                                                        <label class="label">F.pago garantías</label>
+                                                            <label style="width:100%;">
+                                                                <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
+                                                            </label>
+                                                    </section>
+                                                </div>
                                             </div>
                                         </fieldset>
                                         <header>
@@ -570,7 +578,7 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-8">
-                                                    <label class="label">Nombre del articulo por defecto</label>
+                                                    <label class="label">Nombre del artículo por defecto</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbDefect" name="cmbDefect" data-bind="options: posiblesDefect, optionsText: 'nombre', optionsValue: 'articuloId', value: sdefectId, valueAllowUnset: true, selectedOptions: elegidosDefect, selected2:{}"></select><i></i>
                                                     </label>

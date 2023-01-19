@@ -3052,6 +3052,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: 0,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -3074,6 +3075,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCliente: import21,
             importeCoste: import22,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
@@ -3440,6 +3442,22 @@ function initTablaPrefacturas(departamentoId) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total13 = api
+              .column( 13 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total14 = api
+               .column( 14 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+
 
             // Update footer
             $( api.columns(8).footer() ).html(
@@ -3459,6 +3477,12 @@ function initTablaPrefacturas(departamentoId) {
             );
             $( api.columns(12).footer() ).html(
                 numeral(total12).format('0,0.00')
+            );
+            $( api.columns(13).footer() ).html(
+                numeral(total13).format('0,0.00')
+            );
+            $( api.columns(14).footer() ).html(
+                numeral(total14).format('0,0.00')
             );
 
             //////
@@ -3566,7 +3590,17 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
             }
-        },  {
+        }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -3606,7 +3640,9 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
     tablaPrefacturas.columns(13).visible(false);
+    tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
+    tablaPrefacturas.columns(17).visible(false);
     if(departamentoId != 8) {
         tablaPrefacturas.columns(6).visible(false);
         tablaPrefacturas.columns(7).visible(false);
@@ -5656,6 +5692,7 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
@@ -5745,6 +5782,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
+            retenGarantias: 0,
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
@@ -5814,6 +5852,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: 0,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
