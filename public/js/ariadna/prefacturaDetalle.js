@@ -433,6 +433,7 @@ var aceptarPrefactura = function () {
         vm.totalConIva('0');
         vm.restoCobrar('0');
     }
+    
     var data = generarPrefacturaDb();
     // caso alta
     var verb = "POST";
@@ -1234,7 +1235,11 @@ function loadBasesPrefactura(prefacturaId) {
         vm.total(numeral(t1).format('0,0.00'));
         vm.totalCuota(numeral(t3).format('0,0.00'))
         vm.totalConIva(numeral(t2).format('0,0.00'));
-        vm.restoCobrar(numeral(t2).format('0,0.00'));
+
+        var retenGarantias = vm.retenGarantias();
+        var totSinGarantia =  t2 -  retenGarantias;
+        vm.restoCobrar(numeral(totSinGarantia).format('0,0.00'));
+
         if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
         loadTablaBases(data);
     });
@@ -1295,7 +1300,10 @@ var cambioPorcentajeRetencion = function () {
         vm.importeRetencion(roundToSix((total * vm.porcentajeRetencion()) / 100.0));
         var totalConIva = roundToSix(total + totalCuota - vm.importeRetencion());
         vm.totalConIva(numeral(totalConIva).format('0,0.00'));
-        vm.restoCobrar(numeral(totalConIva).format('0,0.00'));
+
+        var retenGarantias = vm.retenGarantias();
+        var totSinGarantia =  totalConIva -  retenGarantias;
+        vm.restoCobrar(numeral(totSinGarantia).format('0,0.00'));
     }
 }
 
@@ -1380,7 +1388,11 @@ var recalcularImportesGuardar = function(url2, returnUrl) {
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
-            vm.restoCobrar(numeral(t2).format('0,0.00'));
+
+            var retenGarantias = vm.retenGarantias();
+            var totSinGarantia =  t2 -  retenGarantias;
+            vm.restoCobrar(numeral(totSinGarantia).format('0,0.00'));
+            
             if (vm.porcentajeRetencion()) cambioPorcentajeRetencion();
             
              var data  = generarPrefacturaDb();
