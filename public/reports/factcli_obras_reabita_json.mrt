@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "a76cffc1265c4248b36397d31f1dd7b6",
+  "ReportGuid": "b7de3772bc6f4aa68040e8a5c0531360",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1629361696513+0200)/",
+  "ReportChanged": "/Date(1674201899990+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -491,6 +491,13 @@
             "NameInSource": "formaPagoId",
             "Alias": "formaPagoId",
             "Type": "System.Int32"
+          },
+          "56": {
+            "Name": "retenGarantias",
+            "Index": -1,
+            "NameInSource": "retenGarantias",
+            "Alias": "retenGarantias",
+            "Type": "System.Decimal"
           }
         },
         "NameInSource": "factura.root_cabecera"
@@ -1315,7 +1322,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "Guid": "3d4e3911d9e54a678250727b99baa1d6",
-          "ClientRectangle": "0,17.6,19,1.8",
+          "ClientRectangle": "0,17.6,19,2.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1326,7 +1333,7 @@
               "Ident": "StiText",
               "Name": "Text41",
               "Guid": "6dcf9f1b4cac48a89998d82d8dd38458",
-              "ClientRectangle": "16.2,1.4,2,0.4",
+              "ClientRectangle": "16.2,2,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1352,7 +1359,7 @@
               "Ident": "StiText",
               "Name": "Text42",
               "Guid": "b6850af870c241a48856bcb5cacdcefd",
-              "ClientRectangle": "12.8,1.4,3.4,0.4",
+              "ClientRectangle": "12.8,2,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1449,6 +1456,48 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text9",
+              "Guid": "32a110e913614355b0262d0d79da2b1a",
+              "ClientRectangle": "12.8,1.4,3.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Ret.de garantías"
+              },
+              "Font": ";11.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "7b6a1f4b52704564a2f1f4b765a979ec",
+              "ClientRectangle": "16.2,1.4,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.retenGarantias}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";11.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
             }
           }
         },
@@ -1456,7 +1505,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand2",
           "Guid": "e460c929a7454bbaaaf7d0ad834b85e2",
-          "ClientRectangle": "0,20.2,19,2.2",
+          "ClientRectangle": "0,20.8,19,2.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
