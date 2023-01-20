@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "39c0e7ef172a449aa364d33c3289cb20",
+  "ReportGuid": "a06ff0b8e5404f7e94b188d22c98630e",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1674131157470+0100)/",
+  "ReportChanged": "/Date(1674201180494+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -490,6 +490,13 @@
             "NameInSource": "formaPagoId",
             "Alias": "formaPagoId",
             "Type": "System.Int32"
+          },
+          "56": {
+            "Name": "retenGarantias",
+            "Index": -1,
+            "NameInSource": "retenGarantias",
+            "Alias": "retenGarantias",
+            "Type": "System.Decimal"
           }
         },
         "NameInSource": "factura.root_cabecera"
@@ -1224,7 +1231,7 @@
               "Ident": "StiText",
               "Name": "Text38",
               "Guid": "4c49cdd9ff1e3b05554215f7b13efb29",
-              "ClientRectangle": "1.2,0.8,2.2,0.8",
+              "ClientRectangle": "1.2,0.8,2.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1242,7 +1249,7 @@
               "Ident": "StiText",
               "Name": "Text70",
               "Guid": "c64a5aa5507242899b3cc9239b250e9b",
-              "ClientRectangle": "3.6,0.8,2.2,0.8",
+              "ClientRectangle": "4,0.8,2.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1261,7 +1268,7 @@
               "Ident": "StiText",
               "Name": "Text55",
               "Guid": "ec17feac82ef4c5182fd559ed7189a0d",
-              "ClientRectangle": "6,0.8,2.2,0.8",
+              "ClientRectangle": "6.8,0.8,2.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1279,7 +1286,7 @@
               "Ident": "StiText",
               "Name": "Text53",
               "Guid": "63407d8ab3304b5aa594b9484905b0ff",
-              "ClientRectangle": "8.4,0.8,2.2,0.8",
+              "ClientRectangle": "9.6,0.8,2.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1312,6 +1319,25 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "Guid": "8368e5f5bb134bac98e0378d91989c56",
+              "ClientRectangle": "12.4,0.8,2.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "RETENCIÓN\r\nDE GARANTÍAS"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";9.75;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
             }
           },
           "PrintAtBottom": true,
@@ -1332,7 +1358,7 @@
               "Ident": "StiText",
               "Name": "Text69",
               "Guid": "3df945e6a6854d6e848bbd978ddcb473",
-              "ClientRectangle": "1.2,0,2.2,0.6",
+              "ClientRectangle": "1.2,0,2.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1358,7 +1384,7 @@
               "Ident": "StiText",
               "Name": "Text73",
               "Guid": "67e4d076a7f345e5b54843c5266c0000",
-              "ClientRectangle": "6,0,2.2,0.6",
+              "ClientRectangle": "6.8,0,2.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1385,7 +1411,7 @@
               "Ident": "StiText",
               "Name": "Text12",
               "Guid": "26cd908b91484c2a8daf6847bb23bd81",
-              "ClientRectangle": "8.4,0,2.2,0.6",
+              "ClientRectangle": "9.6,0,2.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1438,7 +1464,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text11",
-              "ClientRectangle": "3.6,0,0.8,0.6",
+              "ClientRectangle": "4,0,0.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1456,7 +1482,7 @@
               "Ident": "StiText",
               "Name": "Text72",
               "Guid": "761437e1256745ada8b323f59a0ee45b",
-              "ClientRectangle": "4.4,0,1.4,0.6",
+              "ClientRectangle": "4.8,0,1.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1467,6 +1493,33 @@
               "VertAlignment": "Center",
               "Font": "Arial Narrow;9.75;;",
               "Border": "Top, Right, Bottom;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "Guid": "fae97efab9354f05a0092983d988ed8d",
+              "ClientRectangle": "12.4,0,2.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "ProcessingDuplicates": "Merge",
+              "Text": {
+                "Value": "{cabecera.retenGarantias}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial Narrow;9.75;;",
+              "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
