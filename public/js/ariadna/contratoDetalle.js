@@ -5960,7 +5960,11 @@ function initTablaContratosCobros() {
             }
         },
         rowCallback: function (nRow, aData) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
             if ( !aData.seguro )
             {
                 $('td', nRow).css('background-color', 'Orange');
