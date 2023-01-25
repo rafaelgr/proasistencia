@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "9027e4e641c1411091a07a5ea6ed1ed5",
+  "ReportGuid": "2b6a5f7c7b164a2bb9e3297a5c7082fc",
   "ReportName": "FacturaRedFincas",
   "ReportAlias": "FacturaRedFincas",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(3600000+0100)/",
-  "ReportChanged": "/Date(1674557087186+0100)/",
+  "ReportChanged": "/Date(1674638256701+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProyecta : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProyecta()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -648,7 +648,74 @@
             "Ident": "StiInteraction"
           },
           "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:"
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "Guid": "2028078930cb4be684f2ce55b9eace16",
+              "ClientRectangle": "0.4,0.6,7.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": " FACTURA"
+              },
+              "VertAlignment": "Center",
+              "Font": ";12;Bold;",
+              "Border": "Top, Bottom;66,66,207;;;;;;solid:0,0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:66,66,207",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "Guid": "daef91c66fad40caa3c00a931eb325a7",
+              "ClientRectangle": "10,0.6,8.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "VertAlignment": "Center",
+              "Font": ";14;Bold;",
+              "Border": "Top, Bottom;66,66,207;;;;;;solid:0,0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:66,66,207",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiShape",
+              "Name": "Shape1",
+              "ClientRectangle": "8.2,0.2,1.6,1.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Brush": "empty",
+              "BorderColor": "66,66,207",
+              "ShapeType": {
+                "Ident": "StiOvalShapeType"
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "05438c4a46cd41c2aa988a03c21f8c7e",
+              "ClientRectangle": "8.6,0.6,0.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Q"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";18;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:66,66,207",
+              "Type": "Expression"
+            }
+          }
         },
         "1": {
           "Ident": "StiPageFooterBand",
@@ -698,21 +765,6 @@
           }
         },
         "2": {
-          "Ident": "StiImage",
-          "Name": "Image1",
-          "Guid": "d28b88a72f6d7eb7bb2d6d88b75e75d3",
-          "ClientRectangle": "-0.2,0.6,19.2,1.8",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Stretch": true,
-          "ImageURL": {
-            "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_iquebana.png"
-          }
-        },
-        "3": {
           "Ident": "StiDataBand",
           "Name": "Datacabecera",
           "ClientRectangle": "0,3,19,6.6",
@@ -1035,7 +1087,7 @@
             "1": "fecha"
           }
         },
-        "4": {
+        "3": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
           "ClientRectangle": "0,10.4,19,0.8",
@@ -1065,7 +1117,7 @@
           },
           "PrintIfEmpty": true
         },
-        "5": {
+        "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
           "ClientRectangle": "0,12,19,1",
@@ -1175,7 +1227,7 @@
             "1": "linea"
           }
         },
-        "6": {
+        "5": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand2",
           "ClientRectangle": "0,13.8,19,0.8",
@@ -1231,7 +1283,7 @@
           },
           "PrintIfEmpty": true
         },
-        "7": {
+        "6": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
           "ClientRectangle": "0,15.4,19,0",
@@ -1242,7 +1294,7 @@
           "Brush": "solid:",
           "PrintIfEmpty": true
         },
-        "8": {
+        "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
           "ClientRectangle": "0,16.2,19,0.4",
@@ -1323,7 +1375,7 @@
           "DataRelationName": "cabecera_bases",
           "MasterComponent": "Datacabecera"
         },
-        "9": {
+        "8": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "ClientRectangle": "0,17.4,19,6.8",
