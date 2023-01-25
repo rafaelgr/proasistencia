@@ -1524,7 +1524,11 @@ function initTablaContratosLineas() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -3156,7 +3160,11 @@ function initTablaGenerarPrefacturasPlanificacion() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -3894,7 +3902,11 @@ function initTablaFacturas() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -4200,7 +4212,11 @@ function initTablaFacproves() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -4511,7 +4527,11 @@ function initTablaAntproves() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -4775,7 +4795,11 @@ function initTablaAntcols() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -5033,7 +5057,11 @@ function initTablaFactcol() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
@@ -6087,7 +6115,11 @@ function initTablaConceptosLineas() {
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            try{
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            }catch(e) {
+                console.log(e);
+            }
         },
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
