@@ -799,7 +799,7 @@ function loadData(data) {
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
 
-    vm.porRetenGarantias(data.porRetenGarantias);
+   
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
@@ -1090,8 +1090,7 @@ var generarContratoDb = function () {
             "contratoCerrado": vm.contratoCerrado(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
-            "liquidarBasePrefactura": vm.liquidarBase(),
-            "porRetenGarantias": vm.porRetenGarantias()
+            "liquidarBasePrefactura": vm.liquidarBase()
         }
     };
     return data;
@@ -1864,18 +1863,6 @@ var recargaLineasBases = function () {
 function initTablaBases() {
     tablaCarro = $('#dt_bases').dataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2411,18 +2398,6 @@ function datosOKComisionistas() {
 function initTablaComisionistas() {
     tablaCarro = $('#dt_comisiones').dataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisiones'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2787,7 +2762,8 @@ var verPrefacturasAGenerarPlanificacion = function () {
     }
     var divisor = importe / vm.importeCliente();
     var coste = vm.coste() * divisor;
-    var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    var porRetenGarantias = RegPlanificacion[0].porRetenGarantias;
+    var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
     
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturasPlanificacion(prefacturas);
@@ -3105,18 +3081,7 @@ function initTablaGenerarPrefacturas() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
         bSort: false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3303,6 +3268,38 @@ var reglasDeValidacionAdicionales = function () {
 
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas(departamentoId) {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14 ) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 7) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         responsive: true,
         paging: false,
@@ -3323,74 +3320,34 @@ function initTablaPrefacturas(departamentoId) {
             }
             
         },
+        
        
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+       
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Prefacturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, {
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         autoWidth: false,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -3777,7 +3734,6 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', true);
             $('#txtCliente').prop('disabled', true);
             $('#txtAgente').prop('disabled', true);
-            $('#txtPorRetenGarantias').prop('disabled', true);
         } else {
             $('#cmbEmpresas').prop('disabled', false);
             $('#cmbTiposContrato').prop('disabled', false);
@@ -3785,7 +3741,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', false);
             $('#txtCliente').prop('disabled', false);
             $('#txtAgente').prop('disabled', false);
-            $('#txtPorRetenGarantias').prop('disabled', false);
+           
         }
     } else {
         importePrefacturas = 0;
@@ -3797,7 +3753,6 @@ function loadTablaPrefacturas(data) {
         $('#txtReferencia').prop('disabled', false);
         $('#txtCliente').prop('disabled', false);
         $('#txtAgente').prop('disabled', false);
-        $('#txtPorRetenGarantias').prop('disabled', false);
     }
     dt.fnDraw();
     if(data) {
@@ -5570,7 +5525,7 @@ function deletePrefactura(id) {
         }
     });
 }
-function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
+function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, porRetenGarantias, numPagos, empresaId, clienteId, empresa, cliente) {
     var divisor = obtenerDivisor();
 
 
@@ -5588,6 +5543,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var importePago = roundToTwo(importe / numPagos);
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
     var importeCoste = roundToTwo(coste / numPagos);
+    porRetenGarantias = parseFloat(porRetenGarantias);
     
    
 
@@ -5652,9 +5608,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             p.importeCoste = import22;
         }
         //calculamos la retención de garantia si existe
-        if(vm.porRetenGarantias()) {
-            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
-            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
+        if(porRetenGarantias) {
+            var por = roundToTwo(porRetenGarantias / 100)
+            p.retenGarantias = roundToTwo(p.importe * por);
         } 
         
 
@@ -5665,8 +5621,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
-        if(vm.porRetenGarantias()) {
-            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * porRetenGarantias);
+        if(porRetenGarantias) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * por);
         }
         /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
@@ -5857,6 +5813,8 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
     var fecha = new Date(spanishDbDate(data[0].fecha));
     var pagos = [];
     var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
     var copiadata = data.slice();
   
     for (var i = 0; i < nPagos; i++) {
@@ -5878,6 +5836,11 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
         var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
         var cabOtrosConceptos = '\nOTROS CONCEPTOS';
         var otrosConceptos = ''
+         //calculamos la retención de garantia si existe
+         if(copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        } 
         copiadata.splice(i, 1);
         for( var k  = 0; k < copiadata.length; k++ ) {
             otrosConceptos += "\n"+copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
@@ -5890,7 +5853,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
-            retenGarantias: 0,
+            retenGarantias: retenGarantias,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -5902,11 +5865,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             formaPagoId: formaPagoId
         };
 
-        //calculamos la retención de garantia si existe
-        if(vm.porRetenGarantias()) {
-            var porRetenGarantias = roundToTwo(vm.porRetenGarantias() / 100)
-            p.retenGarantias = roundToTwo(p.importe * porRetenGarantias);
-        } 
+       
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();
@@ -6493,8 +6452,9 @@ function datosOKRecepcionGestion() {
 //FUNCIONES PLANIFICACION OBRAS
 
 function initTablaPlanificacionLineasObras() {
-    tablaCarro = $('#dt_lineasPlanificacionObras').DataTable({
+    tablaLineasPlanificacion = $('#dt_lineasPlanificacionObras').DataTable({
         autoWidth: true,
+        paging: false,
         "order": [[ 0, "asc" ]],
         "columnDefs": [
             {
@@ -6503,6 +6463,11 @@ function initTablaPlanificacionLineasObras() {
                 "searchable": false
             }
         ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -6657,22 +6622,6 @@ function initTablaPlanificacionLineasObras() {
              );
             
         },
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasPlanificacionObras'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-            var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
-            
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -6765,6 +6714,9 @@ function initTablaPlanificacionLineasObras() {
             }
             
         },{
+            data: "porRetenGarantias",
+            
+        },{
             data: "formaPagoNombre",
             
         }, {
@@ -6790,6 +6742,7 @@ function initTablaPlanificacionLineasObras() {
             }
         }]
     });
+    tablaLineasPlanificacion.columns(11).visible(false);
 }
 
 function calculaImportesInformativosPlanificacion(c) {
@@ -6881,6 +6834,7 @@ function limpiaDataLineaPlanificacionObras() {
     vm.porcentajeCobro(0);
     vm.fechaPlanificacionObras(vm.fechaInicio());
     vm.importeCalculado(0);
+    vm.porRetenGarantias(0);
     loadFormasPagoLinea(vm.formaPagoId())
 
 }
@@ -6898,7 +6852,8 @@ function aceptarLineaPlanificacionObras() {
             porcentaje: vm.porcentajePlanificacion(),
             fecha: spanishDbDate(vm.fechaPlanificacionObras()),
             importe: vm.importeCalculadoPlanificacion(),
-            formaPagoId: vm.sformaPagoIdLinea(),
+            porRetenGarantias: vm.porRetenGarantias(),
+            formaPagoId: vm.sformaPagoIdLinea()
         }
     }
                 var verbo = "POST";
@@ -6972,6 +6927,7 @@ function loadDataLineaPlanificacionObras(data) {
     vm.importeCalculadoPlanificacion(data.importe);
     vm.importeFacturado(data.importeFacturado);
     vm.importeCobrado(data.importeCobrado);
+    vm.porRetenGarantias(data.porRetenGarantias);
     loadFormasPagoLinea(data.formaPagoId);
     
 }
@@ -7053,6 +7009,7 @@ function limpiarModalLineasPlanificacion() {
     vm.porcentajePlanificacion(null);
     vm.fechaPlanificacionObras(null);
     vm.importeCalculadoPlanificacion(null);
+    vm.porRetenGarantias(null);
     loadFormasPagoLinea(null);
 }
 
@@ -7131,18 +7088,7 @@ function initTablaAscContratos() {
     tablaCarro = $('#dt_AscContratos').dataTable({
         autoWidth: true,
         "paging": false,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_AscContratos'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
