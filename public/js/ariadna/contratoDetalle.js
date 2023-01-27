@@ -2,11 +2,6 @@
 contratoDetalle.js
 Funciones js par la página ContratoDetalle.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var contratoId = 0;
 var lineaEnEdicion = false;
 
@@ -44,13 +39,6 @@ var RegPlanificacion = null;
 var tablaPrefacturas;
 var a = null;
 var _recepcionGestion
-//var numAscContratos = 0;
-
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
 
 datePickerSpanish(); // see comun.js
 
@@ -1517,21 +1505,8 @@ function datosOKLineas() {
 function initTablaContratosLineas() {
     tablaContratosLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
+        responsive: true,
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({
                 page: 'current'
@@ -1867,6 +1842,7 @@ var recargaLineasBases = function () {
 function initTablaBases() {
     tablaCarro = $('#dt_bases').dataTable({
         autoWidth: true,
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2402,6 +2378,7 @@ function datosOKComisionistas() {
 function initTablaComisionistas() {
     tablaCarro = $('#dt_comisiones').dataTable({
         autoWidth: true,
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3085,7 +3062,7 @@ function initTablaGenerarPrefacturas() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
         bSort: false,
         autoWidth: true,
-       
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3153,22 +3130,7 @@ function initTablaGenerarPrefacturasPlanificacion() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas2').dataTable({
         bSort: false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas2'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3287,7 +3249,11 @@ function initTablaPrefacturas(departamentoId) {
                         console.log(dato);
                         return dato;
                     } else {
-                        return data;
+                        if(column === 0 || column === 18) {
+                            return "";
+                        } else {
+                            return data;
+                        }
                     }
                 },
                 footer: function ( data, row, column, node ) {
@@ -3306,11 +3272,38 @@ function initTablaPrefacturas(departamentoId) {
                     }
                 },
             }
-        }
+        },
+        
     };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 18) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                        return data;
+                    } else {
+                       if(row === 7) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+
+    }
     tablaPrefacturas = $('#dt_prefactura').DataTable({
-        responsive: true,
         paging: false,
+        responsive: true,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //registro facturado
@@ -3335,7 +3328,7 @@ function initTablaPrefacturas(departamentoId) {
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
@@ -3344,7 +3337,7 @@ function initTablaPrefacturas(departamentoId) {
             $.extend( true, {}, buttonCommon, {
                 extend: 'excel'
             },{footer: true} ), 
-            $.extend( true, {}, {
+            $.extend( true, {}, buttonCommon2, {
                 extend: 'pdf'
             },{
                 orientation: 'landscape',
@@ -3608,10 +3601,10 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
     tablaPrefacturas.columns(17).visible(false);
-    if(departamentoId != 8) {
+   /*  if(departamentoId != 8) {
         tablaPrefacturas.columns(6).visible(false);
         tablaPrefacturas.columns(7).visible(false);
-    }
+    } */
     
 }
 
@@ -3884,33 +3877,94 @@ function updateAllPreFacturas(opcion) {
 
 //---- Solapa facturas
 function initTablaFacturas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8 || column === 9 || column === 10) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 14) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 14) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                        return data;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4162,65 +4216,96 @@ printFactura = function(id){
 
 //---- Solapa facturas de gastos
 function initTablaFacproves() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 10) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 10) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8) {
+                        return data;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacproves = $('#dt_facprove').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+        
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facprove'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4477,65 +4562,95 @@ function buscarFacproves() {
 
 //---- Solapa anticipos de gastos
 function initTablaAntproves() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 8) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaAntproves = $('#dt_antprove').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+       
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antprove'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4745,65 +4860,95 @@ function buscarAntprocves() {
 //---- Solapa anticipos de colaboradores
 
 function initTablaAntcols() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 8) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaAntproves = $('#dt_antcol').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antprove'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -5007,65 +5152,94 @@ function buscarAntCols() {
 
 //---- Solapa facturas de colaboradores
 function initTablaFactcol() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6 || column === 7) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 9) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6 || row === 7) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 9) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6 || row === 7) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacproves = $('#dt_factcol').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factcol'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -5951,27 +6125,15 @@ var calcularNumPagosPlanificacion = function () {
 function initTablaContratosCobros() {
     tablaCarro = $('#dt_contratosCobros').dataTable({
         sort: false,
+        responsive: true,
         "paging": false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contratosCobros'), breakpointDefinition);
-            }
-        },
         rowCallback: function (nRow, aData) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
+           
             if ( !aData.seguro )
             {
                 $('td', nRow).css('background-color', 'Orange');
             }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
         },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -6104,6 +6266,7 @@ function loadContratosCobros(id) {
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
+        responsive: true,
         "order": [[ 0, "asc" ]],
         "columnDefs": [
             {
@@ -6112,21 +6275,7 @@ function initTablaConceptosLineas() {
                 "searchable": false
             }
         ],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            try{
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            }catch(e) {
-                console.log(e);
-            }
-        },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -6491,6 +6640,7 @@ function initTablaPlanificacionLineasObras() {
     tablaLineasPlanificacion = $('#dt_lineasPlanificacionObras').DataTable({
         autoWidth: true,
         paging: false,
+        responsive: true,
         "order": [[ 0, "asc" ]],
         "columnDefs": [
             {
@@ -7124,7 +7274,7 @@ function initTablaAscContratos() {
     tablaCarro = $('#dt_AscContratos').dataTable({
         autoWidth: true,
         "paging": false,
-       
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",

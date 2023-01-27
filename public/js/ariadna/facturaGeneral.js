@@ -3,25 +3,12 @@ facturaGeneral.js
 Funciones js par la página FacturaGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var dataFacturas;
 var facturaId;
 var usuario;
 var filtros = {};
 var cargaFacturas = false;
 var antDepartamentoId;
-
-
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
-
 
 function initForm() {
     comprobarLogin();
@@ -192,7 +179,12 @@ function initTablaFacturas() {
                         console.log(dato);
                         return dato;
                     } else {
-                        return data;
+                        if(column === 0 || column ===12) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+    
                     }
                 }
             }
@@ -200,6 +192,7 @@ function initTablaFacturas() {
     };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
+        responsive: true,
         "stateSave": true,
         "stateLoaded": function (settings, state) {
             state.columns.forEach(function (column, index) {
@@ -209,12 +202,10 @@ function initTablaFacturas() {
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [5] },
         ],
-        /* "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>", */
-        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        
         buttons: [
             'copy', 
             'csv', 
@@ -235,18 +226,6 @@ function initTablaFacturas() {
         },
        
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
