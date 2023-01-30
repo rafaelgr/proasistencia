@@ -889,7 +889,7 @@ var generarFacturaDb = function () {
             "totalAlCliente": vm.importeAlCliente(),
             "periodo": vm.periodo(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
-            "importeRetencion": vm.importeRetencion(),
+            "importeRetencion": numeroDbf(vm.importeRetencion()),
             "nombreFacprovePdf": vm.nombreFacprovePdf(),
             "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar(),
@@ -1809,6 +1809,7 @@ function loadBasesFacprove(facproveId) {
         var t1 = 0; // total sin iva
         var t2 = 0; // total con iva
         var t3 = 0; // tital cuotas
+        var t4 = 0 //importe retencion
         for (var i = 0; i < data.length; i++) {
             t1 += data[i].base;
             t3 += data[i].cuota;
@@ -1823,10 +1824,12 @@ function loadBasesFacprove(facproveId) {
             if (err) return;
             for(var j = 0; j < dataBis.length; j++) {
                 t2 = t2 - dataBis[j].importeRetencion;
+                t4 = t4 + dataBis[j].importeRetencion
             }
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'))
             vm.totalConIva(numeral(t2).format('0,0.00'));
+            vm.importeRetencion(numeral(t4).format('0,0.00'))
             recalculaRestoPagar()
             loadTablaBases(data);
         });
