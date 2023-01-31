@@ -372,7 +372,7 @@ function initForm() {
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
-        vm.importeRetencion(0);
+        //vm.importeRetencion(0);
         vm.sempresaId(EmpresaId);
         vm.scontratoId(ContratoId);
         vm.fechaRecepcion(spanishDate(new Date()));//fecha de recepcion ofertada
@@ -781,6 +781,7 @@ var aceptarFactura = function () {
         vm.totalCuota('0');
         vm.totalConIva('0');
         vm.restoPagar('0');
+        vm.importeRetencion('0');
     }
 
     var data = generarFacturaDb();
