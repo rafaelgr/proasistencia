@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2021.3.6.0",
   "ReportGuid": "2b6a5f7c7b164a2bb9e3297a5c7082fc",
-  "ReportName": "FacturaRedFincas",
-  "ReportAlias": "FacturaRedFincas",
+  "ReportName": "FacturaIquebana",
+  "ReportAlias": "FacturaIquebana",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(3600000+0100)/",
   "ReportChanged": "/Date(1674638256701+0100)/",

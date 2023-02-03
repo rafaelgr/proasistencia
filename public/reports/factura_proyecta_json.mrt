@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2021.3.6.0",
   "ReportGuid": "48932c1312844ac88129b3c8589035ef",
-  "ReportName": "FacturaGrupo",
-  "ReportAlias": "FacturaGrupo",
+  "ReportName": "FacturaProyecta",
+  "ReportAlias": "FacturaProyecta",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
   "ReportChanged": "/Date(1627298959796+0200)/",
