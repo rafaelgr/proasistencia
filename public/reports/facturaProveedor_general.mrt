@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2017.1.10.0",
   "ReportGuid": "2e50a88610f146e2990b472a020e96e6",
-  "ReportName": "factura_fondogar",
-  "ReportAlias": "factura_fondogar",
+  "ReportName": "facturaProveedor",
+  "ReportAlias": "facturaProveedor",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
   "ReportChanged": "/Date(1516273149451+0100)/",

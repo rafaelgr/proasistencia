@@ -997,13 +997,13 @@ ALTA</Text>
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionAgente</ReportAlias>
+  <ReportAlias>LiquidacionColaborador</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
   <ReportChanged>5/26/2022 10:02:28 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_colaborador.mrt</ReportFile>
   <ReportGuid>2b22cdcba85c4a5aa4430d13d7f0143b</ReportGuid>
-  <ReportName>LiquidacionAgente</ReportName>
+  <ReportName>LiquidacionColaborador</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;

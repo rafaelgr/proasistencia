@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2021.3.6.0",
   "ReportGuid": "db6752271d5649d68cfe3812343e2d97",
-  "ReportName": "FacturaProasistencia",
-  "ReportAlias": "FacturaProasistencia",
+  "ReportName": "FacturaReabita",
+  "ReportAlias": "FacturaReabita",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
   "ReportChanged": "/Date(1675414741025+0100)/",

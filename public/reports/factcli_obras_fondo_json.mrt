@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2021.3.6.0",
   "ReportGuid": "a06ff0b8e5404f7e94b188d22c98630e",
-  "ReportName": "FacturaProasistencia",
-  "ReportAlias": "FacturaProasistencia",
+  "ReportName": "FacturaFondo",
+  "ReportAlias": "FacturaFondo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
   "ReportChanged": "/Date(1674201180494+0100)/",

@@ -339,7 +339,7 @@ function cargarAnticipos() {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/serviciado/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
