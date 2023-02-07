@@ -19,6 +19,7 @@ var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
 var dataProveedores;
+var dataDocumentacion
 var numLineas = 0;
 
 var breakpointDefinition = {
@@ -139,6 +140,21 @@ function initForm() {
         }
     });
 
+    $('#dt_documentacion').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaDocumentacion.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
     initAutoCliente();
     initAutoMantenedor();
     initAutoAgente();
@@ -207,6 +223,7 @@ function initForm() {
     initTablaBases();
     initTablaConceptosLineas();
     initTablaProveedores();
+    initTablaDocumentacion()
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
@@ -428,7 +445,9 @@ function loadData(data) {
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
 
-    cargaTablaProveedores()
+    cargaTablaProveedores();
+    cargaTablaDocumentacion();
+
 
     if(data.contratoId) {
         $('#cmbEmpresas').prop('disabled', true);
@@ -2404,5 +2423,92 @@ function loadTablaProveedores(data) {
     dt.fnDraw();
 }
 
+
+// FUNCIONES RELACIONADAS CON LA DOCUMENTACIÓN
+
+function initTablaDocumentacion() {
+    tablaDocumentacion = $('#dt_documentacion').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: true,
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataDocumentacion,
+        columns: [
+            {
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+            },{
+            data: "carpetaNombre",
+            render: function (data, type, row) {
+                if(!data) return row.totalProveedor;
+                return data;
+            }
+        },{
+            data: "ofertaCarpetaId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt = "<button class='btn btn-circle btn-success' onclick='imprimirProveedor(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                return html = "<div class='pull-right'>" + bt + "</div>";
+                
+            }
+        }]
+    });
+}
+
+function cargaTablaDocumentacion(){
+    llamadaAjax("GET",  "/api/ofertas/documentacion/"  + vm.ofertaId(), null, function (err, data) {
+        if (err) return;
+        if(data) loadTablaDocumentacion(data);
+    });
+}
+
+function loadTablaDocumentacion(data) {
+    var dt = $('#dt_documentacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function format(d) {
+    var doc = d.documentos;
+    var html = "";
+        html = '<h5> DOCUMENTOS</h5>'
+        doc.forEach(e => {
+            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<tr>' +
+               
+                '<td>' + '<a href="' + e.documentoId  + '" target="_blank">' + e.documentoNombre +'</a>'
+                     +
+                '</td>' + '</br>' +
+            '</tr>' +
+            '</table>'
+        });
+    return html;
+}
 
 
