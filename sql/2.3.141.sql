@@ -1,8 +1,7 @@
 CREATE TABLE `ofertaDocumentacion`(  
   `ofertaCarpetaId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `carpetaNombre` VARCHAR(255),
   `ofertaId` INT(11),
-  `carpetaId` VARCHAR(255),
+  `carpetaId` INT(11),
   `documentoId` VARCHAR(255),
   `documentoNombre` VARCHAR(255),
   PRIMARY KEY (`ofertaCarpetaId`),
@@ -29,3 +28,7 @@ UPDATE `carpetas` SET `url` = 's3://comercializa-partes/Costes profesionales/' W
 UPDATE `carpetas` SET `url` = 's3://comercializa-partes/Oferta aceptada/' WHERE `carpetaId` = '3'; 
 UPDATE `carpetas` SET `url` = 's3://comercializa-partes/Fotografias (Antes)/' WHERE `carpetaId` = '4'; 
 UPDATE `carpetas` SET `url` = 's3://comercializa-partes/Fotografias (Despues) /' WHERE `carpetaId` = '5'; 
+
+ ALTER TABLE `proasistencia`.`carpetas` ADD COLUMN `tipo` VARCHAR(255) NULL AFTER `url`; 
+
+ UPDATE carpetas SET tipo = 'oferta';
