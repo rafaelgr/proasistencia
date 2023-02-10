@@ -2,8 +2,8 @@ CREATE TABLE `ofertaDocumentacion`(
   `ofertaCarpetaId` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ofertaId` INT(11),
   `carpetaId` INT(11),
-  `documentoId` VARCHAR(255),
-  `documentoNombre` VARCHAR(255),
+  `location` VARCHAR(255),
+  `key` VARCHAR(255),
   PRIMARY KEY (`ofertaCarpetaId`),
   CONSTRAINT `carpeta_ofertaFK` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas`(`ofertaId`) ON UPDATE CASCADE
 );

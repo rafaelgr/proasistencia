@@ -183,8 +183,8 @@ function initForm() {
 
         var blob = file.slice(0, file.size, file.type); 
         var newFile = new File([blob], {type: file.type});
-        var fileKey =  docName + "." + ext;
-        var bucket = parametros.bucket + "/" + carpeta;
+        var fileKey =  carpeta + "/" + docName + "." + ext;
+        var bucket = parametros.bucket;
         var params = {
             Bucket: bucket,
             Key: fileKey,
@@ -211,8 +211,8 @@ function initForm() {
                         ofertaCarpetaId: 0,
                         ofertaId: vm.ofertaId(),
                         carpetaId: carpetaId,
-                        documentoId: data.Location,
-                        documentoNombre: fileKey
+                        location: data.Location,
+                        key: fileKey
                     }
                 }
 
@@ -2597,16 +2597,19 @@ function loadTablaDocumentacion(data) {
 function format(d) {
     var doc = d.documentos;
     var html = "";
-        html = '<h5> DOCUMENTOS</h5>'
+        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
         doc.forEach(e => {
-            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
-            '<tr>' +
-               
-                '<td>' + '<a href="' + e.documentoId  + '" target="_blank">' + e.documentoNombre +'</a>'
-                     +
-                '</td>' + '</br>' +
-            '</tr>' +
-            '</table>'
+            html += '<div class="row" style="margin-bottom: 10px">' +
+                        '<section class="col col-md-4">' +
+                            ' <label class="label"><a href="' + e.location  + '" target="_blank">' + e.key +'</a></label>' +
+                        '</section>' +
+                    '<section class="col col-md-4 text-left">' +
+                        '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(""' + e.key.toString() + '"")" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                    '</section>' +
+                    '<section class="col col-md-4">' +
+                  
+                '</section>' +
+            '</div>' 
         });
     return html;
 }
@@ -2617,6 +2620,7 @@ function preparaDatosArchivo(r) {
     docName = docName.replace(/[\/]/g, "-");
     console.log(docName);
     carpeta = r.carpetaNombre;
+    key = r.carpetaNombre   + "/" +  docName;
 }
 
 function limpiaDatosArchivo(r) {
@@ -2633,20 +2637,8 @@ function nuevaCarpeta() {
 }
 
 
-function nuevaLinea() {
-    limpiaDataLinea(); // es un alta
-    lineaEnEdicion = false;
-    llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
-        if (err) return;
-        vm.linea(data);
-        vm.total(0);
-        vm.totalConIva(0);
-    });
-}
-
 function aceptarNuevaCarpeta() {
         var fileKey =  vm.carpetaNombre() + "/";
-        //var bucket = parametros.bucket + "/" + vm.carpetaNombre();
         var params = {
             Bucket: parametros.bucket,
             Key: fileKey,
@@ -2663,25 +2655,23 @@ function aceptarNuevaCarpeta() {
         then (
             data => {
                 console.log(data);
-                //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
-                /* var data = 
+                //CREAMOS EL REGISTRO EN LA TABLA carpetas
+                var data = 
                 {
-                    ofertaDocumentacion: {
-                        ofertaCarpetaId: 0,
-                        ofertaId: vm.ofertaId(),
-                        carpetaId: carpetaId,
-                        documentoId: data.Location,
-                        documentoNombre: fileKey
+                    carpeta: {
+                        carpetaId: 0,
+                        nombre: vm.carpetaNombre(),
+                        url: data.Location,
+                        tipo: "oferta"
                     }
                 }
 
-                llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion", data, function (err, data) {
+                llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion/carpeta", data, function (err, data) {
                     if (err) return mensError(err);
-                    $('#modalUploadDoc').modal('hide');
-                    mensNormal('Archivo subido con exito');
-                    limpiaDatosArchivo();
+                    $('#modalNuevaCarpeta').modal('hide');
+                    mensNormal('Carpeta creada con exito');
                     cargaTablaDocumentacion();
-                }); */
+                });
                 
 
                 
@@ -2690,4 +2680,20 @@ function aceptarNuevaCarpeta() {
                 if (err) return mensError(err);
             }
         );        
+}
+
+function deleteDocumento(doc) {
+    var fileKey =  doc
+    var params = {
+        Bucket: parametros.bucket,
+        Key: 'prueba2/64790000.jpg'
+    }
+
+
+   var s3 = new AWS.S3({ params });
+
+    s3.deleteObject({}, (err, data) => {
+        if (err) console.log('error ' + err);
+        console.log(data)
+    }); 
 }
