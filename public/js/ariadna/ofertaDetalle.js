@@ -208,7 +208,7 @@ function initForm() {
                 var data = 
                 {
                     ofertaDocumentacion: {
-                        ofertaCarpetaId: 0,
+                        ofertaDocumentoId: 0,
                         ofertaId: vm.ofertaId(),
                         carpetaId: carpetaId,
                         location: data.Location,
@@ -2566,7 +2566,7 @@ function initTablaDocumentacion() {
                 return data;
             }
         },{
-            data: "ofertaCarpetaId",
+            data: "carpetaId",
             render: function (data, type, row) {
                 var html = "";
                 var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
@@ -2604,7 +2604,7 @@ function format(d) {
                             ' <label class="label"><a href="' + e.location  + '" target="_blank">' + e.key +'</a></label>' +
                         '</section>' +
                     '<section class="col col-md-4 text-left">' +
-                        '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(""' + e.key.toString() + '"")" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.ofertaDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
                     '</section>' +
                     '<section class="col col-md-4">' +
                   
@@ -2682,18 +2682,27 @@ function aceptarNuevaCarpeta() {
         );        
 }
 
-function deleteDocumento(doc) {
-    var fileKey =  doc
-    var params = {
-        Bucket: parametros.bucket,
-        Key: 'prueba2/64790000.jpg'
-    }
+function deleteDocumento(id) {
+    llamadaAjax('GET', "/api/ofertas/documentacion/docuento/" + id, null, function (err, data) {
+        if (err) return;
+        if(data) {
+            var params = {
+                Bucket: parametros.bucket,
+                Key: data.key
+        }
 
+        //borramos el documento en s3
+        var s3 = new AWS.S3({ params });
 
-   var s3 = new AWS.S3({ params });
-
-    s3.deleteObject({}, (err, data) => {
-        if (err) console.log('error ' + err);
-        console.log(data)
-    }); 
+        s3.deleteObject({}, (err, result) => {
+            if (err) mensError('Error al borrar el docuemnto');
+            //Actualizamos la tabla ofertaDocumentacion
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/ofertas/documentacion/elimina-documento/" + id, null, function (err, data) {
+                if (err) return;
+                cargaTablaDocumentacion();
+            });
+        }); 
+        
+        }
+    });
 }
