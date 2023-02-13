@@ -184,11 +184,11 @@ function initForm() {
         var blob = file.slice(0, file.size, file.type); 
         var newFile = new File([blob], {type: file.type});
         var fileKey =  carpeta + "/" + docName + "." + ext;
-        var bucket = parametros.bucket;
+        var bucket = parametros.bucket_docum;
         var params = {
-            Bucket: bucket,
+            Bucket: bucket_docum,
             Key: fileKey,
-            IdentityPoolId: parametros.identity_pool,
+            IdentityPoolId: parametros.identity_pool_docum,
             Body: newFile,
             ACL: "public-read"
         }
@@ -1749,9 +1749,9 @@ function loadParametros(id) {
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
         parametros = data;
-        AWS.config.region = parametros.bucket_region; // Región
+        AWS.config.region = parametros.bucket_region_docum; // Región
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: parametros.identity_pool,
+            IdentityPoolId: parametros.identity_pool_docum,
         });
     })
 }
@@ -2640,9 +2640,9 @@ function nuevaCarpeta() {
 function aceptarNuevaCarpeta() {
         var fileKey =  vm.carpetaNombre() + "/";
         var params = {
-            Bucket: parametros.bucket,
+            Bucket: parametros.bucket_docum,
             Key: fileKey,
-            IdentityPoolId: parametros.identity_pool,
+            IdentityPoolId: parametros.identity_pool_docum,
             Body: 'body does not matter',
             ACL: "public-read"
         }
@@ -2687,7 +2687,7 @@ function deleteDocumento(id) {
         if (err) return;
         if(data) {
             var params = {
-                Bucket: parametros.bucket,
+                Bucket: parametros.bucket_docum,
                 Key: data.key
         }
 

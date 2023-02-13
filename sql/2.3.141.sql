@@ -32,3 +32,10 @@ UPDATE `carpetas` SET `url` = 's3://comercializa-partes/Fotografias (Despues) /'
  ALTER TABLE `proasistencia`.`carpetas` ADD COLUMN `tipo` VARCHAR(255) NULL AFTER `url`; 
 
  UPDATE carpetas SET tipo = 'oferta';
+
+
+ ALTER TABLE `parametros` ADD COLUMN `bucket_docum` VARCHAR(255) NULL AFTER `restApi`, 
+ ADD COLUMN `bucket_region_docum` VARCHAR(255) NULL AFTER `bucket_docum`, 
+ ADD COLUMN `bucket_folder_docum` VARCHAR(255) NULL AFTER `bucket_region_docum`,
+ ADD COLUMN `identity_pool_docum` VARCHAR(255) NULL AFTER `bucket_folder_docum`, 
+ ADD COLUMN `raiz_url_docum` VARCHAR(255) NULL AFTER `identity_pool_docum`; 
