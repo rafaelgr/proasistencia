@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "1ab1e9c827364aa0a12dbc2968b60dc1",
+  "ReportGuid": "62f7209c83d44e16b9a59fe072ec7db7",
   "ReportName": "FacturaIquebana",
   "ReportAlias": "FacturaIquebana",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1674636706163+0100)/",
+  "ReportChanged": "/Date(1676281795095+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -897,7 +897,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Realizar pago mediante  {cabecera.formaPago} a la cuenta {cabecera.iban}"
+                "Value": "Realizar pago mediante  {cabecera.formaPago} a la cuenta ES0300491828212810297625"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
