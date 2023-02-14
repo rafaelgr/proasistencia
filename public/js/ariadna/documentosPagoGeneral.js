@@ -199,7 +199,42 @@ function initTablaDocumentospago() {
             }
         },  {
             data: "pdf"
-        },{
+        }, {
+            data: 'facturas',
+            render: function(data, type, row) {
+              var facturasData = [];
+              if(data.length > 0) {
+                data.forEach((i) => {
+                    facturasData.push(i.numeroFacturaProveedor);
+                    facturasData.push(i.ref);
+                    facturasData.push(i.proveedorNombre);
+                    //facturasData.push(rowEl.Menge);
+                  });
+                  return facturasData;
+                } else {
+                    return "";
+                }
+              }
+            
+        },
+        {
+            data: 'anticipos',
+            render: function(data, type, row) {
+              var anticiposData = [];
+              if(data.length > 0) {
+                data.forEach((i) => {
+                    anticiposData.push(i.numeroAnticipoProveedor);
+                    anticiposData.push(i.proveedorNombreAnticipo);
+                    //facturasData.push(rowEl.Menge);
+                  });
+                  return anticiposData;
+                }else {
+                    return "";
+                }
+              }
+            
+        },
+        {
             data: "documentoPagoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -208,39 +243,41 @@ function initTablaDocumentospago() {
                 return html;
             }
         }]
-
-        
     });
+
+    tablaCarro.columns(4).visible(false);
+    tablaCarro.columns(5).visible(false);
 }
 
 function format(d) {
     var fac = d.facturas;
     var ant = d.anticipos;
     var html = "";
-        html = '<h5> Facturas</h5>'
-        fac.forEach(e => {
-            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
-            '<tr>' +
-                '<td>REFERENCIA:</td>' +
-                '<td>' +
-                    e.ref +
-                '</td>' +
-                '<td>NÚMERO:</td>' +
-                '<td>' +
-                    e.numeroFacturaProveedor +
-                '</td>' +
-                '<td>PROVEEDOR:</td>' +
-                '<td>' +
-                    e.proveedorNombre +
-                '</td>' +
-            '</tr>' +
-            '</table>'
-        });
+    html = '<h5> Facturas</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    fac.forEach(e => {
+         html += '<tr>' +
+            '<td>REFERENCIA:</td>' +
+            '<td>' +
+                e.ref +
+            '</td>' +
+            '<td>NÚMERO:</td>' +
+            '<td>' +
+                e.numeroFacturaProveedor +
+            '</td>' +
+            '<td>PROVEEDOR:</td>' +
+            '<td>' +
+                e.proveedorNombre +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
         //anticipos
         html += '<h5>Anticipos</h5>'
+        html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
         ant.forEach(e => {
-            html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">' +
-            '<tr>' +
+            html += '<tr>' +
                 '<td>REFERENCIA:</td>' +
                 '<td>' +
                 '</td>' +
@@ -252,9 +289,9 @@ function format(d) {
                 '<td>' +
                     e.proveedorNombreAnticipo +
                 '</td>' +
-            '</tr>' +
-            '</table>'
+            '</tr>' 
         });
+        html +=  '</table>'
     return html;
 }
 
