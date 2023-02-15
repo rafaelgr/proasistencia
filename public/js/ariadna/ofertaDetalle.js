@@ -26,7 +26,6 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
-var parametros = null;
 var  docName = '';
 var carpeta = ''
 var carpetaId = null;
@@ -170,67 +169,67 @@ function initForm() {
 
     $('#upload-input').on('change', function () {
         var files = $(this).get(0).files;
-        
-        
-        
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
-        //if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
-        // add the files to formData object for the data payload
-        var cadena = file.name.split('.');
-        var num = cadena.length
-        //var name = numParte + "." + cadena[num-1];
-
         var blob = file.slice(0, file.size, file.type); 
         var newFile = new File([blob], {type: file.type});
-        var fileKey =  carpeta + "/" + docName + "." + ext;
-        var bucket = parametros.bucket_docum;
-        var params = {
-            Bucket: bucket_docum,
-            Key: fileKey,
-            IdentityPoolId: parametros.identity_pool_docum,
-            Body: newFile,
-            ACL: "public-read"
-        }
-        // Use S3 ManagedUpload class as it supports multipart uploads
-        var upload = new AWS.S3.ManagedUpload({
-            params: params
-        });
-        var promise = upload.on('httpUploadProgress', function(evt) {
-            $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
-            $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
-          })
-          .promise();
-        promise.
-        then (
-            data => {
-                //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
-                var data = 
-                {
-                    ofertaDocumentacion: {
-                        ofertaDocumentoId: 0,
-                        ofertaId: vm.ofertaId(),
-                        carpetaId: carpetaId,
-                        location: data.Location,
-                        key: fileKey
-                    }
-                }
-
-                llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion", data, function (err, data) {
-                    if (err) return mensError(err);
-                    $('#modalUploadDoc').modal('hide');
-                    mensNormal('Archivo subido con exito');
-                    limpiaDatosArchivo();
-                    cargaTablaDocumentacion();
-                });
-                
-
-                
-            },
-            err =>{
-                if (err) return mensError(err);
+        var fileKey =  carpeta + "/" + vm.documNombre() + "." + ext;
+        llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+            if (err) return;
+            var parametros = data;
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: fileKey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: newFile,
+                ACL: "public-read"
             }
-        );        
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
+                    var data = 
+                    {
+                        ofertaDocumentacion: {
+                            ofertaDocumentoId: 0,
+                            ofertaId: vm.ofertaId(),
+                            carpetaId: carpetaId,
+                            location: data.Location,
+                            key: fileKey
+                        }
+                    }
+    
+                    llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion", data, function (err, data) {
+                        if (err) return mensError(err);
+                        $('#modalUploadDoc').modal('hide');
+                        mensNormal('Archivo subido con exito');
+                        limpiaDatosArchivo();
+                        cargaTablaDocumentacion();
+                    });
+                    
+    
+                    
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+        });
+        
     });
 
 
@@ -311,7 +310,6 @@ function initForm() {
             loadData(data);
             loadLineasOferta(data.ofertaId);
             loadBasesOferta(data.ofertaId);
-            loadParametros();
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -491,8 +489,9 @@ function admData() {
      self.posiblesFormasPagoLinea = ko.observableArray([]);
      self.elegidosFormasPagoLinea = ko.observableArray([]);
 
-     //CARPETAS
+     //CARPETAS  Y DOCUMENTOS
      self.carpetaNombre = ko.observable();
+     self.documNombre = ko.observable();
 }
 
 function loadData(data) {
@@ -1745,17 +1744,6 @@ function loadBasesOferta(id) {
     })
 }
 
-function loadParametros(id) {
-    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
-        if (err) return;
-        parametros = data;
-        AWS.config.region = parametros.bucket_region_docum; // Región
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: parametros.identity_pool_docum,
-        });
-    })
-}
-
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 var cargaCliente = function (id) {
@@ -2599,17 +2587,17 @@ function format(d) {
     var html = "";
         html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
         doc.forEach(e => {
+            var l = e.key.split('/');
+            console.log(l);
             html += '<div class="row" style="margin-bottom: 10px">' +
-                        '<section class="col col-md-4">' +
-                            ' <label class="label"><a href="' + e.location  + '" target="_blank">' + e.key +'</a></label>' +
+                        '<section class="col col-md-5">' + 
+                            '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
                         '</section>' +
-                    '<section class="col col-md-4 text-left">' +
-                        '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.ofertaDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
-                    '</section>' +
-                    '<section class="col col-md-4">' +
-                  
-                '</section>' +
-            '</div>' 
+                        '<section class="col col-md-3 text-left">' +
+                            '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.ofertaDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '</section>' +
+                        '<section class="col col-md-4">' + '</section>' +
+                    '</div>' 
         });
     return html;
 }
@@ -2621,6 +2609,7 @@ function preparaDatosArchivo(r) {
     console.log(docName);
     carpeta = r.carpetaNombre;
     key = r.carpetaNombre   + "/" +  docName;
+    vm.documNombre(docName);
 }
 
 function limpiaDatosArchivo(r) {
@@ -2638,71 +2627,57 @@ function nuevaCarpeta() {
 
 
 function aceptarNuevaCarpeta() {
-        var fileKey =  vm.carpetaNombre() + "/";
-        var params = {
-            Bucket: parametros.bucket_docum,
-            Key: fileKey,
-            IdentityPoolId: parametros.identity_pool_docum,
-            Body: 'body does not matter',
-            ACL: "public-read"
-        }
-        // Use S3 ManagedUpload class as it supports multipart uploads
-        var upload = new AWS.S3.ManagedUpload({
-            params: params
-        });
-        var promise = upload.promise();
-        promise.
-        then (
-            data => {
-                console.log(data);
-                //CREAMOS EL REGISTRO EN LA TABLA carpetas
-                var data = 
-                {
-                    carpeta: {
-                        carpetaId: 0,
-                        nombre: vm.carpetaNombre(),
-                        url: data.Location,
-                        tipo: "oferta"
-                    }
-                }
-
-                llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion/carpeta", data, function (err, data) {
-                    if (err) return mensError(err);
-                    $('#modalNuevaCarpeta').modal('hide');
-                    mensNormal('Carpeta creada con exito');
-                    cargaTablaDocumentacion();
-                });
-                
-
-                
-            },
-            err =>{
-                if (err) return mensError(err);
+        //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        var data = 
+        {
+            carpeta: {
+                carpetaId: 0,
+                nombre: vm.carpetaNombre(),
+                tipo: "oferta"
             }
-        );        
+        }
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion/carpeta", data, function (err, data) {
+            if (err) return mensError(err);
+            $('#modalNuevaCarpeta').modal('hide');
+            mensNormal('Carpeta creada con exito');
+            cargaTablaDocumentacion();
+        });
 }
 
 function deleteDocumento(id) {
-    llamadaAjax('GET', "/api/ofertas/documentacion/docuento/" + id, null, function (err, data) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
-        if(data) {
-            var params = {
-                Bucket: parametros.bucket_docum,
-                Key: data.key
-        }
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        llamadaAjax('GET', "/api/ofertas/documentacion/docuento/" + id, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: data.key
+            }
+    
+            //borramos el documento en s3
+            var s3 = new AWS.S3({ params });
+    
+            s3.deleteObject({}, (err, result) => {
+                if (err) mensError('Error al borrar el docuemnto');
+                //Actualizamos la tabla ofertaDocumentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/ofertas/documentacion/elimina-documento/" + id, null, function (err, data) {
+                    if (err) return;
+                    cargaTablaDocumentacion();
+                });
+            }); 
+            
+            }
+        });
+    })
+}
 
-        //borramos el documento en s3
-        var s3 = new AWS.S3({ params });
-
-        s3.deleteObject({}, (err, result) => {
-            if (err) mensError('Error al borrar el docuemnto');
-            //Actualizamos la tabla ofertaDocumentacion
-            llamadaAjax('DELETE', myconfig.apiUrl + "/api/ofertas/documentacion/elimina-documento/" + id, null, function (err, data) {
-                if (err) return;
-                cargaTablaDocumentacion();
-            });
-        }); 
-        
-        }
-    });
+function uploadDoc() {
+   
 }
