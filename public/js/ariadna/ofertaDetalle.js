@@ -2514,8 +2514,12 @@ function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
-        responsive: true,
         "bDestroy": true,
+        "columnDefs": [
+            { "width": "5%", "targets": 0 },
+            { "width": "5%", "targets": 2 },
+
+          ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2543,16 +2547,10 @@ function initTablaDocumentacion() {
                 className: 'dt-control',
                 orderable: false,
                 data: null,
-                data:"carpetaId",
-                render: function (data, type, row) {
-                    return "";
-                }
+                defaultContent: '',
+                //data:"carpetaId",
             },{
             data: "carpetaNombre",
-            render: function (data, type, row) {
-                if(!data) return row.totalProveedor;
-                return data;
-            }
         },{
             data: "carpetaId",
             render: function (data, type, row) {
