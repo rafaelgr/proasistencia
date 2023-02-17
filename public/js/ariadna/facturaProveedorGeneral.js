@@ -297,6 +297,9 @@ function initTablaFacturas() {
             data: "emisorNif"
         },{
             data: "numregisconta",
+        },
+        {
+            data: "aNum",
         },   {
             data: "facproveId",
             render: function (data, type, row) {
