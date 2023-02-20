@@ -196,8 +196,28 @@ function initTablaFacturas() {
     };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
+        paging: true,
+        "pageLength": 100,
         "stateSave": true,
         responsive: true,
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            //registro facturado
+            if(aData.aNum > 1) {
+                $(nRow).attr('style', 'background: #F85F6A'); 
+
+            }
+             //letra recibida
+             if(aData.aNum == 1) {
+                $(nRow).attr('style', 'background: #FFF800'); 
+            }
+
+            //letra en gestión de cobros
+            if(aData.formaPagoId == 12) {
+                $(nRow).attr('style', 'background: #11F611'); 
+            }
+            
+        },
         "stateLoaded": function (settings, state) {
             state.columns.forEach(function (column, index) {
                 $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);

@@ -66,6 +66,8 @@ function initForm() {
 function initTablaEmpresas() {
     tablaCarro = $('#dt_empresa').dataTable({
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {

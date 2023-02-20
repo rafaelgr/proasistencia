@@ -122,6 +122,8 @@ function initTablaAnticipos() {
             'print'
         ],
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",

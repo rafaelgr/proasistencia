@@ -79,6 +79,8 @@ function initForm() {
 function initTablaContratosMantenedores() {
     tablaCarro = $('#dt_contratoMantenedor').dataTable({
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function() {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
