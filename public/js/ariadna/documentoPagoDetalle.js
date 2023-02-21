@@ -13,6 +13,7 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
+var datosArray = [];
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -863,41 +864,29 @@ function loadTablaAsociarFacturas(data) {
     dt.fnDraw();
     data.forEach(function (v) {
         var field = "#chk" + v.facproveId;
-        if (v.sel == 1) {
+        if (v.sele == 1) {
             $(field).attr('checked', true);
         }
         $(field).change(function () {
-            var quantity = 0;
-            var data = {
-                facprove: {
-                    facproveId: v.facproveId,
-                    empresaId: v.empresaId,
-                    proveedorId: v.proveedorId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: 0
-                }
-            };
+            
             if (this.checked) {
-                data.facprove.sel = 1;
+                var data = {
+                    facprove: {
+                        facproveId: v.facproveId,
+                        empresaId: v.empresaId,
+                        proveedorId: v.proveedorId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                    }
+                };
+                datosArray.push(data)
+            } else {
+                for(var i=0; i < datosArray.length; i++) {
+					if(datosArray[i].facprove.facproveId == v.facproveId){
+						datosArray.splice(i,1);//eliminamos un elemto del array y modificamops su tamaño
+						i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+					}
+				}
             }
-            var datosArray = [];
-            datosArray.push(data)
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, v.facproveId);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(datosArray),
-                success: function (data, status) {
-
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
-            });
         });
     });
 }
@@ -932,6 +921,7 @@ function loadTablaAsociarRegistros(data) {
 
 
 function buscarAsociarFacturas() {
+    datosArray = [];
     $('#dt_asociarFacturas').dataTable().fnClearTable();
       //$('#dt_asociarFacturas').dataTable().fnDestroy();
         //initTablaAsociarFacturas();
@@ -1036,7 +1026,8 @@ function aceptarAsociarFacturas() {
             empresaId: empresaId,
             departamentoId: departamentoId,
             documentoPagoId: documentoPagoId
-        }
+        },
+        datosArray: datosArray
     }
   
     $.ajax({
@@ -1179,44 +1170,22 @@ function limpiarModal() {
 
 
 function updateAll(opcion) {
-    var sel = 0;
-    if(opcion) sel = 1
     var tb = $('#dt_asociarFacturas').dataTable().api();
     var datos = tb.rows( {page:'current'} ).data();
-    var length = datos.length;
-    if(opcion) sel = 1
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
-                var data = {
-                    facprove: {
-                        facproveId: datos[i].facproveId,
-                        empresaId: datos[i].empresaId,
-                        proveedorId: datos[i].proveedorId,
-                        fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                        sel: sel
-                    }
-                };
-                
-                var datosArray = [];
-                datosArray.push(data)
-                var url = "", type = "";
-                // updating record
-                var type = "PUT";
-                var url = sprintf('%s/api/facturasProveedores/%s', myconfig.apiUrl, datos[i].facproveId);
-                $.ajax({
-                    type: type,
-                    url: url,
-                    contentType: "application/json",
-                    data: JSON.stringify(datosArray),
-                    success: function (data, status) {
-    
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                    }
-                });
-        
-    
+    datosArray = [];
+    if(opcion) {
+        if(datos) {
+            for( var i = 0; i < datos.length; i++) {
+                    var data = {
+                        facprove: {
+                            facproveId: datos[i].facproveId,
+                            empresaId: datos[i].empresaId,
+                            proveedorId: datos[i].proveedorId,
+                            fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                        }
+                    };
+                    datosArray.push(data)        
+            }
         }
     }
 }
