@@ -89,7 +89,7 @@ function initForm() {
         // comprobamos parámetros
         facproveId = gup('facproveId');
         var f = facproveId;
-        if(facproveId = '') {
+        if(facproveId == '') {
             f = null
         }
         cambioDepartamento(this.value);
@@ -98,6 +98,7 @@ function initForm() {
         else{ $('#btnPrint').show() }
         if( !$('#chkTodos').prop('checked') ) {
             if(this.value != antDepartamentoId) {
+                if(facproveId) return; 
                 cargarFacturas2()();
             } else {
                 cargarFacturas2(f)();
@@ -196,8 +197,28 @@ function initTablaFacturas() {
     };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
+        paging: true,
+        "pageLength": 100,
         "stateSave": true,
         responsive: true,
+        fnCreatedRow : 
+        function (nRow, aData, iDataIndex) {
+            //registro facturado
+            if(aData.aNum > 1) {
+                $(nRow).attr('style', 'background: #F85F6A'); 
+
+            }
+             //letra recibida
+             if(aData.aNum == 1) {
+                $(nRow).attr('style', 'background: #FFF800'); 
+            }
+
+            //letra en gestión de cobros
+            if(aData.formaPagoId == 12) {
+                $(nRow).attr('style', 'background: #11F611'); 
+            }
+            
+        },
         "stateLoaded": function (settings, state) {
             state.columns.forEach(function (column, index) {
                 $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
@@ -297,6 +318,9 @@ function initTablaFacturas() {
             data: "emisorNif"
         },{
             data: "numregisconta",
+        },
+        {
+            data: "aNum",
         },   {
             data: "facproveId",
             render: function (data, type, row) {

@@ -193,6 +193,8 @@ function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
         responsive: true,
+        paging: true,
+        "pageLength": 100,
         "stateSave": true,
         "stateLoaded": function (settings, state) {
             state.columns.forEach(function (column, index) {

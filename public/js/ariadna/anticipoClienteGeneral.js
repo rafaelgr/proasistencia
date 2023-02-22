@@ -105,6 +105,8 @@ function initTablaAntcliens() {
     tablaAntcliens = $('#dt_antclien').DataTable({
         bSort: false,
         responsive: true,
+        paging: true,
+        "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",

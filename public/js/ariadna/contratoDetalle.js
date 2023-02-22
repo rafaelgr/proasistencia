@@ -40,6 +40,7 @@ var tablaPrefacturas;
 var a = null;
 var _recepcionGestion
 
+
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -61,6 +62,10 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
     $('#txtPrecio').focus( function () {
@@ -187,7 +192,7 @@ function initForm() {
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){
-            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+                a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
         } else {
             $('.fixedHeader').remove();
             a = null;
@@ -400,6 +405,39 @@ function initForm() {
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
 
+    //abrir en pestaña de facturas de proveedores
+    if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s5"]').tab('show');
+    } 
+    //abrir en pestaña  de prefacturas
+    if (gup('docPre') != "") {
+        $('.nav-tabs a[href="#s3"]').tab('show');
+    } 
+
+    if (gup('docFac') != "") {
+        $('.nav-tabs a[href="#s4"]').tab('show');
+    } 
+
+    //abrir en pestaña de contratos vinculados
+    if (gup('docAsc') != "") {
+        $('.nav-tabs a[href="#s7"]').tab('show');
+    } 
+
+    //abrir en pestaña de anticipos de gastos
+    if (gup('docAnt') != "") {
+        $('.nav-tabs a[href="#s8"]').tab('show');
+    } 
+    
+    //abrir en pestaña de anticipos de colaboradores
+    if (gup('docAntcol') != "") {
+        $('.nav-tabs a[href="#s9"]').tab('show');
+    } 
+
+    //abrir en pestaña de anticipos de colaboradores
+    if (gup('docFactcol') != "") {
+        $('.nav-tabs a[href="#s10"]').tab('show');
+    } 
+
 
     contratoId = gup('ContratoId');
     if (contratoId != 0) {
@@ -408,7 +446,10 @@ function initForm() {
             
 
             loadData(data);
-            initTablaPrefacturas(data.tipoContratoId);
+          
+                initTablaPrefacturas(data.tipoContratoId);
+            
+            
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
            
@@ -454,38 +495,7 @@ function initForm() {
     }
 
 
-     //abrir en pestaña de facturas de proveedores
-     if (gup('doc') != "") {
-        $('.nav-tabs a[href="#s5"]').tab('show');
-    } 
-    //abrir en pestaña  de prefacturas
-    if (gup('docPre') != "") {
-        $('.nav-tabs a[href="#s3"]').tab('show');
-    } 
-
-    if (gup('docFac') != "") {
-        $('.nav-tabs a[href="#s4"]').tab('show');
-    } 
-
-    //abrir en pestaña de contratos vinculados
-    if (gup('docAsc') != "") {
-        $('.nav-tabs a[href="#s7"]').tab('show');
-    } 
-
-    //abrir en pestaña de anticipos de gastos
-    if (gup('docAnt') != "") {
-        $('.nav-tabs a[href="#s8"]').tab('show');
-    } 
-    
-    //abrir en pestaña de anticipos de colaboradores
-    if (gup('docAntcol') != "") {
-        $('.nav-tabs a[href="#s9"]').tab('show');
-    } 
-
-    //abrir en pestaña de anticipos de colaboradores
-    if (gup('docFactcol') != "") {
-        $('.nav-tabs a[href="#s10"]').tab('show');
-    } 
+     
     
     //metodo de validacion de fechas
     $.validator.addMethod("greaterThan",
@@ -957,20 +967,25 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
-    guardarContrato(function (err, tipo) {
-        if (err) return mensError(err);
-        var url;
-        if(DesdeContrato == "true" && AscContratoId != 0){
-            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-        } else {
-            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-        }
-        if (tipo == 'POST') {
-            url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-        }
-        window.open(url, '_self');
-    })
+var clicAceptar = function (salir) {
+        guardarContrato(function (err, tipo) {
+            if (err) return mensError(err);
+            var url;
+            if(DesdeContrato == "true" && AscContratoId != 0){
+                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+            } else {
+                url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+            }
+            if (tipo == 'POST') {
+                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+            }
+            if(salir) {
+                window.open(url, '_self');
+            } else {
+                mensNormal('Contrato guardado.')
+            }
+        })
+    
 }
 
 var guardarContrato = function (done) {
@@ -3304,6 +3319,7 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         paging: false,
         responsive: true,
+        "bDestroy": true,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //registro facturado
@@ -5659,6 +5675,7 @@ var nuevoContratoOK = function () {
 }
 
 var editPrefactura = function (id) {
+    $('#dt_prefactura').dataTable().fnDestroy();
     var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=" + id + "&ContratoId="+ contratoId;
     window.open(url, '_new');
 }

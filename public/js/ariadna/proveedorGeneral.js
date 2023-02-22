@@ -104,6 +104,8 @@ function initTablaProveedores() {
         },
 
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
            
