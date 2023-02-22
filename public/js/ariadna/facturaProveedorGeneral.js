@@ -89,7 +89,7 @@ function initForm() {
         // comprobamos parámetros
         facproveId = gup('facproveId');
         var f = facproveId;
-        if(facproveId = '') {
+        if(facproveId == '') {
             f = null
         }
         cambioDepartamento(this.value);
@@ -98,6 +98,7 @@ function initForm() {
         else{ $('#btnPrint').show() }
         if( !$('#chkTodos').prop('checked') ) {
             if(this.value != antDepartamentoId) {
+                if(facproveId) return; 
                 cargarFacturas2()();
             } else {
                 cargarFacturas2(f)();

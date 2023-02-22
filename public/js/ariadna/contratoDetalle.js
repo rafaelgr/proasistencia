@@ -62,6 +62,10 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
     $('#txtPrecio').focus( function () {
@@ -963,20 +967,25 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
-    guardarContrato(function (err, tipo) {
-        if (err) return mensError(err);
-        var url;
-        if(DesdeContrato == "true" && AscContratoId != 0){
-            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-        } else {
-            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-        }
-        if (tipo == 'POST') {
-            url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-        }
-        window.open(url, '_self');
-    })
+var clicAceptar = function (salir) {
+        guardarContrato(function (err, tipo) {
+            if (err) return mensError(err);
+            var url;
+            if(DesdeContrato == "true" && AscContratoId != 0){
+                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+            } else {
+                url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+            }
+            if (tipo == 'POST') {
+                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+            }
+            if(salir) {
+                window.open(url, '_self');
+            } else {
+                mensNormal('Contrato guardado.')
+            }
+        })
+    
 }
 
 var guardarContrato = function (done) {
