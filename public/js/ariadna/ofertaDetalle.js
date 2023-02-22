@@ -2517,7 +2517,7 @@ function initTablaDocumentacion() {
         "bDestroy": true,
         "columnDefs": [
             { "width": "5%", "targets": 0 },
-            { "width": "5%", "targets": 2 },
+            { "width": "8%", "targets": 2 },
 
           ],
         language: {
@@ -2556,7 +2556,8 @@ function initTablaDocumentacion() {
             render: function (data, type, row) {
                 var html = "";
                 var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
-                return html = "<div class='pull-right'>" + bt + "</div>";
+                var bt2 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                return html = "<div class='pull-right'>" + bt + " " + bt2 + "</div>";
                 
             }
         }]
@@ -2564,7 +2565,7 @@ function initTablaDocumentacion() {
 }
 
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/ofertas/documentacion/"  + vm.ofertaId(), null, function (err, data) {
+    llamadaAjax("GET",  "/api/ofertas/documentacion/"  + vm.ofertaId() + "/" + vm.tipoOfertaId(), null, function (err, data) {
         if (err) return;
         if(data) loadTablaDocumentacion(data);
     });
@@ -2631,7 +2632,8 @@ function aceptarNuevaCarpeta() {
             carpeta: {
                 carpetaId: 0,
                 nombre: vm.carpetaNombre(),
-                tipo: "oferta"
+                tipo: "oferta",
+                departamentoId: vm.tipoOfertaId()
             }
         }
 
@@ -2651,7 +2653,7 @@ function deleteDocumento(id) {
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: parametros.identity_pool_docum,
         });
-        llamadaAjax('GET', "/api/ofertas/documentacion/docuento/" + id, null, function (err, data) {
+        llamadaAjax('GET', "/api/ofertas/documentacion/un/documento/" + id, null, function (err, data) {
             if (err) return;
             if(data) {
                 var params = {
@@ -2674,6 +2676,57 @@ function deleteDocumento(id) {
             }
         });
     })
+}
+
+function deleteCarpeta(id) {
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos que contiene y no se podrá recuperar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            
+            llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+                if (err) return;
+                var parametros = data;
+                AWS.config.region = parametros.bucket_region_docum; // Región
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: parametros.identity_pool_docum,
+                });
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: "prueba/"
+            }
+    
+                var s3 = new AWS.S3({ params });
+                s3.listObjectsV2({}, (err, result) => {
+                    if (err) mensError('Error al borrar la carpeta');
+                    console.log(result);
+                }); 
+               /*  llamadaAjax('DELETE', "/api/ofertas/documentacion/elimina-carpeta/" + id, null, function (err, data) {
+                    if (err) return;
+                    if(data) {
+                        var params = {
+                            Bucket: parametros.bucket_docum,
+                            Key: data.nombre + "/"
+                    }
+            
+                    //borramos el documento en s3
+                    //var s3 = new AWS.S3({ params });
+            
+                    s3.deleteObject({}, (err, result) => {
+                        if (err) mensError('Error al borrar la carpeta');
+                    }); 
+                    
+                    }
+                }); */
+            })
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }
 
 function uploadDoc() {

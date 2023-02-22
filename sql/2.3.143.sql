@@ -32,3 +32,15 @@ INSERT INTO `carpetas` (`nombre`) VALUES ('Fotografias(Despues) ');
  ADD COLUMN `bucket_folder_docum` VARCHAR(255) NULL AFTER `bucket_region_docum`,
  ADD COLUMN `identity_pool_docum` VARCHAR(255) NULL AFTER `bucket_folder_docum`, 
  ADD COLUMN `raiz_url_docum` VARCHAR(255) NULL AFTER `identity_pool_docum`; 
+
+ ALTER TABLE `carpetas`   
+  ADD COLUMN `departamentoId` INT(11) NULL AFTER `tipo`,
+  ADD CONSTRAINT `carpeta_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`);
+
+  UPDATE carpetas SET departamentoId = 7;
+
+
+ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `carpeta_ofertaFK`;
+
+ALTER TABLE `ofertadocumentacion` ADD CONSTRAINT `carpeta_ofertaFK` FOREIGN KEY (`ofertaId`) REFERENCES `proasistencia`.`ofertas`(`ofertaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
+
