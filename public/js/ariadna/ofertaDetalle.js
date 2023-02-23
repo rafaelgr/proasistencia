@@ -2690,37 +2690,65 @@ function deleteCarpeta(id) {
             llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
                 if (err) return;
                 var parametros = data;
-                AWS.config.region = parametros.bucket_region_docum; // Región
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: parametros.identity_pool_docum,
-                });
-                var params = {
+                llamadaAjax('DELETE', "/api/ofertas/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                    if (err) return mensError('Fallo al borrar la documentación en la base de datos');
+                    if(data2) {
+                        
+                    AWS.config.region = parametros.bucket_region_docum; // Región
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: parametros.identity_pool_docum,
+                    });
+                    var prefix = data2.nombre;
+                    var params = {
+                        Bucket: parametros.bucket_docum,
+                        Prefix: prefix,
+                        Delimeter: "/"
+                    }
+        
+                    var s3 = new AWS.S3({ params });
+                    s3.listObjectsV2({}, (err, result) => {
+                        if (err) mensError('Error de lectura en la nube');
+                        console.log(result);
+                        if(result.Contents.length > 0) {
+
+
+
+                    var objectKeys = []
+                    result.Contents.forEach(e => {
+                        objectKeys.push(e.Key);
+                    });
+
+                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                    const objects = objectKeys.map(key => ({ Key: key }));
+                    const deleteParams = {
                     Bucket: parametros.bucket_docum,
-                    Key: "prueba/"
-            }
-    
-                var s3 = new AWS.S3({ params });
-                s3.listObjectsV2({}, (err, result) => {
-                    if (err) mensError('Error al borrar la carpeta');
-                    console.log(result);
-                }); 
-               /*  llamadaAjax('DELETE', "/api/ofertas/documentacion/elimina-carpeta/" + id, null, function (err, data) {
-                    if (err) return;
-                    if(data) {
-                        var params = {
-                            Bucket: parametros.bucket_docum,
-                            Key: data.nombre + "/"
-                    }
-            
-                    //borramos el documento en s3
-                    //var s3 = new AWS.S3({ params });
-            
-                    s3.deleteObject({}, (err, result) => {
-                        if (err) mensError('Error al borrar la carpeta');
+                    Delete: { Objects: objects }
+                    };
+
+                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                    s3.deleteObjects(deleteParams, function(err, data) {
+                        if (err) {
+                            mensError('Fallo al borrar la carpeta en la nube');
+                        } else {
+                            mensNormal('Carpeta eliminada con éxito');
+                            cargaTablaDocumentacion();
+                        }
+}                   );
+
+                        } else {
+                            mensAlerta('No se han encontrado archivos en la nube para borrar');
+                            cargaTablaDocumentacion();
+                        }
+                       
                     }); 
+            
+                  
                     
+                    } else {
+                        mensError('No se han encontrado carpetas para borrar');
+                        cargaTablaDocumentacion();
                     }
-                }); */
+                }); 
             })
         }
         if (ButtonPressed === "Cancelar") {
