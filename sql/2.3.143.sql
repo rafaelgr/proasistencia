@@ -42,5 +42,10 @@ INSERT INTO `carpetas` (`nombre`) VALUES ('Fotografias(Despues) ');
 
 ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `carpeta_ofertaFK`;
 
-ALTER TABLE `ofertadocumentacion` ADD CONSTRAINT `carpeta_ofertaFK` FOREIGN KEY (`ofertaId`) REFERENCES `proasistencia`.`ofertas`(`ofertaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE `ofertadocumentacion` ADD CONSTRAINT `carpeta_ofertaFK` 
+FOREIGN KEY (`ofertaId`) REFERENCES `proasistencia`.`ofertas`(`ofertaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
+
+ALTER TABLE `proasistencia`.`carpetas`   
+  ADD  UNIQUE INDEX `uniq_nombre` (`nombre`);
+
 

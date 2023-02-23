@@ -1,4 +1,6 @@
-﻿/*-------------------------------------------------------------------------- 
+﻿
+
+/*-------------------------------------------------------------------------- 
 ofertaDetalle.js
 Funciones js par la página OfertaDetalle.html
 ---------------------------------------------------------------------------*/
@@ -168,68 +170,53 @@ function initForm() {
     });
 
     $('#upload-input').on('change', function () {
+        if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+        var encontrado = false;
+        var id = 0;
         var files = $(this).get(0).files;
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
         var blob = file.slice(0, file.size, file.type); 
         var newFile = new File([blob], {type: file.type});
-        var fileKey =  carpeta + "/" + vm.documNombre() + "." + ext;
-        llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        var nom = vm.documNombre() + "." + ext;
+        var fileKey =  carpeta + "/" + nom
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/ofertas/documentacion/documentos/carpeta/" + carpetaId, null, function (err, docums) {
             if (err) return;
-            var parametros = data;
-            AWS.config.region = parametros.bucket_region_docum; // Región
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: parametros.identity_pool_docum,
-            });
-            var bucket = parametros.bucket_docum;
-            var params = {
-                Bucket: bucket,
-                Key: fileKey,
-                IdentityPoolId: parametros.identity_pool_docum,
-                Body: newFile,
-                ACL: "public-read"
-            }
-            // Use S3 ManagedUpload class as it supports multipart uploads
-            var upload = new AWS.S3.ManagedUpload({
-                params: params
-            });
-            var promise = upload.on('httpUploadProgress', function(evt) {
-                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
-                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
-              })
-              .promise();
-            promise.
-            then (
-                data => {
-                    //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
-                    var data = 
-                    {
-                        ofertaDocumentacion: {
-                            ofertaDocumentoId: 0,
-                            ofertaId: vm.ofertaId(),
-                            carpetaId: carpetaId,
-                            location: data.Location,
-                            key: fileKey
-                        }
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    if(n[1] == nom) {
+                        encontrado = true;
+                        id = d.ofertaDocumentoId
+                        break;
                     }
-    
-                    llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion", data, function (err, data) {
-                        if (err) return mensError(err);
-                        $('#modalUploadDoc').modal('hide');
-                        mensNormal('Archivo subido con exito');
-                        limpiaDatosArchivo();
-                        cargaTablaDocumentacion();
-                    });
-                    
-    
-                    
-                },
-                err =>{
-                    if (err) return mensError(err);
                 }
-            );        
-        });
-        
+                if(encontrado) {
+
+                    var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(newFile, fileKey, id);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            // no hacemos nada (no quiere borrar)
+                        }
+                    });
+
+                } else {
+                    uploadDocum(newFile, fileKey, id);
+                }
+            } else {
+                uploadDocum(newFile, fileKey, id);
+            }
+        }); 
     });
 
 
@@ -2587,7 +2574,6 @@ function format(d) {
         html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
         doc.forEach(e => {
             var l = e.key.split('/');
-            console.log(l);
             html += '<div class="row" style="margin-bottom: 10px">' +
                         '<section class="col col-md-5">' + 
                             '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
@@ -2638,7 +2624,7 @@ function aceptarNuevaCarpeta() {
         }
 
         llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion/carpeta", data, function (err, data) {
-            if (err) return mensError(err);
+            if (err) return
             $('#modalNuevaCarpeta').modal('hide');
             mensNormal('Carpeta creada con exito');
             cargaTablaDocumentacion();
@@ -2757,6 +2743,69 @@ function deleteCarpeta(id) {
     });
 }
 
-function uploadDoc() {
+
+
+function uploadDocum(newFile, fileKey, id) {
+    var method = 'POST';
+    var url = "/api/ofertas/documentacion/";
+    if(id > 0) {
+        method = 'PUT';
+        url = "/api/ofertas/documentacion/" + id
+    }
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        var bucket = parametros.bucket_docum;
+        var params = {
+            Bucket: bucket,
+            Key: fileKey,
+            IdentityPoolId: parametros.identity_pool_docum,
+            Body: newFile,
+            ACL: "public-read"
+        }
+        // Use S3 ManagedUpload class as it supports multipart uploads
+        var upload = new AWS.S3.ManagedUpload({
+            params: params
+        });
+        var promise = upload.on('httpUploadProgress', function(evt) {
+            $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+            $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+          })
+          .promise();
+        promise.
+        then (
+            data => {
+                //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
+                var data = 
+                {
+                    ofertaDocumentacion: {
+                        ofertaDocumentoId: id,
+                        ofertaId: vm.ofertaId(),
+                        carpetaId: carpetaId,
+                        location: data.Location,
+                        key: fileKey
+                    }
+                }
+
+                llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                    if (err) return mensError(err);
+                    $('#modalUploadDoc').modal('hide');
+                    mensNormal('Archivo subido con exito');
+                    limpiaDatosArchivo();
+                    cargaTablaDocumentacion();
+                });
+                
+
+                
+            },
+            err =>{
+                if (err) return mensError(err);
+            }
+        );        
+    });
    
 }
