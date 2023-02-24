@@ -335,7 +335,7 @@ function initForm() {
             tr.removeClass('shown');
         } else {
             // Open this row
-            row.child(format(row.data())).show();
+            row.child(formatData(row.data())).show();
             tr.addClass('shown');
         }
     });
@@ -616,6 +616,7 @@ function admData() {
     self.fechaContrato = ko.observable();
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
+    self.ofertaId = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -838,6 +839,7 @@ function admData() {
 function loadData(data) {  
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
+    vm.ofertaId(data.ofertaId);
     vm.tipoContratoId(data.tipoContratoId);
     loadTiposContrato(data.tipoContratoId);
     vm.stipoContratoId(data.tipoContratoId);    
@@ -7545,23 +7547,30 @@ function initTablaDocumentacion() {
                 data: null,
                 defaultContent: '',
                 //data:"carpetaId",
-            },{
+            },
+            {
             data: "carpetaNombre",
-        },{
+            },
+            {
+            data: "tipo",
+            },
+            {
             data: "carpetaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                return html = "<div class='pull-right'>" + bt + " " + bt2 + "</div>";
-                
+                if(row.tipo == "contrato") {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    return html = "<div class='pull-right'>" + bt + " " + bt2 + "</div>";
+                }
+                return html;
             }
         }]
     });
 }
 
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/contratos/documentacion/"  + vm.contratoId() + "/" + vm.tipoContratoId(), null, function (err, data) {
+    llamadaAjax("GET",  "/api/contratos/documentacion/contrato/oferta/"  + vm.contratoId() + "/" + vm.tipoContratoId() + "/" + vm.ofertaId(), null, function (err, data) {
         if (err) return;
         if(data) loadTablaDocumentacion(data);
     });
@@ -7577,21 +7586,32 @@ function loadTablaDocumentacion(data) {
     dt.fnDraw();
 }
 
-function format(d) {
+function formatData(d) {
     var doc = d.documentos;
     var html = "";
         html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+        var a;
         doc.forEach(e => {
             var l = e.key.split('/');
-            html += '<div class="row" style="margin-bottom: 10px">' +
+             a = '<div class="row" style="margin-bottom: 10px">' +
                         '<section class="col col-md-5">' + 
                             '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
                         '</section>' +
                         '<section class="col col-md-3 text-left">' +
-                            '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.contratoDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.contratoDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
                         '</section>' +
                         '<section class="col col-md-4">' + '</section>' +
                     '</div>' 
+            if(d.tipo == 'oferta') {
+                a = '<div class="row" style="margin-bottom: 10px">' +
+                '<section class="col col-md-12">' + 
+                    '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
+                '</section>' +
+               
+            '</div>' 
+
+            }
+            html += a;
         });
     return html;
 }

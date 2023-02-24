@@ -56,9 +56,12 @@ ALTER TABLE `carpetas`
   `carpetaId` int(11) default NULL,
   `location` varchar(255) default NULL,
   `key` varchar(255) default NULL,
-  PRIMARY KEY  (`contratoDocumentoId`),
-  KEY `doc_contratoFK` (`contratoId`),
-  CONSTRAINT `doc_contratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`) ON DELETE NO ACTION ON UPDATE CASCADE
+  PRIMARY KEY  (`contratoDocumentoId`)
 ) 
+
+ALTER TABLE `contratodocumentacion`   
+  ADD COLUMN `ofertaDocumentoId` INT(11) UNSIGNED NULL AFTER `key`
+
+
 
 
