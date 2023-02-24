@@ -5,15 +5,15 @@ CREATE TABLE `carpetas` (
   PRIMARY KEY  (`carpetaId`)
 );
 
-CREATE TABLE `ofertaDocumentacion` (
+CREATE TABLE `ofertadocumentacion` (
   `ofertaDocumentoId` int(11) unsigned NOT NULL auto_increment,
   `ofertaId` int(11) default NULL,
   `carpetaId` int(11) default NULL,
   `location` varchar(255) default NULL,
   `key` varchar(255) default NULL,
   PRIMARY KEY  (`ofertaDocumentoId`),
-  KEY `carpeta_ofertaFK` (`ofertaId`),
-  CONSTRAINT `carpeta_ofertaFK` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas` (`ofertaId`) ON UPDATE CASCADE
+  KEY `docof_ofertaFK` (`ofertaId`),
+  CONSTRAINT `docof_ofertaFK` FOREIGN KEY (`ofertaId`) REFERENCES `ofertas` (`ofertaId`) ON UPDATE CASCADE
 );
 
 
@@ -45,7 +45,20 @@ ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `carpeta_ofertaFK`;
 ALTER TABLE `ofertadocumentacion` ADD CONSTRAINT `carpeta_ofertaFK` 
 FOREIGN KEY (`ofertaId`) REFERENCES `proasistencia`.`ofertas`(`ofertaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
 
-ALTER TABLE `proasistencia`.`carpetas`   
+ALTER TABLE `carpetas`   
   ADD  UNIQUE INDEX `uniq_nombre` (`nombre`);
+
+
+
+  CREATE TABLE `contratodocumentacion` (
+  `contratoDocumentoId` int(11) unsigned NOT NULL auto_increment,
+  `contratoId` int(11) default NULL,
+  `carpetaId` int(11) default NULL,
+  `location` varchar(255) default NULL,
+  `key` varchar(255) default NULL,
+  PRIMARY KEY  (`contratoDocumentoId`),
+  KEY `doc_contratoFK` (`contratoId`),
+  CONSTRAINT `doc_contratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos` (`contratoId`) ON DELETE NO ACTION ON UPDATE CASCADE
+) 
 
 

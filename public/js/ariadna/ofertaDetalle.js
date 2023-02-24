@@ -288,7 +288,7 @@ function initForm() {
     initTablaBases();
     initTablaConceptosLineas();
     initTablaProveedores();
-    initTablaDocumentacion()
+    initTablaDocumentacion();
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {

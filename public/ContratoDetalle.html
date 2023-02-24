@@ -3068,6 +3068,122 @@
         <!-- /.modal-dialog -->
     </div>  
     <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalNuevaCarpeta" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> CREACIÓN DE CARPETAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="creacionCarpetas-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Nombre de la carpeta</label>
+                                        <label class="input">
+                                            <input id="txtCarpetaNombre" name="txtCarpetaNombre" data-bind="value: carpetaNombre" class="text" />
+                                        </label>
+                                    </section>
+                                   
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarNuevaCarpeta" class="btn btn-primary"  onclick="aceptarNuevaCarpeta()">
+                                Aceptar
+                            </button>
+                           <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarModalGenerarPrefacturasObras()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
+    <!--End modal-->
+      <!--MODAL-->
+      <div class="modal fade" id="modalUploadDoc" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Subir documento</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmloadDoc" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <form id="upload-form" class="smart-form">
+                                                <fieldset>
+                                                    
+                                                        <!-- DOCUMENT -->
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="label">Nombre del documento</label>
+                                                                <label class="input">
+                                                                    <input id="txtDocumNombre" name="txtDocumNombre" type="text" data-bind="value: documNombre" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        
+                                                            <div id="P1Title" class="row">
+                                                                <section class="col col-md-12">
+                                                                    <h3>Escoja el documento a subir</h3>
+                                                                </section>
+                                                            </div>
+                                                            <div id="P1Loader" class="row">
+                                                                <section class="col col-md-6">
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar" role="progressbar"></div>
+                                                                    </div>
+                                                                </section>
+                                                                <section class="col col-md-6">
+                                                                    <input id="upload-input" type="file" name="uploads[]"></br>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-12">
+                                                                    <div id="msgContainer" style="color:blue">
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-12">
+                                                                    <div id="docContainer"></div>
+                                                                </section>
+                                                            </div>
+                                                        </section>
+                                                        <!-- END DOCUMENT -->
+                                                        
+                                                    
+                                                </fieldset>
+                                                
+                                            </form>
+                                        
+                                    
+                                </article>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--END MODAL-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
@@ -3169,6 +3285,9 @@
     <script src="js/plugin/datatables/new/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.html5.min.js"></script>
     <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.print.min.js"></script>
+
+    <!--AWS-->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 
     
     <script type="text/javascript">
