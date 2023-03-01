@@ -63,5 +63,18 @@ ALTER TABLE `contratodocumentacion`
   ADD COLUMN `ofertaDocumentoId` INT(11) UNSIGNED NULL AFTER `key`
 
 
+CREATE TABLE `partedocumentacion` (
+  `parteDocumentoId` int(11) unsigned NOT NULL auto_increment,
+  `parteId` int(11) default NULL,
+  `carpetaId` int(11) default NULL,
+  `location` varchar(255) default NULL,
+  `key` varchar(255) default NULL,
+  PRIMARY KEY  (`parteDocumentoId`)
+);
+
+ALTER TABLE `partedocumentacion`   
+  ADD COLUMN `ofertaDocumentoId` INT(11) NOT NULL AFTER `key`;
+
+
 
 
