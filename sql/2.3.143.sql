@@ -73,7 +73,7 @@ CREATE TABLE `partedocumentacion` (
 );
 
 ALTER TABLE `partedocumentacion`   
-  ADD COLUMN `ofertaDocumentoId` INT(11) NOT NULL AFTER `key`;
+  ADD COLUMN `ofertaDocumentoId` INT(11) AFTER `key`;
 
 
 
