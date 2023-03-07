@@ -33,6 +33,11 @@ INSERT INTO `carpetas` (`nombre`) VALUES ('Fotografias(Despues) ');
  ADD COLUMN `identity_pool_docum` VARCHAR(255) NULL AFTER `bucket_folder_docum`, 
  ADD COLUMN `raiz_url_docum` VARCHAR(255) NULL AFTER `identity_pool_docum`; 
 
+ UPDATE `parametros` SET `raiz_url_docum` = 'https://proas-documentacion.s3-eu-west-1.amazonaws.com/' WHERE `parametroId` = '0'; 
+ UPDATE `parametros` SET `identity_pool_docum` = 'eu-west-1:45dceab6-694d-4599-914d-b2be27469500' WHERE `parametroId` = '0';
+ UPDATE `parametros` SET `bucket_region_docum` = 'eu-west-1' WHERE `parametroId` = '0';
+ UPDATE `parametros` SET `bucket_docum` = 'proas-documentacion' WHERE `parametroId` = '0';  
+
  ALTER TABLE `carpetas`   
   ADD COLUMN `departamentoId` INT(11) NULL AFTER `tipo`,
   ADD CONSTRAINT `carpeta_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`);
@@ -42,8 +47,6 @@ INSERT INTO `carpetas` (`nombre`) VALUES ('Fotografias(Despues) ');
 
 ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `carpeta_ofertaFK`;
 
-ALTER TABLE `ofertadocumentacion` ADD CONSTRAINT `carpeta_ofertaFK` 
-FOREIGN KEY (`ofertaId`) REFERENCES `proasistencia`.`ofertas`(`ofertaId`) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 ALTER TABLE `carpetas`   
   ADD  UNIQUE INDEX `uniq_nombre` (`nombre`);
