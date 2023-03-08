@@ -267,6 +267,12 @@ function initTablaFacturas() {
         }, {
             data: "vNum"
         }, {
+            data: "nombreAgente",
+            render: function (data, type, row) {
+                if(!data || data =="") return "";
+                return data;
+            }
+        },{
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
