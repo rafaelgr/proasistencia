@@ -338,8 +338,8 @@ function initTablaFacturas() {
     });
 
     // Hide some columns by default
-    tablaFacturas.columns(8).visible(false);
-    tablaFacturas.columns(10).visible(false);
+    tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(11).visible(false);
 }
 
 function datosOK() {
