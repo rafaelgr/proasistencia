@@ -203,18 +203,18 @@ function initTablaFacturas() {
         responsive: true,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
-            //registro facturado
+            //facturas asociadas a más de un documento de pago
             if(aData.aNum > 1) {
                 $(nRow).attr('style', 'background: #F85F6A'); 
 
             }
-             //letra recibida
+             //facturas asociadas a un documento de pago
              if(aData.aNum == 1) {
                 $(nRow).attr('style', 'background: #FFF800'); 
             }
 
-            //letra en gestión de cobros
-            if(aData.formaPagoId == 12) {
+            //facturas que no necesitan asociación de documento de pago
+            if(aData.formaPagoId == 12 || aData.formaPagoId == 21) {
                 $(nRow).attr('style', 'background: #11F611'); 
             }
             
