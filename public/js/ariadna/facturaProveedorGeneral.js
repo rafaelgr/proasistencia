@@ -179,7 +179,7 @@ function initTablaFacturas() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 7 || column === 8) {
+                    if(column === 7 || column === 8 || column === 11 || column === 12) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -203,18 +203,18 @@ function initTablaFacturas() {
         responsive: true,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
-            //registro facturado
+            //facturas asociadas a más de un documento de pago
             if(aData.aNum > 1) {
                 $(nRow).attr('style', 'background: #F85F6A'); 
 
             }
-             //letra recibida
+             //facturas asociadas a un documento de pago
              if(aData.aNum == 1) {
                 $(nRow).attr('style', 'background: #FFF800'); 
             }
 
-            //letra en gestión de cobros
-            if(aData.formaPagoId == 12) {
+            //facturas que no necesitan asociación de documento de pago
+            if(aData.formaPagoId == 12 || aData.formaPagoId == 21) {
                 $(nRow).attr('style', 'background: #11F611'); 
             }
             
@@ -318,9 +318,17 @@ function initTablaFacturas() {
             data: "emisorNif"
         },{
             data: "numregisconta",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0');
+                return string;
+            }
         },
         {
             data: "aNum",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0');
+                return string;
+            }
         },   {
             data: "facproveId",
             render: function (data, type, row) {

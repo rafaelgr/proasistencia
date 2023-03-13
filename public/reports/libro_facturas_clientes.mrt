@@ -14,6 +14,7 @@
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
+  <Key>2ec0795b85af49dea40dfc635e985797</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
     <Page1 Ref="2" type="Page" isKey="true">
@@ -28,6 +29,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.4,9.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,14.25,Regular,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
@@ -41,6 +43,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>18,0.2,9.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,12,Regular,Point,False,0</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -53,6 +56,7 @@
             </Text16>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageHeaderBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -65,6 +69,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.1,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -77,6 +82,7 @@
             </Text5>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -90,6 +96,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>831f3923acd34c74aae0ee984e29f8a0</Guid>
               <Margins>0,0,0,0</Margins>
@@ -107,8 +114,10 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>15.2,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>a08b2dd5aa5b4de4b2f550881621528b</Guid>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
               <Page isRef="2" />
@@ -122,10 +131,12 @@
             <Text10 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.6,0,2,0.8</ClientRectangle>
+              <ClientRectangle>19.8,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>070e40d35f924f12bc1afac403b85268</Guid>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
               <Page isRef="2" />
@@ -141,6 +152,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>22,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>80c5816b0bd44672bd25b9082d332fc8</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -159,8 +171,10 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>16.6,0,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>6f67543450e746f7816f410bcfe4af4d</Guid>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
               <Page isRef="2" />
@@ -176,6 +190,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_nombre</Name>
@@ -192,6 +207,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>6.4,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_tipo</Name>
@@ -208,6 +224,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>8,0,5.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_totComision</Name>
@@ -224,6 +241,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>4.4,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>28552fa0073747309a96d89d9d5f6fa5</Guid>
               <Margins>0,0,0,0</Margins>
@@ -239,10 +257,12 @@
             <Text4 Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.8,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>17.8,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>218d80ec7b42410396b70d05599a5498</Guid>
+              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
               <Page isRef="2" />
@@ -258,6 +278,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>23.8,0,3.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>30c06512e8884376ab5ec1f872f2470a</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -276,6 +297,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>2,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>befa5a97d60649578ddc41e57aef15a0</Guid>
               <Margins>0,0,0,0</Margins>
@@ -290,6 +312,7 @@
             </Text36>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>HeaderlibPro</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -304,6 +327,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0.2,3.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,12,Bold,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text35</Name>
@@ -316,6 +340,7 @@
           </Components>
           <Condition>{libCli.serie}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GroupHeaderBand2</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -327,6 +352,7 @@
           <Components isList="true" count="0" />
           <Condition>{libCli.facturaId}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GroupHeaderBand3</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
@@ -343,6 +369,7 @@
               <CanGrow>True</CanGrow>
               <ClientRectangle>15.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>9a24c9f6ea094d94a8441aafbf825f40</Guid>
@@ -354,10 +381,11 @@
               <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="26" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -365,10 +393,11 @@
             <Text11 Ref="27" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>19.6,0,2,0.4</ClientRectangle>
+              <ClientRectangle>19.8,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.importeRetencion,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>29101da2d0c34f0c8c918a513ade1443</Guid>
@@ -380,10 +409,11 @@
               <Text>{libCli.importeRetencion}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="28" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -393,6 +423,7 @@
               <CanGrow>True</CanGrow>
               <ClientRectangle>16.6,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>227b3a69aa40431b9abf50440bba0971</Guid>
@@ -404,10 +435,11 @@
               <Text>{libCli.cuota}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="30" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -417,6 +449,7 @@
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -436,6 +469,7 @@
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -454,6 +488,7 @@
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -462,18 +497,10 @@
               <Parent isRef="24" />
               <Text>{libCli.receptorNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <Symbol>€</Symbol>
-                <UseLocalSetting>False</UseLocalSetting>
-              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_totComision>
-            <Text15 Ref="35" type="Text" isKey="true">
+            <Text15 Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -481,6 +508,7 @@
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,WhiteSmoke,White,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>fa906f2177c440e189c84e0ae44f2fd7</Guid>
@@ -491,25 +519,26 @@
               <Parent isRef="24" />
               <Text>{libCli.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="36" type="NumberFormat" isKey="true">
+              <TextFormat Ref="35" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text15>
-            <Text7 Ref="37" type="Text" isKey="true">
+            <Text7 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>13.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>5592025692a34d09907a5e85ced97093</Guid>
               <HideZeros>True</HideZeros>
-              <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="2" />
@@ -517,21 +546,23 @@
               <Text>{libCli.basFact}
 </Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="38" type="NumberFormat" isKey="true">
+              <TextFormat Ref="37" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text7>
-            <Text25 Ref="39" type="Text" isKey="true">
+            <Text25 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>4.4,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
@@ -542,13 +573,14 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text25>
-            <Text23 Ref="40" type="Text" isKey="true">
+            <Text23 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>17.8,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>17.8,0,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.suplidos,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>d8716aa95e1f4fe590a2bf00386c292c</Guid>
@@ -559,21 +591,23 @@
               <Parent isRef="24" />
               <Text>{libCli.suplidos}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="NumberFormat" isKey="true">
+              <TextFormat Ref="40" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text23>
-            <Text29 Ref="42" type="Text" isKey="true">
+            <Text29 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
               <ClientRectangle>23.8,0,3.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>be103befd1b24c61a33a585b3c2dcf1c</Guid>
@@ -584,21 +618,16 @@
               <Parent isRef="24" />
               <Text>{libCli.observaciones}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text29>
-            <Text37 Ref="44" type="Text" isKey="true">
+            <Text37 Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>2,0,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>f93a51d69e2e4224a916a4c2bbc17ef3</Guid>
@@ -614,229 +643,247 @@
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
           <DataSourceName>libCli</DataSourceName>
+          <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DatalibCli</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DatalibCli>
-        <FooterBand1 Ref="45" type="FooterBand" isKey="true">
+        <FooterBand1 Ref="43" type="FooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,8.8,27.7,0.8</ClientRectangle>
           <Components isList="true" count="6">
-            <Text18 Ref="46" type="Text" isKey="true">
+            <Text18 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>13.6,0.2,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="NumberFormat" isKey="true">
+              <TextFormat Ref="45" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text18>
-            <Text19 Ref="48" type="Text" isKey="true">
+            <Text19 Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.2,5.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>TOTAL GENERAL</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text19>
-            <Text20 Ref="49" type="Text" isKey="true">
+            <Text20 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>16.2,0.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <Guid>ed27cd7f96d04199b190ce6941e31493</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="50" type="NumberFormat" isKey="true">
+              <TextFormat Ref="48" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text21 Ref="51" type="Text" isKey="true">
+            <Text21 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.6,0.2,2,0.4</ClientRectangle>
+              <ClientRectangle>19.8,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <Guid>713afcaf74c94d0283bc8d1bb83f1b0a</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>{Sum(DatalibCli,libCli.importeRetencion)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="52" type="NumberFormat" isKey="true">
+              <TextFormat Ref="50" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text21>
-            <Text22 Ref="53" type="Text" isKey="true">
+            <Text22 Ref="51" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.8,0.2,1.8,0.4</ClientRectangle>
+              <ClientRectangle>22,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <Guid>a53f9b28a22947099f55f86c45e37c07</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>{(Sum(DatalibCli,libCli.basFact)+ Sum(DatalibCli, libCli.cuota)-Sum(DatalibCli,libCli.importeRetencion))+Sum(DatalibCli,libCli.suplidos)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="54" type="NumberFormat" isKey="true">
+              <TextFormat Ref="52" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
-            <Text24 Ref="55" type="Text" isKey="true">
+            <Text24 Ref="53" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.8,0.2,1.6,0.4</ClientRectangle>
+              <ClientRectangle>17.8,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <Guid>5074160a4233446d9bdf544172033afd</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text24</Name>
               <Page isRef="2" />
-              <Parent isRef="45" />
+              <Parent isRef="43" />
               <Text>{Sum(DatalibCli,libCli.suplidos)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="56" type="NumberFormat" isKey="true">
+              <TextFormat Ref="54" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text24>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>FooterBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
         </FooterBand1>
-        <HeaderBand1 Ref="57" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="55" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,10.4,27.7,0.6</ClientRectangle>
           <Components isList="true" count="5">
-            <Text1 Ref="58" type="Text" isKey="true">
+            <Text1 Ref="56" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,4.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>60caffd24c034c85b4b67de33a22cc1d</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
               <Page isRef="2" />
-              <Parent isRef="57" />
+              <Parent isRef="55" />
               <Text>REGIMEN GENERAL</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="59" type="Text" isKey="true">
+            <Text2 Ref="57" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>7,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>fa1d3e953eea4eb5827e83b9f1ba4c14</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="2" />
-              <Parent isRef="57" />
+              <Parent isRef="55" />
               <Text>Tipo de IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text2>
-            <Text31 Ref="60" type="Text" isKey="true">
+            <Text31 Ref="58" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>9.2,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>8efe0c938fce4fb48816fa72565b092a</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
               <Page isRef="2" />
-              <Parent isRef="57" />
+              <Parent isRef="55" />
               <Text>Base imp.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text31>
-            <Text33 Ref="61" type="Text" isKey="true">
+            <Text33 Ref="59" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0.2,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>ae5b76d2c4414ff7959da68f9679eb0c</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text33</Name>
               <Page isRef="2" />
-              <Parent isRef="57" />
+              <Parent isRef="55" />
               <Text>% IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text33>
-            <Text34 Ref="62" type="Text" isKey="true">
+            <Text34 Ref="60" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12.8,0.2,1.4,0.4</ClientRectangle>
+              <ClientRectangle>12.8,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,9,Bold,Point,False,0</Font>
               <Guid>b0ca8d6052d5475dbc1346f50c501f5e</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text34</Name>
               <Page isRef="2" />
-              <Parent isRef="57" />
+              <Parent isRef="55" />
               <Text>IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -845,108 +892,117 @@
             </Text34>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>HeaderBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
         </HeaderBand1>
-        <GroupHeaderBand1 Ref="63" type="GroupHeaderBand" isKey="true">
+        <GroupHeaderBand1 Ref="61" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,11.8,27.7,0.4</ClientRectangle>
           <Components isList="true" count="4">
-            <Text32 Ref="64" type="Text" isKey="true">
+            <Text32 Ref="62" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>7.2,0,2,0.2</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.tipoIva,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>9040d04175be4c28bb23a604c43e667b</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text32</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="61" />
               <Text>{libCli.tipoIva}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text32>
-            <Text27 Ref="65" type="Text" isKey="true">
+            <Text27 Ref="63" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>9.4,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.tipoIva,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="61" />
               <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="66" type="NumberFormat" isKey="true">
+              <TextFormat Ref="64" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
             </Text27>
-            <Text28 Ref="67" type="Text" isKey="true">
+            <Text28 Ref="65" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.tipoIva,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="61" />
               <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="68" type="NumberFormat" isKey="true">
+              <TextFormat Ref="66" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
-            <Text30 Ref="69" type="Text" isKey="true">
+            <Text30 Ref="67" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>13,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.tipoIva,EqualTo,SUPLIDOS,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
+              <Expressions isList="true" count="0" />
               <Font>Arial,8.25,Regular,Point,False,0</Font>
               <Guid>3dc05cf06e1d4162979804f900f1926c</Guid>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
               <Page isRef="2" />
-              <Parent isRef="63" />
+              <Parent isRef="61" />
               <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="70" type="NumberFormat" isKey="true">
+              <TextFormat Ref="68" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
             </Text30>
           </Components>
           <Condition>{libCli.tipoIva}</Condition>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>GroupHeaderBand1</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
         </GroupHeaderBand1>
-        <DataBand1 Ref="71" type="DataBand" isKey="true">
+        <DataBand1 Ref="69" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,13,27.7,0</ClientRectangle>
@@ -954,6 +1010,7 @@
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
           <DataSourceName>libCli</DataSourceName>
+          <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand1</Name>
           <Page isRef="2" />
@@ -964,6 +1021,7 @@
       <Conditions isList="true" count="1">
         <value>libPro.numregisconta,EqualTo,null,,String,Red,Transparent,Arial_x002C_8,False,False,,,None</value>
       </Conditions>
+      <Expressions isList="true" count="0" />
       <Guid>7f7989b68a2aca6d444ff67b30b21651</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
@@ -971,13 +1029,8 @@
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="72" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
-        <Font>Arial,100</Font>
-        <TextBrush>[50:0:0:0]</TextBrush>
-      </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="73" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -990,14 +1043,13 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>8/25/2020 9:52:59 AM</ReportChanged>
+  <ReportChanged>3/10/2023 12:53:14 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\proyectos\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>fc971d0f6ca6474c949d2f610f9a6f82</ReportGuid>
-  <ReportImage isNull="true" />
+  <ReportFile>C:\node_apps\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
+  <ReportGuid>6296f6ff4a4e41c392178473bdf11b61</ReportGuid>
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.1.10.0</ReportVersion>
+  <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;
