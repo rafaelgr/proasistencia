@@ -179,7 +179,7 @@ function initTablaFacturas() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 7 || column === 8) {
+                    if(column === 7 || column === 8 || column === 11 || column === 12) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -318,9 +318,17 @@ function initTablaFacturas() {
             data: "emisorNif"
         },{
             data: "numregisconta",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0');
+                return string;
+            }
         },
         {
             data: "aNum",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0');
+                return string;
+            }
         },   {
             data: "facproveId",
             render: function (data, type, row) {
