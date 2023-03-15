@@ -45,7 +45,7 @@ INSERT INTO `carpetas` (`nombre`) VALUES ('Fotografias(Despues) ');
   UPDATE carpetas SET departamentoId = 7;
 
 
-ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `carpeta_ofertaFK`;
+ALTER TABLE `ofertadocumentacion` DROP FOREIGN KEY `docof_ofertaFK`;
 
 
 ALTER TABLE `carpetas`   
@@ -60,10 +60,10 @@ ALTER TABLE `carpetas`
   `location` varchar(255) default NULL,
   `key` varchar(255) default NULL,
   PRIMARY KEY  (`contratoDocumentoId`)
-) 
+);
 
 ALTER TABLE `contratodocumentacion`   
-  ADD COLUMN `ofertaDocumentoId` INT(11) UNSIGNED NULL AFTER `key`
+  ADD COLUMN `ofertaDocumentoId` INT(11) UNSIGNED NULL AFTER `key`;
 
 
 CREATE TABLE `partedocumentacion` (
@@ -77,6 +77,20 @@ CREATE TABLE `partedocumentacion` (
 
 ALTER TABLE `partedocumentacion`   
   ADD COLUMN `ofertaDocumentoId` INT(11) AFTER `key`;
+
+  //CARPETA GENERAL DE documentacion
+
+  CREATE TABLE `documentacion`(  
+  `documentoId` INT(11) NOT NULL AUTO_INCREMENT,
+  `ofertaId` INT(11),
+  `contratoId` INT(11),
+  `parteId` INT(11),
+  `carpetaId` INT(11),
+  `location` VARCHAR(255),
+  `key` VARCHAR(255),
+  PRIMARY KEY (`documentoId`)
+);
+
 
 
 

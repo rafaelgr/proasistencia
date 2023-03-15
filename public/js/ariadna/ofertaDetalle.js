@@ -181,7 +181,7 @@ function initForm() {
         var nom = vm.documNombre() + "." + ext;
         var fileKey =  carpeta + "/" + nom
         //buscamos si el documento ya existe en la carpeta de destino
-        llamadaAjax('GET', "/api/ofertas/documentacion/documentos/carpeta/" + carpetaId, null, function (err, docums) {
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
             if (err) return;
             if(docums && docums.length > 0) {
                 for(var i = 0; i < docums.length; i++) {
@@ -189,7 +189,7 @@ function initForm() {
                     var n = d.key.split('/');
                     if(n[1] == nom) {
                         encontrado = true;
-                        id = d.ofertaDocumentoId
+                        id = d.documentoId
                         break;
                     }
                 }
@@ -2552,7 +2552,7 @@ function initTablaDocumentacion() {
 }
 
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/ofertas/documentacion/"  + vm.ofertaId() + "/" + vm.tipoOfertaId(), null, function (err, data) {
+    llamadaAjax("GET",  "/api/documentacion/"  + vm.ofertaId() + "/" + vm.tipoOfertaId() + "/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
         if(data) loadTablaDocumentacion(data);
     });
@@ -2579,7 +2579,7 @@ function format(d) {
                             '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
                         '</section>' +
                         '<section class="col col-md-3 text-left">' +
-                            '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.ofertaDocumentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                            '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
                         '</section>' +
                         '<section class="col col-md-4">' + '</section>' +
                     '</div>' 
@@ -2623,7 +2623,7 @@ function aceptarNuevaCarpeta() {
             }
         }
 
-        llamadaAjax('POST', myconfig.apiUrl + "/api/ofertas/documentacion/carpeta", data, function (err, data) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
             if (err) return
             $('#modalNuevaCarpeta').modal('hide');
             mensNormal('Carpeta creada con exito');
@@ -2639,7 +2639,7 @@ function deleteDocumento(id) {
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: parametros.identity_pool_docum,
         });
-        llamadaAjax('GET', "/api/ofertas/documentacion/un/documento/" + id, null, function (err, data) {
+        llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
             if (err) return;
             if(data) {
                 var params = {
@@ -2652,8 +2652,8 @@ function deleteDocumento(id) {
     
             s3.deleteObject({}, (err, result) => {
                 if (err) mensError('Error al borrar el docuemnto');
-                //Actualizamos la tabla ofertaDocumentacion
-                llamadaAjax('DELETE', myconfig.apiUrl + "/api/ofertas/documentacion/elimina-documento/" + id, null, function (err, data) {
+                //Actualizamos la tabla documentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
                     if (err) return;
                     cargaTablaDocumentacion();
                 });
@@ -2676,7 +2676,7 @@ function deleteCarpeta(id) {
             llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
                 if (err) return;
                 var parametros = data;
-                llamadaAjax('DELETE', "/api/ofertas/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
                     if (err) return mensError('Fallo al borrar la documentación en la base de datos');
                     if(data2) {
                         
@@ -2747,10 +2747,10 @@ function deleteCarpeta(id) {
 
 function uploadDocum(newFile, fileKey, id) {
     var method = 'POST';
-    var url = "/api/ofertas/documentacion/";
+    var url = "/api/documentacion/";
     if(id > 0) {
         method = 'PUT';
-        url = "/api/ofertas/documentacion/" + id
+        url = "/api/documentacion/" + id
     }
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
@@ -2782,9 +2782,11 @@ function uploadDocum(newFile, fileKey, id) {
                 //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
                 var data = 
                 {
-                    ofertaDocumentacion: {
-                        ofertaDocumentoId: id,
+                    documentacion: {
+                        documentoId: id,
                         ofertaId: vm.ofertaId(),
+                        contratoId: vm.contratoId(),
+                        parteId: null,
                         carpetaId: carpetaId,
                         location: data.Location,
                         key: fileKey
