@@ -31,6 +31,7 @@ var breakpointDefinition = {
 var  docName = '';
 var carpeta = ''
 var carpetaId = null;
+var carpetaTipo = null;
 
 
 datePickerSpanish(); // see comun.js
@@ -2593,6 +2594,7 @@ function preparaDatosArchivo(r) {
     docName = docName.replace(/[\/]/g, "-");
     console.log(docName);
     carpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo;
     key = r.carpetaNombre   + "/" +  docName;
     vm.documNombre(docName);
 }
@@ -2784,13 +2786,18 @@ function uploadDocum(newFile, fileKey, id) {
                 {
                     documentacion: {
                         documentoId: id,
-                        ofertaId: vm.ofertaId(),
-                        contratoId: vm.contratoId(),
+                        ofertaId: null,
+                        contratoId: null,
                         parteId: null,
                         carpetaId: carpetaId,
                         location: data.Location,
                         key: fileKey
                     }
+                }
+                if(carpetaTipo == "oferta") {
+                    data.documentacion.ofertaId =  vm.ofertaId();
+                }else if(carpetaTipo == "contrato") {
+                    data.documentacion.contratoId = vm.contratoId();
                 }
 
                 llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {

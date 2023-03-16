@@ -7569,7 +7569,7 @@ function initTablaDocumentacion() {
 }
 
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/documentacion/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
+    llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
         if(data) loadTablaDocumentacion(data);
     });
