@@ -4,7 +4,6 @@
 ofertaDetalle.js
 Funciones js par la página OfertaDetalle.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
@@ -32,6 +31,7 @@ var  docName = '';
 var carpeta = ''
 var carpetaId = null;
 var carpetaTipo = null;
+var num = 0;
 
 
 datePickerSpanish(); // see comun.js
@@ -220,6 +220,31 @@ function initForm() {
         }); 
     });
 
+    $('#dt_documentacion').on('draw.dt', function () {
+        // Recorre todas las filas de la tabla
+        //var a =  $('#dt_documentacion').DataTable();
+        //var datosColumna2 = a.column('carpetaNombre').data();
+        //console.log(datosColumna2);
+
+        const table = $('#dt_documentacion').DataTable(),
+      table_filtered=table.rows({page:'current'})
+ 
+console.log({data: table_filtered.data()});
+        //console.log(a.data());
+        /* $('#dt_documentacion tbody tr').each(function (a, b, c) {
+          var sublineas = $(this).next('.documentos');
+          console.log(sublineas.length);
+          var boton = $(this).find('.dt-control');
+      
+          // Si no hay sublíneas, oculta el botón
+          if (!sublineas.length) {
+            boton.hide();
+          } else {
+            boton.show();
+          }
+        }); */
+      });
+      
 
     initAutoCliente();
     initAutoMantenedor();
@@ -1142,17 +1167,15 @@ function datosOKLineas() {
 function initTablaOfertasLineas() {
     tablaOfertasLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
+        responsive: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+           
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -1649,15 +1672,13 @@ function initTablaBases() {
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -2196,15 +2217,12 @@ function initTablaConceptosLineas() {
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -2502,6 +2520,12 @@ function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
+        responsive: {
+            function (row, callback) {
+              var data = row.data();
+              console.log(data);
+            }
+          },
         "bDestroy": true,
         "columnDefs": [
             { "width": "5%", "targets": 0 },
@@ -2536,10 +2560,23 @@ function initTablaDocumentacion() {
                 orderable: false,
                 data: null,
                 defaultContent: '',
+                id: num++,
                 //data:"carpetaId",
+                render: function (data, type, row) {
+                    //console.log(row.documentos);
+                    var i = num;
+                    if(row.documentos.length == 0) $('#'+num).hide();
+                }
             },{
             data: "carpetaNombre",
-        },{
+            },{
+                data: "documentos",
+                render: function (data, type, row) {
+                    //var obj = JSON.parse(row.documentos);
+                    
+                    return row.documentos.length; ;
+                }
+                },{
             data: "carpetaId",
             render: function (data, type, row) {
                 var html = "";
@@ -2548,7 +2585,7 @@ function initTablaDocumentacion() {
                 return html = "<div class='pull-right'>" + bt + " " + bt2 + "</div>";
                 
             }
-        }]
+            }]
     });
 }
 
@@ -2570,6 +2607,7 @@ function loadTablaDocumentacion(data) {
 }
 
 function format(d) {
+    if(!d.documentos) d.documentos = [];
     var doc = d.documentos;
     var html = "";
         html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
