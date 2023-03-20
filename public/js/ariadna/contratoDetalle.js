@@ -383,7 +383,7 @@ function initForm() {
                             uploadDocum(newFile, fileKey, id);
                         }
                         if (ButtonPressed === "Cancelar") {
-                            // no hacemos nada (no quiere borrar)
+                            $('#upload-input').val([]);
                         }
                     });
 
@@ -7519,7 +7519,7 @@ function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
-        responsive: true,
+        responsive: false,
         "bDestroy": true,
         "columnDefs": [
             { "width": "5%", "targets": 0 },

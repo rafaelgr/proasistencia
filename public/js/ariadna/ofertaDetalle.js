@@ -193,7 +193,8 @@ function initForm() {
                 for(var i = 0; i < docums.length; i++) {
                     var d = docums[i];
                     var n = d.key.split('/');
-                    if(n[1] == nom) {
+                    var index = n.length - 1
+                    if(n[index] == nom) {
                         encontrado = true;
                         id = d.documentoId
                         break;
@@ -212,7 +213,7 @@ function initForm() {
                             uploadDocum(newFile, fileKey, id);
                         }
                         if (ButtonPressed === "Cancelar") {
-                            // no hacemos nada (no quiere borrar)
+                            $('#upload-input').val([]);
                         }
                     });
 
@@ -2546,7 +2547,6 @@ function initTablaDocumentacion() {
             },{
                 data: "documentos",
                 render: function (data, type, row) {
-                    //var obj = JSON.parse(row.documentos);
                     if(!row.documentos) return 0;
                     return row.documentos.length; ;
                 }
@@ -2655,7 +2655,7 @@ function aceptarNuevaSubCarpeta() {
         carpeta: {
             carpetaId: 0,
             nombre: n,
-            tipo: "oferta",
+            tipo: carpetaTipo,
             departamentoId: vm.tipoOfertaId()
         }
     }
@@ -2672,6 +2672,7 @@ function aceptarNuevaSubCarpeta() {
 function nuevaSubcarpeta(r) {
     vm.subCarpetaNombre(null);
     subCarpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo
 
 }
 
