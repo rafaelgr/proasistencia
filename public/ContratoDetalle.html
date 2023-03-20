@@ -2383,6 +2383,9 @@
                                                                                 <th data-class="phone">
                                                                                     Tipo
                                                                                 </th>
+                                                                                <th>
+                                                                                    Documentos
+                                                                                </th>
                                                                                 <th style="width:10%; text-align: center;">
                                                                                     <i class="fa fa-fw fa-gears">
                                                                                 </th>
@@ -3188,6 +3191,48 @@
         <!-- /.modal-dialog -->
     </div>
     <!--END MODAL-->
+     <!-- Modal -->
+     <div class="modal fade" id="modalpostSubcarpeta" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> CREACIÓN DE SUBCARPETAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="creacionSubcarpetas-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Nombre de la carpeta</label>
+                                        <label class="input">
+                                            <input id="txtCarpetaNombre" name="txtCarpetaNombre" data-bind="value: subCarpetaNombre" class="text" />
+                                        </label>
+                                    </section>
+                                   
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarNuevaSubCarpeta" class="btn btn-primary"  onclick="aceptarNuevaSubCarpeta()">
+                                Aceptar
+                            </button>
+                           <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarModalGenerarPrefacturasObras()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
+    <!--End modal-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

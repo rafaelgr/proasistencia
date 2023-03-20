@@ -29,6 +29,7 @@ var breakpointDefinition = {
 };
 var  docName = '';
 var carpeta = ''
+var subCarpeta = '';
 var carpetaId = null;
 var carpetaTipo = null;
 var num = 0;
@@ -113,6 +114,10 @@ function initForm() {
         return false;
     });
 
+    $("#creacionSubcarpetas-form").submit(function () {
+        return false;
+    });
+
     $("#frmDoc").submit(function () {
         return false;
     });
@@ -155,7 +160,7 @@ function initForm() {
         }
     });
 
-    $('#dt_documentacion').on('click', 'td.dt-control', function () {
+   $('#dt_documentacion').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = tablaDocumentacion.row(tr);
  
@@ -220,30 +225,6 @@ function initForm() {
         }); 
     });
 
-    $('#dt_documentacion').on('draw.dt', function () {
-        // Recorre todas las filas de la tabla
-        //var a =  $('#dt_documentacion').DataTable();
-        //var datosColumna2 = a.column('carpetaNombre').data();
-        //console.log(datosColumna2);
-
-        const table = $('#dt_documentacion').DataTable(),
-      table_filtered=table.rows({page:'current'})
- 
-console.log({data: table_filtered.data()});
-        //console.log(a.data());
-        /* $('#dt_documentacion tbody tr').each(function (a, b, c) {
-          var sublineas = $(this).next('.documentos');
-          console.log(sublineas.length);
-          var boton = $(this).find('.dt-control');
-      
-          // Si no hay sublíneas, oculta el botón
-          if (!sublineas.length) {
-            boton.hide();
-          } else {
-            boton.show();
-          }
-        }); */
-      });
       
 
     initAutoCliente();
@@ -504,6 +485,7 @@ function admData() {
 
      //CARPETAS  Y DOCUMENTOS
      self.carpetaNombre = ko.observable();
+     self.subCarpetaNombre = ko.observable();
      self.documNombre = ko.observable();
 }
 
@@ -2520,16 +2502,13 @@ function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
-        responsive: {
-            function (row, callback) {
-              var data = row.data();
-              console.log(data);
-            }
-          },
+        responsive: false,
         "bDestroy": true,
         "columnDefs": [
             { "width": "5%", "targets": 0 },
             { "width": "8%", "targets": 2 },
+            { "width": "5%", "targets": 3 },
+            { "width": "13%", "targets": 4 },
 
           ],
         language: {
@@ -2559,30 +2538,26 @@ function initTablaDocumentacion() {
                 className: 'dt-control',
                 orderable: false,
                 data: null,
-                defaultContent: '',
-                id: num++,
-                //data:"carpetaId",
-                render: function (data, type, row) {
-                    //console.log(row.documentos);
-                    var i = num;
-                    if(row.documentos.length == 0) $('#'+num).hide();
-                }
+                defaultContent: ''
             },{
-            data: "carpetaNombre",
+                data: "carpetaNombre",
+            },{
+                data: "tipo",
             },{
                 data: "documentos",
                 render: function (data, type, row) {
                     //var obj = JSON.parse(row.documentos);
-                    
+                    if(!row.documentos) return 0;
                     return row.documentos.length; ;
                 }
-                },{
+            },{
             data: "carpetaId",
             render: function (data, type, row) {
                 var html = "";
                 var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                return html = "<div class='pull-right'>" + bt + " " + bt2 + "</div>";
+                var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                return html = "<div class='pull-right'>" + bt + " " + bt2 + " " + bt3 +"</div>";
                 
             }
             }]
@@ -2613,9 +2588,10 @@ function format(d) {
         html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
         doc.forEach(e => {
             var l = e.key.split('/');
+            var index = l.length - 1;
             html += '<div class="row" style="margin-bottom: 10px">' +
                         '<section class="col col-md-5">' + 
-                            '<a href="' + e.location  + '" target="_blank">' + l[1] +'</a>' +
+                            '<a href="' + e.location  + '" target="_blank">' + l[index] +'</a>' +
                         '</section>' +
                         '<section class="col col-md-3 text-left">' +
                             '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
@@ -2669,6 +2645,34 @@ function aceptarNuevaCarpeta() {
             mensNormal('Carpeta creada con exito');
             cargaTablaDocumentacion();
         });
+}
+
+function aceptarNuevaSubCarpeta() {
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    var n = subCarpeta + "/" + vm.subCarpetaNombre();
+    var data = 
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: n,
+            tipo: "oferta",
+            departamentoId: vm.tipoOfertaId()
+        }
+    }
+
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+        if (err) return
+        $('#modalpostSubcarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
+}
+
+
+function nuevaSubcarpeta(r) {
+    vm.subCarpetaNombre(null);
+    subCarpeta = r.carpetaNombre;
+
 }
 
 function deleteDocumento(id) {
