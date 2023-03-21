@@ -284,7 +284,7 @@ function initTablaContratos() {
     // Hide some columns by default
     tablaContratos.columns(7).visible(false);
     tablaContratos.columns(8).visible(false);
-    tablaContratos.columns(9).visible(false);
+    //tablaContratos.columns(9).visible(false);
 }
 
 function datosOK() {

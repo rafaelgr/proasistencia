@@ -185,6 +185,7 @@ function initForm() {
         var blob = file.slice(0, file.size, file.type); 
         var newFile = new File([blob], {type: file.type});
         var nom = vm.documNombre() + "." + ext;
+        nom = nom.replace(/\//g, "-");
         var fileKey =  carpeta + "/" + nom
         //buscamos si el documento ya existe en la carpeta de destino
         llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
@@ -2606,7 +2607,6 @@ function preparaDatosArchivo(r) {
     docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
     carpetaId = r.carpetaId;
     docName = docName.replace(/[\/]/g, "-");
-    console.log(docName);
     carpeta = r.carpetaNombre;
     carpetaTipo = r.tipo;
     key = r.carpetaNombre   + "/" +  docName;
@@ -2629,11 +2629,13 @@ function nuevaCarpeta() {
 
 function aceptarNuevaCarpeta() {
         //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        var a = vm.carpetaNombre();
+        a = a.replace(/[\/]/g, "-");
         var data = 
         {
             carpeta: {
                 carpetaId: 0,
-                nombre: vm.carpetaNombre(),
+                nombre: a,
                 tipo: "oferta",
                 departamentoId: vm.tipoOfertaId()
             }
@@ -2649,7 +2651,10 @@ function aceptarNuevaCarpeta() {
 
 function aceptarNuevaSubCarpeta() {
     //CREAMOS EL REGISTRO EN LA TABLA carpetas
-    var n = subCarpeta + "/" + vm.subCarpetaNombre();
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    var a =  vm.subCarpetaNombre();
+    a = a.replace(/\//g, "-");
+    var n = subCarpeta + "/" + a;
     var data = 
     {
         carpeta: {
