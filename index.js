@@ -97,11 +97,12 @@ var report_router = require('./lib/report-controller/reportdb')
 var tipos_garantia_router = require('./lib/tipos_garantia/tipos_garantia_controller');
 
 //MENSAJES
-
 var mensajes_router = require('./lib/mensajes/mensajes_controller');
 
-//DEMONIOS
-//var cuentaAtras_router = require('./lib/demonios/cuenta_atras/cuentaAtras');
+//DOCUMENTACION
+var documentacion_router = require('./lib/documentacion/documentacion_controller');
+
+
 
 
 
@@ -255,9 +256,8 @@ app.use('/api/tipos_garantia', tipos_garantia_router);
 //MENSAJES
 app.use('/api/mensajes', mensajes_router);
 
-//CUENTA ATRAS DAEMON
-//app.use('/api/cuenta_atras', cuentaAtras_router);
-
+//DOCUMENTACION
+app.use('/api/documentacion', documentacion_router);
 
 
 
