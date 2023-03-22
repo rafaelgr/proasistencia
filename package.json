@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafaelgr/proasistencia.git"
+    "url": "https://github.com/rafaelgr/proasistencia.git"
   },
   "keywords": [
     "node",
