@@ -128,6 +128,12 @@ function admData() {
     self.bucketFolder = ko.observable();
     self.identityPool = ko.observable();
     self.raizUrl = ko.observable();
+    //
+    self.bucketDocum = ko.observable();
+    self.bucketRegionDocum = ko.observable();
+    self.bucketFolderDocum = ko.observable();
+    self.identityPoolDocum = ko.observable();
+    self.raizUrlDocum = ko.observable();
 
     //oneSignal
     self.tituloPush = ko.observable();
@@ -154,6 +160,12 @@ function loadData(data) {
     vm.bucketFolder(data.bucket_folder);
     vm.identityPool(data.identity_pool);
     vm.raizUrl(data.raiz_url);
+    //
+    vm.bucketDocum(data.bucket_docum);
+    vm.bucketRegionDocum(data.bucket_region_docum);
+    vm.bucketFolderDocum(data.bucket_folder_docum);
+    vm.identityPoolDocum(data.identity_pool_docum);
+    vm.raizUrlDocum(data.raiz_url_docum);
     //
     vm.tituloPush(data.tituloPush);
     vm.appId(data.appId);
@@ -211,6 +223,11 @@ function aceptar() {
                 "bucket_folder":  vm.bucketFolder(),
                 "identity_pool": vm.identityPool(),
                 "raiz_url": vm.raizUrl(),
+                "bucket":  vm.bucketDocum(),
+                "bucket_region_docum":  vm.bucketRegionDocum(),
+                "bucket_folder_docum":  vm.bucketFolderDocum(),
+                "identity_pool_docum": vm.identityPoolDocum(),
+                "raiz_url_docum": vm.raizUrlDocum(),
                 "appId": vm.appId(),
                 "gcm": vm.gcm(),
                 "tituloPush": vm.tituloPush(),
