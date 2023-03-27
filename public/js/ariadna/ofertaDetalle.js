@@ -22,6 +22,7 @@ var dataConceptos;
 var dataProveedores;
 var dataDocumentacion
 var numLineas = 0;
+var parametros;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -175,7 +176,7 @@ function initForm() {
         }
     });
 
-    $('#upload-input').on('change', function () {
+   /*  $('#upload-input').on('change', function () {
         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
         var encontrado = false;
         var id = 0;
@@ -226,7 +227,7 @@ function initForm() {
             }
         }); 
     });
-
+ */
       
 
     initAutoCliente();
@@ -2795,17 +2796,17 @@ function deleteCarpeta(id) {
 
 
 
-function uploadDocum(newFile, fileKey, id) {
-    var method = 'POST';
-    var url = "/api/documentacion/";
-    if(id > 0) {
-        method = 'PUT';
-        url = "/api/documentacion/" + id
-    }
-    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
-        if (err) return;
-        var parametros = data;
-        AWS.config.region = parametros.bucket_region_docum; // Región
+function uploadDocum(arr, fileKey, id) {
+    var index = 0;
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: parametros.identity_pool_docum,
         });
@@ -2863,6 +2864,90 @@ function uploadDocum(newFile, fileKey, id) {
                 if (err) return mensError(err);
             }
         );        
+        });       
+}
+
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        parametros = data;
+        var files = $("upload-input").get(0).files;
+    var arr = [];
+    if (!files.length) {
+        mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+        return;
+    }
+    for(var i = 0; i< files.length; i++) {
+        var e = files[i];
+        var encontrado = false;
+        var id = 0;
+        var file = e;
+        var ext = file.name.split('.').pop().toLowerCase();
+        var blob = file.slice(0, file.size, file.type); 
+        var newFile = new File([blob], {type: file.type});
+        var nom = "";
+        nom = vm.documNombre()
+        if(files.length > 1) {
+            var s = parseInt(i)
+            s++
+            nom = nom + "-" + s;
+        } 
+        non = nom + "." + ext;
+        nom = nom.replace(/\//g, "-");
+        newFile.name = nom;
+        var fileKey =  carpeta + "/" + nom
+        newFile.fileKey = fileKey;
+        arr.push(newFile);
+        
+        
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].name) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                        }
+                    }
+                }
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(newFile);
+                }
+            } else {
+                uploadDocum(newFile);
+            }
+        }); 
+
+
+
+    }
     });
-   
+    
 }
