@@ -22,6 +22,7 @@ var dataConceptos;
 var dataProveedores;
 var dataDocumentacion
 var numLineas = 0;
+var parametros;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -90,6 +91,11 @@ function initForm() {
         return false;
     });
 
+    //Evento dfel modal de la documentación
+    $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+        vm.files([]);
+      });
+
     $("#frmLinea").submit(function () {
         return false;
     });
@@ -119,6 +125,10 @@ function initForm() {
     });
 
     $("#frmDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmloadDoc").submit(function () {
         return false;
     });
     validacionesAdicionalesDelContrato();
@@ -175,7 +185,7 @@ function initForm() {
         }
     });
 
-    $('#upload-input').on('change', function () {
+   /*  $('#upload-input').on('change', function () {
         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
         var encontrado = false;
         var id = 0;
@@ -226,7 +236,7 @@ function initForm() {
             }
         }); 
     });
-
+ */
       
 
     initAutoCliente();
@@ -279,6 +289,12 @@ function initForm() {
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
+
+    $('#btnNuevaCarpeta').show();
+    if(!usuario.puedeEditar) {
+        $('#btnNuevaCarpeta').hide();
+    } 
+   
 
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
@@ -489,6 +505,8 @@ function admData() {
      self.carpetaNombre = ko.observable();
      self.subCarpetaNombre = ko.observable();
      self.documNombre = ko.observable();
+     //
+     self.files = ko.observable();
 }
 
 function loadData(data) {
@@ -2555,9 +2573,17 @@ function initTablaDocumentacion() {
             data: "carpetaId",
             render: function (data, type, row) {
                 var html = "";
-                var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt = "";
+                var bt2 = "";
+                var bt3 = "";
+                if(usuario.puedeEditar) {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
+                    var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                } else {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                }
+               
                 return html = "<div class='pull-right'>" + bt + " " + bt2 + " " + bt3 +"</div>";
                 
             }
@@ -2604,6 +2630,7 @@ function format(d) {
 }
 
 function preparaDatosArchivo(r) {
+    uploads = [] //limpiamos las cargas que se hayan podido quedar
     docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
     carpetaId = r.carpetaId;
     docName = docName.replace(/[\/]/g, "-");
@@ -2629,7 +2656,9 @@ function nuevaCarpeta() {
 
 function aceptarNuevaCarpeta() {
         //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
         var a = vm.carpetaNombre();
+        a = a.trim();
         a = a.replace(/[\/]/g, "-");
         var data = 
         {
@@ -2651,8 +2680,9 @@ function aceptarNuevaCarpeta() {
 
 function aceptarNuevaSubCarpeta() {
     //CREAMOS EL REGISTRO EN LA TABLA carpetas
-    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
     var a =  vm.subCarpetaNombre();
+    a = a.trim();
     a = a.replace(/\//g, "-");
     var n = subCarpeta + "/" + a;
     var data = 
@@ -2715,7 +2745,7 @@ function deleteDocumento(id) {
 }
 
 function deleteCarpeta(id) {
-    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos que contiene y no se podrá recuperar?";
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
@@ -2795,74 +2825,171 @@ function deleteCarpeta(id) {
 
 
 
-function uploadDocum(newFile, fileKey, id) {
-    var method = 'POST';
-    var url = "/api/documentacion/";
-    if(id > 0) {
-        method = 'PUT';
-        url = "/api/documentacion/" + id
-    }
+function uploadDocum(arr) {
+    var index = 0;
+      
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+            delete e.nom;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: filekey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: e,
+                ACL: "public-read"
+            }
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    if(data) {
+                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
+                        var data = 
+                        {
+                            documentacion: {
+                                documentoId: 0,
+                                ofertaId: null,
+                                contratoId: null,
+                                parteId: null,
+                                carpetaId: carpetaId,
+                                location: data.Location,
+                                key: filekey
+                            }
+                        }
+                        if(carpetaTipo == "oferta") {
+                            data.documentacion.ofertaId =  vm.ofertaId();
+                        }else if(carpetaTipo == "contrato") {
+                            data.documentacion.contratoId = vm.contratoId();
+                        }
+    
+                        if(!repetido) {
+                            method = 'POST';
+                            url = "/api/documentacion";
+                        } else {
+                            data.documentacion.documentoId = e.documentoId;
+                            method = 'PUT';
+                            url = "/api/documentacion/" + documentoId;
+                        }
+        
+                        llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                            if (err) return mensError(err);
+                            index++
+                            if(index == arr.length) {
+                                $('#modalUploadDoc').modal('hide');
+                                mensNormal('Archivo subido con exito');
+                                limpiaDatosArchivo();
+                                cargaTablaDocumentacion();
+                            }
+                        });
+                    }
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+            });       
+}
+
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
-        var parametros = data;
-        AWS.config.region = parametros.bucket_region_docum; // Región
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: parametros.identity_pool_docum,
-        });
-        var bucket = parametros.bucket_docum;
-        var params = {
-            Bucket: bucket,
-            Key: fileKey,
-            IdentityPoolId: parametros.identity_pool_docum,
-            Body: newFile,
-            ACL: "public-read"
+        parametros = data;
+        var files = $("#upload-input").get(0).files;
+        var arr = [];
+        if (!files.length) {
+            mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+            return;
         }
-        // Use S3 ManagedUpload class as it supports multipart uploads
-        var upload = new AWS.S3.ManagedUpload({
-            params: params
-        });
-        var promise = upload.on('httpUploadProgress', function(evt) {
-            $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
-            $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
-          })
-          .promise();
-        promise.
-        then (
-            data => {
-                //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
-                var data = 
-                {
-                    documentacion: {
-                        documentoId: id,
-                        ofertaId: null,
-                        contratoId: null,
-                        parteId: null,
-                        carpetaId: carpetaId,
-                        location: data.Location,
-                        key: fileKey
+        for(var i = 0; i< files.length; i++) {
+            var e = files[i];
+            var encontrado = false;
+            var id = 0;
+            var file = e;
+            var ext = file.name.split('.').pop().toLowerCase();
+            var blob = file.slice(0, file.size, file.type); 
+            var newFile = new File([blob], {type: file.type});
+            var nom = "";
+            nom = vm.documNombre()
+            if(files.length > 1) {
+                var s = parseInt(i)
+                s++
+                nom = nom + "-" + s + "." + ext;
+            } else {
+                nom = nom + "." + ext;
+            }
+            nom = nom.replace(/\//g, "-");
+            newFile.nom = nom;
+            var fileKey =  carpeta + "/" + nom
+            newFile.fileKey = fileKey;
+            newFile.repetido = false;
+            arr.push(newFile);
+        }
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].nom) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                            arr[j].repetido = true;
+                            break;
+                        } 
                     }
                 }
-                if(carpetaTipo == "oferta") {
-                    data.documentacion.ofertaId =  vm.ofertaId();
-                }else if(carpetaTipo == "contrato") {
-                    data.documentacion.contratoId = vm.contratoId();
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(arr);
                 }
-
-                llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
-                    if (err) return mensError(err);
-                    $('#modalUploadDoc').modal('hide');
-                    mensNormal('Archivo subido con exito');
-                    limpiaDatosArchivo();
-                    cargaTablaDocumentacion();
-                });
-                
-
-                
-            },
-            err =>{
-                if (err) return mensError(err);
+            } else {
+                uploadDocum(arr);
             }
-        );        
+        }); 
+
     });
-   
+    
 }
