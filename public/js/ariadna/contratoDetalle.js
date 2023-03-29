@@ -7531,7 +7531,8 @@ function loadAscContratos(id) {
 
 function ocualtaBotonesContratoCerrado() {
     $('#btnAceptar').hide();
-    if(usuario.puedeAbrir)   $('#btnAceptar').show();
+    $('#btnAceptar2').hide();
+    if(usuario.puedeAbrir)  { $('#btnAceptar').show();  $('#btnAceptar2').show() }
     $('#btnNuevoComisionista').hide();
     $('#btnAltaPrefactura').hide();
     $('#btnAltaFacprove').hide();
