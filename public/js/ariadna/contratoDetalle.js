@@ -7692,7 +7692,9 @@ function nuevaCarpeta() {
 
 function aceptarNuevaCarpeta() {
         //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
         var a = vm.carpetaNombre();
+        a = a.trim();
         a = a.replace(/[\/]/g, "-");
         var data = 
         {
@@ -7714,7 +7716,9 @@ function aceptarNuevaCarpeta() {
 
 function aceptarNuevaSubCarpeta() {
     //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
     var a =  vm.subCarpetaNombre();
+    a = a.trim();
     a = a.replace(/\//g, "-");
     var n = subCarpeta + "/" + a;
     var data = 
@@ -7777,7 +7781,7 @@ function deleteDocumento(id) {
 }
 
 function deleteCarpeta(id) {
-    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos que contiene y no se podrá recuperar?";
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
