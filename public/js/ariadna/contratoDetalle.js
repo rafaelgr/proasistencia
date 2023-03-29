@@ -72,7 +72,13 @@ function initForm() {
     //$("#btnImprimir").click(imprimir);
     $('#txtPrecio').focus( function () {
         $('#txtPrecio').val(null);
-    })
+    });
+
+     //Evento dfel modal de la documentación
+     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+        vm.files([]);
+      });
+      
     $("#frmContrato").submit(function () {
         return false;
     });
@@ -858,6 +864,8 @@ function admData() {
     self.carpetaNombre = ko.observable();
     self.subCarpetaNombre = ko.observable();
     self.documNombre = ko.observable();
+    //
+    self.files = ko.observable();
 
 }
 

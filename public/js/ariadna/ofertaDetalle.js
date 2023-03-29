@@ -91,6 +91,11 @@ function initForm() {
         return false;
     });
 
+    //Evento dfel modal de la documentación
+    $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+        vm.files([]);
+      });
+
     $("#frmLinea").submit(function () {
         return false;
     });
@@ -500,6 +505,8 @@ function admData() {
      self.carpetaNombre = ko.observable();
      self.subCarpetaNombre = ko.observable();
      self.documNombre = ko.observable();
+     //
+     self.files = ko.observable();
 }
 
 function loadData(data) {
@@ -2623,6 +2630,7 @@ function format(d) {
 }
 
 function preparaDatosArchivo(r) {
+    uploads = [] //limpiamos las cargas que se hayan podido quedar
     docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
     carpetaId = r.carpetaId;
     docName = docName.replace(/[\/]/g, "-");

@@ -3137,7 +3137,7 @@
                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <form id="upload-form" class="smart-form">
                                                 <fieldset>
-                                                    
+                                                    <section>
                                                         <!-- DOCUMENT -->
                                                         <div class="row">
                                                             <section class="col col-md-12">
@@ -3148,29 +3148,28 @@
                                                             </section>
                                                         </div>
                                                         
-                                                            <div id="P1Title" class="row">
+                                                            <div class="row">
                                                                 <section class="col col-md-12">
                                                                     <h3>Escoja el documento a subir</h3>
                                                                 </section>
                                                             </div>
-                                                            <div id="P1Loader" class="row">
-                                                                <section class="col col-md-6">
+                                                            <div class="row">
+                                                                <section class="col col-md-8">
                                                                     <div class="progress">
                                                                         <div class="progress-bar" role="progressbar"></div>
                                                                     </div>
                                                                 </section>
-                                                                <section class="col col-md-6">
-                                                                    <input id="upload-input" type="file" name="uploads[]" multiple></br>
+                                                                <section class="col col-md-4">
+                                                                    <input id="upload-input" type="file" name="uploads[]" multiple  data-bind="value: files"></br>
                                                                 </section>
-                                                                <button id="btnSubirDocumentos" name="btnSubirDocumentos" class="btn btn-primary"  onclick="aceptarSubirDocumentos()">
-                                                                    Subir documentos
-                                                                </button>
                                                             </div>
                                                         </section>
-                                                        <!-- END DOCUMENT -->
-                                                        
-                                                    
                                                 </fieldset>
+                                                <footer>
+                                                    <button id="btnSubirDocumentos" name="btnSubirDocumentos" class="btn btn-primary"  onclick="aceptarSubirDocumentos()">
+                                                        Subir documentos
+                                                    </button>
+                                                </footer>
                                                 
                                             </form>
                                         
