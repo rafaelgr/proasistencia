@@ -2764,7 +2764,7 @@ function vinculaAnticipoCompleto() {
         mensError('No se ha elegido ningún anticipo');
         return;
     }
-    //recuperas el anticipo seleccionado para saver si es completo o no
+    //recuperas el anticipo seleccionado para saber si es completo o no
     llamadaAjax("GET",  "/api/anticiposProveedores/" + id, null, function (err, dato) {
         if (err) return;
         vm.antproveId(id);
@@ -2846,7 +2846,8 @@ function vinculaAnticipoCompleto() {
                             }
                             if(data) {
                                 //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
-                                
+                                vm.coste(data.coste);
+                                vm.importeRetencion(data.importeRetencion);
                                 loadLineasFactura(vm.facproveId());
                                 loadBasesFacprove(vm.facproveId());
                                 loadRetencionesFacprove(vm.facproveId());
