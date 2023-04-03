@@ -1208,10 +1208,14 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url =  "/api/facturasProveedores/lineas";
+    var url =  "/api/facturasProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
         url =  "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
+    }
+    if(verbo = "POST") {
+        data.facproveLinea.proveedorId = vm.proveedorId();
+        data.facproveLinea.departamentoId = vm.departamentoId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;

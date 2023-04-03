@@ -1026,7 +1026,7 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url = myconfig.apiUrl + "/api/facturas/lineas";
+    var url = myconfig.apiUrl + "/api/facturas/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
         url = myconfig.apiUrl + "/api/facturas/lineas/" + vm.facturaLineaId();
