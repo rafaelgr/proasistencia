@@ -1482,7 +1482,7 @@ function cambioTiposRetencion(codigo) {
             }
         }
         if(acumulado == 2) {
-            mostratMnesajeTipoNoPermitido();
+            mostrarMensajeTipoNoPermitido();
             vm.codigo(vm.antCodigo());
             vm.scodigo(vm.antCodigo());
             vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1491,8 +1491,18 @@ function cambioTiposRetencion(codigo) {
             return;
         }
         if(datos.length == 1 &&  vm.scodigo() != 0) {
-            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo()) {
-                mostratMnesajeTipoNoPermitido();
+            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && !lineaEnEdicion) {
+                mostrarMensajeTipoNoPermitido();
+                vm.codigo(0);
+                vm.scodigo(0);
+                vm.cuentaRetencion(null);
+                vm.porcentajeRetencionLinea(0);
+                vm.importeRetencionLinea(0);
+                $("#cmbTiposRetencion").val([0]).trigger('change');
+                //loadTiposRetencion(codigo);
+                return;
+            } else if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && lineaEnEdicion){
+                mostrarMensajeTipoNoPermitido();
                 vm.codigo(vm.antCodigo());
                 vm.scodigo(vm.antCodigo());
                 vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1505,6 +1515,7 @@ function cambioTiposRetencion(codigo) {
         llamadaAjax("GET", "/api/anticiposProveedores/retenciones/tiposreten/antprove/" + codigo, null, function (err, data) {
             if (err) return;
             vm.codigo(data.codigo);
+            vm.antCodigo(data.codigo);
             if(vm.codigo() != 0) {
                 vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
                 vm.cuentaRetencion(data.cuentaPorDefecto);
@@ -1522,14 +1533,14 @@ function cambioTiposRetencion(codigo) {
 
 
 function establecerTotal() {
-    if(vm.antTotal()) {
+   /*  if(vm.antTotal()) {
         vm.total(vm.antTotal());
-    }
+    } */
 }
 
 var cambioPrecioCantidad = function () {
     
-        vm.antTotal(vm.total()); //guardamos el total
+        //vm.antTotal(vm.total()); //guardamos el total
     
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
@@ -1911,7 +1922,7 @@ var mostrarMensajeAnticipoNueva = function () {
     mensNormal(mens);
 }
 
-var mostratMnesajeTipoNoPermitido = function() {
+var mostrarMensajeTipoNoPermitido = function() {
     var mens = "Solo se permiten tipos de retencion exentos y otro tipo en una misma anticipo";
     mensNormal(mens);
 }
