@@ -1077,7 +1077,7 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url =  "/api/anticiposProveedores/lineas";
+    var url =  "/api/anticiposProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
         url =  "/api/anticiposProveedores/lineas/" + vm.antproveLineaId();

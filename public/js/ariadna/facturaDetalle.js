@@ -1029,7 +1029,7 @@ function aceptarLinea() {
     var url = myconfig.apiUrl + "/api/facturas/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url = myconfig.apiUrl + "/api/facturas/lineas/" + vm.facturaLineaId();
+        url = myconfig.apiUrl + "/api/facturas/lineas-nuevo/" + vm.facturaLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -1400,7 +1400,7 @@ function editFacturaLinea(id) {
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/facturas/lineas/" + facturaId;
+    var url = myconfig.apiUrl + "/api/facturas/lineas-nuevo/" + facturaId;
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {

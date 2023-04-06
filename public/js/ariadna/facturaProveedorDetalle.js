@@ -1204,19 +1204,18 @@ function aceptarLinea() {
             porcentajeRetencion: vm.porcentajeRetencionLinea(),
             importeRetencion: vm.importeRetencionLinea(),
             codigoRetencion: vm.codigo(),
-            cuentaRetencion: vm.cuentaRetencion()
+            cuentaRetencion: vm.cuentaRetencion(),
+            proveedorId: vm.proveedorId(),
+            departamentoId: vm.departamentoId()
         }
     }
     var verbo = "POST";
     var url =  "/api/facturasProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
+        url =  "/api/facturasProveedores/lineas-nuevo/" + vm.facproveLineaId();
     }
-    if(verbo == "POST") {
-        data.facproveLinea.proveedorId = vm.proveedorId();
-        data.facproveLinea.departamentoId = vm.departamentoId();
-    }
+   
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
@@ -1715,13 +1714,14 @@ function editFacturaLinea(id) {
 function deleteFacturaLinea(facproveLineaId) {
     // mensaje de confirmación
     //var url =  "/api/facturasProveedores/lineas/con/parte/" + facproveLineaId;
-    var url = "/api/facturasProveedores/lineas/" + facproveLineaId
+    var url = "/api/facturasProveedores/lineas-nuevo/" + facproveLineaId
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
             facproveLinea: {
                 facproveId: vm.facproveId(),
-                departamentoId: vm.departamentoId()
+                departamentoId: vm.departamentoId(),
+                proveedorId: vm.proveedorId()
             }
         };
         /*if(vm.departamentoId() != 7) {
