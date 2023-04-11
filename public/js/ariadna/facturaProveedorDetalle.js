@@ -2808,12 +2808,16 @@ function vinculaAnticipoCompleto() {
     
         datosArrayAnt.push(data);
         datosArrayFact.push(data2);
+        var obj = [];
+        obj.push(data2);
+        obj.push(data);
+
         if(dato.completo == 1) {
             if(numLineas > 0) {
                 mensError('Esta clase de anticipos por el total de la factura no tiene que tener lineas ni empresas serviciadas creadas.');
                 return;
             }
-            llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
+            /* llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
                 if (err) return;
                 llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
                     if (err) return;
@@ -2873,7 +2877,14 @@ function vinculaAnticipoCompleto() {
                        
                     }
                 });
+            }); */
+
+            llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data2) {
+                if (err) return;
+               
             });
+
+
         } else {
             llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
                 if (err) return;

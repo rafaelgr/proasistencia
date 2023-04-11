@@ -1076,7 +1076,7 @@ function aceptarLinea() {
     var url =  "/api/anticiposProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  "/api/anticiposProveedores/lineas/" + vm.antproveLineaId();
+        url =  "/api/anticiposProveedores/lineas-nuevo/" + vm.antproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -1568,7 +1568,7 @@ function deleteAnticipoLinea(antproveLineaId) {
                 antproveId: vm.antproveId()
             }
         };
-        llamadaAjax("DELETE",  "/api/anticiposProveedores/lineas/" + antproveLineaId, data, function (err, data) {
+        llamadaAjax("DELETE",  "/api/anticiposProveedores/lineas-nuevo/" + antproveLineaId, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET",  "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
                 if (err) return;
