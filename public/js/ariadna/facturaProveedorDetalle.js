@@ -2879,8 +2879,19 @@ function vinculaAnticipoCompleto() {
                 });
             }); */
 
-            llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data2) {
+            llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data) {
                 if (err) return;
+                $('#modalAnticipoCompleto').modal('hide');
+                vm.anticipo(data.numeroAnticipoProveedor);
+                vm.antproveId(data.antproveId);
+                $('#btnVincularAnticipo').hide();
+                $('#btnDesVincularAnticipo').show();
+                vm.coste(data.coste);
+                vm.importeRetencion(data.importeRetencion);
+                loadLineasFactura(vm.facproveId());
+                loadBasesFacprove(vm.facproveId());
+                loadRetencionesFacprove(vm.facproveId());
+                loadServiciadasFacprove(vm.facproveId());
                
             });
 
