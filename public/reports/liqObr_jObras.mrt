@@ -721,7 +721,7 @@ OBR.</Text>
               <Name>Text26</Name>
               <Page isRef="2" />
               <Parent isRef="28" />
-              <Text>{liqAgente.comision}</Text>
+              <Text>{liqAgente.totPagar}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -929,7 +929,7 @@ OBR.</Text>
               <Name>Text33</Name>
               <Page isRef="2" />
               <Parent isRef="53" />
-              <Text>{Sum(GroupHeaderBand2,liqAgente.comision)}</Text>
+              <Text>{Sum(GroupHeaderBand2,liqAgente.totPagar)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="64" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1039,7 +1039,7 @@ OBR.</Text>
               <Name>Text49</Name>
               <Page isRef="2" />
               <Parent isRef="53" />
-              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision))* (decimal)0.15}</Text>
+              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.totPagar))* (decimal)0.15}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="71" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1066,7 +1066,7 @@ OBR.</Text>
               <Name>Text53</Name>
               <Page isRef="2" />
               <Parent isRef="53" />
-              <Text>{Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}</Text>
+              <Text>{Sum(GroupHeaderBand2,(decimal)liqAgente.totPagar)* (decimal)0.21}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="73" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1092,7 +1092,7 @@ OBR.</Text>
               <Name>Text54</Name>
               <Page isRef="2" />
               <Parent isRef="53" />
-              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.comision)-Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.15) + Sum(GroupHeaderBand2,(decimal)liqAgente.comision)* (decimal)0.21}
+              <Text>{(Sum(GroupHeaderBand2,(decimal)liqAgente.totPagar)-Sum(GroupHeaderBand2,(decimal)liqAgente.totPagar)* (decimal)0.15) + Sum(GroupHeaderBand2,(decimal)liqAgente.totPagar)* (decimal)0.21}
 </Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="75" type="CurrencyFormat" isKey="true">
@@ -1393,10 +1393,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionJObras</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>6/21/2022 10:46:49 AM</ReportChanged>
+  <ReportChanged>4/18/2023 12:12:26 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_jObras.mrt</ReportFile>
-  <ReportGuid>78d50b67416a4ee8ab6a31e5a54d6f4c</ReportGuid>
+  <ReportGuid>b0906d5e524c4985ac38b1efff4c38ea</ReportGuid>
   <ReportName>LiquidacionJObras</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
