@@ -285,7 +285,7 @@ var rptLiquidacionGeneralParametros = function () {
     contratoId = parseInt(contratoId);
     
     sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, ";
-    sql += " SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision";
+    sql += " SUM(lf.base) AS totBase, SUM(lf.comision) + SUM(lf.comision2) AS totComision";
     sql += " FROM liquidacion_comercial AS lf";
     
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
