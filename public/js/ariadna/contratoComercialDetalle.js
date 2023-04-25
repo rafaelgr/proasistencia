@@ -149,6 +149,7 @@ function admData() {
     self.obrComercial = ko.observable();
     self.obrComision = ko.observable();    
     self.obrComisionAdicional = ko.observable();    
+    self.obrPorBi = ko.observable();
     //
     self.sempresaId = ko.observable();
     //
@@ -249,6 +250,7 @@ function loadData(data) {
      vm.obrComercial(data.obrComercial);
      vm.obrComision(data.obrComision);
      vm.obrComisionAdicional(data.obrComisionAdicional);
+     vm.obrPorBi(data.obrPorBi);
 
     vm.comision(data.comision);
 
@@ -417,7 +419,8 @@ function aceptar() {
                 "obrAsesorTecnico": vm.obrAsesorTecnico(),
                 "obrComercial": vm.obrComercial(),
                 "obrComision": vm.obrComision(),
-                "obrComisionAdicional": vm.obrComisionAdicional()
+                "obrComisionAdicional": vm.obrComisionAdicional(),
+                "obrPorBi": vm.obrPorBi()
             }
         };
         var url = "";

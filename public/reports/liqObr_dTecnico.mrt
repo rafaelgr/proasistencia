@@ -1821,7 +1821,7 @@ OBR.</Text>
               <Name>Text63</Name>
               <Page isRef="2" />
               <Parent isRef="72" />
-              <Text>{Sum(DataLiqAgente,liqAgente.totComision)}</Text>
+              <Text>{Sum(DataLiqAgente,liqAgente.baseCalculo)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="125" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
@@ -1867,10 +1867,10 @@ OBR.</Text>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionDTecnico</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/13/2023 12:35:23 PM</ReportChanged>
+  <ReportChanged>4/18/2023 12:41:21 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_dTecnico.mrt</ReportFile>
-  <ReportGuid>43f20aaa4a50486b8579a4cdf77ac61b</ReportGuid>
+  <ReportGuid>f319865db96340f39e354bea9e89d222</ReportGuid>
   <ReportName>LiquidacionDTecnico</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

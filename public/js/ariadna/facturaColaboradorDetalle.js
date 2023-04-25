@@ -1187,14 +1187,16 @@ function aceptarLinea() {
             porcentajeRetencion: vm.porcentajeRetencionLinea(),
             importeRetencion: vm.importeRetencionLinea(),
             codigoRetencion: vm.codigo(),
-            cuentaRetencion: vm.cuentaRetencion()
+            cuentaRetencion: vm.cuentaRetencion(),
+            proveedorId: vm.proveedorId(),
+            departamentoId: vm.departamentoId()
         }
     }
     var verbo = "POST";
-    var url =  "/api/facturasProveedores/lineas";
+    var url =  "/api/facturasProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  "/api/facturasProveedores/lineas/" + vm.facproveLineaId();
+        url =  "/api/facturasProveedores/lineas-nuevo/" + vm.facproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -1612,7 +1614,7 @@ function cambioTiposRetencion(codigo) {
             }
         }
         if(acumulado == 2) {
-            mostratMnesajeTipoNoPermitido();
+            mostrarMensajeTipoNoPermitido();
             vm.codigo(vm.antCodigo());
             vm.scodigo(vm.antCodigo());
             vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1621,8 +1623,18 @@ function cambioTiposRetencion(codigo) {
             return;
         }
         if(datos.length == 1 &&  vm.scodigo() != 0) {
-            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo()) {
-                mostratMnesajeTipoNoPermitido();
+            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && !lineaEnEdicion) {
+                mostrarMensajeTipoNoPermitido();
+                vm.codigo(0);
+                vm.scodigo(0);
+                vm.cuentaRetencion(null);
+                vm.porcentajeRetencionLinea(0);
+                vm.importeRetencionLinea(0);
+                $("#cmbTiposRetencion").val([0]).trigger('change');
+                //loadTiposRetencion(codigo);
+                return;
+            } else if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && lineaEnEdicion){
+                mostrarMensajeTipoNoPermitido();
                 vm.codigo(vm.antCodigo());
                 vm.scodigo(vm.antCodigo());
                 vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1635,6 +1647,8 @@ function cambioTiposRetencion(codigo) {
         llamadaAjax("GET", "/api/facturasProveedores/retenciones/tiposreten/facprove/" + codigo, null, function (err, data) {
             if (err) return;
             vm.codigo(data.codigo);
+            vm.antCodigo(data.codigo);
+            
             if(vm.codigo() != 0) {
                 vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
                 vm.cuentaRetencion(data.cuentaPorDefecto);
@@ -1649,14 +1663,14 @@ function cambioTiposRetencion(codigo) {
 }
 
 function establecerTotal() {
-    if(vm.antTotal()) {
+    /* if(vm.antTotal()) {
         vm.total(vm.antTotal());
-    }
+    } */
 }
 
 var cambioPrecioCantidad = function () {
     
-        vm.antTotal(vm.total()); //guardamos el total
+        //vm.antTotal(vm.total()); //guardamos el total
     
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
@@ -1682,13 +1696,14 @@ function editFacturaLinea(id) {
 function deleteFacturaLinea(facproveLineaId) {
     // mensaje de confirmación
     //var url =  "/api/facturasProveedores/lineas/con/parte/" + facproveLineaId;
-    var url = "/api/facturasProveedores/lineas/" + facproveLineaId
+    var url = "/api/facturasProveedores/lineas-nuevo/" + facproveLineaId
     var mensaje = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mensaje, function () {
         var data = {
             facproveLinea: {
                 facproveId: vm.facproveId(),
-                departamentoId: vm.departamentoId()
+                departamentoId: vm.departamentoId(),
+                proveedorId: vm.proveedorId()
             }
         };
         /*if(vm.departamentoId() != 7) {
@@ -2118,7 +2133,7 @@ var mostrarMensajeFacturaNueva = function () {
     mensNormal(mens);
 }
 
-var mostratMnesajeTipoNoPermitido = function() {
+var mostrarMensajeTipoNoPermitido = function() {
     var mens = "Solo se permiten tipos de retencion exentos y otro tipo en una misma factura";
     mensNormal(mens);
 }
@@ -2737,7 +2752,7 @@ function vinculaAnticipoCompleto() {
         mensError('No se ha elegido ningún anticipo');
         return;
     }
-    //recuperas el anticipo seleccionado para saver si es completo o no
+    //recuperas el anticipo seleccionado para saber si es completo o no
     llamadaAjax("GET",  "/api/anticiposProveedores/" + id, null, function (err, dato) {
         if (err) return;
         vm.antproveId(id);
@@ -2765,12 +2780,16 @@ function vinculaAnticipoCompleto() {
     
         datosArrayAnt.push(data);
         datosArrayFact.push(data2);
+        var obj = [];
+        obj.push(data2);
+        obj.push(data);
+
         if(dato.completo == 1) {
             if(numLineas > 0) {
                 mensError('Esta clase de anticipos por el total de la factura no tiene que tener lineas ni empresas serviciadas creadas.');
                 return;
             }
-            llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
+            /* llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
                 if (err) return;
                 llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
                     if (err) return;
@@ -2819,7 +2838,8 @@ function vinculaAnticipoCompleto() {
                             }
                             if(data) {
                                 //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
-                                
+                                vm.coste(data.coste);
+                                vm.importeRetencion(data.importeRetencion);
                                 loadLineasFactura(vm.facproveId());
                                 loadBasesFacprove(vm.facproveId());
                                 loadRetencionesFacprove(vm.facproveId());
@@ -2829,7 +2849,25 @@ function vinculaAnticipoCompleto() {
                        
                     }
                 });
+            }); */
+
+            llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data) {
+                if (err) return;
+                $('#modalAnticipoCompleto').modal('hide');
+                vm.anticipo(data.numeroAnticipoProveedor);
+                vm.antproveId(data.antproveId);
+                $('#btnVincularAnticipo').hide();
+                $('#btnDesVincularAnticipo').show();
+                vm.coste(data.coste);
+                vm.importeRetencion(data.importeRetencion);
+                loadLineasFactura(vm.facproveId());
+                loadBasesFacprove(vm.facproveId());
+                loadRetencionesFacprove(vm.facproveId());
+                loadServiciadasFacprove(vm.facproveId());
+               
             });
+
+
         } else {
             llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
                 if (err) return;

@@ -361,6 +361,21 @@ function initForm() {
         }
     });
 
+    $('#dt_contratosCobros').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaContratoCobros.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatDataCobros(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
    /*  $('#upload-input').on('change', function () {
         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
         var encontrado = false;
@@ -6249,7 +6264,7 @@ var calcularNumPagosPlanificacion = function () {
 /* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
 
 function initTablaContratosCobros() {
-    tablaCarro = $('#dt_contratosCobros').dataTable({
+    tablaContratoCobros = $('#dt_contratosCobros').DataTable({
         sort: false,
         responsive: true,
         "paging": false,
@@ -6274,7 +6289,7 @@ function initTablaContratosCobros() {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -6287,7 +6302,7 @@ function initTablaContratosCobros() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -6297,11 +6312,11 @@ function initTablaContratosCobros() {
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
@@ -6330,7 +6345,15 @@ function initTablaContratosCobros() {
             }
         },
         data: dataContratosCobros,
-        columns: [{
+        columns: [
+            {
+                
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+                //data:"carpetaId",
+            },{
             data: "numorden"
         }, {
             data: "numserie"
@@ -7665,6 +7688,68 @@ function formatData(d) {
         });
     return html;
 }
+
+
+function formatDataCobros(d) {
+    if(!d.lin) d.lin = [];
+    var lin = d.lin;
+    var html = "";
+    html = '<h5> APUNTES DEL COBRO</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    lin.forEach(e => {
+        var d = e.timporteH - e.timporteD
+         html += 
+         '<tr>' +
+            '<th>Fecha de entrada:</th>' +
+            '<th>Asiento:</th>' +
+            '<th>Num. linea:</th>' +
+            '<th>Num. documento:</th>' +
+            '<th>Nom. documento:</th>' +
+            '<th>IMPORTE:</th>' +
+            '<th>ES DEVOLUCION:</th>' +
+         '</tr>' +
+         
+         '<tr>' +
+            
+            '<td>' +
+                formatFecha(e.fechaent)  +
+            '</td>' +
+            
+            '<td>' +
+                e.numasien +
+            '</td>' +
+            
+            '<td>' +
+                e.linliapu +
+            '</td>' +
+            
+            '<td>' +
+                e.numdocum +
+            '</td>' +
+            
+            '<td>' +
+                e.ampconce +
+            '</td>' +
+
+            '<td>' +
+                numeral(d).format('0,0.00');+
+            '</td>' +
+            
+            '<td>'  +
+           
+                e.esdevolucion +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
+    return html
+}
+
+ function formatFecha(f) {
+    if(f) return spanishDate(f);
+    return ' ';
+ }
 
 function preparaDatosArchivo(r) {
     docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
