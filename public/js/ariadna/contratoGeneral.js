@@ -53,6 +53,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarContratos());
     $('#btnAlta').click(crearContrato());
+    $('#btnPrint').click(imprimirInforme);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -511,4 +512,10 @@ function cargarContratos2All() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+
+imprimirInforme = function () {
+    var url = "InfContratos.html";
+    window.open(url, '_blank');
 }
