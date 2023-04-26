@@ -112,12 +112,8 @@
                     </fieldset>
                     <fieldset>
                         <div class="pull-right">
-                            <button id="btnImprimir" title="Imprimir contrato" class="btn btn-success btn-circle btn-lg">
+                            <button id="btnBuscar" title="Buscar contratos" class="btn btn-success btn-circle btn-lg">
                                 <i class="fa fa-lg fa-print"></i>
-                            </button>
-                            <button id="btnMostrarModal" data-toggle="modal" data-target="#modalExportar" title="Exportar contratos en ficheros PDF individuales"
-                                class="btn btn-success btn-circle btn-lg">
-                                <i class="fa fa-lg fa-file-pdf-o"></i>
                             </button>
                         </div>
                     </fieldset>
@@ -146,60 +142,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalExportar" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title"> EXPORTACION PDF</h4>
-                </div>
-                <div class="modal-body no-padding">
-                    <form id="frmExportar" class="smart-form">
-                        <fieldset>
-                            <section>
-                                <div class="row" id="mensajeExportacion">
-                                    <section class="col col-md-12">
-                                        <div>
-                                            Este proceso exportará las contratos a ficheros PDF individuales, uno por contrato, con el nombre S-AAA-NNNNNN.PDF. <br/>                                            Donde: <br/> S = Letra de serie // AAAA = Año de la fectura // NNNNNN = Número
-                                            de la contrato <br/> Al final del proceso de exportación se le mostrará el directorio
-                                            donde se encuentran todos los ficheros exportados. Puede acceder a ese mismo
-                                            directorio por un enlace que figura en la pantalla principal de informes, en
-                                            el apartado "Informes de contratos".
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="row" style="display:none;" id="mensajeEspera">
-                                    <section class="col col-md-4">
-                                        <img src="img/jar-loading.gif" style="border: none; width: 100%;" alt="Espere...">
-                                    </section>
-                                    <section class="col col-md-8">
-                                        <div>
-                                            <br/><br/><br/>
-                                            <h3>ESPERE POR FAVOR...</h3>
-                                            Sus contratos se están exportando, este proceso puede tardar un tiempo considerable dependiendo del número de contratos a procesar.
-                                            <br/>
-                                        </div>
-                                    </section>
-                                </div>
-                            </section>
-                        </fieldset>
-                        <footer>
-                            <button id="btnExportar" class="btn btn-primary">
-                                Exportar
-                            </button>
-                            <button id="btnCancelarExport" type="button" class="btn btn-default" data-dismiss="modal">
-                                Cancelar
-                            </button>
-                        </footer>
-                    </form>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+  
     <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {

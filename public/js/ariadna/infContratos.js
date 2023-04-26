@@ -39,7 +39,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnImprimir").click(obtainReport);
+    $("#btnBuscar").click(obtainReport);
     // avoid form submmit
     $("#frmRptOfertas").submit(function () {
         return false;
@@ -47,7 +47,6 @@ function initForm() {
     $("#frmExportar").submit(function () {
         return false;
     });
-    $("#btnExportar").click(exportarPDF);
     //
     $('#txtRFecha').daterangepicker({
         "showDropdowns": true,
@@ -493,7 +492,7 @@ var rptFacturaParametrosJson = function () {
 
 
     
-    var url = "/api/facturas/inf/facturas/json/visor/" + dFecha + "/" + hFecha;
+    var url = "/api/contratos/inf/contratos/json/visor/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + clienteId;
     url += "/" + departamentoId;
@@ -506,37 +505,6 @@ var rptFacturaParametrosJson = function () {
         } else {
             alert("No hay registros con estas condiciones");
         }
-        
-    });
-}
-
-var exportarPDF = function () {
-    $("#mensajeExportacion").hide();
-    $("#mensajeEspera").show();
-    var clienteId = vm.sclienteId();
-    var empresaId = vm.sempresaId();
-
-    if (!empresaId) empresaId = 0;
-    if (!clienteId) clienteId = 0;
-
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
-
-    // (1) Obtener una lista de las facturas implicadas.
-    // la lista debe devolver también el fichero de informe asociado
-    var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
-    url += "/" + empresaId;
-    url += "/" + clienteId;
-    llamadaAjax("GET", url, null, function (err, data) {
-        if (err) {
-            // hay que informar de error durante la exportación
-            return;
-        }
-        $("#mensajeEspera").hide();
-        $("#mensajeExportacion").show();
-        $('#modalExportar').modal('hide');
-        var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
-        mensNormal(mens);
         
     });
 }
