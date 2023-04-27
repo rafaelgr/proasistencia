@@ -939,6 +939,10 @@ function loadData(data) {
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.servicioId(data.servicioId);
+
+    //src del iframe con los datos del cliente
+    var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
+    $('#frCliente').attr('src', url)
    
 
     if(data.tipoContratoId != 8) {
