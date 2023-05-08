@@ -3,66 +3,8 @@
   <CalculationMode>Interpretation</CalculationMode>
   <Dictionary Ref="1" type="Dictionary" isKey="true">
     <BusinessObjects isList="true" count="0" />
-    <Databases isList="true" count="1">
-      <listadoPre Ref="2" type="Stimulsoft.Report.Dictionary.StiJsonDatabase" isKey="true">
-        <Alias>listadoPre</Alias>
-        <Key />
-        <Name>listadoPre</Name>
-        <PathData>C:\node_apps\proasistencia\public\reports\listadoPre.json</PathData>
-      </listadoPre>
-    </Databases>
-    <DataSources isList="true" count="2">
-      <acumulados Ref="3" type="DataTableSource" isKey="true">
-        <Alias>acumulados</Alias>
-        <Columns isList="true" count="5">
-          <value>acumPenRecibir,System.Decimal</value>
-          <value>acumRecibido,System.Decimal</value>
-          <value>acumGestCobros,System.Decimal</value>
-          <value>acumCobrado,System.Decimal</value>
-          <value>acumTotConIva,System.Decimal</value>
-        </Columns>
-        <Dictionary isRef="1" />
-        <Key>2c3fb0177dfe4b528c0b27c732e3ef12</Key>
-        <Name>acumulados</Name>
-        <NameInSource>listadoPre.acumulados</NameInSource>
-      </acumulados>
-      <libCli Ref="4" type="DataTableSource" isKey="true">
-        <Alias>libCli</Alias>
-        <Columns isList="true" count="27">
-          <value>empresaId,System.Decimal</value>
-          <value>facturaId,System.Decimal</value>
-          <value>empresaNombre,System.String</value>
-          <value>contratoReferencia,System.String</value>
-          <value>prefacturaId,System.Decimal</value>
-          <value>fecha,System.String</value>
-          <value>emisorNombre,System.String</value>
-          <value>tipoIva,System.String</value>
-          <value>totalConIva,System.Decimal</value>
-          <value>cuentaContable,System.String</value>
-          <value>porcentaje,System.Decimal</value>
-          <value>basFact,System.Decimal</value>
-          <value>cuota,System.Decimal</value>
-          <value>importeRetencion,System.Decimal</value>
-          <value>ano,System.Decimal</value>
-          <value>numero,System.Decimal</value>
-          <value>serie,System.String</value>
-          <value>receptorNombre,System.String</value>
-          <value>fechaRecibida,System.DateTime</value>
-          <value>fechaGestionCobros,System.DateTime</value>
-          <value>formaPagoNombre,System.String</value>
-          <value>suplidos,System.Decimal</value>
-          <value>cobrado,System.Decimal</value>
-          <value>penRecibir,System.Decimal</value>
-          <value>recibido,System.Decimal</value>
-          <value>gestCobros,System.Decimal</value>
-          <value>duplicado,System.Boolean</value>
-        </Columns>
-        <Dictionary isRef="1" />
-        <Key>84100b9ff188429e90c37ddebb859978</Key>
-        <Name>libCli</Name>
-        <NameInSource>listadoPre.libCli</NameInSource>
-      </libCli>
-    </DataSources>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
@@ -75,15 +17,15 @@
   <Key>d92dca1031f841609b65172816884c8c</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="5" type="Page" isKey="true">
+    <Page1 Ref="2" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="8">
-        <PageHeaderBand1 Ref="6" type="PageHeaderBand" isKey="true">
+        <PageHeaderBand1 Ref="3" type="PageHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,27.7,2.2</ClientRectangle>
           <Components isList="true" count="2">
-            <Text3 Ref="7" type="Text" isKey="true">
+            <Text3 Ref="4" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.4,9.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -91,13 +33,13 @@
               <Font>Arial,14.25,Regular,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
-              <Page isRef="5" />
-              <Parent isRef="6" />
+              <Page isRef="2" />
+              <Parent isRef="3" />
               <Text>LISTADO DE PREFACTURAS CLIENTES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text3>
-            <Text16 Ref="8" type="Text" isKey="true">
+            <Text16 Ref="5" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>18,0.2,9.4,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -106,8 +48,8 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
-              <Page isRef="5" />
-              <Parent isRef="6" />
+              <Page isRef="2" />
+              <Parent isRef="3" />
               <Text>{libCli.empresaNombre}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -116,14 +58,14 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>PageHeaderBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </PageHeaderBand1>
-        <PageFooterBand1 Ref="9" type="PageFooterBand" isKey="true">
+        <PageFooterBand1 Ref="6" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text5 Ref="10" type="Text" isKey="true">
+            <Text5 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.1,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -132,8 +74,8 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
-              <Page isRef="5" />
-              <Parent isRef="9" />
+              <Page isRef="2" />
+              <Parent isRef="6" />
               <Text>Página {PageNumber} de {TotalPageCount}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -142,50 +84,50 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </PageFooterBand1>
-        <HeaderlibPro Ref="11" type="HeaderBand" isKey="true">
+        <HeaderlibPro Ref="8" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,3.4,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="15">
-            <Text6 Ref="12" type="Text" isKey="true">
+          <Components isList="true" count="16">
+            <Text6 Ref="9" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.4,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>11.8,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>831f3923acd34c74aae0ee984e29f8a0</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Base</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text6>
-            <Text8 Ref="13" type="Text" isKey="true">
+            <Text8 Ref="10" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13,0,1,0.8</ClientRectangle>
+              <ClientRectangle>13.4,0,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>a08b2dd5aa5b4de4b2f550881621528b</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>% IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text8>
-            <Text10 Ref="14" type="Text" isKey="true">
+            <Text10 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>17.2,0,1.6,0.8</ClientRectangle>
@@ -195,15 +137,15 @@
               <Guid>070e40d35f924f12bc1afac403b85268</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Reten.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text14 Ref="15" type="Text" isKey="true">
+            <Text14 Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>20.8,0,1.4,0.8</ClientRectangle>
@@ -214,33 +156,33 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Pend.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text14>
-            <Text12 Ref="16" type="Text" isKey="true">
+            <Text12 Ref="13" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,1.2,0.8</ClientRectangle>
+              <ClientRectangle>14.6,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>6f67543450e746f7816f410bcfe4af4d</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>IVA</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text12>
-            <Headerliqgen_nombre Ref="17" type="Text" isKey="true">
+            <Headerliqgen_nombre Ref="14" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,2,0.8</ClientRectangle>
@@ -249,15 +191,15 @@
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_nombre</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Factura</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqgen_nombre>
-            <Headerliqgen_tipo Ref="18" type="Text" isKey="true">
+            <Headerliqgen_tipo Ref="15" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>4,0,1.4,0.8</ClientRectangle>
@@ -266,32 +208,32 @@
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_tipo</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Cuenta</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqgen_tipo>
-            <Headerliqgen_totComision Ref="19" type="Text" isKey="true">
+            <Headerliqgen_totComision Ref="16" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,0,3.4,0.8</ClientRectangle>
+              <ClientRectangle>7.4,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_totComision</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Titulo</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Headerliqgen_totComision>
-            <Text17 Ref="20" type="Text" isKey="true">
+            <Text17 Ref="17" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>2.2,0,1.6,0.8</ClientRectangle>
@@ -301,50 +243,50 @@
               <Guid>28552fa0073747309a96d89d9d5f6fa5</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Fecha</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text17>
-            <Text4 Ref="21" type="Text" isKey="true">
+            <Text4 Ref="18" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>16,0,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>218d80ec7b42410396b70d05599a5498</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
-              <Text>Supli.</Text>
+              <Page isRef="2" />
+              <Parent isRef="8" />
+              <Text>Supl.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text4>
-            <Text26 Ref="22" type="Text" isKey="true">
+            <Text26 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,0,2,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
-              <Text>Referencia</Text>
+              <Page isRef="2" />
+              <Parent isRef="8" />
+              <Text>Referen.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text26>
-            <Text35 Ref="23" type="Text" isKey="true">
+            <Text35 Ref="20" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>22.4,0,1.6,0.8</ClientRectangle>
@@ -355,15 +297,15 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text35</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Recibido</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text35>
-            <Text36 Ref="24" type="Text" isKey="true">
+            <Text36 Ref="21" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24.2,0,1.6,0.8</ClientRectangle>
@@ -374,8 +316,8 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text36</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Gestión
 cobro</Text>
               <TextBrush>Black</TextBrush>
@@ -383,7 +325,7 @@ cobro</Text>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text36>
-            <Text37 Ref="25" type="Text" isKey="true">
+            <Text37 Ref="22" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>26,0,1.6,0.8</ClientRectangle>
@@ -394,15 +336,15 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text37</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Cobrado</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text37>
-            <Text44 Ref="26" type="Text" isKey="true">
+            <Text44 Ref="23" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>19,0,1.6,0.8</ClientRectangle>
@@ -413,32 +355,51 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
-              <Page isRef="5" />
-              <Parent isRef="11" />
+              <Page isRef="2" />
+              <Parent isRef="8" />
               <Text>Total</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text44>
+            <Text47 Ref="24" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>10.6,0,1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>f5a181bae50e4406a1e377ac3190389a</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="2" />
+              <Parent isRef="8" />
+              <Text>Num.
+Doc.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>HeaderlibPro</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderlibPro>
-        <DatalibCli Ref="27" type="DataBand" isKey="true">
+        <DatalibCli Ref="25" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanBreak>True</CanBreak>
           <ClientRectangle>0,5,27.7,0.4</ClientRectangle>
-          <Components isList="true" count="15">
-            <Text9 Ref="28" type="Text" isKey="true">
+          <Components isList="true" count="16">
+            <Text9 Ref="26" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>13,0,1,0.4</ClientRectangle>
+              <ClientRectangle>13.4,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
@@ -448,11 +409,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="29" type="NumberFormat" isKey="true">
+              <TextFormat Ref="27" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -462,7 +423,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text9>
-            <Text11 Ref="30" type="Text" isKey="true">
+            <Text11 Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>17.2,0,1.6,0.4</ClientRectangle>
@@ -476,12 +437,12 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libCli.importeRetencion}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="31" type="NumberFormat" isKey="true">
+              <TextFormat Ref="29" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -491,10 +452,10 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text11>
-            <Text13 Ref="32" type="Text" isKey="true">
+            <Text13 Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>14.2,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>14.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
@@ -503,11 +464,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.cuota}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="33" type="NumberFormat" isKey="true">
+              <TextFormat Ref="31" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -517,7 +478,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text13>
-            <Dataliqgen_nombre Ref="34" type="Text" isKey="true">
+            <Dataliqgen_nombre Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,2,0.4</ClientRectangle>
@@ -529,14 +490,14 @@ cobro</Text>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_nombre</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.serie}-{libCli.ano}-{libCli.numero.ToString("000000")}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_nombre>
-            <Dataliqgen_tipo Ref="35" type="Text" isKey="true">
+            <Dataliqgen_tipo Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>4,0,1.4,0.4</ClientRectangle>
@@ -548,17 +509,17 @@ cobro</Text>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_tipo</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.cuentaContable}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_tipo>
-            <Dataliqgen_totComision Ref="36" type="Text" isKey="true">
+            <Dataliqgen_totComision Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>7.8,0,3.4,0.4</ClientRectangle>
+              <ClientRectangle>7.4,0,3,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
@@ -567,11 +528,11 @@ cobro</Text>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_totComision</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.receptorNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="37" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="35" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -583,7 +544,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Dataliqgen_totComision>
-            <Text15 Ref="38" type="Text" isKey="true">
+            <Text15 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -598,11 +559,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.penRecibir}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="39" type="NumberFormat" isKey="true">
+              <TextFormat Ref="37" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -612,10 +573,10 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text15>
-            <Text7 Ref="40" type="Text" isKey="true">
+            <Text7 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11.4,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>11.8,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
@@ -625,12 +586,12 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.basFact}
 </Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="NumberFormat" isKey="true">
+              <TextFormat Ref="39" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -640,7 +601,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text7>
-            <Text25 Ref="42" type="Text" isKey="true">
+            <Text25 Ref="40" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>2.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
@@ -650,16 +611,16 @@ cobro</Text>
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.fecha}</Text>
               <TextBrush>Black</TextBrush>
               <Type>DataColumn</Type>
             </Text25>
-            <Text23 Ref="43" type="Text" isKey="true">
+            <Text23 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>15.6,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>16,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.suplidos,EqualTo,_x0030_,,Numeric,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
@@ -670,12 +631,12 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libCli.suplidos}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="44" type="NumberFormat" isKey="true">
+              <TextFormat Ref="42" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -685,10 +646,10 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text23>
-            <Text29 Ref="45" type="Text" isKey="true">
+            <Text29 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>5.6,0,2,0.4</ClientRectangle>
+              <ClientRectangle>5.6,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="1">
                 <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
               </Conditions>
@@ -697,14 +658,14 @@ cobro</Text>
               <GrowToHeight>True</GrowToHeight>
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.contratoReferencia}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text29>
-            <Text40 Ref="46" type="Text" isKey="true">
+            <Text40 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -719,11 +680,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text40</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.recibido}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="NumberFormat" isKey="true">
+              <TextFormat Ref="45" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -733,7 +694,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text40>
-            <Text41 Ref="48" type="Text" isKey="true">
+            <Text41 Ref="46" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -748,11 +709,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.gestCobros}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="NumberFormat" isKey="true">
+              <TextFormat Ref="47" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -762,7 +723,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text41>
-            <Text42 Ref="50" type="Text" isKey="true">
+            <Text42 Ref="48" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -777,11 +738,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.cobrado}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="51" type="NumberFormat" isKey="true">
+              <TextFormat Ref="49" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -791,7 +752,7 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text42>
-            <Text45 Ref="52" type="Text" isKey="true">
+            <Text45 Ref="50" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
@@ -806,11 +767,11 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text45</Name>
-              <Page isRef="5" />
-              <Parent isRef="27" />
+              <Page isRef="2" />
+              <Parent isRef="25" />
               <Text>{libCli.totalConIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="53" type="NumberFormat" isKey="true">
+              <TextFormat Ref="51" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -820,6 +781,35 @@ cobro</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text45>
+            <Text48 Ref="52" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>10.6,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="1">
+                <value>libCli.duplicado,EqualTo,true,,Boolean,White,Transparent,Arial_x002C_8,False,False,,,None</value>
+              </Conditions>
+              <Expressions isList="true" count="0" />
+              <Font>Arial Narrow,8.25,Regular,Point,False,0</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="2" />
+              <Parent isRef="25" />
+              <Text>{libCli.numLetra}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <Symbol>€</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text48>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -827,8 +817,8 @@ cobro</Text>
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DatalibCli</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DatalibCli>
         <FooterBand1 Ref="54" type="FooterBand" isKey="true">
@@ -838,14 +828,14 @@ cobro</Text>
           <Components isList="true" count="10">
             <Text18 Ref="55" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,0,1.2,0.4</ClientRectangle>
+              <ClientRectangle>12.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
               <TextBrush>Black</TextBrush>
@@ -867,7 +857,7 @@ cobro</Text>
               <Font>Arial,9.75,Bold,Point,False,0</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>TOTAL GENERAL</Text>
               <TextBrush>Black</TextBrush>
@@ -875,7 +865,7 @@ cobro</Text>
             </Text19>
             <Text20 Ref="58" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.8,0,1.6,0.4</ClientRectangle>
+              <ClientRectangle>14.2,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
@@ -883,7 +873,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
@@ -907,7 +897,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{Sum(DatalibCli,libCli.importeRetencion)}</Text>
               <TextBrush>Black</TextBrush>
@@ -931,7 +921,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{acumulados.acumPenRecibir}</Text>
               <TextBrush>Black</TextBrush>
@@ -947,7 +937,7 @@ cobro</Text>
             </Text22>
             <Text24 Ref="64" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>16,0,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
@@ -955,7 +945,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text24</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{Sum(DatalibCli,libCli.suplidos)}</Text>
               <TextBrush>Black</TextBrush>
@@ -979,7 +969,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text38</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{acumulados.acumRecibido}</Text>
               <TextBrush>Black</TextBrush>
@@ -1003,7 +993,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text39</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{acumulados.acumGestCobros}</Text>
               <TextBrush>Black</TextBrush>
@@ -1027,7 +1017,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text43</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{acumulados.acumCobrado}</Text>
               <TextBrush>Black</TextBrush>
@@ -1051,7 +1041,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text46</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="54" />
               <Text>{acumulados.acumTotConIva}</Text>
               <TextBrush>Black</TextBrush>
@@ -1069,8 +1059,8 @@ cobro</Text>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>FooterBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </FooterBand1>
         <HeaderBand1 Ref="74" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
@@ -1085,7 +1075,7 @@ cobro</Text>
               <Guid>60caffd24c034c85b4b67de33a22cc1d</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="74" />
               <Text>REGIMEN GENERAL</Text>
               <TextBrush>Black</TextBrush>
@@ -1103,7 +1093,7 @@ cobro</Text>
               <Guid>fa1d3e953eea4eb5827e83b9f1ba4c14</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="74" />
               <Text>Tipo de IVA</Text>
               <TextBrush>Black</TextBrush>
@@ -1122,7 +1112,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="74" />
               <Text>Base imp.</Text>
               <TextBrush>Black</TextBrush>
@@ -1140,7 +1130,7 @@ cobro</Text>
               <Guid>ae5b76d2c4414ff7959da68f9679eb0c</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text33</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="74" />
               <Text>% IVA</Text>
               <TextBrush>Black</TextBrush>
@@ -1159,7 +1149,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text34</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="74" />
               <Text>IVA</Text>
               <TextBrush>Black</TextBrush>
@@ -1171,8 +1161,8 @@ cobro</Text>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>HeaderBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </HeaderBand1>
         <GroupHeaderBand1 Ref="80" type="GroupHeaderBand" isKey="true">
           <Brush>Transparent</Brush>
@@ -1190,7 +1180,7 @@ cobro</Text>
               <Guid>9040d04175be4c28bb23a604c43e667b</Guid>
               <Margins>0,0,0,0</Margins>
               <Name>Text32</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="80" />
               <Text>{libCli.tipoIva}</Text>
               <TextBrush>Black</TextBrush>
@@ -1209,7 +1199,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="80" />
               <Text>{Sum(DatalibCli,libCli.basFact)}</Text>
               <TextBrush>Black</TextBrush>
@@ -1233,7 +1223,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="80" />
               <Text>{libCli.porcentaje}</Text>
               <TextBrush>Black</TextBrush>
@@ -1258,7 +1248,7 @@ cobro</Text>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
-              <Page isRef="5" />
+              <Page isRef="2" />
               <Parent isRef="80" />
               <Text>{Sum(DatalibCli,libCli.cuota)}</Text>
               <TextBrush>Black</TextBrush>
@@ -1276,8 +1266,8 @@ cobro</Text>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>GroupHeaderBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </GroupHeaderBand1>
         <DataBand1 Ref="88" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
@@ -1290,8 +1280,8 @@ cobro</Text>
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand1</Name>
-          <Page isRef="5" />
-          <Parent isRef="5" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DataBand1>
       </Components>
@@ -1320,10 +1310,10 @@ cobro</Text>
   </ReferencedAssemblies>
   <ReportAlias>PrefacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>4/28/2023 1:37:32 PM</ReportChanged>
+  <ReportChanged>5/8/2023 12:15:22 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\libro_prefacturas_clientes_obras.mrt</ReportFile>
-  <ReportGuid>fd770b0d21b842a5abc8ff269ed101f1</ReportGuid>
+  <ReportGuid>28c78ccc33e14e5c888cb4a93fbcfba9</ReportGuid>
   <ReportName>PrefacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

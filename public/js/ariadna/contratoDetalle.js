@@ -5874,6 +5874,7 @@ function deletePrefactura(id) {
 }
 function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, porRetenGarantias, numPagos, empresaId, clienteId, empresa, cliente) {
     var divisor = obtenerDivisor();
+    var numLetra = '';
 
 
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
@@ -5927,6 +5928,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
        /*  if (i == (nPagos - 1)) {
             f2 = moment(fFactura).format('DD/MM/YYYY');
         } */
+        var n =  i+1 
+            numLetra = n + "/" + nPagos
+        
         var p = {
             fecha: f,
             importe: importePago,
@@ -5941,8 +5945,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             cliente: cliente,
             periodo: f0 + "-" + f2,
             contPlanificacionId: RegPlanificacion[0].contPlanificacionId,
-            formaPagoId: RegPlanificacion[0].formaPagoId
-
+            formaPagoId: RegPlanificacion[0].formaPagoId,
+            numLetra: numLetra
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -6012,6 +6016,8 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
         nPagos++
     }
     for (var i = 0; i < nPagos; i++) {
+        var n =  i+1 
+        numLetra = n + "/" + nPagos
         // sucesivas fechas de factura
         var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
         // inicio de periodo
@@ -6039,7 +6045,8 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: f0 + "-" + f2
+            periodo: f0 + "-" + f2,
+            numLetra: numLetra
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -7643,8 +7650,10 @@ function initTablaDocumentacion() {
                     var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
                     var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
                     var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    if(!usuario.borrarCarpeta) bt3 = "";
                 } else {
                     var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                  
                 }
                
                 return html = "<div class='pull-right'>" + bt + " " + bt2 + " " + bt3 +"</div>";

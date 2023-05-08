@@ -223,8 +223,9 @@ var obtainReport = function () {
 
 };
 
-var obtainReportJson = function (obj) {
+var obtainReportJson = function (obj, departamentoId) {
         var file = "../reports/libro_prefacturas_clientes.mrt";
+        if(departamentoId == 8) file = "../reports/libro_prefacturas_clientes_obras.mrt";
         var report = new Stimulsoft.Report.StiReport();
             
             
@@ -453,7 +454,7 @@ var rptFacturaParametros = function () {
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
         if(data.libCli.length > 0) {
-            obtainReportJson(data)
+            obtainReportJson(data, departamentoId)
         } else {
             alert("No hay registros con estas condiciones");
         }
