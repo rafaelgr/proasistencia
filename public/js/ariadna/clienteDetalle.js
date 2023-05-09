@@ -20,6 +20,7 @@ var datosCambioAgente;
 var ClienteId;
 var fechaTope;
 var fechasCambio = [];
+var frContrato = '';
 var my_array = new Array('9/04/2019', '02/02/2021'); 
 
 
@@ -269,6 +270,35 @@ function initForm() {
     });
 
     empId = gup('ClienteId');
+    frContrato = gup('frContrato');
+    //OCULTAMOS ELEMENTOS DEL HTML CUANDO CARGAMOS EL IFRAME DESDE EL CONTRATO
+    if(frContrato == 'true') {
+        $('#btnAceptar').hide();
+        $('#btnSalir').hide();
+        $('#btnImportar').hide();
+        $("#left-panel").hide();
+      
+        $('#header').hide();
+        $('#ribbon').hide();
+        $('#footer').hide();
+        $('#detalleCliente').hide();
+        $('#hAgentes').hide();
+        $('#hCobros').hide();
+        $('#main').css('margin-left', 0)
+    }else {
+        $('#btnAceptar').show();
+        $('#btnSalir').show();
+        $('#btnImportar').show();
+        $("#left-panel").show();
+      
+        $('#header').show();
+        $('#ribbon').show();
+        $('#footer').show();
+        $('#detalleCliente').show();
+        $('#hAgentes').show();
+        $('#hCobros').show();
+        $('#main').css('margin-left', 220)
+    }
 
 
     if (empId != 0) {
