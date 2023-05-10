@@ -75,13 +75,13 @@
                                     <input id="txtRFecha" name="txtRFecha"/>
                                 </label>
                             </section>
-                            <div class="col col-md-2">
+                            <section class="col col-md-2">
                                 <label class="label">Empresa</label>
                                 <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
-                            </div>
-                            <section class="col col-md-3">
+                            </section>
+                            <section class="col col-md-5">
                                 <label class="label">Cliente</label>
                                 <label class="input">
                                     <input id="txtCliente" name="txtCliente" />
@@ -93,14 +93,21 @@
                                     <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
                                 </label>
                             </section>
+                            
+                        </div>
+                        <div class="row">
                             <section class="col col-md-2">
-                                <label class="label">Agente</label>
+                                <label class="label">Tipo colaborador</label>
+                                <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
+                                                    </label>
+                            </section>  
+                            <section class="col col-md-4">
+                                <label class="label">Colaborador</label>
                                 <label style="width:100%; height:50px;">
                                     <select style="width:100%" id="cmbColaboradores" name="cmbColaboradores" data-bind="options: posiblesColaboradores, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosColaboradores, selected2:{}"></select><i></i>
                                 </label>
-                            </section>
-                        </div>
-                        <div class="row">
+                            </section>            
                             <section class="col col-md-6" id="contrato">
                                 <label class="label">CONTRATO</label>
                                 <label style="width:100%;">
