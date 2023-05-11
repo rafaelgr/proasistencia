@@ -39,7 +39,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //
-    $("#btnBuscar").click(obtainReport);
+    $("#btnBuscar").click(rptContratosParametrosJson);
     // avoid form submmit
     $("#frmRptOfertas").submit(function () {
         return false;
@@ -140,7 +140,7 @@ function initForm() {
                 llamadaAjax(verb, url, null, function (err, data) {
                     vm.sempresaId(data.empresaId);
                     vm.sdepartamentoId(data.departamentoId);
-                    obtainReport();
+                    rptContratosParametrosJson();
                     $('#selector').hide();
                 });
             }
@@ -199,7 +199,7 @@ function admData() {
      self.observaciones = ko.observable();
      self.observacionesPago = ko.observable();
      //
-    self.tipoComerciallId = ko.observable();
+    self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
@@ -208,36 +208,6 @@ function admData() {
 };
 
 
-var rptLiquidacionGeneralParametrosJson = function () {
-    if(!datosOK) return;
-  /*   if(vm.sdepartamentoId() == 0 && vm.stipoComercialId() != 1) {
-        mensError("Se tiene que introducir un departamento.");
-        return;
-    } */
-    var comercialId = vm.scomercialId();
-    var tipoComercialId = vm.stipoComercialId();
-    var departamentoId = vm.sdepartamentoId();
-    var dFecha = vm.dFecha();
-    var hFecha = vm.hFecha();
-
-   /*  if(tipoComercialId != 1) {
-        obtainReport();
-        return;
-    } */
-
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario.usuarioId;
-
-    llamadaAjax("POST", url, null, function (err, data) {
-        if(err) return;
-        if(data) {
-            obtainReportJson(data)
-        } else {
-            alert("No hay registros con estas condiciones");
-        }
-    });
-   
-    
-}
 
 
 function datosOK() {
@@ -349,11 +319,12 @@ var initAutoCliente = function () {
 
 
 var rptContratosParametrosJson = function () {
-    var tipoComercialId = vm.tipoComercialId();
+    var tipoComercialId = vm.stipoComercialId();
     var comercialId = vm.scomercialId();
     var clienteId = vm.sclienteId();
     var departamentoId = vm.sdepartamentoId();
     var empresaId = vm.sempresaId();
+    var contratoId = vm.scontratoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
 
@@ -362,6 +333,7 @@ var rptContratosParametrosJson = function () {
     if(!tipoComercialId) tipoComercialId = 0;
     if(!departamentoId) departamentoId = 0;
     if(!empresaId) empresaId = 0;
+    if(!contratoId) contratoId = 0;
 
 
     
@@ -371,6 +343,8 @@ var rptContratosParametrosJson = function () {
     url += "/" + departamentoId;
     url += "/" + tipoComercialId;
     url += "/" + comercialId;
+    url += "/" + contratoId;
+    url += "/" + usuario.usuarioId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err)   return;
         if(data) {
@@ -381,3 +355,24 @@ var rptContratosParametrosJson = function () {
         
     });
 }
+
+var obtainReportJson = function (obj) {
+    var file = "../reports/inf_cobros.mrt";
+    var report = new Stimulsoft.Report.StiReport();
+        
+        
+    report.loadFile(file);
+
+    var dataSet = new Stimulsoft.System.Data.DataSet("liq_ant");
+    dataSet.readJson(obj);
+    
+     // Remove all connections from the report template
+     report.dictionary.databases.clear();
+
+     //
+    report.regData(dataSet.dataSetName, "", dataSet);
+    report.dictionary.synchronize();
+
+    viewer.report = report;
+
+};
