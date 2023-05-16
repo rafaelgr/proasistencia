@@ -600,11 +600,10 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.fechaInicio}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="38" type="DateFormat" isKey="true" />
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text6>
-            <Text8 Ref="39" type="Text" isKey="true">
+            <Text8 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>9.4,0,2.4,0.4</ClientRectangle>
@@ -621,7 +620,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text8>
-            <Text13 Ref="40" type="Text" isKey="true">
+            <Text13 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>13.4,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -635,7 +634,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.coste}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -646,7 +645,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text13>
-            <Text15 Ref="42" type="Text" isKey="true">
+            <Text15 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>16,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -660,7 +659,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.BI}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="42" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -671,7 +670,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text15>
-            <Text17 Ref="44" type="Text" isKey="true">
+            <Text17 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>15,0,0.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -685,7 +684,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.porBI}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="NumberFormat" isKey="true">
+              <TextFormat Ref="44" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -694,7 +693,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text17>
-            <Text18 Ref="46" type="Text" isKey="true">
+            <Text18 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>17.6,0,1.6,0.4</ClientRectangle>
@@ -710,7 +709,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.agenteNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="46" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -722,7 +721,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text18>
-            <Text20 Ref="48" type="Text" isKey="true">
+            <Text20 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>19.4,0,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -736,7 +735,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.importeAgente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="48" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -747,7 +746,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text20>
-            <Text69 Ref="50" type="Text" isKey="true">
+            <Text69 Ref="49" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>7.8,0,1.4,0.4</ClientRectangle>
@@ -760,13 +759,12 @@ REPERCUTIDO</Text>
               <Name>Text69</Name>
               <Page isRef="2" />
               <Parent isRef="33" />
-              <Text>{contratos.fechaFinal}</Text>
+              <Text>{contratos.fecFin}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="51" type="DateFormat" isKey="true" />
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text69>
-            <Text35 Ref="52" type="Text" isKey="true">
+            <Text35 Ref="50" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>21.2,0,1.4,0.4</ClientRectangle>
@@ -782,7 +780,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.comercialNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="51" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -794,7 +792,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text35>
-            <Text55 Ref="54" type="Text" isKey="true">
+            <Text55 Ref="52" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>22.8,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -808,7 +806,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.importeComercial}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="53" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -819,7 +817,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text55>
-            <Text39 Ref="56" type="Text" isKey="true">
+            <Text39 Ref="54" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>24.4,0,1.6,0.4</ClientRectangle>
@@ -835,7 +833,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.jGrupoNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="57" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="55" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -847,7 +845,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text39>
-            <Text50 Ref="58" type="Text" isKey="true">
+            <Text50 Ref="56" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>26.2,0,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -861,7 +859,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.importejefeGrupo}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="57" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -872,7 +870,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text50>
-            <Text23 Ref="60" type="Text" isKey="true">
+            <Text23 Ref="58" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>27.8,0,1.4,0.4</ClientRectangle>
@@ -888,7 +886,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.jObrasNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="61" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -900,7 +898,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text23>
-            <Text26 Ref="62" type="Text" isKey="true">
+            <Text26 Ref="60" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>29.4,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -914,7 +912,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.importejefeObras}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="63" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="61" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -925,7 +923,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text26>
-            <Text9 Ref="64" type="Text" isKey="true">
+            <Text9 Ref="62" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>30.8,0,1.2,0.4</ClientRectangle>
@@ -941,7 +939,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.arquitectoNombre}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="65" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="63" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -953,7 +951,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text9>
-            <Text27 Ref="66" type="Text" isKey="true">
+            <Text27 Ref="64" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>32.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -967,7 +965,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.importeArquitecto}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="67" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="65" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -978,7 +976,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text27>
-            <Text28 Ref="68" type="Text" isKey="true">
+            <Text28 Ref="66" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>33.6,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -992,7 +990,7 @@ REPERCUTIDO</Text>
               <Parent isRef="33" />
               <Text>{contratos.BINeto}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="69" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="67" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1003,7 +1001,7 @@ REPERCUTIDO</Text>
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
-            <Text30 Ref="70" type="Text" isKey="true">
+            <Text30 Ref="68" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>35,0,0.6,0.4</ClientRectangle>
@@ -1022,7 +1020,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text30>
-            <Text33 Ref="71" type="Text" isKey="true">
+            <Text33 Ref="69" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>35.8,0,0.6,0.4</ClientRectangle>
@@ -1041,7 +1039,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text33>
-            <Text41 Ref="72" type="Text" isKey="true">
+            <Text41 Ref="70" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>36.6,0,0.6,0.4</ClientRectangle>
@@ -1060,7 +1058,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text41>
-            <Text44 Ref="73" type="Text" isKey="true">
+            <Text44 Ref="71" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>2.4,0,1.6,0.4</ClientRectangle>
@@ -1078,7 +1076,7 @@ REPERCUTIDO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text44>
-            <Text45 Ref="74" type="Text" isKey="true">
+            <Text45 Ref="72" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <ClientRectangle>4.2,0,2,0.4</ClientRectangle>
@@ -1112,12 +1110,12 @@ REPERCUTIDO</Text>
             <value>fecha</value>
           </Sort>
         </Datacontratos>
-        <GroupFooterBand2 Ref="75" type="GroupFooterBand" isKey="true">
+        <GroupFooterBand2 Ref="73" type="GroupFooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,5.4,37.7,0</ClientRectangle>
           <Components isList="true" count="1">
-            <Text62 Ref="76" type="Text" isKey="true">
+            <Text62 Ref="74" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>25.8,0,0,0.4</ClientRectangle>
@@ -1128,7 +1126,7 @@ REPERCUTIDO</Text>
               <Margins>0,0,0,0</Margins>
               <Name>Text62</Name>
               <Page isRef="2" />
-              <Parent isRef="75" />
+              <Parent isRef="73" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
@@ -1164,10 +1162,10 @@ REPERCUTIDO</Text>
   </ReferencedAssemblies>
   <ReportAlias>InfContratos</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/15/2023 12:52:08 PM</ReportChanged>
+  <ReportChanged>5/16/2023 1:23:58 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\inf_cobros.mrt</ReportFile>
-  <ReportGuid>95c29dc4e6ed4570afc4b6726e048fc6</ReportGuid>
+  <ReportGuid>bf6577815ee7418996f87178aead40eb</ReportGuid>
   <ReportName>InfContratos</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
