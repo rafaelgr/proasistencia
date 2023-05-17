@@ -1,5 +1,7 @@
 #TABLAS TEMPORALES PARA EL INFORME DE COBROS REPERCUTIDOS Y GESTIONADOS DE LOS CONTRATOS
 
+DROP TABLE IF EXISTS `tmp_contratos`;
+
 CREATE TABLE `tmp_contratos` (
   `contratoId` int(11) NOT NULL default '0' COMMENT 'Identificador único de el contrato como contador autoincremental',
   `referencia` varchar(255) character set utf8 NOT NULL COMMENT 'Referencia de el contrato pa5ra búsquedas',
@@ -42,8 +44,11 @@ CREATE TABLE `tmp_contratos` (
 
 
 
+DROP TABLE IF EXISTS `tmp_cobros`;
+
 CREATE TABLE `tmp_cobros` (
   `contratoId` int(11) NOT NULL default '0',
+  `formaPagoId` int(11) default '0',
   `numserie` char(3) NOT NULL,
   `numfactu` int(11) NOT NULL default '0',
   `fecfactu` date NOT NULL default '0000-00-00',
@@ -92,9 +97,8 @@ CREATE TABLE `tmp_cobros` (
   `codusu` int(7) default NULL,
   `comunicadoServer` tinyint(4) default '0' COMMENT 'TrasBOLBAITE',
   `reciboanticipado` tinyint(4) default '0' COMMENT 'Cobro anticipado',
-  `nomforpa` varchar(40),
+  `nomforpa` varchar(40) default NULL,
   `esSeguro` int(2) NOT NULL default '0',
   `usuarioId` int(1) NOT NULL default '0',
   KEY `keyContrato` (`contratoId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
