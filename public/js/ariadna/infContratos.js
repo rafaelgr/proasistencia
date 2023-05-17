@@ -262,10 +262,10 @@ function loadTiposComerciales() {
 function loadColaboradores(e) {
     var tipoComercialId = 0;
     var url = "/api/comerciales"
-    if(e) {
+   
         var tipoComercialId = e;
-        url =  "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId
-    }
+        url =  "/api/comerciales/colaboradores/por/tipo/" + tipoComercialId
+    
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
@@ -320,6 +320,11 @@ var initAutoCliente = function () {
 
 
 var rptContratosParametrosJson = function () {
+    //si no hay cliente en el campo de texto el cliente es 0
+    var c = $('#txtCliente').val();
+    if(c == '') {
+        vm.sclienteId(null);
+    }
     var tipoComercialId = vm.stipoComercialId();
     var comercialId = vm.scomercialId();
     var clienteId = vm.sclienteId();
@@ -328,6 +333,8 @@ var rptContratosParametrosJson = function () {
     var contratoId = vm.scontratoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    
+    
 
     if(!clienteId) clienteId = 0;
     if(!comercialId) comercialId = 0;
