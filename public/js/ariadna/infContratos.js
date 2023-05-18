@@ -100,6 +100,12 @@ function initForm() {
         //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
+
+        var empresaId =  vm.sempresaId(); 
+        var departamentoId = vm.sdepartamentoId();
+        var dFecha = vm.dFecha();
+        var hFecha = vm.hFecha();
+        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
@@ -127,7 +133,9 @@ function initForm() {
         if(!e.added) return;
         var empresaId = vm.sempresaId()
         var departamentoId =  e.added.id;
-        loadContratos(parseInt(departamentoId), parseInt(empresaId));
+        var dFecha = vm.dFecha();
+        var hFecha = vm.hFecha();
+        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
 
 
@@ -135,7 +143,9 @@ function initForm() {
         if(!e.added) return;
         var empresaId =  e.added.id; 
         var departamentoId = vm.sdepartamentoId();
-        loadContratos(parseInt(departamentoId), parseInt(empresaId));
+        var dFecha = vm.dFecha();
+        var hFecha = vm.hFecha();
+        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
 
 
@@ -150,11 +160,24 @@ function initForm() {
             initAutoCliente();
             var d = vm.sdepartamentoId();
             var e = vm.sempresaId()
-
+            var dFecha = vm.dFecha();
+            var hFecha = vm.hFecha();
             //rptContratosParametrosJson();
-            loadContratos(d, e);
+            loadContratos(dFecha, hFecha, d, e);
         }
     });
+
+
+    $('#txtRFecha').change(function(e) {
+        if(!e.added) return;
+        var empresaId =  e.added.id; 
+        var departamentoId = vm.sdepartamentoId();
+        var dFecha = vm.dFecha();
+        var hFecha = vm.hFecha();
+        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
+    });
+    
+    
     //
     $.validator.addMethod("notEqualTo", function(value, element, param){
         if(value == "0") return false
@@ -283,12 +306,12 @@ function loadColaboradores(e) {
     });
 }
 
-function loadContratos(departamentoId, empresaId) {
+function loadContratos(dFecha, hFecha, departamentoId, empresaId) {
    
-    var url = myconfig.apiUrl +"/api/contratos/recupera/todos/" + departamentoId + "/" + empresaId;
+    var url = myconfig.apiUrl +"/api/contratos/recupera/todos/" + dFecha + "/" +hFecha + "/" + departamentoId + "/" + empresaId;
     
     llamadaAjax("GET", url, null, function (err, data) {
-        //if (err) return;
+        if (err) return;
         cargarContratos(data);
     });
 }
