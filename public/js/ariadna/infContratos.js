@@ -42,7 +42,7 @@ function initForm() {
     //
     $("#btnBuscar").click(rptContratosParametrosJson);
     // avoid form submmit
-    $("#frmRptOfertas").submit(function () {
+    $("#frmRptContratos").submit(function () {
         return false;
     });
     $("#frmExportar").submit(function () {
@@ -106,7 +106,7 @@ function initForm() {
 
     //
     $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
+    loadEmpresas(2);
     //
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
@@ -115,13 +115,29 @@ function initForm() {
     loadColaboradores(null);
     //
     $("#cmbContratos").select2(select2Spanish());
-    loadContratos();
 
 
     $('#cmbTiposComerciales').change(function(e) {
         if(!e.added) return;
         loadColaboradores(parseInt(e.added.id));
     });
+
+
+    $('#cmbDepartamentosTrabajo').change(function(e) {
+        if(!e.added) return;
+        var empresaId = vm.sempresaId()
+        var departamentoId =  e.added.id;
+        loadContratos(parseInt(departamentoId), parseInt(empresaId));
+    });
+
+
+    $('#cmbEmpresas').change(function(e) {
+        if(!e.added) return;
+        var empresaId =  e.added.id; 
+        var departamentoId = vm.sdepartamentoId();
+        loadContratos(parseInt(departamentoId), parseInt(empresaId));
+    });
+
 
     
 
@@ -132,19 +148,11 @@ function initForm() {
         if(err) return;
         if(data) {
             initAutoCliente();
-            // verificamos si nos han llamado directamente
-            //if (id) $('#selector').hide();
-            if (gup('facturaId') != "") {
-                vm.facturaId(gup('facturaId'));
-                verb = "GET";
-                var url = myconfig.apiUrl + "/api/facturas/" + vm.facturaId();
-                llamadaAjax(verb, url, null, function (err, data) {
-                    vm.sempresaId(data.empresaId);
-                    vm.sdepartamentoId(data.departamentoId);
-                    rptContratosParametrosJson();
-                    $('#selector').hide();
-                });
-            }
+            var d = vm.sdepartamentoId();
+            var e = vm.sempresaId()
+
+            //rptContratosParametrosJson();
+            loadContratos(d, e);
         }
     });
     //
@@ -212,7 +220,7 @@ function admData() {
 
 
 function datosOK() {
-    $('#frmRptOfertas').validate({
+    $('#frmRptContratos').validate({
         rules: {
             cmbEmpresas: {
                 required: true
@@ -237,15 +245,16 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmRptOfertas").validate().settings;
-    return $('#frmRptOfertas').valid();
+    var opciones = $("#frmRptContratos").validate().settings;
+    return $('#frmRptContratos').valid();
 }
 
 function loadEmpresas(empresaId) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
+        vm.sempresaId(empresaId);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
     });
 }
@@ -274,12 +283,12 @@ function loadColaboradores(e) {
     });
 }
 
-function loadContratos() {
+function loadContratos(departamentoId, empresaId) {
    
-    var url = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + 0;
+    var url = myconfig.apiUrl +"/api/contratos/recupera/todos/" + departamentoId + "/" + empresaId;
     
     llamadaAjax("GET", url, null, function (err, data) {
-        if (err) return;
+        //if (err) return;
         cargarContratos(data);
     });
 }
@@ -320,6 +329,7 @@ var initAutoCliente = function () {
 
 
 var rptContratosParametrosJson = function () {
+    if(!datosOK()) return;
     //si no hay cliente en el campo de texto el cliente es 0
     var c = $('#txtCliente').val();
     if(c == '') {
