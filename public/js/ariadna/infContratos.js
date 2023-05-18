@@ -167,15 +167,6 @@ function initForm() {
         }
     });
 
-
-    $('#txtRFecha').change(function(e) {
-        if(!e.added) return;
-        var empresaId =  e.added.id; 
-        var departamentoId = vm.sdepartamentoId();
-        var dFecha = vm.dFecha();
-        var hFecha = vm.hFecha();
-        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
-    });
     
     
     //
