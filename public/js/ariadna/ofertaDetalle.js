@@ -1930,13 +1930,17 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 var recalcularCostesImportesDesdeCoste = function () {
     if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
     if (!vm.coste()) vm.coste(0);
-    if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
+    if (!vm.porcentajeAgente()) {
+        vm.porcentajeAgente(0);
+    } else {
+        vm.porcentajeAgente(roundToTwo(vm.porcentajeAgente()));
+    }
     if (!vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
-        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+        vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
