@@ -31,4 +31,5 @@ _ReSharper*/
 node_modules
 public/ficheros
 .env
+log.txt
 
