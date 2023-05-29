@@ -79,7 +79,7 @@
             <Text7 Ref="7" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.8,0,1.6,1</ClientRectangle>
+              <ClientRectangle>11.6,0,1.8,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -383,29 +383,10 @@ CONTRATO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text52>
-            <Text42 Ref="24" type="Text" isKey="true">
+            <Text43 Ref="24" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.2,0,2.6,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7</Font>
-              <Guid>7e4ad133557a4b4eb006a2478cb91ad5</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text42</Name>
-              <Page isRef="2" />
-              <Parent isRef="3" />
-              <Text>%
-GESTIONADO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Bottom</VertAlignment>
-            </Text42>
-            <Text43 Ref="25" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0,2.2,1</ClientRectangle>
+              <ClientRectangle>4.2,0,2.2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -421,15 +402,15 @@ CONSOLIDADO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text43>
-            <Text46 Ref="26" type="Text" isKey="true">
+            <Text46 Ref="25" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7,0,4.8,1</ClientRectangle>
+              <ClientRectangle>6.4,0,5.2,1</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
               <Guid>9fcbedd80d4146708a6d3c17ff496ad0</Guid>
-              <Margins>0,0,0,0</Margins>
+              <Margins>5,0,0,0</Margins>
               <Name>Text46</Name>
               <Page isRef="2" />
               <Parent isRef="3" />
@@ -438,7 +419,7 @@ CONSOLIDADO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text46>
-            <Text37 Ref="27" type="Text" isKey="true">
+            <Text37 Ref="26" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>19.2,0.6,1,0.4</ClientRectangle>
@@ -456,7 +437,7 @@ CONSOLIDADO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text37>
-            <Text14 Ref="28" type="Text" isKey="true">
+            <Text14 Ref="27" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>19.2,0,2.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -472,7 +453,7 @@ CONSOLIDADO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text14>
-            <Text48 Ref="29" type="Text" isKey="true">
+            <Text48 Ref="28" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>20.2,0.6,1.6,0.4</ClientRectangle>
@@ -490,6 +471,25 @@ CONSOLIDADO</Text>
               <Type>Expression</Type>
               <VertAlignment>Bottom</VertAlignment>
             </Text48>
+            <Text42 Ref="29" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,0,2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>330eadf9d4054330ac2d01c42730bd34</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text42</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>%
+GESTIONADO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text42>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -557,7 +557,7 @@ CONSOLIDADO</Text>
             <Text6 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11.8,0,1.6,0.2</ClientRectangle>
+              <ClientRectangle>11.6,0,1.8,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -676,7 +676,7 @@ CONSOLIDADO</Text>
               <Font>Arial,7</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>cd0c711a1efe41109a83dbcc9ddc0e0f</Guid>
-              <Margins>12,0,0,0</Margins>
+              <Margins>10,0,0,0</Margins>
               <Name>Text18</Name>
               <Page isRef="2" />
               <Parent isRef="32" />
@@ -826,7 +826,7 @@ CONSOLIDADO</Text>
               <Font>Arial,7</Font>
               <GrowToHeight>True</GrowToHeight>
               <Guid>8b905020f970428e8ecaf1751bb46def</Guid>
-              <Margins>5,0,0,0</Margins>
+              <Margins>10,0,0,0</Margins>
               <Name>Text9</Name>
               <Page isRef="2" />
               <Parent isRef="32" />
@@ -1008,7 +1008,7 @@ CONSOLIDADO</Text>
             <Text44 Ref="65" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>2.2,0,2.6,0.2</ClientRectangle>
+              <ClientRectangle>2.2,0,2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1030,10 +1030,27 @@ CONSOLIDADO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text44>
-            <Text45 Ref="67" type="Text" isKey="true">
+            <Text47 Ref="67" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>4.6,0,2.3,0.2</ClientRectangle>
+              <ClientRectangle>6.4,0,5.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.clienteNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text47>
+            <Text45 Ref="68" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>4.2,0,2.2,0.2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,7</Font>
@@ -1045,7 +1062,7 @@ CONSOLIDADO</Text>
               <Parent isRef="32" />
               <Text>{contratos.repercutido}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="68" type="NumberFormat" isKey="true">
+              <TextFormat Ref="69" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -1055,23 +1072,6 @@ CONSOLIDADO</Text>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
             </Text45>
-            <Text47 Ref="69" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>7,0,4.8,0.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,7</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text47</Name>
-              <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>{contratos.clienteNombre}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text47>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -1112,10 +1112,10 @@ CONSOLIDADO</Text>
   </ReferencedAssemblies>
   <ReportAlias>InfContratos</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/26/2023 10:19:27 AM</ReportChanged>
+  <ReportChanged>5/29/2023 9:47:59 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\inf_cobros.mrt</ReportFile>
-  <ReportGuid>76bc5aa3552846f585993184cde79dea</ReportGuid>
+  <ReportGuid>4fc81c04ae8b44228ada75cc86be766d</ReportGuid>
   <ReportName>InfContratos</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
