@@ -655,6 +655,7 @@ function admData() {
     self.referencia = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
+    self.nombreComercial = ko.observable();
     self.nombreCliente = ko.observable();
     self.mantenedorId = ko.observable();
     self.agenteId = ko.observable();
@@ -1373,6 +1374,7 @@ var cambioCliente = function (datos) {
         vm.poblacion(data.poblacion2);
         vm.provincia(data.provincia2);
         vm.iban(data.iban);
+        vm.nombreComercial(data.nombreComercial)
         antClienteId = datos.id;
         antClienteNombre = datos.value;
     });
@@ -2068,6 +2070,7 @@ var cargaCliente = function (id) {
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
         vm.nombreCliente(data.nombre);
+        vm.nombreComercial(data.nombreComercial);
         vm.iban(data.iban);
         antClienteId = data.clienteId;
         antClienteNombre = data.nombre;
@@ -2127,7 +2130,7 @@ var initAutoCliente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.clienteId(ui.item.id);
-           
+         
             cambioCliente(ui.item);
         }
     });
@@ -2850,7 +2853,7 @@ var verPrefacturasAGenerar = function () {
     var importe = vm.importeCliente(); // importe real de la factura;
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
     var clienteId = vm.clienteId();
-    var cliente = $("#txtCliente").val();
+    var cliente = vm.nombreComercial();
     var empresa = $("#cmbEmpresas").select2('data').text;
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
@@ -2876,7 +2879,7 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var importe = vm.importeAFacturar(); // importe real de la factura;
     var importeAlCliente = vm.importeAFacturar(); // importe al cliente final;
     var clienteId = vm.clienteId();
-    var cliente = $("#txtCliente").val();
+    var cliente = vm.nombreComercial();
     var empresa = $("#cmbEmpresas").select2('data').text;
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
@@ -6643,7 +6646,7 @@ function aceptarLineaConceptoPrefactura() {
                                     var importe = vm.importeCliente(); // importe real de la factura;
                                     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
                                     var clienteId = vm.clienteId();
-                                    var cliente = $("#txtCliente").val();
+                                    var cliente = vm.nombreComercial();
                                     var empresa = $("#cmbEmpresas").select2('data').text;
                                     // si es un mantenedor su importe de factura es el calculado para él.
                                     if (vm.mantenedorId()) {
@@ -6673,7 +6676,7 @@ function aceptarLineaConceptoPrefactura() {
                             var importe = vm.importeCliente(); // importe real de la factura;
                             var importeAlCliente = vm.importeCliente(); // importe al cliente final;
                             var clienteId = vm.clienteId();
-                            var cliente = $("#txtCliente").val();
+                            var cliente = vm.nombreComercial();
                             var empresa = $("#cmbEmpresas").select2('data').text;
                             // si es un mantenedor su importe de factura es el calculado para él.
                             if (vm.mantenedorId()) {
@@ -7249,7 +7252,7 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
     } else {
         // comprobamos si es de mantenedor o cliente final.
         var clienteId = vm.clienteId();
-        var cliente = $("#txtCliente").val();
+        var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
