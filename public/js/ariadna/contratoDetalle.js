@@ -2477,7 +2477,7 @@ function aceptarComisionista() {
     }
     if (!lineaEnEdicion) {
         data.contratoComisionista.contratoComisionistaId = 0;
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista/comprueba/tipo", data, function (err, data) {
             if (err) return;
             $('#modalComisionista').modal('hide');
             loadComisionistas(vm.clienteId());
@@ -2646,7 +2646,7 @@ function buscaComisionistas(id) {
     llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data1) {
         if (err) return;
         if(data1) {
-            llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId(), null, function (err, data2) {
+            llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId() + "/" + vm.sempresaId() + "/" + vm.tipoContratoId(), null, function (err, data2) {
                 if (err) return;
                 if(data2.length  > 0) {
                     for(var i = 0; i< data1.length; i++){
