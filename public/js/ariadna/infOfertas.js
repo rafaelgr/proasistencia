@@ -112,9 +112,14 @@ function initForm() {
         // verificamos si nos han llamado directamente
         //     if (id) $('#selector').hide();
         if (gup('ofertaId') != "") {
-            vm.ofertaId(gup('ofertaId'));
-            obtainReport();
-            $('#selector').hide();
+            //recuperamos la información de la oferta para conocer su departamento
+            vm.ofertaId(gup('ofertaId')); 
+            llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
+                if (err) return;
+                if(data) vm.sempresaId(data.empresaId);
+                obtainReport();
+                $('#selector').hide();
+            });
         }
     });
 
@@ -159,6 +164,10 @@ function admData() {
 
 var obtainReport = function () {
     if (!datosOK()) return;
+
+    var empresaId = vm.sempresaId();
+    var departamentoId = vm.sdepartamentoId();
+  
     
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -166,6 +175,8 @@ var obtainReport = function () {
     //report.loadFile("../reports/SimpleList.mrt");
     var rpt = gup("report");
     var file = "../reports/oferta_general.mrt";
+    //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
+    if(empresaId == 10 && departamentoId == 5) file = "../reports/oferta_proyecta.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
