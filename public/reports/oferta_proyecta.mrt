@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "002d1f1750d84d36b39338701eaf5b01",
+  "ReportGuid": "9d9ba1250a9a4182ae1e241fd9b5ca9a",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1686223779602+0200)/",
+  "ReportChanged": "/Date(1686301802887+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -388,6 +388,200 @@
     "0": {
       "Ident": "StiPage",
       "Name": "Page1",
+      "Guid": "30b47bfe65034ee786a947cf0e96a147",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiPageHeaderBand",
+          "Name": "cabeceraPresentacion",
+          "ClientRectangle": "0,0.4,19,4.4",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text24",
+              "Guid": "3081d22ecd4a4738800d1443c2443cba",
+              "ClientRectangle": "11.6,3.6,7.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.fechaOferta}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "D"
+              }
+            },
+            "1": {
+              "Ident": "StiImage",
+              "Name": "Image1",
+              "Guid": "3acfef1b0e86486ba5c6d11a68baa7ad",
+              "ClientRectangle": "0.2,0.2,5,1.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_proyecta_nuevo.png"
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text27",
+              "Guid": "a4c28bd8c2ca45b99a020d431768ff1d",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "8.4,2.2,10.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.clienteNombre} \r\n{ofertas.clienteCodPostal} {ofertas.clientePoblacion}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text30",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.6,4.4,18.2,1.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Estimados Sres.:\r\n\r\nAtendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los servicios detallados a continuación, para la comunidad de propietarios sita en:"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiPageFooterBand",
+          "Name": "PiePresentacion",
+          "ClientRectangle": "0,26.3,19,1.4",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.2,0.16,18.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.empresaDireccion} ({ofertas.empresaCodPostal}) {ofertas.empresaPoblacion} | Telf:  91 290 50 30  email: info@proyectarquitectos.es "
+              },
+              "HorAlignment": "Center",
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiText",
+          "Name": "Text26",
+          "CanGrow": true,
+          "GrowToHeight": true,
+          "ClientRectangle": "0.6,6.6,18.2,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Text": {
+            "Value": "\t\t- {ofertas.empresaDireccion}. {ofertas.empresaCodPostal}. {ofertas.empresaPoblacion}\r\n"
+          },
+          "Font": ";10;Bold;",
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "TextBrush": "solid:Black",
+          "TextOptions": {
+            "WordWrap": true
+          },
+          "Type": "Expression"
+        },
+        "3": {
+          "Ident": "StiText",
+          "Name": "Text29",
+          "CanGrow": true,
+          "GrowToHeight": true,
+          "ClientRectangle": "0.6,7.4,18.2,1.4",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Text": {
+            "Value": "Estamos a su disposición para cualquier aclaración\r\n\r\nAtentamente,\r\n"
+          },
+          "Font": ";10;;",
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "TextBrush": "solid:Black",
+          "TextOptions": {
+            "WordWrap": true
+          },
+          "Type": "Expression"
+        }
+      },
+      "PageWidth": 21.0,
+      "PageHeight": 29.7,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1.0,
+        "Right": 1.0,
+        "Top": 1.0,
+        "Bottom": 1.0
+      },
+      "ReportUnit": {
+        "Ident": "StiCentimetersUnit"
+      }
+    },
+    "1": {
+      "Ident": "StiPage",
+      "Name": "Page2",
       "Guid": "cec8a694f19f8c4433f0b3e0a097cf28",
       "Interaction": {
         "Ident": "StiInteraction"
@@ -519,19 +713,19 @@
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text38",
-              "ClientRectangle": "0.2,0.76,18.6,0.6",
+              "Name": "Text34",
+              "ClientRectangle": "0.2,0.82,18.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{PageNumber} de {TotalPageCount}"
+                "Value": "{PageNumberThrough-1} de {TotalPageCountThrough-1}"
               },
               "HorAlignment": "Center",
               "Font": ";9;;",
-              "Border": ";;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           }
@@ -565,7 +759,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Line} {Substring(ofertas_lineas.capituloLinea, 12, 100)}"
+                "Value": "{GroupLine} {Substring(ofertas_lineas.capituloLinea, 12, 100)}"
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
@@ -610,7 +804,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
-          "ClientRectangle": "0,7.4,19,1",
+          "ClientRectangle": "0,7.4,19,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -626,7 +820,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas_lineas.totalLinea}"
+                "Value": "{IIF(ofertas_lineas.totalLinea == 0, \"Sin cargo\", ofertas_lineas.totalLinea)}"
               },
               "HorAlignment": "Right",
               "Font": ";10;;",
@@ -641,19 +835,20 @@
                 "UseLocalSetting": false,
                 "PositivePattern": 3,
                 "Symbol": "€"
-              }
+              },
+              "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text5",
               "CanShrink": true,
               "CanGrow": true,
-              "ClientRectangle": "2.8,0,12.2,0.4",
+              "ClientRectangle": "2.8,0,13,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas_lineas.descripcion}---{Left(ofertas_lineas.descripcion, ofertas_lineas.descripcion.IndexOf(\":\"))}\r\n"
+                "Value": "{Trim(Remove(ofertas_lineas.descripcion, 0, ofertas_lineas.descripcion.IndexOf(\":\") + 1))}\r\n\r\n"
               },
               "HorAlignment": "Width",
               "Font": ";10;;",
@@ -662,12 +857,6 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
-              },
-              "Margins": {
-                "Left": 0.0,
-                "Right": 0.0,
-                "Top": 0.0,
-                "Bottom": 2.0
               },
               "Type": "Expression"
             },
@@ -701,7 +890,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterLineas",
-          "ClientRectangle": "0,9.2,19,1",
+          "ClientRectangle": "0,8.6,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -734,7 +923,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(Dataofertas_lineas,ofertas_lineas.totalLinea)}"
+                "Value": "{IIF(Sum(Dataofertas_lineas,ofertas_lineas.totalLinea) == 0, \"Sin cargo\", Sum(Dataofertas_lineas,ofertas_lineas.totalLinea))}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -751,7 +940,7 @@
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
-              "Type": "Totals"
+              "Type": "Expression"
             },
             "2": {
               "Ident": "StiText",
@@ -773,7 +962,7 @@
         "7": {
           "Ident": "StiHeaderBand",
           "Name": "cabeceraResumenLineas",
-          "ClientRectangle": "0,11,19,0.6",
+          "ClientRectangle": "0,10.4,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -802,7 +991,7 @@
         "8": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBandResumen",
-          "ClientRectangle": "0,12.4,19,0.6",
+          "ClientRectangle": "0,11.8,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -833,7 +1022,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(Dataofertas_lineas,ofertas_lineas.totalLinea)}"
+                "Value": "{IIF(Sum(Dataofertas_lineas,ofertas_lineas.totalLinea)== 0, \"Sin cargo\", Sum(Dataofertas_lineas,ofertas_lineas.totalLinea))}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -850,7 +1039,7 @@
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
-              "Type": "Totals"
+              "Type": "Expression"
             }
           },
           "Condition": {
@@ -860,7 +1049,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "DataOfertas_lineas_resumen",
-          "ClientRectangle": "0,13.8,19,0",
+          "ClientRectangle": "0,13.2,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -874,7 +1063,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineasResumen",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "ClientRectangle": "0,14.6,19,0.6",
+          "ClientRectangle": "0,14,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -933,7 +1122,7 @@
         "11": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBandFormaPago",
-          "ClientRectangle": "0,16,19,1",
+          "ClientRectangle": "0,15.8,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -978,7 +1167,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderFormaPago",
           "Guid": "c9589c016d7c4f77b0530bec428c9207",
-          "ClientRectangle": "0,17.8,19,0",
+          "ClientRectangle": "0,17.6,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -992,7 +1181,7 @@
           "Ident": "StiDataBand",
           "Name": "DataFormaPago",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,18.6,19,0.4",
+          "ClientRectangle": "0,18.4,19,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1054,7 +1243,7 @@
         "14": {
           "Ident": "StiFooterBand",
           "Name": "PieFormaPago",
-          "ClientRectangle": "0,19.8,19,7.2",
+          "ClientRectangle": "0,19.6,19,7.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1090,7 +1279,7 @@
               "Text": {
                 "Value": "PROYECTA, MEDIACIÓN EN INGENIERIA Y ARQUITECTURA S.L."
               },
-              "Font": ";10;;",
+              "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1102,7 +1291,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text35",
-              "ClientRectangle": "1.2,1,17.6,0.8",
+              "ClientRectangle": "1.6,1,17.2,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1134,7 +1323,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text19",
-              "ClientRectangle": "1.2,0.6,8.2,0.4",
+              "ClientRectangle": "1.2,0.6,12.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1153,7 +1342,7 @@
               "Guid": "55eb97dfa3e4440992a9f5dbcbcfe61d",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "1.2,2.6,16.6,0.4",
+              "ClientRectangle": "1.6,2.6,16.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1179,7 +1368,7 @@
               "Text": {
                 "Value": "LA COMUNIDAD DE PROPIETARIOS"
               },
-              "Font": ";10;;",
+              "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1188,7 +1377,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text22",
-              "ClientRectangle": "1.2,1.8,8.2,0.4",
+              "ClientRectangle": "1.6,1.8,7.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1204,7 +1393,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text23",
-              "ClientRectangle": "1.2,2.2,8.2,0.4",
+              "ClientRectangle": "1.6,2.2,7.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
