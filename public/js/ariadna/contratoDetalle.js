@@ -2848,6 +2848,10 @@ var obtenerDivisor = function () {
 
 var verPrefacturasAGenerar = function () {
     if (!generarPrefacturasOK()) return;
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
     
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeCliente(); // importe real de la factura;
@@ -2874,6 +2878,10 @@ var verPrefacturasAGenerar = function () {
 
 var verPrefacturasAGenerarPlanificacion = function () {
     if (!generarPrefacturasOK()) return;
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
     
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeAFacturar(); // importe real de la factura;
@@ -6598,6 +6606,11 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
    var  impCli = parseFloat(vm.importeCliente());
    var imp = parseFloat(vm.importeCalculado());
     if(importePrefacturasConcepto > impCli) {
@@ -7250,7 +7263,10 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
         generarPrefacturasPlanificacion(RegPlanificacion);
 
     } else {
-        // comprobamos si es de mantenedor o cliente final.
+         //comprobamos que le cliente tenga un nombre comercial
+        var d = vm.nombreComercial();
+        if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
         var clienteId = vm.clienteId();
         var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
