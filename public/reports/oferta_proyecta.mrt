@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "906000748b9b41edbb379ae7054d9b73",
+  "ReportGuid": "021fb5198d594d39896995ebaccea537",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1686310049181+0200)/",
+  "ReportChanged": "/Date(1686564334811+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -31,21 +31,24 @@
             "Index": -1,
             "NameInSource": "ofertaId",
             "Alias": "ofertaId",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "9ede1564151146088c37270583ef9bcd"
           },
           "1": {
             "Name": "referencia",
             "Index": -1,
             "NameInSource": "referencia",
             "Alias": "referencia",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "e54fd08ee6f941c6b4b0015f4526847a"
           },
           "2": {
             "Name": "fechaOferta",
             "Index": -1,
             "NameInSource": "fechaOferta",
             "Alias": "fechaOferta",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "aa5201308155433fa83668f488f4be15"
           },
           "3": {
             "Name": "nombreEmpresa",
@@ -161,7 +164,8 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT o.ofertaId, o.referencia, o.fechaOferta AS fechaOferta,\r\ne.nombre AS nombreEmpresa, e.nif AS nifEmpresa,\r\nTRIM(CONCAT(COALESCE(tv1.nombre, \"\"), \" \" , e.direccion)) AS empresaDireccion, \r\ne.codPostal AS empresaCodPostal, e.poblacion AS empresaPoblacion, e.provincia AS empresaProvincia,\r\nc.nombre AS clienteNombre, c.nif AS clienteNif, \r\nTRIM(CONCAT(COALESCE(tv2.nombre, \"\"), \" \", c.direccion)) AS clienteDireccion, \r\nc.codPostal AS clienteCodPostal, c.poblacion AS clientePoblacion, c.provincia AS clienteProvincia,\r\no.total, o.totalConIva, o.observaciones,\r\nfp.nombre AS formaPago\r\nFROM ofertas AS o\r\nLEFT JOIN empresas AS e ON e.empresaId = o.empresaId\r\nLEFT JOIN clientes AS c ON c.clienteId = o.clienteId\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = o.formaPagoId\r\nLEFT JOIN tipos_via AS tv1 ON tv1.tipoViaId = e.tipoViaId\r\nLEFT JOIN tipos_via AS tv2 ON tv2.tipoViaId = c.tipoViaId\r\n"
+        "CommandTimeout": 21,
+        "SqlCommand": "SELECT o.ofertaId, o.referencia, DATE_FORMAT(o.fechaOferta, '%d/%m/%Y') AS fechaOferta,\r\ne.nombre AS nombreEmpresa, e.nif AS nifEmpresa,\r\nTRIM(CONCAT(COALESCE(tv1.nombre, \"\"), \" \" , e.direccion)) AS empresaDireccion, \r\ne.codPostal AS empresaCodPostal, e.poblacion AS empresaPoblacion, e.provincia AS empresaProvincia,\r\nc.nombre AS clienteNombre, c.nif AS clienteNif, \r\nTRIM(CONCAT(COALESCE(tv2.nombre, \"\"), \" \", c.direccion)) AS clienteDireccion, \r\nc.codPostal AS clienteCodPostal, c.poblacion AS clientePoblacion, c.provincia AS clienteProvincia,\r\no.total, o.totalConIva, o.observaciones,\r\nfp.nombre AS formaPago\r\nFROM ofertas AS o\r\nLEFT JOIN empresas AS e ON e.empresaId = o.empresaId\r\nLEFT JOIN clientes AS c ON c.clienteId = o.clienteId\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = o.formaPagoId\r\nLEFT JOIN tipos_via AS tv1 ON tv1.tipoViaId = e.tipoViaId\r\nLEFT JOIN tipos_via AS tv2 ON tv2.tipoViaId = c.tipoViaId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -407,27 +411,6 @@
           "Brush": "solid:",
           "Components": {
             "0": {
-              "Ident": "StiText",
-              "Name": "Text24",
-              "Guid": "3081d22ecd4a4738800d1443c2443cba",
-              "ClientRectangle": "11.6,3.6,7.2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{ofertas.fechaOferta}"
-              },
-              "HorAlignment": "Right",
-              "Font": ";;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextFormat": {
-                "Ident": "StiDateFormatService",
-                "StringFormat": "D"
-              }
-            },
-            "1": {
               "Ident": "StiImage",
               "Name": "Image1",
               "Guid": "3acfef1b0e86486ba5c6d11a68baa7ad",
@@ -442,13 +425,13 @@
                 "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_proyecta_nuevo.png"
               }
             },
-            "2": {
+            "1": {
               "Ident": "StiText",
               "Name": "Text27",
               "Guid": "a4c28bd8c2ca45b99a020d431768ff1d",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "8.4,2.2,10.4,0.8",
+              "ClientRectangle": "5.4,2.2,13.4,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -465,7 +448,7 @@
               },
               "Type": "Expression"
             },
-            "3": {
+            "2": {
               "Ident": "StiText",
               "Name": "Text30",
               "CanGrow": true,
@@ -486,7 +469,7 @@
               },
               "Type": "Expression"
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text26",
               "CanGrow": true,
@@ -507,7 +490,7 @@
               },
               "Type": "Expression"
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text29",
               "CanGrow": true,
@@ -526,6 +509,25 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text21",
+              "Guid": "c5103814dac84015bac6dc7da1be2e63",
+              "ClientRectangle": "11.6,3.4,7.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.fechaOferta}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           }
@@ -602,27 +604,6 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text20",
-              "Guid": "c4a8e69384384f8c9ff74c3deee6d6c7",
-              "ClientRectangle": "11.6,1,7.2,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{ofertas.fechaOferta}"
-              },
-              "HorAlignment": "Right",
-              "Font": ";;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextFormat": {
-                "Ident": "StiDateFormatService",
-                "StringFormat": "D"
-              }
-            },
-            "1": {
-              "Ident": "StiText",
               "Name": "Text59",
               "Guid": "ec1bc8485a89420887d13d0afff34467",
               "ClientRectangle": "15,0.4,3.8,0.4",
@@ -640,7 +621,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "2": {
+            "1": {
               "Ident": "StiImage",
               "Name": "Image2",
               "Guid": "f254168dafe5401c846b2f7b939448a0",
@@ -655,13 +636,13 @@
                 "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_proyecta_nuevo.png"
               }
             },
-            "3": {
+            "2": {
               "Ident": "StiText",
               "Name": "Text3",
               "Guid": "6a16b5f2ff124ad4bb1785a5a652305e",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "5.6,0.8,13.2,0.2",
+              "ClientRectangle": "5.6,0.8,13.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -676,6 +657,25 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text20",
+              "Guid": "ffe098fd8dd44fac8c1ee997469e3de0",
+              "ClientRectangle": "15,1.4,3.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.fechaOferta}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           }
