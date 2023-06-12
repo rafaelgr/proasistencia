@@ -9,7 +9,7 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
-// License Key
+var usuario;
 
 // Create the report viewer with default options
 var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
@@ -34,6 +34,7 @@ function initForm() {
     //pageSetUp();
     getVersionFooter();
     datePickerSpanish();
+    usuario = recuperarUsuario();
     vm = new admData();
     ko.applyBindings(vm);
     //
@@ -98,17 +99,31 @@ function initForm() {
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
-    //
-    $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
-    initAutoCliente(); 
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    if (gup('ofertaId') != "") {
-        vm.ofertaId(gup('ofertaId'));
-        obtainReport();
-        $('#selector').hide();
-    }
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    //loadDepartamentos();
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+
+        //
+        $("#cmbEmpresas").select2(select2Spanish());
+        loadEmpresas();
+        initAutoCliente(); 
+        // verificamos si nos han llamado directamente
+        //     if (id) $('#selector').hide();
+        if (gup('ofertaId') != "") {
+            //recuperamos la información de la oferta para conocer su departamento
+            vm.ofertaId(gup('ofertaId')); 
+            llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
+                if (err) return;
+                if(data) vm.sempresaId(data.empresaId);
+                obtainReport();
+                $('#selector').hide();
+            });
+        }
+    });
+
+    
 }
 
 function obtainKey() {
@@ -138,16 +153,30 @@ function admData() {
     //
     self.posiblesClientes = ko.observableArray([]);
     self.elegidosClientes = ko.observableArray([]);
+     //
+     self.departamentoId = ko.observable();
+     self.sdepartamentoId = ko.observable();
+     //
+     self.posiblesDepartamentos = ko.observableArray([]);
+     self.elegidosDepartamentos = ko.observableArray([]);
+     // 
 };
 
 var obtainReport = function () {
     if (!datosOK()) return;
+
+    var empresaId = vm.sempresaId();
+    var departamentoId = vm.sdepartamentoId();
+  
+    
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
     //report.loadFile("../reports/SimpleList.mrt");
     var rpt = gup("report");
     var file = "../reports/oferta_general.mrt";
+    //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
+    if(empresaId == 10 && departamentoId == 5) file = "../reports/oferta_proyecta.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
@@ -226,6 +255,7 @@ var rptOfertaParametros = function (sql) {
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var departamentoId = vm.sdepartamentoId();
     sql += " WHERE TRUE"
     if (ofertaId) {
         sql += " AND o.ofertaId IN (" + ofertaId + ")";
@@ -241,6 +271,11 @@ var rptOfertaParametros = function (sql) {
         }
         if (hFecha) {
             sql += " AND o.fechaOferta <= '" + hFecha + " 23:59:59'";
+        }
+        if(departamentoId && departamentoId > 0) {
+            sql += " AND o.tipoOfertaId =" + departamentoId;
+        } else {
+            sql += " AND o.tipoOfertaId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId +")"
         }
 
     }
