@@ -16,17 +16,24 @@ var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
+options.ParamsPanelEnabled = false;
+
 
 obtainKey();//obtiene la clave de usuario de stimulsoft de lña configuracion
 
 
-options.appearance.scrollbarsMode = true;
-options.appearance.fullScreenMode = true;
-options.toolbar.showSendEmailButton = true;
+//options.appearance.scrollbarsMode = true;
+//options.appearance.fullScreenMode = true;
+//options.toolbar.showSendEmailButton = true;
 //var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
 }
+
+viewer.onLoad = function() {
+    viewer.paramsPanelEnabled = false;
+  };
+  
 
 function initForm() {
     comprobarLogin();
@@ -167,6 +174,7 @@ var obtainReport = function () {
 
     var empresaId = vm.sempresaId();
     var departamentoId = vm.sdepartamentoId();
+    var ofertaId = vm.ofertaId();
   
     
     // Create a new report instance
@@ -176,7 +184,8 @@ var obtainReport = function () {
     var rpt = gup("report");
     var file = "../reports/oferta_general.mrt";
     //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
-    if(empresaId == 10 && departamentoId == 5) file = "../reports/oferta_proyecta.mrt";
+    if(empresaId == 10 && departamentoId == 5 && !ofertaId) file = "../reports/oferta_proyecta_visor.mrt";
+    else if(empresaId == 10 && departamentoId == 5  && ofertaId) file = "../reports/oferta_proyecta.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
