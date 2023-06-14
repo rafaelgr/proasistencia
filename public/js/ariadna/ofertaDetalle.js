@@ -417,6 +417,7 @@ function admData() {
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
+    self.conceptosExcluidos = ko.observable();
     //
     self.total = ko.observable();
     self.totalConIva = ko.observable();
@@ -532,6 +533,7 @@ function loadData(data) {
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
+    vm.conceptosExcluidos(data.conceptosExcluidos);
     vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
@@ -707,6 +709,7 @@ var generarOfertaDb = function() {
             "importeCliente": vm.importeCliente(),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
+            "conceptosExcluidos": vm.conceptosExcluidos(),
             "formaPagoId": vm.sformaPagoId()
         }
     };

@@ -12,21 +12,28 @@ var breakpointDefinition = {
 var usuario;
 
 // Create the report viewer with default options
-var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
 var options = new Stimulsoft.Viewer.StiViewerOptions();
+options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
+var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
+
+
 
 obtainKey();//obtiene la clave de usuario de stimulsoft de lña configuracion
 
 
-options.appearance.scrollbarsMode = true;
-options.appearance.fullScreenMode = true;
-options.toolbar.showSendEmailButton = true;
+//options.appearance.scrollbarsMode = true;
+//options.appearance.fullScreenMode = true;
+//options.toolbar.showSendEmailButton = true;
 //var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
 }
+
+  
+
+
 
 function initForm() {
     comprobarLogin();
@@ -167,6 +174,7 @@ var obtainReport = function () {
 
     var empresaId = vm.sempresaId();
     var departamentoId = vm.sdepartamentoId();
+    var ofertaId = vm.ofertaId();
   
     
     // Create a new report instance
@@ -176,7 +184,8 @@ var obtainReport = function () {
     var rpt = gup("report");
     var file = "../reports/oferta_general.mrt";
     //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
-    if(empresaId == 10 && departamentoId == 5) file = "../reports/oferta_proyecta.mrt";
+    if(empresaId == 10 && departamentoId == 5 && !ofertaId) file = "../reports/oferta_proyecta_visor.mrt";
+    else if(empresaId == 10 && departamentoId == 5  && ofertaId) file = "../reports/oferta_proyecta.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";
@@ -187,10 +196,22 @@ var obtainReport = function () {
     connectionString += "dateStrings=true";
     report.dictionary.databases.list[0].connectionString = connectionString;
     var sql = report.dataSources.items[0].sqlCommand;
+    var sql2 = rptOfertaParametros(sql);
+    verb = "POST"; 
+    url = myconfig.apiUrl + "/api/informes/sql";
 
-    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql);
-    // Assign report to the viewer, the report will be built automatically after rendering the viewer
-    viewer.report = report;
+    
+    llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
+        if (err) return;
+        if (data) {
+            report.dataSources.items[0].sqlCommand  = sql2;
+            // Assign report to the viewer, the report will be built automatically after rendering the viewer
+            viewer.displayMode = Stimulsoft.Viewer.StiWebViewMode[1];
+            viewer.report = report;
+        } else {
+            alert("No hay registros con estas condiciones");
+        }
+    });
 };
 
 var printReport = function (url) {
