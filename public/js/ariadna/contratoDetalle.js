@@ -427,6 +427,19 @@ function initForm() {
         }); 
     }); */
 
+   
+
+    // 7 bind to events triggered on the tree
+    $('#jstree').on("changed.jstree", function (e, data) {
+      console.log(data);
+    });
+    // 8 interact with the tree - either way is OK
+    $('#demo').on('click', function () {
+      $('#jstree').jstree(true).select_node('child_node_1');
+      $('#jstree').jstree('select_node', 'child_node_1');
+      $.jstree.reference('#jstree').select_node('child_node_1');
+    });
+  
 
 
     initAutoCliente();
@@ -7684,7 +7697,128 @@ function initTablaDocumentacion() {
 function cargaTablaDocumentacion(){
     llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data) loadTablaDocumentacion(data);
+        if(data) loadTablaDocumentacionTree(data);
+         if(data) loadTablaDocumentacion(data);
+    });
+}
+
+function loadTablaDocumentacionTree(data) {
+    var carpetaformat = [];
+    var carpetaObj = {
+    }
+    var documformat = [];
+    var documObj = {
+    }
+    var obj = []
+    data.forEach(e => {
+        e.text = e.carpetaNombre
+        e.id = e.carpetaId;
+        e.data = { "folder" : true }
+        e.parent = '#';
+        obj.push(e);
+        if(e.documentos.length > 0) {
+            e.documentos.forEach( f => {
+                var l = f.key.split('/');
+                var index = l.length - 1;
+                f.text = l[index];
+                f.id = f.documentoId;
+                f.data = { "folder" : false }
+                f.esCarpeta = false;
+                f.parent = e.carpetaId;
+                f.icon = icon = "glyphicon glyphicon-file";
+            });
+        }
+        if(e.subcarpetas.length > 0) {
+            e.subcarpetas.forEach( g => {
+                g.text = g.carpetaNombre
+                g.id = g.carpetaId;
+                g.data = { "folder" : true }
+                g.esCarpeta = true;
+                g.parent = e.carpetaId;
+                obj.push(g);
+                if(g.documentos.length > 0) {
+                    g.documentos.forEach( f => {
+                        var l = f.key.split('/');
+                        var index = l.length - 1;
+                        f.text = l[index];
+                        f.id = f.documentoId;
+                        f.data = { "folder" : false }
+                        f.esCarpeta = false;
+                        f.parent = g.carpetaId;
+                        f.icon = icon = "glyphicon glyphicon-file";
+                        obj.push(f);
+                    });
+                }
+            });
+        }
+    });
+    var a = [
+       
+
+    {
+        "text": "ACTA DE RECEPCIÓN",
+        "id": 50,
+        "parent": "#"
+    },
+    {
+        "text": "CERTIFICACIONES",
+        "id": 49,
+        "parent": "#"
+    },
+    {
+        "text": "CLIENTE",
+        "id": 16,
+        "esCarpeta": true,
+        "parent": "#"
+    },
+    {
+        "text": "ACTA",
+        "id": 18,
+        "parent": 16
+    }
+     ] 
+    
+    $('#jstree').jstree({ 'core' : 
+        {
+            'data' : obj
+        },
+        "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+        "select_node": true,
+        'contextmenu': {
+            'items': function(node) {
+                var menuItems = {
+                // Define las opciones del menú contextual para cada nodo
+             
+                'Option 1': {
+                    'label': 'Subir documento',
+                    'action': function(a, b , c) {
+                      console.log(node.type);
+                      $('#modalUploadDoc').modal('show');
+                      preparaDatosArchivo(node.original);
+                    }
+                  },
+                  'Option 2': {
+                    'label': 'Crear Subcarpeta',
+                    'action': function() {
+                       $('#modalpostSubcarpeta').modal('show');
+                       nuevaSubcarpeta(node.original);
+                    }
+                  },
+                  'Option 3': {
+                      'label': 'Eliminar',
+                      'action': function() {
+                          deleteCarpeta(node.id);
+                      }
+                    }
+             
+                }
+                if (!node.data.folder) {
+                    delete menuItems['Option 1'];
+                    delete menuItems['Option 2'];
+                }
+                return menuItems;
+            }
+        }
     });
 }
 
@@ -7718,6 +7852,25 @@ function formatData(d) {
                     '</div>' 
             html += a;
         });
+    if(!d.subcarpetas) d.subcarpetas = [];
+    var subC = d.subcarpetas;
+    html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
+    var b;
+    subC.forEach(e => {
+         b = '<div class="row" style="margin-bottom: 10px">' +
+         '<section class="col col-md-3 text-left">' +
+                        '<button  class="dt-control"></button>' +
+                    '</section>' +
+                    '<section class="col col-md-5">' + 
+                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
+                    '</section>' +
+                    '<section class="col col-md-3 text-left">' +
+                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                    '</section>' +
+                    '<section class="col col-md-2">' + '</section>' +
+                '</div>' 
+        html += b;
+    });
     return html;
 }
 
@@ -8098,7 +8251,7 @@ function uploadDocum(arr) {
             then (
                 data => {
                     if(data) {
-                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
+                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumentacion
                         var data = 
                         {
                             documentacion: {
