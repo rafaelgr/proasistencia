@@ -42,6 +42,7 @@ var _recepcionGestion;
 var dataDocumentacion;
 var subCarpeta = '';
 var carpetaTipo = null;
+var parent = null;
 
 datePickerSpanish(); // see comun.js
 
@@ -430,14 +431,14 @@ function initForm() {
    
 
     // 7 bind to events triggered on the tree
-    $('#jstree').on("changed.jstree", function (e, data) {
+    $('#jstreeDocumentacion').on("changed.jstree", function (e, data) {
       console.log(data);
     });
     // 8 interact with the tree - either way is OK
     $('#demo').on('click', function () {
-      $('#jstree').jstree(true).select_node('child_node_1');
-      $('#jstree').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstree').select_node('child_node_1');
+      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
   
 
@@ -493,7 +494,8 @@ function initForm() {
     initTablaFactcol();
     initTablaConceptosLineas();
     initTablaPlanificacionLineasObras();
-    initTablaDocumentacion();
+    //initTablaDocumentacion();
+    initArbolDocumentacion();
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -7615,7 +7617,7 @@ function ocualtaBotonesContratoCerrado() {
 
 // FUNCIONES RELACIONADAS CON LA DOCUMENTACIÓN
 
-function initTablaDocumentacion() {
+/* function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
@@ -7692,134 +7694,75 @@ function initTablaDocumentacion() {
             }
         }]
     });
-}
+} */
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+            return menuItems;
+        }
+    }
+});
 
+}
 function cargaTablaDocumentacion(){
     llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data) loadTablaDocumentacionTree(data);
-         if(data) loadTablaDocumentacion(data);
+        if(data) loadDocumentacionTree(data);
+         //if(data) loadTablaDocumentacion(data);
     });
 }
 
-function loadTablaDocumentacionTree(data) {
-    var carpetaformat = [];
-    var carpetaObj = {
-    }
-    var documformat = [];
-    var documObj = {
-    }
-    var obj = []
-    data.forEach(e => {
-        e.text = e.carpetaNombre
-        e.id = e.carpetaId;
-        e.data = { "folder" : true }
-        e.parent = '#';
-        obj.push(e);
-        if(e.documentos.length > 0) {
-            e.documentos.forEach( f => {
-                var l = f.key.split('/');
-                var index = l.length - 1;
-                f.text = l[index];
-                f.id = f.documentoId;
-                f.data = { "folder" : false }
-                f.esCarpeta = false;
-                f.parent = e.carpetaId;
-                f.icon = icon = "glyphicon glyphicon-file";
-            });
-        }
-        if(e.subcarpetas.length > 0) {
-            e.subcarpetas.forEach( g => {
-                g.text = g.carpetaNombre
-                g.id = g.carpetaId;
-                g.data = { "folder" : true }
-                g.esCarpeta = true;
-                g.parent = e.carpetaId;
-                obj.push(g);
-                if(g.documentos.length > 0) {
-                    g.documentos.forEach( f => {
-                        var l = f.key.split('/');
-                        var index = l.length - 1;
-                        f.text = l[index];
-                        f.id = f.documentoId;
-                        f.data = { "folder" : false }
-                        f.esCarpeta = false;
-                        f.parent = g.carpetaId;
-                        f.icon = icon = "glyphicon glyphicon-file";
-                        obj.push(f);
-                    });
-                }
-            });
-        }
-    });
-    var a = [
-       
-
-    {
-        "text": "ACTA DE RECEPCIÓN",
-        "id": 50,
-        "parent": "#"
-    },
-    {
-        "text": "CERTIFICACIONES",
-        "id": 49,
-        "parent": "#"
-    },
-    {
-        "text": "CLIENTE",
-        "id": 16,
-        "esCarpeta": true,
-        "parent": "#"
-    },
-    {
-        "text": "ACTA",
-        "id": 18,
-        "parent": 16
-    }
-     ] 
+function loadDocumentacionTree(data) {
+    if(data.length == 0) return;
+    var obj = data;
     
-    $('#jstree').jstree({ 'core' : 
-        {
-            'data' : obj
-        },
-        "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
-        "select_node": true,
-        'contextmenu': {
-            'items': function(node) {
-                var menuItems = {
-                // Define las opciones del menú contextual para cada nodo
-             
-                'Option 1': {
-                    'label': 'Subir documento',
-                    'action': function(a, b , c) {
-                      console.log(node.type);
-                      $('#modalUploadDoc').modal('show');
-                      preparaDatosArchivo(node.original);
-                    }
-                  },
-                  'Option 2': {
-                    'label': 'Crear Subcarpeta',
-                    'action': function() {
-                       $('#modalpostSubcarpeta').modal('show');
-                       nuevaSubcarpeta(node.original);
-                    }
-                  },
-                  'Option 3': {
-                      'label': 'Eliminar',
-                      'action': function() {
-                          deleteCarpeta(node.id);
-                      }
-                    }
-             
-                }
-                if (!node.data.folder) {
-                    delete menuItems['Option 1'];
-                    delete menuItems['Option 2'];
-                }
-                return menuItems;
-            }
-        }
-    });
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
 }
 
 function loadTablaDocumentacion(data) {
@@ -7998,11 +7941,11 @@ function aceptarNuevaSubCarpeta() {
             carpetaId: 0,
             nombre: n,
             tipo: carpetaTipo,
-            departamentoId: vm.tipoContratoId()
+            departamentoId: vm.tipoContratoId(),
         }
     }
 
-    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
         if (err) return
         $('#modalpostSubcarpeta').modal('hide');
         mensNormal('Carpeta creada con exito');
@@ -8015,6 +7958,7 @@ function nuevaSubcarpeta(r) {
     vm.subCarpetaNombre(null);
     subCarpeta = r.carpetaNombre;
     carpetaTipo = r.tipo
+    parent = r.carpetaId
 }
 
 
