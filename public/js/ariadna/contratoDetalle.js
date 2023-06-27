@@ -431,8 +431,17 @@ function initForm() {
    
 
     // 7 bind to events triggered on the tree
-    $('#jstreeDocumentacion').on("changed.jstree", function (e, data) {
-      console.log(data);
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+            var node = $(e.target).closest('.jstree-node');
+            var selectedNodeId = node.attr('id');
+            if (e.which === 1) {
+                var jsTree = $.jstree.reference(e.target);
+                var originalNode = jsTree.get_node(node);
+                if(!originalNode.data.folder)  {
+                    var url = originalNode.original.location;
+                    window.open(url, '_blank');
+                }
+            }
     });
     // 8 interact with the tree - either way is OK
     $('#demo').on('click', function () {
@@ -7738,6 +7747,10 @@ function initArbolDocumentacion() {
             if (!node.data.folder) {
                 delete menuItems['Option 1'];
                 delete menuItems['Option 2'];
+            }
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
             }
             return menuItems;
         }
