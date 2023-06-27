@@ -34,6 +34,7 @@ var subCarpeta = '';
 var carpetaId = null;
 var carpetaTipo = null;
 var num = 0;
+var parent = null;
 
 
 datePickerSpanish(); // see comun.js
@@ -185,6 +186,26 @@ function initForm() {
         }
     });
 
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+        var node = $(e.target).closest('.jstree-node');
+        var selectedNodeId = node.attr('id');
+        if (e.which === 1) {
+            var jsTree = $.jstree.reference(e.target);
+            var originalNode = jsTree.get_node(node);
+            if(!originalNode.data.folder)  {
+                var url = originalNode.original.location;
+                window.open(url, '_blank');
+            }
+        }
+    });
+          // 8 interact with the tree - either way is OK
+          $('#demo').on('click', function () {
+            $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+            $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+            $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+          });
+
+
    /*  $('#upload-input').on('change', function () {
         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
         var encontrado = false;
@@ -313,7 +334,8 @@ function initForm() {
     initTablaBases();
     initTablaConceptosLineas();
     initTablaProveedores();
-    initTablaDocumentacion();
+    //initTablaDocumentacion();
+    initArbolDocumentacion();
 
     ofertaId = gup('OfertaId');
     if (ofertaId != 0) {
@@ -2525,7 +2547,7 @@ function loadTablaProveedores(data) {
 
 // FUNCIONES RELACIONADAS CON LA DOCUMENTACIÓN
 
-function initTablaDocumentacion() {
+/* function initTablaDocumentacion() {
     tablaDocumentacion = $('#dt_documentacion').DataTable({
         autoWidth: true,
         paging: true,
@@ -2598,12 +2620,80 @@ function initTablaDocumentacion() {
             }]
     });
 }
+ */
 
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
+            }
+            return menuItems;
+        }
+    }
+});
+
+}
 function cargaTablaDocumentacion(){
     llamadaAjax("GET",  "/api/documentacion/"  + vm.ofertaId() + "/" + vm.tipoOfertaId() + "/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data) loadTablaDocumentacion(data);
+        if(data) loadDocumentacionTree(data);
     });
+}
+
+function loadDocumentacionTree(data) {
+    if(data.length == 0) return;
+    var obj = data;
+    
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
 }
 
 function loadTablaDocumentacion(data) {
@@ -2703,7 +2793,7 @@ function aceptarNuevaSubCarpeta() {
         }
     }
 
-    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
         if (err) return
         $('#modalpostSubcarpeta').modal('hide');
         mensNormal('Carpeta creada con exito');
@@ -2715,7 +2805,8 @@ function aceptarNuevaSubCarpeta() {
 function nuevaSubcarpeta(r) {
     vm.subCarpetaNombre(null);
     subCarpeta = r.carpetaNombre;
-    carpetaTipo = r.tipo
+    carpetaTipo = r.tipo;
+    parent = r.carpetaId;
 
 }
 
