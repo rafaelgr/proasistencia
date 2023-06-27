@@ -5,7 +5,7 @@ ALTER TABLE `carpeta_subcarpetas`
   ALTER TABLE `carpeta_subcarpetas`   
   CHANGE `carpetaId` `carpetaId` INT(11) UNSIGNED NULL;
 
-  ALTER TABLE `proasistencia`.`carpeta_subcarpetas`   
+  ALTER TABLE `carpeta_subcarpetas`   
   CHANGE `subcarpetaId` `subcarpetaId` INT(11) UNSIGNED NULL;
 
 
