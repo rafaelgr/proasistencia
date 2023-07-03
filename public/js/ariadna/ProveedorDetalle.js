@@ -453,6 +453,7 @@ function admData() {
     self.direccionRp = ko.observable();
     self.poblacionRp = ko.observable();
     self.categoriaProfesional = ko.observable();
+    self.nivelFormativoSalud = ko.observable();
     self.codPostalRp = ko.observable();
     self.provinciaRp = ko.observable();
     //
@@ -518,6 +519,7 @@ function loadData(data) {
     vm.codPostalRp(data.codPostalRp);
     vm.provinciaRp(data.provinciaRp);
     vm.categoriaProfesional(data.categoriaProfesional);
+    vm.nivelFormativoSalud(data.nivelFormativoSalud);
     //representante
     vm.nombreRepresentante(data.nombreRepresentante);;
     vm.dniRepresentante(data.dniRepresentante);
@@ -743,6 +745,7 @@ function aceptar() {
                 "codPostalRp": vm.codPostalRp(),
                 "provinciaRp": vm.provinciaRp(),
                 "categoriaProfesional": vm.categoriaProfesional(),
+                "nivelFormativoSalud": vm.nivelFormativoSalud(),
                 "nombreRepresentante": vm.nombreRepresentante(),
                 "dniRepresentante": vm.dniRepresentante(),
                 "nombreRepresentante": vm.nombreRepresentante(),
