@@ -687,7 +687,7 @@
                                                                                         <tr>
                                                                                             <td style="text-align:center;">
                                                                                                 <label class="input">
-                                                                                                    <input id="txtCoste" name="txtCoste" data-bind="value:coste" disabled />
+                                                                                                    <input id="txtCoste" name="txtCoste" data-bind="value:totalCosteProveedor" disabled />
                                                                                                 </label>
                                                                                             </td>
                                                                                             <td style="text-align:center;">
@@ -1199,110 +1199,6 @@
                         </fieldset>
                         <fieldset>
                             <section>
-                                <h3> Importes del cliente</h3>
-                                <div class="row">
-                                    <section class="col col-md-2">
-                                        <label class="label">Tipo IVA</label>
-                                        <label style="width:100%;">
-                                            <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
-                                        </label>
-                                    </section>                                   
-                                    <section class="col col-md-2">
-                                        <label class="label">Coste / Ud</label>
-                                        <label class="input">
-                                            <input id="txtImpUni" name="txtImpUni" type="text" data-bind="value: importe" />
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">% Descuento</label>
-                                        <label class="input">
-                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">Precio</label>
-                                        <label class="input">
-                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" disabled/>
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">Importe descuento</label>
-                                        <label class="input">
-                                            <input id="txtImpDescuento" name="txtImpDescuento" type="text" data-bind="value: dto"/>
-                                        </label>
-                                    </section>
-                                    <section class="col col-md-2">
-                                        <label class="label">Total coste</label>
-                                        <label class="input">
-                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
-                                        </label>
-                                    </section>
-                                </div>
-                                <div class="row" id="calculadoraLineal">
-                                    <header>(Calculadora importes)</header>
-                                    <section class="col col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:center;">BENEFICIO</th>
-                                                        <th style="text-align:center;">VENTA NETA</th>
-                                                        <th colspan="2" style="text-align:center;">AGENTE</th>
-                                                        <th style="text-align:center;">IMPORTE CLIENTE</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="text-align:center;">%</td>
-                                                        <td style="text-align:center;">IMPORTE</td>
-                                                        <td></td>
-                                                        <td style="text-align:center;">%</td>
-                                                        <td style="text-align:center;">IMPORTE</td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;">
-                                                            <label class="input">
-                                                                <input id="txtPorcentajeBeneficioLinea" name="txtPorcentajeBeneficioLinea" data-bind="value:porcentajeBeneficioLinea" />
-                                                            </label>
-                                                        </td>
-                                                        <td style="text-align:center;">
-                                                            <label class="input">
-                                                                <input id="txtImporteBeneficioLinea" name="txtImporteBeneficioLinea" data-bind="value:importeBeneficioLinea" />
-                                                            </label>
-                                                        </td>
-                                                        
-                                                            <td style="text-align:center;">
-                                                                <label class="input">
-                                                                    <input id="txtVentaNetaLinea" name="txtVentaNetaLinea" data-bind="value:ventaNetaLinea" disabled />
-                                                                </label>
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                <label class="input">
-                                                                    <input id="txtPorcentajeAgente" name="txtPorcentajeAgente" data-bind="value:porcentajeAgente" disabled />
-                                                                </label>
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                <label class="input">
-                                                                    <input id="txtImporteAgente" name="txtImporteAgente" data-bind="value:importeAgente" disabled />
-                                                                </label>
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                <label class="input">
-                                                                    <input id="txtTotalAlClienteLinea" name="txtTotalAlClienteLinea" data-bind="value:totalLinea" disabled/>
-                                                                </label>
-                                                            </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </section>
-                                </div>
-                            </section>
-
-                        </fieldset>
-                        <fieldset>
-                            <section>
                                 <h3> Importes del proveedor</h3>
                                 <div class="row">  
                                     <section class="col col-md-6">
@@ -1351,7 +1247,112 @@
                                         </label>
                                     </section>
                                 </div>
+                                <div class="row" id="calculadoraLineal">
+                                    <header>(Calculadora importes)</header>
+                                    <section class="col col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:center;">BENEFICIO</th>
+                                                        <th style="text-align:center;">VENTA NETA</th>
+                                                        <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                        <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center;">%</td>
+                                                        <td style="text-align:center;">IMPORTE</td>
+                                                        <td></td>
+                                                        <td style="text-align:center;">%</td>
+                                                        <td style="text-align:center;">IMPORTE</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <label class="input">
+                                                                <input id="txtPorcentajeBeneficioLinea" name="txtPorcentajeBeneficioLinea" data-bind="value:porcentajeBeneficioLinea" />
+                                                            </label>
+                                                        </td>
+                                                        <td style="text-align:center;">
+                                                            <label class="input">
+                                                                <input id="txtImporteBeneficioLinea" name="txtImporteBeneficioLinea" data-bind="value:importeBeneficioLinea" />
+                                                            </label>
+                                                        </td>
+                                                        
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtVentaNetaLinea" name="txtVentaNetaLinea" data-bind="value:ventaNetaLinea" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtPorcentajeAgenteLinea" name="txtPorcentajeAgenteLinea" data-bind="value:porcentajeAgente" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtImporteAgenteLinea" name="txtImporteAgenteLinea" data-bind="value:importeAgenteLinea" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtTotalAlClienteLinea" name="txtTotalAlClienteLinea" data-bind="value:totalLinea" disabled/>
+                                                                </label>
+                                                            </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                </div>
                             </section>
+                        </fieldset>
+                        <fieldset>
+                            <section>
+                                <h3> Importes del cliente</h3>
+                                <div class="row">
+                                    <section class="col col-md-2">
+                                        <label class="label">Tipo IVA</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>                                   
+                                    <section class="col col-md-2">
+                                        <label class="label">Venta / Ud</label>
+                                        <label class="input">
+                                            <input id="txtImpUni" name="txtImpUni" type="text" data-bind="value: importe" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Precio</label>
+                                        <label class="input">
+                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" disabled/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Importe descuento</label>
+                                        <label class="input">
+                                            <input id="txtImpDescuento" name="txtImpDescuento" type="text" data-bind="value: dto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-2">
+                                        <label class="label">Total venta</label>
+                                        <label class="input">
+                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
+                                        </label>
+                                    </section>
+                                </div>
+                                
+                            </section>
+
                         </fieldset>
                         <footer>
                             <button id="btnAceptarLinea" class="btn btn-primary" onclick="guardarLinea()">

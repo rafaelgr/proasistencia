@@ -17,4 +17,8 @@ ALTER TABLE `ofertas_lineas`
   CHANGE `importeBeneficio` `importeBeneficioLinea` DECIMAL(12,2) DEFAULT 0.00 NULL,
   CHANGE `ventaNeta` `ventaNetaLinea` DECIMAL(12,2) DEFAULT 0.00 NULL;
 
+  ALTER TABLE `ofertas_lineas`   
+  ADD COLUMN `importeAgenteLinea` DECIMAL(12,2) DEFAULT 0 NULL AFTER `porcentajeAgente`;
+
+
 
