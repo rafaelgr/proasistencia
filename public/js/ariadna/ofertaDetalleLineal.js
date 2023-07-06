@@ -1,4 +1,4 @@
-﻿
+
 
 /*-------------------------------------------------------------------------- 
 ofertaDetalleLineal.js
@@ -82,7 +82,7 @@ function initForm() {
     $('#txtCosteLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
     $('#txtPorcentajeBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
     $('#txtImporteBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeBeneficioLinea);
-    $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
+    $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
@@ -682,7 +682,7 @@ var guardarOferta = function (done) {
             done(null, 'POST');
         });
     } else {
-        if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        if( (vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
                 // mensaje de confirmación
                 var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
                 $.SmartMessageBox({
@@ -732,10 +732,11 @@ var generarOfertaDb = function() {
             "fechaOferta": spanishDbDate(vm.fechaOferta()),
             "coste": vm.coste(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
-            "importeBeneficio": numeroDbf(vm.importeBeneficio()),
-            "ventaNeta": numeroDbf(vm.ventaNeta()),
+            "porcentajeAgente": vm.porcentajeAgente(),
+            "importeBeneficio": vm.importeBeneficio(),
+            "ventaNeta": vm.ventaNeta(),
             "rappelAgente": vm.rappelAgente(),
-            "importeAgente": numeroDbf(vm.importeAgente()),
+            "importeAgente": vm.importeAgente(),
             "importeCliente": vm.importeCliente(),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
@@ -775,7 +776,7 @@ var recalcularImportesGuardar = function(done) {
 
 var actualizarLineasDeLaOfertaTrasCambioCostes = function (done) {
     llamadaAjax('PUT',
-        "/api/ofertas/recalculo/" + vm.ofertaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        "/api/ofertas/recalculo/lineal/" + vm.ofertaId() + '/' + vm.porcentajeAgente(),
         null, function (err, data) {
             if (err) return errorGeneral(err, done);
             done(null, 'OK')
@@ -1394,17 +1395,18 @@ function loadLineasOferta(id) {
         var totalCosteProveedor = 0;
         var totalImporteAgenteLinea = 0
         data.forEach(function (linea) {
-            totalCoste += (linea.coste * linea.cantidad);
+            //totalCoste += (linea.coste * linea.cantidad);
             totalBeneficio += linea.importeBeneficioLinea;
             totalVentaNeta += linea.ventaNetaLinea;
             totalCosteProveedor += linea.costeLineaProveedor;
             totalImporteAgenteLinea += linea.importeAgenteLinea;
         });
-        vm.importeBeneficio(numeral(totalBeneficio).format('0,0.00'));
-        vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-        vm.ventaNeta(numeral(totalVentaNeta).format('0,0.00'));
-        vm.totalCosteProveedor(numeral(totalCosteProveedor).format('0,0.00'));
-        vm.importeAgente(numeral(totalImporteAgenteLinea).format('0,0.00'));
+        vm.importeBeneficio(totalBeneficio);
+        vm.totalCoste(numeral(totalCosteProveedor).format('0,0.00'));
+        vm.ventaNeta(totalVentaNeta);
+        vm.totalCosteProveedor(totalCosteProveedor);
+        vm.importeAgente(totalImporteAgenteLinea);
+        vm.coste(totalCosteProveedor);
         loadTablaOfertaLineas(data);
     });
 }
@@ -2010,7 +2012,8 @@ var cambioCampoConRecalculoDesdeBeneficioLinea = function () {
 
 var recalcularCostesImportesDesdeCoste = function () {
     if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
-    
+ 
+
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) {
         vm.porcentajeAgente(0);
