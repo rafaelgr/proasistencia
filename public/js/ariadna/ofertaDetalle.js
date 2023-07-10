@@ -382,6 +382,7 @@ function admData() {
     self.fechaOferta = ko.observable();
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
+    self.beneficioLineal = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -559,6 +560,7 @@ function loadData(data) {
     vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
+    vm.beneficioLineal(data.beneficioLineal);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
     //cambioDepartamento(data.tipoOfertaId);
@@ -2141,7 +2143,7 @@ var generarContratoAPI = function () {
         preaviso: vm.preaviso(),
         facturaParcial: vm.facturaParcial()
     }
-    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
+    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId() + "/" + vm.beneficioLineal();
     llamadaAjax('POST', url, data, function (err, data) {
         if (err) return;
         var datos = {

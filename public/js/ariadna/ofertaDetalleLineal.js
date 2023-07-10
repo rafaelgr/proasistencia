@@ -383,6 +383,7 @@ function admData() {
     self.fechaOferta = ko.observable();
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
+    self.beneficioLineal = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -568,6 +569,7 @@ function loadData(data) {
     vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
+    vm.beneficioLineal(data.beneficioLineal)
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
     //cambioDepartamento(data.tipoOfertaId);
@@ -2055,7 +2057,7 @@ var recalcularCostesImportesDesdeCosteLinea = function () {
     if (vm.mantenedorId()) {
         vm.importeMantenedor(roundToTwo(vm.totalLinea() - vm.ventaNetaLinea() + vm.importeBeneficioLinea()));
     }
-    vm.importe(vm.totalLinea() / vm.cantidad());
+    vm.importe(roundToSix(vm.totalLinea() / vm.cantidad()));
     vm.precio(vm.totalLinea());
     vm.costeLinea(vm.precio());
      //calculo en caso de descuento cliente
@@ -2247,7 +2249,7 @@ var generarContratoAPI = function () {
         preaviso: vm.preaviso(),
         facturaParcial: vm.facturaParcial()
     }
-    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
+    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId() + "/" + vm.beneficioLineal();
     llamadaAjax('POST', url, data, function (err, data) {
         if (err) return;
         var datos = {
@@ -2255,7 +2257,11 @@ var generarContratoAPI = function () {
             ofertaId: vm.ofertaId(),
         }
         generarLineasConceptos(datos);
-        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
+        if(vm.beneficioLineal == 0) {
+            var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
+        } else {
+            var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
+        }
         window.open(url, '_new');
     })
 }

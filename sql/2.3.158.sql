@@ -35,6 +35,12 @@ ALTER TABLE `contratos_lineas`
   ALTER TABLE `contratos_lineas`   
   ADD COLUMN `importeAgenteLinea` DECIMAL(12,2) DEFAULT 0 NULL AFTER `porcentajeAgente`;
 
+  ALTER TABLE `contratos_lineas`   
+  ADD COLUMN `costeUnidad` DECIMAL(14,4) DEFAULT 0 NULL AFTER `totalLinea`;
+
+   ALTER TABLE `ofertas_lineas` CHANGE `importe` `importe` DECIMAL(14,4) NULL; 
+
+
 
 
 
