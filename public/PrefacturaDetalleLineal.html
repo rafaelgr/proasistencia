@@ -631,6 +631,7 @@
                                                 <section class="col col-md-10">
                                                 </section>
                                             </div>
+                                            
                                             <div class="row">
                                                 <section class="col col-md-6">
                                                     <div class="row">
@@ -1142,6 +1143,66 @@
                                         </label>
                                     </section>
                                 </div>
+                                <div class="row" id="calculadoraLineal">
+                                    <header>(Calculadora importes)</header>
+                                    <section class="col col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:center;">BENEFICIO</th>
+                                                        <th style="text-align:center;">VENTA NETA</th>
+                                                        <th colspan="2" style="text-align:center;">AGENTE</th>
+                                                        <th style="text-align:center;">IMPORTE CLIENTE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center;">%</td>
+                                                        <td style="text-align:center;">IMPORTE</td>
+                                                        <td></td>
+                                                        <td style="text-align:center;">%</td>
+                                                        <td style="text-align:center;">IMPORTE</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">
+                                                            <label class="input">
+                                                                <input id="txtPorcentajeBeneficioLinea" name="txtPorcentajeBeneficioLinea" data-bind="value:porcentajeBeneficioLinea" />
+                                                            </label>
+                                                        </td>
+                                                        <td style="text-align:center;">
+                                                            <label class="input">
+                                                                <input id="txtImporteBeneficioLinea" name="txtImporteBeneficioLinea" data-bind="value:importeBeneficioLinea" />
+                                                            </label>
+                                                        </td>
+                                                        
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtVentaNetaLinea" name="txtVentaNetaLinea" data-bind="value:ventaNetaLinea" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtPorcentajeAgenteLinea" name="txtPorcentajeAgenteLinea" data-bind="value:porcentajeAgente" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtImporteAgenteLinea" name="txtImporteAgenteLinea" data-bind="value:importeAgenteLinea" disabled />
+                                                                </label>
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                <label class="input">
+                                                                    <input id="txtTotalAlClienteLinea" name="txtTotalAlClienteLinea" data-bind="value:totalLinea" disabled/>
+                                                                </label>
+                                                            </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                </div>
                             </section>
                         </fieldset>
                         <footer>
@@ -1247,7 +1308,7 @@
     <script src="myconfig.js"></script>
     <script src="js/init.utilities.js"></script>
     <script src="js/ariadna/comun.js"></script>
-    <script src="js/ariadna/prefacturaDetalle.js"></script>
+    <script src="js/ariadna/prefacturaDetalleLineal.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
