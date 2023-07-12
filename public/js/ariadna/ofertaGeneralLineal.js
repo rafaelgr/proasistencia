@@ -322,7 +322,7 @@ function buscarOfertas() {
 
 function crearOferta() {
     var mf = function () {
-        var url = "OfertaDetalleLineal.html?OfertaId=0";
+        var url = "OfertaLinealDetalle.html?OfertaId=0";
         window.open(url, '_new');
     };
     return mf;
@@ -363,7 +363,7 @@ function deleteOferta(id) {
 }
 
 function editOferta(id) {
-    var url = "OfertaDetalleLineal.html?OfertaId=" + id;
+    var url = "OfertaLinealDetalle.html?OfertaId=" + id;
     window.open(url, '_new');
 }
 

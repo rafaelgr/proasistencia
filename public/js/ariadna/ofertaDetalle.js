@@ -348,6 +348,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.ofertaId(0);
+        vm.beneficioLineal(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -534,6 +535,11 @@ function admData() {
 }
 
 function loadData(data) {
+    if(data.beneficioLineal) {
+        var url = "OfertaLinealDetalle.html?OfertaId=" + data.ofertaId;
+        window.open(url, '_self');
+       //return;
+    }
     vm.ofertaId(data.ofertaId);
     vm.servicioId(data.servicioId);
     vm.tipoOfertaId(data.tipoOfertaId);
@@ -734,9 +740,11 @@ var generarOfertaDb = function() {
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
             "conceptosExcluidos": vm.conceptosExcluidos(),
-            "formaPagoId": vm.sformaPagoId()
+            "formaPagoId": vm.sformaPagoId(),
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
+    if(vm.beneficioLineal()) data.oferta.porcentajeBeneficio = 0;
     return data;
 }
 

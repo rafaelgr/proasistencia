@@ -615,6 +615,7 @@ function initForm() {
         vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
+        vm.beneficioLineal(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -911,6 +912,11 @@ function admData() {
 }
 
 function loadData(data) {  
+    if(data.beneficioLineal) {
+        var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId;
+        window.open(url, '_self');
+       //return;
+    }
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
     vm.ofertaId(data.ofertaId);
@@ -1253,9 +1259,10 @@ var generarContratoDb = function () {
             "beneficioLineal": vm.beneficioLineal(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
-            "liquidarBasePrefactura": vm.liquidarBase()
+            "liquidarBasePrefactura": vm.liquidarBase(),
         }
     };
+    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
     return data;
 }
 

@@ -1,8 +1,8 @@
 
 
 /*-------------------------------------------------------------------------- 
-ofertaDetalleLineal.js
-Funciones js par la página OfertaDetalleLineal.html
+ofertaLinealDetalle.js
+Funciones js par la página OfertaLinealDetalle.html
 ---------------------------------------------------------------------------*/
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
@@ -557,7 +557,7 @@ function loadData(data) {
     cargaAgente(data.agenteId, true);
     vm.fechaOferta(spanishDate(data.fechaOferta));
     vm.coste(data.coste);
-    vm.porcentajeBeneficio(data.porcentajeBeneficio);
+    vm.porcentajeBeneficio(0);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
@@ -667,7 +667,7 @@ var clicAceptar = function () {
         if (err) return;
         var url = "OfertaGeneralLineal.html?OfertaId=" + vm.ofertaId(); // default PUT
         if (tipo == 'POST') {
-            url = "OfertaDetalleLineal.html?OfertaId=" + vm.ofertaId(); // POST
+            url = "OfertaLinealDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
         window.open(url, '_self');
     })

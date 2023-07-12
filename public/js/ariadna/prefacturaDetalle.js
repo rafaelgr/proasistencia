@@ -306,6 +306,14 @@ function admData() {
 }
 
 function loadData(data) {
+    if(data.beneficioLineal) {
+        var url = "PrefacturaLinealDetalle.html?PrefacturaId=" + data.prefacturaId;
+        if(desdeContrato == "true" && prefacturaId != 0){
+            url = "PrefacturaLinealDetalle.html?desdeContrato=true&PrefacturaId=" + data.prefacturaId + "&ContratoId="+ data.contratoId;
+        }
+        window.open(url, '_self');
+       //return;
+    }
     vm.prefacturaId(data.prefacturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
@@ -318,7 +326,7 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
-    vm.beneficioLineal(dara.beneficioLineal)
+    vm.beneficioLineal(data.beneficioLineal)
 
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
@@ -535,6 +543,7 @@ var generarPrefacturaDb = function () {
             "beneficioLineal": vm.beneficioLineal()
         }
     };
+    if(vm.beneficioLineal()) data.prefactura.porcentajeRetencion = 0;
     return data;
 }
 

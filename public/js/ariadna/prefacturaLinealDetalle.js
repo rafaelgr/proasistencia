@@ -453,7 +453,7 @@ var aceptarPrefactura = function () {
     // caso alta
     var verb = "POST";
     var url = myconfig.apiUrl + "/api/prefacturas";
-    var returnUrl = "PrefacturaDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&PrefacturaId=";
+    var returnUrl = "PrefacturaLinealDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&PrefacturaId=";
     // caso modificación
     if (prefacturaId != 0) {
         verb = "PUT";
@@ -463,7 +463,7 @@ var aceptarPrefactura = function () {
 
     if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
         if(desdeContrato == "true" && prefacturaId != 0){
-            returnUrl = 'ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self';
+            returnUrl = 'ContratoLienalDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self';
         }
         AvisaRecalculo(url, returnUrl);
     } else {
@@ -471,7 +471,7 @@ var aceptarPrefactura = function () {
             loadData(data);
             returnUrl = returnUrl + vm.prefacturaId();
             if(desdeContrato == "true" && prefacturaId != 0){
-                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+                window.open('ContratoLinealDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
             }
             else{
                 window.open(returnUrl, '_self');
@@ -555,7 +555,7 @@ function salir() {
     var mf = function () {
         var url = "PrefacturaGeneral.html";
         if(prefacturaId != 0  || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
+            window.open('ContratoLinealDetalle.html?ContratoId='+ ContratoId +'&docPre=true', '_self');
         } else {
             window.open(url, '_self');
         }
@@ -1015,7 +1015,7 @@ function loadLineasPrefactura(id) {
         });
         vm.importeBeneficio(totalBeneficio);
         vm.ventaNeta(totalVentaNeta);
-        vm.coste(totalCoste);
+        //vm.coste(totalCoste);
         vm.importeAgente(totalImporteAgenteLinea);
         vm.totalCoste(numeral(totalCoste).format('0,0.00'));
         recalcularCostesImportesDesdeCoste();
