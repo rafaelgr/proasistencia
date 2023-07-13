@@ -43,7 +43,7 @@ ALTER TABLE `contratos_lineas`
 
    ALTER TABLE `ofertas_lineas` CHANGE `importe` `importe` DECIMAL(14,4) NULL; 
 
-   //
+  
    ALTER TABLE `prefacturas`   
   ADD COLUMN `beneficioLineal` TINYINT(1) DEFAULT 0 NULL AFTER `numLetra`;
 
