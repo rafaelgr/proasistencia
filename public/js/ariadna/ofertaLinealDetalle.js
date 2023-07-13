@@ -319,7 +319,7 @@ function initForm() {
 
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
-    $("#txtImpUni").blur(cambioPrecioCantidad);
+    $("#txtImpUni").blur(recalculaPorcentajeBeneficio);
     $("#txtPorDescuento").blur(cambioPrecioCantidad);
     $("#txtPorDescuentoProveedor").blur(cambioPrecioCantidad);
     $('#txtPrecioProveedor').blur(cambioPrecioCantidad);
@@ -327,8 +327,8 @@ function initForm() {
         var val =  $("#txtRappelAgente").val();
         nuevaRefReparaciones(vm.stipoOfertaId(), val);
       });
-    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
-    $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
+    //$("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
+    //$("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -1369,7 +1369,7 @@ function loadDataLinea(data) {
     vm.precioProveedor(data.precioProveedor);
     vm.dtoProveedor(data.dtoProveedor);
 
-    recalcularCostesImportesDesdeBeneficioLinea();
+    //recalcularCostesImportesDesdeBeneficioLinea();
 
 }
 
@@ -1685,6 +1685,21 @@ var cambioPrecioCantidad = function () {
 
     }
     recalcularCostesImportesDesdeCosteLinea();
+}
+
+var recalculaPorcentajeBeneficio = function() {
+    var porcen = 0;
+    if(!vm.importeProveedor()) vm.importeProveedor(0);
+    if(!vm.importe()) vm.importe(0);
+    if(!vm.importeProveedor()) vm.importeProveedor(0);
+
+    porcen = roundToTwo((((vm.importe() * (100 - vm.porcentajeAgente()) / 100) / vm.importeProveedor()) * 100) - 100);
+
+    vm.porcentajeBeneficioLinea(porcen);
+
+    recalcularCostesImportesDesdeCosteLinea();
+    
+
 }
 
 function editOfertaLinea(id) {
