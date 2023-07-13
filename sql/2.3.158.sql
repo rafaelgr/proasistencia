@@ -56,6 +56,10 @@ ALTER TABLE `contratos_lineas`
   ALTER TABLE `prefacturas_lineas` 
   ADD COLUMN `ventaNetaLinea` DECIMAL(12,2) DEFAULT 0.00 AFTER `importeAgenteLinea`; 
 
+  ALTER TABLE `facturas`   
+  ADD COLUMN `beneficioLineal` TINYINT(1) DEFAULT 0 NULL AFTER `numLetra`;
+
+
 
 
 
