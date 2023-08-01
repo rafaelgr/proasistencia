@@ -215,6 +215,13 @@ function initForm() {
         }
     });
 
+    $("#chkContratoCerrado").change(function() {
+        if($('#chkContratoCerrado').prop('checked')) {
+           compruebaAnticiposVinculados()
+        }
+      });
+    
+
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){
@@ -1249,6 +1256,22 @@ var generarContratoDb = function () {
         }
     };
     return data;
+}
+
+function compruebaAnticiposVinculados() {
+    llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        if(data.length > 0) {
+            var a = [];
+            data.forEach( f => {
+                a.push(f.numeroAnticipoProveedor);
+            });
+            var ab = JSON.stringify(a);
+            var str = "los sigientes anticipos están sin vincular:\n " + ab
+            mensError("los sigientes anticipos están sin vincular:\n" + ab);
+            $('#chkContratoCerrado').prop('checked', false);
+        }
+    });
 }
 
 function loadEmpresas(id) {
@@ -2822,7 +2845,8 @@ var generarPrefacturasPlanificacion = function (data) {
      $("#cmbPeriodosPagos2").select2().on('change', function (e) {
          cambioPeriodosPagosPlanificacion(e.added);
      });
-    
+
+   
     
      if(vm.fechaPlanificacionObras2()) {
         vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
