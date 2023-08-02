@@ -1267,8 +1267,10 @@ function compruebaAnticiposVinculados() {
                 a.push(f.numeroAnticipoProveedor);
             });
             var ab = JSON.stringify(a);
-            var str = "los sigientes anticipos están sin vincular:\n " + ab
-            mensError("los sigientes anticipos están sin vincular:\n" + ab);
+            const expresionRegular = /[\[\]"]/g;
+            var c = ab.replace(expresionRegular, '');
+            var str = "los sigientes anticipos están sin vincular:<br> " + c
+            mensError(str);
             $('#chkContratoCerrado').prop('checked', false);
         }
     });
