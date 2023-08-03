@@ -59,6 +59,15 @@ ALTER TABLE `contratos_lineas`
   ALTER TABLE `facturas`   
   ADD COLUMN `beneficioLineal` TINYINT(1) DEFAULT 0 NULL AFTER `numLetra`;
 
+  ALTER TABLE `facturas_lineas`   
+  ADD COLUMN `importeBeneficioLinea` DECIMAL(12,2) DEFAULT 0.00 AFTER `porcentajeBeneficio`;
+
+    ALTER TABLE `facturas_lineas`   
+  ADD COLUMN `importeAgenteLinea` DECIMAL(12,2) DEFAULT 0.00 NULL AFTER `porcentajeAgente`;
+
+  ALTER TABLE `facturas_lineas` 
+  ADD COLUMN `ventaNetaLinea` DECIMAL(12,2) DEFAULT 0.00 AFTER `importeAgenteLinea`; 
+
 
 
 

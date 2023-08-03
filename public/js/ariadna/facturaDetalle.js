@@ -248,6 +248,7 @@ function admData() {
     self.tipoProyectoId = ko.observable();
     self.contabilizada = ko.observable();
     self.retenGarantias = ko.observable();
+    self.beneficioLineal = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -373,6 +374,14 @@ function admData() {
 }
 
 function loadData(data, desdeLinea) {
+    if(data.beneficioLineal) {
+        var url = "FacturaLinealDetalle.html?FacturaId=" + data.facturaId;
+        if(desdeContrato == "true" && facturaId != 0){
+            url = "FacturaLinealDetalle.html?desdeContrato=true&FacturaId=" + data.facturaId + "&ContratoId="+ data.contratoId;
+        }
+        window.open(url, '_self');
+       //return;
+    }
     vm.facturaId(data.facturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
@@ -394,7 +403,8 @@ function loadData(data, desdeLinea) {
     vm.sdepartamentoId(data.departamentoId);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
-    vm.contabilizada(data.contabilizada)
+    vm.contabilizada(data.contabilizada);
+    vm.beneficioLineal(data.beneficioLineal);
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -657,7 +667,8 @@ var generarFacturaDb = function () {
             "departamentoId": vm.departamentoId(),
             "observacionesPago": vm.observacionesPago(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
-            "tipoProyectoId": vm.tipoProyectoId()
+            "tipoProyectoId": vm.tipoProyectoId(),
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
     return data;
