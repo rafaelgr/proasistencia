@@ -1131,26 +1131,28 @@ function salir() {
 }
 
 var clicAceptar = function (salir) {
-        guardarContrato(function (err, tipo) {
-            if (err) return mensError(err);
-            var url;
-            if(DesdeContrato == "true" && AscContratoId != 0){
-                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-            } else {
-                url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-            }
-            if(vm.beneficioLineal() == 0) {
-                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-            } else {
-                url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-            }
-            if(salir) {
-                window.open(url, '_self');
-            } else {
-                mensNormal('Contrato guardado.')
-            }
-        })
-    
+            guardarContrato(function (err, tipo) {
+                if (err) return mensError(err);
+                var url;
+                if(DesdeContrato == "true" && AscContratoId != 0){
+                    url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+                } else {
+                    url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+                }
+                if (tipo == 'POST') {
+                    if(vm.beneficioLineal() == 0) {
+                        url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    } else {
+                        url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    }
+                   
+                }
+                if(salir) {
+                    window.open(url, '_self');
+                } else {
+                    mensNormal('Contrato guardado.')
+                }
+            });
 }
 
 var guardarContrato = function (done) {
@@ -2407,7 +2409,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 
 var actualizarLineasDeLaContratoTrasCambioCostes = function (done) {
     llamadaAjax('PUT',
-        "/api/contratos/recalculo/" + vm.contratoId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        "/api/contratos/recalculo/lineal/" + vm.contratoId() + '/' + vm.porcentajeAgente(),
         null,
         function (err, data) {
             if (err) return errorGeneral(err, done);

@@ -656,7 +656,7 @@ function datosOK() {
 
 function salir() {
     var mf = function () {
-        var url = "OfertaGeneralLineal.html";
+        var url = "OfertaGeneral.html";
         window.open(url, '_self');
     }
     return mf;
@@ -665,7 +665,7 @@ function salir() {
 var clicAceptar = function () {
     guardarOferta(function (err, tipo) {
         if (err) return;
-        var url = "OfertaGeneralLineal.html?OfertaId=" + vm.ofertaId(); // default PUT
+        var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
         if (tipo == 'POST') {
             url = "OfertaLinealDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
@@ -1344,7 +1344,9 @@ function loadDataLinea(data) {
     //calculadora importes linea
     vm.porcentajeBeneficioLinea(data.porcentajeBeneficio);
     vm.importeBeneficioLinea(data.importeBeneficioLinea);
-    recalcularCostesImportesDesdeCosteLinea()
+    vm.ventaNetaLinea(data.ventaNetaLinea);
+    vm.importeAgenteLinea(data.importeAgenteLinea)
+    //recalcularCostesImportesDesdeCosteLinea()
     //cantidades de proveedor
     vm.importeProveedor(data.importeProveedor);
     vm.totalLineaProveedor(data.totalLineaProveedor);
