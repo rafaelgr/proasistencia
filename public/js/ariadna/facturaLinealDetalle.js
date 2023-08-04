@@ -578,7 +578,7 @@ var aceptarFactura = function () {
     }
     if( (vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
         if(desdeContrato == "true" && facturaId != 0){
-            returnUrl = 'ContratoDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self';
+            returnUrl = 'ContratoLinealDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self';
         }
         AvisaRecalculo(url, returnUrl);
     } else {
@@ -586,7 +586,7 @@ var aceptarFactura = function () {
             loadData(data);
             returnUrl = returnUrl + vm.facturaId();
             if(desdeContrato == "true" && facturaId != 0){
-                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self');
+                window.open('ContratoLinealDetalle.html?ContratoId='+ ContratoId +'&docFac=true', '_self');
             } else {
                 window.open(returnUrl, '_self');
             }
@@ -1837,10 +1837,12 @@ var recalcularCostesImportesDesdeCoste = function () {
         vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
     }
 
+    vm.total(roundToSix(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     if (vm.tipoClienteId() == 1 && !vm.mantenedorDesactivado()) {
         // es un mantenedor
         vm.total(roundToSix(vm.importeAlCliente() - vm.ventaNeta() + vm.importeBeneficio()));
     }
+
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
@@ -1857,9 +1859,9 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaFacturaTrasCambioCostes = function (url2, returnUrl) {
-    var url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+    var url = myconfig.apiUrl + "/api/facturas/recalculo/lineal/" + vm.facturaId() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
     if (vm.mantenedorDesactivado()) {
-        url = myconfig.apiUrl + "/api/facturas/recalculo/" + vm.facturaId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/0';
+        url = myconfig.apiUrl + "/api/facturas/recalculo/lineal/" + vm.facturaId() + '/' + vm.porcentajeAgente() + '/0';
     }
    
     llamadaAjax("PUT", url, null, function (err, data) {

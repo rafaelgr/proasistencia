@@ -86,6 +86,10 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmOferta").submit(function () {
@@ -171,6 +175,10 @@ function initForm() {
         }
     });
 
+    $('#chkBeneficioLineal').change(function() {
+        cambioLineal();
+      });
+
    $('#dt_documentacion').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = tablaDocumentacion.row(tr);
@@ -185,6 +193,7 @@ function initForm() {
             tr.addClass('shown');
         }
     });
+
 
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
         var node = $(e.target).closest('.jstree-node');
@@ -659,14 +668,19 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
+var clicAceptar = function (salir) {
     guardarOferta(function (err, tipo) {
         if (err) return;
         var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
         if (tipo == 'POST') {
             url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
-        window.open(url, '_self');
+        if(salir) {
+            window.open(url, '_self');
+        } else {
+            mensNormal('Oferta guardada.');
+            recargaCabeceraLineasBases();
+        }
     })
 }
 
@@ -1002,6 +1016,23 @@ function cambioTextosPredeterminados(data) {
     });
 }
 
+function cambioLineal() {
+    var mens = "Al cambiar esta propiedad se tienen que editar las lineas para ajustar los importes correctos. ¿Desea guardar y continuar con la edición?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            clicAceptar(false);
+        }
+        
+        if (ButtonPressed === "Cancelar") {
+            salir()();
+        }
+    });
+}
+
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
@@ -1101,8 +1132,11 @@ var guardarLinea = function () {
             dto: vm.dto(),
             precioProveedor: vm.precioProveedor(),
             dtoProveedor: vm.dtoProveedor(),
-            totalLineaProveedorIva: vm.totalLineaProveedorIva()
-            //
+            totalLineaProveedorIva: vm.totalLineaProveedorIva(),
+            //Ponemos los campos de la oferta lineal a cero
+            importeBeneficioLinea: 0,
+            importeAgenteLinea: 0,
+            ventaNetaLinea: 0
         }
     }
     var verboAjax = '';

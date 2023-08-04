@@ -78,6 +78,8 @@ function initForm() {
         vm.porcentajeCobro(roundToTwo(porcentaje));
     });
 
+
+
     // Eventos de la calculadora de costes
     $('#txtCosteLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
     $('#txtPorcentajeBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
@@ -86,6 +88,10 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmOferta").submit(function () {
@@ -170,6 +176,10 @@ function initForm() {
             buscaTarifaProveedor(e.added.id);
         }
     });
+
+    $('#chkBeneficioLineal').change(function() {
+        cambioLineal();
+      });
 
    $('#dt_documentacion').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
@@ -544,6 +554,11 @@ function admData() {
 }
 
 function loadData(data) {
+    if(!data.beneficioLineal) {
+        var url = "OfertaDetalle.html?OfertaId=" + data.ofertaId;
+        window.open(url, '_self');
+       //return;
+    }
     vm.ofertaId(data.ofertaId);
     vm.servicioId(data.servicioId);
     vm.tipoOfertaId(data.tipoOfertaId);
@@ -662,14 +677,19 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
+var clicAceptar = function (salir) {
     guardarOferta(function (err, tipo) {
         if (err) return;
         var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
         if (tipo == 'POST') {
             url = "OfertaLinealDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
-        window.open(url, '_self');
+        if(salir) {
+            window.open(url, '_self');
+        } else {
+            mensNormal('Oferta guardada.');
+            recargaCabeceraLineasBases();
+        }
     })
 }
 
@@ -744,7 +764,7 @@ var generarOfertaDb = function() {
             "observaciones": vm.observaciones(),
             "conceptosExcluidos": vm.conceptosExcluidos(),
             "formaPagoId": vm.sformaPagoId(),
-            "beneficioLineal": 1
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
     return data;
@@ -1001,6 +1021,23 @@ function cambioTextosPredeterminados(data) {
         if (vm.observaciones()) observaciones = vm.observaciones();
         observaciones += data.texto;
         vm.observaciones(observaciones);
+    });
+}
+
+function cambioLineal() {
+    var mens = "Al cambiar esta propiedad se tienen que editar las lineas para ajustar los importes correctos. ¿Desea guardar y continuar con la edición?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            clicAceptar(false);
+        }
+        
+        if (ButtonPressed === "Cancelar") {
+            salir()();
+        }
     });
 }
 
