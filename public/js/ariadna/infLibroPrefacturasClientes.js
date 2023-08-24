@@ -79,6 +79,9 @@ function initForm() {
 
     $('#cmbOrden').select2();
     loadComboOrden();
+
+    $('#chkInfgestionCobros').prop("checked", false);
+    vm.infgestionCobros(false)
     
     $('.datepicker').datepicker({
         closeText: 'Cerrar',
@@ -185,6 +188,7 @@ function admData() {
     ]);
     self.selectedOrden = ko.observableArray([]);
     self.sorden = ko.observable();
+    self.infgestionCobros = ko.observable();
 };
 
 var obtainReport = function () {
@@ -225,7 +229,7 @@ var obtainReport = function () {
 
 var obtainReportJson = function (obj, departamentoId) {
         var file = "../reports/libro_prefacturas_clientes.mrt";
-        if(departamentoId == 8) file = "../reports/libro_prefacturas_clientes_obras.mrt";
+        if(departamentoId == 8 && vm.infgestionCobros()) file = "../reports/libro_prefacturas_clientes_obras.mrt";
         var report = new Stimulsoft.Report.StiReport();
             
             
@@ -447,9 +451,10 @@ var rptFacturaParametros = function () {
     var tipoIvaId = vm.stipoIvaId();
     var factu = vm.sfactu();
     var orden = vm.sorden();
+    var infgestionCobros = vm.infgestionCobros();
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
-    var url = myconfig.apiUrl + "/api/prefacturas/prefacturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + factu +"/" + orden + "/" + departamentoId + "/" + usuario.usuarioId
+    var url = myconfig.apiUrl + "/api/prefacturas/prefacturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + factu +"/" + orden + "/" + departamentoId + "/" + usuario.usuarioId + "/" + infgestionCobros
 
     llamadaAjax("POST", url, null, function (err, data) {
         if(err) return;
