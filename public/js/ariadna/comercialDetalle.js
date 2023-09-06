@@ -403,6 +403,7 @@ function admData() {
     //
     self.posiblesTiposViaRp = ko.observableArray([]);
     self.elegidosTiposViaRp = ko.observableArray([]);
+    self.nivelFormativoSalud = ko.observable();
 
     //REPRESENTANTE
     self.nombreRepresentante = ko.observable();
@@ -462,6 +463,7 @@ function loadData(data, desdeLoad) {
     vm.codPostalRp(data.codPostalRp);
     vm.provinciaRp(data.provinciaRp);
     vm.categoriaProfesional(data.categoriaProfesional);
+    vm.nivelFormativoSalud(data.nivelFormativoSalud);
     loadTiposViaRp(data.tipoViaRpId);
     loadTiposViaRepresentante(data.tipoViaRepresentanteId);
 
@@ -630,7 +632,8 @@ function aceptar() {
                 "poblacionRepresentante": vm.poblacionRepresentante(),
                 "codPostalRepresentante": vm.codPostalRepresentante(),
                 "provinciaRepresentante": vm.provinciaRepresentante(),
-                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId()
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId(),
+                "nivelFormativoSalud": vm.nivelFormativoSalud()
             }
         };
         if (empId == 0) {
@@ -1578,6 +1581,25 @@ function preparaObjProveedor (codigo, codmacta) {
             "observaciones": vm.observaciones(),
             "paisId": 66,
             "emitirFacturas": 0,
+            //
+            "nombreRp": vm.nombreRp(),
+            "dniRp": vm.dniRp(),
+            "tipoViaRpId": vm.stipoViaRpId(),
+            "direccionRp": vm.direccionRp(),
+            "poblacionRp": vm.poblacionRp(),
+            "codPostalRp": vm.codPostalRp(),
+            "provinciaRp": vm.provinciaRp(),
+            "categoriaProfesional": vm.categoriaProfesional(),
+            "nombreRepresentante": vm.nombreRepresentante(),
+            "dniRepresentante": vm.dniRepresentante(),
+            "nombreRepresentante": vm.nombreRepresentante(),
+            "dniRepresentante": vm.dniRepresentante(),
+            "direccionRepresentante": vm.direccionRepresentante(),
+            "poblacionRepresentante": vm.poblacionRepresentante(),
+            "codPostalRepresentante": vm.codPostalRepresentante(),
+            "provinciaRepresentante": vm.provinciaRepresentante(),
+            "tipoViaRepresentanteId": vm.stipoViaRepresentanteId(),
+            "nivelFormativoSalud": vm.nivelFormativoSalud()
         },
         departamentos: {
             "departamentos": [1,2,3,4,5,6,7,8]
