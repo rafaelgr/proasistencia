@@ -71,7 +71,10 @@ function initForm() {
             if(this.value != antDepartamentoId) {
                 cargarFacturas2()();
             } else {
-                cargarFacturas2(f)();
+                setTimeout(function() {
+                    cargarFacturas2(f)();
+                }, 1000);
+                
             }
         } else {
             cargarFacturas2All()();
@@ -143,13 +146,18 @@ function compruebaFiltros(id) {
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
             if(id > 0) {
-                cargarFacturas2(id)();
+                setTimeout(function() {
+                    cargarFacturas2(id)();
+                }, 1000);
+               
             } else {
                 cargarFacturas2All()();
             }
         } else {
             $('#chkTodos').prop('checked', false);
-            cargarFacturas2(id)();
+            setTimeout(function() {
+                cargarFacturas2(id)();
+            }, 1000);
         }
        /*  if(id) {
             cargarFacturas2()(id);
@@ -159,7 +167,9 @@ function compruebaFiltros(id) {
         loadEmpresas(0);
         estableceFechaEjercicio();
         if(id) {
-            cargarFacturas2(id)();
+            setTimeout(function() {
+                cargarFacturas2(id)();
+            }, 1000);
         } else{
             cargarFacturas2()();
         }
