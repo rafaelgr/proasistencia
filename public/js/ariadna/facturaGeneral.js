@@ -8,7 +8,7 @@ var facturaId;
 var usuario;
 var filtros = {};
 var cargaFacturas = false;
-var antDepartamentoId;
+var antDepartamentoId = 0;
 
 function initForm() {
     comprobarLogin();
