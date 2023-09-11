@@ -539,7 +539,7 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
-      $('#btnNuevaCarpeta').show();
+    $('#btnNuevaCarpeta').show();
     if(!usuario.puedeEditar) {
         $('#btnNuevaCarpeta').hide();
     } 

@@ -168,6 +168,11 @@ function initForm() {
         compruebaCodigoProveedor();
     });
 
+    $('#btnNuevaCarpeta').show();
+    if(!usuario.puedeEditar) {
+        $('#btnNuevaCarpeta').hide();
+    } 
+
     initTablaFacturas();
     initTablaUsuariosPush();
     initArbolDocumentacion();
