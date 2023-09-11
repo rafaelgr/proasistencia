@@ -8234,7 +8234,7 @@ function uploadDocum(arr) {
             then (
                 data => {
                     if(data) {
-                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumentacion
+                        //CREAMOS EL REGISTRO EN LA TABLA documentacion
                         var data = 
                         {
                             documentacion: {

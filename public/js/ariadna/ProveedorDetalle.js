@@ -57,6 +57,23 @@ function initForm() {
         return false;
     });
 
+    $("#creacionCarpetas-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionSubcarpetas-form").submit(function () {
+        return false;
+    });
+
+
+    $("#frmDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmloadDoc").submit(function () {
+        return false;
+    });
+
     //carga de combos
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
@@ -153,6 +170,7 @@ function initForm() {
 
     initTablaFacturas();
     initTablaUsuariosPush();
+    initArbolDocumentacion();
 
     // autosalto en IBAN
     $(function () {
@@ -218,7 +236,29 @@ function initForm() {
             return true;
         }
     }, 'La fecha de alta debe ser menor que la fecha de baja.');
-//
+    //
+
+    
+    // 7 bind to events triggered on the tree
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+            var node = $(e.target).closest('.jstree-node');
+            var selectedNodeId = node.attr('id');
+            if (e.which === 1) {
+                var jsTree = $.jstree.reference(e.target);
+                var originalNode = jsTree.get_node(node);
+                if(!originalNode.data.folder)  {
+                    var url = originalNode.original.location;
+                    window.open(url, '_blank');
+                }
+            }
+    });
+    // 8 interact with the tree - either way is OK
+    $('#demo').on('click', function () {
+      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+    });
+  
 
     // obtener el número de digitos de la contabilidad
     // para controlar la cuenta contable.
@@ -360,6 +400,8 @@ function admData() {
     self.codigoOriginal = ko.observable();
     self.observaciones = ko.observable();
     self.emitirFacturas = ko.observable();
+    self.cerTitularidad = ko.observable();
+    self.cerFormativoSalud = ko.observable();
     self.activa = ko.observable();
     //DATOS DE LA FIANZA
     self.fianza = ko.observable('0.00');
@@ -475,6 +517,13 @@ function admData() {
     //
     self.posiblesTiposViaRepresentante = ko.observableArray([]);
     self.elegidosTiposViaRepresentante = ko.observableArray([]);
+
+    //CARPETAS  Y DOCUMENTOS
+    self.carpetaNombre = ko.observable();
+    self.subCarpetaNombre = ko.observable();
+    self.documNombre = ko.observable();
+    //
+    self.files = ko.observable();
     
   
 }
@@ -510,6 +559,8 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
+    vm.cerTitularidad(data.cerTitularidad);
+    vm.cerFormativoSalud(data.cerFormativoSalud)
     vm.activa(data.activa);
     //recurso preventivo
     vm.nombreRp(data.nombreRp);
@@ -558,6 +609,8 @@ function loadData(data) {
     buscaDepartamentos();
     buscaProfesiones();
     //loadDepartamentos(data.departamentoId)
+
+    cargaTablaDocumentacion();
 }
 
 function obtenInicioCuenta() {
@@ -736,6 +789,8 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "paisId": vm.spaisId(),
                 "emitirFacturas": vm.emitirFacturas(),
+                "cerTitularidad": vm.cerTitularidad(),
+                "cerFormativoSalud": vm.cerFormativoSalud(),
                 "empresaId": vm.sempresaId(),
                 "nombreRp": vm.nombreRp(),
                 "dniRp": vm.dniRp(),
@@ -1750,5 +1805,557 @@ function datosOKUsuariosPush() {
     var opciones = $("#modalUsuariosPush-form").validate().settings;
     return $('#modalUsuariosPush-form').valid();
 }
+
+//FUNCIONES REALCIONADAS CON LA DOCUMENTACIÓN
+
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
+            }
+            return menuItems;
+        }
+    }
+});
+
+}
+function cargaTablaDocumentacion(){
+    llamadaAjax("GET",  "/api/documentacion/proveedor/"  + vm.proveedorId(), null, function (err, data) {
+        if (err) return;
+        loadDocumentacionTree(data);
+         //if(data) loadTablaDocumentacion(data);
+    });
+}
+
+function loadDocumentacionTree(data) {
+    //if(data.length == 0) return;
+    var obj = data;
+    
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
+}
+
+function loadTablaDocumentacion(data) {
+    var dt = $('#dt_documentacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function formatData(d) {
+    if(!d.documentos) d.documentos = [];
+    var doc = d.documentos;
+    var html = "";
+        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+        var a;
+        doc.forEach(e => {
+            var l = e.key.split('/');
+            var index = l.length - 1;
+             a = '<div class="row" style="margin-bottom: 10px">' +
+                        '<section class="col col-md-5">' + 
+                            '<a href="' + e.location  + '" target="_blank">' +  l[index] +'</a>' +
+                        '</section>' +
+                        '<section class="col col-md-3 text-left">' +
+                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '</section>' +
+                        '<section class="col col-md-4">' + '</section>' +
+                    '</div>' 
+            html += a;
+        });
+    if(!d.subcarpetas) d.subcarpetas = [];
+    var subC = d.subcarpetas;
+    html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
+    var b;
+    subC.forEach(e => {
+         b = '<div class="row" style="margin-bottom: 10px">' +
+         '<section class="col col-md-3 text-left">' +
+                        '<button  class="dt-control"></button>' +
+                    '</section>' +
+                    '<section class="col col-md-5">' + 
+                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
+                    '</section>' +
+                    '<section class="col col-md-3 text-left">' +
+                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                    '</section>' +
+                    '<section class="col col-md-2">' + '</section>' +
+                '</div>' 
+        html += b;
+    });
+    return html;
+}
+
+
+function formatDataCobros(d) {
+    if(!d.lin) d.lin = [];
+    var lin = d.lin;
+    var html = "";
+    html = '<h5> APUNTES DEL COBRO</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    lin.forEach(e => {
+        var d = e.timporteH - e.timporteD
+         html += 
+         '<tr>' +
+            '<th>Fecha de entrada:</th>' +
+            '<th>Asiento:</th>' +
+            '<th>Num. linea:</th>' +
+            '<th>Num. documento:</th>' +
+            '<th>Nom. documento:</th>' +
+            '<th>IMPORTE:</th>' +
+            '<th>ES DEVOLUCION:</th>' +
+         '</tr>' +
+         
+         '<tr>' +
+            
+            '<td>' +
+                formatFecha(e.fechaent)  +
+            '</td>' +
+            
+            '<td>' +
+                e.numasien +
+            '</td>' +
+            
+            '<td>' +
+                e.linliapu +
+            '</td>' +
+            
+            '<td>' +
+                e.numdocum +
+            '</td>' +
+            
+            '<td>' +
+                e.ampconce +
+            '</td>' +
+
+            '<td>' +
+                numeral(d).format('0,0.00');+
+            '</td>' +
+            
+            '<td>'  +
+           
+                e.esdevolucion +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
+    return html
+}
+
+ function formatFecha(f) {
+    if(f) return spanishDate(f);
+    return ' ';
+ }
+
+function preparaDatosArchivo(r) {
+    vm.files(null);
+    docName = r.carpetaNombre + "_" + vm.proveedorId() + "_" + vm.nombre();
+    carpetaId = r.carpetaId;
+    docName = docName.replace(/[\/]/g, "-");
+    console.log(docName);
+    carpeta = r.carpetaNombre;
+    key = r.carpetaNombre   + "/" +  docName;
+    carpetaTipo = r.tipo;
+    vm.documNombre(docName);
+}
+
+function limpiaDatosArchivo(r) {
+    docName = null
+    carpetaId = null
+    docName = null
+    carpeta = null
+    $('.progress-bar').text(parseInt((0)+'%'));
+    $('.progress-bar').width(parseInt((0)+'%'));
+}
+
+function nuevaCarpeta() {
+    vm.carpetaNombre(null);
+}
+
+
+function aceptarNuevaCarpeta() {
+        //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+        var a = vm.carpetaNombre();
+        a = a.trim();
+        a = a.replace(/[\/]/g, "-");
+        var data = 
+        {
+            carpeta: {
+                carpetaId: 0,
+                nombre: a,
+                tipo: "proveedor",
+                departamentoId: null
+            }
+        }
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+            if (err) return
+            $('#modalNuevaCarpeta').modal('hide');
+            mensNormal('Carpeta creada con exito');
+            cargaTablaDocumentacion();
+        });
+}
+
+function aceptarNuevaSubCarpeta() {
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a =  vm.subCarpetaNombre();
+    a = a.trim();
+    a = a.replace(/\//g, "-");
+    var n = subCarpeta + "/" + a;
+    var data = 
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: n,
+            tipo: carpetaTipo,
+            departamentoId: null,
+        }
+    }
+
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
+        if (err) return
+        $('#modalpostSubcarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
+}
+
+
+function nuevaSubcarpeta(r) {
+    vm.subCarpetaNombre(null);
+    subCarpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo
+    parent = r.carpetaId
+}
+
+
+function deleteDocumento(id) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: data.key
+            }
+    
+            //borramos el documento en s3
+            var s3 = new AWS.S3({ params });
+    
+            s3.deleteObject({}, (err, result) => {
+                if (err) mensError('Error al borrar el docuemnto');
+                //Actualizamos la tabla documentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                    if (err) return;
+                    cargaTablaDocumentacion();
+                });
+            }); 
+            
+            }
+        });
+    })
+}
+
+function deleteCarpeta(id) {
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            
+            llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+                if (err) return;
+                var parametros = data;
+                llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                    if (err) return mensError('Fallo al borrar la documentación en la base de datos');
+                    if(data2) {
+                        
+                    AWS.config.region = parametros.bucket_region_docum; // Región
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: parametros.identity_pool_docum,
+                    });
+                    var prefix = data2.nombre;
+                    var params = {
+                        Bucket: parametros.bucket_docum,
+                        Prefix: prefix,
+                        Delimeter: "/"
+                    }
+        
+                    var s3 = new AWS.S3({ params });
+                    s3.listObjectsV2({}, (err, result) => {
+                        if (err) mensError('Error de lectura en la nube');
+                        console.log(result);
+                        if(result.Contents.length > 0) {
+
+
+
+                    var objectKeys = []
+                    result.Contents.forEach(e => {
+                        objectKeys.push(e.Key);
+                    });
+
+                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                    const objects = objectKeys.map(key => ({ Key: key }));
+                    const deleteParams = {
+                    Bucket: parametros.bucket_docum,
+                    Delete: { Objects: objects }
+                    };
+
+                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                    s3.deleteObjects(deleteParams, function(err, data) {
+                        if (err) {
+                            mensError('Fallo al borrar la carpeta en la nube');
+                        } else {
+                            mensNormal('Carpeta eliminada con éxito');
+                            cargaTablaDocumentacion();
+                        }
+}                   );
+
+                        } else {
+                            mensAlerta('No se han encontrado archivos en la nube para borrar');
+                            cargaTablaDocumentacion();
+                        }
+                       
+                    }); 
+            
+                  
+                    
+                    } else {
+                        mensError('No se han encontrado carpetas para borrar');
+                        cargaTablaDocumentacion();
+                    }
+                }); 
+            })
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        parametros = data;
+        var files = $("#upload-input").get(0).files;
+        var arr = [];
+        if (!files.length) {
+            mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+            return;
+        }
+        for(var i = 0; i< files.length; i++) {
+            var e = files[i];
+            var encontrado = false;
+            var id = 0;
+            var file = e;
+            var ext = file.name.split('.').pop().toLowerCase();
+            var blob = file.slice(0, file.size, file.type); 
+            var newFile = new File([blob], {type: file.type});
+            var nom = "";
+            nom = vm.documNombre()
+            if(files.length > 1) {
+                var s = parseInt(i)
+                s++
+                nom = nom + "-" + s + "." + ext;
+            } else {
+                nom = nom + "." + ext;
+            }
+            nom = nom.replace(/\//g, "-");
+            newFile.nom = nom;
+            var fileKey =  carpeta + "/" + nom
+            newFile.fileKey = fileKey;
+            newFile.repetido = false;
+            arr.push(newFile);
+        }
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].nom) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                            arr[j].repetido = true;
+                            break;
+                        } 
+                    }
+                }
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(arr);
+                }
+            } else {
+                uploadDocum(arr);
+            }
+        }); 
+
+    });
+    
+}
+
+function uploadDocum(arr) {
+    var index = 0;
+      
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+            delete e.nom;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: filekey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: e,
+                ACL: "public-read"
+            }
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    if(data) {
+                        //CREAMOS EL REGISTRO EN LA TABLA documentacion
+                        var data = 
+                        {
+                            documentacion: {
+                                documentoId: 0,
+                                proveedorId: null,
+                                contratoId: null,
+                                parteId: null,
+                                carpetaId: carpetaId,
+                                proveedorId: vm.proveedorId(),
+                                location: data.Location,
+                                key: filekey
+                            }
+                        }
+                       
+    
+                        if(!repetido) {
+                            method = 'POST';
+                            url = "/api/documentacion";
+                        } else {
+                            data.documentacion.documentoId = e.documentoId;
+                            method = 'PUT';
+                            url = "/api/documentacion/" + documentoId;
+                        }
+        
+                        llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                            if (err) return mensError(err);
+                            index++
+                            if(index == arr.length) {
+                                $('#modalUploadDoc').modal('hide');
+                                mensNormal('Archivo subido con exito');
+                                limpiaDatosArchivo();
+                                cargaTablaDocumentacion();
+                            }
+                        });
+                    }
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+            });       
+}
+
 
 
