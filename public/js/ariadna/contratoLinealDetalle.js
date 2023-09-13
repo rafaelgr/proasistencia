@@ -519,6 +519,7 @@ function initForm() {
         cambioComercial(e.added);
     });
 
+    $('#btnAltaPrefactura').hide();//oculto de momento, en lineal las prefacturas solo se pueden crear automáticamente
     $("#btnAltaPrefactura").click(nuevaPrefactura);
 
     $('#btnAltaFacprove').click(nuevaFacprove);
