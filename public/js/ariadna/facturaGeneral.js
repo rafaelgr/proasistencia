@@ -584,7 +584,7 @@ function cargarFacturas2(id) {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
+                url: myconfig.apiUrl + "/api/facturas/agente/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

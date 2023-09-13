@@ -1,6 +1,10 @@
 {
   "name": "proasistencia",
+<<<<<<< HEAD
   "version": "2.3.162",
+=======
+  "version": "2.3.163",
+>>>>>>> feature/carpetas_subcarpetas_rep2
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
