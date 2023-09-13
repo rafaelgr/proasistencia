@@ -157,7 +157,8 @@ function initForm() {
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
     $('#noCobro').hide();
-
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (facturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
@@ -224,7 +225,8 @@ function initForm() {
         vm.importeRetencion(0);
         vm.sempresaId(0);
         vm.sclienteId(0);
-        vm.sdepartamentoId(0)
+        vm.sdepartamentoId(0);
+    
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();

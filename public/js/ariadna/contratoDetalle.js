@@ -576,6 +576,8 @@ function initForm() {
 
 
     contratoId = gup('ContratoId');
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
@@ -615,7 +617,7 @@ function initForm() {
         vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
-        vm.beneficioLineal(0);
+       
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();

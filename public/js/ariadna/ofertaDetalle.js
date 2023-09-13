@@ -176,7 +176,7 @@ function initForm() {
     });
 
     $('#chkBeneficioLineal').change(function() {
-        cambioLineal();
+        if(vm.ofertaId()) cambioLineal();
       });
 
    $('#dt_documentacion').on('click', 'td.dt-control', function () {
@@ -347,6 +347,8 @@ function initForm() {
     initArbolDocumentacion();
 
     ofertaId = gup('OfertaId');
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (ofertaId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
             if (err) return;
@@ -898,6 +900,20 @@ function cambioDepartamento(departamentoId) {
     if(!departamentoId) return;
     llamadaAjax('GET', "/api/departamentos/" + departamentoId, null, function (err, data) {
         if (err) return;
+        if(departamentoId == 5) {
+            var excluidos = "Quedan excluidos explícitamente de la presente oferta los siguientes trabajos:\n"
+            + "* Tasas e Impuestos ocasionados por los Proyectos e Instalaciones que se comprenden en la presente oferta\n"
+           + " para sus respectivas legalizaciones ante los Organismos Oficiales.\n"	
+           + "* El Impuesto sobre el Valor Añadido (IVA).\n"	
+           + "* Apertura de calas, ensayos y/o estudio geotécnico.\n"	
+           + "* Cualquier trabajo no especificado en la presente oferta.";
+           vm.conceptosExcluidos(excluidos);
+           $('#chkBeneficioLineal').prop('disabled', false);
+        } else {
+            $('#chkBeneficioLineal').prop('disabled', true);
+            vm.beneficioLineal(0);
+            $('#chkBeneficioLineal').prop('checked', false);
+        }
         usaCalculadora = data.usaCalculadora;
         if(data.usaCalculadora == 0) {
             $('#calculadora').hide();

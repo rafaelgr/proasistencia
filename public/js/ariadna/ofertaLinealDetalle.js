@@ -178,7 +178,7 @@ function initForm() {
     });
 
     $('#chkBeneficioLineal').change(function() {
-        cambioLineal();
+        if(vm.ofertaId()) cambioLineal();
       });
 
    $('#dt_documentacion').on('click', 'td.dt-control', function () {
