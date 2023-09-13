@@ -58,10 +58,16 @@ function initForm() {
     ko.applyBindings(vm);
 
     // Eventos de la calculadora de costes
-    $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
+    //$('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
+    //$('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
+    //$('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
+
+     // Eventos de la calculadora de costes
+     $('#txtCosteLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
+     $('#txtPorcentajeBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
+     $('#txtImporteBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeBeneficioLinea);
+     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
@@ -71,8 +77,8 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
-    $('#txtPrecio').focus( function () {
-        $('#txtPrecio').val(null);
+    $('#txtCosteUnidad').focus( function () {
+        $('#txtCosteUnidad').val(null);
     });
 
      //Evento dfel modal de la documentación
@@ -214,13 +220,6 @@ function initForm() {
             }
         }
     });
-
-    $("#chkContratoCerrado").change(function() {
-        if($('#chkContratoCerrado').prop('checked')) {
-           compruebaAnticiposVinculados()
-        }
-      });
-    
 
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
@@ -492,7 +491,7 @@ function initForm() {
     });
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
-    $("#txtPrecio").blur(cambioPrecioCantidad);
+    $("#txtCosteUnidad").blur(cambioPrecioCantidad);
 
     initTablaContratosLineas();
     initTablaBases();
@@ -539,7 +538,7 @@ function initForm() {
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
-    $('#btnNuevaCarpeta').show();
+      $('#btnNuevaCarpeta').show();
     if(!usuario.puedeEditar) {
         $('#btnNuevaCarpeta').hide();
     } 
@@ -583,18 +582,11 @@ function initForm() {
 
 
     contratoId = gup('ContratoId');
-    vm.beneficioLineal(0);
-    $('#chkBeneficioLineal').prop('disabled', true);
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
-            
-
             loadData(data);
-          
-                initTablaPrefacturas(data.tipoContratoId);
-            
-            
+            initTablaPrefacturas(data.tipoContratoId);
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
            
@@ -624,8 +616,7 @@ function initForm() {
         vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
-       
-        obtenerPorcentajeBeneficioPorDefecto();
+        //obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
@@ -701,7 +692,6 @@ function admData() {
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
-    self.antPorcentajeBeneficio = ko.observable();
     self.importeBeneficio = ko.observable();
     self.ventaNeta = ko.observable();
     self.porcentajeAgente = ko.observable();
@@ -711,6 +701,16 @@ function admData() {
     self.importeClienteFormat = ko.observable();
     self.certificacionFinal = ko.observable();
     self.importeMantenedor = ko.observable();
+    // calculadora lineal
+    self.porcentajeBeneficioLinea = ko.observable();
+    self.importeBeneficioLinea = ko.observable();
+    self.ventaNetaLinea = ko.observable();
+    self.porcentajeAgente = ko.observable();
+    self.antPorcentajeAgente = ko.observable();
+    self.importeAgenteLinea = ko.observable();
+    self.totalLinea = ko.observable();
+    self.importeMantenedorLinea = ko.observable();
+    self.costeUnidad = ko.observable();
     //
     self.fechaInicio = ko.observable();
     self.fechaFirmaActa = ko.observable();
@@ -921,11 +921,6 @@ function admData() {
 }
 
 function loadData(data) {  
-    if(data.beneficioLineal) {
-        var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId;
-        window.open(url, '_self');
-       //return;
-    }
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
     vm.ofertaId(data.ofertaId);
@@ -941,8 +936,7 @@ function loadData(data) {
     cargaAgente(data.agenteId, true);
     vm.fechaContrato(spanishDate(data.fechaContrato));
     vm.coste(data.coste);
-    vm.porcentajeBeneficio(data.porcentajeBeneficio);
-    vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+    vm.porcentajeBeneficio(0);
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
     vm.certificacionFinal(data.certificacionFinal);
@@ -968,8 +962,8 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
-    vm.beneficioLineal(data.beneficioLineal);
     vm.contratoIntereses(data.contratoIntereses);
+    vm.beneficioLineal(data.beneficioLineal);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -1004,7 +998,7 @@ function loadData(data) {
         $('#btnAltaPrefactura').hide();
     }
     loadDepartamento(data.tipoContratoId);
-    recalcularCostesImportesDesdeCoste();
+    //recalcularCostesImportesDesdeCoste();
     cargaTablaDocumentacion();
     
     if(data.tipoContratoId == 8) {
@@ -1137,29 +1131,28 @@ function salir() {
 }
 
 var clicAceptar = function (salir) {
-        guardarContrato(function (err, tipo) {
-            if (err) return mensError(err);
-            var url;
-            if(DesdeContrato == "true" && AscContratoId != 0){
-                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-            } else {
-                url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-            }
-            if (tipo == 'POST') {
-                if(vm.beneficioLineal() == 0) {
-                    url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+            guardarContrato(function (err, tipo) {
+                if (err) return mensError(err);
+                var url;
+                if(DesdeContrato == "true" && AscContratoId != 0){
+                    url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
                 } else {
-                    url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
                 }
-               
-            }
-            if(salir) {
-                window.open(url, '_self');
-            } else {
-                mensNormal('Contrato guardado.')
-            }
-        })
-    
+                if (tipo == 'POST') {
+                    if(vm.beneficioLineal() == 0) {
+                        url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    } else {
+                        url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    }
+                   
+                }
+                if(salir) {
+                    window.open(url, '_self');
+                } else {
+                    mensNormal('Contrato guardado.')
+                }
+            });
 }
 
 var guardarContrato = function (done) {
@@ -1182,7 +1175,7 @@ var guardarContrato = function (done) {
             done(null, 'POST');
         });
     } else {
-        if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
+        if( (vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
                 // mensaje de confirmación
                 var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
                 $.SmartMessageBox({
@@ -1265,32 +1258,13 @@ var generarContratoDb = function () {
             "provincia": vm.provincia(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "contratoCerrado": vm.contratoCerrado(),
-            "beneficioLineal": vm.beneficioLineal(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
             "liquidarBasePrefactura": vm.liquidarBase(),
+            "beneficioLineal": 1,
         }
     };
-    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
     return data;
-}
-
-function compruebaAnticiposVinculados() {
-    llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
-        if (err) return;
-        if(data.length > 0) {
-            var a = [];
-            data.forEach( f => {
-                a.push(f.numeroAnticipoProveedor);
-            });
-            var ab = JSON.stringify(a);
-            const expresionRegular = /[\[\]"]/g;
-            var c = ab.replace(expresionRegular, '');
-            var str = "los sigientes anticipos están sin vincular:<br> " + c
-            mensError(str);
-            $('#chkContratoCerrado').prop('checked', false);
-        }
-    });
 }
 
 function loadEmpresas(id) {
@@ -1623,8 +1597,12 @@ var guardarLinea = function () {
             importe: vm.importe(),
             totalLinea: vm.totalLinea(),
             coste: vm.costeLinea(),
-            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            costeUnidad: vm.costeUnidad(),
+            porcentajeBeneficio: vm.porcentajeBeneficioLinea(),
+            importeBeneficioLinea: vm.importeBeneficioLinea(),
             porcentajeAgente: vm.porcentajeAgente(),
+            importeAgenteLinea: vm.importeAgenteLinea(),
+            ventaNetaLinea: vm.ventaNetaLinea(),
             capituloLinea: vm.capituloLinea(),
         }
     }
@@ -1666,7 +1644,7 @@ function datosOKLineas() {
             txtDescripcion: {
                 required: true
             },
-            txtPrecio: {
+            txtCosteUnidad: {
                 required: true
             },
             txtCantidad: {
@@ -1699,7 +1677,7 @@ function datosOKLineas() {
             txtCantidad: {
                 required: 'Necesita una cantidad'
             },
-            txtPrecio: {
+            txtCosteUnidad: {
                 required: 'Necesita un precio'
             }
         },
@@ -1817,8 +1795,14 @@ function loadDataLinea(data) {
     vm.importe(data.importe);
     vm.totalLinea(data.totalLinea);
     vm.costeLinea(data.coste);
+    vm.costeUnidad(data.costeUnidad);
     vm.capituloLinea(data.capituloLinea);
     //
+     //calculadora importes linea
+     vm.porcentajeBeneficioLinea(data.porcentajeBeneficio);
+     vm.importeBeneficioLinea(data.importeBeneficioLinea);
+     recalcularCostesImportesDesdeCosteLinea()
+     //
     loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
     loadTiposIva(data.tipoIvaId);
@@ -1845,10 +1829,21 @@ function loadLineasContrato(id) {
     llamadaAjax('GET', "/api/contratos/lineas/" + id, null, function (err, data) {
         if (err) return;
         var totalCoste = 0;
+        var totalBeneficio = 0
+        var totalVentaNeta = 0
+        var totalImporteAgenteLinea = 0
         data.forEach(function (linea) {
-            totalCoste += (linea.coste * linea.cantidad);
-            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-        })
+            totalCoste += linea.coste;
+            totalBeneficio += linea.importeBeneficioLinea;
+            totalVentaNeta += linea.ventaNetaLinea;
+            //totalCoste += linea.costeLine;
+            totalImporteAgenteLinea += linea.importeAgenteLinea;
+        });
+        vm.importeBeneficio(totalBeneficio);
+        vm.ventaNeta(totalVentaNeta);
+        vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+        vm.importeAgente(totalImporteAgenteLinea);
+        vm.coste(totalCoste);
         loadTablaContratoLineas(data);
     });
 }
@@ -1990,9 +1985,9 @@ function cambioTiposIva(data) {
 }
 
 var cambioPrecioCantidad = function () {
-    vm.costeLinea(vm.cantidad() * vm.importe());
-    recalcularCostesImportesDesdeCoste();
-    vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+    vm.costeLinea(vm.cantidad() * vm.costeUnidad());
+    recalcularCostesImportesDesdeCosteLinea();
+    //vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 }
 
 function editContratoLinea(id) {
@@ -2031,7 +2026,7 @@ var recargaCabeceraLineasBases = function () {
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
         
-        recalcularCostesImportesDesdeCoste();
+        recalcularCostesImportesDesdeCosteLinea();
         
     });
 }
@@ -2171,7 +2166,7 @@ var cargaAgente = function (id, encarga) {
         if(contratoId != 0) {
                     
         } else {
-            recalcularCostesImportesDesdeCoste();
+            recalcularCostesImportesDesdeCosteLinea();
         }
     });
 };
@@ -2227,7 +2222,7 @@ var initAutoMantenedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.mantenedorId(ui.item.id);
-            recalcularCostesImportesDesdeCoste();
+            recalcularCostesImportesDesdeCosteLinea();
         }
     });
     // regla de validación para el  inicializado
@@ -2263,7 +2258,7 @@ var initAutoAgente = function () {
                 if(!comision) comision = 0;
                 vm.porcentajeAgente(comision);
                 if(!usaCalculadora) vm.porcentajeAgente(0);
-                recalcularCostesImportesDesdeCoste();
+                recalcularCostesImportesDesdeCosteLinea();
 
                 if(vm.stipoContratoId() == 5) {
                     cargaPorcenRef(comision);
@@ -2281,7 +2276,7 @@ var initAutoAgente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+    if(vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
         $('#btnNuevaLinea').prop('disabled', true);
         $('#btnAceptarLinea').prop('disabled', true)
     } else {
@@ -2291,42 +2286,83 @@ var cambioCampoConRecalculoDesdeCoste = function () {
     
 };
 
+var cambioCampoConRecalculoDesdeCosteLinea = function () {
+    recalcularCostesImportesDesdeCosteLinea();
+   /*  if(vm.porcentajeBeneficioLinea() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+        $('#btnNuevaLinea').prop('disabled', true);
+        $('#btnAceptarLinea').prop('disabled', true)
+    } else {
+        $('#btnNuevaLinea').prop('disabled', false);
+        $('#btnAceptarLinea').prop('disabled', false)
+    } */
+    
+};
+
+
+var cambioCampoConRecalculoDesdeBeneficioLinea = function () {
+    recalcularCostesImportesDesdeBeneficioLinea();
+}
+
+
+var recalcularCostesImportesDesdeBeneficioLinea = function () {
+    if (vm.porcentajeBeneficioLinea() && vm.costeLinea()) {
+        if (vm.importeBeneficioLinea()) {
+            vm.porcentajeBeneficioLinea(roundToSix(((100 * vm.importeBeneficioLinea()) / vm.costeLinea())));
+        }
+    }
+    recalcularCostesImportesDesdeCosteLinea();
+};
+
 
 var recalcularCostesImportesDesdeCoste = function () {
-    if (!vm.coste()) vm.coste(0);
-    if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
-    if (vm.coste() != null) {
-        if (vm.porcentajeBeneficio())  {
-            vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
-        }
-        if(!vm.porcentajeBeneficio()) {
-            vm.porcentajeBeneficio(0);
-            vm.importeBeneficio(0);
-        }
-        var imp = vm.importeBeneficio();
-        if(imp == undefined) vm.importeBeneficio(0);
-        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
-    }
-    //if(!usaCalculadora) vm.porcentajeAgente(0);
-    if  (vm.porcentajeAgente() != null) {
-        vm.importeCliente(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100));
-        vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
-    }
-    //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
-    vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    if (vm.mantenedorId()) {
-        vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
-        vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
-    }
+    if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
+ 
 
-     
-    vm.importeCliente(roundToTwo(vm.importeCliente()));
-    vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
-    vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
-    vm.ventaNeta(roundToTwo(vm.ventaNeta()));
-    vm.importeAgente(roundToTwo(vm.importeAgente()));
-    vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
+    if (!vm.coste()) vm.coste(0);
+    if (!vm.porcentajeAgente()) {
+        vm.porcentajeAgente(0);
+    } else {
+        vm.porcentajeAgente(roundToTwo(vm.porcentajeAgente()));
+    }
+    if (!vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);
+
+   
+    if (vm.porcentajeAgente() != null) {
+        vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
+        vm.importeAgente(roundToTwo(vm.importeCliente() - vm.ventaNeta()));
+    }
+    if (vm.mantenedorId()) {
+        vm.importeMantenedor(roundToTwo(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio()));
+    }
 };
+
+var recalcularCostesImportesDesdeCosteLinea = function () {
+    if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
+    if (!vm.costeLinea()) vm.costeLinea(0);
+    if (!vm.porcentajeAgente()) {
+        vm.porcentajeAgente(0);
+    } else {
+        vm.porcentajeAgente(roundToTwo(vm.porcentajeAgente()));
+    }
+    if (!vm.porcentajeBeneficioLinea()) vm.porcentajeBeneficioLinea(0);
+    if (vm.costeLinea() != null) {
+        if (vm.porcentajeBeneficioLinea() != null) {
+            vm.importeBeneficioLinea(roundToTwo(vm.porcentajeBeneficioLinea() * vm.costeLinea() / 100));
+        }
+        vm.ventaNetaLinea(roundToTwo(vm.costeLinea() * 1 + vm.importeBeneficioLinea() * 1));
+    }
+    if (vm.porcentajeAgente() != null) {
+        vm.totalLinea(roundToTwo(vm.ventaNetaLinea() / ((100 - vm.porcentajeAgente()) / 100)));
+        vm.importeAgenteLinea(roundToTwo(vm.totalLinea() - vm.ventaNetaLinea()));
+    }
+    //vm.totalLinea(roundToTwo(vm.ventaNetaLinea() * 1 + vm.importeAgenteLinea() * 1));
+    if (vm.mantenedorId()) {
+        vm.importeMantenedor(roundToTwo(vm.totalLinea() - vm.ventaNetaLinea() + vm.importeBeneficioLinea()));
+    }
+    vm.importe(roundToFour(vm.totalLinea() / vm.cantidad()));
+  
+};
+
 
 var calcularInverso = function(carga) {
     if(!carga) {
@@ -2373,7 +2409,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 
 var actualizarLineasDeLaContratoTrasCambioCostes = function (done) {
     llamadaAjax('PUT',
-        "/api/contratos/recalculo/" + vm.contratoId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente(),
+        "/api/contratos/recalculo/lineal/" + vm.contratoId() + '/' + vm.porcentajeAgente(),
         null,
         function (err, data) {
             if (err) return errorGeneral(err, done);
@@ -2772,7 +2808,7 @@ function cambioComercial(data) {
             comision = 0
         } 
         vm.porcentajeComision(comision);
-        recalcularCostesImportesDesdeCoste();
+        recalcularCostesImportesDesdeCosteLinea();
         //recalcularCostesImportesDesdeCoste();
     });
 }
@@ -2864,8 +2900,7 @@ var generarPrefacturasPlanificacion = function (data) {
      $("#cmbPeriodosPagos2").select2().on('change', function (e) {
          cambioPeriodosPagosPlanificacion(e.added);
      });
-
-   
+    
     
      if(vm.fechaPlanificacionObras2()) {
         vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
@@ -8251,7 +8286,7 @@ function uploadDocum(arr) {
             then (
                 data => {
                     if(data) {
-                        //CREAMOS EL REGISTRO EN LA TABLA documentacion
+                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumentacion
                         var data = 
                         {
                             documentacion: {
