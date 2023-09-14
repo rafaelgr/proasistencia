@@ -1732,7 +1732,7 @@ var recalculaPorcentajeBeneficio = function() {
     if(!vm.importe()) vm.importe(0);
     if(!vm.importeProveedor()) vm.importeProveedor(0);
 
-    porcen = roundToTwo((((vm.importe() * (100 - vm.porcentajeAgente()) / 100) / vm.importeProveedor()) * 100) - 100);
+    porcen = roundToSix((((vm.importe() * (100 - vm.porcentajeAgente()) / 100) / vm.importeProveedor()) * 100) - 100);
 
     vm.porcentajeBeneficioLinea(porcen);
 
