@@ -903,7 +903,7 @@ var generarFacturaDb = function () {
 
         }
     };
-    if(vm.stipoOperacionId() == 2) {
+    if(vm.stipoOperacionId() == 2 || vm.stipoOperacionId() == 3) {
         data.facprove.totalConIva =  numeroDbf(vm.total());
     }
     return data;
@@ -1574,6 +1574,10 @@ function cambioArticulo(articuloId) {
             $("#cmbTiposIva").val([7]).trigger('change');
             cambioTiposIva(7);
             $("#cmbTiposIva").prop( "disabled", true);
+        } else if(vm.tipoOperacionId() == 3) {
+            $("#cmbTiposIva").val([10]).trigger('change');
+            cambioTiposIva(10);
+            $("#cmbTiposIva").prop( "disabled", true);
         }  else {
             $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
             cambioTiposIva(data.tipoIvaId);
@@ -1831,7 +1835,7 @@ function loadBasesFacprove(facproveId) {
             t1 += data[i].base;
             t3 += data[i].cuota;
             var tipiOpera =  vm.stipoOperacionId();
-            if(vm.stipoOperacionId() == 2) {
+            if(vm.stipoOperacionId() == 2 || vm.stipoOperacionId() == 3 ) {
                 t2 += data[i].base;
             } else {
                 t2 += data[i].base + data[i].cuota;
