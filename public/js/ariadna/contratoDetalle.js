@@ -585,10 +585,11 @@ function initForm() {
     contratoId = gup('ContratoId');
     vm.beneficioLineal(0);
     $('#chkBeneficioLineal').prop('disabled', true);
+    var contratoDocumentacionId = 0
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
-            
+            contratoDocumentacionId = contratoId
 
             loadData(data);
           
@@ -7802,12 +7803,22 @@ function initArbolDocumentacion() {
 
 }
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
+    //miramos primero si es contrato renovado en la nueva tabla
+    llamadaAjax("GET",  "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data) loadDocumentacionTree(data);
-         //if(data) loadTablaDocumentacion(data);
+        contratoDocumentacionId = vm.contratoId();
+        if(data.length > 0) {
+            contratoDocumentacionId = data[0].contratoOriginalId;
+        }
+        llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + contratoDocumentacionId, null, function (err, data) {
+            if (err) return;
+            if(data) loadDocumentacionTree(data);
+             //if(data) loadTablaDocumentacion(data);
+        });
+       
     });
 }
+   
 
 function loadDocumentacionTree(data) {
     if(data.length == 0) return;
@@ -8267,7 +8278,7 @@ function uploadDocum(arr) {
                         if(carpetaTipo == "oferta") {
                             data.documentacion.ofertaId =  vm.ofertaId();
                         }else if(carpetaTipo == "contrato") {
-                            data.documentacion.contratoId = vm.contratoId();
+                            data.documentacion.contratoId = contratoDocumentacionId;
                         }
     
                         if(!repetido) {
