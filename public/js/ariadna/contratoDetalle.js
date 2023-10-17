@@ -585,11 +585,9 @@ function initForm() {
     contratoId = gup('ContratoId');
     vm.beneficioLineal(0);
     $('#chkBeneficioLineal').prop('disabled', true);
-    var contratoDocumentacionId = 0
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
-            contratoDocumentacionId = contratoId
 
             loadData(data);
           
@@ -969,6 +967,11 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    if(data.contratoCerrado) {
+        $('#btnNuevaCarpeta').hide()
+    } else {
+        $('#btnNuevaCarpeta').show()
+    }
     vm.beneficioLineal(data.beneficioLineal);
     vm.contratoIntereses(data.contratoIntereses);
     vm.liquidarBase(data.liquidarBasePrefactura);
@@ -7758,6 +7761,7 @@ function initArbolDocumentacion() {
     "select_node": true,
     'contextmenu': {
         'items': function(node) {
+            if(vm.contratoCerrado()) return;
             var menuItems = {
             // Define las opciones del menú contextual para cada nodo
          
@@ -7806,16 +7810,27 @@ function cargaTablaDocumentacion(){
     //miramos primero si es contrato renovado en la nueva tabla
     llamadaAjax("GET",  "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        contratoDocumentacionId = vm.contratoId();
+        var ids = []
         if(data.length > 0) {
-            contratoDocumentacionId = data[0].contratoOriginalId;
+            ids.push(data[0].contratoOriginalId);
+            data.forEach( function(e){
+                ids.push(e.renovadoId);
+            });
+            var data = {
+                ids: ids
+            }
+            llamadaAjax("POST",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId(), data, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
+        } else {
+            llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId()  + "/" + vm.contratoId(), null, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
         }
-        llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + contratoDocumentacionId, null, function (err, data) {
-            if (err) return;
-            if(data) loadDocumentacionTree(data);
-             //if(data) loadTablaDocumentacion(data);
-        });
-       
     });
 }
    
@@ -8278,7 +8293,7 @@ function uploadDocum(arr) {
                         if(carpetaTipo == "oferta") {
                             data.documentacion.ofertaId =  vm.ofertaId();
                         }else if(carpetaTipo == "contrato") {
-                            data.documentacion.contratoId = contratoDocumentacionId;
+                            data.documentacion.contratoId = vm.contratoId();
                         }
     
                         if(!repetido) {
