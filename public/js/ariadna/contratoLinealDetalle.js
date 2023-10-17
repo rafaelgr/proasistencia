@@ -963,6 +963,11 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    if(data.contratoCerrado) {
+        $('#btnNuevaCarpeta').hide()
+    } else {
+        $('#btnNuevaCarpeta').show()
+    }
     vm.contratoIntereses(data.contratoIntereses);
     vm.beneficioLineal(data.beneficioLineal);
     vm.liquidarBase(data.liquidarBasePrefactura);
@@ -7793,9 +7798,9 @@ function initArbolDocumentacion() {
     "select_node": true,
     'contextmenu': {
         'items': function(node) {
+            if(vm.contratoCerrado()) return;
             var menuItems = {
             // Define las opciones del menú contextual para cada nodo
-         
             'Option 1': {
                 'label': 'Subir documento',
                 'action': function(a, b , c) {
@@ -7838,10 +7843,30 @@ function initArbolDocumentacion() {
 
 }
 function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
+    //miramos primero si es contrato renovado en la nueva tabla
+    llamadaAjax("GET",  "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data) loadDocumentacionTree(data);
-         //if(data) loadTablaDocumentacion(data);
+        var ids = []
+        if(data.length > 0) {
+            ids.push(data[0].contratoOriginalId);
+            data.forEach( function(e){
+                ids.push(e.renovadoId);
+            });
+            var data = {
+                ids: ids
+            }
+            llamadaAjax("POST",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId(), data, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
+        } else {
+            llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId()  + "/" + vm.contratoId(), null, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
+        }
     });
 }
 
