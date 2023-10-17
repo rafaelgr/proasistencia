@@ -4,7 +4,7 @@ CREATE TABLE `contratorenovados`(
   `renovadoId` INT(11),
   `fechaRenovacion` DATE,
   PRIMARY KEY (`contratoRenovadoId`),
-  CONSTRAINT `contratoRenovadoFK` FOREIGN KEY (`renovadoId`) REFERENCES `contratos`(`contratoId`)  ON UPDATE CASCADE ON DELETE CASCADE; 
+  CONSTRAINT `contratoRenovadoFK` FOREIGN KEY (`renovadoId`) REFERENCES `contratos`(`contratoId`)  ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO contratorenovados
