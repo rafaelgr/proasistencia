@@ -2806,7 +2806,8 @@ function vinculaAnticipoCompleto() {
                 proveedorId: vm.sproveedorId(),
                 fecha: spanishDbDate(vm.fecha()),
                 conceptoAnticipo: dato.conceptoAnticipo,
-                importeAnticipo: dato.totalConIva
+                importeAnticipo: dato.totalConIva,
+                restoPagar: 0
             }
         }
     

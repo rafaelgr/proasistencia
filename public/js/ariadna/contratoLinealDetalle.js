@@ -221,6 +221,14 @@ function initForm() {
         }
     });
 
+    $("#chkContratoCerrado").change(function() {
+        if($('#chkContratoCerrado').prop('checked')) {
+           compruebaAnticiposVinculados()
+        } else {
+            vm.fechaCierreContrato(null);
+        }
+      });
+
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){
@@ -690,6 +698,7 @@ function admData() {
     self.servicioId = ko.observable();
     self.ofertaId = ko.observable();
     self.beneficioLineal = ko.observable();
+    self.fechaCierreContrato = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -963,6 +972,7 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    vm.fechaCierreContrato(spanishDate(data.fechaCierreContrato))
     if(data.contratoCerrado) {
         $('#btnNuevaCarpeta').hide()
     } else {
@@ -1225,6 +1235,7 @@ var guardarContrato = function (done) {
 
 
 var generarContratoDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1236,6 +1247,7 @@ var generarContratoDb = function () {
             "clienteId": vm.clienteId(),
             "mantenedorId": vm.mantenedorId(),
             "fechaContrato": spanishDbDate(vm.fechaContrato()),
+            "fechaCierreContrato": spanishDbDate(vm.fechaCierreContrato()),
             "coste": vm.coste(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "importeBeneficio": vm.importeBeneficio(),
@@ -1285,6 +1297,27 @@ function loadEmpresas(id) {
     });
 }
 
+function compruebaAnticiposVinculados() {
+    llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        if(data.length > 0) {
+            var a = [];
+            data.forEach( f => {
+                a.push(f.numeroAnticipoProveedor);
+            });
+            var ab = JSON.stringify(a);
+            const expresionRegular = /[\[\]"]/g;
+            var c = ab.replace(expresionRegular, '');
+            var str = "los sigientes anticipos están sin vincular:<br> " + c
+            mensError(str);
+            $('#chkContratoCerrado').prop('checked', false);
+        } else {
+            var f = new Date();
+            f = spanishDate(f)
+            vm.fechaCierreContrato(f);
+        }
+    });
+}
 
 function loadTiposContrato(id) {
     llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
