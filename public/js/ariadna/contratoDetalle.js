@@ -218,6 +218,8 @@ function initForm() {
     $("#chkContratoCerrado").change(function() {
         if($('#chkContratoCerrado').prop('checked')) {
            compruebaAnticiposVinculados()
+        } else {
+            vm.fechaCierreContrato(null);
         }
       });
     
@@ -697,6 +699,7 @@ function admData() {
     self.servicioId = ko.observable();
     self.ofertaId = ko.observable();
     self.beneficioLineal = ko.observable();
+    self.fechaCierreContrato = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -967,6 +970,7 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    vm.fechaCierreContrato(spanishDate(data.fechaCierreContrato))
     if(data.contratoCerrado) {
         $('#btnNuevaCarpeta').hide()
     } else {
@@ -1230,6 +1234,7 @@ var guardarContrato = function (done) {
 
 
 var generarContratoDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1241,6 +1246,7 @@ var generarContratoDb = function () {
             "clienteId": vm.clienteId(),
             "mantenedorId": vm.mantenedorId(),
             "fechaContrato": spanishDbDate(vm.fechaContrato()),
+            "fechaCierreContrato": spanishDbDate(vm.fechaCierreContrato()),
             "coste": vm.coste(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "importeBeneficio": vm.importeBeneficio(),
@@ -1293,6 +1299,10 @@ function compruebaAnticiposVinculados() {
             var str = "los sigientes anticipos están sin vincular:<br> " + c
             mensError(str);
             $('#chkContratoCerrado').prop('checked', false);
+        } else {
+            var f = new Date();
+            f = spanishDate(f)
+            vm.fechaCierreContrato(f);
         }
     });
 }

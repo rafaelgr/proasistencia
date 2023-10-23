@@ -580,43 +580,53 @@
                                                                     <!-- FORMULARIO CABECERA DE CONTRATO -->
                                                                     <form id="frmContrato" class="smart-form">
                                                                         <fieldset>
-                                                                                <div class="row" style="margin-bottom: 2%">
-                                                                                        <section class="col col-md-2">
-                                                                                            <div style="margin-top: 10%;">
-                                                                                                <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <div style="margin-top: 15%;">
-                                                                                                <input id="chkBeneficioLineal" type="checkbox" name="chkBeneficioLineal" data-bind="checked: beneficioLineal" disabled> Beneficio lineal
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <div style="margin-top: 10%;">
-                                                                                                <input id="chkIntereses" type="checkbox" name="chkIntereses" data-bind="checked: contratoIntereses"/> Contrato de intereses
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <div style="margin-top: 15%;">
-                                                                                                <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial"> Facturación parcial
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <label  class="label"> Firma del acta</label>
-                                                                                            <div id= "radioActa">
-                                                                                                <div><input type='radio' id='radioFirmaActa1' name='firmaActaGroup' value='0' data-bind="checked: firmaActa"/> No </div>
-                                                                                                <div><input type='radio' id='radioFirmaActa2' name='firmaActaGroup' value='1' data-bind="checked: firmaActa"/> Si</div>
-                                                                                                <div><input type='radio' id='radioFirmaActa3' name='firmaActaGroup' value='2' data-bind="checked: firmaActa"/> ¿Si?</div>
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <label class="label">Fecha de firma del acta</label>
-                                                                                            <label class="input">
-                                                                                                <input id="txtFechaFirmaActa" name="txtFechaFirmaActa" data-bind="value: fechaFirmaActa" class="datepicker" data-dateformat="dd/mm/yy" />
-                                                                                            </label>
-                                                                                        </section>
-                                                                                        
-                                                                                </div>
+                                                                            <div class="row" style="margin-bottom: 2%">
+                                                                                <section class="col col-md-2">
+                                                                                    <div style="margin-top: 10%;">
+                                                                                        <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
+                                                                                    </div>
+                                                                                </section>
+                                                                                <section class="col col-md-8">
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Fecha cierre contrato</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaCierreContrato" name="txtFechaCierreContrato" data-bind="value: fechaCierreContrato" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                    <section class="col col-md-2">
+                                                                                        <div style="margin-top: 15%;">
+                                                                                            <input id="chkBeneficioLineal" type="checkbox" name="chkBeneficioLineal" data-bind="checked: beneficioLineal"> Beneficio lineal
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <div style="margin-top: 15%;">
+                                                                                            <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial"> Facturación parcial
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    <section class="col col-md-3">
+                                                                                        <div style="margin-top: 10%;">
+                                                                                            <input id="chkIntereses" type="checkbox" name="chkIntereses" data-bind="checked: contratoIntereses"/> Contrato de intereses
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <label  class="label" style="margin-top: 15%;"> Firma del acta</label>
+                                                                                        <div id= "radioActa">
+                                                                                            <div><input type='radio' id='radioFirmaActa1' name='firmaActaGroup' value='0' data-bind="checked: firmaActa"/> No </div>
+                                                                                            <div><input type='radio' id='radioFirmaActa2' name='firmaActaGroup' value='1' data-bind="checked: firmaActa"/> Si</div>
+                                                                                            <div><input type='radio' id='radioFirmaActa3' name='firmaActaGroup' value='2' data-bind="checked: firmaActa"/> ¿Si?</div>
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    <section class="col col-md-3">
+                                                                                        <label class="label" style="margin-top: 10%;">Fecha de firma del acta</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtFechaFirmaActa" name="txtFechaFirmaActa" data-bind="value: fechaFirmaActa" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    
+                                                                            </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">REFERENCIA</label>

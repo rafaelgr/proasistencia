@@ -2806,7 +2806,8 @@ function vinculaAnticipoCompleto() {
                 proveedorId: vm.sproveedorId(),
                 fecha: spanishDbDate(vm.fecha()),
                 conceptoAnticipo: dato.conceptoAnticipo,
-                importeAnticipo: dato.totalConIva
+                importeAnticipo: dato.totalConIva,
+                restoPagar: 0
             }
         }
     
@@ -2885,8 +2886,10 @@ function vinculaAnticipoCompleto() {
 
             llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data) {
                 if (err) return;
+                descativarEventoCerrar();
                 $('#modalAnticipoCompleto').modal('hide');
-                vm.anticipo(data.numeroAnticipoProveedor);
+                window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
+               /*  vm.anticipo(data.numeroAnticipoProveedor);
                 vm.antproveId(data.antproveId);
                 $('#btnVincularAnticipo').hide();
                 $('#btnDesVincularAnticipo').show();
@@ -2895,7 +2898,7 @@ function vinculaAnticipoCompleto() {
                 loadLineasFactura(vm.facproveId());
                 loadBasesFacprove(vm.facproveId());
                 loadRetencionesFacprove(vm.facproveId());
-                loadServiciadasFacprove(vm.facproveId());
+                loadServiciadasFacprove(vm.facproveId()); */
                
             });
 
@@ -3019,8 +3022,8 @@ function desvinculaAnticipoCompleto() {
                 proveedorId: vm.sproveedorId(),
                 fecha: spanishDbDate(vm.fecha()),
                 conceptoAnticipo: null,
-                importeAnticipo: 0
-
+                importeAnticipo: 0,
+                restoPagar: 0
             }
         }
     
@@ -3045,14 +3048,14 @@ function desvinculaAnticipoCompleto() {
                         $('#btnVincularAnticipo').show();
                         $('#btnDesVincularAnticipo').hide();
                         llamadaAjax("DELETE",  "/api/facturasProveedores/borra/desde/antprove/" + vm.antproveId() + "/" + vm.facproveId(), null, function (err, data) {
-                            if(err) return
+                            if(err) return;
                             if(data) {
-                                //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
-                                
-                                loadLineasFactura(vm.facproveId());
+                                descativarEventoCerrar();
+                                window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
+                                /* loadLineasFactura(vm.facproveId());
                                 loadBasesFacprove(vm.facproveId());
                                 loadRetencionesFacprove(vm.facproveId());
-                                loadServiciadasFacprove(vm.facproveId());
+                                loadServiciadasFacprove(vm.facproveId()); */
                             }
                         });
                        
