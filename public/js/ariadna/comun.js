@@ -181,6 +181,11 @@ function eventoCerrar() {
 
 }
 
+function descativarEventoCerrar(){
+	window.onbeforeunload = null;
+}
+
+
 function eventoBorrarCookie(cookie_name, cargada) {
     cargada
         window.onbeforeunload = borrarCookie;
