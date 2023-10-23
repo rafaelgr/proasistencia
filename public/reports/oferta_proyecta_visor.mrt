@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "0fe22d3192c3440bb64d62518e440812",
+  "ReportGuid": "f48d30f89474494297daaa87c2aee358",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1698053087953+0200)/",
+  "ReportChanged": "/Date(1698055045817+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -660,6 +660,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             },
             "1": {
@@ -994,6 +995,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             }
           },
@@ -1058,6 +1060,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             },
             "2": {

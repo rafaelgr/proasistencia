@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "42510fab55244577afca6adabbc9d449",
+  "ReportGuid": "e4b99c7453ce4a04bc4ac5f49df5a659",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1698053647170+0200)/",
+  "ReportChanged": "/Date(1698054970765+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -473,28 +473,6 @@
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text30",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "0.6,9.4,18.2,4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Estimados Sres.:\r\nAtendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los servicios detallados a continuación, para la comunidad de propietarios sita en:\r\n\t- {ofertas.clienteDireccion}. {ofertas.clienteCodPostal}. {ofertas.clientePoblacion}\r\nEstamos a su disposición para cualquier aclaración\r\nAtentamente,\r\n"
-              },
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "LineSpacing": 1.1499999761581421,
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
               "Name": "Text21",
               "Guid": "c5103814dac84015bac6dc7da1be2e63",
               "ClientRectangle": "11.6,3.4,7.2,0.4",
@@ -510,6 +488,24 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text24",
+              "ClientRectangle": "0.6,9.4,18.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Estimados Sres.:"
+              },
+              "VertAlignment": "Bottom",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "LineSpacing": 1.1499999761581421,
               "Type": "Expression"
             }
           }
@@ -547,6 +543,60 @@
               "Type": "Expression"
             }
           }
+        },
+        "2": {
+          "Ident": "StiText",
+          "Name": "Text22",
+          "ClientRectangle": "0.6,11.8,18.2,1",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Text": {
+            "Value": "Estamos a su disposición para cualquier aclaración\r\nAtentamente,"
+          },
+          "Font": ";10;;",
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "TextBrush": "solid:Black",
+          "LineSpacing": 1.5,
+          "Type": "Expression"
+        },
+        "3": {
+          "Ident": "StiText",
+          "Name": "Text23",
+          "ClientRectangle": "1.8,11.2,17.2,0.4",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Text": {
+            "Value": "- {ofertas.clienteDireccion}. {ofertas.clienteCodPostal}. {ofertas.clientePoblacion}"
+          },
+          "Font": ";10;Bold;",
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "TextBrush": "solid:Black",
+          "LineSpacing": 1.1499999761581421,
+          "Type": "Expression"
+        },
+        "4": {
+          "Ident": "StiText",
+          "Name": "Text30",
+          "ClientRectangle": "0.6,10.2,18.2,1",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Text": {
+            "Value": "Atendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los servicios detallados a continuación, para la comunidad de propietarios sita en:"
+          },
+          "Font": ";10;;",
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "TextBrush": "solid:Black",
+          "TextOptions": {
+            "WordWrap": true
+          },
+          "LineSpacing": 1.1499999761581421,
+          "Type": "Expression"
         }
       },
       "PageWidth": 21.0,
@@ -818,6 +868,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             },
             "1": {
@@ -1144,7 +1195,7 @@
               "Name": "Text9",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "1.2,0.8,17.6,0.4",
+              "ClientRectangle": "1.25,0.8,17.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1158,6 +1209,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             }
           },
@@ -1208,7 +1260,7 @@
               "Name": "Text19",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "1.2,0.6,17.6,0.4",
+              "ClientRectangle": "1.25,0.6,17.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1222,6 +1274,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 1.25,
               "Type": "Expression"
             },
             "2": {
