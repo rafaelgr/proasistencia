@@ -105,7 +105,10 @@ function getObjectsdocumentacion() {
         var parametros = data;
         var carpetas = [];
         var id = 1;
+        var documentoId = 1;
         var antCarpeta = null;
+        var obj = [];
+        var archivos = [];
             AWS.config.region = "eu-west-3"; // Región
             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                 IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
@@ -122,26 +125,29 @@ function getObjectsdocumentacion() {
                 if (err) mensError('Error de lectura en la nube');
                 console.log(result);
                 if(result.Contents.length > 0) {
-                    var objectKeys = result.Contents
-                    result.Contents.forEach(e => {
-                        objectKeys.push(e.Key);
+                    obj = result.Contents
+                    obj.forEach(e => {
                         var a = e.Key.indexOf("/");
                         var b = e.Key.substring(0, a);
                         if(!antCarpeta) {
                             carpetas.push( { carpetaNombre: b, carpetaId: id });
+                            archivos.push( { data: e, carpetaId: id, documentoId: documentoId });
                             antCarpeta = b;
                         } else {
                             if(b != antCarpeta) {
                                 id++;
                                 carpetas.push( { carpetaNombre: b, carpetaId: id });
+                                archivos.push( {  data: e, carpetaId: id, documentoId: documentoId });
                                 antCarpeta = b;
                             } else {
+                                archivos.push( {  data: e, carpetaId: id, documentoId: documentoId })
                                 antCarpeta = b;
                             }
                         }
+                        documentoId++;
                     });
-                    ProcesaDocumObjTree(objectKeys, carpetas)
-                    //loadDocumentacionTree(objectKeys);
+                    var regs = ProcesaDocumObjTree(archivos, carpetas)
+                    loadDocumentacionTree(regs);
                 }
             });
     });
@@ -149,10 +155,15 @@ function getObjectsdocumentacion() {
 
 
 function loadDocumentacionTree(data) {
+    var cont = 50
+    var d = [];
+    for(i=0; i < cont; i++) {
+        d.push(data[i]);
+    }
     if(data.length == 0) return;
-    var obj = data;
-    
-    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    var obj = d;
+    console.log(d);
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = d;
     $('#jstreeDocumentacion').jstree(true).refresh();
 }
 
@@ -175,16 +186,16 @@ function ProcesaDocumObjTree(doc, carpeta) {
 		if(antdir) {
 			if(antdir == d.carpetaId ) {
 			
-                    l = e.Key.split('/');
+                    l = e.data.Key.split('/');
                     index = l.length - 1;
 					docObj = {
                         documentoId: e.documentoId,
 						location: e.location,
-                        key: e.Key,
+                        key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
                         data: { "folder" : false },
-                        parent: e.carpetaId,
+                        parent: 100,
                         icon: "glyphicon glyphicon-file"
 					};
                     if(d.carpetaId == e.carpetaId) {
@@ -202,25 +213,24 @@ function ProcesaDocumObjTree(doc, carpeta) {
 				dirObj = {
 					carpetaNombre: d.carpetaNombre,
                     carpetaId: d.carpetaId,
-                    tipo: d.tipo,
                     text:  l[index],
                     id: d.carpetaId,
                     data: { "folder" : true },
-                    parent: d.carpetaPadreId,
+                    parent: '#',
 				    documentos: [],
 				};
-                if(!d.carpetaPadreId) dirObj.parent = '#';
+                //if(!d.carpetaPadreId) dirObj.parent = '#';
 				
-                    l = e.key.split('/');
+                    l = e.data.Key.split('/');
                     index = l.length - 1;
 					docObj = {
                         documentoId: e.documentoId,
                         location: e.location,
-                        key: e.key,
+                        key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
                         data: { "folder" : false },
-                        parent:  e.carpetaId,
+                        parent:  100,
                         icon: "glyphicon glyphicon-file"
 						
 					};
@@ -242,25 +252,25 @@ function ProcesaDocumObjTree(doc, carpeta) {
 			dirObj = {
 				carpetaNombre: d.carpetaNombre,
                 carpetaId: d.carpetaId,
-                tipo: d.tipo,
                 text: l[index],
-                id: d.carpetaId,
+                id: 100,
                 data: { "folder" : true },
-                parent: d.carpetaPadreId,
+                parent: '#',
 				documentos: [],
 			};
-            if(!d.carpetaPadreId) dirObj.parent = '#';
+            //if(!d.carpetaPadreId) dirObj.parent = '#';
+            regs.push(dirObj);
 			if(e.documentoId) {
-                l = e.key.split('/');
+                l = e.data.Key.split('/');
                 index = l.length - 1;
 				docObj = {
                     documentoId: e.documentoId,
                     location: e.location,
-                    key: e.key,
+                    key: e.data.Key,
                     text: l[index],
                     id: e.documentoId,
                     data: { "folder" : false },
-                    parent:  e.carpetaId,
+                    parent:  100,
                     icon: "glyphicon glyphicon-file"
                 };
                 
