@@ -13,7 +13,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var serveIndex = require('serve-index');
+var AWS = require('aws-sdk');
 var moment = require('moment');
+const path = require('path');
 const daemonApi = require('./lib/daemons/daemons');
 
 
@@ -103,7 +105,14 @@ var mensajes_router = require('./lib/mensajes/mensajes_controller');
 var documentacion_router = require('./lib/documentacion/documentacion_controller');
 
 
+// Configura el cliente de AWS
+AWS.config.update({
+    accessKeyId: 'AKIASZJPZUOBD7ZODHNJ',
+    secretAccessKey: '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',
+    region: 'eu-west-3',
+  });
 
+  const s3 = new AWS.S3();
 
 
 var pack = require('./package.json');
@@ -135,7 +144,34 @@ app.use(cors());
 
 // servidor html estático
 app.use(express.static(__dirname + "/public"));
-app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true, 'view': 'details' }));
+//app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true, 'view': 'details' }));
+
+// Ruta que sirve los archivos desde S3
+app.get('/s3files', (req, res) => {
+    const params = {
+      Bucket: 'comercializa-server',
+    };
+  
+    s3.listObjects(params, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error al listar objetos en S3');
+      } else {
+        const keys = data.Contents.map((object) => object.Key);
+        
+        // Descargar archivos y guardarlos en el directorio temporal local
+      keys.forEach((key) => {
+        const fileStream = fs.createWriteStream(path.join(__dirname + '/public', key));
+        s3.getObject({ Bucket:  'comercializa-server', Key: key })
+          .createReadStream()
+          .pipe(fileStream);
+      });
+      }
+    });
+  });
+  
+  // Ruta que sirve los archivos desde S3 con indexación
+  app.use('/s3files', serveIndex('/public/ficheros', { 'icons': true }));
 
 
 
