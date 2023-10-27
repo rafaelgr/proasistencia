@@ -144,10 +144,10 @@ app.use(cors());
 
 // servidor html estático
 app.use(express.static(__dirname + "/public"));
-//app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true, 'view': 'details' }));
+app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true, 'view': 'details' }));
 
 // Ruta que sirve los archivos desde S3
-app.get('/s3files', (req, res) => {
+/* app.get('/s3files', (req, res) => {
     const params = {
       Bucket: 'comercializa-server',
     };
@@ -168,10 +168,10 @@ app.get('/s3files', (req, res) => {
       });
       }
     });
-  });
+  }); */
   
   // Ruta que sirve los archivos desde S3 con indexación
-  app.use('/s3files', serveIndex('/public/ficheros', { 'icons': true }));
+  //app.use('/s3files', serveIndex('/public/ficheros', { 'icons': true }));
 
 
 
