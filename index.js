@@ -107,8 +107,8 @@ var documentacion_router = require('./lib/documentacion/documentacion_controller
 
 // Configura el cliente de AWS
 AWS.config.update({
-    accessKeyId: 'AKIASZJPZUOBD7ZODHNJ',
-    secretAccessKey: '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',
+    accessKeyId: '',
+    secretAccessKey: '',
     region: 'eu-west-3',
   });
 
