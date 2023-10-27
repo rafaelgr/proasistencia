@@ -121,7 +121,7 @@ function getObjectsdocumentacion() {
       
           AWS.config.region = "eu-west-3"; // Región
           AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-              IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
+              IdentityPoolId:  "",
           });
           var s3 = new AWS.S3({ params });
 
@@ -164,7 +164,7 @@ function getObjectsdocumentacion() {
             
             /* AWS.config.region = "eu-west-3"; // Región
             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
+                IdentityPoolId:  "",
             });
             var prefix = "facturas/";
             var params = {
