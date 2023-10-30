@@ -103,14 +103,6 @@ var mensajes_router = require('./lib/mensajes/mensajes_controller');
 var documentacion_router = require('./lib/documentacion/documentacion_controller');
 
 
-// Configura el cliente de AWS
-AWS.config.update({
-    accessKeyId: '',
-    secretAccessKey: '',
-    region: 'eu-west-3',
-  });
-
-  const s3 = new AWS.S3();
 
 
 var pack = require('./package.json');

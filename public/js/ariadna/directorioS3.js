@@ -7,6 +7,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataRondasRealizadas;
 var rondaRealizadaId;
+var directorio
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -19,6 +20,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    directorio = gup('dir');
 
      // 7 bind to events triggered on the tree
      $('#jstreeDocumentacion').on("click.jstree", function (e) {
@@ -40,15 +42,20 @@ $('#demo').on('click', function () {
   $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
 });
 
-var to = false;
+/* var to = false;
     $('#search-input').keyup(function () {
       if(to) { clearTimeout(to); }
       to = setTimeout(function () {
         var v = $('#search-input').val();
         $('#jstreeDocumentacion').jstree(true).search(v);
       }, 250);
-    });
+    }); */
 
+
+    $('#search-input').on('input', function () {
+        var searchString = $(this).val();
+        $('#jstreeDocumentacion').jstree(true).search(searchString);
+    });
 
 initArbolDocumentacion();
 getObjectsdocumentacion() 
@@ -84,28 +91,26 @@ function initArbolDocumentacion() {
 }
 
 // Función para listar objetos con paginación
-async function listAllObjects() {
+async function listAllObjects(parametros) {
     let objects = [];
     let continuationToken = null;
 
-    const params = {
-        Bucket: "comercializa-server",
-        Prefix: "facturas/",
-        ContinuationToken: continuationToken
-      };
   
-      AWS.config.region = "eu-west-3"; // Región
-      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
-      });
-      var s3 = new AWS.S3({ params });
+    AWS.config.region = parametros.bucket_region_server; // Región
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId:  parametros.identity_pool_server,
+    });
+    var s3 = new AWS.S3();
+      
+      
   
     do {
         const params = {
-            Bucket: "comercializa-server",
-            Prefix: "/facturas",
+            Bucket: parametros.bucket_server,
+            Prefix: directorio,
             ContinuationToken: continuationToken
           };
+       
       const response = await s3.listObjectsV2(params).promise();
       objects = objects.concat(response.Contents);
       continuationToken = response.NextContinuationToken;
@@ -124,30 +129,15 @@ function getObjectsdocumentacion() {
         var antCarpeta = null;
         //var obj = [];
         var archivos = [];
-        var continuationToken = null;
-        const params = {
-            Bucket: "comercializa-server",
-            Prefix: "facturas/",
-            ContinuationToken: continuationToken
-          };
       
-          AWS.config.region = "eu-west-3"; // Región
-          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-              IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
-          });
-          var s3 = new AWS.S3({ params });
-
-        listAllObjects(s3)
+       
+        listAllObjects(parametros)
         .then(obj => {
             // objects contiene todos los objetos del bucket
              // Descargar archivos y guardarlos en el directorio temporal local
+            
              obj.forEach(e => {
-                const objetoURL = s3.getSignedUrl('getObject', {
-                    Bucket: "comercializa-server",
-                    Key: e.Key,
-                    Expires: 3600 // Tiempo de expiración en segundos (1 hora en este caso)
-                  });
-                e.location = objetoURL
+                e.location = parametros.raiz_url_server + e.Key;
                 var a = e.Key.indexOf("/");
                 var b = e.Key.substring(0, a);
                 if(!antCarpeta) {
@@ -166,6 +156,7 @@ function getObjectsdocumentacion() {
                     }
                 }
                 documentoId++;
+                console.log(documentoId);
             });
             var regs = ProcesaDocumObjTree(archivos, carpetas)
             loadDocumentacionTree(regs);
@@ -173,57 +164,6 @@ function getObjectsdocumentacion() {
           .catch(error => {
             console.error('Error:', error);
           });
-            
-            /* AWS.config.region = "eu-west-3"; // Región
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
-            });
-            var prefix = "facturas/";
-            var params = {
-                Bucket: "comercializa-server",
-                Prefix: prefix,
-                Delimeter: ""
-            }
-
-            var s3 = new AWS.S3({ params });
-            s3.listObjectsV2({}, (err, result) => {
-                if (err) mensError('Error de lectura en la nube');
-                console.log(result);
-                if(result.Contents.length > 0) {
-                    obj = result.Contents
-                    const keys = obj.map((object) => object.Key);
-        
-                    // Descargar archivos y guardarlos en el directorio temporal local
-                    obj.forEach(e => {
-                        const objetoURL = s3.getSignedUrl('getObject', {
-                            Bucket: "comercializa-server",
-                            Key: e.Key,
-                            Expires: 3600 // Tiempo de expiración en segundos (1 hora en este caso)
-                          });
-                        e.location = objetoURL
-                        var a = e.Key.indexOf("/");
-                        var b = e.Key.substring(0, a);
-                        if(!antCarpeta) {
-                            carpetas.push( { carpetaNombre: b, carpetaId: id });
-                            archivos.push( { data: e, carpetaId: id, documentoId: documentoId });
-                            antCarpeta = b;
-                        } else {
-                            if(b != antCarpeta) {
-                                id++;
-                                carpetas.push( { carpetaNombre: b, carpetaId: id });
-                                archivos.push( {  data: e, carpetaId: id, documentoId: documentoId });
-                                antCarpeta = b;
-                            } else {
-                                archivos.push( {  data: e, carpetaId: id, documentoId: documentoId })
-                                antCarpeta = b;
-                            }
-                        }
-                        documentoId++;
-                    });
-                    var regs = ProcesaDocumObjTree(archivos, carpetas)
-                    loadDocumentacionTree(regs);
-                }
-            }); */
     });
 }
 
@@ -272,7 +212,7 @@ function ProcesaDocumObjTree(doc, carpeta) {
                         text: html,
                         id: e.documentoId,
                         data: { "folder" : false },
-                        parent: 'c100',
+                        parent:  'c' + d.carpetaId,
                         icon: "glyphicon glyphicon-file"
 					};
                     if(d.carpetaId == e.carpetaId) {
@@ -284,18 +224,19 @@ function ProcesaDocumObjTree(doc, carpeta) {
 				
 			} else  {
 				//si es otro documento de pago guardamos el anterior y creamos otro
-				regs.push(dirObj);
+				
                 l = d.carpetaNombre.split('/');
                 index = l.length - 1;
 				dirObj = {
 					carpetaNombre: d.carpetaNombre,
                     carpetaId: d.carpetaId,
                     text:  l[index],
-                    id: d.carpetaId,
+                    id:  'c' + d.carpetaId,
                     data: { "folder" : true },
                     parent: '#',
 				    documentos: [],
 				};
+                regs.push(dirObj);
                 //if(!d.carpetaPadreId) dirObj.parent = '#';
 				
                     l = e.data.Key.split('/');
@@ -330,7 +271,8 @@ function ProcesaDocumObjTree(doc, carpeta) {
 				carpetaNombre: d.carpetaNombre,
                 carpetaId: d.carpetaId,
                 text: l[index],
-                id: 'c100',
+                state: { "opened": true },
+                id:  'c' + d.carpetaId,
                 data: { "folder" : true },
                 parent: '#',
 				documentos: [],
@@ -347,7 +289,7 @@ function ProcesaDocumObjTree(doc, carpeta) {
                     text: l[index],
                     id: e.documentoId,
                     data: { "folder" : false },
-                    parent:  'c100',
+                    parent:   'c' + d.carpetaId,
                     icon: "glyphicon glyphicon-file"
                 };
                 
