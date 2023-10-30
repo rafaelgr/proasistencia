@@ -156,7 +156,7 @@ function getObjectsdocumentacion() {
                     }
                 }
                 documentoId++;
-                console.log(documentoId);
+                //console.log(documentoId);
             });
             var regs = ProcesaDocumObjTree(archivos, carpetas)
             loadDocumentacionTree(regs);
