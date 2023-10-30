@@ -84,9 +84,21 @@ function initArbolDocumentacion() {
 }
 
 // Función para listar objetos con paginación
-async function listAllObjects(s3) {
+async function listAllObjects() {
     let objects = [];
     let continuationToken = null;
+
+    const params = {
+        Bucket: "comercializa-server",
+        Prefix: "facturas/",
+        ContinuationToken: continuationToken
+      };
+  
+      AWS.config.region = "eu-west-3"; // Región
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId:  "eu-west-3:2d09d557-1507-4aff-8c03-9bf7825c54cd",
+      });
+      var s3 = new AWS.S3({ params });
   
     do {
         const params = {
