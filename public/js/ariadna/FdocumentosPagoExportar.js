@@ -347,6 +347,7 @@ function exportarFacturasDocpago() {
         }
         $("#mensajeExportacion").hide();
         $("#mensajeEspera").show();
+        $('#btnAceptarExportar').prop('disabled', true);
         var proveedorId = 0;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -371,6 +372,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
                     mensNormal("Exportación realizada con éxito.");
                     loadTablaFacturasExp(null);
@@ -379,6 +381,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                 }
             },
             error: function (err) {
@@ -386,6 +389,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     // si hay algo más que hacer lo haremos aquí.
             }
         });
