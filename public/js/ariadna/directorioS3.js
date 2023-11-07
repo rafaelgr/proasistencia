@@ -52,10 +52,7 @@ $('#demo').on('click', function () {
     }); */
 
 
-    $('#search-input').on('input', function () {
-        var searchString = $(this).val();
-        $('#jstreeDocumentacion').jstree(true).search(searchString);
-    });
+
 
 initArbolDocumentacion();
 getObjectsdocumentacion() 
@@ -79,7 +76,7 @@ function initArbolDocumentacion() {
                 'action': function(a, b , c) {
                   console.log(node.type);
                   $('#modalUploadDoc').modal('show');
-                  preparaDatosArchivo(node.original);
+                  descargaObjectdocumentacion(node.original);
                 }
               } 
             } 
@@ -118,6 +115,24 @@ async function listAllObjects(parametros) {
   
     return objects;
   }
+
+async function getObj(parametros) {
+
+
+    AWS.config.region = parametros.bucket_region_server; // Región
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId:  parametros.identity_pool_server,
+    });
+    var s3 = new AWS.S3();
+    
+    const params = {
+        Bucket: parametros.bucket_server,
+        Key: obj.Key
+      };
+
+      const response = await s3.getObject(params).promise();
+      return response;
+}
   
 function getObjectsdocumentacion() {
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
@@ -167,6 +182,23 @@ function getObjectsdocumentacion() {
     });
 }
 
+function descargaObjectdocumentacion(obj) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+       
+        getObj()
+        .then( (response) => {
+
+        })
+        .catch( (err) => {
+            console.error('Error:', error);
+        })
+
+       
+    });
+}
+
 
 function loadDocumentacionTree(data) {
    /*  var cont = 50
@@ -204,7 +236,8 @@ function ProcesaDocumObjTree(doc, carpeta) {
                     var s = parseInt(e.data.Size);
                     var r = s / 1024;
                     r = roundToTwo(r).toString()
-                    var html = '<span>' + l[index] + '  ' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '  ' + r + ' KB ' + '</span>'
+                    var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
+                    //var html = '<ul style="list-style-type: none; color: black"><li style="display: inline; margin-right: 10px;">' + l[index] + '</li><li style="display: inline; margin-right: 10px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</li><li style="display: inline; margin-right: 10px;">' + r + ' KB ' + '</li></ul>'
 					docObj = {
                         documentoId: e.documentoId,
 						location: e.data.location,
@@ -241,11 +274,15 @@ function ProcesaDocumObjTree(doc, carpeta) {
 				
                     l = e.data.Key.split('/');
                     index = l.length - 1;
+                    var s = parseInt(e.data.Size);
+                    var r = s / 1024;
+                    r = roundToTwo(r).toString()
+                    var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
 					docObj = {
                         documentoId: e.documentoId,
                         location: e.data.location,
                         key: e.data.Key,
-                        text: l[index],
+                        text: html,
                         id: e.documentoId,
                         data: { "folder" : false },
                         parent:  'c100',
@@ -282,11 +319,15 @@ function ProcesaDocumObjTree(doc, carpeta) {
 			if(e.documentoId) {
                 l = e.data.Key.split('/');
                 index = l.length - 1;
+                var s = parseInt(e.data.Size);
+                var r = s / 1024;
+                r = roundToTwo(r).toString()
+                var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
 				docObj = {
                     documentoId: e.documentoId,
                     location: e.data.location,
                     key: e.data.Key,
-                    text: l[index],
+                    text: html,
                     id: e.documentoId,
                     data: { "folder" : false },
                     parent:   'c' + d.carpetaId,
