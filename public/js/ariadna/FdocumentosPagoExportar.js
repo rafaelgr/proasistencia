@@ -116,11 +116,18 @@ function admData() {
 
 
 
+
 function initTablaExportar() {
     tablaFacturas = $('#dt_fExportar').DataTable({
         autoWidth: true,
         paging: false,
         responsive: true,
+        columnDefs: [
+            {
+                targets: [10,11,12], // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -143,6 +150,9 @@ function initTablaExportar() {
         },
         data: dataDocumentospago,
         columns: [{
+           data: "empty",
+         
+        },{
             data: "facproveId",
             render: function (data, type, row) {
                 var html = '<label class="input">';

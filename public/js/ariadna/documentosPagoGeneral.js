@@ -40,7 +40,6 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarDocumentospago());
     $('#btnBuscar2').click(buscarDocumentospago2());
-    $('#btnAceptarExportar').click(exportarDocumentospago());
     $('#btnAlta').click(crearDocumentPago());
     $('#frmBuscar').submit(function () {
         return false
@@ -382,49 +381,6 @@ function buscarDocumentospago2() {
             success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadTablaDocumentospago(data);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
-    };
-    return mf;
-}
-
-function exportarDocumentospago() {
-    var mf = function () {
-        if (!datosOk2()) {
-            return;
-        }
-        $("#mensajeExportacion").hide();
-        $("#mensajeEspera").show();
-        var proveedorId = 0;
-        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var empresaId = vm.sempresaId();
-        var proveedorId = vm.sproveedorId();
-        var conDocPago = vm.docAsociado();
-        if(conDocPago) {
-            conDocPago = 1;
-        }else {
-            conDocPago = 0;
-        }
-        // obtener el n.serie del certificado para la firma.
-        // enviar la consulta por la red (AJAX)
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/documentos_pago/exportar/"+ conDocPago + "/"  + dFecha + "/" + hFecha + "/" + empresaId + "/" + proveedorId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                if(data) {
-                    $("#mensajeEspera").hide();
-                    $("#mensajeExportacion").show();
-                    $('#modalExportar').modal('hide');
-                    var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
-                    mensNormal("Exportación realizada con éxito.");
-                }
             },
                             error: function (err) {
                     mensErrorAjax(err);

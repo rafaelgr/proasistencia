@@ -201,6 +201,12 @@ function initTablaFacturas() {
         "pageLength": 100,
         "stateSave": true,
         responsive: true,
+        columnDefs: [
+            {
+                targets: 13, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
+        ],
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //facturas asociadas a más de un documento de pago
