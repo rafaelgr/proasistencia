@@ -187,15 +187,39 @@ function descargaObjectdocumentacion(obj) {
         if (err) return;
         var parametros = data;
        
-        getObj()
-        .then( (response) => {
+        // Reemplaza con la URL de tu objeto S3
+        const s3Url = parametros.raiz_url_server + obj.key;
 
-        })
-        .catch( (err) => {
-            console.error('Error:', error);
-        })
+        // Nombre con el que se guardará el archivo en el navegador
+        l = obj.key.split('/');
+        index = l.length - 1;
+        const fileName = l[index];
 
-       
+        downloadS3Object(s3Url, fileName);
+    });
+}
+
+function downloadS3Object(s3Url, fileName) {
+
+// Función para descargar el archivo desde S3
+  fetch(s3Url, {
+    method: 'GET',
+  })
+    .then((response) => {
+        return response.blob();
+    })
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = s3Url.split('/').pop(); // Nombre del archivo basado en la URL
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch((error) => {
+      console.error('Error al descargar el objeto S3:', error);
     });
 }
 
