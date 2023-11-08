@@ -565,6 +565,7 @@ function enviarCorreos() {
             url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
+                    
                     $('#progress').hide();
                     return;
                 }
@@ -573,6 +574,12 @@ function enviarCorreos() {
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturas se han enviado por correo');
+                llamadaAjax("PUT", '/api/facturas/borrar-directorio/facturas', null, function (err, data2) {
+                    if (err) {
+                        $('#progress').hide();
+                        return;
+                    }
+                });
             });
 
         });
