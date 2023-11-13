@@ -187,9 +187,8 @@ function initForm() {
         if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
         // add the files to formData object for the data payload
         formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
-            
             $.ajax({
-                url: '/api/upload/docpago',
+                url: '/api/upload/docpago/' + vm.documentoPagoId(),
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -1359,43 +1358,54 @@ function loadTablaFacturasRegistros(data) {
 //funciones de la pestaña de facturas en PDF
 
 function loadDoc(filename) {
-    var ext = filename.split('.').pop().toLowerCase();
-    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
-        // see it in container
-        var url = "/../../../ficheros/docpago/" + filename;
-        if (ext == "pdf") {
-            // <iframe src="" width="100%" height="600px"></iframe>
-            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "docpago/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
         } else {
-            // .html("<img src=' + this.href + '>");
-            $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
         }
-        $("#msgContainer").html('');
-    } else {
-        $("#msgContainer").html('Vista previa no dispònible');
-        $("#docContainer").html('');
-    }
+    });
+   
 }
 
 
- function checkVisibility(filename) {
-    var ext = filename.split('.').pop().toLowerCase();
-    if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
-        // see it in container
-        var url = "/ficheros/docpago/" + filename;
-        if (ext == "pdf") {
-            // <iframe src="" width="100%" height="600px"></iframe>
-            $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+function checkVisibility(filename) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "docpago/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
         } else {
-            // .html("<img src=' + this.href + '>");
-            $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
         }
-        $("#msgContainer").html('');
-    } else {
-        $("#msgContainer").html('Vista previa no dispònible');
-        $("#docContainer").html('');
-    }
+    });
+   
 }
+
 
 function editFactura(id) {
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;

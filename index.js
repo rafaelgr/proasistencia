@@ -105,7 +105,6 @@ var documentacion_router = require('./lib/documentacion/documentacion_controller
 
 
 
-
 var pack = require('./package.json');
 // read app parameters (host and port for the API)
 //var config = require('./config.json');

@@ -455,6 +455,12 @@ function enviarCorreos() {
                 $('#progress').hide();
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
+                llamadaAjax("PUT", '/api/liquidaciones/borrar-directorio/liquidacion', null, function (err, data2) {
+                    if (err) {
+                        $('#progress').hide();
+                        return;
+                    }
+                });
             });
 
         });

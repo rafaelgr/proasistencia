@@ -507,6 +507,13 @@ function enviarCorreos() {
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturasProveedores se han enviado por correo');
+                llamadaAjax("PUT", '/api/facturasProveedores/borrar-directorio/facturas', null, function (err, data2) {
+                    if (err) {
+                        $('#progress').hide();
+                        return;
+                    }
+                    
+                });
             });
 
         });

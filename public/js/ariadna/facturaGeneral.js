@@ -212,7 +212,13 @@ function initTablaFacturas() {
              });
         },
         "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [5] },
+            { "sType": "date-uk", "aTargets": [6] },
+        ],
+        columnDefs: [
+            {
+                targets: 13, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
         ],
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
