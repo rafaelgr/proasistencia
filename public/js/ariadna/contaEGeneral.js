@@ -574,7 +574,7 @@ function enviarCorreos() {
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturas se han enviado por correo');
-                llamadaAjax("PUT", '/api/facturas/borrar-directorio/facturas', null, function (err, data2) {
+                llamadaAjax("PUT", '/api/facturas/borrar-directorio', null, function (err, data2) {
                     if (err) {
                         $('#progress').hide();
                         return;
