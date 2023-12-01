@@ -197,9 +197,9 @@ function initTablaFacturas() {
     };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: true,
-        "aoColumnDefs": [
+        /* "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [5] },
-        ],
+        ], */
         paging: true,
         "pageLength": 100,
         "stateSave": true,
