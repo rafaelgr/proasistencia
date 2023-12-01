@@ -86,6 +86,9 @@ function initForm() {
     
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarFactura);
+    $("#btnAceptar2").click(function() {
+        aceptarFactura(false);
+    });
     $("#btnSalir").click(salir());
     
     //$("#btnImprimir").click(imprimir);
@@ -790,7 +793,7 @@ function datosOK() {
     return $('#frmFactura').valid();
 }
 
-var aceptarFactura = function () {
+var aceptarFactura = function (salir) {
     if (!datosOK()) return;
 
     eventSalir = false;
@@ -842,10 +845,18 @@ var aceptarFactura = function () {
         loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            if(salir) {
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
+            } else {
+                mensNormal('Factura guardada.')
+            }
         }
         else{
-            window.open(returnUrl, '_self');
+            if(salir) {
+                window.open(returnUrl, '_self');
+            } else {
+                mensNormal('Factura guardada.')
+            }
         }
        
     });

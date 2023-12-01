@@ -40,9 +40,14 @@ function initForm() {
     ko.applyBindings(vm);
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar);
+
+    $("#btnAceptar2").click(function() {
+        aceptar(false);
+    });
     
     
     $("#btnSalir").click(salir());
+    
     $("#frmDocumentoPago").submit(function() {
         return false;
     });
@@ -469,7 +474,7 @@ function datosOK5() {
 }
 
 
-function aceptar() {
+function aceptar(salir) {
         if (!datosOK())
             return;
         var data = {
@@ -498,8 +503,13 @@ function aceptar() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function(data, status) {
-                    returnUrl = returnUrl + data.documentoPagoId;
-                    window.open(returnUrl, '_self');
+                    if(salir) {
+                        returnUrl = returnUrl + data.documentoPagoId;
+                        window.open(returnUrl, '_self');
+                    } else {
+                        mensNormal('Documento de pago guardado guardado.')
+                    }
+                    
                 },
                                 error: function (err) {
                     mensErrorAjax(err);

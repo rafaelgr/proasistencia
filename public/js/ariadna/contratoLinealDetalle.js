@@ -8318,6 +8318,7 @@ function uploadDocum(arr) {
             delete e.fileKey
             delete e.documentoId;
             delete e.repetido;
+            var nom = e.nom;
             delete e.nom;
 
             AWS.config.region = parametros.bucket_region_docum; // Región
@@ -8332,6 +8333,8 @@ function uploadDocum(arr) {
                 Body: e,
                 ACL: "public-read"
             }
+            var ext = nom.split('.').pop().toLowerCase();
+            if(ext == "pdf") params.ContentType = 'application/pdf'
             // Use S3 ManagedUpload class as it supports multipart uploads
             var upload = new AWS.S3.ManagedUpload({
                 params: params
