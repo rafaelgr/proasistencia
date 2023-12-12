@@ -858,9 +858,11 @@ var aceptarFactura = function (salir) {
                 } else {
                     mensNormal('Factura guardada.')
                 }
-            } else {
-                
+            } else{
+                var url = "FacturaProveedorGeneral.html?ConservaFiltro=true";
+                window.open(url, '_self');
             }
+        
         }
        
     });
