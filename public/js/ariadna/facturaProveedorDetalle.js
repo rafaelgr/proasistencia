@@ -859,8 +859,9 @@ var aceptarFactura = function (salir) {
                     mensNormal('Factura guardada.')
                 }
             } else{
-                var url = "FacturaProveedorGeneral.html?ConservaFiltro=true";
-                window.open(url, '_self');
+                returnUrl = "FacturaProveedorGeneral.html?ConservaFiltro=true&facproveId=";
+                returnUrl = returnUrl + vm.facproveId();
+                window.open(urreturnUrl, '_self');
             }
         
         }
