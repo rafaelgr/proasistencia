@@ -852,10 +852,14 @@ var aceptarFactura = function (salir) {
             }
         }
         else{
-            if(salir) {
-                window.open(returnUrl, '_self');
+            if(verb == "PUT") {
+                if(salir) {
+                    window.open(returnUrl, '_self');
+                } else {
+                    mensNormal('Factura guardada.')
+                }
             } else {
-                mensNormal('Factura guardada.')
+                
             }
         }
        
