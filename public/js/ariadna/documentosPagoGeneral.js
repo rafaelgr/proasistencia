@@ -55,11 +55,6 @@ function initForm() {
     //        buscarDocumentospago();
     //});
     //
-    $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
-
-    $("#cmbEmpresas").select2(select2Spanish());
-    loadEmpresas();
 
     initTablaDocumentospago();
 
@@ -149,6 +144,10 @@ function admData() {
 function initTablaDocumentospago() {
     tablaCarro = $('#dt_documentoPago').DataTable({
         autoWidth: true,
+        bSort: true,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [2] },
+        ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -242,6 +241,22 @@ function initTablaDocumentospago() {
                 return html;
             }
         }]
+    });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
     });
 
     tablaCarro.columns(4).visible(false);
@@ -442,33 +457,5 @@ buscarTodos = function() {
     var url = myconfig.apiUrl + "/api/documentos_pago/?nombre=*";
     llamadaAjax("GET", url, null, function(err, data){
         loadTablaDocumentospago(data);
-    });
-}
-
-function loadProveedores() {
-    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
-        if (err) return;
-        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
-        vm.posiblesProveedores(proveedores);
-        vm.sproveedorId(0)
-        $("#cmbProveedores").val(0).trigger('change');
-    });
-}
-
-function loadEmpresas() {
-    $.ajax({
-        type: "GET",
-        url: "/api/empresas",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            var empresas = [{ empresaId: 0, nombre: null }].concat(data);
-            vm.posiblesEmpresas(empresas);
-            $("#cmbEmpresas").val(null).trigger('change');
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
     });
 }

@@ -168,6 +168,7 @@ function initForm() {
     $('#btnAceptarAsociarRegistros').hide();
     $('#btnAceptarAsociarRegistrosAnt').hide();
     $("#btnAceptarAsociarAnticipos").hide();
+   
     initTablaFacturasAsociadas();
     initTablaAsociarFacturas();
     initTablaAsociarRegistros();
@@ -254,6 +255,7 @@ function initForm() {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 $('#facturasAsociadas').show();
+                $("#anticiposAsociados").show();
             },
                             error: function (err) {
                     mensErrorAjax(err);
@@ -266,6 +268,7 @@ function initForm() {
         vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
+        $("#anticiposAsociados").hide();
     }
 }
 
@@ -487,7 +490,7 @@ function aceptar(salir) {
         };
         var verb = "POST";
         var url =   myconfig.apiUrl + "/api/documentos_pago"
-        var returnUrl = "DocumentoPagoDetalle.html?cmd=nuevo&DocumentoPagoId=" + vm.documentoPagoId()
+        var returnUrl = "DocumentoPagoDetalle.html?cmd=nuevo&DocumentoPagoId=";
     
     
         // caso modificación
@@ -507,7 +510,12 @@ function aceptar(salir) {
                         returnUrl = returnUrl + data.documentoPagoId;
                         window.open(returnUrl, '_self');
                     } else {
-                        mensNormal('Documento de pago guardado guardado.')
+                        if( verb == "POST") {
+                            returnUrl = returnUrl + data.documentoPagoId;
+                            window.open(returnUrl, '_self');
+                        } else {
+                            mensNormal('Documento de pago guardado guardado.');
+                        }
                     }
                     
                 },
