@@ -5849,6 +5849,34 @@ var proponerFechasRenovacion = function () {
 
 var aceptarNuevoContrato = function () {
     if (!nuevoContratoOK()) return;
+    //primero comprobamos que el cliente esté activo
+    llamadaAjax('GET', "/api/clientes/" + vm.clienteId(), null, function (err, data) {
+        if (err) {
+            return mensErrorAjax(err);
+        }
+        if(data.activa != 1) {
+            // mensaje de confirmación
+            var mens = "¿Este cliente no se encuantra activo, realmente desea renovar el contrato?";
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    renovarContrato();
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
+                    return;
+                }
+            });
+        } else {
+            renovarContrato();
+        }
+    });
+};
+
+var renovarContrato = function() {
     var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
@@ -5857,7 +5885,7 @@ var aceptarNuevoContrato = function () {
         if (err) return;
         window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
     })
-};
+}
 
 var nuevoContratoOK = function () {
     $('#frmRenovarContratos').validate({
