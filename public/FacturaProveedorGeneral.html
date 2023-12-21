@@ -583,11 +583,18 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkTodos" type="checkbox" name="chkTodos">
                                                         <i></i>Ver también facturas contabilizadas
                                                     </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label  class="label"> Ordenar Por</label>
+                                                    <div id= "radioFecha" style="margin-bottom: 5%;">
+                                                        <div><input type='radio' id='radioFecha1' name='ordenFechaGroup' value='1' data-bind="checked: ordenFecha"/> Fecha factura </div>
+                                                        <div><input type='radio' id='radioFecha2' name='ordenFechaGroup' value='2' data-bind="checked: ordenFecha"/> Fecha recepcion factura</div>
+                                                    </div>
                                                 </section>
                                             </div>
                                             <div class="row">
@@ -612,9 +619,7 @@
                                                                         </label>
                                                 </section>
                                                 <section class="col col-md-7">
-                                                   
                                                 </section>
-                                               
                                             </div>
                                         </fieldset>
                                         

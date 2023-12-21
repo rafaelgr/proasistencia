@@ -40,6 +40,7 @@ function initForm() {
 
     vm = new admData();
     ko.applyBindings(vm);
+    vm.ordenFecha('1');
 
     $("#cmbEmpresas").select2(select2Spanish());
 
@@ -137,6 +138,8 @@ function admData() {
     
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
+
+    self.ordenFecha = ko.observable();
     
 } 
 

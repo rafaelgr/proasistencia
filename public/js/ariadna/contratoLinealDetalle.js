@@ -5907,16 +5907,23 @@ var proponerFechasRenovacion = function () {
 
 }
 
+
 var aceptarNuevoContrato = function () {
     if (!nuevoContratoOK()) return;
-    //primero comprobamos que el cliente esté activo
-    llamadaAjax('GET', "/api/clientes/" + vm.clienteId(), null, function (err, data) {
+    //primero comprobamos que los implicados en los contratos estén de alta
+    llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
         if (err) {
             return mensErrorAjax(err);
         }
-        if(data.activa != 1) {
+        if(data) { //si no se encuentra activo
             // mensaje de confirmación
-            var mens = "¿Este cliente no se encuantra activo, realmente desea renovar el contrato?";
+            //procesamos el mansaje
+            var mens = "Los siguientes implicados en el contrato no se encuantran activos.<br>"
+            for(let d of data) {
+                mens += JSON.stringify(d) + "<br>";
+            }
+            mens = mens.replace(/["{}]/g, '');
+            mens += "¿Realmente desea renovar el contrato?.";
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
