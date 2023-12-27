@@ -47,7 +47,6 @@ function initForm() {
     $('#hf').text('Hasta fecha recepción');
 
     var rad = $("[name='filtroFechaGroup']");
-    var prev = null;
     for(var i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
            if(this.value == "0") {
@@ -112,6 +111,7 @@ function initForm() {
         if(facproveId == '') {
             f = null
         }
+        compruebaFiltros(f);
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if(vm.sdepartamentoId() != 7) { $('#btnPrint').hide() ;} 
@@ -630,7 +630,7 @@ function cargarFacturas2All() {
         }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
+            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {

@@ -583,11 +583,18 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkTodos" type="checkbox" name="chkTodos">
                                                         <i></i>Ver también facturas contabilizadas
                                                     </label>
+                                                </section>
+                                                <section class="col col-md-6">
+                                                    <label  class="label"> Filtrar Por</label>
+                                                    <div id= "radioFecha" style="margin-bottom: 5%;">
+                                                        <div><input type='radio' id='radioFecha1' name='filtroFechaGroup' value='0' data-bind="checked: filtroFecha"/> Fecha recepcion factura </div>
+                                                        <div><input type='radio' id='radioFecha2' name='filtroFechaGroup' value='1' data-bind="checked: filtroFecha"/> Fecha factura</div>
+                                                    </div>
                                                 </section>
                                             </div>
                                             <div class="row">
