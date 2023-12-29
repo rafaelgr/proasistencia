@@ -123,6 +123,32 @@ function initTablaAnticipos() {
             }, 
             'print'
         ],
+        columnDefs: [
+            {
+                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [5],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -162,10 +188,7 @@ function initTablaAnticipos() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
         },{
             data: "importeServiciado",
             render: function (data, type, row) {
@@ -199,13 +222,13 @@ function initTablaAnticipos() {
         }]
     });
 
-    // Apply the filter
-    $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
-        tablaAnticipos
-            .column($(this).parent().index() + ':visible')
-            .search(this.value)
-            .draw();
-    });
+   // Apply the filter
+   $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
+    tablaAnticipos
+        .column($(this).parent().index() + ':visible')
+        .search(this.value)
+        .draw();
+});
 
     
 }
