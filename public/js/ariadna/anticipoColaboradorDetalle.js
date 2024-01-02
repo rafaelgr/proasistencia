@@ -2172,7 +2172,19 @@ function loadDataServiciadas(data) {
 
 function nuevaServiciada() {
     //primero comprobamos que el colaborador no exceda el límite de lo que tiene anticipado
-    compruebaLimiteColaborador(function(err, result) {
+    var verb = "POST";
+    var url =  '/api/anticiposProveedores/nueva/serviciada';
+    
+    // caso modificación
+    if (vm.antproveServiciadoId() != 0) {
+       
+
+        verb = "PUT";
+        url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
+        returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
+        
+    }
+    compruebaAnticiposColaborador(verb, function(err, result) {
         if(err) return mensError(err);
         var imp;
         var tot;
@@ -2207,18 +2219,6 @@ function nuevaServiciada() {
                 vm.importeServiciada(0);
                 return;
             }
-            var verb = "POST";
-            var url =  '/api/anticiposProveedores/nueva/serviciada';
-            
-            // caso modificación
-            if (vm.antproveServiciadoId() != 0) {
-               
-        
-                verb = "PUT";
-                url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
-                returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
-                
-            }
             var data = {
                 antproveServiciada: {
                     antproveId: vm.antproveId(),
@@ -2237,13 +2237,32 @@ function nuevaServiciada() {
     });
 }
 
-function compruebaLimiteColaborador(callback) {
+function compruebaAnticiposColaborador(verb, callback) {
     llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId(), null, function (err, data) {
         if (err) return callback(err);
-        if(data) {
-            //compruba el limite
-            console.log(data);
-            callback(err, null);
+        if(Object.keys(data).length === 0 && data.constructor === Object) {
+            var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato.";
+            return callback(err); 
+        } else {
+            var imp = 0;
+            var totAnt = 0;
+            //comprobamos si se ha superado el límite
+            // si el limite es null no se hace nada
+            if(data.limite == null) return callback(null, null);
+            //sumamos lo que le estamos anticipando a lo ya anticipado y vemos si supera el límite
+            //caso post 
+            if(verb == "POST") {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = parseFloat(data.totAnticipado) + imp;
+            } else {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = (parseFloat(data.totAnticipado) - importeModificar) + imp;
+            }
+            if(totAnt > data.limite) {
+                var err = "Limite para este colaborador sobrepasado en este contrato.<br>" + " Limite: " + numeral(data.limite).format('0,0.00') + ".<br>" + "Total que se intenta anticipar: " + numeral(totAnt).format('0,0.00');
+                return callback(err); 
+            }
+            callback(null, null);
         }
 
     });
