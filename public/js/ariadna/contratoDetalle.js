@@ -3711,6 +3711,7 @@ function initTablaPrefacturas(departamentoId) {
         data: dataPrefacturas,
         columns: [{
             data: "prefacturaId",
+            width: "5%",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if(row.esLetra != 1) {
@@ -4960,12 +4961,13 @@ function initTablaAntproves() {
         },
         data: dataAntProves,
         columns: [{
-            data: "antproveId",
+            data: "vinculado",
+            width: "5%",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
+                var html = '<label class="input">';
+                html += '<input type="checkbox" disabled ' + (data === 1 ? 'checked' : '') + '>'
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {
@@ -5258,12 +5260,13 @@ function initTablaAntcols() {
         },
         data: dataAntCol,
         columns: [{
-            data: "antproveId",
+            data: "vinculado",
+            width: "5%",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
+                var html = '<label class="input">';
+                html += '<input type="checkbox" disabled ' + (data === 1 ? 'checked' : '') + '>'
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {

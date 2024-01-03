@@ -411,6 +411,8 @@ function admData() {
     self.receptorCodPostal = ko.observable();
     self.receptorPoblacion = ko.observable();
     self.receptorProvincia = ko.observable();
+    self.tipoComercialNombre = ko.observable();
+    self.tipoComercialId = ko.observable();
     //
     self.total = ko.observable();
     self.antTotal = ko.observable();
@@ -557,6 +559,8 @@ function loadData(data) {
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
+    vm.tipoComercialNombre(data.tipoComercialNombre);
+    vm.tipoComercialId(data.tipoComercialId);
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -796,7 +800,9 @@ var generarAnticipoDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "completo": vm.completo(),
             "servicioId": vm.servicioId(),
-            "esColaborador": 1
+            "esColaborador": 1,
+            "tipoComercialId": vm.tipoComercialId(),
+            "tipoComercialNombre": vm.tipoComercialNombre()
 
         }
     };
@@ -1796,13 +1802,15 @@ var initAutoProveedor = function () {
     $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/?nombre=" + request.term, datosPro, function (err, data) {
+            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/con/tipo/?nombre=" + request.term, datosPro, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
                         value: d.nomconcat,
-                        id: d.proveedorId
+                        id: d.proveedorId,
+                        tipoComercialId: d.tipoComercialId,
+                        tipoComercialNombre: d.tipoComercialNombre
                     };
                     r.push(v);
                 });
@@ -1812,6 +1820,8 @@ var initAutoProveedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.sproveedorId(ui.item.id);
+            vm.tipoComercialNombre(ui.item.tipoComercialNombre);
+            vm.tipoComercialId(ui.item.tipoComercialId);
             cambioProveedor(ui.item.id);
         }
     });
@@ -2238,7 +2248,7 @@ function nuevaServiciada() {
 }
 
 function compruebaAnticiposColaborador(verb, callback) {
-    llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.tipoComercialId(), null, function (err, data) {
         if (err) return callback(err);
         if(Object.keys(data).length === 0 && data.constructor === Object) {
             var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato.";
