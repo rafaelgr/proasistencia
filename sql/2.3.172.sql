@@ -18,3 +18,8 @@ ALTER TABLE `antprove`
 
   ALTER TABLE `antprove`   
   ADD COLUMN `tipoComercialNombre` VARCHAR(255) NULL AFTER `tipoComercialId`;
+
+  ALTER TABLE `antprove`   
+  ADD COLUMN `comercialId` INT(11) NULL AFTER `tipoComercialNombre`,
+  ADD CONSTRAINT `proveedor_comercialFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`);
+
