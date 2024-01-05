@@ -79,7 +79,7 @@ function initForm() {
 }
 
 function initTablaContratosComerciales() {
-    tablaCarro = $('#dt_contratoComercial').dataTable({
+    tablaCarro = $('#dt_contratoComercial').DataTable({
         autoWidth: true,
         paging: true,
         "pageLength": 100,
@@ -146,6 +146,14 @@ function initTablaContratosComerciales() {
                 return html;
             }
         }]
+    });
+
+      // Apply the filter
+      $("#dt_contratoComercial thead th input[type=text]").on('keyup change', function () {
+        tablaCarro
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
     });
 }
 
