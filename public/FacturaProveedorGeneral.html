@@ -583,22 +583,29 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-12">
+                                                <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkTodos" type="checkbox" name="chkTodos">
                                                         <i></i>Ver también facturas contabilizadas
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-6">
+                                                    <label  class="label"> Filtrar Por</label>
+                                                    <div id= "radioFecha" style="margin-bottom: 5%;">
+                                                        <div><input type='radio' id='radioFecha1' name='filtroFechaGroup' value='0' data-bind="checked: filtroFecha"/> Fecha recepcion factura </div>
+                                                        <div><input type='radio' id='radioFecha2' name='filtroFechaGroup' value='1' data-bind="checked: filtroFecha"/> Fecha factura</div>
+                                                    </div>
+                                                </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Desde fecha</label>
+                                                    <label class="label" id = "df"></label>
                                                     <label class="input">
                                                         <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="label" id = "hf"></label>
                                                     <label class="input">
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
@@ -612,9 +619,7 @@
                                                                         </label>
                                                 </section>
                                                 <section class="col col-md-7">
-                                                   
                                                 </section>
-                                               
                                             </div>
                                         </fieldset>
                                         

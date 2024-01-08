@@ -411,6 +411,9 @@ function admData() {
     self.receptorCodPostal = ko.observable();
     self.receptorPoblacion = ko.observable();
     self.receptorProvincia = ko.observable();
+    self.tipoComercialNombre = ko.observable();
+    self.tipoComercialId = ko.observable();
+    self.comercialId = ko.observable();
     //
     self.total = ko.observable();
     self.antTotal = ko.observable();
@@ -557,6 +560,9 @@ function loadData(data) {
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
+    vm.tipoComercialNombre(data.tipoComercialNombre);
+    vm.tipoComercialId(data.tipoComercialId);
+    vm.comercialId(data.comercialId);
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -796,7 +802,10 @@ var generarAnticipoDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "completo": vm.completo(),
             "servicioId": vm.servicioId(),
-            "esColaborador": 1
+            "esColaborador": 1,
+            "comercialId": vm.comercialId(),
+            "tipoComercialId": vm.tipoComercialId(),
+            "tipoComercialNombre": vm.tipoComercialNombre()
 
         }
     };
@@ -1796,13 +1805,16 @@ var initAutoProveedor = function () {
     $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/?nombre=" + request.term, datosPro, function (err, data) {
+            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/con/tipo/?nombre=" + request.term, datosPro, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
                         value: d.nomconcat,
-                        id: d.proveedorId
+                        id: d.proveedorId,
+                        comercialId: d.comercialId,
+                        tipoComercialId: d.tipoComercialId,
+                        tipoComercialNombre: d.tipoComercialNombre
                     };
                     r.push(v);
                 });
@@ -1812,6 +1824,9 @@ var initAutoProveedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.sproveedorId(ui.item.id);
+            vm.tipoComercialNombre(ui.item.tipoComercialNombre);
+            vm.comercialId(ui.item.comercialId);
+            vm.tipoComercialId(ui.item.tipoComercialId);
             cambioProveedor(ui.item.id);
         }
     });
@@ -2171,65 +2186,100 @@ function loadDataServiciadas(data) {
 }
 
 function nuevaServiciada() {
-    var imp;
-    var tot;
-    acumulado = 0;
+    //primero comprobamos que el colaborador no exceda el límite de lo que tiene anticipado
+    var verb = "POST";
+    var url =  '/api/anticiposProveedores/nueva/serviciada';
+    
+    // caso modificación
+    if (vm.antproveServiciadoId() != 0) {
+       
 
-    //recalculamos el acumulado de todas las empresas serviciadas de la anticipo
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
-        if (err) return;
-        for(var i = 0; i < data.length; i++){
-            acumulado += parseFloat(data[i].importe);
-        }
-        acumulado = roundToTwo(acumulado);
-        if(vm.antproveServiciadoId() != 0) {
-            imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
-            
-        } else {
-            imp = acumulado + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
-            if($('#chkCompleto').prop("checked")) {
-                tot = parseFloat(numeroDbf(vm.total()));
-            } else {
-                tot = parseFloat(vm.totalConIva());
-            }
-        }
-    
-        if( imp > tot){
-            mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la anticipo');
-            return;
-        }
-        else if(!datosOKServiciada()){
-            vm.importeServiciada(0);
-            return;
-        }
-        var verb = "POST";
-        var url =  '/api/anticiposProveedores/nueva/serviciada';
+        verb = "PUT";
+        url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
+        returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
         
-        // caso modificación
-        if (vm.antproveServiciadoId() != 0) {
-           
+    }
+    compruebaAnticiposColaborador(verb, function(err, result) {
+        if(err) return mensError(err);
+        var imp;
+        var tot;
+        acumulado = 0;
     
-            verb = "PUT";
-            url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
-            returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
-            
-        }
-        var data = {
-            antproveServiciada: {
-                antproveId: vm.antproveId(),
-                empresaId: vm.sempresaServiciadaId(),
-                contratoId: vm.scontratoId(),
-                importe: vm.importeServiciada()
-            }
-        }
-        llamadaAjax(verb, url, data, function (err, data) {
+        //recalculamos el acumulado de todas las empresas serviciadas de del anticipo
+        llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
             if (err) return;
-            loadServiciadasAntprove(antproveId);
-            $('#modalServiciado').modal('hide');
-        });
+            for(var i = 0; i < data.length; i++){
+                acumulado += parseFloat(data[i].importe);
+            }
+            acumulado = roundToTwo(acumulado);
+            if(vm.antproveServiciadoId() != 0) {
+                imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+                imp = parseFloat(imp.toFixed(2));
+                
+            } else {
+                imp = acumulado + parseFloat(vm.importeServiciada());
+                imp = parseFloat(imp.toFixed(2));
+                if($('#chkCompleto').prop("checked")) {
+                    tot = parseFloat(numeroDbf(vm.total()));
+                } else {
+                    tot = parseFloat(vm.totalConIva());
+                }
+            }
         
+            if( imp > tot){
+                mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la anticipo');
+                return;
+            }
+            else if(!datosOKServiciada()){
+                vm.importeServiciada(0);
+                return;
+            }
+            var data = {
+                antproveServiciada: {
+                    antproveId: vm.antproveId(),
+                    empresaId: vm.sempresaServiciadaId(),
+                    contratoId: vm.scontratoId(),
+                    importe: vm.importeServiciada()
+                }
+            }
+            llamadaAjax(verb, url, data, function (err, data) {
+                if (err) return;
+                loadServiciadasAntprove(antproveId);
+                $('#modalServiciado').modal('hide');
+            });
+            
+        });
+    });
+}
+
+function compruebaAnticiposColaborador(verb, callback) {
+    llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.comercialId(), null, function (err, data) {
+        if (err) return callback(err);
+        if(Object.keys(data).length === 0 && data.constructor === Object) {
+            var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato.";
+            return callback(err); 
+        } else {
+            var imp = 0;
+            var totAnt = 0;
+            //comprobamos si se ha superado el límite
+            // si el limite es null no se hace nada
+            if(data.limite == null) return callback(null, null);
+            //sumamos lo que le estamos anticipando a lo ya anticipado y vemos si supera el límite
+            //caso post 
+            if(verb == "POST") {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = parseFloat(data.totAnticipado) + imp;
+            } else {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = (parseFloat(data.totAnticipado) - importeModificar) + imp;
+            }
+            if(totAnt > data.limite) {
+                var err = "Limite para este colaborador sobrepasado en este contrato.<br>" + " Limite: " + numeral(data.limite).format('0,0.00') + ".<br>" + "Total que se intenta anticipar: " + numeral(totAnt).format('0,0.00');
+                return callback(err); 
+            }
+            callback(null, null);
+        }
+
     });
 }
 function datosOKServiciada() {

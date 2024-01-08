@@ -40,10 +40,28 @@ function initForm() {
 
     vm = new admData();
     ko.applyBindings(vm);
+    vm.filtroFecha('0');
+    vm.dFecha(null);
+    //por defecto el label de filto de fechas es por fecha de recepción
+    $('#df').text('Desde fecha recepción');
+    $('#hf').text('Hasta fecha recepción');
+
+    var rad = $("[name='filtroFechaGroup']");
+    for(var i = 0; i < rad.length; i++) {
+        rad[i].onclick = function () {
+           if(this.value == "0") {
+            $('#df').text('Desde fecha recepción');
+            $('#hf').text('Hasta fecha recepción');
+           } else {
+            $('#df').text('Desde fecha');
+            $('#hf').text('Hasta fecha');
+           }
+        };
+    }
 
     $("#cmbEmpresas").select2(select2Spanish());
 
-    filtros = getCookie('filtro_facproves');
+    filtros = getCookie('filtro_factcols');
     if(filtros != undefined) {
         filtros = JSON.parse(filtros);
     }
@@ -136,6 +154,8 @@ function admData() {
     
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
+
+    self.filtroFecha = ko.observable();
     
 } 
 
@@ -145,6 +165,15 @@ function compruebaFiltros(id) {
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
+        //comprobamos el filtro por fechas
+        vm.filtroFecha(filtros.filtroFecha);
+        if(vm.filtroFecha() == "0") {
+            $('#df').text('Desde fecha recepción');
+            $('#hf').text('Hasta fecha recepción');
+        } else {
+            $('#df').text('Desde fecha');
+            $('#hf').text('Hasta fecha');
+        }
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
             if(id > 0) {
@@ -204,11 +233,7 @@ function initTablaFacturas() {
             state.columns.forEach(function (column, index) {
                 $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
              });
-        },
-        "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [5] },
-        ],
-        
+        },        
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -228,6 +253,32 @@ function initTablaFacturas() {
                 pageSize: 'LEGAL'
             }, 
             'print'
+        ],
+        columnDefs: [
+            {
+                targets: 12, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [5, 6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
         ],
         autoWidth: true,
         language: {
@@ -270,16 +321,8 @@ function initTablaFacturas() {
             data: "receptorNombre"
         },  {
             data: "fecha",
-            render: function (data, type, row) {
-                if(!data) return "";
-                return moment(data).format('DD/MM/YYYY');
-            }
         },  {
             data: "fecha_recepcion",
-            render: function (data, type, row) {
-                if(!data) return "";
-                return moment(data).format('DD/MM/YYYY');
-            }
         }, {
             data: "total",
             render: function (data, type, row) {
@@ -484,9 +527,10 @@ function editFactura(id) {
             empresaId:vm.sempresaId(),
             dFecha: vm.dFecha(),
             hFecha: vm.hFecha(),
-            contabilizadas: contabilizadas
+            contabilizadas: contabilizadas,
+            filtroFecha: vm.filtroFecha()
         }
-    setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
+    setCookie("filtro_factcols", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaColaboradorDetalle.html?facproveId=" + id;
     window.open(url, '_self');
 }
@@ -496,7 +540,8 @@ function editFactura(id) {
 function cargarFacturas2(id) {
     var mf = function() {
         var colaborador = 1;
-        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var dFecha = null;
+        if(vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
         if(hFecha == '' || hFecha == undefined) hFecha = null;
         if(hFecha != null) {
@@ -524,9 +569,10 @@ function cargarFacturas2(id) {
                 }
             });
         } else {
+            if(!dFecha) return;
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador,
+                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -555,8 +601,7 @@ function cargarFacturas2All() {
         }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador,
-            dataType: "json",
+            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
             contentType: "application/json",
             success: function (data, status) {
                 loadTablaFacturas(data);
@@ -597,7 +642,7 @@ function estableceFechaEjercicio() {
 
 limpiarFiltros = function() {
     var returnUrl = "FacturaColaboradorGeneral.html?cleaned=true"
-    deleteCookie('filtro_facproves');
+    deleteCookie('filtro_factcols');
     tablaFacturas.state.clear();
     window.open(returnUrl, '_self');
 }

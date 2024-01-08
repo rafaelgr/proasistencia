@@ -751,8 +751,8 @@ function datosImportOK() {
 
 function aceptar() {
     var mf = function () {
+        if (!datosOK()) return;
         if($('#chkActiva').prop('checked')) {
-            if (!datosOK()) return;
             if(vm.cuentaContable() == null || vm.cuentaContable() == "") {
                 mensError('El Campo cuenta contable es obligatorio');
                 return;
@@ -823,7 +823,6 @@ function aceptar() {
                 success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
-                    actualizaContratosActivos(data);
                     // Nos volvemos al general
                     var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
                     window.open(url, '_self');
@@ -834,31 +833,75 @@ function aceptar() {
                 }
             });
         } else {
-            data.cliente.antCuentaContable = vm.antCuentaContable();
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/clientes/" + empId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    actualizaContratosActivos(data);
-                    // Nos volvemos al general
-                    var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+            if(!$('#chkActiva').prop('checked')) {
+                //comprobamos que el cliente no tenga contratos activos
+                $.ajax({
+                 type: "GET",
+                 url: "/api/clientes/contratos/activos/cliente/" + empId,
+                 dataType: "json",
+                 contentType: "application/json",
+                 success: function (data2, status) {
+                     if(data2) { 
+                         // mensaje de confirmación
+                         //procesamos el mansaje
+                         var mens = "Este cliente tiene los siguientes contratos activos.<br>"
+                         for(let d of data2) {
+                             mens += JSON.stringify(d.referencia) + "<br>";
+                         }
+                         mens = mens.replace(/["{}]/g, '');
+                         mens += "¿Realmente desea desactivar el cliente?.";
+                         $.SmartMessageBox({
+                             title: "<i class='fa fa-info'></i> Mensaje",
+                             content: mens,
+                             buttons: '[Aceptar][Cancelar]'
+                         }, function (ButtonPressed) {
+                             if (ButtonPressed === "Aceptar") {
+                                continuarGuardarCliente(data);
+                             }
+                             if (ButtonPressed === "Cancelar") {
+                                 // no hacemos nada (no quiere aceptar)
+                                 return;
+                             }
+                         });
+                     }  else {
+                        continuarGuardarCliente(data);
+                     }
+                 },
+                 error: function (err) {
+                     mensErrorAjax(err);
+                     // si hay algo más que hacer lo haremos aquí.
+                 }
+             });
+     
+             } else {
+                continuarGuardarCliente(data);
+             }
         }
     };
     return mf;
 }
-
+var continuarGuardarCliente = function(data) {
+     //se continua si se acepta
+     data.cliente.antCuentaContable = vm.antCuentaContable();
+     $.ajax({
+         type: "PUT",
+         url: myconfig.apiUrl + "/api/clientes/" + empId,
+         dataType: "json",
+         contentType: "application/json",
+         data: JSON.stringify(data),
+         success: function (data, status) {
+             //actualizamos los contratos activos
+             actualizaContratosActivos(data);
+             // Nos volvemos al general
+             var url = "ClientesGeneral.html?ClienteId=" + vm.clienteId();
+             window.open(url, '_self');
+         },
+         error: function (err) {
+             mensErrorAjax(err);
+             // si hay algo más que hacer lo haremos aquí.
+         }
+     });
+}
 function importar() {
     var mf = function () {
         if (!datosImportOK())
