@@ -384,7 +384,8 @@ function select2Spanish() {
 // Toma un número en formato imprimible español y lo pasa
 // a formato guardable en base de datos.
 function numeroDbf(n) {
-    return n.replace('.', '').replace(',', '.');
+    var a =  n.replace('.', '').replace(',', '.');
+    return a;
 }
 
 //---- numreoDbf

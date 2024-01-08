@@ -61,7 +61,7 @@ function initForm() {
 
     $("#cmbEmpresas").select2(select2Spanish());
 
-    filtros = getCookie('filtro_facproves');
+    filtros = getCookie('filtro_factcols');
     if(filtros != undefined) {
         filtros = JSON.parse(filtros);
     }
@@ -165,7 +165,15 @@ function compruebaFiltros(id) {
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
-        vm.filtroFecha(filtros.filtoFecha);
+        //comprobamos el filtro por fechas
+        vm.filtroFecha(filtros.filtroFecha);
+        if(vm.filtroFecha() == "0") {
+            $('#df').text('Desde fecha recepción');
+            $('#hf').text('Hasta fecha recepción');
+        } else {
+            $('#df').text('Desde fecha');
+            $('#hf').text('Hasta fecha');
+        }
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
             if(id > 0) {
@@ -520,9 +528,9 @@ function editFactura(id) {
             dFecha: vm.dFecha(),
             hFecha: vm.hFecha(),
             contabilizadas: contabilizadas,
-            filtoFecha: vm.filtroFecha()
+            filtroFecha: vm.filtroFecha()
         }
-    setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
+    setCookie("filtro_factcols", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaColaboradorDetalle.html?facproveId=" + id;
     window.open(url, '_self');
 }
@@ -634,7 +642,7 @@ function estableceFechaEjercicio() {
 
 limpiarFiltros = function() {
     var returnUrl = "FacturaColaboradorGeneral.html?cleaned=true"
-    deleteCookie('filtro_facproves');
+    deleteCookie('filtro_factcols');
     tablaFacturas.state.clear();
     window.open(returnUrl, '_self');
 }
