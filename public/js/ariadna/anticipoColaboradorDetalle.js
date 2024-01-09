@@ -2256,7 +2256,7 @@ function compruebaAnticiposColaborador(verb, callback) {
     llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.comercialId(), null, function (err, data) {
         if (err) return callback(err);
         if(Object.keys(data).length === 0 && data.constructor === Object) {
-            var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato.";
+            var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato o dicho colaborador no tiene contrato de colaborador creado.";
             return callback(err); 
         } else {
             var imp = 0;
