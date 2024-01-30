@@ -1339,6 +1339,8 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
+    if (!vm.coste()) vm.coste(0);
+    if (!vm.porcentajeAgente() || vm.porcentajeAgente() == undefined) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
@@ -1347,7 +1349,8 @@ var recalcularCostesImportesDesdeCoste = function () {
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
-        vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
+        var impA = vm.importeAlCliente() - vm.ventaNeta()
+        vm.importeAgente(vm.importeAlCliente() - roundToTwo(vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     vm.total(roundToSix(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
