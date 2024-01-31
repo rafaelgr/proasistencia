@@ -943,6 +943,7 @@ function initTablaPrefacturasLineas() {
                 var ventaNeta = vm.ventaNeta();
                     var importeAgente = vm.importeAgente();
                     var ventaNetaLinea = (( row.coste * vm.porcentajeBeneficio()  ) / 100) +  row.coste; 
+                    if(!vm.ventaNeta() || vm.ventaNeta() == undefined) return 0;
                     var data = roundToSix((ventaNetaLinea * importeAgente) / ventaNeta);
                     return numeral(data).format('0,0.00');
             }
