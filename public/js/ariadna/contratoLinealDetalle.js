@@ -1311,6 +1311,7 @@ function compruebaAnticiposVinculados() {
             var str = "los sigientes anticipos están sin vincular:<br> " + c
             mensError(str);
             $('#chkContratoCerrado').prop('checked', false);
+            vm.contratoCerrado(false);
         } else {
             var f = new Date();
             f = spanishDate(f)
