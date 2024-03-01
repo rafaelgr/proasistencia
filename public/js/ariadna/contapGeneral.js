@@ -455,7 +455,7 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 /*function loadDepartamentos(departamentoId) {
