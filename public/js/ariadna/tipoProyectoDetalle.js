@@ -68,6 +68,7 @@ function admData() {
     self.nombre = ko.observable();
     self.abrev = ko.observable();
     self.activo = ko.observable();
+    self.visibleApp = ko.observable();
     //
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -80,12 +81,9 @@ function loadData(data) {
     vm.tipoProyectoId(data.tipoProyectoId);
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
+    vm.visibleApp(data.visibleApp);
+    vm.activo(data.activo);
     loadDepartamento(data.tipoMantenimientoId);
-    if(data.activo == 1){
-        $('#chkActivo').prop("checked", true);
-    } else {
-        $('#chkActivo').prop("checked", false);
-    }
 }
 
 function datosOK() {
@@ -131,21 +129,15 @@ function datosOK() {
 
 function aceptar() {
     var mf = function () {
-        if (!datosOK())
-            return;
-
-        if($('#chkActivo').prop("checked")) {
-            vm.activo(true);
-        } else {
-            vm.activo(false);
-        }
+        if (!datosOK()) return;
         var data = {
             tipoProyecto: {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
                 "abrev": vm.abrev(),
                 "tipoMantenimientoId": vm.sdepartamentoId(),
-                "activo": vm.activo()
+                "activo": vm.activo(),
+                "visibleApp": vm.visibleApp()
             }
         };
         if (adminId == 0) {
@@ -175,9 +167,6 @@ function aceptar() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
                     var url = "TiposProyectoGeneral.html?TipoProyectoId=" + vm.tipoProyectoId();
                     window.open(url, '_self');
                 },
