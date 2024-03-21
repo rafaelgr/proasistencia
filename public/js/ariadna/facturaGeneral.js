@@ -462,10 +462,14 @@ function deleteFactura(id, departamentoId) {
         }
         if (ButtonPressed === "Descontabilizar factura") {
             var data = { facturaId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err) {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err, data) {
                 if (err) return;
                 $('#chkTodos').prop('checked',false);
-                mostrarMensajeFacturaDescontabilizada();
+                if(data.changedRows > 0) {
+                    mostrarMensajeFacturaDescontabilizada();
+                } else {
+                    mostrarMensajeFacturaNoCambiada();
+                }
                 buscarFacturas()();
             });
         }
@@ -497,6 +501,11 @@ var mostrarMensajeFacturaBorrada = function () {
     var mens = "La factura se ha borrado correctamente.";
     mensNormal(mens);
 }
+
+var mostrarMensajeFacturaNoCambiada = function () {
+    var mens = "La factura NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}  
 
 function editFactura(id) {
     // hay que abrir la página de detalle de factura

@@ -483,13 +483,17 @@ function crearFactura() {
 function deleteFactura(id) {
     var url = myconfig.apiUrl + "/api/facturasProveedores/nuevo/" + id + "/" + usuario.nombre;
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro?";
+    var mens = "¿Qué desea hacer con este registro?";
+    mens += "<ul>"
+    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
+    mens += "<li><strong>Borrar:</strong> Elimina completamente la factura. ¡¡ Atención !! Puede dejar huecos en los números de factura de la serie</li>";
+    mens += "</ul>"
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Aceptar][Cancelar]'
+        buttons: '[Cancelar][Descontabilizar factura][Borrar factura]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
+        if (ButtonPressed === "Borrar factura") {
             
             $.ajax({
                 type: "GET",
@@ -536,6 +540,7 @@ function deleteFactura(id) {
                     contentType: "application/json",
                     data: JSON.stringify(datos),
                     success: function (data, status) {
+                        mostrarMensajeFacturaBorrada();
                         var fn = buscarFacturas();
                         fn();
                     },
@@ -549,6 +554,19 @@ function deleteFactura(id) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+            });
+        }
+        if (ButtonPressed === "Descontabilizar factura") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/facturasProveedores/descontabilizar/" + id, null, function (err, data) {
+                if (err) return;
+                $('#chkTodos').prop('checked',false);
+                if(data.changedRows > 0) {
+                    mostrarMensajeFacturaDescontabilizada();
+                } else {
+                    mostrarMensajeFacturaNoCambiada();
+                }
+                buscarFacturas()();
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -692,6 +710,21 @@ imprimirFactura = function () {
     var url = "InfFacturasProveedores.html";
     window.open(url, '_blank');
 }
+
+var mostrarMensajeFacturaDescontabilizada = function () {
+    var mens = "La factura se ha descontabilizado correctamente.";
+    mensNormal(mens);
+}
+
+var mostrarMensajeFacturaBorrada = function () {
+    var mens = "La factura se ha borrado correctamente.";
+    mensNormal(mens);
+}
+
+var mostrarMensajeFacturaNoCambiada = function () {
+    var mens = "La factura NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}   
 
 
 
