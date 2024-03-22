@@ -15,7 +15,9 @@ var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var usuario;
 var numfactu = 0;
 var dataUsuarios;
+var dataindices;
 var usuarioEnEdicion = false;
+var indiceEnEdicion = false;
 
 var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
@@ -56,6 +58,9 @@ function initForm() {
     $("#modalUsuariosPush-form").submit(function () {
         return false;
     });
+    $("#modalIndicesCorrectores-form").submit(function () {
+        return false;
+    });
 
     $("#creacionCarpetas-form").submit(function () {
         return false;
@@ -71,6 +76,10 @@ function initForm() {
     });
 
     $("#frmloadDoc").submit(function () {
+        return false;
+    });frmIndices
+
+    $("#frmIndices").submit(function () {
         return false;
     });
 
@@ -176,6 +185,7 @@ function initForm() {
     initTablaFacturas();
     initTablaUsuariosPush();
     initArbolDocumentacion();
+    initTablaindicesCorrectores();
 
     // autosalto en IBAN
     $(function () {
@@ -291,36 +301,16 @@ function initForm() {
                     success: function (data, status) {
                         // hay que mostrarlo en la zona de datos
                         loadData(data);
+                        loadFacturasDelProveedor(proId);
+                        loadUsuariosPush(proId);
+                        compruebaAnticipos(proId);
+                        loadIndicesCorrectores(proId);
                     },
                     error: function (err) {
                         mensErrorAjax(err);
                         // si hay algo más que hacer lo haremos aquí.
                     }
                 });
-        
-                // contador de código
-               /*  $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        
-                        codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
-                                                    //el codigo y resulta que ya está asignado
-        
-                    
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                }); */
-        
-                loadFacturasDelProveedor(proId);
-                loadUsuariosPush(proId);
-                compruebaAnticipos(proId);
             } else {
                 // se trata de un alta ponemos el id a cero para indicarlo.
                 vm.proveedorId(0);
@@ -493,6 +483,13 @@ function admData() {
     self.nombrePush = ko.observable();
     self.loginPush = ko.observable();
     self.passwordPush = ko.observable();
+
+    //INDICES CORRECTORES
+    self.indiceCorrectorId = ko.observable();
+    self.nombreIndice = ko.observable();
+    self.minimo = ko.observable();
+    self.maximo = ko.observable();
+    self.porcentajeDescuento = ko.observable();
     
     //RECURSO PREVNTIVO
     self.nombreRp = ko.observable();
@@ -2363,6 +2360,292 @@ function uploadDocum(arr) {
                 }
             );        
             });       
+}
+
+
+// --------------- Solapa de Indices correctores
+function initTablaindicesCorrectores() {
+    tablaSeries = $('#dt_indices').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "oTableTools": {
+            "aButtons": [{
+                "sExtends": "pdf",
+                "sTitle": "Prefacturas Seleccionadas",
+                "sPdfMessage": "proasistencia PDF Export",
+                "sPdfSize": "A4",
+                "sPdfOrientation": "landscape",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "copy",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "csv",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "xls",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            },
+            {
+                "sExtends": "print",
+                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
+                "oSelectorOpts": {
+                    filter: 'applied',
+                    order: 'current'
+                }
+            }
+            ],
+            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+        },
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_indices'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataindices,
+        columns: [{
+            data: "proveedorUsuarioPushId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        },{
+            data: "nombre"
+        }, {
+            data: "minimo"
+        }, {
+            data: "maximo"
+        }, {
+            data: "porcentajeDescuento"
+        },{
+            data: "proveedorUsuarioPushId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteIndiceCorrector(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editIndiceCorrector(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+}
+
+
+function loadIndicesCorrectores(proveedorId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/" + proveedorId, null, function (err, data) {
+        if (err) return;
+        loadTablaIndicesCorrectores(data);
+    });
+}
+
+function loadTablaIndicesCorrectores(data) {
+    var dt = $('#dt_indices').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function guardarIndiceCorrector() {
+    //COMPROBAMOS PRIMERO QUE NO HAYA YA UN USUARIO CON ESTE LOGIN Y CONTRASEÑA 
+    
+    var encontrado = 0;
+    var data = {
+        indiceCorrector: {
+            nombre: vm.nombreIndice(),
+            minimo: vm.minimo(),
+            maximo: vm.maximo(),
+            porcentajeDescuento: vm.porcentajeDescuento()
+        }
+    }
+
+    if (!indiceEnEdicion) {
+        if(!datosOKIndicesCorrectores()) return;
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadIndicesCorrectores(vm.proveedorId());
+                $('#modalIndicesCorrectores').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                indiceEnEdicion = false;
+                empSerieId = 0;
+                loadIndicesCorrectores(vm.proveedorId());
+                $('#modalIndicesCorrectores').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
+function deleteIndicesCorrectores(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/elimina/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadIndicesCorrectores(vm.proveedorId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            limpiaModalIndicesCorrectores();
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function limpiaModalIndicesCorrectores() {
+   vm.indiceCorrectorId(null);
+   vm.minimo(null);
+   vm.maximo(null);
+   vm.porcentajeDescuento(null);
+
+}
+
+function editIndicesCorrectores(id) {
+    indiceEnEdicion = true;
+    cargaModalIndicesCorrectores(id);
+}
+
+function cargaModalIndicesCorrectores(id) {
+    limpiaModalIndicesCorrectores();
+    if(id) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuario/proveedor/app/" + id, null, function (err, data) {
+            if (err) return;
+           vm.proveedorUsuarioPushId(data.proveedorUsuarioPushId);
+           vm.nombrePush(data.nombre);
+           vm.loginPush(data.login);
+           vm.passwordPush(data.password);
+            $('#modalIndicesCorrectores').modal('show');
+        });
+    }
+}
+
+function datosOKIndicesCorrectores() {
+    $('#modalIndicesCorrectores-form').validate({
+        rules: {
+            txtNombrePush: {
+                required: true
+            },
+            txtLoginPush: {
+                required:true,
+            },
+            txtPasswordPush: {
+                required:true,
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNombrePush: {
+                required: "Debe elegir un nombre"
+            },
+            txtLoginPush: {
+                required: "Debe elegir un usuario"
+            },
+            txtPasswordPush: {
+                required: "Debe elegir una contraseña"
+            },
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#modalIndicesCorrectores-form").validate().settings;
+    return $('#modalIndicesCorrectores-form').valid();
 }
 
 
