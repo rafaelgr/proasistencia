@@ -77,7 +77,7 @@ function initForm() {
 
     $("#frmloadDoc").submit(function () {
         return false;
-    });frmIndices
+    });
 
     $("#frmIndices").submit(function () {
         return false;
