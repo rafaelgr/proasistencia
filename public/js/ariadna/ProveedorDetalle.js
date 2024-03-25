@@ -253,6 +253,15 @@ function initForm() {
     }, 'La fecha de alta debe ser menor que la fecha de baja.');
     //
 
+    $.validator.addMethod("numberGreaterThan",
+    function (value, element, params) {
+        var fv = value;
+        var fp = $(params).val();
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return fv > fp;
+        } 
+    }, 'El máximo tiene que ser mayor que el mínimo.');
+
     
     // 7 bind to events triggered on the tree
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
@@ -2504,9 +2513,6 @@ function loadTablaIndicesCorrectores(data) {
 }
 
 function guardarIndiceCorrector() {
-    //COMPROBAMOS PRIMERO QUE NO HAYA YA UN USUARIO CON ESTE LOGIN Y CONTRASEÑA 
-    
-    var encontrado = 0;
     var data = {
         indiceCorrector: {
             nombre: vm.nombreIndice(),
@@ -2617,27 +2623,34 @@ function cargaModalIndicesCorrectores(id) {
 function datosOKIndicesCorrectores() {
     $('#modalIndicesCorrectores-form').validate({
         rules: {
-            txtNombrePush: {
+            txtNombreIndice: {
                 required: true
             },
-            txtLoginPush: {
+            txtMinimo: {
                 required:true,
             },
-            txtPasswordPush: {
+            txtMaximo: {
+                required: true,
+                numberGraeterThan: "#txtMinimo" 
+            },
+            txtPorcentajeDescuento: {
                 required:true,
             }
         },
         // Messages for form validation
         messages: {
-            txtNombrePush: {
+            txtNombreIndice: {
                 required: "Debe elegir un nombre"
             },
-            txtLoginPush: {
-                required: "Debe elegir un usuario"
+            txtMinimo: {
+                required: "Debe elegir un mínimo"
             },
-            txtPasswordPush: {
-                required: "Debe elegir una contraseña"
+            txtMaximo: {
+                required: "Debe elegir un máximo"
             },
+            txtPorcentajeDescuento: {
+                required: "Debe elegir un porcentaje de descuento",
+            }
         },
         // Do not change code below
         errorPlacement: function (error, element) {

@@ -1657,7 +1657,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> Usuarios móvil</h4>
+                    <h4 class="modal-title"> Indices correctores</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="modalIndicesCorrectores-form" class="smart-form">
@@ -1667,7 +1667,7 @@
                                     <section class="col col-md-12">
                                         <label class="label">Nombre</label>
                                         <label class="input">
-                                            <input id="txtNombrePush" name="txtNombrePush" type="text" data-bind="value: nombreIndice"/>
+                                            <input id="txtNombreIndice" name="txtNombreIndice" type="text" data-bind="value: nombreIndice"/>
                                         </label>
                                     </section>
                                 </div>
@@ -1677,26 +1677,26 @@
                                     <section class="col col-md-6">
                                         <label class="label">minimo</label>
                                         <label class="input">
-                                            <input id="txtLoginPush" name="txtLoginPush" type="text" data-bind="value: minimo" />
+                                            <input id="txtMinimo" name="txtMinimo" type="text" data-bind="value: minimo" />
                                         </label>
                                     </section>
                                     <section class="col col-md-6">
                                         <label class="label">maximo</label>
                                         <label class="input">
-                                            <input id="txtPasswordPush" name="txtPasswordPush" type="text" data-bind="value: maximo" />
+                                            <input id="txtMaximo" name="txtMaximo" type="text" data-bind="value: maximo" />
                                         </label>
                                     </section>
                                     <section class="col col-md-6">
                                         <label class="label">Porcentaje de descuento</label>
                                         <label class="input">
-                                            <input id="txtPasswordPush" name="txtPasswordPush" type="text" data-bind="value: porcentajeDescuento" />
+                                            <input id="txtPorcentajeDescuento" name="txtPorcentajeDescuento" type="text" data-bind="value: porcentajeDescuento" />
                                         </label>
                                     </section>
                                 </div>
                             </section>
                         </fieldset>
                         <footer>
-                            <button id="btnAceptarComisionista" class="btn btn-primary" onclick="guardarUsuarioPush()">
+                            <button id="btnAceptarComisionista" class="btn btn-primary" onclick="guardarindiceCorrector()">
                                 Aceptar
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">
