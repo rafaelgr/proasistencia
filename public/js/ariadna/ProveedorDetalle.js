@@ -255,8 +255,8 @@ function initForm() {
 
     $.validator.addMethod("numberGreaterThan",
     function (value, element, params) {
-        var fv = value;
-        var fp = $(params).val();
+        var fv = parseFloat(value);
+        var fp = parseFloat($(params).val());
         if (!/Invalid|NaN/.test(new Date(fv))) {
             return fv > fp;
         } 
@@ -2516,6 +2516,7 @@ function guardarIndiceCorrector() {
     var data = {
         indiceCorrector: {
             nombre: vm.nombreIndice(),
+            proveedorId: vm.proveedorId(),
             minimo: vm.minimo(),
             maximo: vm.maximo(),
             porcentajeDescuento: vm.porcentajeDescuento()
@@ -2526,7 +2527,7 @@ function guardarIndiceCorrector() {
         if(!datosOKIndicesCorrectores()) return;
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
+            url: myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -2631,7 +2632,7 @@ function datosOKIndicesCorrectores() {
             },
             txtMaximo: {
                 required: true,
-                numberGraeterThan: "#txtMinimo" 
+                numberGreaterThan: "#txtMinimo" 
             },
             txtPorcentajeDescuento: {
                 required:true,
@@ -2657,7 +2658,6 @@ function datosOKIndicesCorrectores() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#modalIndicesCorrectores-form").validate().settings;
     return $('#modalIndicesCorrectores-form').valid();
 }
 
