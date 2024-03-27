@@ -24,6 +24,8 @@ function initForm() {
     getVersionFooter();
     directorio = gup('dir');
 
+    if(directorio != "facturas_proveedores/") $('#frmBuscar').hide()
+
     vm = new admData();
     ko.applyBindings(vm);
 
@@ -174,14 +176,19 @@ var descargarRenombrar = function() {
     //patronTexto = patronTexto.toString();
     selectObjects(patronTexto)
     .then(objetosFiltrados => {
-        descargarObjetos(objetosFiltrados)
-        .then(() => {
-            console.log('Descarga completa');
+        renombrarObjetos(objetosFiltrados)
+        .then((objetosRenombrados) => {
+            descargarObjetos(objetosRenombrados)
+            .then(() => {
+                console.log('Descarga completa');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    
     })
     .catch(error => {
         console.error('Error:', error);
@@ -191,12 +198,30 @@ var descargarRenombrar = function() {
 
 async function selectObjects(patronTexto) {
      // Filtrar los objetos según el patrón de texto
-     const objetosFiltrados = objectsS3.filter(objeto => {
+     let objetosFiltrados = objectsS3.filter(objeto => {
         return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
     });
-
     return objetosFiltrados;
+}
 
+async function renombrarObjetos(obj) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: "/api/facturasProveedores/recupera/numregis",
+            method: 'PUT',
+            contentType: 'application/json', // Establece el tipo de contenido a JSON
+            data: JSON.stringify(obj), // Convierte el array a formato JSON
+            success: function(response) {
+                // Resuelve la promesa con la respuesta recibida
+                resolve(response);
+            },
+            error: function(xhr, status, error) {
+                // Rechaza la promesa con el error
+                mensError("Fallo al renombrar los archivos.");
+                reject(error);
+            }
+        });
+    });
 }
 
 function initArbolDocumentacion() {
@@ -295,7 +320,7 @@ async function descargarObjetos(objetos) {
         try {
             const { Body } = await s3.getObject(params).promise();
             const url = URL.createObjectURL(new Blob([Body]));
-            const nombreDescarga = objeto.RenombrarA + "_" + objeto.Key; // Usa el nombre de descarga alternativo si está definido
+            const nombreDescarga = objeto.RenombrarA; // Usa el nombre de descarga alternativo si está definido
             descargarArchivo(url, nombreDescarga);
         } catch (error) {
             console.error(`Error al descargar el objeto ${objeto.Key}: ${error}`);
@@ -309,6 +334,7 @@ function descargarArchivo(url, nombreArchivo) {
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', nombreArchivo);
+    link.setAttribute('target', '_blank'); // Agregar el atributo target="_blank"
     document.body.appendChild(link);
     link.click();
 }
