@@ -975,8 +975,10 @@ function compruebaRepetido(numeroAnt, proveedorId) {
                 if(data) {
                     data.forEach( (f) => {
                         var num = f.numeroAnticipoProveedor;
+                        var ano = moment(spanishDbDate(vm.fecha())).year();
+                        var antAno = moment(f.fecha).year();
                         
-                        if(num == numeroAnt && f.antproveId != vm.antproveId()) {
+                        if(num == numeroAnt && f.antproveId != vm.antproveId() && ano == antAno) {
                             mensError('Ya existe una anticipo con este numero para este proveedor');
                             $('#txtNumero').val(antNumAnt);
                             return;
