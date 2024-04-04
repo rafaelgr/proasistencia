@@ -1233,45 +1233,13 @@ function compruebaNifRepetido(nif) {
 function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1375,8 +1343,6 @@ function loadTablaFacturas(data) {
 }
 
 function editFactura(id) {
-    // hay que abrir la página de detalle de prefactura
-    // pasando en la url ese ID
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
     window.open(url, '_new');
 }
@@ -1470,59 +1436,13 @@ function compruebaAnticipos(id) {
 function initTablaUsuariosPush() {
     tablaSeries = $('#dt_usuarios').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Prefacturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+       
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -1577,7 +1497,6 @@ function initTablaUsuariosPush() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosPush(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosPush(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -2376,59 +2295,13 @@ function uploadDocum(arr) {
 function initTablaindicesCorrectores() {
     tablaSeries = $('#dt_indices').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Prefacturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+       
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -2464,7 +2337,7 @@ function initTablaindicesCorrectores() {
         },
         data: dataindices,
         columns: [{
-            data: "proveedorUsuarioPushId",
+            data: "indiceCorrectorId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if (data) {
@@ -2481,11 +2354,10 @@ function initTablaindicesCorrectores() {
         }, {
             data: "porcentajeDescuento"
         },{
-            data: "proveedorUsuarioPushId",
+            data: "indiceCorrectorId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteIndiceCorrector(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editIndiceCorrector(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -2544,7 +2416,7 @@ function guardarIndiceCorrector() {
     } else {
         $.ajax({
             type: "PUT",
-            url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/modifica/" + vm.proveedorUsuarioPushId(),
+            url: myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/" + vm.indiceCorrectorId(),
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -2563,7 +2435,7 @@ function guardarIndiceCorrector() {
     }
 }
 
-function deleteIndicesCorrectores(id) {
+function deleteIndiceCorrector(id) {
     // mensaje de confirmación
     var mens = "¿Realmente desea borrar este registro?";
     $.SmartMessageBox({
@@ -2574,7 +2446,7 @@ function deleteIndicesCorrectores(id) {
         if (ButtonPressed === "Aceptar") {
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/elimina/" + id,
+                url: myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: null,
@@ -2596,13 +2468,14 @@ function deleteIndicesCorrectores(id) {
 
 function limpiaModalIndicesCorrectores() {
    vm.indiceCorrectorId(null);
+   vm.nombreIndice(null);
    vm.minimo(null);
    vm.maximo(null);
    vm.porcentajeDescuento(null);
 
 }
 
-function editIndicesCorrectores(id) {
+function editIndiceCorrector(id) {
     indiceEnEdicion = true;
     cargaModalIndicesCorrectores(id);
 }
@@ -2610,12 +2483,13 @@ function editIndicesCorrectores(id) {
 function cargaModalIndicesCorrectores(id) {
     limpiaModalIndicesCorrectores();
     if(id) {
-        llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuario/proveedor/app/" + id, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id, null, function (err, data) {
             if (err) return;
-           vm.proveedorUsuarioPushId(data.proveedorUsuarioPushId);
-           vm.nombrePush(data.nombre);
-           vm.loginPush(data.login);
-           vm.passwordPush(data.password);
+           vm.indiceCorrectorId(data.indiceCorrectorId);
+           vm.nombreIndice(data.nombre);
+           vm.minimo(data.minimo);
+           vm.maximo(data.maximo);
+           vm.porcentajeDescuento(data.porcentajeDescuento);
             $('#modalIndicesCorrectores').modal('show');
         });
     }
