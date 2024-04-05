@@ -3,10 +3,6 @@ prefacturaGeneral.js
 Funciones js par la página PrefacturaGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
 
 var dataFacturas;
 var facproveId;
@@ -347,10 +343,6 @@ function initTablaFacturas() {
             data: "fecha",
         },  {
             data: "fecha_recepcion",
-            /* render: function (data, type, row) {
-                if(!data) return null;
-                return moment(data).format('DD/MM/YYYY');
-            } */
         }, {
             data: "total",
             render: function (data, type, row) {

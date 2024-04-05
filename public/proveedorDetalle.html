@@ -22,6 +22,12 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">-->
+
+    <!--DATATABLES-->
+    <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/Buttons-1.6.5/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/responsive-2.4.0/css/responsive.dataTables.min.css">
+
+
     <!-- #FAVICONS -->
     <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -1145,9 +1151,37 @@
                                                             <!-- end widget edit box -->
                                                             <!-- widget content -->
                                                             <div class="widget-body">
+                                                                <form id="frmBuscar" class="smart-form">
+                                                                    <header>
+                                                                        Criterios filtrado.
+                                                                    </header>
+                                                                    <fieldset>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-6">
+                                                                                <label class="label">Desde fecha recepción</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-6">
+                                                                                <label class="label">Hasta fecha recepción</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <fieldset>
+                                                                        <div class="pull-right">
+                                                                            <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                                                <i class="fa fa-lg fa-search"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </form>
                                                                 <!-- this is what the user will see -->
                                                                 <header>
-                                                                    Facturas emitidas por este proveedor
+                                                                    <h5>Facturas emitidas por este proveedor</h5>
                                                                 </header>
                                                                 <hr/>
                                                                 <div id="tbFactura">
@@ -1158,6 +1192,9 @@
                                                                                         <i class="fa fa-fw fa-search"></i>
                                                                                     </th>
                                                                                     
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
                                                                                     <th class="hasinput">
                                                                                         <input type="text" class="form-control" placeholder="" />
                                                                                     </th>
@@ -1191,7 +1228,10 @@
                                                                                         Receptor
                                                                                     </th>
                                                                                     <th data-hide="phone">
-                                                                                        fecha
+                                                                                        fecha factura
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        fecha recepción
                                                                                     </th>
                                                                                     <th data-hide="phone">
                                                                                         base
@@ -1668,13 +1708,20 @@
     <script src="myconfig.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <script src="js/ariadna/proveedorDetalle.js"></script>
-    <!-- PAGE RELATED PLUGIN(S) -->
-    <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+   <!-- PAGE RELATED PLUGIN(S) -->
+   <script src="js/plugin/datatables/new/jquery.dataTables.min.js"></script>
+   <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+   <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+   <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+   <script src="js/plugin/datatables/new/responsive-2.4.0/js/dataTables.responsive.min.js"></script>
 
+   <!--Nuevos botones exportación para datatables-->
+   <script src="js/plugin/datatables/new/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
+   <script src="js/plugin/datatables/new/JSZip-2.5.0/jszip.min.js"></script>
+   <script src="js/plugin/datatables/new/pdfmake-0.1.36/pdfmake.min.js"></script>
+   <script src="js/plugin/datatables/new/pdfmake-0.1.36/vfs_fonts.js"></script>
+   <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+   <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.print.min.js"></script>
     <!--AWS-->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 

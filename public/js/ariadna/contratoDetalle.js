@@ -4459,13 +4459,13 @@ function initTablaFacproves() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7 || column === 8) {
+                    if(column === 7 || column === 8 || column === 9) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 10) {
+                        if(column === 0 || column === 11) {
                             return "";
                         } else {
                             return data;
@@ -4474,7 +4474,7 @@ function initTablaFacproves() {
                 },
                 footer: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8) {
+                    if(row === 7 || row === 8 || row === 9) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -4494,7 +4494,7 @@ function initTablaFacproves() {
         exportOptions: {
             format: {
                 body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 10) {
+                    if(column === 0 || column === 11) {
                         return "";
                     } else {
                         return data;
@@ -4502,7 +4502,7 @@ function initTablaFacproves() {
                 },
                 footer: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8) {
+                    if(row === 7 || row === 8 || row === 9) {
                         return data;
                     } else {
                        if(row === 5) {
@@ -4557,7 +4557,7 @@ function initTablaFacproves() {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4570,7 +4570,7 @@ function initTablaFacproves() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4578,7 +4578,7 @@ function initTablaFacproves() {
 
              // Total over all pages
               total3 = api
-              .column( 8 )
+              .column( 9 )
               .data()
               .reduce( function (a, b) {
                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4589,15 +4589,15 @@ function initTablaFacproves() {
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $( api.columns(9).footer() ).html(
                 numeral(total3).format('0,0.00')
             ); 
 
@@ -4646,6 +4646,11 @@ function initTablaFacproves() {
             data: "emisorNombre"
         }, {
             data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },  {
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -5397,13 +5402,13 @@ function initTablaFactcol() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 5 || column === 6 || column === 7) {
+                    if(column === 6 || column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 9) {
+                        if(column === 0 || column === 10) {
                             return "";
                         } else {
                             return data;
@@ -5412,7 +5417,7 @@ function initTablaFactcol() {
                 },
                 footer: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6 || row === 7) {
+                    if(row === 6 || row === 7 || row === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -5432,7 +5437,7 @@ function initTablaFactcol() {
         exportOptions: {
             format: {
                 body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 9) {
+                    if(column === 0 || column === 10) {
                         return "";
                     } else {
                         return data;
@@ -5440,7 +5445,7 @@ function initTablaFactcol() {
                 },
                 footer: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6 || row === 7) {
+                    if(row === 6 || row === 7 || row === 8) {
                         return data;
                     } else {
                        if(row === 4) {
@@ -5493,7 +5498,7 @@ function initTablaFactcol() {
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5506,7 +5511,7 @@ function initTablaFactcol() {
 
              // Total over all pages
              total2 = api
-             .column( 6 )
+             .column( 7 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5514,7 +5519,7 @@ function initTablaFactcol() {
 
              // Total over all pages
               total3 = api
-              .column( 7 )
+              .column( 8 )
               .data()
               .reduce( function (a, b) {
                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5525,15 +5530,15 @@ function initTablaFactcol() {
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $( api.columns(6).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total3).format('0,0.00')
             ); 
 
@@ -5580,6 +5585,11 @@ function initTablaFactcol() {
             data: "emisorNombre"
         }, {
             data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }

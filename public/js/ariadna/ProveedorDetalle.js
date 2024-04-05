@@ -17,18 +17,6 @@ var numfactu = 0;
 var dataUsuarios;
 var usuarioEnEdicion = false;
 
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
-
-
-
 
 datePickerSpanish(); // see comun.js
 
@@ -44,6 +32,7 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
+    $('#btnBuscar').click(buscarFacturasFecha());
    
 
     $('#frmProveedor').submit(function () {
@@ -73,6 +62,11 @@ function initForm() {
     $("#frmloadDoc").submit(function () {
         return false;
     });
+
+    $('#frmBuscar').submit(function () {
+        return false
+    });
+
 
     //carga de combos
     $("#cmbTiposIva").select2(select2Spanish());
@@ -176,6 +170,20 @@ function initForm() {
     initTablaFacturas();
     initTablaUsuariosPush();
     initArbolDocumentacion();
+
+       //validacion de fecha mayor que fecha
+       $.validator.addMethod("greaterThan",
+       function (value, element, params) {
+           var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+           var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+           if (!/Invalid|NaN/.test(new Date(fv))) {
+               return new Date(fv) >= new Date(fp);
+           } else {
+               // esto es debido a que permitimos que la segunda fecha nula
+               return true;
+           }
+       }, 'La fecha final debe ser mayor que la inicial.');
+   
 
     // autosalto en IBAN
     $(function () {
@@ -529,8 +537,10 @@ function admData() {
     self.documNombre = ko.observable();
     //
     self.files = ko.observable();
-    
-  
+
+    //
+    self.desdeFecha = ko.observable();
+    self.hastaFecha = ko.observable();
 }
 
 function loadData(data) {
@@ -1225,60 +1235,74 @@ function compruebaNifRepetido(nif) {
 
 //---- Solapa facturas
 function initTablaFacturas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6 || column === 11) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column ===8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                }
+            }
+        }
+    };
     tablaFacturas = $('#dt_factura').DataTable({
-        bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        bSort: true,
+        paging: true,
+        "pageLength": 100,
+        columnDefs: [
+            { 
+                "type": "datetime-moment",
+                "targets": [3, 4],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1315,13 +1339,20 @@ function initTablaFacturas() {
             data: "receptorNombre"
         }, {
             data: "fecha",
+        },  {
+            data: "fecha_recepcion",
+        }, {
+            data: "total",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                var string = numeral(data).format('0,0.00');
+                return string;
             }
         }, {
-            data: "total"
-        }, {
-            data: "totalConIva"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         },  {
             data: "vFPago"
         }, {
@@ -1518,18 +1549,6 @@ function initTablaUsuariosPush() {
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_usuarios'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2364,6 +2383,49 @@ function uploadDocum(arr) {
             );        
             });       
 }
+
+function buscarFacturasFecha() {
+    var mf = function () {
+        if (!datosOKFechas()) return;
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/facturasProveedores/recupera/facturas/proveedor/por/fecha/" + vm.proveedorId() + "/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
+                loadTablaFacturas(data);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    };
+    return mf;
+}
+
+function datosOKFechas() {
+    // Segun se incorporen criterios de filtrado
+    // habrá que controlarlos aquí
+    $('#frmBuscar').validate({
+        rules: {
+            txtHastaFecha: {
+                greaterThan: "#txtDesdeFecha"
+            }
+        },
+        // Messages for form validation
+        messages: {
+
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmBuscar').valid();
+}
+
 
 
 
