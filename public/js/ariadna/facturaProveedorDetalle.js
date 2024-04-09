@@ -14,6 +14,7 @@ var ProveedorId = 0;
 var refWoId = 0;
 var ruta;
 var desdeContrato;
+var desdeProveedor;
 var acumulado = 0;
 var tot;
 var numServiciadas;
@@ -254,6 +255,7 @@ function initForm() {
     EmpresaId = gup("EmpresaId");
     ProveedorId = gup("ProveedorId");
     desdeContrato = gup("desdeContrato");
+    desdeProveedor = gup("desdeProveedor");
 
     
 
@@ -851,6 +853,13 @@ var aceptarFactura = function (salir) {
                 mensNormal('Factura guardada.');
                 window.open(returnUrl, '_self');
             }
+        } else if(desdeProveedor == "true" && facproveId != 0) {
+            if(salir) {
+                window.open('ProveedorDetalle.html?ProveedorId='+ vm.proveedorId() +'&doc=true', '_self');
+            } else {
+                mensNormal('Factura guardada.');
+                window.open(returnUrl, '_self');
+            }
         }
         else{
             if(verb == "PUT") {
@@ -931,7 +940,10 @@ function salir() {
     var mf = function () {
         if(EmpresaId != "" || desdeContrato == "true"){
             window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
-        }else{
+        } else if(desdeProveedor == "true") {
+            window.open('ProveedorDetalle.html?ProveedorId='+ vm.proveedorId() +'&doc=true', '_self');
+        }
+        else{
             var url = "FacturaProveedorGeneral.html?ConservaFiltro=true";
             window.open(url, '_self');
         }

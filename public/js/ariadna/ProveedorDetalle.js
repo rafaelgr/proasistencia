@@ -271,6 +271,11 @@ function initForm() {
       $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
       $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
+
+     //abrir en pestaña de facturas del proveedor
+     if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s2"]').tab('show');
+    } 
   
 
     // obtener el número de digitos de la contabilidad
@@ -1470,8 +1475,8 @@ function loadTablaFacturas(data) {
 function editFactura(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id + "&desdeProveedor=true";
+    window.open(url, '_self');
 }
 
 function deleteFactura(id) {
