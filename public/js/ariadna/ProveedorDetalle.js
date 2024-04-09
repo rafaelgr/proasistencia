@@ -172,7 +172,7 @@ function initForm() {
     initArbolDocumentacion();
 
        //validacion de fecha mayor que fecha
-       $.validator.addMethod("greaterThan",
+       $.validator.addMethod("greaterThan2",
        function (value, element, params) {
            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -271,6 +271,11 @@ function initForm() {
       $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
       $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
+
+     //abrir en pestaña de facturas del proveedor
+     if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s2"]').tab('show');
+    } 
   
 
     // obtener el número de digitos de la contabilidad
@@ -1303,6 +1308,68 @@ function initTablaFacturas() {
             "buttonText": "Mostrar / ocultar columnas"
         },
         autoWidth: true,
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+             // Total over all pages
+              total3 = api
+              .column( 7 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(6).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total3).format('0,0.00')
+            ); 
+
+
+            //////
+
+            
+        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1349,6 +1416,12 @@ function initTablaFacturas() {
             }
         }, {
             data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
+        }, {
+            data: "importeRetencion",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
                 return string;
@@ -1402,8 +1475,8 @@ function loadTablaFacturas(data) {
 function editFactura(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_new');
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id + "&desdeProveedor=true";
+    window.open(url, '_self');
 }
 
 function deleteFactura(id) {
@@ -2411,7 +2484,7 @@ function datosOKFechas() {
     $('#frmBuscar').validate({
         rules: {
             txtHastaFecha: {
-                greaterThan: "#txtDesdeFecha"
+                greaterThan2: "#txtDesdeFecha"
             }
         },
         // Messages for form validation
