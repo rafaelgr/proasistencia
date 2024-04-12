@@ -24,12 +24,17 @@ function initForm() {
     getVersionFooter();
     directorio = gup('dir');
 
-    if(directorio != "facturas_proveedores/") $('#frmBuscar').hide()
+    if(directorio != "facturas_proveedores/") $('#frmBuscarFacproves').hide();
+    if(directorio != "facturas/") $('#frmBuscarFacturas').hide()
 
     vm = new admData();
     ko.applyBindings(vm);
 
-    $('#btndescargar').click(descargarRenombrar);
+    $('#btndescargarFacproves').click(descargarRenombrarFacproves);
+
+    $('#btndescargarFacturas').click(descargarRenombrarFacturas);
+    
+    $('#btnBuscarFacturas').click(buscarFacturas);
     
      // 7 bind to events triggered on the tree
      $('#jstreeDocumentacion').on("click.jstree", function (e) {
@@ -60,7 +65,11 @@ $('#demo').on('click', function () {
         $('#jstreeDocumentacion').jstree(true).search(v);
       }, 250);
     }); */
-    $("#frmBuscar").submit(function () {
+    $("#frmBuscarFacproves").submit(function () {
+        return false;
+    });
+
+    $("#frmBuscarFacturas").submit(function () {
         return false;
     });
 
@@ -166,19 +175,20 @@ var initAutoProveedor = function () {
         return r;
     }, "Debe seleccionar un Proveedor válido");
 };
+//FUNCIONES DE DESCARGAR Y RENOMBRAR FACTURAS DE GASTOS
 
-var descargarRenombrar = function() {
+var descargarRenombrarFacproves = function() {
     if(objectsS3.length == 0) return;
     //
     var a = vm.sempresaId().toString();
     var b = vm.sano().toString();
     var patronTexto = b + "-" + a;
     //patronTexto = patronTexto.toString();
-    selectObjects(patronTexto)
+    selectObjectsFacprove(patronTexto)
     .then(objetosFiltrados => {
-        renombrarObjetos(objetosFiltrados)
+        renombrarObjetosFacprove(objetosFiltrados)
         .then((objetosRenombrados) => {
-            descargarObjetos(objetosRenombrados)
+            descargarObjetosFacprove(objetosRenombrados)
             .then(() => {
                 console.log('Descarga completa');
             })
@@ -196,7 +206,7 @@ var descargarRenombrar = function() {
 }
 
 
-async function selectObjects(patronTexto) {
+async function selectObjectsFacprove(patronTexto) {
      // Filtrar los objetos según el patrón de texto
      let objetosFiltrados = objectsS3.filter(objeto => {
         return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
@@ -204,7 +214,7 @@ async function selectObjects(patronTexto) {
     return objetosFiltrados;
 }
 
-async function renombrarObjetos(obj) {
+async function renombrarObjetosFacprove(obj) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             url: "/api/facturasProveedores/recupera/numregis",
@@ -224,6 +234,134 @@ async function renombrarObjetos(obj) {
     });
 }
 
+async function descargarObjetosFacprove(objetos) {
+    AWS.config.region = parametros.bucket_region_server; // Región
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: parametros.identity_pool_server,
+    });
+    const s3 = new AWS.S3();
+
+    for (const objeto of objetos) {
+        const params = {
+            Bucket: parametros.bucket_server,
+            Key: objeto.Key,
+        };
+
+        try {
+            const { Body } = await s3.getObject(params).promise();
+            const url = URL.createObjectURL(new Blob([Body]));
+            const nombreDescarga = objeto.RenombrarA; // Usa el nombre de descarga alternativo si está definido
+            descargarArchivo(url, nombreDescarga);
+        } catch (error) {
+            console.error(`Error al descargar el objeto ${objeto.Key}: ${error}`);
+        }
+    }
+}
+
+
+
+//FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
+var buscarFacturas = function() {
+    var a = vm.sempresaId().toString();
+    var b = vm.sano().toString();
+    llamadaAjax("GET", "/api/facturas/busca/key/documentacion/" + a + "/" + b, null, function (err, data) {
+       if(data) {
+        descargarObjetosFacturas(data)
+        .then(() => {
+            console.log('Descarga completa');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+       }
+    });
+    
+
+}
+
+var descargarRenombrarFacturas = function() {
+    if(objectsS3.length == 0) return;
+    //Buscamos 
+    var a = vm.sempresaId().toString();
+    var b = vm.sano().toString();
+    var patronTexto = b + "-" + a;
+    //patronTexto = patronTexto.toString();
+    selectObjects(patronTexto)
+    .then(objetosFiltrados => {
+        renombrarObjetosFacturas(objetosFiltrados)
+        .then((objetosRenombrados) => {
+            descargarObjetosFacturas(objetosRenombrados)
+            .then(() => {
+                console.log('Descarga completa');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+async function selectObjectsFacturas(patronTexto) {
+    // Filtrar los objetos según el patrón de texto
+    let objetosFiltrados = objectsS3.filter(objeto => {
+       return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
+   });
+   return objetosFiltrados;
+}
+
+async function renombrarObjetosFacturas(obj) {
+   return new Promise(function(resolve, reject) {
+       $.ajax({
+           url: "/api/facturasProveedores/recupera/numregis",
+           method: 'PUT',
+           contentType: 'application/json', // Establece el tipo de contenido a JSON
+           data: JSON.stringify(obj), // Convierte el array a formato JSON
+           success: function(response) {
+               // Resuelve la promesa con la respuesta recibida
+               resolve(response);
+           },
+           error: function(xhr, status, error) {
+               // Rechaza la promesa con el error
+               mensError("Fallo al renombrar los archivos.");
+               reject(error);
+           }
+       });
+   });
+}
+
+async function descargarObjetosFacturas(objetos) {
+    AWS.config.region = parametros.bucket_region_server; // Región
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: parametros.identity_pool_server,
+    });
+    const s3 = new AWS.S3();
+
+    for (const objeto of objetos) {
+        const params = {
+            Bucket: parametros.bucket_server,
+            Key: objeto.vFact,
+        };
+
+        try {
+            const { Body } = await s3.getObject(params).promise();
+            const url = URL.createObjectURL(new Blob([Body]));
+            const nombreDescarga = objeto.vFact; // Usa el nombre de descarga alternativo si está definido
+            descargarArchivo(url, nombreDescarga);
+        } catch (error) {
+            console.error(`Error al descargar el objeto ${objeto.Key}: ${error}`);
+        }
+    }
+}
+
+
+
+///
 function initArbolDocumentacion() {
     $('#jstreeDocumentacion').jstree({ 'core' : 
     {
@@ -303,30 +441,6 @@ async function getObj(parametros) {
       return response;
 }
 
-
-async function descargarObjetos(objetos) {
-    AWS.config.region = parametros.bucket_region_server; // Región
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: parametros.identity_pool_server,
-    });
-    const s3 = new AWS.S3();
-
-    for (const objeto of objetos) {
-        const params = {
-            Bucket: parametros.bucket_server,
-            Key: objeto.Key,
-        };
-
-        try {
-            const { Body } = await s3.getObject(params).promise();
-            const url = URL.createObjectURL(new Blob([Body]));
-            const nombreDescarga = objeto.RenombrarA; // Usa el nombre de descarga alternativo si está definido
-            descargarArchivo(url, nombreDescarga);
-        } catch (error) {
-            console.error(`Error al descargar el objeto ${objeto.Key}: ${error}`);
-        }
-    }
-}
 
 
 
