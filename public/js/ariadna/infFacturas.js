@@ -441,6 +441,7 @@ var rptFacturaParametros = function (sql) {
         } else {
             sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
         }
+        sql += " ORDER BY  pf.serie, pf.fecha, pf.numero ASC"
 
     }
     return sql;
