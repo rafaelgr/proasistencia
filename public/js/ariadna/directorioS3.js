@@ -32,9 +32,9 @@ function initForm() {
 
     $('#btndescargarFacproves').click(descargarRenombrarFacproves);
 
-    $('#btndescargarFacturas').click(descargarRenombrarFacturas);
+  
     
-    $('#btnBuscarFacturas').click(buscarFacturas);
+    $('#btndescargarFacturas').click(descargarRenombrarFacturas);
     
      // 7 bind to events triggered on the tree
      $('#jstreeDocumentacion').on("click.jstree", function (e) {
@@ -76,8 +76,15 @@ $('#demo').on('click', function () {
     $('#cmbAnos').select2(select2Spanish());
     loadAnyos();
 
+    $('#cmbAnos2').select2(select2Spanish());
+    loadAnyos2();
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas(2);
+
+    $("#cmbEmpresas2").select2(select2Spanish());
+    loadEmpresas2(2);
+
     initAutoProveedor();
 
 
@@ -104,6 +111,19 @@ function admData() {
     self.ano = ko.observable(); 
     self.sano = ko.observable();
     self.selectedAnos = ko.observableArray([]);
+    
+    //COMBO EMPRESA 2
+    self.empresaId2 = ko.observable();
+    self.sempresaId2 = ko.observable();
+    //
+    self.posiblesEmpresas2 = ko.observableArray([]);
+    self.elegidosEmpresas2 = ko.observableArray([]);
+    
+    //COMBO AÑOS 2
+    self.optionsAnos2 = ko.observableArray([]);
+    self.ano2 = ko.observable(); 
+    self.sano2 = ko.observable();
+    self.selectedAnos2 = ko.observableArray([]);
     
 } 
 
@@ -133,6 +153,33 @@ function   loadAnyos(){
     });
 }
 
+function   loadAnyos2(){
+    //recuperamos los años que hay en las facturas de proveedores en la base de datos
+    llamadaAjax("GET", "/api/facturasProveedores/get-anyos/facprove", null, function (err, data) {
+        console.log(data);
+        if (err) return;
+        var anos = [];
+        var ano = {}
+        var anoText;
+        var d = new Date();
+        var n = d.getFullYear();//estableceremos el año actual por defecto en el desplegable
+        var t = data[0].ano.toString();
+        vm.sano2(t);
+        for(var i = 0; i < data.length; i++){
+            var s = data[i];
+            anoText = s.ano.toString();
+          ano = {
+            nombreAno: anoText,
+            ano: s.ano
+          };
+          anos.push(ano);
+        }
+        vm.optionsAnos2(anos);
+        $("#cmbAnos2").val([n]).trigger('change');
+    });
+}
+
+
 function loadEmpresas(id) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
@@ -140,6 +187,16 @@ function loadEmpresas(id) {
         vm.posiblesEmpresas(empresas);
         vm.sempresaId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
+    });
+}
+
+function loadEmpresas2(id) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas2(empresas);
+        vm.sempresaId2(id);
+        $("#cmbEmpresas2").val([id]).trigger('change');
     });
 }
 
@@ -261,7 +318,7 @@ async function descargarObjetosFacprove(objetos) {
 
 
 //FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
-var buscarFacturas = function() {
+var descargarRenombrarFacturas = function() {
     var a = vm.sempresaId().toString();
     var b = vm.sano().toString();
     llamadaAjax("GET", "/api/facturas/busca/key/documentacion/" + a + "/" + b, null, function (err, data) {
@@ -280,7 +337,7 @@ var buscarFacturas = function() {
 
 }
 
-var descargarRenombrarFacturas = function() {
+/* var descargarRenombrarFacturas = function() {
     if(objectsS3.length == 0) return;
     //Buscamos 
     var a = vm.sempresaId().toString();
@@ -306,7 +363,7 @@ var descargarRenombrarFacturas = function() {
     .catch(error => {
         console.error('Error:', error);
     });
-}
+} */
 async function selectObjectsFacturas(patronTexto) {
     // Filtrar los objetos según el patrón de texto
     let objetosFiltrados = objectsS3.filter(objeto => {
