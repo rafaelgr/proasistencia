@@ -237,8 +237,8 @@ var initAutoProveedor = function () {
 var descargarRenombrarFacproves = function() {
     if(objectsS3.length == 0) return;
     //
-    var a = vm.sempresaId().toString();
-    var b = vm.sano().toString();
+    var a = vm.sempresaId2().toString();
+    var b = vm.sano2().toString();
     var patronTexto = b + "-" + a;
     //patronTexto = patronTexto.toString();
     selectObjectsFacprove(patronTexto)
