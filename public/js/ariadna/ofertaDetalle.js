@@ -1424,6 +1424,38 @@ function loadTablaOfertaLineas(data) {
 }
 
 
+function aplicaIndicesCorrectores(id) {
+    if(vm.tipoOfertaId() == 7) {//Solo se aplica en el departa,mento de reparaciones
+        llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false + "/" +  false, null, function (err, data) {
+            if (err) return;
+            var totalCoste = 0;
+            let proIds = [];
+            let cont = 0
+            data.forEach(function (linea) {
+                totalCoste += (linea.coste * linea.cantidad);
+                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+                //obtenemos los proveedores de la oferta
+                proIds.push(linea.proveedorId);
+                
+            });
+            //eliminamos los duplicados
+             proIds = proIds.filter((item,index)=>{
+                return proIds.indexOf(item) === index;
+              });
+              //buscamos los indices correctores de cada proveedor
+              for(let proId of proIds) {
+                buscarIndicesCorrectores(proId, data, function (err, result) {
+                    if(err) return mensError(err);
+                    cont++
+                    if(cont == proIds.length) loadLineasOferta(id);
+                });
+              }
+        });
+    } else {
+        loadLineasOferta(id);
+    }
+}
+
 function loadLineasOferta(id) {
     llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false + "/" +  false, null, function (err, data) {
         if (err) return;
@@ -1434,6 +1466,71 @@ function loadLineasOferta(id) {
         })
         loadTablaOfertaLineas(data);
     });
+}
+
+var buscarIndicesCorrectores =  function (proId, lineas, done) {
+    llamadaAjax('GET', "/api/proveedores/indices-correctores/proveedor/" + proId, null, function (err, indices) {
+        if (err) return errorGeneral(err, done);
+        let indice = 0;
+        let descuento = 0;
+        let importeproveedorDescuento = 0;
+        let totales = 0;
+        for(let l of lineas) {
+            if(proId == l.proveedorId) totales += parseFloat(l.precioProveedor);
+        }
+          totales = Math.round(totales * 100) / 100;
+
+        //Ahora aplicamos el indice correspondiente
+        for(let i of indices) {
+            if(totales >= i.minimo && totales <= i.maximo) {
+              indice = parseFloat(i.porcentajeDescuento) / 100;
+            }
+        }
+        //si hay indice se aplica el descuento
+    //if(indice > 0) {
+        for(let l of lineas) {
+          if(proId == l.proveedorId) {
+            //primero lo calculamos por linea y actualizamos en la base de datos
+            descuento = l.precioProveedor * indice;
+            descuento = parseFloat(descuento.toFixed(2));
+            //
+            importeproveedorDescuento = l.precioProveedor - descuento;
+            importeproveedorDescuento = parseFloat(importeproveedorDescuento.toFixed(2));
+         
+            let data = {
+                ofertaLinea: {
+                  ofertaId: l.ofertaId,
+                  ofertaLineaId: l.ofertaLineaId,
+                  linea: l.linea,
+                  articuloId: l.articuloId,
+                  tipoIvaId: l.tipoIvaId,
+                  porcentaje: l.porcentaje,
+                  descripcion: l.descripcion,
+                  cantidad: l.cantidad,
+                  importe: l.importe,
+                  totalLinea: l.totalLinea,
+                  //DESCUENTOS POVEEDOR
+                  perdtoProveedor: indice * 100,
+                  dtoProveedor: descuento,
+                  totalLineaProveedor: importeproveedorDescuento,
+                  costeLineaProveedor: importeproveedorDescuento
+                }
+            }
+            let verbo = 'PUT';
+            let urlAjax = myconfig.apiUrl + "/api/ofertas/lineas/" + l.ofertaLineaId;
+            llamadaAjax(verbo, urlAjax, data, function (err, data) {
+                if (err) return errorGeneral(err, done);
+                return done(null, null);
+                
+            });
+            
+          }
+        }
+      /* } else {
+        return done(null, null);
+      } */
+    });
+
 }
 
 function loadArticulos(id) {
@@ -1736,18 +1833,18 @@ var recargaCabeceraLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
         if (err) return;
         loadData(data);
-        loadLineasOferta(data.ofertaId);
+        aplicaIndicesCorrectores(data.ofertaId);
         loadBasesOferta(data.ofertaId);
     });
 }
 
-var recargaLineasBases = function () {
+/* var recargaLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
         if (err) return;
-        loadLineasOferta(data.ofertaId);
+        aplicaIndicesCorrectores(data.ofertaId);
         loadBasesOferta(data.ofertaId);
     });
-}
+} */
 
 /*
     Funciones relacionadas con la gestión de bases
