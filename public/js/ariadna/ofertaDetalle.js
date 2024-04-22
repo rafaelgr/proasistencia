@@ -1056,12 +1056,14 @@ function cambioLineal() {
 function nuevaLinea() {
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
-    llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
-        if (err) return;
-        vm.linea(data);
-        vm.total(0);
-        vm.totalConIva(0);
-    });
+    if(vm.tipoOfertaId() != 7) {
+        llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
+            if (err) return;
+            vm.linea(data);
+            vm.total(0);
+            vm.totalConIva(0);
+        });
+    }
 }
 
 function limpiaDataLinea(data) {
@@ -1664,8 +1666,9 @@ function buscaTarifaProveedor(proveedorId) {
 function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
+
     
-        crearTextoDeCapituloAutomatico(grupoArticuloId);
+    if( tipoOfertaId != 7) crearTextoDeCapituloAutomatico(grupoArticuloId);
     
     cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
@@ -1737,6 +1740,70 @@ function cambioProveedor(proveedorId) {
         loadTiposIvaProveedor(data.tipoIvaId);
         cambioTiposIvaProveedor(data.tipoIvaId);
         cambioPrecioCantidad();
+        asignaCapituloLinea();
+    });
+}
+
+function asignaCapituloLinea() {
+    if (vm.ofertaLineaId()) return;
+    //buscamos el resto de trabajos
+    let proId = vm.proveedorId();
+    let proIds = [];
+    llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, trabajos) {
+        if (err) return;
+        let obj = {};
+        let cont = 0;
+        let procesado = false;
+        let p = new Set;
+        let n = 0
+        if(trabajos.length > 0) {
+          //CAPIULO
+            //extraemos las ids de los proveedores de las lineas
+            for(let t of trabajos) {
+              obj = {
+                proveedorId: t.proveedorId,
+                capitulo: t.capituloLinea,
+                linea: t.linea 
+              }
+              proIds.push(obj);
+              p.add(t.proveedorId);  //miramos el numero de proveedores diferentes que hay en los tabajos
+            };
+           
+            //miramos si hay algún trabajo del proveedor
+            for(let i = 0; i < proIds.length; i++) {
+              if(proId == proIds[i].proveedorId) {
+                vm.capituloLinea(proIds[i].capitulo);
+                procesado = true;
+                break;
+              }   
+            } 
+            if(!procesado) { //creamos un nuevo capitulo y una nueva linea
+              n =  p.size + 1;
+              vm.capituloLinea("Capitulo " + n);
+              vm.linea(n + 0.1);
+            }
+            //LINEA
+            //contamos los trabajos del proveedor
+             let numero = 0
+            for (let p of proIds) {
+              if(proId == p.proveedorId) {
+                cont++;
+                let capi = p.capitulo
+                numero = parseInt(capi.match(/\d+/)?.[0] || '0');
+    
+              }
+            }
+            if(cont > 0) {
+              cont = (cont + 1) / 10;
+              vm.linea(numero + cont);
+    
+            }
+    
+        } else {
+          vm.capituloLinea("Capitulo 1");
+          vm.linea(1.1);
+        }
+        
     });
 }
 
