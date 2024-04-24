@@ -360,6 +360,7 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.ofertaId(0);
         vm.beneficioLineal(0);
+        vm.enviadaApp(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -395,6 +396,7 @@ function admData() {
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
     self.beneficioLineal = ko.observable();
+    self.enviadaApp = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -578,6 +580,7 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
     vm.beneficioLineal(data.beneficioLineal);
+    vm.enviadaApp(data.enviadaApp);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
     //cambioDepartamento(data.tipoOfertaId);
@@ -757,7 +760,8 @@ var generarOfertaDb = function() {
             "observaciones": vm.observaciones(),
             "conceptosExcluidos": vm.conceptosExcluidos(),
             "formaPagoId": vm.sformaPagoId(),
-            "beneficioLineal": vm.beneficioLineal()
+            "beneficioLineal": vm.beneficioLineal(),
+            "enviadaApp": vm.enviadaApp()
         }
     };
     if(vm.beneficioLineal()) data.oferta.porcentajeBeneficio = 0;
@@ -1477,6 +1481,9 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
         let descuento = 0;
         let importeproveedorDescuento = 0;
         let totales = 0;
+        //
+        let descuentoCliente = 0;
+        let importeClienteDescuento = 0;
         for(let l of lineas) {
             if(proId == l.proveedorId) totales += parseFloat(l.precioProveedor);
         }
@@ -1498,6 +1505,12 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
             //
             importeproveedorDescuento = l.precioProveedor - descuento;
             importeproveedorDescuento = parseFloat(importeproveedorDescuento.toFixed(2));
+            //CLIENTE
+            descuentoCliente = l.precio * indice;
+            descuentoCliente = parseFloat(descuentoCliente.toFixed(2));
+            //
+            importeClienteDescuento = l.precio - descuentoCliente;
+            importeClienteDescuento = parseFloat(importeClienteDescuento.toFixed(2));
          
             let data = {
                 ofertaLinea: {
@@ -1510,12 +1523,17 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
                   descripcion: l.descripcion,
                   cantidad: l.cantidad,
                   importe: l.importe,
-                  totalLinea: l.totalLinea,
+                  //totalLinea: l.totalLinea,
                   //DESCUENTOS POVEEDOR
                   perdtoProveedor: indice * 100,
                   dtoProveedor: descuento,
                   totalLineaProveedor: importeproveedorDescuento,
-                  costeLineaProveedor: importeproveedorDescuento
+                  costeLineaProveedor: importeproveedorDescuento,
+                  //DESCUENTOS CLIENTE
+                  perdto: indice * 100,
+                  dto: descuentoCliente,
+                  totalLinea: importeClienteDescuento,
+                  coste: importeClienteDescuento
                 }
             }
             let verbo = 'PUT';
@@ -1668,7 +1686,7 @@ function cambioGrupoArticulo(data) {
     var grupoArticuloId = data.id;
 
     
-    if( tipoOfertaId != 7) crearTextoDeCapituloAutomatico(grupoArticuloId);
+    if( vm.tipoOfertaId() != 7) crearTextoDeCapituloAutomatico(grupoArticuloId);
     
     cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
