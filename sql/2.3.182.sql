@@ -13,7 +13,6 @@ CREATE TABLE `indices_correctores`(
   CONSTRAINT `indice_proveedorFK` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`)
 ) ENGINE=INNODB;
 
-ALTER TABLE `ofertas`   
-  ADD COLUMN `parteId` INT(11) NULL AFTER `enviada`;
+
 
 
