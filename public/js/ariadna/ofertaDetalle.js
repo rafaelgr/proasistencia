@@ -1430,13 +1430,12 @@ function loadTablaOfertaLineas(data) {
 }
 
 
-function aplicaIndicesCorrectores(id) {
-    if(vm.tipoOfertaId() == 7) {//Solo se aplica en el departa,mento de reparaciones
-        llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false + "/" +  false, null, function (err, data) {
+function aplicaIndicesCorrectores() {
+    if(vm.tipoOfertaId() == 7) {//Solo se aplica en el departamento de reparaciones
+        llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, data) {
             if (err) return;
             var totalCoste = 0;
             let proIds = [];
-            let cont = 0
             data.forEach(function (linea) {
                 totalCoste += (linea.coste * linea.cantidad);
                 vm.totalCoste(numeral(totalCoste).format('0,0.00'));
@@ -1452,14 +1451,10 @@ function aplicaIndicesCorrectores(id) {
               for(let proId of proIds) {
                 buscarIndicesCorrectores(proId, data, function (err, result) {
                     if(err) return mensError(err);
-                    cont++
-                    if(cont == proIds.length) loadLineasOferta(id);
                 });
               }
         });
-    } else {
-        loadLineasOferta(id);
-    }
+    } 
 }
 
 function loadLineasOferta(id) {
@@ -1496,7 +1491,7 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
             }
         }
         //si hay indice se aplica el descuento
-    //if(indice > 0) {
+    if(indice > 0) {
         for(let l of lineas) {
           if(proId == l.proveedorId) {
             //primero lo calculamos por linea y actualizamos en la base de datos
@@ -1546,9 +1541,9 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
             
           }
         }
-      /* } else {
+      } else {
         return done(null, null);
-      } */
+      } 
     });
 
 }
@@ -1918,7 +1913,7 @@ var recargaCabeceraLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
         if (err) return;
         loadData(data);
-        aplicaIndicesCorrectores(data.ofertaId);
+        loadLineasOferta(data.ofertaId);
         loadBasesOferta(data.ofertaId);
     });
 }
