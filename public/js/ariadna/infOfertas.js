@@ -186,6 +186,7 @@ var obtainReport = function () {
     //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
     if(empresaId == 10 && departamentoId == 5 && !ofertaId) file = "../reports/oferta_proyecta_visor.mrt";
     else if(empresaId == 10 && departamentoId == 5  && ofertaId) file = "../reports/oferta_proyecta.mrt";
+    else if( departamentoId == 7) file = "../reports/oferta_reparaciones.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";

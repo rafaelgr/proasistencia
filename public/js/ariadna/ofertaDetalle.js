@@ -1432,27 +1432,39 @@ function loadTablaOfertaLineas(data) {
 
 function aplicaIndicesCorrectores() {
     if(vm.tipoOfertaId() == 7) {//Solo se aplica en el departamento de reparaciones
-        llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, data) {
-            if (err) return;
-            var totalCoste = 0;
-            let proIds = [];
-            data.forEach(function (linea) {
-                totalCoste += (linea.coste * linea.cantidad);
-                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-                //obtenemos los proveedores de la oferta
-                proIds.push(linea.proveedorId);
-                
-            });
-            //eliminamos los duplicados
-             proIds = proIds.filter((item,index)=>{
-                return proIds.indexOf(item) === index;
-              });
-              //buscamos los indices correctores de cada proveedor
-              for(let proId of proIds) {
-                buscarIndicesCorrectores(proId, data, function (err, result) {
-                    if(err) return mensError(err);
+        var mens = "¿Realmente desea realizar esta acción?, Se aplicarán los indices correctores correspondientes a cada proveedor, cualquier descuento introducido manuelmente se borrará.";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, data) {
+                    if (err) return;
+                    var totalCoste = 0;
+                    let proIds = [];
+                    data.forEach(function (linea) {
+                        totalCoste += (linea.coste * linea.cantidad);
+                        vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+                        //obtenemos los proveedores de la oferta
+                        proIds.push(linea.proveedorId);
+                        
+                    });
+                    //eliminamos los duplicados
+                     proIds = proIds.filter((item,index)=>{
+                        return proIds.indexOf(item) === index;
+                      });
+                      //buscamos los indices correctores de cada proveedor
+                      for(let proId of proIds) {
+                        buscarIndicesCorrectores(proId, data, function (err, result) {
+                            if(err) return mensError(err);
+                        });
+                      }
                 });
-              }
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+            }
         });
     } 
 }
@@ -1541,6 +1553,7 @@ var buscarIndicesCorrectores =  function (proId, lineas, done) {
             
           }
         }
+        loadLineasOferta(vm.ofertaId());
       } else {
         return done(null, null);
       } 
