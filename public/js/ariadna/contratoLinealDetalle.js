@@ -527,7 +527,7 @@ function initForm() {
         cambioComercial(e.added);
     });
 
-    $('#btnAltaPrefactura').hide();//oculto de momento, en lineal las prefacturas solo se pueden crear automáticamente
+    //$('#btnAltaPrefactura').hide();//oculto de momento, en lineal las prefacturas solo se pueden crear automáticamente
     $("#btnAltaPrefactura").click(nuevaPrefactura);
 
     $('#btnAltaFacprove').click(nuevaFacprove);
@@ -1003,6 +1003,7 @@ function loadData(data) {
         $('#lineasPagoObras').hide();
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
+        //$('#btnAltaPrefactura').show();
 
     } else {
         $('.obras').show()
