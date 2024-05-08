@@ -1837,14 +1837,16 @@ var cambioPrecioCantidad = function () {
     var totalProIva;
     var porIva;
     var porPro = vm.porcentajeProveedor();
-    vm.precio(vm.cantidad() * vm.importe());
-    vm.costeLinea(vm.cantidad() * vm.importe());
+    var p = vm.cantidad() * vm.importe();
+    vm.precio(roundToTwo(p));
+    vm.costeLinea(roundToTwo(p));
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 
      //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
-     vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
-     vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
+     var pp = vm.cantidad() * vm.importeProveedor();
+     vm.precioProveedor(roundToTwo(pp));
+     vm.costeLineaProveedor(roundToTwo(pp));
      vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
      vm.totalLineaProveedorIva(vm.totalLineaProveedor());
      if(porPro !== null) {
