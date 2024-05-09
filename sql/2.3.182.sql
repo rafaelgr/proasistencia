@@ -11,7 +11,19 @@ CREATE TABLE `indices_correctores`(
   `porcentajeDescuento` DECIMAL(12,2),
   PRIMARY KEY (`indiceCorrectorId`),
   CONSTRAINT `indice_proveedorFK` FOREIGN KEY (`proveedorId`) REFERENCES `proveedores`(`proveedorId`)
-) ENGINE=INNODB;
+) 
+
+CREATE TABLE `indiceCorrector_profesiones`(  
+  `indiceCorrectorProfesionId` INT(11) NOT NULL  AUTO_INCREMENT,
+  `indiceCorrectorId` INT(11),
+  `tipoProfesionalId` INT(11),
+  PRIMARY KEY (`indiceCorrectorProfesionId`),
+  CONSTRAINT `indiceCorrecorFK` FOREIGN KEY (`indiceCorrectorId`) REFERENCES `indices_correctores`(`indiceCorrectorId`),
+  CONSTRAINT `tipoProfesionalFK` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`)
+);
+
+
+
 
 
 

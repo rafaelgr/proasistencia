@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "e079103d61084a2d9cdb2c109dd26962",
+  "ReportGuid": "cc4d71979d414ab68cbc512232776bfd",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1715164526844+0200)/",
+  "ReportChanged": "/Date(1715251569632+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -223,16 +223,14 @@
             "Index": -1,
             "NameInSource": "importe",
             "Alias": "importe",
-            "Type": "System.Decimal",
-            "Key": "eccab80ad7f64e78bf2c44d841e98e68"
+            "Type": "System.Decimal"
           },
           "8": {
             "Name": "importe",
             "Index": -1,
             "NameInSource": "importe",
             "Alias": "importe",
-            "Type": "System.Decimal",
-            "Key": "eccab80ad7f64e78bf2c44d841e98e68"
+            "Type": "System.Decimal"
           },
           "9": {
             "Name": "perdto",
@@ -268,10 +266,24 @@
             "NameInSource": "impDescUni",
             "Alias": "impDescUni",
             "Type": "System.Decimal"
+          },
+          "14": {
+            "Name": "primera_linea",
+            "Index": -1,
+            "NameInSource": "primera_linea",
+            "Alias": "primera_linea",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "resto_lineas",
+            "Index": -1,
+            "NameInSource": "resto_lineas",
+            "Alias": "resto_lineas",
+            "Type": "System.String"
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\nu.abrev, a.nombre AS articulo, a.articuloId, ol.coste / ol.cantidad as impDescUni\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\n\tu.abrev, a.nombre AS articulo, a.articuloId, ol.coste / ol.cantidad as impDescUni, SUBSTRING_INDEX(ol.descripcion, '\\n', 1) AS primera_linea,\r\n\tCASE \r\n        WHEN LOCATE('\\n', ol.descripcion) > 0 THEN SUBSTRING(ol.descripcion, LOCATE('\\n', ol.descripcion) + 1)\r\n        ELSE ''\r\n    END AS resto_lineas\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -563,7 +575,7 @@
               "Ident": "StiImage",
               "Name": "Image2",
               "Guid": "f254168dafe5401c846b2f7b939448a0",
-              "ClientRectangle": "0.2,0.2,5,1.6",
+              "ClientRectangle": "0.2,0,5,1.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -830,7 +842,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Precio"
+                "Value": "P.V.P"
               },
               "HorAlignment": "Right",
               "Font": ";11;Bold;",
@@ -889,7 +901,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Precio\r\nOferta"
+                "Value": "P.V.P\r\nOferta"
               },
               "HorAlignment": "Right",
               "Font": ";11;Bold;",
@@ -904,7 +916,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
-          "ClientRectangle": "0,10.2,19,0.6",
+          "ClientRectangle": "0,10.2,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -965,38 +977,6 @@
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text5",
-              "CanShrink": true,
-              "CanGrow": true,
-              "ClientRectangle": "2.4,0.4,8.8,0",
-              "Conditions": {
-                "0": {
-                  "Ident": "StiCondition",
-                  "DataType": "Numeric",
-                  "Column": "ofertas_lineas.articuloId",
-                  "Value1": "639",
-                  "Enabled": false,
-                  "TextColor": "255,255,255",
-                  "BorderSides": "None"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{ofertas_lineas.descripcion}"
-              },
-              "HorAlignment": "Width",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              }
-            },
-            "3": {
-              "Ident": "StiText",
               "Name": "Text6",
               "CanGrow": true,
               "ClientRectangle": "12.2,0,1,0.4",
@@ -1019,7 +999,7 @@
                 "UseLocalSetting": false
               }
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text30",
               "CanGrow": true,
@@ -1042,7 +1022,7 @@
                 "UseLocalSetting": false
               }
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text41",
               "Guid": "8007ce84e9474e82998fcd638def49b2",
@@ -1051,6 +1031,7 @@
               "Interaction": {
                 "Ident": "StiInteraction"
               },
+              "ProcessingDuplicates": "Merge",
               "Text": {
                 "Value": "{ofertas_lineas.abrev}"
               },
@@ -1067,41 +1048,7 @@
               },
               "Type": "DataColumn"
             },
-            "6": {
-              "Ident": "StiText",
-              "Name": "Text23",
-              "CanShrink": true,
-              "CanGrow": true,
-              "ClientRectangle": "2.4,0,9.6,0.4",
-              "Conditions": {
-                "0": {
-                  "Ident": "StiCondition",
-                  "DataType": "Numeric",
-                  "Column": "ofertas_lineas.articuloId",
-                  "Value1": "639",
-                  "TextColor": "0,0,0",
-                  "Font": ";10;;",
-                  "CanAssignExpression": true,
-                  "AssignExpression": "ofertas_lineas.descripcion",
-                  "BorderSides": "None"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{ofertas_lineas.articulo}"
-              },
-              "Font": ";10;Bold;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
-            },
-            "7": {
+            "5": {
               "Ident": "StiText",
               "Name": "Text44",
               "CanGrow": true,
@@ -1127,6 +1074,52 @@
                 "Symbol": "€"
               },
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "2.4,0,9.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas_lineas.primera_linea}"
+              },
+              "HorAlignment": "Width",
+              "Font": ";10;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text23",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "2.4,0.4,9.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas_lineas.resto_lineas}"
+              },
+              "HorAlignment": "Width",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "Type": "Expression"
             }
           },
           "DataSourceName": "ofertas_lineas",
@@ -1136,7 +1129,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,11.6,19,0.2",
+          "ClientRectangle": "0,11.8,19,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1194,7 +1187,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "ClientRectangle": "0,12.6,19,0.4",
+          "ClientRectangle": "0,12.8,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1254,7 +1247,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,13.8,19,0.4",
+          "ClientRectangle": "0,14,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1302,7 +1295,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "Guid": "c9589c016d7c4f77b0530bec428c9207",
-          "ClientRectangle": "0,15,19,0",
+          "ClientRectangle": "0,15.2,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1317,7 +1310,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,15.8,19,0.6",
+          "ClientRectangle": "0,16,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1409,7 +1402,7 @@
         "11": {
           "Ident": "StiFooterBand",
           "Name": "PieOferta",
-          "ClientRectangle": "0,17.2,19,5.4",
+          "ClientRectangle": "0,17.4,19,5.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1559,6 +1552,21 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiImage",
+              "Name": "Image1",
+              "Guid": "ac6686929aeb48269e1f15e87f3ea44e",
+              "ClientRectangle": "11.8,3,7,1.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/firma%20proasistencia.jpg?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCmV1LW5vcnRoLTEiRzBFAiEAndzywtbUO70YzYzz7RoaMvEDbFtGOK%2BJIGG7uzPHzxcCIFvfW691y%2B6oHxG4gOOlMWe7AnUJJMcrT%2Fqj7e4hCUDuKv0CCBQQBBoMMTkxNzYzMTYxOTg2Igwo3MjRB%2BMKJk%2BrjuEq2gJJUNjK2trQwvXts3aF8Sof6QnqIwZszYgTblTRx2PSiI%2FqKWBGB714%2Ffp%2F26wwJXc3wLNT1OAVR5xpZQIUOd%2FE2lALgqy7IMuYvKUJra42I3MXKRZtWcIl3cF8sYJsdY31q3Z2AiWyyD%2F%2BQlijP0l42s4jVIILtToeOJf95NsWa2j8EZktP9Il3Sbq4BXb%2BzV4q19tOJ%2FKU%2FCHsgOll2tuYn4%2F5WCcVSKonWqzN6C6nY8rL4od81EGrNCVf4roOPQkUVduorTv0lT7P9GqhLQNp11Fk2D20Zop%2FJjloVBwBj52JFGwzvKiQ2AKIHjyS51xw10XA%2BGO%2FjEwgcWzD%2F5zq6t%2BvBJQwQUtUgtK3CctT0zLOLwbsoIjpzyIv1Eoz8JLuNZ%2BfFVtCX7PL0UluqX7Of%2F4U8hBaIaAI9VxxcxwljUr0EfwKyBf9T7tQLQlDCfgc9zdII1pWA4GMP3O8rEGOrMC%2F2JcRz3f9PX%2F7M6M1MwXkJuXYmtt10V6egwdjoVFrpbf8iG2MIUH6QRVV%2Bq4KQwkqNPTLlStAaQfAbimpKkRfmRZIX5KkIfBHrGQTtbXAqswt9JNPsMa9tH76Tv1yfT0bcXZNMvlWGGau3sBLmWpq2c%2BFARUNeZXLe2IB7gt37Gi%2FT1avhxw%2F7LBvwE1VeSIvRPKvqiG8dx0JJC3Qx0G0E1js4SUriMtOAESd%2F3ucEOfRuNKo6pKJ7m%2FCqGv8UB3wQaZ4KozkHbnJzPTABxbCaDY%2Bv3jJk4lP%2FC4PUS2JdnxTg1pwEvKarcjlMAWdIfLd0BeNiDF%2BSbRGaPff3a%2BcAWqJczBryUCZyBjQKOrZV3TfKFdg9xt7s8C2KfvYiG9HZRlqJ15OlBGCMO3479dazWaaQ%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240509T104511Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIASZJPZUOBGEWT5OKF%2F20240509%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=04a3e809937799ca2db60858e5e4c913eda351a0b748ab700d47b25bc155b690"
+              }
             }
           },
           "ResetPageNumber": true,

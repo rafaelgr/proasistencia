@@ -1,3 +1,5 @@
+const { load } = require("dotenv");
+
 /*-------------------------------------------------------------------------- 
 proveedorDetalle.js
 Funciones js par la página ProveedorDetalle.html
@@ -96,6 +98,8 @@ function initForm() {
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
     loadTiposProfesionales();
+    $("#cmbTiposProfesionalIndice").select2(select2Spanish());
+    //loadTiposProfesionalesIndice();
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
@@ -499,6 +503,13 @@ function admData() {
     self.minimo = ko.observable();
     self.maximo = ko.observable();
     self.porcentajeDescuento = ko.observable();
+    //COMBO PROFESIONES INDICE CORRECTOR
+    //
+    self.stipoProfesionalIndiceId = ko.observable();
+    //
+    self.posiblesTiposProfesionalIndice = ko.observableArray([]);
+    self.elegidosTiposProfesionalIndice = ko.observableArray([]);
+
     
     //RECURSO PREVNTIVO
     self.nombreRp = ko.observable();
@@ -1062,6 +1073,32 @@ function loadTiposProfesionales(tiposProfesionalesIds) {
                     ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
                 }
                 $("#cmbTiposProfesional").val(ids).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
+function loadTiposProfesionalesIndice(tiposProfesionalesIds) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ids = [];
+            var tiposProfesionales  = data
+            vm.posiblesTiposProfesionalIndice(tiposProfesionales);
+            if(tiposProfesionalesIds) {
+                vm.elegidosTiposProfesionalIndice(tiposProfesionalesIds);
+                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                    ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
+                }
+                $("#cmbTiposProfesionalIndice").val(ids).trigger('change');
             }
         },
         error: function (err) {
@@ -2490,7 +2527,12 @@ function cargaModalIndicesCorrectores(id) {
            vm.minimo(data.minimo);
            vm.maximo(data.maximo);
            vm.porcentajeDescuento(data.porcentajeDescuento);
+           //cargamos los tipos profesionales asociados al indice
+           llamadaAjax("GET", myconfig.apiUrl + "/api/tipos_profesional/indice/" + id, null, function (err, data) {
+            if (err) return;
+             loadTiposProfesionalesIndice(data)
             $('#modalIndicesCorrectores').modal('show');
+            });
         });
     }
 }
