@@ -1,5 +1,3 @@
-const { load } = require("dotenv");
-
 /*-------------------------------------------------------------------------- 
 proveedorDetalle.js
 Funciones js par la página ProveedorDetalle.html
@@ -286,6 +284,23 @@ function initForm() {
       $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
       $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
+
+    //sublineas de la tabla indices_correctores
+    $('#dt_indices').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaIndices.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatDataIndices(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
   
 
     // obtener el número de digitos de la contabilidad
@@ -1086,7 +1101,7 @@ function loadTiposProfesionales(tiposProfesionalesIds) {
 function loadTiposProfesionalesIndice(tiposProfesionalesIds) {
     $.ajax({
         type: "GET",
-        url: "/api/tipos_profesional/",
+        url: "/api/proveedores/profesiones/asociadas/todas/" + vm.proveedorId(),//LAS PROFESIONES QUE TIENE ASIGNADAS EL PROVEEDOR SON LAS ELEGIBLES EN EL COMBO
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
@@ -1901,63 +1916,6 @@ function formatData(d) {
     return html;
 }
 
-
-function formatDataCobros(d) {
-    if(!d.lin) d.lin = [];
-    var lin = d.lin;
-    var html = "";
-    html = '<h5> APUNTES DEL COBRO</h5>'
-    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
-    lin.forEach(e => {
-        var d = e.timporteH - e.timporteD
-         html += 
-         '<tr>' +
-            '<th>Fecha de entrada:</th>' +
-            '<th>Asiento:</th>' +
-            '<th>Num. linea:</th>' +
-            '<th>Num. documento:</th>' +
-            '<th>Nom. documento:</th>' +
-            '<th>IMPORTE:</th>' +
-            '<th>ES DEVOLUCION:</th>' +
-         '</tr>' +
-         
-         '<tr>' +
-            
-            '<td>' +
-                formatFecha(e.fechaent)  +
-            '</td>' +
-            
-            '<td>' +
-                e.numasien +
-            '</td>' +
-            
-            '<td>' +
-                e.linliapu +
-            '</td>' +
-            
-            '<td>' +
-                e.numdocum +
-            '</td>' +
-            
-            '<td>' +
-                e.ampconce +
-            '</td>' +
-
-            '<td>' +
-                numeral(d).format('0,0.00');+
-            '</td>' +
-            
-            '<td>'  +
-           
-                e.esdevolucion +
-            '</td>' +
-        '</tr>'
-       
-    });
-    html +=  '</table>'
-    return html
-}
-
  function formatFecha(f) {
     if(f) return spanishDate(f);
     return ' ';
@@ -2330,7 +2288,7 @@ function uploadDocum(arr) {
 
 // --------------- Solapa de Indices correctores
 function initTablaindicesCorrectores() {
-    tablaSeries = $('#dt_indices').DataTable({
+    tablaIndices = $('#dt_indices').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
@@ -2374,6 +2332,13 @@ function initTablaindicesCorrectores() {
         },
         data: dataindices,
         columns: [{
+                
+            className: 'dt-control',
+            orderable: false,
+            data: null,
+            defaultContent: '',
+            //data:"carpetaId",
+        },{
             data: "indiceCorrectorId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
@@ -2428,7 +2393,8 @@ function guardarIndiceCorrector() {
             proveedorId: vm.proveedorId(),
             minimo: vm.minimo(),
             maximo: vm.maximo(),
-            porcentajeDescuento: vm.porcentajeDescuento()
+            porcentajeDescuento: vm.porcentajeDescuento(),
+            profesiones: vm.elegidosTiposProfesionalIndice()
         }
     }
 
@@ -2509,7 +2475,7 @@ function limpiaModalIndicesCorrectores() {
    vm.minimo(null);
    vm.maximo(null);
    vm.porcentajeDescuento(null);
-
+   vm.elegidosTiposProfesionalIndice(null);
 }
 
 function editIndiceCorrector(id) {
@@ -2519,7 +2485,7 @@ function editIndiceCorrector(id) {
 
 function cargaModalIndicesCorrectores(id) {
     limpiaModalIndicesCorrectores();
-    if(id) {
+    if(id) {//ES UN PUT
         llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id, null, function (err, data) {
             if (err) return;
            vm.indiceCorrectorId(data.indiceCorrectorId);
@@ -2528,12 +2494,14 @@ function cargaModalIndicesCorrectores(id) {
            vm.maximo(data.maximo);
            vm.porcentajeDescuento(data.porcentajeDescuento);
            //cargamos los tipos profesionales asociados al indice
-           llamadaAjax("GET", myconfig.apiUrl + "/api/tipos_profesional/indice/" + id, null, function (err, data) {
+           llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
             if (err) return;
-             loadTiposProfesionalesIndice(data)
+             loadTiposProfesionalesIndice(data2);
             $('#modalIndicesCorrectores').modal('show');
             });
         });
+    } else {//ES UN POST
+        loadTiposProfesionalesIndice(null);
     }
 }
 
@@ -2575,6 +2543,26 @@ function datosOKIndicesCorrectores() {
         }
     });
     return $('#modalIndicesCorrectores-form').valid();
+}
+
+
+function formatDataIndices(d) {
+    if(!d.lin) d.lin = [];
+    var lin = d.lin;
+    var html = "";
+    html = '<h5> PROFESIONES ASOCIADAS</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    lin.forEach(e => {
+         html += 
+         '<tr>' + 
+            '<td>'  +
+                e.nombreProfesion +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
+    return html
 }
 
 
