@@ -1108,6 +1108,7 @@ function loadTiposProfesionalesIndice(tiposProfesionalesIds) {
             var ids = [];
             var tiposProfesionales  = data
             vm.posiblesTiposProfesionalIndice(tiposProfesionales);
+            $("#cmbTiposProfesionalIndice").val([]).trigger('change');
             if(tiposProfesionalesIds) {
                 vm.elegidosTiposProfesionalIndice(tiposProfesionalesIds);
                 for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
@@ -2475,7 +2476,8 @@ function limpiaModalIndicesCorrectores() {
    vm.minimo(null);
    vm.maximo(null);
    vm.porcentajeDescuento(null);
-   vm.elegidosTiposProfesionalIndice(null);
+   vm.elegidosTiposProfesionalIndice([]);
+   //vm.posiblesTiposProfesionalIndice([]);
 }
 
 function editIndiceCorrector(id) {
@@ -2493,14 +2495,17 @@ function cargaModalIndicesCorrectores(id) {
            vm.minimo(data.minimo);
            vm.maximo(data.maximo);
            vm.porcentajeDescuento(data.porcentajeDescuento);
+           loadTiposProfesionalesIndice(data.lin);
+           $('#modalIndicesCorrectores').modal('show');
            //cargamos los tipos profesionales asociados al indice
-           llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
+          /*  llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
             if (err) return;
              loadTiposProfesionalesIndice(data2);
             $('#modalIndicesCorrectores').modal('show');
-            });
+            }); */
         });
     } else {//ES UN POST
+        indiceEnEdicion = false;
         loadTiposProfesionalesIndice(null);
     }
 }

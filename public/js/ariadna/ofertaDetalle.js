@@ -2285,13 +2285,13 @@ var imprimirProveedor = function (id) {
 }
 
 function printOferta2(id) {
-    var url = "InfOfertas.html?ofertaId=" + id;
-    window.open(url, "_new");
+    var url = "InfOfertas.html?ofertaId=" + id  + "&departamentoId=" + vm.tipoOfertaId();
+    window.open(url, "_blank");
 }
 
 function printOfertaProveedor(id) {
-    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id;
-    window.open(url, "_new");
+    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id + "&departamentoId=" + vm.tipoOfertaId();
+    window.open(url, "_blank");
 }
 
 function printOferta(id) {
@@ -2402,7 +2402,7 @@ var generarContratoAPI = function () {
         }
         generarLineasConceptos(datos);
         var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
-        window.open(url, '_new');
+        window.open(url, '_blank');
     })
 }
 

@@ -4,6 +4,7 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
+var departamentoId = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -173,7 +174,7 @@ var obtainReport = function () {
     if (!datosOK()) return;
 
     var empresaId = vm.sempresaId();
-    var departamentoId = vm.sdepartamentoId();
+    departamentoId = gup('departamentoId');
     var ofertaId = vm.ofertaId();
   
     

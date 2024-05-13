@@ -385,8 +385,21 @@ var cargarOfertasNoAceptadas = function (id) {
 }
 
 function printOferta(id) {
-    var url = "InfOfertas.html?ofertaId=" + id;
-    window.open(url, "_new");
+    //buscamos el dapartamento de la oferta
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/ofertas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var url = "InfOfertas.html?ofertaId=" + id + "&departamentoId=" + data.tipoOfertaId;
+            window.open(url, "_new");
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 imprimirOfertas = function () {
