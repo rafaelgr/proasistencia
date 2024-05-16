@@ -1,6 +1,5 @@
 ALTER TABLE `tipos_proyecto` ADD COLUMN `visibleApp` TINYINT(1) DEFAULT 0 NULL AFTER `activo`; 
 
-ALTER TABLE `ofertas` ADD COLUMN `enviadaApp` TINYINT(1) DEFAULT 0 NULL AFTER `beneficioLineal`; 
 
 CREATE TABLE `indices_correctores`(  
   `indiceCorrectorId` INT(11) NOT NULL AUTO_INCREMENT,
@@ -22,6 +21,8 @@ CREATE TABLE `indiceCorrector_profesiones`(
   CONSTRAINT `tipoProfesionalFK` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`)
 );
 
+ALTER TABLE `proasistencia`.`ofertas`   
+  ADD COLUMN `creadaApp` TINYINT(1) DEFAULT 0 NULL AFTER `servicioId`;
 
 
 
