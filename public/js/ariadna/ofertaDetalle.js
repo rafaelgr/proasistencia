@@ -336,8 +336,8 @@ function initForm() {
         var val =  $("#txtRappelAgente").val();
         nuevaRefReparaciones(vm.stipoOfertaId(), val);
       });
-    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
-    $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
+    //$("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
+    //$("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
     initTablaOfertasLineas();
     initTablaBases();
@@ -352,6 +352,13 @@ function initForm() {
     if (ofertaId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
             if (err) return;
+           
+            //ocultamos el botón de cálculo de los indices correctores si el departa,ento no es de reparaciones
+            if(data.tipoOfertaId != 7) {
+                $('#btnAplicaIndiceCorrector').hide();
+            } else {
+                $('#btnAplicaIndiceCorrector').show();
+            }
             loadData(data);
             loadLineasOferta(data.ofertaId);
             loadBasesOferta(data.ofertaId);
@@ -360,7 +367,6 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.ofertaId(0);
         vm.beneficioLineal(0);
-        vm.enviadaApp(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -396,7 +402,6 @@ function admData() {
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
     self.beneficioLineal = ko.observable();
-    self.enviadaApp = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -580,7 +585,6 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
     vm.beneficioLineal(data.beneficioLineal);
-    vm.enviadaApp(data.enviadaApp);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
     //
     //cambioDepartamento(data.tipoOfertaId);
@@ -760,8 +764,7 @@ var generarOfertaDb = function() {
             "observaciones": vm.observaciones(),
             "conceptosExcluidos": vm.conceptosExcluidos(),
             "formaPagoId": vm.sformaPagoId(),
-            "beneficioLineal": vm.beneficioLineal(),
-            "enviadaApp": vm.enviadaApp()
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
     if(vm.beneficioLineal()) data.oferta.porcentajeBeneficio = 0;
@@ -1442,24 +1445,33 @@ function aplicaIndicesCorrectores() {
                 llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, data) {
                     if (err) return;
                     var totalCoste = 0;
-                    let proIds = [];
+                    let pros= [];
                     data.forEach(function (linea) {
                         totalCoste += (linea.coste * linea.cantidad);
                         vm.totalCoste(numeral(totalCoste).format('0,0.00'));
                         //obtenemos los proveedores de la oferta
-                        proIds.push(linea.proveedorId);
+                        let data = {
+                            proveedorId: linea.proveedorId,
+                            proveedorNombre: linea.proveedorNombre
+                        }
+                        pros.push(data);
                         
                     });
-                    //eliminamos los duplicados
-                     proIds = proIds.filter((item,index)=>{
-                        return proIds.indexOf(item) === index;
-                      });
-                      //buscamos los indices correctores de cada proveedor
-                      for(let proId of proIds) {
-                        buscarIndicesCorrectores(proId, data, function (err, result) {
-                            if(err) return mensError(err);
-                        });
-                      }
+                    // Usando un Set para almacenar las combinaciones únicas de proveedorId y proveedorNombre
+                    const seen = new Set();
+                    const uniqueArray = pros.filter(item => {
+                        const duplicate = seen.has(item.proveedorId + item.proveedorNombre);
+                        seen.add(item.proveedorId + item.proveedorNombre);
+                        return !duplicate;
+                    });
+                    //buscamos los indices correctores de cada proveedor
+                    for(let pro of uniqueArray) {
+                     buscarIndicesCorrectores(pro, data, function (err, result) {
+                         if(err) return mensError(err);
+                         let p = [];
+                         if(result) mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                     });
+                    }
                 });
             }
             if (ButtonPressed === "Cancelar") {
@@ -1481,84 +1493,93 @@ function loadLineasOferta(id) {
     });
 }
 
-var buscarIndicesCorrectores =  function (proId, lineas, done) {
-    llamadaAjax('GET', "/api/proveedores/indices-correctores/proveedor/" + proId, null, function (err, indices) {
+var buscarIndicesCorrectores =  function (pro, lineas, done) {
+    //BUSCAMOS PRIMERO EL PARTE ASOCIADO A LA OFERTA SI EXISTE
+    llamadaAjax('GET', "/api/ofertas/busca-parte/asociado/oferta/proveedor/" + vm.ofertaId() + "/" + pro.proveedorId, null, function(err, parte) {
         if (err) return errorGeneral(err, done);
-        let indice = 0;
-        let descuento = 0;
-        let importeproveedorDescuento = 0;
-        let totales = 0;
-        //
-        let descuentoCliente = 0;
-        let importeClienteDescuento = 0;
-        for(let l of lineas) {
-            if(proId == l.proveedorId) totales += parseFloat(l.precioProveedor);
-        }
-          totales = Math.round(totales * 100) / 100;
-
-        //Ahora aplicamos el indice correspondiente
-        for(let i of indices) {
-            if(totales >= i.minimo && totales <= i.maximo) {
-              indice = parseFloat(i.porcentajeDescuento) / 100;
-            }
-        }
-        //si hay indice se aplica el descuento
-    if(indice > 0) {
-        for(let l of lineas) {
-          if(proId == l.proveedorId) {
-            //primero lo calculamos por linea y actualizamos en la base de datos
-            descuento = l.precioProveedor * indice;
-            descuento = parseFloat(descuento.toFixed(2));
-            //
-            importeproveedorDescuento = l.precioProveedor - descuento;
-            importeproveedorDescuento = parseFloat(importeproveedorDescuento.toFixed(2));
-            //CLIENTE
-            descuentoCliente = l.precio * indice;
-            descuentoCliente = parseFloat(descuentoCliente.toFixed(2));
-            //
-            importeClienteDescuento = l.precio - descuentoCliente;
-            importeClienteDescuento = parseFloat(importeClienteDescuento.toFixed(2));
-         
-            let data = {
-                ofertaLinea: {
-                  ofertaId: l.ofertaId,
-                  ofertaLineaId: l.ofertaLineaId,
-                  linea: l.linea,
-                  articuloId: l.articuloId,
-                  tipoIvaId: l.tipoIvaId,
-                  porcentaje: l.porcentaje,
-                  descripcion: l.descripcion,
-                  cantidad: l.cantidad,
-                  importe: l.importe,
-                  //totalLinea: l.totalLinea,
-                  //DESCUENTOS POVEEDOR
-                  perdtoProveedor: indice * 100,
-                  dtoProveedor: descuento,
-                  totalLineaProveedor: importeproveedorDescuento,
-                  costeLineaProveedor: importeproveedorDescuento,
-                  //DESCUENTOS CLIENTE
-                  perdto: indice * 100,
-                  dto: descuentoCliente,
-                  totalLinea: importeClienteDescuento,
-                  coste: importeClienteDescuento
-                }
-            }
-            let verbo = 'PUT';
-            let urlAjax = myconfig.apiUrl + "/api/ofertas/lineas/" + l.ofertaLineaId;
-            llamadaAjax(verbo, urlAjax, data, function (err, data) {
+        if(parte) {
+            // SI HAY PARTE ASOCIADO OBRTENEMOS EL TIPO PROFESIONAL DEL PROVEEDOR
+            let tipoProfesionalId = parte.tipoProfesionalId;
+            llamadaAjax('GET', "/api/proveedores/indices-correctores/proveedor/" + pro.proveedorId + "/" + tipoProfesionalId, null, function (err, indices) {
                 if (err) return errorGeneral(err, done);
-                return done(null, null);
-                
+                let indice = 0;
+                let descuento = 0;
+                let importeproveedorDescuento = 0;
+                let totales = 0;
+                //
+                let descuentoCliente = 0;
+                let importeClienteDescuento = 0;
+                for(let l of lineas) {
+                    if(pro.proveedorId == l.proveedorId) totales += parseFloat(l.precioProveedor);
+                }
+                  totales = Math.round(totales * 100) / 100;
+        
+                //Ahora aplicamos el indice correspondiente
+                for(let i of indices) {
+                    if(totales >= i.minimo && totales <= i.maximo) {
+                      indice = parseFloat(i.porcentajeDescuento) / 100;
+                    }
+                }
+                //si hay indice se aplica el descuento
+            if(indice > 0) {
+                for(let l of lineas) {
+                  if(pro.proveedorId == l.proveedorId) {
+                    //primero lo calculamos por linea y actualizamos en la base de datos
+                    descuento = l.precioProveedor * indice;
+                    descuento = parseFloat(descuento.toFixed(2));
+                    //
+                    importeproveedorDescuento = l.precioProveedor - descuento;
+                    importeproveedorDescuento = parseFloat(importeproveedorDescuento.toFixed(2));
+                    //CLIENTE
+                    descuentoCliente = l.precio * indice;
+                    descuentoCliente = parseFloat(descuentoCliente.toFixed(2));
+                    //
+                    importeClienteDescuento = l.precio - descuentoCliente;
+                    importeClienteDescuento = parseFloat(importeClienteDescuento.toFixed(2));
+                 
+                    let data = {
+                        ofertaLinea: {
+                          ofertaId: l.ofertaId,
+                          ofertaLineaId: l.ofertaLineaId,
+                          linea: l.linea,
+                          articuloId: l.articuloId,
+                          tipoIvaId: l.tipoIvaId,
+                          porcentaje: l.porcentaje,
+                          descripcion: l.descripcion,
+                          cantidad: l.cantidad,
+                          importe: l.importe,
+                          //totalLinea: l.totalLinea,
+                          //DESCUENTOS POVEEDOR
+                          perdtoProveedor: indice * 100,
+                          dtoProveedor: descuento,
+                          totalLineaProveedor: importeproveedorDescuento,
+                          costeLineaProveedor: importeproveedorDescuento,
+                          //DESCUENTOS CLIENTE
+                          perdto: indice * 100,
+                          dto: descuentoCliente,
+                          totalLinea: importeClienteDescuento,
+                          coste: importeClienteDescuento
+                        }
+                    }
+                    let verbo = 'PUT';
+                    let urlAjax = myconfig.apiUrl + "/api/ofertas/lineas/" + l.ofertaLineaId;
+                    llamadaAjax(verbo, urlAjax, data, function (err, data) {
+                        if (err) return errorGeneral(err, done);
+                        return done(null, null);
+                        
+                    });
+                    
+                  }
+                }
+                loadLineasOferta(vm.ofertaId());
+              } else {// SI NO HAY INDICE CORRECTOR, NO SE CALCULA NADA Y DEVOLVEMOS EL NOMBRE DEL PROFESIONAL
+                return done(null, pro.proveedorNombre);
+              } 
             });
-            
-          }
+        } else {// SI NO HAY PARTE ASOCIADO NO PODEMOS CALCULAR EL INDICE CORRECTOR, DEVOLVEMOS EL NOMBRE DEL PROFESIONAL
+            return done(null, pro.proveedorNombre);
         }
-        loadLineasOferta(vm.ofertaId());
-      } else {
-        return done(null, null);
-      } 
     });
-
 }
 
 function loadArticulos(id) {
