@@ -21,7 +21,7 @@ CREATE TABLE `indiceCorrector_profesiones`(
   CONSTRAINT `tipoProfesionalFK` FOREIGN KEY (`tipoProfesionalId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`)
 );
 
-ALTER TABLE `proasistencia`.`ofertas`   
+ALTER TABLE `ofertas`   
   ADD COLUMN `creadaApp` TINYINT(1) DEFAULT 0 NULL AFTER `servicioId`;
 
 
