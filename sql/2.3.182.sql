@@ -23,9 +23,3 @@ CREATE TABLE `indiceCorrector_profesiones`(
 
 ALTER TABLE `ofertas`   
   ADD COLUMN `creadaApp` TINYINT(1) DEFAULT 0 NULL AFTER `servicioId`;
-
-
-
-
-
-

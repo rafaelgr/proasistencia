@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "1a6f5693ac7f4c78ab7fc8f07b444be2",
+  "ReportGuid": "d1026e6165f2430baf868a3c8e27cdbe",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1715595757590+0200)/",
+  "ReportChanged": "/Date(1717065974931+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -283,7 +283,7 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\n\tu.abrev, a.nombre AS articulo, a.articuloId, ol.coste / ol.cantidad as impDescUni, SUBSTRING_INDEX(ol.descripcion, '\\n', 1) AS primera_linea,\r\n\tCASE \r\n        WHEN LOCATE('\\n', ol.descripcion) > 0 THEN SUBSTRING(ol.descripcion, LOCATE('\\n', ol.descripcion) + 1)\r\n        ELSE ''\r\n    END AS resto_lineas\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\n\tu.abrev, a.nombre AS articulo, a.articuloId, ROUND(ol.importe - (ol.importe * (ol.perdto / 100)), 2) AS  impDescUni, SUBSTRING_INDEX(ol.descripcion, '\\n', 1) AS primera_linea,\r\n\tCASE \r\n        WHEN LOCATE('\\n', ol.descripcion) > 0 THEN SUBSTRING(ol.descripcion, LOCATE('\\n', ol.descripcion) + 1)\r\n        ELSE ''\r\n    END AS resto_lineas\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
       },
       "2": {
         "Ident": "StiMySqlSource",

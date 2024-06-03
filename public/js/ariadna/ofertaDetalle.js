@@ -318,6 +318,7 @@ function initForm() {
     });
 
     $('#btnNuevaLinea').prop('disabled', false);
+    //$('#btnNuevaLineaRep').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
 
     $('#btnNuevaCarpeta').show();
@@ -353,11 +354,15 @@ function initForm() {
         llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
             if (err) return;
            
-            //ocultamos el botón de cálculo de los indices correctores si el departa,ento no es de reparaciones
+            //ocultamos el botón de cálculo de los indices correctores si el departamento no es de reparaciones.
             if(data.tipoOfertaId != 7) {
                 $('#btnAplicaIndiceCorrector').hide();
+                $('#btnNuevaLinea').show();
+                //$('#btnNuevaLineaRep').hide();
             } else {
                 $('#btnAplicaIndiceCorrector').show();
+                $('#btnNuevaLinea').hide();
+                //$('#btnNuevaLineaRep').show();
             }
             loadData(data);
             loadLineasOferta(data.ofertaId);
@@ -421,6 +426,8 @@ function admData() {
     self.dto = ko.observable();
     self.precioProveedor = ko.observable();
     self.dtoProveedor = ko.observable();
+    self.importeDescCliente = ko.observable();
+    self.importeDescProveedor = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -1367,8 +1374,15 @@ function initTablaOfertasLineas() {
             data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
+                var bt2 = "";
+               /*  if(vm.tipoOfertaId() != 7) {
+                    bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                } else {
+                    bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLineaRep' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                } */
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteOfertaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+              
                 if (!vm.generada())
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -1504,10 +1518,12 @@ var buscarIndicesCorrectores =  function (pro, lineas, done) {
                 if (err) return errorGeneral(err, done);
                 let indice = 0;
                 let descuento = 0;
+                let descuentoUnitarioPro = 0
                 let importeproveedorDescuento = 0;
                 let totales = 0;
                 //
                 let descuentoCliente = 0;
+                let descuentoUnitarioCli = 0
                 let importeClienteDescuento = 0;
                 for(let l of lineas) {
                     if(pro.proveedorId == l.proveedorId) totales += parseFloat(l.precioProveedor);
@@ -1525,17 +1541,26 @@ var buscarIndicesCorrectores =  function (pro, lineas, done) {
                 for(let l of lineas) {
                   if(pro.proveedorId == l.proveedorId) {
                     //primero lo calculamos por linea y actualizamos en la base de datos
-                    descuento = l.precioProveedor * indice;
-                    descuento = parseFloat(descuento.toFixed(2));
+                    descuentoUnitarioPro = parseFloat(l.importeProveedor * indice);
                     //
-                    importeproveedorDescuento = l.precioProveedor - descuento;
-                    importeproveedorDescuento = parseFloat(importeproveedorDescuento.toFixed(2));
+                    importeproveedorDescuento = l.importeProveedor - descuentoUnitarioPro;
+                    importeproveedorDescuento = parseFloat(Math.round(importeproveedorDescuento * 100) / 100);
+                    importeproveedorDescuento = importeproveedorDescuento * l.cantidad
+                    importeproveedorDescuento = parseFloat(Math.round(importeproveedorDescuento * 100) / 100);
+
+                    descuento = (roundToTwo(l.precioProveedor - importeproveedorDescuento)); //cantidad de descuento
+
+                   
+                    
                     //CLIENTE
-                    descuentoCliente = l.precio * indice;
-                    descuentoCliente = parseFloat(descuentoCliente.toFixed(2));
+                    descuentoUnitarioCli = parseFloat(l.importe * indice);
                     //
-                    importeClienteDescuento = l.precio - descuentoCliente;
-                    importeClienteDescuento = parseFloat(importeClienteDescuento.toFixed(2));
+                    importeClienteDescuento = l.importe - descuentoUnitarioCli;
+                    importeClienteDescuento = parseFloat(Math.round(importeClienteDescuento * 100) / 100);
+                    importeClienteDescuento = importeClienteDescuento * l.cantidad
+                    importeClienteDescuento = parseFloat(Math.round(importeClienteDescuento * 100) / 100);
+
+                    descuentoCliente = (roundToTwo(l.precio - importeClienteDescuento)); //cantidad de descuento
                  
                     let data = {
                         ofertaLinea: {
@@ -1877,42 +1902,88 @@ var cambioPrecioCantidad = function () {
      }
 
      if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
-                                                                                                 //descuennto en el proveedor cargamos el del cliente
-     //calculo en caso de descuento cliente
-    if(vm.perdto() > 0 || vm.perdto() != '') {
-        var precio = parseFloat(vm.precio());
-        var porcen = parseFloat(vm.perdto());
-        porcen = porcen / 100;
-        var descuento = precio * porcen;
-        //se calcula el descuento cliente
-        vm.dto(roundToTwo(descuento));
-        var resultado = parseFloat(precio-descuento);
-        vm.costeLinea(roundToTwo(resultado));
+                                                                                                 //descuento en el proveedor cargamos el del cliente
+    
+    //CASO REPARACIONES
+    if(vm.tipoOfertaId() == 7) {
+         //calculo en caso de descuento cliente
+         if(vm.perdto() > 0 || vm.perdto() != '') {
+            var precio = parseFloat(vm.precio()); // precio unitario * cantiad
+            var importeUnitario = parseFloat(vm.importe()); // precio unitario
+            var porcen = parseFloat(vm.perdto()); // porcentaje descuento
+            porcen = porcen / 100;
+            var desc = importeUnitario * porcen; //importe de unitario con el descuento
+            var descuentoUnitario = importeUnitario - desc
+            //se calcula el descuento cliente
+            vm.importeDescCliente(roundToTwo(descuentoUnitario));
+            var d = vm.cantidad() * vm.importeDescCliente();
+            vm.costeLinea(roundToTwo(d));//precio final con el descuento
+            vm.dto(roundToTwo(precio - d)); //cantidad de descuento
         
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    }
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+        }
 
-    //calculo en caso de descuento proveedor
-    if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
-        var precioProveedor =  parseFloat(vm.precioProveedor());
-        var porcen = parseFloat(vm.perdtoProveedor());
-        porcen = porcen / 100;
-        var descuentoProveedor = precioProveedor * porcen;
+        //calculo en caso de descuento proveedor
+        if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+            var precioProveedor = parseFloat(vm.precioProveedor()); // precio unitario * cantiad
+            var importeUnitarioProveedoor = parseFloat(vm.importeProveedor()); // precio unitario
+            var porcenProveedor = parseFloat(vm.perdtoProveedor()); // porcentaje descuento
+            porcenProveedor = porcenProveedor / 100;
+            var descProveedor = importeUnitarioProveedoor * porcenProveedor; //importe de unitario con el descuento
+            var descuentoUnitarioProveedor = importeUnitarioProveedoor - descProveedor
+            //se calcula el descuento cliente
+            vm.importeDescProveedor(roundToTwo(descuentoUnitarioProveedor));
+            var dp = vm.cantidad() * vm.importeDescProveedor();
+            vm.costeLineaProveedor(roundToTwo(dp));//precio final con el descuento
+            vm.dtoProveedor(roundToTwo(precioProveedor - dp)); //cantidad de descuento
         
-        //se calcula el descuento proveedor
-        vm.dtoProveedor(roundToTwo(descuentoProveedor));
-        var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
-        vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+    
+            if(porPro !== null) {
+                porIva = vm.porcentajeProveedor() / 100;
+                totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+                vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+             }
+        }
+    } else {// RESTO DE DEPARTAMENTOS
+         //calculo en caso de descuento cliente 
+         if(vm.perdto() > 0 || vm.perdto() != '') {
+            var precio = parseFloat(vm.precio()); // precio unitario * cantiad
+            var porcen = parseFloat(vm.perdto());
+            porcen = porcen / 100;
+            var descuento = precio * porcen;
+            //se calcula el descuento cliente
+            vm.dto(roundToTwo(descuento)); //descuento total
+            var resultado = parseFloat(precio-descuento);
+            vm.costeLinea(roundToTwo(resultado));
+            
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+        }
 
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
-        if(porPro !== null) {
-            porIva = vm.porcentajeProveedor() / 100;
-            totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
-            vm.totalLineaProveedorIva(roundToTwo(totalProIva));
-         }
-
+        //calculo en caso de descuento proveedor 
+        if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+            var precioProveedor =  parseFloat(vm.precioProveedor()); // precio unitario * cantiad
+            var porcen = parseFloat(vm.perdtoProveedor());
+            porcen = porcen / 100;
+            var descuentoProveedor = precioProveedor * porcen;
+            
+            //se calcula el descuento proveedor
+            vm.dtoProveedor(roundToTwo(descuentoProveedor)); // descuento total
+            var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
+            vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
+    
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+            if(porPro !== null) {
+                porIva = vm.porcentajeProveedor() / 100;
+                totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+                vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+             }
+    
+        }
     }
 }
 
@@ -2213,9 +2284,11 @@ var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
     if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
         $('#btnNuevaLinea').prop('disabled', true);
+        //$('#btnNuevaLineaRep').prop('disabled', true);
         $('#btnAceptarLinea').prop('disabled', true)
     } else {
         $('#btnNuevaLinea').prop('disabled', false);
+        //$('#btnNuevaLineaRep').prop('disabled', false);
         $('#btnAceptarLinea').prop('disabled', false)
     }
     
@@ -2264,6 +2337,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 var ocultarCamposOfertasGeneradas = function () {
     $('#btnAceptar').hide();
     $('#btnNuevaLinea').hide();
+    //$('#btnNuevaLineaRep').hide();
     // los de input para evitar que se lance 'onblur'
     $('#txtCoste').prop('disabled', true);
     $('#txtPorcentajeBeneficio').prop('disabled', true);
