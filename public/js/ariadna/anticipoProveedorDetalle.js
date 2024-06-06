@@ -70,7 +70,14 @@ function initForm() {
     
     
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptarAnticipo);
+    $("#btnAceptar").click(function() {
+        aceptarAnticipo(true);
+    });
+
+    $("#btnAceptar2").click(function() {
+        aceptarAnticipo(false);
+    });
+
     $("#btnSalir").click(salir());
     
     //$("#btnImprimir").click(imprimir);
@@ -276,6 +283,7 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
+            $('#btnAceptar2').show();
             loadData(data);
             loadServiciadasAntprove(antproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
@@ -332,6 +340,7 @@ function initForm() {
         })
     } else {
         // caso alta
+        $('#btnAceptar2').hide();
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
@@ -585,8 +594,8 @@ function loadData(data) {
         mostrarMensajeAnticipoGenerada();
     }
     vm.periodo(data.periodo);
-    if (cmd == "nueva") {
-        mostrarMensajeAnticipoNueva();
+    if (cmd == "nueva" && data.completo == 1) {
+        mostrarMensajeAnticipoNuevo();
     }
     if(data.noContabilizar == 1){
         $('#chkNoContabilizar').prop("checked", true);
@@ -694,10 +703,10 @@ function datosOK() {
     return $('#frmAnticipo').valid();
 }
 
-var aceptarAnticipo = function () {
+var aceptarAnticipo = function (salir) {
     if (!datosOK()) return;
 
-    eventSalir = false;
+
     if (!vm.total() && vm.completo()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -726,16 +735,25 @@ var aceptarAnticipo = function () {
         loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            if(salir) {
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
         }
         else{
-            window.open(returnUrl, '_self');
+            if(salir) {
+                window.open(returnUrl, '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
         }
        
     });
 }
-var totConIva;
+
 var generarAnticipoDb = function () {
+    var totConIva;
     if($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
@@ -1913,8 +1931,8 @@ var mostrarMensajeAnticipoGenerada = function () {
     mensNormal(mens);
 }
 
-var mostrarMensajeAnticipoNueva = function () {
-    var mens = "Introduzca las líneas de la nueva anticipo en el apartado correspondiente";
+var mostrarMensajeAnticipoNuevo = function () {
+    var mens = "Introduzca las líneas del nuevo anticipo en el apartado correspondiente";
     mensNormal(mens);
 }
 
