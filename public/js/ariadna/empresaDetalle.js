@@ -33,7 +33,8 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#btnGuardarPlantilla").click(aceptar());
+    //$("#btnGuardarPlantilla").click(aceptar());
+    //$("#btnGuardarPlantillaRep").click(aceptar());
     $("#btnImportar").click(importar());
 
     $("#frmEmpresa").submit(function () {
@@ -111,6 +112,7 @@ function initForm() {
     
     // carga del editor de plantillas
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
+    CKEDITOR.replace('ckeditorRep', { height: '380px', startupFocus: true });
 
     empId = gup('EmpresaId');
     if (empId != 0) {
@@ -219,6 +221,7 @@ function admData() {
 
     //
     self.plantillaCorreoFacturas = ko.observable();
+    self.plantillaCorreoFacturasRep = ko.observable();
 
 
     //MODAL
@@ -286,7 +289,9 @@ function loadData(data) {
     vm.infFacCliObr(data.infFacCliObr);
     // 
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
+    vm.plantillaCorreoFacturasRep(data.plantillaCorreoFacturasRep);
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
+    CKEDITOR.instances.plantillaRep.setData(vm.plantillaCorreoFacturasRep());
 
     //
     loadSerieRectificativas(data.serieFacR);
@@ -364,6 +369,7 @@ function aceptar() {
         comprobarVacios();
         if (!datosOK()) return;
         vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
+        vm.plantillaCorreoFacturasRep(CKEDITOR.instances.plantillaRep.getData());
         var data = {
             empresa: {
                 "empresaId": vm.empresaId(),
@@ -398,6 +404,7 @@ function aceptar() {
                 "infFacturas": vm.infFacturas(),
                 "infPreFacturas": vm.infPreFacturas(),
                 "plantillaCorreoFacturas": vm.plantillaCorreoFacturas(),
+                "plantillaCorreoFacturasRep": vm.plantillaCorreoFacturasRep(),
                 "asuntoCorreo": vm.asunto(),
                 "hostCorreo": vm.hostCorreo(),
                 "portCorreo": vm.portCorreo(),
