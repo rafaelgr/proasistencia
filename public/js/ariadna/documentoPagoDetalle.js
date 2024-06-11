@@ -5,7 +5,6 @@ Funciones js par la página DocumentoPagoDetalle.html
 
 var documentoPagoId = 0;
 var usuario;
-var esFactura = false;
 var datosArrayRegistros = []
 var datosArrayRegistrosAnt = []
 
@@ -181,63 +180,21 @@ function initForm() {
 
 
     $('#upload-input').on('change', function () {
-        var files = $(this).get(0).files;
+        if(vm.documentoPagoId() == 0) {
+            aceptarUpload(this);
+        } else {
+            upload(this);
+        }
         
-        // create a FormData object which will be sent as the data payload in the
-        // AJAX request
-        var formData = new FormData();
-        // loop through all the selected files and add them to the formData object
-        
-        var file = files[0];
-        var ext = file.name.split('.').pop().toLowerCase();
-        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
-        // add the files to formData object for the data payload
-        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
-            $.ajax({
-                url: '/api/upload/docpago/' + vm.documentoPagoId(),
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    filename = data;
-                    vm.pdf(filename);
-                    checkVisibility(filename);
-                },
-                xhr: function () {
-                    // create an XMLHttpRequest
-                    var xhr = new XMLHttpRequest();
-                    // listen to the 'progress' event
-                    xhr.upload.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            // calculate the percentage of upload completed
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-                            // update the Bootstrap progress bar with the new percentage
-                            $('.progress-bar').text(percentComplete + '%');
-                            $('.progress-bar').width(percentComplete + '%');
-                            // once the upload reaches 100%, set the progress bar text to done
-                            if (percentComplete === 100) {
-                                $('.progress-bar').html('Fichero subido');
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                },
-                error: function (xhr, textStatus, errorThrwon) {
-                    var m = xhr.responseText;
-                    if (!m) m = "Error al cargar";
-                    mensError(m);
-                    return;
-                }
-            });
     });
+
+
 
 
     documentoPagoId = gup('DocumentoPagoId');
     cmd = gup("cmd");
     if (documentoPagoId != 0) {
-        $('#pdfDoc').show();
+        //$('#pdfDoc').show();
         var data = {
                 documentoPagoId: documentoPagoId
             }
@@ -264,7 +221,7 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        $('#pdfDoc').hide();
+        //$('#pdfDoc').hide();
         vm.documentoPagoId(0);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
@@ -327,6 +284,9 @@ function datosOK() {
             },
             txtFecha: {
                 required: true
+            },
+            txtPdf: {
+                required: true
             }
         },
         // Messages for form validation
@@ -336,6 +296,9 @@ function datosOK() {
             },
             txtFecha: {
                 required: 'Introduzca una fecha'
+            },
+            txtPdf: {
+                required: "Se tiene que subir un PDF para poder crear"
             }
         },
         // Do not change code below
@@ -522,6 +485,95 @@ function aceptar(salir) {
                                 error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+}
+
+function aceptarUpload(a) {
+    if (!datosOK())
+        return;
+    var data = {
+        documentoPago: {
+            "documentoPagoId": vm.documentoPagoId(),
+            "nombre": vm.nombre(),
+            "fecha":spanishDbDate(vm.fecha()),
+            "pdf": vm.pdf(),
+        }
+    };
+    var verb = "POST";
+    var url =   myconfig.apiUrl + "/api/documentos_pago"
+    var returnUrl = "DocumentoPagoDetalle.html?cmd=nuevo&DocumentoPagoId=";
+
+        $.ajax({
+            type: verb,
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function(data, status) {
+                vm.documentoPagoId(data.documentoPagoId);
+                documentoPagoId = data.documentoPagoId;
+                upload(a)
+                //returnUrl = returnUrl + data.documentoPagoId;
+                //window.open(returnUrl, '_self');
+                
+            },
+                            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+function upload(a) {
+    var files = $(a).get(0).files;
+        
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+        
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
+            $.ajax({
+                url: '/api/upload/docpago/' + vm.documentoPagoId(),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.pdf(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
                 }
             });
 }
@@ -1017,13 +1069,7 @@ function buscarAsociarRegistros() {
         });
 }
 
-function aceptarAsociar() {
-    if(esFactura) {
-        aceptarAsociarFacturas();
-    } else {
-        aceptarAsociarRegistros();
-    }
-}
+
 function aceptarAsociarFacturas() {
     $('#btnAceptarAsociarFacturas').prop('disabled', true);
     var data = 
@@ -1073,6 +1119,42 @@ function aceptarAsociarFacturas() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function confirmarAsociarRegistros() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos registros?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar registros]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar registros") {
+            aceptarAsociarRegistros();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
+}
+
+function confirmarAsociarFacturas() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estas facturas?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar facturas]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar facturas") {
+            aceptarAsociarFacturas();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
 }
 
 function aceptarAsociarRegistros() {
