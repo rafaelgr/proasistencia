@@ -435,10 +435,13 @@ function admData() {
     self.noContabilizar = ko.observable();
     self.numregis = ko.observable();
     self.importeAnticipo = ko.observable();
+    self.importeAnticipoFormat = ko.observable();
     self.restoPagar = ko.observable();
+    self.restoPagarFormat = ko.observable();
     self.conceptoAnticipo = ko.observable();
     self.emisorIban = ko.observable();
     self.fianza = ko.observable();
+    self.fianzaFormat = ko.observable();
     self.enviadaCorreo = ko.observable();
     self.contabilizada = ko.observable();
 
@@ -492,6 +495,7 @@ function admData() {
     self.anticipo = ko.observable();
     self.antproveId = ko.observable();
     self.contado = ko.observable();
+    self.contadoFormat = ko.observable();
 
     // -- Valores para las líneas
     self.facproveLineaId = ko.observable();
@@ -605,11 +609,14 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
-    vm.contado(numeral(data.contado).format('0,0.00'));
+    vm.importeAnticipo(data.importeAnticipo);
+    vm.importeAnticipoFormat(numeral(data.importeAnticipo).format('0,0.00'));
+    vm.contado(data.contado);
+    vm.contadoFormat(numeral(data.contado).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.emisorIban(data.IBAN);
-    vm.fianza(numeral(data.fianza).format('0,0.00'));
+    vm.fianza(data.fianza);
+    vm.fianzaFormat(numeral(data.fianza).format('0,0.00'));
     vm.restoPagar(data.restoPagar);
     vm.enviadaCorreo(data.enviadaCorreo);
     vm.contabilizada(data.contabilizada);
@@ -783,7 +790,7 @@ var aceptarFactura = function (salir) {
         vm.total('0');
         vm.totalCuota('0');
         vm.totalConIva('0');
-        vm.restoPagar('0');
+        vm.restoPagar(0);
         vm.importeRetencion('0')
     }
 
@@ -895,7 +902,7 @@ var generarFacturaDb = function () {
             "ref": vm.ref(),
             "noContabilizar": vm.noContabilizar(),
             "departamentoId": vm.sdepartamentoId(),
-            "restoPagar": numeroDbf(vm.restoPagar()),
+            "restoPagar": vm.restoPagar(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "tipoOperacionId": vm.stipoOperacionId(),
             "enviadaCorreo": vm.enviadaCorreo(),
@@ -1853,14 +1860,18 @@ function loadBasesFacprove(facproveId) {
 }
 
 function recalculaRestoPagar() {
-    var importeAnticipo = numeroDbf(vm.importeAnticipo());
-    var importeFianza = numeroDbf(vm.fianza());
-    var contado = numeroDbf(vm.contado());
+    var importeAnticipo = vm.importeAnticipo();
+    var importeFianza = vm.fianza();
+    var contado = vm.contado();
+
     var totConIva =  numeroDbf(vm.totalConIva());
+    totConIva = Math.round(totConIva * 100) / 100
+
     var totSinImporteAnticipo = totConIva-importeAnticipo;
     var totalSinFian = totSinImporteAnticipo-importeFianza;
     var totalSinContado = totalSinFian - contado
-    vm.restoPagar(numeral(totalSinContado).format('0,0.00'));
+    vm.restoPagar(totalSinContado);
+    vm.restoPagarFormat(numeral(totalSinContado).format('0,0.00'));
 
     //ACTUALIZAMOS LA FACTURA EN LA BASE DE DATOS
     var data = {
@@ -2919,8 +2930,8 @@ function vinculaAnticipoCompleto() {
 function vinculaAnticiposIncompletos() {
     var impAnticipo = 0;
     var selected;
-    var impFianza = parseFloat(vm.fianza());
-    var impContado = parseFloat(vm.contado());
+    var impFianza = vm.fianza();
+    var impContado = vm.contado();
     var result = numeroDbf(vm.totalConIva());
     var id = []
     $('#dt_anticipos input[type=checkbox]').each(function(){
@@ -2959,7 +2970,8 @@ function vinculaAnticiposIncompletos() {
             if(impAnticipo > 0) {
                 result = result - impAnticipo
                 //vm.restoPagar(numeral(result).format('0,0.00'));
-                vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+                vm.importeAnticipo(impAnticipo);
+                vm.importeAnticipoFormat(numeral(impAnticipo).format('0,0.00'));
                 vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
             }
             if(impFianza > 0) {
@@ -3090,7 +3102,7 @@ function desvinculaAnticipoCompleto() {
 function cargaTablaAnticipos(completo){
     comp = completo;
     if(comp) {
-        var cantidad = numeroDbf(vm.importeAnticipo());
+        var cantidad = vm.importeAnticipo();
         if(cantidad > 0) {
             mensError('Ya existen anticipos vinculados');
             return;
@@ -3237,7 +3249,7 @@ function desvinculaAnticipoIncompleto(id) {
        
     }
     var impAnticipo = 0
-    var impFianza = numeroDbf(vm.fianza());
+    var impFianza = vm.fianza();
     var result = numeroDbf(vm.totalConIva());
     llamadaAjax("DELETE", "/api/anticiposProveedores/desvincula/", datos, function (err, data) {
         if (err) return;
@@ -3255,12 +3267,14 @@ function desvinculaAnticipoIncompleto(id) {
                 if(impAnticipo > 0) {
                     result = result - impAnticipo
                     //vm.restoPagar(numeral(result).format('0,0.00'));
-                    vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
+                    vm.importeAnticipo(impAnticipo);
+                    vm.importeAnticipoFormat(numeral(impAnticipo).format('0,0.00'));
                     vm.conceptoAnticipo(anticipos[0].conceptoAnticipo);
                 }
             } else {//SI NO HAY ANTICIPOS ASOCIADOS
-                    vm.importeAnticipo(numeral(impAnticipo).format('0,0.00'));
-                    vm.conceptoAnticipo('');
+                vm.importeAnticipo(impAnticipo);
+                vm.importeAnticipoFormat(numeral(impAnticipo).format('0,0.00'));
+                vm.conceptoAnticipo('');
             }
             if(impFianza > 0) {
                 result = result - impFianza;
