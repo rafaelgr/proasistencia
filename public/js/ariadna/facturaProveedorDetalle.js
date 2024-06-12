@@ -805,7 +805,7 @@ function datosOK() {
 var aceptarFactura = function (salir) {
     if (!datosOK()) return;
 
-    eventSalir = false;
+   
     if (!vm.total()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -851,7 +851,7 @@ var aceptarFactura = function (salir) {
     var datosArray = [];
     datosArray.push(data, dataPdf)
     llamadaAjax(verb, url, datosArray, function (err, data) {
-        loadData(data);
+        if(salir) loadData(data);
         returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
             if(salir) {
