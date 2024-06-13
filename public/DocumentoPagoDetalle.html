@@ -940,14 +940,17 @@
                                     <th data-hide="phone">
                                         Fichero
                                     </th>
-                                    <th data-hide="phone">
+                                    <th class="text-right">
                                         Fecha transferencia
                                     </th>
-                                    <th data-hide="phone" class="text-right">
+                                    <th class="text-right">
                                         Importe
                                     </th>
                                     <th data-hide="phone" class="text-right">
                                         Descripcion
+                                    </th>
+                                    <th>
+                                        Facturas
                                     </th>
                                     <th>
                                     </th>
@@ -1188,7 +1191,7 @@
                                 <button id="btnSalirAsociarRegistrosAnt" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
                                     <i class="fa fa-lg fa-sign-out"></i>
                                 </button>
-                                <button id="btnAceptarAsociarRegistrosAnt" title="Asociar registros" onClick="aceptarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
+                                <button id="btnAceptarAsociarRegistrosAnt" title="Asociar registros" onClick="confirmarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
                                     <i class="fa fa-lg fa-check"></i>
                                 </button>
                                 <button id="btnbuscarAsociarRegistrosAnt" title="Buscar registros" onClick="buscarAsociarRegistrosAnt()" class="btn btn-success btn-circle btn-lg">
@@ -1222,6 +1225,10 @@
                                     <th data-hide="phone" class="text-right">
                                         Descripcion
                                     </th>
+                                    <th data-hide="phone" class="text-right">
+                                        Facturas
+                                    </th>
+
                                     <th>
                                     </th>
                                 </tr>
@@ -1489,11 +1496,11 @@
     <script src="js/ariadna/documentopagoDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
-    <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+     <script src="js/plugin/datatables/new/jquery.dataTables.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+     <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.print.min.js"></script>
     <script type="text/javascript">
     (function($) {
         $(document).ready(function() {

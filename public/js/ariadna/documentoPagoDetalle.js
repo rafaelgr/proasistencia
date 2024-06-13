@@ -913,6 +913,9 @@ function initTablaAsociarRegistros() {
             }
         }, {
             data: "Descripcion"
+        }, {
+            data: "facturas",
+            width: "5%"
         },{
             data: "codigo",
             render: function (data, type, row) {
@@ -1775,6 +1778,9 @@ function initTablaAsociarRegistrosAnt() {
             }
         }, {
             data: "Descripcion"
+        }, {
+            data: "facturas",
+            width: "5%"
         },{
             data: "codigo",
             render: function (data, type, row) {
@@ -1811,6 +1817,24 @@ function loadTablaAsociarRegistrosAnt(data) {
             }
         });
     });
+}
+
+function confirmarAsociarRegistrosAnt() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos registros?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar registros]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar registros") {
+            aceptarAsociarRegistrosAnt();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
 }
 
 function buscarAsociarRegistrosAnt() {
@@ -2071,7 +2095,7 @@ function desvinculaAnticipo(id) {
 
 function desvinculaAnticipos() {
      // mensaje de confirmación
-     var mens = "¿Desea borrar todos los registros?. Esta acción no se podrá deshacer";
+     var mens = "¿Desea desasociar todos los registros?. Esta acción no se podrá deshacer";
      $.SmartMessageBox({
          title: "<i class='fa fa-info'></i> Mensaje",
          content: mens,
