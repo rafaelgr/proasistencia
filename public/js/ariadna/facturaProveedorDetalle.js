@@ -843,14 +843,14 @@ var aceptarFactura = function (salir) {
                 window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
             } else {
                 mensNormal('Factura guardada.');
-                window.open(returnUrl, '_self');
+                //window.open(returnUrl, '_self');
             }
         } else if(desdeProveedor == "true" && facproveId != 0) {
             if(salir) {
                 window.open('ProveedorDetalle.html?ProveedorId='+ vm.proveedorId() +'&doc=true', '_self');
             } else {
                 mensNormal('Factura guardada.');
-                window.open(returnUrl, '_self');
+                //window.open(returnUrl, '_self');
             }
         }
         else{
