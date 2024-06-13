@@ -2320,6 +2320,24 @@ function loadTablaAsociarAnticipos(data) {
     });
 }
 
+function confirmarAsociarAnticipos() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos anticipos?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar anticipos]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar anticipos") {
+            aceptarAsociarAnticipos();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
+}
+
 function aceptarAsociarAnticipos() {
     $('#btnAceptarAsociarAnticipos').prop('disabled', true);
     var data = 
