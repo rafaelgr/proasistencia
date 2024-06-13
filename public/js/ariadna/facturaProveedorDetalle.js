@@ -319,6 +319,7 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/facturasProveedores/" + facproveId, null, function (err, data) {
             if (err) return;
+            $('#btnAceptar2').show();
             vm.stipoOperacionId(data.tipoOperacionId);
             loadData(data);
             loadLineasFactura(data.facproveId);
@@ -326,24 +327,7 @@ function initForm() {
             loadRetencionesFacprove(data.facproveId);
             loadServiciadasFacprove(facproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
-            /*llamadaAjax("GET",  "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + data.proveedorId, null, function (err, data2) {
-                if (err) return;
-                var result = [];
-                if(data2) {
-                    if(data2.length > 0) {
-                        data2.forEach(function (f) {
-                            if(f.facproveId == null) {
-                                result.push(f);
-                            }
-                        })
-                    }
-                    if(result.length > 0 && !data.antproveId) {
-                        initTablaAnticipos();
-                        $("#modalAnticipo").modal({show: true});
-                        loadTablaAnticipos(result);
-                    }
-                }
-            })*/
+            
              //actualización de propiedad al click
              var proveedorId = data.proveedorId;
              var empresaId = data.empresaId;
@@ -375,6 +359,7 @@ function initForm() {
         });
     } else {
         // caso alta
+        $('#btnAceptar2').hide();
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
