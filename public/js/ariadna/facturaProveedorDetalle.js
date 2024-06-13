@@ -790,7 +790,7 @@ function datosOK() {
 var aceptarFactura = function (salir) {
     if (!datosOK()) return;
 
-   
+    eventSalir = false;
     if (!vm.total()) {
         vm.total('0');
         vm.totalCuota('0');
