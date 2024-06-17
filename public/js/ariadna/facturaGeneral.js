@@ -183,7 +183,7 @@ function initTablaFacturas() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7) {
+                    if(column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
