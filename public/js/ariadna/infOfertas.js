@@ -4,6 +4,7 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
+var departamentoId = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -173,7 +174,7 @@ var obtainReport = function () {
     if (!datosOK()) return;
 
     var empresaId = vm.sempresaId();
-    var departamentoId = vm.sdepartamentoId();
+    departamentoId = gup('departamentoId');
     var ofertaId = vm.ofertaId();
   
     
@@ -186,6 +187,7 @@ var obtainReport = function () {
     //si se trata del departamento de arquitectura y la empresa proyecta cargamos su propio informe
     if(empresaId == 10 && departamentoId == 5 && !ofertaId) file = "../reports/oferta_proyecta_visor.mrt";
     else if(empresaId == 10 && departamentoId == 5  && ofertaId) file = "../reports/oferta_proyecta.mrt";
+    else if( departamentoId == 7) file = "../reports/oferta_reparaciones.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";

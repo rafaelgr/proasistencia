@@ -663,7 +663,7 @@
                                                                                 <input id="chkBeneficioLineal" type="checkbox" name="chkBeneficioLineal" data-bind="checked: beneficioLineal"> Beneficio lineal
                                                                             </div>
                                                                         </section>
-                                                                        <section class="col col-md-10">
+                                                                        <section class="col col-md-8">
                                                                         </section>
                                                                     </div>
                                                                     <div class="row">
@@ -816,6 +816,14 @@
                                                                     <div class="pull-right">
                                                                         <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
                                                                             <i class="fa fa-lg fa-plus"></i>
+                                                                        </button>
+                                                                       <!--  <button id="btnNuevaLineaRep" title="Nueva línea" data-toggle="modal" data-target="#modalLineaRep" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-plus"></i>
+                                                                        </button> -->
+                                                                    </div>
+                                                                    <div class="pull-right">
+                                                                        <button id="btnAplicaIndiceCorrector" title="Aplicar indice corrector" data-toggle="modal"  onclick="aplicaIndicesCorrectores()" class="btn btn-primary btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-refresh"></i>
                                                                         </button>
                                                                     </div>
                                                                 </fieldset>
@@ -1336,6 +1344,201 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- /.modal -->
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="modalLineaRep" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LINEA OFERTA</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="linea-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Texto del capítulo</label>
+                                        <label class="input">
+                                            <input id="txtCapitulo" name="txtCapitulo" type="text" data-bind="value: capituloLinea" />
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-1">
+                                        <label class="label">Linea</label>
+                                        <label class="input">
+                                            <input id="txtLinea" name="txtLinea" type="text" data-bind="value: linea" />
+                                        </label>
+                                    </section>
+                                    <div class="col col-md-4">
+                                        <label class="label">Capítulo</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbGrupoArticulos" name="cmbGrupoArticulos" data-bind="options: posiblesGrupoArticulos, optionsText: 'nombre', optionsValue: 'grupoArticuloId', value: sgrupoArticuloId, valueAllowUnset: true, selectedOptions: elegidosGrupoArticulos, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <label class="label">Unidad constructiva</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbArticulos" name="cmbArticulos" data-bind="options: posiblesArticulos, optionsText: 'nombre', optionsValue: 'articuloId', value: sarticuloId, valueAllowUnset: true, selectedOptions: elegidosArticulos, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <label class="label">Unidades</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbUnidades" name="cmbUnidades" data-bind="options: posiblesUnidades, optionsText: 'abrev', optionsValue: 'unidadId', value: sunidadId, valueAllowUnset: true, selectedOptions: elegidosUnidades, selected2:{}"></select><i></i>
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-1">
+                                        <label class="label">Cantidad</label>
+                                        <label class="input">
+                                            <input id="txtCantidad" name="txtCantidad" type="text" data-bind="value: cantidad" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Descripción </label>
+                                        <label class="textarea textarea-resizable">
+                                            <textarea id="txtDescripcion" rows="6" class="custom-scroll" data-bind="value:descripcion">
+                                            </textarea>
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <fieldset>
+                            <section>
+                                <h3> Importes del cliente</h3>
+                                <div class="row">
+                                    <section class="col col-md-4">
+                                        <label class="label">Tipo IVA</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposIva" name="cmbTiposIva" data-bind="options: posiblesTiposIva, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaId, valueAllowUnset: true, selectedOptions: elegidosTiposIva, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>                                   
+                                    <section class="col col-md-4">
+                                        <label class="label">Coste / Ud</label>
+                                        <label class="input">
+                                            <input id="txtImpUni" name="txtImpUni" type="text" data-bind="value: importe" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="label">Precio</label>
+                                        <label class="input">
+                                            <input id="txtPrecio" name="txtPrecio" type="text" data-bind="value: precio" disabled/>
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-3">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuento" name="txtPorDescuento" type="text" data-bind="value: perdto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Coste Descuento/ Ud</label>
+                                        <label class="input">
+                                            <input id="txtImpUniDesc" name="txtImpUniDesc" type="text" data-bind="value: importeDescCliente" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Importe descuento</label>
+                                        <label class="input">
+                                            <input id="txtImpDescuento" name="txtImpDescuento" type="text" data-bind="value: dto"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Total coste</label>
+                                        <label class="input">
+                                            <input id="txtCosteLinea" name="txtCosteLinea" type="text" data-bind="value: costeLinea" disabled />
+                                        </label>
+                                    </section>
+
+                                </div>
+                            </section>
+                        </fieldset>
+                        <fieldset>
+                            <section>
+                                <h3> Importes del proveedor</h3>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Proveedor</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
+                                            <i></i>
+                                        </label>
+                                    </section>  
+                                </div>
+                                <div class="row">  
+                                    <section class="col col-md-4">
+                                        <label class="label">Coste / Ud</label>
+                                        <label class="input">
+                                            <input id="txtPrecioProveedor" name="txtPrecioProveedor" type="text" data-bind="value: importeProveedor" />
+                                        </label>
+                                    </section>         
+                                    
+                                    <section class="col col-md-4">
+                                        <label class="label">Tipo IVA</label>
+                                        <label style="width:100%;">
+                                            <select style="width:100%" id="cmbTiposIvaProveedor" name="cmbTiposIvaProveedor" data-bind="options: posiblesTiposIvaProveedor, optionsText: 'nombre', optionsValue: 'tipoIvaId', value: stipoIvaProveedorId, valueAllowUnset: true, selectedOptions: elegidosTiposIvaProveedor, selected2:{}"></select><i></i>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="label">Precio</label>
+                                        <label class="input">
+                                            <input id="txtPrecioPro" name="txtPrecioPro" type="text" data-bind="value: precioProveedor" disabled/>
+                                        </label>
+                                    </section>                            
+                                </div>
+                                <div class="row"> 
+                                    <section class="col col-md-3">
+                                        <label class="label">% Descuento</label>
+                                        <label class="input">
+                                            <input id="txtPorDescuentoProveedor" name="txtPorDescuentoProveedor" type="text" data-bind="value: perdtoProveedor"/>
+                                        </label>
+                                    </section>   
+                                    <section class="col col-md-3">
+                                        <label class="label">Coste Descuento/ Ud</label>
+                                        <label class="input">
+                                            <input id="txtImpUniDescPro" name="txtImpUniDescPro" type="text" data-bind="value: importeDescProveedor" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Importe descuento</label>
+                                        <label class="input">
+                                            <input id="txtImpDescuentoPro" name="txtImpDescuentoPro" type="text" data-bind="value: dtoProveedor"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Total coste</label>
+                                        <label class="input">
+                                            <input id="txtCosteLineaProveedor" name="txtCosteLineaProveedor" type="text" data-bind="value: costeLineaProveedor" disabled />
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLinea" class="btn btn-primary" onclick="guardarLinea()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div> -->
     <!-- /.modal -->
     <!-- Modal -->
     <div class="modal fade" id="modalContrato" tabindex="-1" role="dialog">
