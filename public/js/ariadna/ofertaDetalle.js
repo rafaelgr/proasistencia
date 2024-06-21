@@ -1693,8 +1693,14 @@ function cambioArticulo(data) {
         } else {
             vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
+
         vm.cantidad(1);
-        vm.importe(data.precioUnitario);
+        
+        if(vm.departamentoId() != 7) {
+            vm.importe(data.precioUnitario);
+        }
+      
+        
         //valores para IVA por defecto a partir del  
         // articulo seleccionado.
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
