@@ -351,17 +351,18 @@ function initForm() {
     vm.beneficioLineal(0);
     $('#chkBeneficioLineal').prop('disabled', true);
     if (ofertaId != 0) {
+        $('#btnAceptar2').show();
         llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
             if (err) return;
            
             //ocultamos el botón de cálculo de los indices correctores si el departamento no es de reparaciones.
             if(data.tipoOfertaId != 7) {
                 $('#btnAplicaIndiceCorrector').hide();
-                $('#btnNuevaLinea').show();
+                //$('#btnNuevaLinea').show();
                 //$('#btnNuevaLineaRep').hide();
             } else {
                 $('#btnAplicaIndiceCorrector').show();
-                $('#btnNuevaLinea').hide();
+                //$('#btnNuevaLinea').hide();
                 //$('#btnNuevaLineaRep').show();
             }
             loadData(data);
@@ -370,6 +371,7 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
+        $('#btnAceptar2').hide();
         vm.ofertaId(0);
         vm.beneficioLineal(0);
         obtenerPorcentajeBeneficioPorDefecto();
@@ -695,7 +697,7 @@ var clicAceptar = function (salir) {
             window.open(url, '_self');
         } else {
             mensNormal('Oferta guardada.');
-            recargaCabeceraLineasBases();
+            //recargaCabeceraLineasBases();
         }
     })
 }
