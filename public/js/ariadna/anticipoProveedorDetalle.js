@@ -706,7 +706,8 @@ function datosOK() {
 var aceptarAnticipo = function (salir) {
     if (!datosOK()) return;
 
-
+    eventSalir = false;
+    
     if (!vm.total() && vm.completo()) {
         vm.total('0');
         vm.totalCuota('0');
