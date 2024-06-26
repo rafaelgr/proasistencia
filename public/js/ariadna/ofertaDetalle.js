@@ -164,16 +164,7 @@ function initForm() {
         loadTipoProyecto();
     });
 
-    $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
-    $("#cmbProveedores").select2().on('change', function (e) {
-        if(!e.added) return;
-        cambioProveedor(e.added.id);
-        var tipof =  vm.tipoOfertaId();
-        if(tipof == 7) {
-            buscaTarifaProveedor(e.added.id);
-        }
-    });
+    
 
     $('#chkBeneficioLineal').change(function() {
         if(vm.ofertaId()) cambioLineal();
@@ -292,13 +283,33 @@ function initForm() {
 
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
+
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added);
         var tipof =  vm.tipoOfertaId();
         if(tipof == 7) {
             buscaTarifaCliente(e.added);
             if(vm.proveedorId()) buscaTarifaProveedor(vm.proveedorId())
+        } else {
+            buscaTarifaCliente(e.added);
+            cambioArticulo(e.added);
+        }
+    });
+
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    $("#cmbProveedores").select2().on('change', function (e) {
+        if(!e.added) return;
+        cambioProveedor(e.added.id);
+        var tipof =  vm.tipoOfertaId();
+        if(tipof == 7) {
+            if(vm.esTarifa()) {
+                buscaTarifaProveedor(e.added.id);
+            } else {
+
+            }
+            
         }
     });
 
@@ -492,6 +503,7 @@ function admData() {
     self.totalLineaProveedor = ko.observable();
     self.totalLineaProveedorIva = ko.observable();
     self.porcentajeProveedor = ko.observable();
+    self.esTarifa = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -595,6 +607,7 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.beneficioLineal(data.beneficioLineal);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
+  
     //
     //cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
@@ -1170,7 +1183,8 @@ var guardarLinea = function () {
             //Ponemos los campos de la oferta lineal a cero
             importeBeneficioLinea: 0,
             importeAgenteLinea: 0,
-            ventaNetaLinea: 0
+            ventaNetaLinea: 0,
+            esTarifa: vm.esTarifa()
         }
     }
     var verboAjax = '';
@@ -1407,6 +1421,7 @@ function loadDataLinea(data) {
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
     vm.proveedorId(data.proveedorId);
+    vm.esTarifa(data.esTarifa);
     //
     //cantidades de proveedor
     vm.importeProveedor(data.importeProveedor);
@@ -1696,10 +1711,7 @@ function cambioArticulo(data) {
 
         vm.cantidad(1);
         
-        if(vm.departamentoId() != 7) {
-            vm.importe(data.precioUnitario);
-        }
-      
+        vm.importe(data.precioUnitario);
         
         //valores para IVA por defecto a partir del  
         // articulo seleccionado.
