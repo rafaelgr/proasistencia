@@ -2195,7 +2195,7 @@ var imprimirProveedor = function (id) {
 }
 
 function printOferta2(id) {
-    var url = "InfOfertas.html?ofertaId=" + id;
+    var url = "InfOfertas.html?ofertaId=" + id  + "&departamentoId=" + vm.tipoOfertaId();
     window.open(url, "_new");
 }
 
