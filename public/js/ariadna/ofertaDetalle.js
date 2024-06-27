@@ -289,22 +289,17 @@ function initForm() {
         var tipof =  vm.tipoOfertaId();
         if(tipof == 7) {
             //CASO REPARACIONES
-            if(!vm.esTarifa()) {
-                //NO APLICAMOS TARIFA
-                cambioArticulo(e.added);
-            } else {
-                //APLICAMOS TARIFA
-                cambioArticulo(e.added);
-                buscaTarifaCliente(e.added);
-                if(vm.proveedorId()) {
-                    if(vm.estarifa()) {
-                        buscaTarifaProveedor(vm.proveedorId()); //SI YA HAY PROVEEDORT BUSCAMOS SU TARIFA TAMBIÉN
-                        loadTiposIvaProveedor(vm.proveedorId());
-                    } else {
-                        //nueva rutina para cargar el coste del articulo
-                        cambioArticuloProveedor(e.added);
-                    }
+            cambioArticuloClienteRep(e.added);
+            if(vm.proveedorId()) {
+                if(vm.esTarifa()) {
+                    buscaTarifaProveedor(vm.proveedorId()); //SI YA HAY PROVEEDOR BUSCAMOS SU TARIFA TAMBIÉN
+                    loadTiposIvaProveedor(vm.proveedorId());
+                } else {
+                    var data = {};
+                    data.id = vm.sarticuloId()
+                    cambioArticuloProveedor(data)
                 }
+               
             }
         } else {
             //RESTO DEPARTAMENTOS
@@ -1755,6 +1750,52 @@ function cambioArticulo(data) {
         cambioPrecioCantidad();
     });
 }
+
+function cambioArticuloClienteRep(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var data2 = {};
+    var articuloId = data.id;
+        llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+            if (err) return;
+            // cargamos los campos por defecto de receptor
+            if (data.descripcion == null) {
+                vm.descripcion(data.nombre);
+            } else {
+                vm.descripcion(data.nombre + ':\n' + data.descripcion);
+            }
+
+             //valores para IVA del cliente
+             var id = vm.tipoIvaId();
+             $("#cmbTiposIva").val([id]).trigger('change');
+             data2 = {
+                 id: data.tipoIvaId
+             };
+             vm.cantidad(1);
+             // poner la unidades por defecto de ese artículo
+            $("#cmbUnidades").val([data.unidadId]).trigger('change');
+            cambioTiposIva(data2);
+
+            if(vm.estarifa()) {
+                var articuloId = data.id;
+                llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
+                    if (err) return;
+                    if(datos.length > 0)  {
+                        vm.importe(datos[0].precioCliente);
+                        cambioPrecioCantidad();
+                    }
+                    
+                });
+            } else {
+                vm.importe(data.precioUnitario);
+                cambioPrecioCantidad();
+            }
+        });
+}
+
+
 
 function cambioArticuloProveedor(data) {
     //
