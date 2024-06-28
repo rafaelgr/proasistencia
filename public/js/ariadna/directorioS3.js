@@ -30,7 +30,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
 
-    $('#btndescargarFacproves').click(descargarRenombrarFacproves);
+    $('#btndescargarFacproves').click(descargarRenombrarFacproves2);
 
   
     
@@ -85,7 +85,10 @@ $('#demo').on('click', function () {
     $("#cmbEmpresas2").select2(select2Spanish());
     loadEmpresas2(2);
 
-    initAutoProveedor();
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    //initAutoProveedor();
 
 
     initArbolDocumentacion();
@@ -124,6 +127,13 @@ function admData() {
     self.ano2 = ko.observable(); 
     self.sano2 = ko.observable();
     self.selectedAnos2 = ko.observableArray([]);
+
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
     
 } 
 
@@ -200,6 +210,16 @@ function loadEmpresas2(id) {
     });
 }
 
+function loadProveedores(proveedorId) {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        $("#cmbProveedores").val([proveedorId]).trigger('change');
+    });
+}
+
+
 // initAutoProveedor
 // inicializa el control del Proveedor como un autocomplete
 var initAutoProveedor = function () {
@@ -260,6 +280,43 @@ var descargarRenombrarFacproves = function() {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+var descargarRenombrarFacproves2 = function() {
+    if(objectsS3.length == 0) return;
+    //
+    var arr = [];
+    var obj = {}
+    var a = vm.sempresaId2().toString();
+    var b = vm.sano2().toString();
+    var patronTexto = b + "-" + a;
+
+    llamadaAjax("GET", "/api/facturasProveedores/anyo/empresa/proveedor/" + a + "/" + b + "/" + vm.sproveedorId(), null, function (err, data) {
+        if (err) return;
+        if(data.length == 0) return;
+        for(let i = 0; i < data.length; i++) {
+            obj = {
+                Key: "facturas_proveedores/" + data[i].ref + ".pdf"
+            }
+            arr.push(obj);
+        }
+        renombrarObjetosFacprove(arr)
+        .then((objetosRenombrados) => {
+            descargarObjetosFacprove(objetosRenombrados)
+            .then(() => {
+                console.log('Descarga completa');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+    });
+    //patronTexto = patronTexto.toString();
+    
 }
 
 
