@@ -86,7 +86,7 @@ $('#demo').on('click', function () {
     loadEmpresas2(2);
 
     $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
+    loadProveedores(0);
 
     //initAutoProveedor();
 
@@ -97,10 +97,6 @@ $('#demo').on('click', function () {
 
 function admData() {
     var self = this;
-
-    //AUTOCOMPLETE PROVEEDORES
-    self.proveedorId = ko.observable();
-    self.sproveedorId = ko.observable();
 
     //COMBO EMPRESA
     self.empresaId = ko.observable();
@@ -213,8 +209,10 @@ function loadEmpresas2(id) {
 function loadProveedores(proveedorId) {
     llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
         if (err) return;
-        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
         vm.posiblesProveedores(proveedores);
+        vm.proveedorId(proveedorId);
+        vm.sproveedorId(proveedorId);
         $("#cmbProveedores").val([proveedorId]).trigger('change');
     });
 }
