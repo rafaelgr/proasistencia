@@ -1696,7 +1696,7 @@ function cambioArticulo(data) {
 
         vm.cantidad(1);
         
-        if(vm.departamentoId() != 7) {
+        if(vm.tipoOfertaId() != 7) {
             vm.importe(data.precioUnitario);
         }
       
