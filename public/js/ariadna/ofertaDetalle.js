@@ -1751,13 +1751,13 @@ function cambioArticulo(data) {
     });
 }
 
-function cambioArticuloClienteRep(data) {
+function cambioArticuloClienteRep(datos) {
     //
-    if (!data) {
+    if (!datos) {
         return;
     }
     var data2 = {};
-    var articuloId = data.id;
+    var articuloId = datos.id;
         llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
             if (err) return;
             // cargamos los campos por defecto de receptor
@@ -1778,8 +1778,7 @@ function cambioArticuloClienteRep(data) {
             $("#cmbUnidades").val([data.unidadId]).trigger('change');
             cambioTiposIva(data2);
 
-            if(vm.estarifa()) {
-                var articuloId = data.id;
+            if(vm.esTarifa()) {
                 llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
                     if (err) return;
                     if(datos.length > 0)  {
