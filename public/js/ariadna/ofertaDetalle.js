@@ -1107,6 +1107,8 @@ function nuevaLinea() {
             vm.linea(data);
             vm.total(0);
             vm.totalConIva(0);
+            vm.esTarifa(0);
+            if(vm.tipoOfertaId() == 7) vm.esTarifa(1);
         });
     }
 }
