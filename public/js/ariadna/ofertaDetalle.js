@@ -321,8 +321,9 @@ function initForm() {
                 loadTiposIvaProveedor(e.added.id);
             } else {
                 var data = {};
-                data.id = vm.sarticuloId()
-                cambioArticuloProveedor(data)
+                data.id = vm.sarticuloId();
+                cambioArticuloProveedor(data);
+                loadTiposIvaProveedor(e.added.id);
             }
             
         }
@@ -1108,8 +1109,11 @@ function nuevaLinea() {
             vm.total(0);
             vm.totalConIva(0);
             vm.esTarifa(0);
-            if(vm.tipoOfertaId() == 7) vm.esTarifa(1);
         });
+    } else {
+        vm.total(0);
+        vm.totalConIva(0);
+        vm.esTarifa(1);
     }
 }
 
