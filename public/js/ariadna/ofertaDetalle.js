@@ -286,6 +286,7 @@ function initForm() {
 
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
+        if(!e.added) return;
         var tipof =  vm.tipoOfertaId();
         if(tipof == 7) {
             //CASO REPARACIONES
@@ -1522,9 +1523,10 @@ function aplicaIndicesCorrectores() {
                      buscarIndicesCorrectores(pro, data, function (err, result) {
                          if(err) return mensError(err);
                          let p = [];
-                         if(result) mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                         if(result) return mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                         loadLineasOferta(vm.ofertaId());
                      });
-                    }
+                    };
                 });
             }
             if (ButtonPressed === "Cancelar") {

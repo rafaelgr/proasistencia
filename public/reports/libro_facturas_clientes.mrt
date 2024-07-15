@@ -456,7 +456,6 @@
               <Name>Dataliqgen_nombre</Name>
               <Page isRef="2" />
               <Parent isRef="24" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Text>{libCli.serie}-{libCli.ano}-{libCli.numero.ToString("000000")}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -1043,10 +1042,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasClientes</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>3/10/2023 12:53:14 PM</ReportChanged>
+  <ReportChanged>7/15/2024 1:26:26 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\node_apps\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
-  <ReportGuid>6296f6ff4a4e41c392178473bdf11b61</ReportGuid>
+  <ReportFile>E:\node_apps\proasistencia\public\reports\libro_facturas_clientes.mrt</ReportFile>
+  <ReportGuid>5534c5ed8d674cbd915e48b4aebb987c</ReportGuid>
   <ReportName>FacturasClientes</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
