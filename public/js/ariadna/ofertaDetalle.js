@@ -1103,6 +1103,11 @@ function cambioLineal() {
 function nuevaLinea() {
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
+    if(vm.tipoOfertaId() != 7) {// solo visible en caso de reparaciones
+        $('#chkEsTarifa').hide()
+    } else {
+        $('#chkEsTarifa').show();
+    } 
     if(vm.tipoOfertaId() != 7) {
         llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
             if (err) return;
@@ -1751,7 +1756,6 @@ function cambioArticulo(data) {
         cambioPrecioCantidad();
     });
 }
-
 function cambioArticuloClienteRep(datos) {
     //
     if (!datos) {
@@ -2095,7 +2099,11 @@ var cambioPrecioCantidad = function () {
 
 function editOfertaLinea(id) {
     lineaEnEdicion = true;
-    if(vm.tipoOfertaId() != 7) $('#chkEsTarifa').hide() // solo visible en caso de reparaciones
+    if(vm.tipoOfertaId() != 7) {// solo visible en caso de reparaciones
+        $('#chkEsTarifa').hide()
+    } else {
+        $('#chkEsTarifa').show();
+    } 
     llamadaAjax('GET', "/api/ofertas/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
