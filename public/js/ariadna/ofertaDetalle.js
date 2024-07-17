@@ -164,16 +164,7 @@ function initForm() {
         loadTipoProyecto();
     });
 
-    $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
-    $("#cmbProveedores").select2().on('change', function (e) {
-        if(!e.added) return;
-        cambioProveedor(e.added.id);
-        var tipof =  vm.tipoOfertaId();
-        if(tipof == 7) {
-            buscaTarifaProveedor(e.added.id);
-        }
-    });
+    
 
     $('#chkBeneficioLineal').change(function() {
         if(vm.ofertaId()) cambioLineal();
@@ -292,13 +283,50 @@ function initForm() {
 
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
+
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added);
+        if(!e.added) return;
         var tipof =  vm.tipoOfertaId();
         if(tipof == 7) {
-            buscaTarifaCliente(e.added);
-            if(vm.proveedorId()) buscaTarifaProveedor(vm.proveedorId())
+            //CASO REPARACIONES
+            cambioArticuloClienteRep(e.added);
+            if(vm.proveedorId()) {
+                if(vm.esTarifa()) {
+                    buscaTarifaProveedor(vm.proveedorId()); //SI YA HAY PROVEEDOR BUSCAMOS SU TARIFA TAMBIÉN
+                    //loadTiposIvaProveedor(vm.proveedorId());
+                } else {
+                    var data = {};
+                    data.id = vm.sarticuloId()
+                    cambioArticuloProveedor(data)
+                }
+               
+            }
+        } else {
+            //RESTO DEPARTAMENTOS
+            //buscaTarifaCliente(e.added);
+            cambioArticulo(e.added);
+        }
+    });
+
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    $("#cmbProveedores").select2().on('change', function (e) {
+        if(!e.added) return;
+        cambioProveedor(e.added.id);
+        var tipof =  vm.tipoOfertaId();
+        if(tipof == 7) {
+            if(vm.esTarifa()) {
+                buscaTarifaProveedor(e.added.id);
+                //loadTiposIvaProveedor(e.added.id);
+            } else {
+                var data = {};
+                data.id = vm.sarticuloId();
+                cambioArticuloProveedor(data);
+                //loadTiposIvaProveedor(e.added.id);
+            }
+            
         }
     });
 
@@ -492,6 +520,7 @@ function admData() {
     self.totalLineaProveedor = ko.observable();
     self.totalLineaProveedorIva = ko.observable();
     self.porcentajeProveedor = ko.observable();
+    self.esTarifa = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -595,6 +624,7 @@ function loadData(data) {
     vm.contratoId(data.contratoId);
     vm.beneficioLineal(data.beneficioLineal);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
+  
     //
     //cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
@@ -978,6 +1008,7 @@ var cambioCliente = function (data) {
         cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
+        vm.tipoIvaId(data.tipoIvaId());
     });
 }
 
@@ -1078,7 +1109,12 @@ function nuevaLinea() {
             vm.linea(data);
             vm.total(0);
             vm.totalConIva(0);
+            vm.esTarifa(0);
         });
+    } else {
+        vm.total(0);
+        vm.totalConIva(0);
+        vm.esTarifa(1);
     }
 }
 
@@ -1086,15 +1122,15 @@ function limpiaDataLinea(data) {
     vm.ofertaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
-    vm.tipoIvaId(null);
+    if(vm.tipoOfertaId() != 7) vm.tipoIvaId(null);
     vm.porcentaje(null);
     vm.descripcion(null);
     vm.cantidad(null);
-    vm.importe(null);
+    vm.importe(0);
     vm.costeLinea(null);
     vm.totalLinea(null);
     vm.costeLineaProveedor(null);
-    vm.importeProveedor(null);
+    vm.importeProveedor(0);
     vm.totalLineaProveedor(null);
     vm.totalLineaProveedorIva(null);
     vm.porcentajeProveedor(null)
@@ -1170,7 +1206,8 @@ var guardarLinea = function () {
             //Ponemos los campos de la oferta lineal a cero
             importeBeneficioLinea: 0,
             importeAgenteLinea: 0,
-            ventaNetaLinea: 0
+            ventaNetaLinea: 0,
+            esTarifa: vm.esTarifa()
         }
     }
     var verboAjax = '';
@@ -1407,6 +1444,7 @@ function loadDataLinea(data) {
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
     vm.proveedorId(data.proveedorId);
+    vm.esTarifa(data.esTarifa);
     //
     //cantidades de proveedor
     vm.importeProveedor(data.importeProveedor);
@@ -1485,9 +1523,10 @@ function aplicaIndicesCorrectores() {
                      buscarIndicesCorrectores(pro, data, function (err, result) {
                          if(err) return mensError(err);
                          let p = [];
-                         if(result) mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                         if(result) return mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                         loadLineasOferta(vm.ofertaId());
                      });
-                    }
+                    };
                 });
             }
             if (ButtonPressed === "Cancelar") {
@@ -1684,6 +1723,7 @@ function cambioArticulo(data) {
     if (!data) {
         return;
     }
+    var data2 = {};
     var articuloId = data.id;
     llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
         if (err) return;
@@ -1695,21 +1735,84 @@ function cambioArticulo(data) {
         }
 
         vm.cantidad(1);
-        
-        if(vm.departamentoId() != 7) {
-            vm.importe(data.precioUnitario);
-        }
-      
+        if(vm.tipoOfertaId() != 7 || !vm.esTarifa()) vm.importe(data.precioUnitario);
         
         //valores para IVA por defecto a partir del  
-        // articulo seleccionado.
-        $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-        var data2 = {
-            id: data.tipoIvaId
-        };
+        // articulo seleccionado si no es reparaciones
+        if(vm.tipoOfertaId() != 7) {
+            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+            data2 = {
+                id: data.tipoIvaId
+            };
+        } else {
+            var id = vm.tipoIvaId();
+            $("#cmbTiposIva").val([id]).trigger('change');
+            data2 = {
+                id: data.tipoIvaId
+            };
+        }
+        
         // poner la unidades por defecto de ese artículo
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
+        cambioPrecioCantidad();
+    });
+}
+
+function cambioArticuloClienteRep(datos) {
+    //
+    if (!datos) {
+        return;
+    }
+    var data2 = {};
+    var articuloId = datos.id;
+        llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+            if (err) return;
+            // cargamos los campos por defecto de receptor
+            if (data.descripcion == null) {
+                vm.descripcion(data.nombre);
+            } else {
+                vm.descripcion(data.nombre + ':\n' + data.descripcion);
+            }
+
+             //valores para IVA del cliente
+             var id = vm.tipoIvaId();
+             $("#cmbTiposIva").val([id]).trigger('change');
+             data2 = {
+                 id: data.tipoIvaId
+             };
+             vm.cantidad(1);
+             // poner la unidades por defecto de ese artículo
+            $("#cmbUnidades").val([data.unidadId]).trigger('change');
+            //cambioTiposIva(data2);
+
+            if(vm.esTarifa()) {
+                llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
+                    if (err) return;
+                    if(datos.length > 0)  {
+                        vm.importe(datos[0].precioCliente);
+                        cambioPrecioCantidad();
+                    }
+                    
+                });
+            } else {
+                vm.importe(data.precioUnitario);
+                cambioPrecioCantidad();
+            }
+        });
+}
+
+
+
+function cambioArticuloProveedor(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var articuloId = data.id;
+    llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+        if (err) return;
+        vm.importeProveedor(data.coste);
         cambioPrecioCantidad();
     });
 }
@@ -1787,12 +1890,14 @@ function cambioTiposIva(data) {
 
 function cambioTiposIvaProveedor(tipoIvaId) {
     if (!tipoIvaId) {
+        vm.tipoIvaProveedorId(null);
         vm.stipoIvaProveedorId(null);
         vm.porcentajeProveedor(null);
         return;
     }
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
+        vm.tipoIvaProveedorId(data.tipoIvaId);
         vm.stipoIvaProveedorId(data.tipoIvaId);
         vm.porcentajeProveedor(data.porcentaje);
         cambioPrecioCantidad();
@@ -1909,7 +2014,7 @@ var cambioPrecioCantidad = function () {
         vm.totalLineaProveedorIva(roundToTwo(totalProIva));
      }
 
-     if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
+     if(!vm.perdtoProveedor() && vm.proveedorId()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
                                                                                                  //descuento en el proveedor cargamos el del cliente
     
     //CASO REPARACIONES
@@ -1997,6 +2102,7 @@ var cambioPrecioCantidad = function () {
 
 function editOfertaLinea(id) {
     lineaEnEdicion = true;
+    if(vm.tipoOfertaId() != 7) $('#chkEsTarifa').hide() // solo visible en caso de reparaciones
     llamadaAjax('GET', "/api/ofertas/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
@@ -2142,6 +2248,8 @@ var cargaCliente = function (id) {
         vm.nombreCliente(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
+        //SI ES REPARACIONES EL IVA SE CARGA DEL CLIENTE
+        if(vm.tipoOfertaId() == 7) vm.tipoIvaId(data.tipoIvaId);
     });
 };
 

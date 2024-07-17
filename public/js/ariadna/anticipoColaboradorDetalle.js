@@ -70,7 +70,14 @@ function initForm() {
     
     
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptarAnticipo);
+    $("#btnAceptar").click(function() {
+        aceptarAnticipo(true);
+    });
+
+    $("#btnAceptar2").click(function() {
+        aceptarAnticipo(false);
+    });
+
     $("#btnSalir").click(salir());
     
     //$("#btnImprimir").click(imprimir);
@@ -276,6 +283,7 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
+            $('#btnAceptar2').show();
             loadData(data);
             loadServiciadasAntprove(antproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
@@ -333,6 +341,7 @@ function initForm() {
         })
     } else {
         // caso alta
+        $('#btnAceptar2').hide();
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
@@ -703,10 +712,11 @@ function datosOK() {
     return $('#frmAnticipo').valid();
 }
 
-var aceptarAnticipo = function () {
+var aceptarAnticipo = function (salir) {
     if (!datosOK()) return;
 
     eventSalir = false;
+
     if (!vm.total() && vm.completo()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -732,19 +742,28 @@ var aceptarAnticipo = function () {
     var datosArray = [];
     datosArray.push(data)
     llamadaAjax(verb, url, datosArray, function (err, data) {
-        loadData(data);
+        //loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
+            if(salir) {
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
         }
         else{
-            window.open(returnUrl, '_self');
+            if(salir) {
+                window.open(returnUrl, '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
         }
        
     });
 }
-var totConIva;
+
 var generarAnticipoDb = function () {
+    var totConIva;
     if($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
