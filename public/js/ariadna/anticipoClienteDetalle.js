@@ -19,9 +19,11 @@ var usuario;
 var usaCalculadora;
 var usaContrato = true;//por defecto se usa contrato
 var antSerie = null;
-var servicioId 
-var EmpresaId 
-var ClienteId 
+var servicioId; 
+var EmpresaId;
+var ClienteId;
+var ContratoId = 0;
+var desdeContrato;
 
 
 var breakpointDefinition = {
@@ -47,7 +49,14 @@ function initForm() {
     
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptarAntClien);
+    $("#btnAceptar").click(function() {
+        aceptarAntClien(true);
+    });
+    $("#btnAceptar2").click(function() {
+        aceptarAntClien(false);
+    });
+
+
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmAntClien").submit(function () {
@@ -96,6 +105,8 @@ function initForm() {
     });
     
     antClienId = gup('AntClienId');
+    ContratoId = gup("ContratoId");
+    desdeContrato = gup("desdeContrato");
     servicioId = gup('ServicioId');
     EmpresaId = gup('EmpresaId');
     ClienteId = gup('ClienteId');
@@ -315,7 +326,7 @@ function datosOK() {
     return $('#frmAntClien').valid();
 }
 
-var aceptarAntClien = function () {
+var aceptarAntClien = function (salir) {
     if (!datosOK()) return;
 
 
@@ -337,11 +348,26 @@ var aceptarAntClien = function () {
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
-        loadData(data);
+        if(err) return;
+        //loadData(data);
         returnUrl = returnUrl + vm.antClienId();
-        window.open(returnUrl, '_self');
+        //window.open(returnUrl, '_self');
         if(!antSerie) {
             vm.serie(null);
+        }
+        if(desdeContrato == "true" && antClienId != 0){
+            if(salir) {
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntCli=true', '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
+        }
+        else{
+            if(salir) {
+                window.open(returnUrl, '_self');
+            } else {
+                mensNormal('Anticipo guardado.')
+            }
         }
     });
 }

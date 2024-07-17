@@ -442,7 +442,6 @@
               <Name>Text1</Name>
               <Page isRef="2" />
               <Parent isRef="20" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libPro.numeroFacturaProveedor}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -984,10 +983,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>10/18/2023 11:34:41 AM</ReportChanged>
+  <ReportChanged>7/15/2024 1:23:51 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
   <ReportFile>E:\node_apps\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>71a653e5534e4575980b02d086b27eb1</ReportGuid>
+  <ReportGuid>91ce0184b22a4520a9611e23754998a1</ReportGuid>
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

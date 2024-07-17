@@ -572,6 +572,11 @@ function initForm() {
     if (gup('docAnt') != "") {
         $('.nav-tabs a[href="#s8"]').tab('show');
     } 
+
+     //abrir en pestaña de anticipos de ventas
+     /* if (gup('docAntCli') != "") {
+        $('.nav-tabs a[href="#s8"]').tab('show');
+    }  */
     
     //abrir en pestaña de anticipos de colaboradores
     if (gup('docAntcol') != "") {

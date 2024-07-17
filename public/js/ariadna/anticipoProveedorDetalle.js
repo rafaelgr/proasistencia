@@ -733,7 +733,8 @@ var aceptarAnticipo = function (salir) {
     var datosArray = [];
     datosArray.push(data)
     llamadaAjax(verb, url, datosArray, function (err, data) {
-        loadData(data);
+         if(err) return;
+        //loadData(data);
         returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
             if(salir) {
