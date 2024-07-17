@@ -1740,22 +1740,15 @@ function cambioArticulo(data) {
         }
 
         vm.cantidad(1);
-        if(vm.tipoOfertaId() != 7 || !vm.esTarifa()) vm.importe(data.precioUnitario);
+        vm.importe(data.precioUnitario);
         
         //valores para IVA por defecto a partir del  
         // articulo seleccionado si no es reparaciones
-        if(vm.tipoOfertaId() != 7) {
-            $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
+        
+        $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
             data2 = {
                 id: data.tipoIvaId
-            };
-        } else {
-            var id = vm.tipoIvaId();
-            $("#cmbTiposIva").val([id]).trigger('change');
-            data2 = {
-                id: data.tipoIvaId
-            };
-        }
+        };
         
         // poner la unidades por defecto de ese artículo
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
@@ -1763,7 +1756,6 @@ function cambioArticulo(data) {
         cambioPrecioCantidad();
     });
 }
-
 function cambioArticuloClienteRep(datos) {
     //
     if (!datos) {
