@@ -294,7 +294,7 @@ function initForm() {
             if(vm.proveedorId()) {
                 if(vm.esTarifa()) {
                     buscaTarifaProveedor(vm.proveedorId()); //SI YA HAY PROVEEDOR BUSCAMOS SU TARIFA TAMBIÉN
-                    loadTiposIvaProveedor(vm.proveedorId());
+                    //loadTiposIvaProveedor(vm.proveedorId());
                 } else {
                     var data = {};
                     data.id = vm.sarticuloId()
@@ -319,12 +319,12 @@ function initForm() {
         if(tipof == 7) {
             if(vm.esTarifa()) {
                 buscaTarifaProveedor(e.added.id);
-                loadTiposIvaProveedor(e.added.id);
+                //loadTiposIvaProveedor(e.added.id);
             } else {
                 var data = {};
                 data.id = vm.sarticuloId();
                 cambioArticuloProveedor(data);
-                loadTiposIvaProveedor(e.added.id);
+                //loadTiposIvaProveedor(e.added.id);
             }
             
         }
@@ -1784,7 +1784,7 @@ function cambioArticuloClienteRep(datos) {
              vm.cantidad(1);
              // poner la unidades por defecto de ese artículo
             $("#cmbUnidades").val([data.unidadId]).trigger('change');
-            cambioTiposIva(data2);
+            //cambioTiposIva(data2);
 
             if(vm.esTarifa()) {
                 llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
@@ -1890,12 +1890,14 @@ function cambioTiposIva(data) {
 
 function cambioTiposIvaProveedor(tipoIvaId) {
     if (!tipoIvaId) {
+        vm.tipoIvaProveedorId(null);
         vm.stipoIvaProveedorId(null);
         vm.porcentajeProveedor(null);
         return;
     }
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
+        vm.tipoIvaProveedorId(data.tipoIvaId);
         vm.stipoIvaProveedorId(data.tipoIvaId);
         vm.porcentajeProveedor(data.porcentaje);
         cambioPrecioCantidad();
@@ -2012,7 +2014,7 @@ var cambioPrecioCantidad = function () {
         vm.totalLineaProveedorIva(roundToTwo(totalProIva));
      }
 
-     if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
+     if(!vm.perdtoProveedor() && vm.proveedorId()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
                                                                                                  //descuento en el proveedor cargamos el del cliente
     
     //CASO REPARACIONES
@@ -2100,6 +2102,7 @@ var cambioPrecioCantidad = function () {
 
 function editOfertaLinea(id) {
     lineaEnEdicion = true;
+    if(vm.tipoOfertaId() != 7) $('#chkEsTarifa').hide() // solo visible en caso de reparaciones
     llamadaAjax('GET', "/api/ofertas/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
