@@ -533,7 +533,7 @@ function enviarCorreos() {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            url = myconfig.apiUrl + "/api/facturas/enviar-correos/reparaciones/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     
@@ -544,13 +544,6 @@ function enviarCorreos() {
                 $('#progress').hide();
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
-                // mensNormal('Las facturas se han enviado por correo');
-                llamadaAjax("PUT", '/api/facturas/borrar-directorio', null, function (err, data2) {
-                    if (err) {
-                        $('#progress').hide();
-                        return;
-                    }
-                });
             });
 
         });
