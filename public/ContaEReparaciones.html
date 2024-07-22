@@ -99,7 +99,7 @@
         </div>
         <!-- end projects dropdown -->
         <!-- #TOGGLE LAYOUT BUTTONS -->
-        <!-- pulled right: nav area -->
+         <!-- pulled right: nav area -->
         <div class="pull-right">
             <!-- collapse menu button -->
             <div id="hide-menu" class="btn-header pull-right">
@@ -363,6 +363,12 @@
                                     <a href="AnticipoColaboradorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         colaboradores</a>
                                 </li>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
+                                </li>
                             </ul>
                         </li>
                         <li id="Contabilización">
@@ -477,8 +483,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Gestión</li>
-                <li>Liquidación</li>
-                <li>Generar liquidaciones agente</li>
+                <li>Facturación</li>
+                <li>Contabilizar</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -502,7 +508,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-address-card-o"></i> Generación de liquidaciones agente <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                        <i class="fa-fw fa fa-envelope-o"></i> Enviar facturas por correo electrónico <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                     </h1>
                 </div>
                 <!-- end col -->
@@ -555,7 +561,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Generación de liquidaciones agente </h2>
+                                <h2>Envio electrónico de facturas</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -570,25 +576,11 @@
                                     <!-- this is what the user will see -->
                                     <form id="frmBuscar" class="smart-form">
                                         <header>
-                                            Seleccione las facturas de las que va a generar la liquidación
+                                            Seleccione las facturas que va a enviar
                                         </header>
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Periodos de liquidación</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%;" id="cmbPeriodos" name="cmbPeriodos" data-bind="options: optionsPeriodos, optionsText: 'nombrePeriodo', optionsValue: 'periodo', 
-                                                        value: speriodo, valueAllowUnset: true, selectedOptions: selectedPeriodos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-6">
-                                                    <label class="label">Años</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%;" id="cmbAnos" name="cmbAnos" data-bind="options: optionsAnos, optionsText: 'nombreAno', optionsValue: 'ano', 
-                                                        value: sano, valueAllowUnset: true, selectedOptions: selectedAnos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <!-- <section class="col col-md-6">
                                                     <label class="label">Desde fecha</label>
                                                     <label class="input">
                                                         <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
@@ -599,43 +591,76 @@
                                                     <label class="input">
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
-                                                </section> -->
+                                                </section>
+                                                
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-3">
-                                                    <label class="label">Departamento</label>
-                                                    <label style="width:100%; height:50px;">
-                                                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" 
-                                                            data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Empresa</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Cliente (Comunidad):</label>
+                                                    <label class="input">
+                                                        <input id="txtCliente" name="txtCliente" type="text" data-bind="value: cliente" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Agente</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbComerciales" name="cmbComerciales" data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
+                                                </section>   
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Agentes</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbAgentes" name="cmbAgentes" 
+                                                        data-bind="options: posiblesComerciales, optionsText: 'nombre', optionsValue: 'comercialId', value: sComercialId, valueAllowUnset: true, selectedOptions: elegidosComerciales, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Departamento</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" 
+                                                        data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>    
+                                               
+                                            </div>
+                                            <div class="row">
+                                                    <section class="col col-md-6">
+                                                        <label class="label">Empresa</label>
+                                                        <label style="width:100%; height:50px;">
+                                                            <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" 
+                                                            data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sEmpresaId, valueAllowUnset: true, selectedOptions: elegidasEmpresas, selected2:{}"></select><i></i>
+                                                        </label>
+                                                    </section>    
+                                                    <section class="col col-md-6">
+                                                        
+                                                    </section>        
                                             </div>
                                         </fieldset>
                                         <fieldset>
-                                            <div class="pull-right">
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-search"></i>
-                                                </button>
-                                                <!-- Cambiaremos este botón a generación -->
-                                                <button id="btnAlta" title="Generar liquidaciones" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-crosshairs"></i>
-                                                </button>
-                                                <button id="btnBorrar" title="Eliminar última liquidación" class="btn btn-danger btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-trash"></i>
-                                                </button>
+                                            <div class="row">
+                                                <section class="col col-md-8">
+                                                    <div id="progress" style="display:none;">
+                                                        <div>
+                                                            <span data-bind="text: titleReg"></span>
+                                                            <span data-bind="text: numReg"></span> de
+                                                            <span data-bind="text: totalReg"></span>
+                                                        </div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"></div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-md-4">
+                                                    <div class="pull-right">
+                                                        <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-search"></i>
+                                                        </button>
+                                                        <!-- Cambiaremos este botón a generación -->
+                                                        <button id="btnAlta" title="Generar facturas" class="btn btn-success btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-envelope-o"></i>
+                                                        </button>
+                                                    </div>
+                                                </section>
                                             </div>
+
                                         </fieldset>
                                     </form>
                                     <div id="tbFactura">
@@ -654,7 +679,7 @@
                                                         </div>
                                                     </th>
                                                     <th data-class="expand">
-                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>                                                        Emisor
                                                     </th>
                                                     <th data-hide="phone">
                                                         Receptor
@@ -701,6 +726,23 @@
         </div>
         <!-- END MAIN CONTENT -->
     </div>
+    <div class="modal fade" id="modalResultado" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title"> RESULTADO DEL ENVÍO</h4>
+                    </div>
+                    <div class="modal-body" style="padding:20px;">
+                        <div id="resEnvio"></div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>    
     <!-- END MAIN PANEL -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
@@ -734,7 +776,9 @@
         }
     </script>
     <!-- IMPORTANT: APP CONFIG -->
-    
+                
+     <!--- KNOCKOUT JS -->
+     <script src="js/knockout-3.1.0.js"></script>
                 
     <script src="js/app.config.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
@@ -784,7 +828,7 @@
         <script src="..."></script>-->
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/generarLiquidacion.js"></script>
+    <script src="js/ariadna/contaEReparaciones.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
@@ -792,6 +836,9 @@
     <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
     <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
     <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+
+    <!-- -->
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {

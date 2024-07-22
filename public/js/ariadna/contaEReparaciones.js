@@ -1,4 +1,4 @@
-﻿/*-------------------------------------------------------------------------- 
+/*-------------------------------------------------------------------------- 
 facturaGeneral.js
 Funciones js par la página FacturaGeneral.html
 
@@ -11,13 +11,13 @@ var responsiveHelper_datatable_tabletools = undefined;
 var dataFacturas;
 var facturaId;
 var clienteId = 0;
-var mantenedorId = 0;
 var comercialId = 0;
-var contratoId = 0;
 var empresaId = 0;
 var departamentoId = 0;
 var usuario;
 var facturas;
+var mantenedorId = 0;
+var contratoId = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -36,32 +36,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
-
     
-    initAutoCliente();
-
-    $('#cmbMantenedores').select2();
-    loadMantenedores();
-
-    $('#cmbAgentes').select2();
-    loadComerciales();
-
-    $('#cmbContratos').select2();
-    loadContratosActivos();
-
-    $('#cmbEmpresas').select2();
-    loadEmpresas();
-
-    $('#cmbDepartamentosTrabajo').select2();
-    //loadDepartamentos();
-    
-    //Evento asociado al cambio de departamento
-    $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) loadContratosActivos(e.added.id);
-        vm.sdepartamentoId(this.value);
-        vm.departamentoId(this.value);
-    });
    
     //
     $.validator.addMethod("greaterThan",
@@ -81,8 +56,30 @@ function initForm() {
      //Recuperamos el departamento de trabajo
      recuperaDepartamento(function(err, data) {
         if(err) return;
-        ajustaDepartamentos(data)
         
+    });
+    
+    //Recuperamos el departamento de trabajo
+    recuperaDepartamento(function(err, data) {
+        if(err) return;
+        
+        ajustaDepartamentos(data);
+
+        initAutoCliente();
+        $('#cmbDepartamentosTrabajo').select2();
+
+        $('#cmbAgentes').select2();
+        loadComerciales();
+
+
+        $('#cmbEmpresas').select2();
+        loadEmpresas();
+
+        initTablaFacturas();
+
+        // comprobamos parámetros
+        facturaId = gup('FacturaId');
+
     });
     //
     $('#btnBuscar').click(buscarFacturas());
@@ -91,12 +88,10 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
     // ocultamos el botón de alta hasta que se haya producido una búsqueda
     $("#btnAlta").hide();
 
-    initTablaFacturas();
-    // comprobamos parámetros
-    facturaId = gup('FacturaId');
     //
     var socket = io.connect('/');
     socket.on('message', function (data) {
@@ -145,17 +140,10 @@ function admData() {
     self.totalReg = ko.observable();
     self.cliente = ko.observable();
 
-    self.posiblesMantenedores = ko.observableArray([]);
-    self.elegidosMantenedores = ko.observableArray([]);
-    self.sMantenedorId = ko.observable();
 
     self.posiblesComerciales = ko.observableArray([]);
     self.elegidosComerciales = ko.observableArray([]);
     self.sComercialId = ko.observable();
-
-    self.posiblesContratos = ko.observableArray([]);
-    self.elegidosContratos = ko.observableArray([]);
-    self.sContratoId = ko.observable();
 
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidasEmpresas = ko.observableArray([]);
@@ -321,17 +309,6 @@ var initAutoCliente = function () {
     });
 }
 
-function loadMantenedores(id){
-    llamadaAjax('GET', "/api/clientes/mantenedores_activos", null, function (err, data) {
-        if (err) return
-        var mantenedores = [{
-            clienteId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesMantenedores(mantenedores);
-        $("#cmbMantenedores").val([id]).trigger('change');
-    });
-}
 
 function loadComerciales(id){
     llamadaAjax('GET', "/api/comerciales", null, function (err, data) {
@@ -342,24 +319,6 @@ function loadComerciales(id){
         }].concat(data);
         vm.posiblesComerciales(comerciales);
         $("#cmbComerciales").val([id]).trigger('change');
-    });
-}
-
-function loadContratosActivos(id){
-    var dep;
-    if(id) {
-        dep = id;
-    } else {
-        dep = 0
-    }
-    llamadaAjax('GET', "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId +"/"+ dep, null, function (err, data) {
-        if (err) return
-        var contratos = [{
-            contratoId: 0,
-            referencia: ""
-        }].concat(data);
-        vm.posiblesContratos(contratos);
-        $("#cmbContratos").val([id]).trigger('change');
     });
 }
 
@@ -414,17 +373,7 @@ function updateAll(opcion) {
     }
 }
 
-/*function loadDepartamentos(id){
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario, null, function (err, data) {
-        if (err) return
-        var departamentos = [{
-            departamentoId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesDepartamentos(departamentos);
-        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
-    });
-}*/
+
 
 
 function loadTablaFacturas(data) {
@@ -495,9 +444,7 @@ function buscarClientes(done){
 function buscarFacturas() {
     var mf = function () {
         if (!datosOK()) return;
-        mantenedorId = vm.sMantenedorId();
         comercialId = vm.sComercialId();
-        contratoId = vm.sContratoId();
         empresaId = vm.sEmpresaId();
         departamentoId = vm.sdepartamentoId();
 
@@ -519,25 +466,6 @@ function buscarFacturas() {
         });
     };
     return mf;
-}
-
-function ajustaDepartamentos(data) {
-    //ELIMINAMOS EL DEEPARTAMENTO DE REPARACIONES DEL COMBO
-    //var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
-     for (var i = 0; i < data.length; i++) {
-            if (data[i].departamentoId == 7) {
-                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
-                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
-            }
-    }
-    console.log(data);
-    var departamentos = [{
-        departamentoId: null,
-        nombre: ""
-    }].concat(data);
-    vm.posiblesDepartamentos(departamentos);
- 
-    $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
 }
 
 function buscarFicheros() {
@@ -574,6 +502,27 @@ function contabilizarFacturas() {
     return mf;
 }
 
+function ajustaDepartamentos(data) {
+    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
+    //var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
+     for (var i = 0; i < data.length; i++) {
+            if (data[i].departamentoId != 7) {
+                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
+                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+            }
+    }
+    console.log(data);
+    var departamentos = [{
+        departamentoId: null,
+        nombre: ""
+    }].concat(data);
+    vm.posiblesDepartamentos(departamentos);
+ 
+    $("#cmbDepartamentosTrabajo").val([7]).trigger('change');
+    vm.sdepartamentoId(7);
+    vm.departamentoId(7);
+}
+
 function enviarCorreos() {
     var mf = function () {
         if (!datosOK()) return;
@@ -584,7 +533,7 @@ function enviarCorreos() {
                 $('#progress').hide();
                 return;
             }
-            url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
+            url = myconfig.apiUrl + "/api/facturas/enviar-correos/reparaciones/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
                     
@@ -595,13 +544,6 @@ function enviarCorreos() {
                 $('#progress').hide();
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
-                // mensNormal('Las facturas se han enviado por correo');
-                llamadaAjax("PUT", '/api/facturas/borrar-directorio', null, function (err, data2) {
-                    if (err) {
-                        $('#progress').hide();
-                        return;
-                    }
-                });
             });
 
         });

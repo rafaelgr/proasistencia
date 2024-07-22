@@ -118,7 +118,7 @@ function initForm() {
     }
     
 
-    //loadTiposContrato();
+
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function(err, data) {
         if(err) return;
@@ -858,17 +858,6 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function loadTiposContrato(id) {
-    llamadaAjax('GET', "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
-        if (err) return;
-        var tipos = [{
-            departamentoId: 0,
-            nombre: ""
-        }].concat(data);
-        vm.posiblesDepartamentos(tipos);
-        $("#cmbDepartamentosTrabajo").val([id]).trigger('change');
-    });
-}
 
 function loadEmpresas(id) {
     llamadaAjax('GET', "/api/empresas", null, function (err, data) {
