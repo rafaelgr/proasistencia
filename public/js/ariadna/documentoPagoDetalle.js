@@ -220,6 +220,7 @@ function initForm() {
         // se trata de un alta ponemos el id a cero para indicarlo.
         //$('#pdfDoc').hide();
         vm.documentoPagoId(0);
+        vm.pdf(null);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
         $("#anticiposAsociados").hide();
@@ -281,9 +282,6 @@ function datosOK() {
             },
             txtFecha: {
                 required: true
-            },
-            txtPdf: {
-                required: true
             }
         },
         // Messages for form validation
@@ -293,9 +291,6 @@ function datosOK() {
             },
             txtFecha: {
                 required: 'Introduzca una fecha'
-            },
-            txtPdf: {
-                required: "Se tiene que subir un PDF para poder crear"
             }
         },
         // Do not change code below
@@ -438,8 +433,11 @@ function datosOK5() {
 
 
 function aceptar(salir) {
-        if (!datosOK())
+        if (!datosOK()) return;
+        if(!vm.pdf() || vm.pdf() == '') {
+            mensError("Se tiene que subir un PDF");
             return;
+        }
         var data = {
             documentoPago: {
                 "documentoPagoId": vm.documentoPagoId(),
