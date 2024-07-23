@@ -582,8 +582,47 @@ function salir() {
 }
 
 function initTablaFacturasAsociadas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 7) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+    
+                    }
+                }
+            }
+        }
+    };
     tablaCarro = $('#dt_FacturasAsociadas').DataTable({
         autoWidth: true,
+        responsive: true,
+        paging: true,
+        dom: 'Bfrtip', // Este parámetro agrega los botones, el filtro y el paginado
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
         
         language: {
             processing: "Procesando...",
