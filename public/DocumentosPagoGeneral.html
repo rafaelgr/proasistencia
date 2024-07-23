@@ -578,6 +578,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnNuevoFicheroAsociado" title="Consultar transferencias" data-toggle="modal" data-target="#modalRegistros" onclick="limpiarModal()" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-file"></i>
+                                                </button>
                                                 <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
                                                 </button>
@@ -630,6 +633,161 @@
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN PANEL -->
+      <!--MODAL-->
+    <div class="modal fade" id="modalRegistros" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog" style="width: 100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Mostrar transferencias</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmRegistros" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-sm-6">
+                                    <label class="label">De fecha transferencia</label>
+                                    <label class="input">
+                                        <input id="txtdFecha" name="txtdFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: dFecha"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-6">
+                                    <label class="label">A fecha transferencia</label>
+                                    <label class="input">
+                                        <input id="txthFecha" name="txthFecha" type="text" class="datepicker" data-dateformat="dd/mm/yy" data-bind="value: hFecha"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row" >
+                                <section class="col col-sm-6">
+                                    <label class="label">Empresa</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                        <i></i>
+                                    </label>
+                                </section>
+                                    <section class="col col-sm-6" >
+                                    </section>
+                            
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="pull-right">
+                                <button id="btnSalirRegistros" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                                <!-- <button id="btnAceptarRegistros" title=" registros" onClick="confirmarRegistros()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-check"></i>
+                                </button> -->
+                                <button id="btnbuscarRegistros" title="Buscar registros" onClick="buscarRegistros()" class="btn btn-success btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-search"></i>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                   
+                    <div id="tbRegistros">
+                        <table id="dt_registros" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th data-hide="phone">
+                                        Codigo
+                                        <!-- <div class="row">
+                                            <section class="col col-sm-12">
+                                                <input type="checkbox" id="checkMainRegistros">
+                                            </section>
+                                            
+                                        </div> -->
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fichero
+                                    </th>
+                                    <th class="text-right">
+                                        Fecha transferencia
+                                    </th>
+                                    <th class="text-right">
+                                        Importe
+                                    </th>
+                                    <th data-hide="phone" class="text-right">
+                                        Descripcion
+                                    </th>
+                                    <th>
+                                        Facturas
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--END MODAL-->
+     <!--MODAL-->
+     <div class="modal fade" id="modalFacturasRegistros" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width: 100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                    <h4 class="modal-title">Facturas de la transferencia</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmFacturasRegistros" class="smart-form">
+                        <fieldset>
+                            <div class="pull-right">
+                                <button id="btnSalirFacturasRegistros" title="Salir" onclick="cierraModal()"  class="btn btn-warning btn-circle btn-lg">
+                                    <i class="fa fa-lg fa-sign-out"></i>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div id="tbFacturasRegistros">
+                        <table id="dt_facturasRegistros" class="table table-striped table-bordered table-hover"  style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th data-hide="phone">
+                                    </th>
+                                    <th data-class="expand">
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Receptor
+                                    </th>
+                                    <th data-hide="phone">
+                                        Numero
+                                    </th>
+                                    <th data-hide="phone">
+                                        Referencia
+                                    </th>
+                                    <th data-hide="phone">
+                                        Fecha
+                                    </th>
+                                    <th data-hide="phone">
+                                        Base
+                                    </th>
+                                    <th data-hide="phone">
+                                        Total
+                                    </th>
+                                    <th data-hide="phone">
+                                        Forma pago
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--END MODAL-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
