@@ -141,173 +141,150 @@ function admData() {
     return sel;
 } */
 
-function initTablaDocumentospago() {
-    tablaCarro = $('#dt_documentoPago').DataTable({
-        autoWidth: true,
-        bSort: true,
-        "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [2] },
-        ],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_documentoPago'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
-        language: {
-            processing: "Procesando...",
-            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-            infoFiltered: "(filtrado de un total de _MAX_ registros)",
-            infoPostFix: "",
-            loadingRecords: "Cargando...",
-            zeroRecords: "No se encontraron resultados",
-            emptyTable: "Ningún dato disponible en esta tabla",
-            paginate: {
-                first: "Primero",
-                previous: "Anterior",
-                next: "Siguiente",
-                last: "Último"
-            },
-            aria: {
-                sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sortDescending: ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        data: dataDocumentospago,
-        columns: [
-            {
-                className: 'dt-control',
-                orderable: false,
-                data: null,
-                defaultContent: '',
-            },
-            {
-            data: "nombre"
-        },{
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        },  {
-            data: "pdf"
-        }, {
-            data: 'facturas',
-            render: function(data, type, row) {
-              var facturasData = [];
-              if(data.length > 0) {
-                data.forEach((i) => {
-                    facturasData.push(i.numeroFacturaProveedor);
-                    facturasData.push(i.ref);
-                    facturasData.push(i.proveedorNombre);
-                    //facturasData.push(rowEl.Menge);
-                  });
-                  return facturasData;
-                } else {
-                    return "";
+    function initTablaDocumentospago() {
+        tablaCarro = $('#dt_documentoPago').DataTable({
+            autoWidth: true,
+            bSort: true,
+            "aoColumnDefs": [
+                { "sType": "date-uk", "aTargets": [2] }
+            ],
+            preDrawCallback: function () {
+                if (!responsiveHelper_dt_basic) {
+                    responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_documentoPago'), breakpointDefinition);
                 }
-              }
-            
-        },
-        {
-            data: 'anticipos',
-            render: function(data, type, row) {
-              var anticiposData = [];
-              if(data.length > 0) {
-                data.forEach((i) => {
-                    anticiposData.push(i.numeroAnticipoProveedor);
-                    anticiposData.push(i.proveedorNombreAnticipo);
-                    //facturasData.push(rowEl.Menge);
-                  });
-                  return anticiposData;
-                }else {
-                    return "";
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper_dt_basic.respond();
+            },
+            language: {
+                processing: "Procesando...",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                loadingRecords: "Cargando...",
+                zeroRecords: "No se encontraron resultados",
+                emptyTable: "Ningún dato disponible en esta tabla",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                },
+                aria: {
+                    sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sortDescending: ": Activar para ordenar la columna de manera descendente"
                 }
-              }
-            
-        },
-        {
-            data: "documentoPagoId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editDocumentPago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                return html;
+            },
+            data: dataDocumentospago,
+            columns: [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
+                { data: "nombre" },
+                {
+                    data: "fecha",
+                    render: function (data, type, row) {
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                },
+                { data: "pdf" },
+                {
+                    data: 'facturas',
+                    render: function(data, type, row) {
+                        var facturasData = data.map(i => `${i.numeroFacturaProveedor} ${i.ref} ${i.proveedorNombre}`).join(", ");
+                        return facturasData;
+                    }
+                },
+                {
+                    data: 'anticipos',
+                    render: function(data, type, row) {
+                        var anticiposData = data.map(i => `${i.numeroAnticipoProveedor} ${i.proveedorNombreAnticipo}`).join(", ");
+                        return anticiposData;
+                    }
+                },
+                {
+                    data: "documentoPagoId",
+                    render: function (data, type, row) {
+                        var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocumentPago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                        var bt2 = "<button class='btn btn-circle btn-success' onclick='editDocumentPago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                        var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                        return html;
+                    }
+                }
+            ]
+        });
+    
+        // Añadir la búsqueda por columnas
+        $('#dt_documentoPago thead tr:eq(1) th').each(function (i) {
+            $('input', this).on('keyup change', function () {
+                if (tablaCarro.column(i).search() !== this.value) {
+                    tablaCarro.column(i).search(this.value).draw();
+                }
+            });
+        });
+    
+        // Ordenación personalizada por fecha en formato UK
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-uk-pre": function (a) {
+                var ukDatea = a.split('/');
+                return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+            },
+            "date-uk-asc": function (a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "date-uk-desc": function (a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
             }
-        }]
-    });
+        });
+    
+        tablaCarro.columns(4).visible(false);
+        tablaCarro.columns(5).visible(false);
+    }
+    
 
-     //function sort by date
-     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "date-uk-pre": function ( a ) {
-            var ukDatea = a.split('/');
-            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-        },
-        
-        "date-uk-asc": function ( a, b ) {
-            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-        },
-        
-        "date-uk-desc": function ( a, b ) {
-            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-        }
-    });
-
-    tablaCarro.columns(4).visible(false);
-    tablaCarro.columns(5).visible(false);
-}
-
-function format(d) {
-    var fac = d.facturas;
-    var ant = d.anticipos;
-    var html = "";
-    html = '<h5> Facturas</h5>'
-    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
-    fac.forEach(e => {
-         html += '<tr>' +
-            '<td>REFERENCIA:</td>' +
-            '<td>' +
-                e.ref +
-            '</td>' +
-            '<td>NÚMERO:</td>' +
-            '<td>' +
-                e.numeroFacturaProveedor +
-            '</td>' +
-            '<td>PROVEEDOR:</td>' +
-            '<td>' +
-                e.proveedorNombre +
-            '</td>' +
-        '</tr>'
-       
-    });
-    html +=  '</table>'
-        //anticipos
-        html += '<h5>Anticipos</h5>'
-        html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    function format(d) {
+        var fac = d.facturas;
+        var ant = d.anticipos;
+        var html = "";
+    
+        html = '<h5>Facturas</h5>';
+        html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">';
+        fac.forEach(e => {
+            html += '<tr>' +
+                '<td>REFERENCIA:</td>' +
+                '<td>' + e.ref + '</td>' +
+                '<td>NÚMERO:</td>' +
+                '<td>' + e.numeroFacturaProveedor + '</td>' +
+                '<td>PROVEEDOR:</td>' +
+                '<td>' + e.proveedorNombre + '</td>' +
+            '</tr>';
+        });
+        html += '</table>';
+    
+        // Anticipos
+        html += '<h5>Anticipos</h5>';
+        html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">';
         ant.forEach(e => {
             html += '<tr>' +
                 '<td>REFERENCIA:</td>' +
-                '<td>' +
-                '</td>' +
+                '<td></td>' +
                 '<td>NÚMERO:</td>' +
-                '<td>' +
-                    e.numeroAnticipoProveedor +
-                '</td>' +
+                '<td>' + e.numeroAnticipoProveedor + '</td>' +
                 '<td>PROVEEDOR:</td>' +
-                '<td>' +
-                    e.proveedorNombreAnticipo +
-                '</td>' +
-            '</tr>' 
+                '<td>' + e.proveedorNombreAnticipo + '</td>' +
+            '</tr>';
         });
-        html +=  '</table>'
-    return html;
-}
+        html += '</table>';
+    
+        return html;
+    }
+    
 
 function datosOK() {
 
