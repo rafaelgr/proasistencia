@@ -593,7 +593,7 @@ function initTablaFacturasAsociadas() {
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 7) {
+                        if(column === 8) {
                             return "";
                         } else {
                             return data;
@@ -604,11 +604,13 @@ function initTablaFacturasAsociadas() {
             }
         }
     };
-    tablaCarro = $('#dt_FacturasAsociadas').DataTable({
+    var tablaCarro = $('#dt_FacturasAsociadas').DataTable({
         autoWidth: true,
         responsive: true,
-        paging: true,
-        dom: 'Bfrtip', // Este parámetro agrega los botones, el filtro y el paginado
+        paging: false,
+       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'f>r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
             'copy', 
             'csv', 
@@ -766,7 +768,7 @@ function loadFormasPago() {
 
 
 function initTablaAsociarFacturas() {
-    tablaCarro = $('#dt_asociarFacturas').dataTable({
+    var tablaCarro = $('#dt_asociarFacturas').dataTable({
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //color para las facturas asociadas una vez
@@ -859,7 +861,7 @@ function initTablaAsociarFacturas() {
 
 
 function initTablaAsociarRegistros() {
-    tablaCarro = $('#dt_asociarRegistros').dataTable({
+    var tablaCarro = $('#dt_asociarRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1340,7 +1342,7 @@ function updateAllAnt(opcion) {
 
 
 function initTablaFacturasRegistros() {
-    tablaCarro = $('#dt_facturasRegistros').dataTable({
+    var tablaCarro = $('#dt_facturasRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1620,9 +1622,49 @@ function cierraModal() {
 //funciones relacionadas con los anticipos
 
 function initTablaAnticipoasAsociados() {
-    tablaCarro = $('#dt_AnticiposAsociados').DataTable({
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 3 || column === 4) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 5) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+    
+                    }
+                }
+            }
+        }
+    };
+    var tablaCarro = $('#dt_AnticiposAsociados').DataTable({
         autoWidth: true,
-        
+        responsive: true,
+        paging: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'f>r>" +
+         "t" +
+         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+         buttons: [
+             'copy', 
+             'csv', 
+             $.extend( true, {}, buttonCommon, {
+                 extend: 'excel'
+             } ), 
+             {
+                
+                 extend: 'pdf',
+                 orientation: 'landscape',
+                 pageSize: 'LEGAL'
+             }, 
+             'print'
+         ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1691,7 +1733,7 @@ function loadTablaAnticipos(data) {
 }
 
 function initTablaAsociarRegistrosAnt() {
-    tablaCarro = $('#dt_asociarRegistrosAnt').dataTable({
+    var tablaCarro = $('#dt_asociarRegistrosAnt').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1929,7 +1971,7 @@ function editRegistroAnt(codigo) {
  }
 
  function initTablaAnticiposRegistros() {
-    tablaCarro = $('#dt_anticiposRegistros').dataTable({
+    var tablaCarro = $('#dt_anticiposRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -2134,7 +2176,7 @@ function cierraModalAnt() {
 }
 
 function initTablaAsociarAnticipos() {
-    tablaCarro = $('#dt_asociarAnticipos').dataTable({
+    var tablaCarro = $('#dt_asociarAnticipos').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
