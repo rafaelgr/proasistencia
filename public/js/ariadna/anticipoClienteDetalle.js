@@ -118,10 +118,12 @@ function initForm() {
             if (err) return;
             loadData(data);
             $('#txtFecha').prop('disabled', true);
+            $('#btnAceptar2').show();
             
         })
     } else {
         // caso alta
+        $('#btnAceptar2').hide();
         vm.antClienId(0);
         vm.fecha(spanishDate(new Date()));//fecha de recepcion ofertada
         vm.sempresaId(null);

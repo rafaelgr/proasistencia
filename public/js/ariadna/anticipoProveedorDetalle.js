@@ -732,21 +732,35 @@ var aceptarAnticipo = function (salir) {
     }
     var datosArray = [];
     datosArray.push(data)
-    llamadaAjax(verb, url, datosArray, function (err, data) {
+    llamadaAjax(verb, url, datosArray, function (err, result) {
          if(err) return;
         //loadData(data);
-        returnUrl = returnUrl + vm.antproveId();
         if(desdeContrato == "true" && antproveId != 0){
             if(salir) {
                 window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAnt=true', '_self');
             } else {
+                if(!vm.completo()) {
+                    loadData(result);
+                }
                 mensNormal('Anticipo guardado.')
             }
         }
         else{
             if(salir) {
-                window.open(returnUrl, '_self');
+                if(verb == 'POST') {
+                    returnUrl = returnUrl + result.antproveId;
+                    window.open(returnUrl, '_self');
+
+
+                } else {
+                    returnUrl = returnUrl + vm.antproveId();
+                    window.open(returnUrl, '_self');
+                }
+               
             } else {
+                if(!vm.completo()) {
+                    loadData(result);
+                }
                 mensNormal('Anticipo guardado.')
             }
         }
