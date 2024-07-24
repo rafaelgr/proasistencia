@@ -52,8 +52,12 @@ function initForm() {
 
     $('#frmRegistros').submit(function () {
         return false
-    });
+    });btnSalirFacturasRegistros
     
+    $('#frmFacturasRegistros').submit(function () {
+        return false
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
@@ -746,6 +750,57 @@ function editRegistro(codigo) {
 function cierraModal() {
     $('#modalFacturasRegistros').modal('hide'); 
 }
+
+function editRegistro(codigo) {
+    var claves = procesaClavesTransferencias(codigo);
+    var empresaId = vm.sempresaId();
+    var cod = claves[0].nrodocum
+    var anyo = claves[0].anyodocum
+    $.ajax({
+     type: "GET",
+     url: myconfig.apiUrl + "/api/documentos_pago/registro/" + cod + "/" + anyo + "/" + empresaId,
+     dataType: "json",
+     contentType: "application/json",
+     data: null,
+     success: function (data, status) {
+         if(data) {
+            loadTablaFacturasRegistros(data)
+             return;
+         }
+         mensNormal("No se han encontrado registros.")
+         
+     },
+     error: function (err) {
+         mensErrorAjax(err);
+         // si hay algo más que hacer lo haremos aquí.
+     }
+ });
+ }
+
+
+function procesaClavesTransferencias(cod) {
+    var arr = [];
+    var c = datosArrayRegistros;
+    if(cod) {
+        c = [];
+        cod = cod.toString();
+        c.push(cod);
+    }
+    c.forEach(e => {
+        var obj = {};
+        var anyo = e.substr(-4);
+        var i = e.indexOf(anyo);
+        var cod = e.substr(0, i);
+
+        obj = {
+            nrodocum: cod,
+            anyodocum: anyo
+        }
+        arr.push(obj);
+    });
+    return arr;
+}
+
 
 
 
