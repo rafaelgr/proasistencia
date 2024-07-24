@@ -814,9 +814,9 @@ var aceptarFactura = function (salir) {
     }
     var datosArray = [];
     datosArray.push(data, dataPdf)
-    llamadaAjax(verb, url, datosArray, function (err, data) {
-        if(salir) loadData(data);
-        returnUrl = returnUrl + vm.facproveId();
+    llamadaAjax(verb, url, datosArray, function (err, result) {
+        if(err) return;
+        //returnUrl = returnUrl + vm.facproveId();
         if(desdeContrato == "true" && facproveId != 0){
             if(salir) {
                 window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&doc=true', '_self');
@@ -826,18 +826,21 @@ var aceptarFactura = function (salir) {
             }
         }
         else{
-            if(verb == "PUT") {
-                if(salir) {
+            if(salir) {
+                if(verb == 'POST') {
+                    returnUrl = returnUrl + result.facproveId;
                     window.open(returnUrl, '_self');
+
+
                 } else {
-                    mensNormal('Factura guardada.')
+                    returnUrl = returnUrl + vm.facproveId();
+                    window.open(returnUrl, '_self');
                 }
-            } else{
-                window.open(returnUrl, '_self');
+               
+            } else {
+                mensNormal('Factura guardada.')
             }
-        
         }
-       
     });
 }
 
