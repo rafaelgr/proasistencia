@@ -32,11 +32,11 @@ function initForm() {
     ko.applyBindings(vm);
     // asignación de eventos al clic
     $("#btnAceptar").click(function() {
-        aceptar(true);
+        aceptar(true)();
     });
     
     $("#btnAceptar2").click(function() {
-        aceptar(false);
+        aceptar(false)();
     });
     
     $("#btnSalir").click(salir());
@@ -867,11 +867,12 @@ function aceptar(salir) {
                 if(salir) {
                     window.open(returnUrl, '_self');
                 } else {
-                    if( verb == "POST") {
+                    if(verb == 'POST') {
+                        returnUrl =  "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
                         window.open(returnUrl, '_self');
-                    } else {
-                        mensNormal('Documento de pago guardado guardado.');
+                        mensNormal('Proveedor guardado.');
                     }
+                   
                 }
             },
             error: function (err) {
