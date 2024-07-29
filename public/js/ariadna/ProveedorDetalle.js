@@ -3,6 +3,7 @@ proveedorDetalle.js
 Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
+var cmd = "";
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
@@ -32,7 +33,14 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptar());
+    $("#btnAceptar").click(function() {
+        aceptar(true)();
+    });
+    
+    $("#btnAceptar2").click(function() {
+        aceptar(false)();
+    });
+    
     $("#btnSalir").click(salir());
     $('#btnBuscar').click(buscarFacturasFecha());
    
@@ -781,7 +789,7 @@ function datosOK() {
     return $('#frmProveedor').valid();
 }
 
-function aceptar() {
+function aceptar(salir) {
     var mf = function () {
         if (!datosOK()) return;
         if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
@@ -860,45 +868,40 @@ function aceptar() {
                 "profesiones": vm.elegidosTiposProfesional()
             }
         };
-        if (proId == 0) {
-            $.ajax({
-                type: "POST",
-                url: myconfig.apiUrl + "/api/proveedores",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "ProveedoresGeneral.html?ProveedorId=" + vm.proveedorId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/proveedores/" + proId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "ProveedoresGeneral.html?ProveedorId=" + vm.proveedorId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+
+        var verb = "POST";
+        var url =   myconfig.apiUrl + "/api/proveedores";
+        var returnUrl = "ProveedoresGeneral.html?cmd=nuevo&ProveedorId=";
+
+        // caso modificación
+        if (proId != 0) {
+            verb = "PUT";
+            url =  myconfig.apiUrl + "/api/proveedores/" + proId;
+            "ProveedoresGeneral.html?ProveedorId=" + proId;
         }
+        $.ajax({
+            type: verb,
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                if(salir) {
+                    window.open(returnUrl, '_self');
+                } else {
+                    if(verb == 'POST') {
+                        returnUrl =  "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
+                        window.open(returnUrl, '_self');
+                        mensNormal('Proveedor guardado.');
+                    }
+                   
+                }
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     };
     return mf;
 }
@@ -1432,8 +1435,14 @@ function initTablaFacturas() {
             data: "receptorNombre"
         }, {
             data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
         },  {
             data: "fecha_recepcion",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
         }, {
             data: "total",
             render: function (data, type, row) {

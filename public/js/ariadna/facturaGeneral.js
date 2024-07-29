@@ -183,7 +183,7 @@ function initTablaFacturas() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7) {
+                    if(column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -220,9 +220,9 @@ function initTablaFacturas() {
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             }
         ],
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'f>>" +
+             "rt" +
+             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
         
         buttons: [
             'copy', 

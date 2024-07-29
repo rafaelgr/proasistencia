@@ -5,14 +5,10 @@ Funciones js par la página DocumentoPagoDetalle.html
 
 var documentoPagoId = 0;
 var usuario;
-var esFactura = false;
 var datosArrayRegistros = []
 var datosArrayRegistrosAnt = []
 
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
+
 var datosArray = [];
 var datosArrayAnt = [];
 
@@ -181,63 +177,21 @@ function initForm() {
 
 
     $('#upload-input').on('change', function () {
-        var files = $(this).get(0).files;
+        if(vm.documentoPagoId() == 0) {
+            aceptarUpload(this);
+        } else {
+            upload(this);
+        }
         
-        // create a FormData object which will be sent as the data payload in the
-        // AJAX request
-        var formData = new FormData();
-        // loop through all the selected files and add them to the formData object
-        
-        var file = files[0];
-        var ext = file.name.split('.').pop().toLowerCase();
-        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
-        // add the files to formData object for the data payload
-        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
-            $.ajax({
-                url: '/api/upload/docpago/' + vm.documentoPagoId(),
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    filename = data;
-                    vm.pdf(filename);
-                    checkVisibility(filename);
-                },
-                xhr: function () {
-                    // create an XMLHttpRequest
-                    var xhr = new XMLHttpRequest();
-                    // listen to the 'progress' event
-                    xhr.upload.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            // calculate the percentage of upload completed
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-                            // update the Bootstrap progress bar with the new percentage
-                            $('.progress-bar').text(percentComplete + '%');
-                            $('.progress-bar').width(percentComplete + '%');
-                            // once the upload reaches 100%, set the progress bar text to done
-                            if (percentComplete === 100) {
-                                $('.progress-bar').html('Fichero subido');
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                },
-                error: function (xhr, textStatus, errorThrwon) {
-                    var m = xhr.responseText;
-                    if (!m) m = "Error al cargar";
-                    mensError(m);
-                    return;
-                }
-            });
     });
+
+
 
 
     documentoPagoId = gup('DocumentoPagoId');
     cmd = gup("cmd");
     if (documentoPagoId != 0) {
-        $('#pdfDoc').show();
+        //$('#pdfDoc').show();
         var data = {
                 documentoPagoId: documentoPagoId
             }
@@ -264,8 +218,9 @@ function initForm() {
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
-        $('#pdfDoc').hide();
+        //$('#pdfDoc').hide();
         vm.documentoPagoId(0);
+        vm.pdf(null);
         $("#cmbTiposProfesional").select2(select2Spanish());
         $('#facturasAsociadas').hide();
         $("#anticiposAsociados").hide();
@@ -478,8 +433,11 @@ function datosOK5() {
 
 
 function aceptar(salir) {
-        if (!datosOK())
+        if (!datosOK()) return;
+        if(!vm.pdf() || vm.pdf() == '') {
+            mensError("Se tiene que subir un PDF");
             return;
+        }
         var data = {
             documentoPago: {
                 "documentoPagoId": vm.documentoPagoId(),
@@ -526,6 +484,95 @@ function aceptar(salir) {
             });
 }
 
+function aceptarUpload(a) {
+    if (!datosOK())
+        return;
+    var data = {
+        documentoPago: {
+            "documentoPagoId": vm.documentoPagoId(),
+            "nombre": vm.nombre(),
+            "fecha":spanishDbDate(vm.fecha()),
+            "pdf": vm.pdf(),
+        }
+    };
+    var verb = "POST";
+    var url =   myconfig.apiUrl + "/api/documentos_pago"
+    var returnUrl = "DocumentoPagoDetalle.html?cmd=nuevo&DocumentoPagoId=";
+
+        $.ajax({
+            type: verb,
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function(data, status) {
+                vm.documentoPagoId(data.documentoPagoId);
+                documentoPagoId = data.documentoPagoId;
+                upload(a)
+                //returnUrl = returnUrl + data.documentoPagoId;
+                //window.open(returnUrl, '_self');
+                
+            },
+                            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+}
+
+function upload(a) {
+    var files = $(a).get(0).files;
+        
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+        
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf.");
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, vm.documentoPagoId() + "_" + file.name);
+            $.ajax({
+                url: '/api/upload/docpago/' + vm.documentoPagoId(),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.pdf(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
+                }
+            });
+}
+
 function salir() {
     var mf = function() {
         var url = "DocumentosPagoGeneral.html";
@@ -535,20 +582,50 @@ function salir() {
 }
 
 function initTablaFacturasAsociadas() {
-    tablaCarro = $('#dt_FacturasAsociadas').DataTable({
-        autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_FacturasAsociadas'), breakpointDefinition);
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+    
+                    }
+                }
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        }
+    };
+    var tablaCarro = $('#dt_FacturasAsociadas').DataTable({
+        autoWidth: true,
+        responsive: true,
+        paging: false,
+       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'f>r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
+        
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -691,7 +768,7 @@ function loadFormasPago() {
 
 
 function initTablaAsociarFacturas() {
-    tablaCarro = $('#dt_asociarFacturas').dataTable({
+    var tablaCarro = $('#dt_asociarFacturas').dataTable({
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //color para las facturas asociadas una vez
@@ -703,22 +780,11 @@ function initTablaAsociarFacturas() {
                 $(nRow).attr('style', 'background: #D46A6A'); 
             }
         },
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
         "bDestroy": true,
 
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarFacturas'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -795,7 +861,7 @@ function initTablaAsociarFacturas() {
 
 
 function initTablaAsociarRegistros() {
-    tablaCarro = $('#dt_asociarRegistros').dataTable({
+    var tablaCarro = $('#dt_asociarRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -803,18 +869,7 @@ function initTablaAsociarRegistros() {
             "width": "10%",
             "targets": 0
         }],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarRegistros'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -861,6 +916,9 @@ function initTablaAsociarRegistros() {
             }
         }, {
             data: "Descripcion"
+        }, {
+            data: "facturas",
+            width: "5%"
         },{
             data: "codigo",
             render: function (data, type, row) {
@@ -1017,13 +1075,7 @@ function buscarAsociarRegistros() {
         });
 }
 
-function aceptarAsociar() {
-    if(esFactura) {
-        aceptarAsociarFacturas();
-    } else {
-        aceptarAsociarRegistros();
-    }
-}
+
 function aceptarAsociarFacturas() {
     $('#btnAceptarAsociarFacturas').prop('disabled', true);
     var data = 
@@ -1073,6 +1125,42 @@ function aceptarAsociarFacturas() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+function confirmarAsociarRegistros() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos registros?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar registros]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar registros") {
+            aceptarAsociarRegistros();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
+}
+
+function confirmarAsociarFacturas() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estas facturas?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar facturas]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar facturas") {
+            aceptarAsociarFacturas();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
 }
 
 function aceptarAsociarRegistros() {
@@ -1254,7 +1342,7 @@ function updateAllAnt(opcion) {
 
 
 function initTablaFacturasRegistros() {
-    tablaCarro = $('#dt_facturasRegistros').dataTable({
+    var tablaCarro = $('#dt_facturasRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1262,18 +1350,7 @@ function initTablaFacturasRegistros() {
             "width": "10%",
             "targets": 0
         }],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facturasRegistros'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1545,20 +1622,49 @@ function cierraModal() {
 //funciones relacionadas con los anticipos
 
 function initTablaAnticipoasAsociados() {
-    tablaCarro = $('#dt_AnticiposAsociados').DataTable({
-        autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_AnticiposAsociados'), breakpointDefinition);
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 3 || column === 4) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 5) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+    
+                    }
+                }
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        }
+    };
+    var tablaCarro = $('#dt_AnticiposAsociados').DataTable({
+        autoWidth: true,
+        responsive: true,
+        paging: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'f>r>" +
+         "t" +
+         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+         buttons: [
+             'copy', 
+             'csv', 
+             $.extend( true, {}, buttonCommon, {
+                 extend: 'excel'
+             } ), 
+             {
+                
+                 extend: 'pdf',
+                 orientation: 'landscape',
+                 pageSize: 'LEGAL'
+             }, 
+             'print'
+         ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1627,7 +1733,7 @@ function loadTablaAnticipos(data) {
 }
 
 function initTablaAsociarRegistrosAnt() {
-    tablaCarro = $('#dt_asociarRegistrosAnt').dataTable({
+    var tablaCarro = $('#dt_asociarRegistrosAnt').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1635,18 +1741,7 @@ function initTablaAsociarRegistrosAnt() {
             "width": "10%",
             "targets": 0
         }],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarRegistrosAnt'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1693,6 +1788,9 @@ function initTablaAsociarRegistrosAnt() {
             }
         }, {
             data: "Descripcion"
+        }, {
+            data: "facturas",
+            width: "5%"
         },{
             data: "codigo",
             render: function (data, type, row) {
@@ -1729,6 +1827,24 @@ function loadTablaAsociarRegistrosAnt(data) {
             }
         });
     });
+}
+
+function confirmarAsociarRegistrosAnt() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos registros?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar registros]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar registros") {
+            aceptarAsociarRegistrosAnt();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
 }
 
 function buscarAsociarRegistrosAnt() {
@@ -1855,7 +1971,7 @@ function editRegistroAnt(codigo) {
  }
 
  function initTablaAnticiposRegistros() {
-    tablaCarro = $('#dt_anticiposRegistros').dataTable({
+    var tablaCarro = $('#dt_anticiposRegistros').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -1863,18 +1979,7 @@ function editRegistroAnt(codigo) {
             "width": "10%",
             "targets": 0
         }],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_anticiposRegistros'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1989,7 +2094,7 @@ function desvinculaAnticipo(id) {
 
 function desvinculaAnticipos() {
      // mensaje de confirmación
-     var mens = "¿Desea borrar todos los registros?. Esta acción no se podrá deshacer";
+     var mens = "¿Desea desasociar todos los registros?. Esta acción no se podrá deshacer";
      $.SmartMessageBox({
          title: "<i class='fa fa-info'></i> Mensaje",
          content: mens,
@@ -2071,7 +2176,7 @@ function cierraModalAnt() {
 }
 
 function initTablaAsociarAnticipos() {
-    tablaCarro = $('#dt_asociarAnticipos').dataTable({
+    var tablaCarro = $('#dt_asociarAnticipos').dataTable({
         autoWidth: true,
         paging: false,
         "bDestroy": true,
@@ -2079,18 +2184,7 @@ function initTablaAsociarAnticipos() {
             "width": "10%",
             "targets": 0
         }],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_asociarAnticipos'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2236,6 +2330,24 @@ function loadTablaAsociarAnticipos(data) {
             }
         });
     });
+}
+
+function confirmarAsociarAnticipos() {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea asociar estos anticipos?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Asociar anticipos]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Asociar anticipos") {
+            aceptarAsociarAnticipos();
+           }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+
 }
 
 function aceptarAsociarAnticipos() {
