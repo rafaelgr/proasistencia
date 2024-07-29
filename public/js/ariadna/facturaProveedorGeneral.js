@@ -467,7 +467,7 @@ function buscarFacturas() {
 function crearFactura() {
     var mf = function () {
         var url = "FacturaProveedorDetalle.html?facproveId=0";
-        window.open(url, '_new');
+        window.open(url, '_blank');
     };
     return mf;
 }
@@ -581,7 +581,7 @@ function editFactura(id) {
         }
     setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaProveedorDetalle.html?facproveId=" + id;
-    window.open(url, '_self');
+    window.open(url, '_blank');
 }
 
 
@@ -668,7 +668,7 @@ function cargarFacturas2All() {
 
 function printFactura2(id) {
     var url = "InfFacturasProveedores.html?facproveId=" + id;
-    window.open(url, "_new");
+    window.open(url, "_blank");
 }
 
 function estableceFechaEjercicio() {

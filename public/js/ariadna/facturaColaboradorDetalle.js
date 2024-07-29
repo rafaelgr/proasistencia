@@ -2815,68 +2815,10 @@ function vinculaAnticipoCompleto() {
                 mensError('Esta clase de anticipos por el total de la factura no tiene que tener lineas ni empresas serviciadas creadas.');
                 return;
             }
-            /* llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
-                if (err) return;
-                llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
-                    if (err) return;
-                    if(data) {
-                        $('#modalAnticipoCompleto').modal('hide');
-                        vm.anticipo(data.numeroAnticipoProveedor);
-                        vm.antproveId(data.antproveId);
-                        $('#btnVincularAnticipo').hide();
-                        $('#btnDesVincularAnticipo').show();
-                         //INSERTAMOS LA LINEAS, BASES Y RETENCIONES DEL ANTICIPO EN LA FACTURA
-                         llamadaAjax("POST",  "/api/facturasProveedores/inserta/desde/antprove/" + vm.antproveId() + "/" + vm.facproveId(), null, function (err, data) {
-                            if(err) {
-                                var datosArrayAnt = [];
-                                var datosArrayFact = [];
-           
-                                var data = {
-                                    antprove: {
-                                        antproveId: vm.antproveId(),
-                                        facproveId: null
-                                    }
-                                }
-                        
-                                var data2 = {
-                                    facprove: {
-                                        antproveId: null,
-                                        facproveId: vm.facproveId(),
-                                        empresaId: vm.sempresaId(),
-                                        proveedorId: vm.sproveedorId(),
-                                        fecha: spanishDbDate(vm.fecha())
-                                    }
-                                }
-                            
-                                datosArrayAnt.push(data);
-                                datosArrayFact.push(data2);
-        
-                                llamadaAjax("PUT", "/api/anticiposProveedores/"+ vm.antproveId(), datosArrayAnt, function (err, data) {
-                                    if (err) return;
-                                    llamadaAjax("PUT", "/api/facturasProveedores/"+ vm.facproveId(), datosArrayFact, function (err, data2) {
-                                        if (err) return;
-                                        vm.anticipo('');
-                                        vm.antproveId(null);
-                                        $('#btnVincularAnticipo').show();
-                                        $('#btnDesVincularAnticipo').hide();
-                                    });
-                                });
-                            }
-                            if(data) {
-                                //window.open('FacturaProveedorDetalle.html?facproveId='+ vm.facproveId(), '_self');
-                                vm.coste(data.coste);
-                                vm.importeRetencion(data.importeRetencion);
-                                loadLineasFactura(vm.facproveId());
-                                loadBasesFacprove(vm.facproveId());
-                                loadRetencionesFacprove(vm.facproveId());
-                                loadServiciadasFacprove(vm.facproveId());
-                            }
-                        });
-                       
-                    }
-                });
-            }); */
-
+            if(numServiciadas > 0) {
+                mensError('Esta clase de anticipos por el total de la factura no tiene que tener lineas ni empresas serviciadas creadas.');
+                return;
+            }
             llamadaAjax("PUT", "/api/facturasProveedores/vincula/anticipo/completo/nuevo/"+ vm.facproveId() + "/" + vm.antproveId(), obj, function (err, data) {
                 if (err) return;
                 $('#modalAnticipoCompleto').modal('hide');
