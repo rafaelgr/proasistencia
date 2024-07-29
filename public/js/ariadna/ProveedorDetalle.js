@@ -80,6 +80,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmBuscar").submit(function () {
+        return false;
+    });
+
     //carga de combos
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
@@ -185,6 +189,11 @@ function initForm() {
     initTablaUsuariosPush();
     initArbolDocumentacion();
     initTablaindicesCorrectores();
+
+      //abrir en pestaña de facturas de proveedores
+      if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s2"]').tab('show');
+    } 
 
        //validacion de fecha mayor que fecha
        $.validator.addMethod("greaterThan2",
@@ -1508,7 +1517,7 @@ function loadTablaFacturas(data) {
 }
 
 function editFactura(id) {
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id + '&desdeProveedor=true';
     window.open(url, '_new');
 }
 
