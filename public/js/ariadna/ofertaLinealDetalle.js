@@ -2310,13 +2310,9 @@ var generarContratoAPI = function () {
             contratoId: data.contratoId,
             ofertaId: vm.ofertaId(),
         }
+        vm.contratoId(data.contratoId);
         generarLineasConceptos(datos);
-        if(vm.beneficioLineal == 0) {
-            var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
-        } else {
-            var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
-        }
-        window.open(url, '_new');
+        $('#modalContrato').modal('hide');
     })
 }
 
@@ -2324,6 +2320,12 @@ var generarLineasConceptos = function(datos) {
     var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto";
     llamadaAjax('POST', url, datos, function (err, data) {
         if (err) return;
+        if(vm.beneficioLineal() == 0) {
+            var url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=GEN";
+        } else {
+            var url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=GEN";
+        }
+        window.open(url, '_blank');
         
     })
 }

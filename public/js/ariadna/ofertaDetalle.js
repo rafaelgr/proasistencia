@@ -2612,9 +2612,9 @@ var generarContratoAPI = function () {
             contratoId: data.contratoId,
             ofertaId: vm.ofertaId(),
         }
+        vm.contratoId(data.contratoId);
         generarLineasConceptos(datos);
-        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
-        window.open(url, '_blank');
+        $('#modalContrato').modal('hide');
     })
 }
 
@@ -2622,7 +2622,8 @@ var generarLineasConceptos = function(datos) {
     var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto";
     llamadaAjax('POST', url, datos, function (err, data) {
         if (err) return;
-        
+        var returnUrl = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=GEN";
+        window.open(returnUrl, '_blank');
     })
 }
 
