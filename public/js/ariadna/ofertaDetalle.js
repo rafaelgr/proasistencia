@@ -319,12 +319,12 @@ function initForm() {
         if(tipof == 7) {
             if(vm.esTarifa()) {
                 buscaTarifaProveedor(e.added.id);
-                //loadTiposIvaProveedor(e.added.id);
+                cambioTiposIvaProveedor(e.added.id);
             } else {
                 var data = {};
                 data.id = vm.sarticuloId();
                 cambioArticuloProveedor(data);
-                //loadTiposIvaProveedor(e.added.id);
+                cambioTiposIvaProveedor(e.added.id);
             }
             
         }
@@ -1773,15 +1773,16 @@ function cambioArticuloClienteRep(datos) {
             }
 
              //valores para IVA del cliente
-             var id = vm.tipoIvaId();
-             $("#cmbTiposIva").val([id]).trigger('change');
+             //var id = vm.tipoIvaId();
+             //$("#cmbTiposIva").val([id]).trigger('change');
              data2 = {
                  id: data.tipoIvaId
              };
              vm.cantidad(1);
+             cambioTiposIva(data2);
              // poner la unidades por defecto de ese artículo
             $("#cmbUnidades").val([data.unidadId]).trigger('change');
-            //cambioTiposIva(data2);
+            cambioTiposIva(data2);
 
             if(vm.esTarifa()) {
                 llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
@@ -1882,19 +1883,22 @@ function cambioTiposIva(data) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+        if(tipoIvaId) {
+            $("#cmbTiposIva").val([tipoIvaId]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([null]).trigger('change');
+        }
     });
 }
 
 function cambioTiposIvaProveedor(tipoIvaId) {
     if (!tipoIvaId) {
-        vm.tipoIvaProveedorId(null);
         vm.stipoIvaProveedorId(null);
         vm.porcentajeProveedor(null);
         return;
     }
     llamadaAjax('GET', "/api/tipos_iva/" + tipoIvaId, null, function (err, data) {
         if (err) return;
-        vm.tipoIvaProveedorId(data.tipoIvaId);
         vm.stipoIvaProveedorId(data.tipoIvaId);
         vm.porcentajeProveedor(data.porcentaje);
         cambioPrecioCantidad();
