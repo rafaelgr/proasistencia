@@ -629,6 +629,9 @@
                                                 </div>
                                             </div>
                                             <div class="pull-right">
+                                                <button id="btnRenovarContratos" title="Renovar contratos" data-toggle="modal" data-target="#modalRenovarContratos" onclick="prepararRenovacion()" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-repeat"></i>
+                                                </button>
                                                 <button id="btnPrint" title="Informe" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-print"></i>
                                                 </button>        
@@ -750,6 +753,69 @@
 <!-- END MAIN CONTENT -->
 </div>
 <!-- END MAIN PANEL -->
+ <!-- Modal -->
+ <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"> RENOVAR CONTRATO</h4>
+            </div>
+            <div class="modal-body no-padding">
+                <form id="frmRenovarContratos" class="smart-form">
+                    <fieldset>
+                        <section>
+                            <!--
+                            <div class="row">
+                                <section class="col col-md-6">
+                                    <div class="form-group">
+                                        <label class="label">Fecha nuevo contrato</label>
+                                        <label class="input">
+                                            <input id="txtNFechaNuevoContrato" type="text" name="txtNFechaNuevoContrato" data-bind="value: nuevaFechaContrato" class="form-control datepicker" data-dateformat="dd/mm/yy" />
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>                                
+                            -->
+                            <div class="row">
+                                <section class="col col-md-5">
+                                    <label class="label">Fecha Inicial (Contratos nuevos)</label>
+                                    <label class="input">
+                                        <input id="txtNFechaInicio" name="txtNFechaInicio" data-bind="value: nuevaFechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-5">
+                                    <label class="label">Fecha Final (Contratos nuevos)</label>
+                                    <label class="input">
+                                        <input id="txtNFechaFinal" name="txtNFechaFinal" data-bind="value: nuevaFechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">IPC</label>
+                                    <label class="input">
+                                        <input id="txtIpc" name="txtIpc" data-bind="value: ipc" />
+                                    </label>
+                                </section>
+                            </div>
+                    </fieldset>
+                    <footer>
+                        <button id="btnAceptarContratosNuevos" class="btn btn-primary" onclick="aceptarContratosNuevos()">
+                            RENOVAR
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>  
+<!--End modal-->
 <!-- PAGE FOOTER -->
 <div class="page-footer">
     <div class="row">

@@ -5922,9 +5922,9 @@ var nuevoContratoOK = function () {
                 required: true,
                 fechaFinalSuperiorAInicial: true
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -5934,9 +5934,9 @@ var nuevoContratoOK = function () {
             txtNFechaFinal: {
                 required: "Debe elegir una fecha"
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {

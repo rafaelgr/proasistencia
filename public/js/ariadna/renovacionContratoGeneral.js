@@ -28,8 +28,9 @@ function initForm() {
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
+        ajustaDepartamentos(data)
         initTablaContratos();
-        cargarContratos()();
+        //cargarContratos()();
     });
 
     $.validator.addMethod("greaterThan",
@@ -50,7 +51,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        cargarContratos()();
+        //cargarContratos()();
     });
 
         //Evento de marcar/desmarcar todos los checks
@@ -77,33 +78,12 @@ function initForm() {
         return false
     });
     
-    $('#chkCerrados').change(function () {
-        if($('#chkPreaviso').is(':checked')) {
-            $('#chkPreaviso').prop("checked", false);
-        }
-        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
-        checkCerrados =  this;
-        if (this.checked) {
-            url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
-        } 
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            data.forEach(function(d) {
-                if(d.preaviso == null) {
-                    d.preaviso = 0;
-                }
-                d.plazo = restarDias(d.fechaFinal, d.preaviso);
-                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-            }, this);
-            loadTablaContratos(data);
-        });
-    });
+
 
     $('#chkPreaviso').change(function () {
+        cargarContratos()();
         
-        if($('#chkCerrados').is(':checked')) {
-            $('#chkCerrados').prop("checked", false);
-        }
+       /* if(!datosOK) return;
         var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         if (this.checked) {
             url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
@@ -118,21 +98,27 @@ function initForm() {
                 d.plazo = moment(d.plazo).format('YYYY-MM-DD');
             }, this);
             loadTablaContratos(data);
-        });
+        }); */
     })
 }
 
-function admData() {
-    var self = this;
-    self.desdeFecha = ko.observable();
-    self.hastaFecha = ko.observable();
-    
-    self.departamentoId = ko.observable();
-    self.sdepartamentoId = ko.observable();
-    //
-    self.posiblesDepartamentos = ko.observableArray([]);
-    self.elegidosDepartamentos = ko.observableArray([]);
-    
+class admData {
+    constructor() {
+        var self = this;
+        self.desdeFecha = ko.observable();
+        self.hastaFecha = ko.observable();
+
+        self.departamentoId = ko.observable();
+        self.sdepartamentoId = ko.observable();
+        //
+        self.posiblesDepartamentos = ko.observableArray([]);
+        self.elegidosDepartamentos = ko.observableArray([]);
+
+        // modal de renovación del contrato
+        self.nuevaFechaInicio = ko.observable();
+        self.nuevaFechaFinal = ko.observable();
+        self.ipc = ko.observable();
+    }
 } 
 
 
@@ -438,9 +424,10 @@ function editContrato(id) {
 function cargarContratos() {
     var mf = function () {
         if (!datosOK()) return;
+        let preaviso = $('#chkPreaviso').prop('checked');
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/renovar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId(),
+                url: myconfig.apiUrl + "/api/contratos/renovar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + preaviso,
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
@@ -540,6 +527,105 @@ function updateAllContratos(option) {
         }
     }
 }
+
+function ajustaDepartamentos(data) {
+    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
+    var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
+     for (var i = 0; i < data.length; i++) {
+            if (data[i].departamentoId != 3) {
+                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
+                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+            }
+    }
+    console.log(data);
+    var departamentos = [{
+        departamentoId: 0,
+        nombre: ""
+    }].concat(data);
+    vm.posiblesDepartamentos(departamentos);
+    if(id != 3)  {
+        $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
+        vm.sdepartamentoId(0);
+    }
+}
+
+var aceptarContratosNuevos = function () {
+    if (!nuevoContratoOK()) return;
+    //primero comprobamos que los implicados en los contratos estén de alta
+    llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
+        if (err) {
+            return mensErrorAjax(err);
+        }
+        if(data) { //si no se encuentra activo
+            // mensaje de confirmación
+            //procesamos el mansaje
+            var mens = "Los siguientes implicados en el contrato no se encuantran activos.<br>"
+            for(let d of data) {
+                mens += JSON.stringify(d) + "<br>";
+            }
+            mens = mens.replace(/["{}]/g, '');
+            mens += "¿Realmente desea renovar el contrato?.";
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    renovarContrato();
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
+                    return;
+                }
+            });
+        } else {
+            renovarContrato();
+        }
+    });
+};
+
+var nuevoContratoOK = function () {
+    $('#frmRenovarContratos').validate({
+        rules: {
+            txtNFechaInicio: {
+                required: true
+            },
+            txtNFechaFinal: {
+                required: true,
+                fechaFinalSuperiorAInicial: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNFechaInicio: {
+                number: "Debe elegir una fecha"
+            },
+            txtNFechaFinal: {
+                required: "Debe elegir una fecha"
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmRenovarContratos").validate().settings;
+    return $('#frmRenovarContratos').valid();
+}
+
+var renovarContrato = function() {
+    var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
+    url += "/" + spanishDbDate(vm.nuevaFechaInicio());
+    url += "/" + spanishDbDate(vm.nuevaFechaFinal());
+    url += "/" + spanishDbDate(vm.nuevaFechaContrato());
+    llamadaAjax("POST", url, null, function (err, data) {
+        if (err) return;
+        window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
+    })
+}
+
+
+
 
 
 imprimirInforme = function () {
