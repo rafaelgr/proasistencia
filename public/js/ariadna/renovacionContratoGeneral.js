@@ -14,6 +14,7 @@ var breakpointDefinition = {
     phone: 480
 };
 
+datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
@@ -21,19 +22,28 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
+
+     // select2 things
+     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
         initTablaContratos();
-
-        contratoId = gup('ContratoId');
-        if (contratoId !== '') {
-            cargarContratos()(contratoId);
-
-        } else {
-            cargarContratos()();
-        }
+        cargarContratos()();
     });
+
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
+    //
 
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
@@ -114,6 +124,8 @@ function initForm() {
 
 function admData() {
     var self = this;
+    self.desdeFecha = ko.observable();
+    self.hastaFecha = ko.observable();
     
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
@@ -148,9 +160,6 @@ function initTablaContratos() {
             var fechaFinal = moment(aData.fechaFinal).format('YYYY-MM-DD');
             if (fechaActual >= aData.plazo && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #FFA96C');
-            }
-            if (aData.contratoCerrado == 1) {
-                $(nRow).attr('style', 'background: #FBB0B9');
             }
             if (fechaFinal <= fechaActual && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #99DACF');
@@ -290,6 +299,13 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
+            txtDesdeFecha: {
+                required: true
+            },
+            txtHastaFecha: {
+                required: true,
+                greaterThan: "#txtDesdeFecha"
+            },
 
         },
         // Messages for form validation
@@ -305,6 +321,8 @@ function datosOK() {
 }
 
 function loadTablaContratos(data) {
+    var url;
+    var type;
     var dt = $('#dt_contrato').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
@@ -312,6 +330,62 @@ function loadTablaContratos(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+    data.forEach(function (v) {
+        var field = "#chk" + v.contratoId;
+        if (v.sel == 1) {
+            $(field).attr('checked', false);
+            var data = {
+                contrato: {
+                    contratoId: v.contratoId,
+                    sel: 0
+                }
+            };
+            url = "", type = "";
+            // updating record
+            type = "PUT";
+            url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, v.contratoId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+        $(field).change(function () {
+            var quantity = 0;
+            var data = {
+                contrato: {
+                    contratoId: v.contratoId,
+                    sel: 0
+                }
+            };
+            if (this.checked) {
+                data.contrato.sel = 1;
+            }
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/contratos/%s', myconfig.apiUrl, v.contratoId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        });
+    });
 }
 
 function buscarContratos() {
@@ -362,38 +436,13 @@ function editContrato(id) {
 }
 
 function cargarContratos() {
-    var mf = function (id) {
-        if (id) {
-            var data = {
-                id: contratoId
-            }
-            // hay que buscar ese elemento en concreto
+    var mf = function () {
+        if (!datosOK()) return;
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/" + contratoId,
+                url: myconfig.apiUrl + "/api/contratos/renovar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId(),
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    if(data.preaviso == null) {
-                        data.preaviso = 0;
-                    }
-                        data.plazo = restarDias(data.fechaFinal, data.preaviso);
-                        data.plazo = moment(data.plazo).format('YYYY-MM-DD');
-                    loadTablaContratos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
                 success: function (data, status) {
                     data.forEach(function(d) {
                         if(d.preaviso == null) {
@@ -410,7 +459,7 @@ function cargarContratos() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-        }
+        
     };
     return mf;
 }
@@ -491,7 +540,6 @@ function updateAllContratos(option) {
         }
     }
 }
-
 
 
 imprimirInforme = function () {

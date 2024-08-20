@@ -137,13 +137,6 @@
                     </div>
                     <!-- end fullscreen button -->
                     <div class="col col-xs-4 col-sm-4 col-md-5 pull-right" style="padding-bottom: 5%">
-                            <span>
-                                    <label class="label">Departamento de trabajo</label>
-                                    <label style="width:100%; height:50px;">
-                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo"
-                                            data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                    </label>
-                            </span>
                     </div>    
             </div>
         </div>
@@ -595,11 +588,29 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="checkbox">
-                                                        <input id="chkCerrados" type="checkbox" name="chkCerrados">
-                                                        <i></i>Ver también contratos cerrados
+                                                    <label class="label">Desde fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-6">
+                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Departamento</label>
+                                                        <label style="width:100%;">
+                                                            <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                        </label>
+                                                </section>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="row">
                                                 <section class="col col-md-6">
                                                     <label class="checkbox">
                                                         <input id="chkPreaviso" type="checkbox" name="chkPreaviso">
@@ -612,9 +623,6 @@
                                             <div class="pull-left">
                                                 <div style="margin-bottom: 2px;">
                                                     <span  style="background-color: #FFA96C; color: #FFA96C;">text</span><span> Contratos en preaviso</span>
-                                                </div>
-                                                <div style="margin-bottom: 2px;">
-                                                    <span  style="background-color:  #FBB0B9; color:  #FBB0B9;">text</span><span> Contratos cerrados</span>
                                                 </div>
                                                 <div>
                                                     <span  style="background-color: #99DACF; color: #99DACF;">text</span><span> Contratos vencidos</span>
