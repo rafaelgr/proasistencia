@@ -25,6 +25,10 @@ function initForm() {
 
      // select2 things
      $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
+     $("#frmRenovarContratos").submit(function () {
+        return false;
+    });
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
@@ -117,6 +121,7 @@ class admData {
         // modal de renovación del contrato
         self.nuevaFechaInicio = ko.observable();
         self.nuevaFechaFinal = ko.observable();
+        self.nuevaFechaContrato = ko.observable();
         self.ipc = ko.observable();
     }
 } 
@@ -571,7 +576,7 @@ var aceptarContratosNuevos = function () {
                 buttons: '[Aceptar][Cancelar]'
             }, function (ButtonPressed) {
                 if (ButtonPressed === "Aceptar") {
-                    renovarContrato();
+                    renovarContratos();
                 }
                 if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
@@ -579,7 +584,7 @@ var aceptarContratosNuevos = function () {
                 }
             });
         } else {
-            renovarContrato();
+            renovarContratos();
         }
     });
 };
@@ -612,15 +617,32 @@ var nuevoContratoOK = function () {
     var opciones = $("#frmRenovarContratos").validate().settings;
     return $('#frmRenovarContratos').valid();
 }
+var prepararRenovacion = function () {
+    proponerFechasRenovacion();
+};
 
-var renovarContrato = function() {
-    var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
+var proponerFechasRenovacion = function () {
+    // Crear un objeto moment con la fecha actual
+    var _fechaInicio = moment();
+
+    // Crear una copia de _fechaInicio para fecha final
+    var _fechaFinal = moment(_fechaInicio).add(365, 'days');
+
+    // Formatear las fechas
+    vm.nuevaFechaInicio(_fechaInicio.format('DD/MM/YYYY'));
+    vm.nuevaFechaFinal(_fechaFinal.format('DD/MM/YYYY'));
+    vm.nuevaFechaContrato(_fechaInicio.format('DD/MM/YYYY'));
+    vm.ipc(0);
+};
+
+var renovarContratos = function() {
+    var url = myconfig.apiUrl + "/api/contratos/renovar/varios";
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
     url += "/" + spanishDbDate(vm.nuevaFechaContrato());
     llamadaAjax("POST", url, null, function (err, data) {
         if (err) return;
-        window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
+        //window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
     })
 }
 
