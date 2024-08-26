@@ -50,6 +50,8 @@ function initForm() {
         }, 'La fecha final debe ser mayor que la inicial.');
     //
 
+    reglasDeValidacionAdicionales();
+
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
@@ -122,6 +124,7 @@ class admData {
         self.nuevaFechaInicio = ko.observable();
         self.nuevaFechaFinal = ko.observable();
         self.nuevaFechaContrato = ko.observable();
+        self.fechaRenovacionIpc = ko.observable();
         self.ipc = ko.observable();
     }
 } 
@@ -557,7 +560,7 @@ function ajustaDepartamentos(data) {
 var aceptarContratosNuevos = function () {
     if (!nuevoContratoOK()) return;
     //primero comprobamos que los implicados en los contratos estén de alta
-    llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
+   /*  llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
         if (err) {
             return mensErrorAjax(err);
         }
@@ -586,8 +589,17 @@ var aceptarContratosNuevos = function () {
         } else {
             renovarContratos();
         }
-    });
+    }); */
+    renovarContratos();
 };
+
+var reglasDeValidacionAdicionales = function () {
+    jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
+        var fechaInicial = new Date(spanishDbDate(vm.nuevaFechaInicio()));
+        var fechaFinal = new Date(spanishDbDate(vm.nuevaFechaFinal()));
+        return (fechaFinal >= fechaInicial);
+    }, "La fecha final debe ser superior a la inicial");
+}
 
 var nuevoContratoOK = function () {
     $('#frmRenovarContratos').validate({
@@ -636,12 +648,23 @@ var proponerFechasRenovacion = function () {
 };
 
 var renovarContratos = function() {
-    var url = myconfig.apiUrl + "/api/contratos/renovar/varios";
+    let preaviso = $('#chkPreaviso').prop('checked');
+    let url = myconfig.apiUrl + "/api/contratos/renovar/varios";
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
     url += "/" + spanishDbDate(vm.nuevaFechaContrato());
+
+    url += "/" + spanishDbDate(vm.fechaRenovacionIpc());
+    url += "/" + vm.ipc();
+
+    url += "/" + spanishDbDate(vm.desdeFecha());
+    url += "/" + spanishDbDate(vm.hastaFecha());
+    url += "/" + vm.sdepartamentoId();
+    url += "/" + preaviso,
     llamadaAjax("POST", url, null, function (err, data) {
         if (err) return;
+        var mens = "Los contratos se han renovado correctamente. Estas son las nuevas referencias.\n" + data;
+        mensNormal(mens);
         //window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
     })
 }

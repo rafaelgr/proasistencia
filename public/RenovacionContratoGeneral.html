@@ -588,13 +588,13 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-md-6">
-                                                    <label class="label">Desde fecha</label>
+                                                    <label class="label">Desde fecha de inicio</label>
                                                     <label class="input">
                                                         <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: desdeFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
-                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="label">Hasta fecha de inicio</label>
                                                     <label class="input">
                                                         <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hastaFecha" class="datepicker" data-dateformat="dd/mm/yy" />
                                                     </label>
@@ -780,24 +780,31 @@
                             </div>                                
                             -->
                             <div class="row">
-                                <section class="col col-md-5">
+                                <section class="col col-md-3">
                                     <label class="label">Fecha Inicial (Contratos nuevos)</label>
                                     <label class="input">
                                         <input id="txtNFechaInicio" name="txtNFechaInicio" data-bind="value: nuevaFechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>
-                                <section class="col col-md-5">
+                                <section class="col col-md-3">
                                     <label class="label">Fecha Final (Contratos nuevos)</label>
                                     <label class="input">
                                         <input id="txtNFechaFinal" name="txtNFechaFinal" data-bind="value: nuevaFechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>
-                                <section class="col col-md-2">
+                                <section class="col col-md-3">
                                     <label class="label">IPC</label>
                                     <label class="input">
                                         <input id="txtIpc" name="txtIpc" data-bind="value: ipc" />
                                     </label>
                                 </section>
+                                <section class="col col-md-3">
+                                    <label class="label">Fecha renovación IPC</label>
+                                    <label class="input">
+                                        <input id="txtFechaRenovacionIpc" name="txtFechaRenovacionIpc" data-bind="value: fechaRenovacionIpc" class="datepicker" data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                
                             </div>
                     </fieldset>
                     <footer>
