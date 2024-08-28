@@ -34,6 +34,8 @@ function initForm() {
         if(err) return;
         ajustaDepartamentos(data)
         initTablaContratos();
+        // ocultamos el botón de alta hasta que se haya producido una búsqueda
+        $("#btnRenovarContratos").hide();
         //cargarContratos()();
     });
 
@@ -72,6 +74,11 @@ function initForm() {
                 }
             }
         );
+
+        $("#txtIpc").focus(function () {
+            $('#txtIpc').val(null);
+        });
+        
     
 
     // de smart admin
@@ -232,6 +239,13 @@ function initTablaContratos() {
             {
                 data: "fechaFinal",
                 render: function (data, type, row) {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+            },
+            {
+                data: "fechaRenovacionIpc",
+                render: function (data, type, row) {
+                    if(!data) return '';
                     return moment(data).format('DD/MM/YYYY');
                 }
             },
@@ -439,15 +453,23 @@ function cargarContratos() {
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
-                    data.forEach(function(d) {
-                        if(d.preaviso == null) {
-                            d.preaviso = 0;
+                    if(data) {
+                        if(data.length > 0) {
+                            data.forEach(function(d) {
+                                if(d.preaviso == null) {
+                                    d.preaviso = 0;
+                                }
+                                d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                                d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                            }, this);
+                            
+                            loadTablaContratos(data);
+                            $("#btnRenovarContratos").show();
                         }
-                        d.plazo = restarDias(d.fechaFinal, d.preaviso);
-                        d.plazo = moment(d.plazo).format('YYYY-MM-DD');
-                    }, this);
-                    
-                    loadTablaContratos(data);
+                    } else { 
+                        $("#btnRenovarContratos").hide();
+                        loadTablaContratos(null);
+                    }
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -630,43 +652,58 @@ var nuevoContratoOK = function () {
     return $('#frmRenovarContratos').valid();
 }
 var prepararRenovacion = function () {
-    proponerFechasRenovacion();
+    mensRenovacion();
 };
 
-var proponerFechasRenovacion = function () {
-    // Crear un objeto moment con la fecha actual
-    var _fechaInicio = moment();
+var mensRenovacion = function() {
+    // mensaje de confirmación
+    var mens = "¿Se renovaran todos los contratos seleccionados. ¿Realmente desea realizar esta acción?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            renovarContratos();
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
 
-    // Crear una copia de _fechaInicio para fecha final
-    var _fechaFinal = moment(_fechaInicio).add(365, 'days');
-
-    // Formatear las fechas
-    vm.nuevaFechaInicio(_fechaInicio.format('DD/MM/YYYY'));
-    vm.nuevaFechaFinal(_fechaFinal.format('DD/MM/YYYY'));
-    vm.nuevaFechaContrato(_fechaInicio.format('DD/MM/YYYY'));
-    vm.ipc(0);
-};
 
 var renovarContratos = function() {
     let preaviso = $('#chkPreaviso').prop('checked');
     let url = myconfig.apiUrl + "/api/contratos/renovar/varios";
-    url += "/" + spanishDbDate(vm.nuevaFechaInicio());
-    url += "/" + spanishDbDate(vm.nuevaFechaFinal());
-    url += "/" + spanishDbDate(vm.nuevaFechaContrato());
-
-    url += "/" + spanishDbDate(vm.fechaRenovacionIpc());
-    url += "/" + vm.ipc();
-
     url += "/" + spanishDbDate(vm.desdeFecha());
     url += "/" + spanishDbDate(vm.hastaFecha());
     url += "/" + vm.sdepartamentoId();
     url += "/" + preaviso,
     llamadaAjax("POST", url, null, function (err, data) {
         if (err) return;
-        var mens = "Los contratos se han renovado correctamente. Estas son las nuevas referencias.\n" + data;
-        mensNormal(mens);
-        //window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
+        if(data) {
+            if(data.length > 0) {
+                var mens = "Los contratos se han renovado correctamente. Estas son las nuevas referencias.\n" + data;
+                mensNormal(mens);
+                $('#modalRenovarContratos').modal('hide');
+                $('#btnRenovarContratos').hide();
+                limpiaDatos();
+                loadTablaContratos(null);
+            }
+        }
     })
+}
+
+function limpiaDatos () {
+    vm.desdeFecha(null);
+    vm.hastaFecha(null);
+    vm.nuevaFechaInicio(null);
+    vm.nuevaFechaFinal(null);
+    vm.nuevaFechaContrato(null);
+    vm.fechaRenovacionIpc(null);
+    vm.ipc(0);
+
 }
 
 
