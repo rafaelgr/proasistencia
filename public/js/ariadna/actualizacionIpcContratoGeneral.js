@@ -449,7 +449,7 @@ function cargarContratos() {
         let preaviso = $('#chkPreaviso').prop('checked');
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/renovar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + preaviso,
+                url: myconfig.apiUrl + "/api/contratos/actualizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + preaviso,
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
