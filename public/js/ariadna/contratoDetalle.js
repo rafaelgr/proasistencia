@@ -930,6 +930,7 @@ function admData() {
     self.ipc = ko.observable();
     //
     self.renovar = ko.observable();
+    self.importeAnualRenovacion = ko.observable();
 
 }
 
@@ -963,6 +964,7 @@ function loadData(data) {
     vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
     vm.ipc(data.ipc);
     vm.renovar(data.renovar);
+    vm.importeAnualRenovacion(data.importeAnualRenovacion);
     
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
@@ -1295,7 +1297,8 @@ var generarContratoDb = function () {
             "liquidarBasePrefactura": vm.liquidarBase(),
             "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
             "ipc": vm.ipc(),
-            "renovar": vm.renovar()
+            "renovar": vm.renovar(),
+            "importeAnualRenovacion": vm.importeAnualRenovacion()
         }
     };
     if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
