@@ -629,7 +629,7 @@
                                                 </div>
                                             </div>
                                             <div class="pull-right">
-                                                <button id="btnActualizarIpcContratos" title="Actualizar IPC contratos"  onclick="prepararActualizacionIpc()" class="btn btn-primary btn-circle btn-lg">
+                                                <button id="btnActualizarContratos" title="Actualizar contratos" data-toggle="modal" data-target="#modalActualizarIpcContratos" onclick="prepararRenovacion()" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-repeat"></i>
                                                 </button>
                                                 <button id="btnPrint" title="Informe" class="btn btn-warning btn-circle btn-lg">
@@ -767,7 +767,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"> RENOVAR CONTRATO</h4>
+                <h4 class="modal-title"> ACTUALIZAR IPC CONTRATOS</h4>
             </div>
             <div class="modal-body no-padding">
                 <form id="frmActualizarIpcContratos" class="smart-form">
@@ -786,25 +786,13 @@
                             </div>                                
                             -->
                             <div class="row">
-                                <section class="col col-md-3">
-                                    <label class="label">Fecha Inicial (Contratos nuevos)</label>
-                                    <label class="input">
-                                        <input id="txtNFechaInicio" name="txtNFechaInicio" data-bind="value: nuevaFechaInicio" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-3">
-                                    <label class="label">Fecha Final (Contratos nuevos)</label>
-                                    <label class="input">
-                                        <input id="txtNFechaFinal" name="txtNFechaFinal" data-bind="value: nuevaFechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-3">
+                                <section class="col col-md-4">
                                     <label class="label">IPC</label>
                                     <label class="input">
                                         <input id="txtIpc" name="txtIpc" data-bind="value: ipc" />
                                     </label>
                                 </section>
-                                <section class="col col-md-3">
+                                <section class="col col-md-8">
                                     <label class="label">Fecha actualización IPC</label>
                                     <label class="input">
                                         <input id="txtFechaRenovacionIpc" name="txtFechaRenovacionIpc" data-bind="value: fechaRenovacionIpc" class="datepicker" data-dateformat="dd/mm/yy" />
@@ -815,7 +803,7 @@
                     </fieldset>
                     <footer>
                         <button id="btnAceptarContratosNuevos" class="btn btn-primary" onclick="aceptarContratosNuevos()">
-                            RENOVAR
+                            ACTUALIZAR
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar

@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-renovarContratoGeneral.js
-Funciones js par la página RenovarContratoGeneral.html
+actualizarContratoGeneral.js
+Funciones js par la página ActualizarContratoGeneral.html
 
 ---------------------------------------------------------------------------*/
 
@@ -26,7 +26,7 @@ function initForm() {
      // select2 things
      $("#cmbDepartamentosTrabajo").select2(select2Spanish());
 
-     $("#frmRenovarContratos").submit(function () {
+     $("#frmActualizarIpcContratos").submit(function () {
         return false;
     });
     
@@ -52,7 +52,6 @@ function initForm() {
         }, 'La fecha final debe ser mayor que la inicial.');
     //
 
-    reglasDeValidacionAdicionales();
 
      //Evento asociado al cambio de departamento
      $("#cmbDepartamentosTrabajo").on('change', function (e) {
@@ -128,9 +127,6 @@ class admData {
         self.elegidosDepartamentos = ko.observableArray([]);
 
         // modal de renovación del contrato
-        self.nuevaFechaInicio = ko.observable();
-        self.nuevaFechaFinal = ko.observable();
-        self.nuevaFechaContrato = ko.observable();
         self.fechaRenovacionIpc = ko.observable();
         self.ipc = ko.observable();
     }
@@ -580,7 +576,7 @@ function ajustaDepartamentos(data) {
 }
 
 var aceptarContratosNuevos = function () {
-    if (!nuevoContratoOK()) return;
+    if (!actualizarIpcOk()) return;
     //primero comprobamos que los implicados en los contratos estén de alta
    /*  llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
         if (err) {
@@ -594,14 +590,14 @@ var aceptarContratosNuevos = function () {
                 mens += JSON.stringify(d) + "<br>";
             }
             mens = mens.replace(/["{}]/g, '');
-            mens += "¿Realmente desea renovar el contrato?.";
+            mens += "¿Realmente desea actualizar el contrato?.";
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
                 buttons: '[Aceptar][Cancelar]'
             }, function (ButtonPressed) {
                 if (ButtonPressed === "Aceptar") {
-                    renovarContratos();
+                    actualizarContratos();
                 }
                 if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
@@ -609,38 +605,29 @@ var aceptarContratosNuevos = function () {
                 }
             });
         } else {
-            renovarContratos();
+            actualizarContratos();
         }
     }); */
-    renovarContratos();
+    actualizarContratos();
 };
 
-var reglasDeValidacionAdicionales = function () {
-    jQuery.validator.addMethod("fechaFinalSuperiorAInicial", function (value, element) {
-        var fechaInicial = new Date(spanishDbDate(vm.nuevaFechaInicio()));
-        var fechaFinal = new Date(spanishDbDate(vm.nuevaFechaFinal()));
-        return (fechaFinal >= fechaInicial);
-    }, "La fecha final debe ser superior a la inicial");
-}
-
-var nuevoContratoOK = function () {
+var actualizarIpcOk = function () {
     $('#frmActualizarIpcContratos').validate({
         rules: {
-            txtNFechaInicio: {
+            txtFechaRenovacionIpc: {
                 required: true
             },
-            txtNFechaFinal: {
-                required: true,
-                fechaFinalSuperiorAInicial: true
+            txtIpc: {
+                required: true
             }
         },
         // Messages for form validation
         messages: {
-            txtNFechaInicio: {
-                number: "Debe elegir una fecha"
-            },
-            txtNFechaFinal: {
+            txtFechaRenovacionIpc: {
                 required: "Debe elegir una fecha"
+            },
+            txtIpc: {
+                required: "Debe elegir un IPC"
             }
         },
         // Do not change code below
@@ -657,14 +644,14 @@ var prepararActualizacionIpc = function () {
 
 var mensRenovacion = function() {
     // mensaje de confirmación
-    var mens = "¿Se renovaran todos los contratos seleccionados. ¿Realmente desea realizar esta acción?";
+    var mens = "¿Se actualizarán todos los contratos seleccionados. ¿Realmente desea realizar esta acción?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            renovarContratos();
+            actualizarContratos();
         }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
@@ -673,18 +660,20 @@ var mensRenovacion = function() {
 }
 
 
-var renovarContratos = function() {
+var actualizarContratos = function() {
     let preaviso = $('#chkPreaviso').prop('checked');
-    let url = myconfig.apiUrl + "/api/contratos/renovar/varios";
+    let url = myconfig.apiUrl + "/api/contratos/actualizar/varios";
     url += "/" + spanishDbDate(vm.desdeFecha());
     url += "/" + spanishDbDate(vm.hastaFecha());
+    url += "/" + spanishDbDate(vm.fechaRenovacionIpc());
+    url += "/" + vm.ipc();
     url += "/" + vm.sdepartamentoId();
     url += "/" + preaviso,
     llamadaAjax("POST", url, null, function (err, data) {
         if (err) return;
         if(data) {
             if(data.length > 0) {
-                var mens = "Los contratos se han renovado correctamente. Estas son las nuevas referencias.\n" + data;
+                var mens = "Los contratos se han actualizado correctamente. Estas son las nuevas referencias.\n" + data;
                 mensNormal(mens);
                 $('#modalActualizarIpcContratos').modal('hide');
                 $('#btnActualizarIpcContratos').hide();
@@ -698,9 +687,6 @@ var renovarContratos = function() {
 function limpiaDatos () {
     vm.desdeFecha(null);
     vm.hastaFecha(null);
-    vm.nuevaFechaInicio(null);
-    vm.nuevaFechaFinal(null);
-    vm.nuevaFechaContrato(null);
     vm.fechaRenovacionIpc(null);
     vm.ipc(0);
 
