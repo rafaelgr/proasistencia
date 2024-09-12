@@ -673,7 +673,7 @@ var actualizarContratos = function() {
         if (err) return;
         if(data) {
             if(data.length > 0) {
-                var mens = "Los contratos se han actualizado correctamente. Estas son las nuevas referencias.\n" + data;
+                var mens = "Los contratos se han actualizado correctamente. Estas son las  referencias.\n" + data;
                 mensNormal(mens);
                 $('#modalActualizarIpcContratos').modal('hide');
                 $('#btnActualizarIpcContratos').hide();
