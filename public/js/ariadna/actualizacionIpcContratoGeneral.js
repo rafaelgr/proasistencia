@@ -294,8 +294,8 @@ function initTablaContratos() {
     });
 
     // Hide some columns by default
-    tablaContratos.columns(8).visible(false); // Actualiza los índices según corresponda
-    tablaContratos.columns(9).visible(false);
+    tablaContratos.columns(10).visible(false); 
+    tablaContratos.columns(11).visible(false);
 }
 
 function datosOK() {
@@ -436,7 +436,7 @@ function deleteContrato(id) {
 
 function editContrato(id) {
     var url = "ContratoDetalle.html?ContratoId=" + id;
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 function cargarContratos() {
@@ -679,6 +679,9 @@ var actualizarContratos = function() {
                 $('#btnActualizarIpcContratos').hide();
                 limpiaDatos();
                 loadTablaContratos(null);
+            } else {
+                var mens = "No se ha actualizado nada, los contratos seleccionados no tienen prefacturas o estas no son posteriores a la fecha de renovación del IPC.";
+                mensAlerta(mens);
             }
         }
     })
