@@ -177,6 +177,7 @@ function admData() {
     self.sereRep = ko.observable();
     self.infFacCliRep = ko.observable();
     self.infFacCliObr = ko.observable();
+    self.infFacCliAlq = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -287,6 +288,7 @@ function loadData(data) {
     vm.infPreFacturas(data.infPreFacturas);
     vm.infFacCliRep(data.infFacCliRep);
     vm.infFacCliObr(data.infFacCliObr);
+    vm.infFacCliAlq(data.infFacCliAlq);
     // 
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     vm.plantillaCorreoFacturasRep(data.plantillaCorreoFacturasRep);
@@ -412,7 +414,8 @@ function aceptar() {
                 "usuCorreo": vm.usuCorreo(),
                 "passCorreo": vm.passCorreo(),
                 "infFacCliRep": vm.infFacCliRep(),
-                "infFacCliObr": vm.infFacCliObr()
+                "infFacCliObr": vm.infFacCliObr(),
+                "infFacCliAlq": vm.infFacCliAlq()
             }
         };
         if (empId == 0) {

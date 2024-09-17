@@ -194,7 +194,9 @@ var obtainReport = function (carga) {
             infFacturas = data.infFacCliRep + "_sin_imagen";
         }else if (vm.sdepartamentoId() == 8) {
             infFacturas = data.infFacCliObr;
-         } else {
+         } else if (vm.sdepartamentoId() == 3) {
+            infFacturas = data.infFacCliAlq;
+         }else {
                 infFacturas = data.infFacturas;
             }
     
