@@ -277,7 +277,7 @@ setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
 
 // -- console message
 console.log("-------------------------------------------");
-console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
+console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYY HH:mm:ss'));
 console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
 console.log(' PORT: ' + process.env.API_PORT);
