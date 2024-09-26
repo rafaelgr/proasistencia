@@ -222,6 +222,11 @@ function initForm() {
             vm.fechaCierreContrato(null);
         }
       });
+
+    $("#txtFechaInicio").change(function (e) {
+        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+    });
+
     
 
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  

@@ -229,6 +229,11 @@ function initForm() {
         }
       });
 
+      
+    $("#txtFechaInicio").change(function (e) {
+        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+    });
+
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){

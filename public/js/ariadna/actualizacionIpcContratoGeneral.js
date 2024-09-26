@@ -127,7 +127,7 @@ class admData {
         self.elegidosDepartamentos = ko.observableArray([]);
 
         // modal de renovación del contrato
-        self.fechaRenovacionIpc = ko.observable();
+        //self.fechaRenovacionIpc = ko.observable();
         self.ipc = ko.observable();
     }
 } 
@@ -307,14 +307,15 @@ function datosOK() {
                 required: true
             },
             txtHastaFecha: {
-                required: true,
                 greaterThan: "#txtDesdeFecha"
             },
 
         },
         // Messages for form validation
         messages: {
-
+            txtDesdeFecha: {
+                required: "Debe seleccionar una fecha"
+            }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -443,9 +444,13 @@ function cargarContratos() {
     var mf = function () {
         if (!datosOK()) return;
         let preaviso = $('#chkPreaviso').prop('checked');
+        let hF = 0
+        if(vm.hastaFecha()) {
+            hF = spanishDbDate(vm.hastaFecha());
+        }
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/actualizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + preaviso,
+                url: myconfig.apiUrl + "/api/contratos/actualizar/" + spanishDbDate(vm.desdeFecha()) + "/" + hF + "/" + vm.sdepartamentoId() + "/" + preaviso,
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
@@ -608,24 +613,18 @@ var aceptarContratosNuevos = function () {
             actualizarContratos();
         }
     }); */
-    actualizarContratos();
+    mensRenovacion()
 };
 
 var actualizarIpcOk = function () {
     $('#frmActualizarIpcContratos').validate({
         rules: {
-            txtFechaRenovacionIpc: {
-                required: true
-            },
             txtIpc: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-            txtFechaRenovacionIpc: {
-                required: "Debe elegir una fecha"
-            },
             txtIpc: {
                 required: "Debe elegir un IPC"
             }
@@ -639,7 +638,8 @@ var actualizarIpcOk = function () {
     return $('#frmActualizarIpcContratos').valid();
 }
 var prepararActualizacionIpc = function () {
-    mensRenovacion();
+    //mensRenovacion();
+    limpiaDatosModal();
 };
 
 var mensRenovacion = function() {
@@ -663,9 +663,13 @@ var mensRenovacion = function() {
 var actualizarContratos = function() {
     let preaviso = $('#chkPreaviso').prop('checked');
     let url = myconfig.apiUrl + "/api/contratos/actualizar/varios";
+    let hF = 0
+    if(vm.hastaFecha()) {
+        hF = spanishDbDate(vm.hastaFecha());
+    }
     url += "/" + spanishDbDate(vm.desdeFecha());
-    url += "/" + spanishDbDate(vm.hastaFecha());
-    url += "/" + spanishDbDate(vm.fechaRenovacionIpc());
+    url += "/" + hF;
+    //url += "/" + spanishDbDate(vm.fechaRenovacionIpc());
     url += "/" + vm.ipc();
     url += "/" + vm.sdepartamentoId();
     url += "/" + preaviso,
@@ -690,9 +694,12 @@ var actualizarContratos = function() {
 function limpiaDatos () {
     vm.desdeFecha(null);
     vm.hastaFecha(null);
-    vm.fechaRenovacionIpc(null);
+    //vm.fechaRenovacionIpc(null);
     vm.ipc(0);
+}
 
+function limpiaDatosModal () {
+    vm.ipc(0);
 }
 
 
