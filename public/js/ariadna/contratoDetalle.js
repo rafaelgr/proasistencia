@@ -937,6 +937,7 @@ function admData() {
     self.renovar = ko.observable();
     self.importeAnualRenovacion = ko.observable();
     self.importeAnualRenovacionFormat = ko.observable();
+    self.fechaFinAlquiler = ko.observable();
 
 }
 
@@ -974,6 +975,7 @@ function loadData(data) {
     vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
     vm.ipc(data.ipc);
     vm.renovar(data.renovar);
+    vm.fechaFinAlquiler(spanishDate(data.fechaFinAlquiler));
     
     
     vm.importeMantenedor(data.importeMantenedor);
@@ -1308,6 +1310,7 @@ var generarContratoDb = function () {
             "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
             "ipc": vm.ipc(),
             "renovar": vm.renovar(),
+            "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
             "importeAnualRenovacion": vm.importeAnualRenovacion()
         }
     };
